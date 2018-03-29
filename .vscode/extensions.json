@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "msjsdiag.debugger-for-chrome",
+        "octref.vetur",
+        "prograhammer.tslint-vue",
+        "streetsidesoftware.code-spell-checker"
+    ]
+}
