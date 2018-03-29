@@ -13,21 +13,14 @@
 -->
 
 <template>
-  <div id="app">
-    <AssetList/>
+  <div>
+    <Asset v-for="assetInfo in assetInfos" :key="assetInfo.key" :info="assetInfo"></Asset>
   </div>
 </template>
 
-<script src="./App.vue.ts" lang="ts">
+<script src="./AssetList.vue.ts" lang="ts">
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
 </style>

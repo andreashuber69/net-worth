@@ -11,14 +11,16 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Vue } from "vue-property-decorator";
+import Asset from "./Asset.vue";
+import { AssetInfo } from "./AssetInfo";
 
 // tslint:disable-next-line:no-unsafe-any
-@Component
+@Component({ components: { Asset } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
-export default class HelloWorld extends Vue {
-    public message = "";
-
-    public onClick() {
-        this.message = "Hello World!";
-    }
+export default class AssetList extends Vue {
+    public assetInfos: AssetInfo[] = [
+        new AssetInfo(1, "One"),
+        new AssetInfo(2, "Two"),
+        new AssetInfo(3, "Three"),
+    ];
 }

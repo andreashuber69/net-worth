@@ -10,10 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component, Vue } from "vue-property-decorator";
-import AssetList from "./components/AssetList.vue";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { AssetInfo } from "./AssetInfo";
 
 // tslint:disable-next-line:no-unsafe-any
-@Component({ components: { AssetList } })
+@Component
 // tslint:disable-next-line:no-default-export no-unsafe-any
-export default class App extends Vue {}
+export default class Asset extends Vue {
+    @Prop()
+    public info: AssetInfo | undefined;
+}

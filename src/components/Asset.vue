@@ -14,12 +14,11 @@
 
 <template>
   <div>
-    <button @click="onClick">Click!</button>
-    <div>{{ message }}</div>
+    <span>{{ info.name }}</span>
   </div>
 </template>
 
-<script src="./HelloWorld.vue.ts" lang="ts">
+<script src="./Asset.vue.ts" lang="ts">
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
