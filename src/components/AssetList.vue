@@ -13,9 +13,13 @@
 -->
 
 <template>
-  <div>
+  <table>
+    <tr>
+      <th>Key</th>
+      <th>Name</th>
+    </tr>
     <Asset v-for="assetInfo in assetInfos" :key="assetInfo.key" :info="assetInfo"></Asset>
-  </div>
+  </table>
 </template>
 
 <script src="./AssetList.vue.ts" lang="ts">

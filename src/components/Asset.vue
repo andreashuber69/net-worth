@@ -13,14 +13,14 @@
 -->
 
 <template>
-  <div>
-    <span>{{ info.name }}</span>
-  </div>
+  <tr>
+    <td>{{ info.key }}</td>
+    <td>{{ info.name }}</td>
+  </tr>
 </template>
 
 <script src="./Asset.vue.ts" lang="ts">
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
