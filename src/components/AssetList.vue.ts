@@ -19,8 +19,8 @@ import { CryptoAssetInfo } from "./CryptoAssetInfo";
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetList extends Vue {
     public assetInfos = [
-        new CryptoAssetInfo(1, "One", "Crypto", "slkdfjlksjd", "BTC"),
-        new CryptoAssetInfo(2, "Two", "Crypto", "slkdfjlksjd", "BTC"),
-        new CryptoAssetInfo(3, "Three", "Crypto", "slkdfjlksjd", "BTC"),
+        new CryptoAssetInfo(1, "One", "Crypto", AssetList.xpub, "BTC"),
     ];
+
+    private static readonly xpub = "";
 }

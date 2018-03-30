@@ -10,7 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { HDNode } from "bitcoinjs-lib";
 import { AssetInfo } from "./AssetInfo";
+
+interface ISummary {
+    final_balance: number;
+    n_tx: number;
+}
 
 export class CryptoAssetInfo extends AssetInfo {
     public get amount() {
@@ -26,10 +32,74 @@ export class CryptoAssetInfo extends AssetInfo {
         super(key, label, type, address, denomination);
     }
 
-    public update(): Promise<void> {
-        return this.updatePromise;
+    public async update(): Promise<void> {
+        // TODO: This is a crude test to distinguish between xpub and a normal address
+        if (this.location.length > 100) {
+            const rootNode = HDNode.fromBase58(this.location);
+            this.amountValue = await CryptoAssetInfo.getRootBalance(rootNode.derive(0)) +
+                await CryptoAssetInfo.getRootBalance(rootNode.derive(1));
+        } else {
+            this.amountValue = await CryptoAssetInfo.getBalance([ this.location ]);
+        }
     }
 
-    private readonly amountValue: number | undefined;
-    private readonly updatePromise = new Promise<void>((resolve, reject) => resolve());
+    private static async getRootBalance(node: HDNode) {
+        let balance = 0;
+        let batch: string[];
+        let batchBalance: number | undefined;
+
+        for (
+            let startIndex = 0;
+            batchBalance = await this.getBalance(batch = this.getAddressBatch(node, startIndex));
+            startIndex += batch.length) {
+            balance += batchBalance;
+        }
+
+        return balance;
+    }
+
+    private static getAddressBatch(node: HDNode, startIndex: number) {
+        const result = new Array<string>(20);
+
+        for (let index = 0; index < 20; ++index) {
+            result[index] = node.derive(index).getAddress();
+        }
+
+        return result;
+    }
+
+    private static async getBalance(addresses: string[]): Promise<number | undefined> {
+        const response = await window.fetch(
+            `https://blockchain.info/balance?active=${addresses.join("|")}&cors=true`);
+        const summary = JSON.parse(await response.text());
+        let transactionCount = 0;
+        let result = 0;
+
+        for (const address of addresses) {
+            if (this.hasStringIndexer(summary)) {
+                const balance = summary[address];
+
+                if (this.isSummary(balance)) {
+                    transactionCount += balance.n_tx;
+                    result += balance.final_balance;
+                }
+            }
+        }
+
+        return (transactionCount > 0) ? result : undefined;
+    }
+
+    private static isObject(value: any): value is object {
+        return value instanceof Object;
+    }
+
+    private static hasStringIndexer(value: any): value is { [key: string]: any } {
+        return this.isObject(value);
+    }
+
+    private static isSummary(value: any): value is ISummary {
+        return this.isObject(value) && value.hasOwnProperty("final_balance") && value.hasOwnProperty("n_tx");
+    }
+
+    private amountValue: number | undefined;
 }
