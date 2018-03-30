@@ -15,7 +15,12 @@
 <template>
   <tr>
     <td>{{ info.key }}</td>
-    <td>{{ info.name }}</td>
+    <td>{{ info.label }}</td>
+    <td>{{ info.type }}</td>
+    <td>{{ info.location }}</td>
+    <td>{{ info.denomination }}</td>
+    <td>{{ info.amount }}</td>
+    <td>0</td>
   </tr>
 </template>
 

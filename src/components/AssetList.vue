@@ -16,7 +16,12 @@
   <table>
     <tr>
       <th>Key</th>
-      <th>Name</th>
+      <th>Label</th>
+      <th>Type</th>
+      <th>Location</th>
+      <th>Denomination</th>
+      <th>Amount/Count</th>
+      <th>Value</th>
     </tr>
     <Asset v-for="assetInfo in assetInfos" :key="assetInfo.key" :info="assetInfo"></Asset>
   </table>

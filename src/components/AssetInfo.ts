@@ -10,9 +10,16 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-export class AssetInfo {
+export abstract class AssetInfo {
     public constructor(
         public readonly key: number,
-        public readonly name: string) {
+        public readonly label: string,
+        public readonly type: string,
+        public readonly location: string,
+        public readonly denomination: string) {
     }
+
+    public abstract get amount(): number | undefined;
+
+    public abstract update(): Promise<void>;
 }
