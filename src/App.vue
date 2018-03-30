@@ -21,7 +21,7 @@
 <script src="./App.vue.ts" lang="ts">
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
