@@ -21,7 +21,7 @@
 <script src="./App.vue.ts" lang="ts">
 </script>
 
-<style scoped>
+<style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -29,5 +29,23 @@
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid lightgrey;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: lightgrey;
 }
 </style>
