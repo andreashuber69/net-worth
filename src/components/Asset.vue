@@ -20,7 +20,7 @@
     <td :title="info.location">{{ info.shortLocation }}</td>
     <td>{{ info.denomination }}</td>
     <td>{{ info.amount }}</td>
-    <td>0</td>
+    <td>{{ info.value }}</td>
   </tr>
 </template>
 

@@ -19,9 +19,9 @@ interface ISummary {
 }
 
 export class CryptoAssetInfo extends AssetInfo {
-    public get amount() {
-        return this.amountValue;
-    }
+    public amount: number | undefined;
+
+    public value: number | undefined;
 
     public constructor(
         key: number,
@@ -36,10 +36,10 @@ export class CryptoAssetInfo extends AssetInfo {
         // TODO: This is a crude test to distinguish between xpub and a normal address
         if (this.location.length > 100) {
             const rootNode = HDNode.fromBase58(this.location);
-            this.amountValue = await CryptoAssetInfo.getRootBalance(rootNode.derive(0)) +
+            this.amount = await CryptoAssetInfo.getRootBalance(rootNode.derive(0)) +
                 await CryptoAssetInfo.getRootBalance(rootNode.derive(1));
         } else {
-            this.amountValue = await CryptoAssetInfo.getBalance([ this.location ]);
+            this.amount = await CryptoAssetInfo.getBalance([ this.location ]);
         }
     }
 
@@ -100,6 +100,4 @@ export class CryptoAssetInfo extends AssetInfo {
     private static isSummary(value: any): value is ISummary {
         return this.isObject(value) && value.hasOwnProperty("final_balance") && value.hasOwnProperty("n_tx");
     }
-
-    private amountValue: number | undefined;
 }

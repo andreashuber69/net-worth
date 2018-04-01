@@ -12,7 +12,13 @@
 
 import { AssetInfo } from "./AssetInfo";
 
+interface IResponse {
+    data: Array<[ string, number ]>;
+}
+
 export class PreciousMetalInfo extends AssetInfo {
+    public value: number | undefined;
+
     public constructor(
         key: number,
         label: string,
@@ -24,6 +30,32 @@ export class PreciousMetalInfo extends AssetInfo {
     }
 
     public async update(): Promise<void> {
-        this.amount.toString();
+        const response = await window.fetch("https://www.quandl.com/api/v1/datasets/LBMA/GOLD.json?rows=1");
+        const parsed = JSON.parse(await response.text());
+
+        if (PreciousMetalInfo.hasDataArrayTuple(parsed)) {
+            this.value = this.amount * parsed.data[0][1];
+        }
+    }
+
+    private static isObject(value: any): value is object {
+        return value instanceof Object;
+    }
+
+    private static hasStringIndexer(value: any): value is { [key: string]: any } {
+        return this.isObject(value);
+    }
+
+    private static hasDataArray(value: any): value is { data: any[] } {
+        return this.hasStringIndexer(value) && value.hasOwnProperty("data") && (value.data instanceof Array);
+    }
+
+    private static hasDataArrayArray(value: any): value is { data: any[][] } {
+        return this.hasDataArray(value) && (value.data.length === 1) && (value.data[0] instanceof Array);
+    }
+
+    private static hasDataArrayTuple(value: any): value is IResponse {
+        return this.hasDataArrayArray(value) && (value.data[0].length === 7) &&
+            (typeof value.data[0][0] === "string") && (typeof value.data[0][1] === "number");
     }
 }

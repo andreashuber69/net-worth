@@ -27,5 +27,7 @@ export abstract class AssetInfo {
 
     public abstract get amount(): number | undefined;
 
+    public abstract get value(): number | undefined;
+
     public abstract update(): Promise<void>;
 }
