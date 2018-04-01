@@ -17,7 +17,7 @@
     <td>{{ info.key }}</td>
     <td>{{ info.label }}</td>
     <td>{{ info.type }}</td>
-    <td>{{ info.location }}</td>
+    <td :title="info.location">{{ info.shortLocation }}</td>
     <td>{{ info.denomination }}</td>
     <td>{{ info.amount }}</td>
     <td>0</td>

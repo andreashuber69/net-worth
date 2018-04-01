@@ -10,15 +10,20 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component, Vue } from "vue-property-decorator";
-import Asset from "./Asset.vue";
-import { PreciousMetalInfo } from "./PreciousMetalInfo";
+import { AssetInfo } from "./AssetInfo";
 
-// tslint:disable-next-line:no-unsafe-any
-@Component({ components: { Asset } })
-// tslint:disable-next-line:no-default-export no-unsafe-any
-export default class AssetList extends Vue {
-    public assetInfos = [
-        new PreciousMetalInfo(1, "One", "Silver", "Home", "oz", 300),
-    ];
+export class PreciousMetalInfo extends AssetInfo {
+    public constructor(
+        key: number,
+        label: string,
+        type: string,
+        location: string,
+        denomination: string,
+        public readonly amount: number) {
+        super(key, label, type, location, denomination);
+    }
+
+    public async update(): Promise<void> {
+        this.amount.toString();
+    }
 }

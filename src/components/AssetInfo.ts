@@ -19,6 +19,12 @@ export abstract class AssetInfo {
         public readonly denomination: string) {
     }
 
+    public get shortLocation() {
+        const maxLength = 15;
+
+        return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
+    }
+
     public abstract get amount(): number | undefined;
 
     public abstract update(): Promise<void>;
