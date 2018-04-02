@@ -20,7 +20,7 @@ export class PreciousMetalInfo extends AssetInfo {
         location: string,
         denomination: string,
         amount: number) {
-        super(key, label, type, location, denomination);
+        super(key, label, type, location, 2, denomination);
         this.amount = amount;
     }
 

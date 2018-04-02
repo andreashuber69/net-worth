@@ -25,7 +25,7 @@ export class CryptoAssetInfo extends AssetInfo {
         type: string,
         address: string,
         denomination: string) {
-        super(key, label, type, address, denomination);
+        super(key, label, type, address, 8, denomination);
     }
 
     public async update(): Promise<void> {
@@ -35,7 +35,8 @@ export class CryptoAssetInfo extends AssetInfo {
             this.amount = await CryptoAssetInfo.getRootBalance(rootNode.derive(0)) +
                 await CryptoAssetInfo.getRootBalance(rootNode.derive(1));
         } else {
-            this.amount = await CryptoAssetInfo.getBalance([ this.location ]);
+            const amount = await CryptoAssetInfo.getBalance([ this.location ]);
+            this.amount = amount ? amount / 100000000 : 0;
         }
     }
 

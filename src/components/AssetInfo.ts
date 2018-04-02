@@ -11,21 +11,27 @@
 // <http://www.gnu.org/licenses/>.
 
 export abstract class AssetInfo {
-    public amount: number | undefined;
-    public value: number | undefined;
+    public amount = Number.NaN;
+    public value = Number.NaN;
 
     public constructor(
         public readonly key: number,
         public readonly label: string,
         public readonly type: string,
         public readonly location: string,
-        public readonly denomination: string) {
+        private readonly amountDecimals: number,
+        private readonly amountDenomination: string) {
     }
 
     public get shortLocation() {
         const maxLength = 15;
 
         return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
+    }
+
+    public get formattedAmount() {
+        return Number.isNaN(this.amount) ? "" :
+            `${this.amount.toFixed(this.amountDecimals)} ${this.amountDenomination}`;
     }
 
     public abstract update(): Promise<void>;
