@@ -12,6 +12,7 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import Asset from "./Asset.vue";
+import { CryptoAssetInfo } from "./CryptoAssetInfo";
 import { PreciousMetalInfo } from "./PreciousMetalInfo";
 
 // tslint:disable-next-line:no-unsafe-any
@@ -20,5 +21,7 @@ import { PreciousMetalInfo } from "./PreciousMetalInfo";
 export default class AssetList extends Vue {
     public assetInfos = [
         new PreciousMetalInfo(1, "One", "Silver", "Home", "oz", 300),
+        new CryptoAssetInfo(2, "Two", "BTC", "32kp8B1VRRY7EHumToKj8YZzt3A6VtxmSA", "BTC"),
     ];
+
 }

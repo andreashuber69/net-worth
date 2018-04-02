@@ -12,10 +12,6 @@
 
 import { AssetInfo } from "./AssetInfo";
 
-interface IResponse {
-    data: Array<[ string, number ]>;
-}
-
 export class PreciousMetalInfo extends AssetInfo {
     public value: number | undefined;
 
@@ -47,15 +43,15 @@ export class PreciousMetalInfo extends AssetInfo {
     }
 
     private static hasDataArray(value: any): value is { data: any[] } {
-        return this.hasStringIndexer(value) && value.hasOwnProperty("data") && (value.data instanceof Array);
+        return this.hasStringIndexer(value) && (value.data instanceof Array);
     }
 
     private static hasDataArrayArray(value: any): value is { data: any[][] } {
-        return this.hasDataArray(value) && (value.data.length === 1) && (value.data[0] instanceof Array);
+        return this.hasDataArray(value) && (value.data.length >= 1) && (value.data[0] instanceof Array);
     }
 
-    private static hasDataArrayTuple(value: any): value is IResponse {
-        return this.hasDataArrayArray(value) && (value.data[0].length === 7) &&
+    private static hasDataArrayTuple(value: any): value is { data: Array<[ string, number ]> } {
+        return this.hasDataArrayArray(value) && (value.data[0].length >= 2) &&
             (typeof value.data[0][0] === "string") && (typeof value.data[0][1] === "number");
     }
 }
