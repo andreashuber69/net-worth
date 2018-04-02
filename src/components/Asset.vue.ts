@@ -20,9 +20,14 @@ export default class Asset extends Vue {
     @Prop()
     public info: AssetInfo | undefined;
 
-    public async created() {
-        if (this.info) {
-            await this.info.update();
+    public mounted() {
+        // TODO: This could possibly be done more elegantly with this.$nextTick
+        setTimeout(Asset.delayedUpdate, 10, this.info);
+    }
+
+    private static async delayedUpdate(info: AssetInfo | undefined) {
+        if (info) {
+            return info.update();
         }
     }
 }
