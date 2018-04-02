@@ -14,10 +14,9 @@
 
 <template>
   <tr>
-    <td>{{ info.key }}</td>
+    <td :title="info.location">{{ info.shortLocation }}</td>
     <td>{{ info.label }}</td>
     <td>{{ info.type }}</td>
-    <td :title="info.location">{{ info.shortLocation }}</td>
     <td>{{ info.formattedAmount }}</td>
     <td>{{ info.value }}</td>
   </tr>

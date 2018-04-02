@@ -15,10 +15,9 @@
 <template>
   <table>
     <tr>
-      <th>Key</th>
+      <th>Location</th>
       <th>Label</th>
       <th>Type</th>
-      <th>Location</th>
       <th>Amount/Count</th>
       <th>Value</th>
     </tr>
