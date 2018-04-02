@@ -11,6 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 export abstract class AssetInfo {
+    public amount: number | undefined;
+    public value: number | undefined;
+
     public constructor(
         public readonly key: number,
         public readonly label: string,
@@ -24,10 +27,6 @@ export abstract class AssetInfo {
 
         return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
     }
-
-    public abstract get amount(): number | undefined;
-
-    public abstract get value(): number | undefined;
 
     public abstract update(): Promise<void>;
 }

@@ -19,10 +19,6 @@ interface ISummary {
 }
 
 export class CryptoAssetInfo extends AssetInfo {
-    public amount: number | undefined;
-
-    public value: number | undefined;
-
     public constructor(
         key: number,
         label: string,

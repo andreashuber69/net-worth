@@ -13,16 +13,15 @@
 import { AssetInfo } from "./AssetInfo";
 
 export class PreciousMetalInfo extends AssetInfo {
-    public value: number | undefined;
-
     public constructor(
         key: number,
         label: string,
         type: string,
         location: string,
         denomination: string,
-        public readonly amount: number) {
+        amount: number) {
         super(key, label, type, location, denomination);
+        this.amount = amount;
     }
 
     public async update(): Promise<void> {
@@ -30,7 +29,9 @@ export class PreciousMetalInfo extends AssetInfo {
         const parsed = JSON.parse(await response.text());
 
         if (PreciousMetalInfo.hasDataArrayTuple(parsed)) {
-            this.value = this.amount * parsed.data[0][1];
+            if (this.amount) {
+                this.value = this.amount * parsed.data[0][1];
+            }
         }
     }
 
