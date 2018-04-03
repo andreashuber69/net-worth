@@ -10,15 +10,27 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+// // enum Currency {
+// //     BTC,
+// //     USD,
+// // }
+
+// // interface IUpdateResult {
+// //     readonly quantity: number;
+// //     readonly quantitytUnit: string; // "g" when a weight should be represented, no special meaning for anything.
+// //     readonly value: number;
+// //     readonly valueCurrency: Currency;
+// // }
+
 export abstract class AssetInfo {
     public amount = Number.NaN;
     public value = Number.NaN;
 
     public constructor(
         public readonly key: number,
+        public readonly location: string,
         public readonly label: string,
         public readonly type: string,
-        public readonly location: string,
         private readonly amountDecimals: number,
         private readonly amountDenomination: string) {
     }

@@ -21,11 +21,11 @@ interface ISummary {
 export class CryptoAssetInfo extends AssetInfo {
     public constructor(
         key: number,
+        address: string,
         label: string,
         type: string,
-        address: string,
         denomination: string) {
-        super(key, label, type, address, 8, denomination);
+        super(key, address, label, type, 8, denomination);
     }
 
     public async update(): Promise<void> {
