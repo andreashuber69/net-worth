@@ -21,7 +21,7 @@
       <th>Quantity</th>
       <th>Value</th>
     </tr>
-    <Asset v-for="assetInfo in assetInfos" :key="assetInfo.key" :info="assetInfo"></Asset>
+    <Asset v-for="(assetInfo, index) in assetInfos" :key="index" :info="assetInfo"></Asset>
   </table>
 </template>
 

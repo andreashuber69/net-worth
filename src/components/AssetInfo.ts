@@ -27,7 +27,6 @@ export abstract class AssetInfo {
     public value = Number.NaN;
 
     public constructor(
-        public readonly key: number,
         public readonly location: string,
         public readonly label: string,
         public readonly type: string,

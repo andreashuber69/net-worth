@@ -20,8 +20,8 @@ import { PreciousMetalInfo } from "./PreciousMetalInfo";
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetList extends Vue {
     public assetInfos = [
-        new PreciousMetalInfo(1, "Home", "One", "Silver", "oz", 300),
-        new CryptoAssetInfo(2, "32kp8B1VRRY7EHumToKj8YZzt3A6VtxmSA", "Two", "BTC", "BTC"),
+        new PreciousMetalInfo("Home", "One", "Silver", "oz", 300),
+        new CryptoAssetInfo("32kp8B1VRRY7EHumToKj8YZzt3A6VtxmSA", "Two", "BTC", "BTC"),
     ];
 
 }

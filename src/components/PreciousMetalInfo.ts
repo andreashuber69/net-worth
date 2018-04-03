@@ -14,13 +14,12 @@ import { AssetInfo } from "./AssetInfo";
 
 export class PreciousMetalInfo extends AssetInfo {
     public constructor(
-        key: number,
         location: string,
         label: string,
         type: string,
         denomination: string,
         amount: number) {
-        super(key, location, label, type, 2, denomination);
+        super(location, label, type, 2, denomination);
         this.amount = amount;
     }
 
