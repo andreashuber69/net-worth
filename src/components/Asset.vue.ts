@@ -36,14 +36,14 @@ export default class Asset extends Vue {
         return location.length > maxLength ? `${location.substr(0, maxLength)}...` : location;
     }
 
-    public get formattedAmount() {
+    public get formattedQuantity() {
         return !this.info || !this.value || Number.isNaN(this.value.quantity) ? "" :
-            `${this.value.quantity.toFixed(this.info.amountDecimals)} ${this.info.amountDenomination}`;
+            `${this.value.quantity.toFixed(this.info.quantityDecimals)} ${this.info.quantityDenomination}`;
     }
 
     public get formattedValue() {
         return !this.info || !this.value || Number.isNaN(this.value.value) ? "" :
-            `${this.value.value.toFixed(this.info.amountDecimals)} ${Currency[this.value.valueCurrency]}`;
+            `${this.value.value.toFixed(this.info.quantityDecimals)} ${Currency[this.value.valueCurrency]}`;
     }
 
     public mounted() {

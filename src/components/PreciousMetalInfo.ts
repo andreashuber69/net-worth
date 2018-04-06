@@ -19,16 +19,16 @@ export class PreciousMetalInfo extends AssetInfo {
         label: string,
         type: string,
         denomination: string,
-        private readonly amount: number) {
+        private readonly quantity: number) {
         super(location, label, type, 2, denomination);
     }
 
     public async getValue(): Promise<Value> {
         const response = await window.fetch("https://www.quandl.com/api/v1/datasets/LBMA/GOLD.json?rows=1");
         const parsed = JSON.parse(await response.text());
-        const value = PreciousMetalInfo.hasDataArrayTuple(parsed) ? this.amount * parsed.data[0][1] : Number.NaN;
+        const value = PreciousMetalInfo.hasDataArrayTuple(parsed) ? this.quantity * parsed.data[0][1] : Number.NaN;
 
-        return new Value(this.amount, this.amountDenomination, value, Currency.USD);
+        return new Value(this.quantity, this.quantityDenomination, value, Currency.USD);
     }
 
     private static isObject(value: any): value is object {

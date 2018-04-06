@@ -17,7 +17,7 @@
     <td :title="info.location">{{ shortLocation }}</td>
     <td>{{ info.label }}</td>
     <td>{{ info.type }}</td>
-    <td>{{ formattedAmount }}</td>
+    <td>{{ formattedQuantity }}</td>
     <td>{{ formattedValue }}</td>
   </tr>
 </template>

@@ -29,7 +29,7 @@ export class CryptoAssetInfo extends AssetInfo {
     }
 
     public async getValue(): Promise<Value> {
-        const quantity = await this.getAmountInSatoshis() / 100000000;
+        const quantity = await this.getQuantityInSatoshis() / 100000000;
 
         return new Value(quantity, "BTC", quantity, Currency.BTC);
     }
@@ -92,7 +92,7 @@ export class CryptoAssetInfo extends AssetInfo {
         return this.isObject(value) && value.hasOwnProperty("final_balance") && value.hasOwnProperty("n_tx");
     }
 
-    private async getAmountInSatoshis(): Promise<number> {
+    private async getQuantityInSatoshis(): Promise<number> {
         // TODO: This is a crude test to distinguish between xpub and a normal address
         if (this.location.length > 100) {
             const rootNode = HDNode.fromBase58(this.location);
