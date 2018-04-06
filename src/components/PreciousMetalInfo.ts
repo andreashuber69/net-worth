@@ -24,7 +24,7 @@ export class PreciousMetalInfo extends AssetInfo {
     }
 
     public async getValue(): Promise<Value> {
-        const response = await window.fetch("https://www.quandl.com/api/v1/datasets/LBMA/GOLD.json?rows=1");
+        const response = await window.fetch("https://www.quandl.com/api/v1/datasets/lbma/silver.json?rows=1");
         const parsed = JSON.parse(await response.text());
         const value = PreciousMetalInfo.hasDataArrayTuple(parsed) ? this.quantity * parsed.data[0][1] : Number.NaN;
 
