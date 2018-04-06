@@ -21,6 +21,7 @@ export default class Asset extends Vue {
     @Prop()
     public info: AssetInfo | undefined;
 
+    // TODO: Apparently props are only meant for parent components to set data...
     @Prop()
     public value: Value | undefined;
 
