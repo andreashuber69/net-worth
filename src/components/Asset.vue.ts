@@ -12,6 +12,7 @@
 
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { AssetInfo } from "./AssetInfo";
+import { Value } from "./Value";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
@@ -20,14 +21,38 @@ export default class Asset extends Vue {
     @Prop()
     public info: AssetInfo | undefined;
 
-    public mounted() {
-        // TODO: This could possibly be done more elegantly with this.$nextTick
-        setTimeout(Asset.delayedUpdate, 10, this.info);
+    @Prop()
+    public value: Value | undefined;
+
+    public get shortLocation() {
+        if (!this.info) {
+            return "";
+        }
+
+        const maxLength = 15;
+        const location = this.info.location;
+
+        return location.length > maxLength ? `${location.substr(0, maxLength)}...` : location;
     }
 
-    private static async delayedUpdate(info: AssetInfo | undefined) {
-        if (info) {
-            return info.update();
+    public get formattedAmount() {
+        return !this.info || !this.value || Number.isNaN(this.value.quantity) ? "" :
+            `${this.value.quantity.toFixed(this.info.amountDecimals)} ${this.info.amountDenomination}`;
+    }
+
+    public get formattedValue() {
+        return !this.info || !this.value || Number.isNaN(this.value.value) ? "" :
+            `${this.value.value.toFixed(this.info.amountDecimals)} ${this.value.valueCurrency}`;
+    }
+
+    public mounted() {
+        // TODO: This could possibly be done more elegantly with this.$nextTick
+        setTimeout(() => this.delayedUpdate(), 1000);
+    }
+
+    private async delayedUpdate() {
+        if (this.info) {
+            this.value = await this.info.getValue();
         }
     }
 }

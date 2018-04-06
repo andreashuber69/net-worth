@@ -12,6 +12,7 @@
 
 import { HDNode } from "bitcoinjs-lib";
 import { AssetInfo } from "./AssetInfo";
+import { Currency, Value } from "./Value";
 
 interface ISummary {
     final_balance: number;
@@ -27,16 +28,10 @@ export class CryptoAssetInfo extends AssetInfo {
         super(address, label, type, 8, denomination);
     }
 
-    public async update(): Promise<void> {
-        // TODO: This is a crude test to distinguish between xpub and a normal address
-        if (this.location.length > 100) {
-            const rootNode = HDNode.fromBase58(this.location);
-            this.amount = await CryptoAssetInfo.getRootBalance(rootNode.derive(0)) +
-                await CryptoAssetInfo.getRootBalance(rootNode.derive(1));
-        } else {
-            const amount = await CryptoAssetInfo.getBalance([ this.location ]);
-            this.amount = amount ? amount / 100000000 : 0;
-        }
+    public async getValue(): Promise<Value> {
+        const quantity = await this.getAmountInSatoshis() / 100000000;
+
+        return new Value(quantity, "BTC", quantity, Currency.BTC);
     }
 
     private static async getRootBalance(node: HDNode) {
@@ -95,5 +90,19 @@ export class CryptoAssetInfo extends AssetInfo {
 
     private static isSummary(value: any): value is ISummary {
         return this.isObject(value) && value.hasOwnProperty("final_balance") && value.hasOwnProperty("n_tx");
+    }
+
+    private async getAmountInSatoshis(): Promise<number> {
+        // TODO: This is a crude test to distinguish between xpub and a normal address
+        if (this.location.length > 100) {
+            const rootNode = HDNode.fromBase58(this.location);
+
+            return await CryptoAssetInfo.getRootBalance(rootNode.derive(0)) +
+                await CryptoAssetInfo.getRootBalance(rootNode.derive(1));
+        } else {
+            const result = await CryptoAssetInfo.getBalance([ this.location ]);
+
+            return result ? result : 0;
+        }
     }
 }

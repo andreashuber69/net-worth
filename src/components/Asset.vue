@@ -14,11 +14,11 @@
 
 <template>
   <tr>
-    <td :title="info.location">{{ info.shortLocation }}</td>
+    <td :title="info.location">{{ shortLocation }}</td>
     <td>{{ info.label }}</td>
     <td>{{ info.type }}</td>
-    <td>{{ info.formattedAmount }}</td>
-    <td>{{ info.value }}</td>
+    <td>{{ formattedAmount }}</td>
+    <td>{{ formattedValue }}</td>
   </tr>
 </template>
 

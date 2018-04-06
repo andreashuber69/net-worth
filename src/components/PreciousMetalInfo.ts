@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInfo } from "./AssetInfo";
+import { Currency, Value } from "./Value";
 
 export class PreciousMetalInfo extends AssetInfo {
     public constructor(
@@ -18,20 +19,16 @@ export class PreciousMetalInfo extends AssetInfo {
         label: string,
         type: string,
         denomination: string,
-        amount: number) {
+        private readonly amount: number) {
         super(location, label, type, 2, denomination);
-        this.amount = amount;
     }
 
-    public async update(): Promise<void> {
+    public async getValue(): Promise<Value> {
         const response = await window.fetch("https://www.quandl.com/api/v1/datasets/LBMA/GOLD.json?rows=1");
         const parsed = JSON.parse(await response.text());
+        const value = PreciousMetalInfo.hasDataArrayTuple(parsed) ? this.amount * parsed.data[0][1] : Number.NaN;
 
-        if (PreciousMetalInfo.hasDataArrayTuple(parsed)) {
-            if (this.amount) {
-                this.value = this.amount * parsed.data[0][1];
-            }
-        }
+        return new Value(this.amount, this.amountDenomination, value, Currency.USD);
     }
 
     private static isObject(value: any): value is object {

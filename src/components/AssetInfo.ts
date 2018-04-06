@@ -10,40 +10,16 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-// // enum Currency {
-// //     BTC,
-// //     USD,
-// // }
-
-// // interface IUpdateResult {
-// //     readonly quantity: number;
-// //     readonly quantitytUnit: string; // "g" when a weight should be represented, no special meaning for anything.
-// //     readonly value: number;
-// //     readonly valueCurrency: Currency;
-// // }
+import { Value } from "./Value";
 
 export abstract class AssetInfo {
-    public amount = Number.NaN;
-    public value = Number.NaN;
-
     public constructor(
         public readonly location: string,
         public readonly label: string,
         public readonly type: string,
-        private readonly amountDecimals: number,
-        private readonly amountDenomination: string) {
+        public readonly amountDecimals: number,
+        public readonly amountDenomination: string) {
     }
 
-    public get shortLocation() {
-        const maxLength = 15;
-
-        return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
-    }
-
-    public get formattedAmount() {
-        return Number.isNaN(this.amount) ? "" :
-            `${this.amount.toFixed(this.amountDecimals)} ${this.amountDenomination}`;
-    }
-
-    public abstract update(): Promise<void>;
+    public abstract getValue(): Promise<Value>;
 }
