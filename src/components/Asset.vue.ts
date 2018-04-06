@@ -12,7 +12,7 @@
 
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { AssetInfo } from "./AssetInfo";
-import { Value } from "./Value";
+import { Currency, Value } from "./Value";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
@@ -42,7 +42,7 @@ export default class Asset extends Vue {
 
     public get formattedValue() {
         return !this.info || !this.value || Number.isNaN(this.value.value) ? "" :
-            `${this.value.value.toFixed(this.info.amountDecimals)} ${this.value.valueCurrency}`;
+            `${this.value.value.toFixed(this.info.amountDecimals)} ${Currency[this.value.valueCurrency]}`;
     }
 
     public mounted() {
