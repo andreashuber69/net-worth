@@ -21,9 +21,6 @@ export default class Asset extends Vue {
     @Prop()
     public info: AssetInfo | undefined;
 
-    // tslint:disable-next-line:no-null-keyword
-    public value: Value | null = null;
-
     public get shortLocation() {
         if (!this.info) {
             return "";
@@ -36,12 +33,12 @@ export default class Asset extends Vue {
     }
 
     public get formattedQuantity() {
-        return !this.info || !this.value || Number.isNaN(this.value.quantity) ? "" :
+        return !this.info || Number.isNaN(this.value.quantity) ? "" :
             `${this.value.quantity.toFixed(this.info.quantityDecimals)} ${this.info.quantityDenomination}`;
     }
 
     public get formattedValue() {
-        return !this.info || !this.value || Number.isNaN(this.value.value) ? "" :
+        return !this.info || Number.isNaN(this.value.value) ? "" :
             `${this.value.value.toFixed(this.info.quantityDecimals)} ${Currency[this.value.valueCurrency]}`;
     }
 
@@ -49,6 +46,10 @@ export default class Asset extends Vue {
         // TODO: This could possibly be done more elegantly with this.$nextTick
         setTimeout(() => this.delayedUpdate(), 1000);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private value = new Value();
 
     private async delayedUpdate() {
         if (this.info) {

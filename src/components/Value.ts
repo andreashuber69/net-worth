@@ -11,15 +11,16 @@
 // <http://www.gnu.org/licenses/>.
 
 export enum Currency {
+    None,
     BTC,
     USD,
 }
 
 export class Value {
     public constructor(
-        public readonly quantity: number,
+        public readonly quantity = Number.NaN,
         // "g" when a weight should be represented, no special meaning for anything else.
-        public readonly quantitytUnit: string,
-        public readonly value: number,
-        public readonly valueCurrency: Currency) { }
+        public readonly quantitytUnit: string = "",
+        public readonly value = Number.NaN,
+        public readonly valueCurrency: Currency = Currency.None) { }
 }
