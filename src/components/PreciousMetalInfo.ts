@@ -20,7 +20,7 @@ export class PreciousMetalInfo extends AssetInfo {
         type: string,
         denomination: string,
         private readonly quantity: number) {
-        super(location, label, type, 2, denomination);
+        super(location, label, type, denomination, 2);
     }
 
     public async getValue(): Promise<Value> {
@@ -31,12 +31,8 @@ export class PreciousMetalInfo extends AssetInfo {
         return new Value(this.quantity, this.quantityDenomination, value, Currency.USD);
     }
 
-    private static isObject(value: any): value is object {
-        return value instanceof Object;
-    }
-
     private static hasStringIndexer(value: any): value is { [key: string]: any } {
-        return this.isObject(value);
+        return value instanceof Object;
     }
 
     private static hasDataArray(value: any): value is { data: any[] } {
