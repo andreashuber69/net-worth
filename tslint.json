@@ -35,7 +35,6 @@
         "no-console": false,
         "no-magic-numbers": false,
         "no-parameter-properties": false,
-        "no-unbound-method": [ true, "ignore-static" ],
         "no-unnecessary-class": [ "allow-static-only" ],
         "no-void-expression": false,
         "promise-function-async": false,
