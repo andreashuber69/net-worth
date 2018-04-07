@@ -19,7 +19,6 @@ export enum Currency {
 export class Value {
     public constructor(
         public readonly quantity = Number.NaN,
-        // "g" when a weight should be represented, no special meaning for anything else.
         public readonly quantitytUnit: string = "",
         public readonly value = Number.NaN,
         public readonly valueCurrency: Currency = Currency.None) { }
