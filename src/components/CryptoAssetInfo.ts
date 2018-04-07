@@ -31,7 +31,7 @@ export class CryptoAssetInfo extends AssetInfo {
     public async getValue(): Promise<Value> {
         const quantity = await this.getQuantityInSatoshis() / 100000000;
 
-        return new Value(quantity, "BTC", quantity, Currency.BTC);
+        return new Value(quantity, quantity, Currency.BTC);
     }
 
     private static async getRootBalance(node: HDNode) {
