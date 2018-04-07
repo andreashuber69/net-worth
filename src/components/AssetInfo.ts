@@ -18,7 +18,7 @@ export abstract class AssetInfo {
         public readonly label: string,
         public readonly type: string,
         public readonly denomination: string,
-        public readonly decimals: number) {
+        public readonly quantityDecimals: number) {
     }
 
     public abstract getValue(): Promise<Value>;
