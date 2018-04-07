@@ -13,14 +13,14 @@
 import { Component, Vue } from "vue-property-decorator";
 import Asset from "./Asset.vue";
 import { CryptoAssetInfo } from "./CryptoAssetInfo";
-import { PreciousMetalInfo } from "./PreciousMetalInfo";
+import { PreciousMetalInfo, WeigthUnit } from "./PreciousMetalInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { Asset } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetList extends Vue {
     public assetInfos = [
-        new PreciousMetalInfo("Home", "One", "Silver", "oz", 300),
+        new PreciousMetalInfo("Home", "One", "Silver", WeigthUnit.TroyOunce, 1, 300),
         new CryptoAssetInfo("32kp8B1VRRY7EHumToKj8YZzt3A6VtxmSA", "Two", "BTC", "BTC"),
     ];
 
