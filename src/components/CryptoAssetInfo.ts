@@ -25,7 +25,7 @@ export class CryptoAssetInfo extends AssetInfo {
         label: string,
         type: string,
         denomination: string) {
-        super(address, label, type, denomination, 8);
+        super(address, label, type, 8, denomination);
     }
 
     public async getValue(): Promise<Value> {
