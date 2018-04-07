@@ -38,7 +38,7 @@ export default class Asset extends Vue {
 
     public get formattedValue() {
         return !this.info || Number.isNaN(this.value.value) ? "" :
-            `${this.value.value.toFixed(this.info.decimals)} ${Currency[this.value.valueCurrency]}`;
+            `${this.value.value.toFixed(this.getValueDecimals())} ${Currency[this.value.valueCurrency]}`;
     }
 
     public mounted() {
@@ -53,6 +53,17 @@ export default class Asset extends Vue {
     private async delayedUpdate() {
         if (this.info) {
             this.value = await this.info.getValue();
+        }
+    }
+
+    private getValueDecimals() {
+        switch (this.value.valueCurrency) {
+            case Currency.BTC:
+                return 8;
+            case Currency.USD:
+                return 2;
+            default:
+                return 0;
         }
     }
 }
