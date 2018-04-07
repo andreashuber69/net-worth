@@ -39,7 +39,7 @@ export class PreciousMetalInfo extends AssetInfo {
         const totalOunces = this.totalGrams / WeigthUnit.TroyOunce;
         const value = PreciousMetalInfo.hasDataArrayTuple(parsed) ? totalOunces * parsed.data[0][1] : Number.NaN;
 
-        return new Value(this.quantity, this.quantityDenomination, value, Currency.USD);
+        return new Value(this.quantity, this.denomination, value, Currency.USD);
     }
 
     private static hasStringIndexer(value: any): value is { [key: string]: any } {

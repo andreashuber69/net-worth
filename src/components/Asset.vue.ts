@@ -34,12 +34,12 @@ export default class Asset extends Vue {
 
     public get formattedQuantity() {
         return !this.info || Number.isNaN(this.value.quantity) ? "" :
-            `${this.value.quantity.toFixed(this.info.quantityDecimals)} ${this.info.quantityDenomination}`;
+            `${this.value.quantity.toFixed(this.info.decimals)} ${this.info.denomination}`;
     }
 
     public get formattedValue() {
         return !this.info || Number.isNaN(this.value.value) ? "" :
-            `${this.value.value.toFixed(this.info.quantityDecimals)} ${Currency[this.value.valueCurrency]}`;
+            `${this.value.value.toFixed(this.info.decimals)} ${Currency[this.value.valueCurrency]}`;
     }
 
     public mounted() {
