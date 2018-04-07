@@ -28,9 +28,10 @@ export class PreciousMetalInfo extends AssetInfo {
         type: string,
         private readonly quantity: number,
         unit: WeigthUnit,
-        denomination: number) {
-        super(location, label, type, 0, PreciousMetalInfo.getDenomination(unit, denomination));
-        this.totalGrams = unit * denomination * quantity;
+        denomination: number,
+        fineness: number) {
+        super(location, label, type, 0, PreciousMetalInfo.getDenomination(unit, denomination), fineness);
+        this.totalGrams = quantity * unit * denomination * fineness;
     }
 
     public async getValue(): Promise<Value> {

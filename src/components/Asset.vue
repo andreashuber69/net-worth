@@ -19,6 +19,7 @@
     <td>{{ info.type }}</td>
     <td>{{ formattedQuantity }}</td>
     <td>{{ info.denomination }}</td>
+    <td>{{ info.fineness }}</td>
     <td>{{ formattedValue }}</td>
   </tr>
 </template>
