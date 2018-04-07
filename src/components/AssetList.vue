@@ -19,6 +19,7 @@
       <th>Label</th>
       <th>Type</th>
       <th>Quantity</th>
+      <th>Denomination</th>
       <th>Value</th>
     </tr>
     <Asset v-for="(assetInfo, index) in assetInfos" :key="index" :info="assetInfo"></Asset>

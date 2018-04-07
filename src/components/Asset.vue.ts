@@ -33,8 +33,7 @@ export default class Asset extends Vue {
     }
 
     public get formattedQuantity() {
-        return !this.info || Number.isNaN(this.value.quantity) ? "" :
-            `${this.value.quantity.toFixed(this.info.decimals)} ${this.info.denomination}`;
+        return !this.info || Number.isNaN(this.value.quantity) ? "" : this.value.quantity.toFixed(this.info.decimals);
     }
 
     public get formattedValue() {
