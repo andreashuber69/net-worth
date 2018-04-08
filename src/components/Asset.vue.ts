@@ -12,7 +12,7 @@
 
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { AssetInfo } from "./AssetInfo";
-import { Currency, Value } from "./Value";
+import { Currency } from "./Value";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
@@ -33,23 +33,18 @@ export default class Asset extends Vue {
     }
 
     public get formattedQuantity() {
-        return !(this.info && this.value) ? "" : this.value.quantity.toFixed(this.info.quantityDecimals);
+        return !(this.info && this.info.value) ? "" : this.info.value.quantity.toFixed(this.info.quantityDecimals);
     }
 
     public get formattedValue() {
-        if (!this.value) {
+        if (!(this.info && this.info.value)) {
             return "";
         }
 
-        const value = this.value.value.toFixed(Asset.getValueDecimals(this.value.valueCurrency));
-        const currency = Currency[this.value.valueCurrency];
+        const value = this.info.value.value.toFixed(Asset.getValueDecimals(this.info.value.valueCurrency));
+        const currency = Currency[this.info.value.valueCurrency];
 
         return `${value} ${currency}`;
-    }
-
-    public mounted() {
-        // TODO: This could possibly be done more elegantly with this.$nextTick
-        setTimeout(() => this.delayedUpdate(), 1000);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,15 +57,6 @@ export default class Asset extends Vue {
                 return 2;
             default:
                 throw new Error("Unknown Currency!");
-        }
-    }
-
-    // tslint:disable-next-line:no-null-keyword
-    private value: Value | null = null;
-
-    private async delayedUpdate() {
-        if (this.info) {
-            this.value = await this.info.getValue();
         }
     }
 }

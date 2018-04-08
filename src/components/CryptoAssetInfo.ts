@@ -28,10 +28,9 @@ export class CryptoAssetInfo extends AssetInfo {
         super(address, label, type, 8, denomination, undefined);
     }
 
-    public async getValue(): Promise<Value> {
+    public async update(): Promise<void> {
         const quantity = await this.getQuantityInSatoshis() / 100000000;
-
-        return new Value(quantity, quantity, Currency.BTC);
+        this.value = new Value(quantity, quantity, Currency.BTC);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -13,6 +13,9 @@
 import { Value } from "./Value";
 
 export abstract class AssetInfo {
+    // tslint:disable-next-line:no-null-keyword
+    public value: Value | null = null;
+
     public constructor(
         public readonly location: string,
         public readonly label: string,
@@ -22,5 +25,5 @@ export abstract class AssetInfo {
         public readonly fineness: number | undefined) {
     }
 
-    public abstract getValue(): Promise<Value>;
+    public abstract update(): Promise<void>;
 }
