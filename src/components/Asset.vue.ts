@@ -12,7 +12,6 @@
 
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { AssetInfo } from "./AssetInfo";
-import { Currency } from "./Value";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
@@ -20,43 +19,4 @@ import { Currency } from "./Value";
 export default class Asset extends Vue {
     @Prop()
     public info: AssetInfo | undefined;
-
-    public get shortLocation() {
-        if (!this.info) {
-            return "";
-        }
-
-        const maxLength = 15;
-        const location = this.info.location;
-
-        return location.length > maxLength ? `${location.substr(0, maxLength)}...` : location;
-    }
-
-    public get formattedQuantity() {
-        return !(this.info && this.info.value) ? "" : this.info.value.quantity.toFixed(this.info.quantityDecimals);
-    }
-
-    public get formattedValue() {
-        if (!(this.info && this.info.value)) {
-            return "";
-        }
-
-        const value = this.info.value.value.toFixed(Asset.getValueDecimals(this.info.value.valueCurrency));
-        const currency = Currency[this.info.value.valueCurrency];
-
-        return `${value} ${currency}`;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static getValueDecimals(currency: Currency) {
-        switch (currency) {
-            case Currency.BTC:
-                return 8;
-            case Currency.USD:
-                return 2;
-            default:
-                throw new Error("Unknown Currency!");
-        }
-    }
 }

@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Value } from "./Value";
+import { Currency, Value } from "./Value";
 
 export abstract class AssetInfo {
     // tslint:disable-next-line:no-null-keyword
@@ -26,4 +26,38 @@ export abstract class AssetInfo {
     }
 
     public abstract update(): Promise<void>;
+
+    public get shortLocation() {
+        const maxLength = 15;
+
+        return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
+    }
+
+    public get formattedQuantity() {
+        return !this.value ? "" : this.value.quantity.toFixed(this.quantityDecimals);
+    }
+
+    public get formattedValue() {
+        if (!this.value) {
+            return "";
+        }
+
+        const value = this.value.value.toFixed(AssetInfo.getValueDecimals(this.value.valueCurrency));
+        const currency = Currency[this.value.valueCurrency];
+
+        return `${value} ${currency}`;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static getValueDecimals(currency: Currency) {
+        switch (currency) {
+            case Currency.BTC:
+                return 8;
+            case Currency.USD:
+                return 2;
+            default:
+                throw new Error("Unknown Currency!");
+        }
+    }
 }
