@@ -13,9 +13,6 @@
 import { Currency, Value } from "./Value";
 
 export abstract class AssetInfo {
-    // tslint:disable-next-line:no-null-keyword
-    public value: Value | null = null;
-
     public constructor(
         public readonly location: string,
         public readonly label: string,
@@ -25,7 +22,9 @@ export abstract class AssetInfo {
         public readonly fineness: number | undefined) {
     }
 
-    public abstract update(): Promise<void>;
+    public async update() {
+        this.value = await this.getValue();
+    }
 
     public get shortLocation() {
         const maxLength = 15;
@@ -50,6 +49,10 @@ export abstract class AssetInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    protected abstract getValue(): Promise<Value>;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     private static getValueDecimals(currency: Currency) {
         switch (currency) {
             case Currency.BTC:
@@ -60,4 +63,7 @@ export abstract class AssetInfo {
                 throw new Error("Unknown Currency!");
         }
     }
+
+    // tslint:disable-next-line:no-null-keyword
+    private value: Value | null = null;
 }
