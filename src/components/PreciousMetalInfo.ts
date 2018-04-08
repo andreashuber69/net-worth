@@ -79,7 +79,7 @@ export class PreciousMetalInfo extends AssetInfo {
             case WeigthUnit.AvdpOunce:
                 return "oz (avdp)";
             default:
-                throw new Error("Unknown WeightUnit");
+                throw new Error("Unknown WeightUnit!");
         }
     }
 

@@ -61,7 +61,7 @@ export default class Asset extends Vue {
             case Currency.USD:
                 return 2;
             default:
-                return 0;
+                throw new Error("Unknown Currency!");
         }
     }
 
