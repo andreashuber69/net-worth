@@ -17,7 +17,7 @@ export abstract class AssetInfo {
         public readonly location: string,
         public readonly label: string,
         public readonly type: string,
-        public readonly quantityDecimals: number,
+        private readonly quantityDecimals: number,
         public readonly denomination: string,
         public readonly fineness: number | undefined) {
     }
