@@ -33,13 +33,18 @@ export default class Asset extends Vue {
     }
 
     public get formattedQuantity() {
-        return !this.info || Number.isNaN(this.value.quantity) ?
-            "" : this.value.quantity.toFixed(this.info.quantityDecimals);
+        return !(this.info && this.value) ? "" : this.value.quantity.toFixed(this.info.quantityDecimals);
     }
 
     public get formattedValue() {
-        return !this.info || Number.isNaN(this.value.value) ? "" :
-            `${this.value.value.toFixed(this.getValueDecimals())} ${Currency[this.value.valueCurrency]}`;
+        if (!this.value) {
+            return "";
+        }
+
+        const value = this.value.value.toFixed(Asset.getValueDecimals(this.value.valueCurrency));
+        const currency = Currency[this.value.valueCurrency];
+
+        return `${value} ${currency}`;
     }
 
     public mounted() {
@@ -49,22 +54,23 @@ export default class Asset extends Vue {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private value = new Value();
-
-    private async delayedUpdate() {
-        if (this.info) {
-            this.value = await this.info.getValue();
-        }
-    }
-
-    private getValueDecimals() {
-        switch (this.value.valueCurrency) {
+    private static getValueDecimals(currency: Currency) {
+        switch (currency) {
             case Currency.BTC:
                 return 8;
             case Currency.USD:
                 return 2;
             default:
                 return 0;
+        }
+    }
+
+    // tslint:disable-next-line:no-null-keyword
+    private value: Value | null = null;
+
+    private async delayedUpdate() {
+        if (this.info) {
+            this.value = await this.info.getValue();
         }
     }
 }

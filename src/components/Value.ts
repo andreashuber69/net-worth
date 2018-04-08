@@ -11,14 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 export enum Currency {
-    None,
     BTC,
     USD,
 }
 
 export class Value {
     public constructor(
-        public readonly quantity = Number.NaN,
-        public readonly value = Number.NaN,
-        public readonly valueCurrency: Currency = Currency.None) { }
+        public readonly quantity: number,
+        public readonly value: number,
+        public readonly valueCurrency: Currency) {}
 }

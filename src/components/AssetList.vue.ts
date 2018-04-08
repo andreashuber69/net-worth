@@ -23,5 +23,4 @@ export default class AssetList extends Vue {
         new PreciousMetalInfo("Home", "One", "Silver", 300, WeigthUnit.TroyOunce, 1, 1),
         new CryptoAssetInfo("32kp8B1VRRY7EHumToKj8YZzt3A6VtxmSA", "Two", "BTC", "BTC"),
     ];
-
 }

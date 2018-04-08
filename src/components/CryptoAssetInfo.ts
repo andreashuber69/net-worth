@@ -34,6 +34,8 @@ export class CryptoAssetInfo extends AssetInfo {
         return new Value(quantity, quantity, Currency.BTC);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     private static async getRootBalance(node: HDNode) {
         let balance = 0;
         let batch: string[];

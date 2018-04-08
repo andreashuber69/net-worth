@@ -43,6 +43,8 @@ export class PreciousMetalInfo extends AssetInfo {
         return new Value(this.quantity, value, Currency.USD);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     private static hasStringIndexer(value: any): value is { [key: string]: any } {
         return value instanceof Object;
     }
