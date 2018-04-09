@@ -56,7 +56,7 @@ export class CryptoAssetInfo extends AssetInfo {
     private static getAddressBatch(node: HDNode, startIndex: number) {
         const result = new Array<string>(20);
 
-        for (let index = 0; index < 20; ++index) {
+        for (let index = 0; index < result.length; ++index) {
             result[index] = node.derive(index).getAddress();
         }
 
