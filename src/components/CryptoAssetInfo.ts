@@ -25,7 +25,7 @@ export class CryptoAssetInfo extends AssetInfo {
         label: string,
         type: string,
         denomination: string) {
-        super(address, label, type, 8, denomination, undefined);
+        super(address, label, type, 8, denomination);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
