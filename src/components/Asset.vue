@@ -14,13 +14,13 @@
 
 <template>
   <tr>
-    <td :title="info.location">{{ info.shortLocation }}</td>
-    <td>{{ info.label }}</td>
-    <td>{{ info.type }}</td>
-    <td>{{ info.formattedQuantity }}</td>
-    <td>{{ info.denomination }}</td>
-    <td>{{ info.fineness }}</td>
-    <td>{{ info.formattedValue }}</td>
+    <td :title="asset.location">{{ asset.shortLocation }}</td>
+    <td>{{ asset.label }}</td>
+    <td>{{ asset.type }}</td>
+    <td>{{ asset.formattedQuantity }}</td>
+    <td>{{ asset.denomination }}</td>
+    <td>{{ asset.fineness }}</td>
+    <td>{{ asset.formattedValue }}</td>
   </tr>
 </template>
 

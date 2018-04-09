@@ -23,7 +23,7 @@
       <th>Fineness</th>
       <th>Value</th>
     </tr>
-    <Asset v-for="(assetInfo, index) in assetInfos" :key="index" :info="assetInfo"></Asset>
+    <Asset v-for="(asset, index) in assets" :key="index" :asset="asset"></Asset>
   </table>
 </template>
 

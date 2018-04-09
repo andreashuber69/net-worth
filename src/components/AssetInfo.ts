@@ -20,10 +20,8 @@ export abstract class AssetInfo {
         private readonly quantityDecimals: number,
         public readonly denomination: string,
         public readonly fineness?: number) {
-    }
-
-    public async update() {
-        this.value = await this.getValue();
+        this.iterator = this.getQueries();
+        this.iteratorResult = this.iterator.next();
     }
 
     public get shortLocation() {
@@ -47,9 +45,21 @@ export abstract class AssetInfo {
         return `${value} ${currency}`;
     }
 
+    public get currentQuery(): string | undefined {
+        return this.iteratorResult.value;
+    }
+
+    public setCurrentQueryResult(result: string) {
+        this.iteratorResult = this.iterator.next();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected abstract getValue(): Promise<Value>;
+    protected abstract getQueries(): IterableIterator<string>;
+
+    protected setValue(value: Value) {
+        this.value = value;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -64,6 +74,8 @@ export abstract class AssetInfo {
         }
     }
 
+    private readonly iterator: IterableIterator<string>;
+    private iteratorResult: IteratorResult<string>;
     // tslint:disable-next-line:no-null-keyword
     private value: Value | null = null;
 }

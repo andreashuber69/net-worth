@@ -3,6 +3,7 @@
     // Compilation options
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
+    "downlevelIteration": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "lib": [ "es2015", "dom" ],

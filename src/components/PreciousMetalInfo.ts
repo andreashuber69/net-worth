@@ -34,15 +34,19 @@ export class PreciousMetalInfo extends AssetInfo {
         this.totalGrams = quantity * unit * denomination * fineness;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected async getValue() {
-        const response = await window.fetch("https://www.quandl.com/api/v1/datasets/lbma/silver.json?rows=1");
-        const parsed = JSON.parse(await response.text());
+    public setCurrentQueryResult(result: string) {
+        const parsed = JSON.parse(result);
         const totalOunces = this.totalGrams / WeigthUnit.TroyOunce;
         const value = PreciousMetalInfo.hasDataArrayTuple(parsed) ? totalOunces * parsed.data[0][1] : Number.NaN;
+        super.setCurrentQueryResult(result);
+        this.setValue(new Value(this.quantity, value, Currency.USD));
+    }
 
-        return new Value(this.quantity, value, Currency.USD);
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected * getQueries() {
+        this.toString();
+        yield "https://www.quandl.com/api/v1/datasets/lbma/silver.json?rows=1";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -18,5 +18,5 @@ import { AssetInfo } from "./AssetInfo";
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class Asset extends Vue {
     @Prop()
-    public info?: AssetInfo;
+    public asset?: AssetInfo;
 }

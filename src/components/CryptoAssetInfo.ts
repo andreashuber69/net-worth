@@ -28,61 +28,55 @@ export class CryptoAssetInfo extends AssetInfo {
         super(address, label, type, 8, denomination);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected async getValue() {
-        const quantity = await this.getQuantityInSatoshis() / 100000000;
-
-        return new Value(quantity, quantity, Currency.BTC);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static async getRootBalance(node: HDNode) {
-        let balance = 0;
-        let batch: string[];
-        let batchBalance: number | undefined;
-
-        for (
-            let startIndex = 0;
-            batchBalance = await this.getBalance(batch = this.getAddressBatch(node, startIndex));
-            startIndex += batch.length) {
-            balance += batchBalance;
-        }
-
-        return balance;
-    }
-
-    private static getAddressBatch(node: HDNode, startIndex: number) {
-        const result = new Array<string>(20);
-
-        for (let index = 0; index < result.length; ++index) {
-            result[index] = node.derive(index).getAddress();
-        }
-
-        return result;
-    }
-
-    private static async getBalance(addresses: string[]): Promise<number | undefined> {
-        const response = await window.fetch(
-            `https://blockchain.info/balance?active=${addresses.join("|")}&cors=true`);
-        const summary = JSON.parse(await response.text());
+    public setCurrentQueryResult(result: string) {
+        const summary = JSON.parse(result);
         let transactionCount = 0;
-        let result = 0;
 
-        for (const address of addresses) {
-            if (this.hasStringIndexer(summary)) {
-                const balance = summary[address];
+        if (CryptoAssetInfo.hasStringIndexer(summary)) {
+            for (const address in summary) {
+                if (summary.hasOwnProperty(address)) {
+                    const balance = summary[address];
 
-                if (this.isSummary(balance)) {
-                    transactionCount += balance.n_tx;
-                    result += balance.final_balance;
+                    if (CryptoAssetInfo.isSummary(balance)) {
+                        transactionCount += balance.n_tx;
+                        this.balance += balance.final_balance;
+                    }
                 }
             }
         }
 
-        return (transactionCount > 0) ? result : undefined;
+        if (!transactionCount) {
+            this.cont = false;
+        }
+
+        super.setCurrentQueryResult(result);
+
+        if (!this.currentQuery) {
+            const quantity = this.balance / 100000000;
+            this.setValue(new Value(quantity, quantity, Currency.BTC));
+        }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected * getQueries() {
+        // TODO: This is a crude test to distinguish between xpub and a normal address
+        if (this.location.length <= 100) {
+            yield `https://blockchain.info/balance?active=${this.location}&cors=true`;
+        } else {
+            for (let chain = 0; chain < 2; ++chain) {
+                for (let index = 0; this.cont;) {
+                    const batch = this.getAddressBatch(chain, index);
+                    index += batch.length;
+                    yield `https://blockchain.info/balance?active=${batch.join("|")}&cors=true`;
+                }
+
+                this.cont = true;
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static isObject(value: any): value is object {
         return value instanceof Object;
@@ -96,17 +90,17 @@ export class CryptoAssetInfo extends AssetInfo {
         return this.isObject(value) && value.hasOwnProperty("final_balance") && value.hasOwnProperty("n_tx");
     }
 
-    private async getQuantityInSatoshis(): Promise<number> {
-        // TODO: This is a crude test to distinguish between xpub and a normal address
-        if (this.location.length > 100) {
-            const rootNode = HDNode.fromBase58(this.location);
+    private balance = 0;
+    private cont = true;
 
-            return await CryptoAssetInfo.getRootBalance(rootNode.derive(0)) +
-                await CryptoAssetInfo.getRootBalance(rootNode.derive(1));
-        } else {
-            const result = await CryptoAssetInfo.getBalance([ this.location ]);
+    private getAddressBatch(chain: number, addressIndex: number) {
+        const node = HDNode.fromBase58(this.location).derive(chain);
+        const result = new Array<string>(20);
 
-            return result ? result : 0;
+        for (let index = addressIndex; index < result.length; ++index) {
+            result[index] = node.derive(index).getAddress();
         }
+
+        return result;
     }
 }

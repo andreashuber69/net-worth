@@ -12,6 +12,7 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import Asset from "./Asset.vue";
+import { AssetInfo } from "./AssetInfo";
 import { CryptoAssetInfo } from "./CryptoAssetInfo";
 import { PreciousMetalInfo, WeigthUnit } from "./PreciousMetalInfo";
 
@@ -19,14 +20,37 @@ import { PreciousMetalInfo, WeigthUnit } from "./PreciousMetalInfo";
 @Component({ components: { Asset } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetList extends Vue {
-    public assetInfos = [
+    public assets: AssetInfo[] = [
         new PreciousMetalInfo("Home", "One", "Silver", 300, WeigthUnit.TroyOunce, 1, 1),
         new CryptoAssetInfo("32kp8B1VRRY7EHumToKj8YZzt3A6VtxmSA", "Two", "BTC", "BTC"),
     ];
 
     public async mounted() {
-        for (const info of this.assetInfos) {
-            await info.update();
-        }
+        let queries: Map<string, AssetInfo[]>;
+
+        do {
+            queries = new Map<string, AssetInfo[]>();
+
+            for (const asset of this.assets) {
+                if (asset.currentQuery) {
+                    let equalQueryAssets = queries.get(asset.currentQuery);
+
+                    if (!equalQueryAssets) {
+                        equalQueryAssets = new Array<AssetInfo>();
+                        queries.set(asset.currentQuery, equalQueryAssets);
+                    }
+
+                    equalQueryAssets.push(asset);
+                }
+            }
+
+            for (const [query, assets] of queries) {
+                const response = await (await window.fetch(query)).text();
+
+                for (const asset of assets) {
+                    asset.setCurrentQueryResult(response);
+                }
+            }
+        } while (queries.size > 0);
     }
 }
