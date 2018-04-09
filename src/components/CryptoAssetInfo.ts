@@ -46,7 +46,7 @@ export class CryptoAssetInfo extends AssetInfo {
         }
 
         if (!transactionCount) {
-            this.cont = false;
+            this.changeChain = true;
         }
 
         super.setCurrentQueryResult(result);
@@ -65,13 +65,13 @@ export class CryptoAssetInfo extends AssetInfo {
             yield `https://blockchain.info/balance?active=${this.location}&cors=true`;
         } else {
             for (let chain = 0; chain < 2; ++chain) {
-                for (let index = 0; this.cont;) {
+                for (let index = 0; !this.changeChain;) {
                     const batch = this.getAddressBatch(chain, index);
                     index += batch.length;
                     yield `https://blockchain.info/balance?active=${batch.join("|")}&cors=true`;
                 }
 
-                this.cont = true;
+                this.changeChain = false;
             }
         }
     }
@@ -91,14 +91,14 @@ export class CryptoAssetInfo extends AssetInfo {
     }
 
     private balance = 0;
-    private cont = true;
+    private changeChain?: boolean;
 
-    private getAddressBatch(chain: number, addressIndex: number) {
+    private getAddressBatch(chain: number, offset: number) {
         const node = HDNode.fromBase58(this.location).derive(chain);
         const result = new Array<string>(20);
 
-        for (let index = addressIndex; index < result.length; ++index) {
-            result[index] = node.derive(index).getAddress();
+        for (let index = 0; index < result.length; ++index) {
+            result[index] = node.derive(offset + index).getAddress();
         }
 
         return result;
