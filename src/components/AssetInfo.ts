@@ -19,7 +19,7 @@ export abstract class AssetInfo {
         public readonly type: string,
         private readonly quantityDecimals: number,
         public readonly denomination: string,
-        public readonly fineness: number | undefined) {
+        public readonly fineness?: number) {
     }
 
     public async update() {
