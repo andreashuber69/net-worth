@@ -17,18 +17,23 @@
     "tasks": [
         {
             "type": "npm",
-            "script": "serve",
+            "script": "lint",
+            "problemMatcher": [ "$tslint5" ]
+        },
+        {
+            "type": "npm",
+            "script": "serve-development",
+            "problemMatcher": [ "$tsc", "$tslint5" ]
+        },
+        {
+            "type": "npm",
+            "script": "serve-production",
             "problemMatcher": [ "$tsc", "$tslint5" ]
         },
         {
             "type": "npm",
             "script": "build",
             "problemMatcher": [ "$tsc", "$tslint5" ]
-        },
-        {
-            "type": "npm",
-            "script": "lint",
-            "problemMatcher": [ "$tslint5" ]
         }
     ]
 }

@@ -5,9 +5,10 @@
   "license": "GPL-3.0-or-later",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "tslint --project tsconfig.json --config tslint.json --format verbose"
+    "lint": "tslint --project tsconfig.json --config tslint.json --format verbose",
+    "serve-development": "vue-cli-service serve --mode development",
+    "serve-production": "vue-cli-service serve --mode production",
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "bitcoinjs-lib": "^3.3.2",
