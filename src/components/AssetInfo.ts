@@ -20,8 +20,6 @@ export abstract class AssetInfo {
         private readonly quantityDecimals: number,
         public readonly denomination: string,
         public readonly fineness?: number) {
-        this.iterator = this.getQueries();
-        this.iteratorResult = this.iterator.next();
     }
 
     public get shortLocation() {
@@ -45,11 +43,24 @@ export abstract class AssetInfo {
         return `${value} ${currency}`;
     }
 
+    public initialize() {
+        this.iterator = this.getQueries();
+        this.iteratorResult = this.iterator.next();
+    }
+
     public get currentQuery(): string | undefined {
+        if (!this.iteratorResult) {
+            throw new Error("currentQuery() must not be called before initialize().");
+        }
+
         return this.iteratorResult.value;
     }
 
     public setCurrentQueryResult(result: string) {
+        if (!this.iterator) {
+            throw new Error("currentQuery() must not be called before initialize().");
+        }
+
         this.iteratorResult = this.iterator.next();
     }
 
@@ -74,8 +85,8 @@ export abstract class AssetInfo {
         }
     }
 
-    private readonly iterator: IterableIterator<string>;
-    private iteratorResult: IteratorResult<string>;
+    private iterator?: IterableIterator<string>;
+    private iteratorResult?: IteratorResult<string>;
     // tslint:disable-next-line:no-null-keyword
     private value: Value | null = null;
 }

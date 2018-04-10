@@ -22,11 +22,15 @@ import { PreciousMetalInfo, WeigthUnit } from "./PreciousMetalInfo";
 export default class AssetList extends Vue {
     public assets: AssetInfo[] = [
         new PreciousMetalInfo("Home", "One", "Silver", 300, WeigthUnit.TroyOunce, 1, 1),
-        new CryptoAssetInfo("32kp8B1VRRY7EHumToKj8YZzt3A6VtxmSA", "Two", "BTC", "BTC"),
+        new CryptoAssetInfo(AssetList.xpub, "Two", "BTC", "BTC"),
     ];
 
     public async mounted() {
         let queries: Map<string, AssetInfo[]>;
+
+        for (const asset of this.assets) {
+            asset.initialize();
+        }
 
         do {
             queries = new Map<string, AssetInfo[]>();
@@ -53,4 +57,7 @@ export default class AssetList extends Vue {
             }
         } while (queries.size > 0);
     }
+
+    // tslint:disable-next-line:max-line-length
+    private static readonly xpub = "";
 }
