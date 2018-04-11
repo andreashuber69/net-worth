@@ -44,7 +44,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     }
 
     public finalize() {
-        this.setValue(new Value(this.quantity, this.fiatValue, Currency.USD));
+        return new Value(this.quantity, this.fiatValue, Currency.USD);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

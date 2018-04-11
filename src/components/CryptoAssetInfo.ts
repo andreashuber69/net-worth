@@ -52,7 +52,8 @@ export class CryptoAssetInfo extends AssetInfo {
 
     public finalize() {
         const quantity = this.balance / 100000000;
-        this.setValue(new Value(quantity, quantity, Currency.BTC));
+
+        return new Value(quantity, quantity, Currency.BTC);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

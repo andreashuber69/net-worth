@@ -13,6 +13,9 @@
 import { Currency, Value } from "./Value";
 
 export abstract class AssetInfo {
+    public formattedQuantity = "Querying...";
+    public formattedValue = "Querying...";
+
     public constructor(
         public readonly location: string,
         public readonly description: string,
@@ -28,32 +31,19 @@ export abstract class AssetInfo {
         return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
     }
 
-    public get formattedQuantity() {
-        return !this.value ? "" : this.value.quantity.toFixed(this.quantityDecimals);
-    }
-
-    public get formattedValue() {
-        if (!this.value) {
-            return "";
-        }
-
-        const value = this.value.value !== undefined ?
-            this.value.value.toFixed(AssetInfo.getValueDecimals(this.value.valueCurrency)) : "";
-        const currency = Currency[this.value.valueCurrency];
-
-        return `${value} ${currency}`;
-    }
-
     public abstract get queries(): IterableIterator<string>;
 
     public abstract set currentQueryResponse(result: string);
 
-    public abstract finalize(): void;
+    public abstract finalize(): Value;
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected setValue(value: Value) {
-        this.value = value;
+    public processResult() {
+        const value = this.finalize();
+        this.formattedQuantity = value.quantity.toFixed(this.quantityDecimals);
+        const val = value.value !== undefined ?
+            value.value.toFixed(AssetInfo.getValueDecimals(value.valueCurrency)) : "";
+        const currency = Currency[value.valueCurrency];
+        this.formattedValue = `${val} ${currency}`;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,7 +58,4 @@ export abstract class AssetInfo {
                 throw new Error("Unknown Currency!");
         }
     }
-
-    // tslint:disable-next-line:no-null-keyword
-    private value: Value | null = null;
 }
