@@ -43,7 +43,7 @@ export abstract class AssetInfo {
         return `${value} ${currency}`;
     }
 
-    public initialize() {
+    public initializeQueries() {
         this.iterator = this.getQueries();
         this.iteratorResult = this.iterator.next();
     }

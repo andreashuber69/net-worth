@@ -33,7 +33,7 @@ export default class AssetList extends Vue {
         let queries: Map<string, AssetInfo[]>;
 
         for (const asset of this.assets) {
-            asset.initialize();
+            asset.initializeQueries();
         }
 
         do {
