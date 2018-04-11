@@ -15,7 +15,7 @@ import { Currency, Value } from "./Value";
 export abstract class AssetInfo {
     public constructor(
         public readonly location: string,
-        public readonly label: string,
+        public readonly description: string,
         public readonly type: string,
         private readonly quantityDecimals: number,
         public readonly denomination: string,

@@ -24,13 +24,13 @@ export enum WeigthUnit {
 export class PreciousMetalInfo extends AssetInfo {
     public constructor(
         location: string,
-        label: string,
+        description: string,
         type: string,
         private readonly quantity: number,
         unit: WeigthUnit,
         denomination: number,
         fineness: number) {
-        super(location, label, type, 0, PreciousMetalInfo.getDenomination(unit, denomination), fineness);
+        super(location, description, type, 0, PreciousMetalInfo.getDenomination(unit, denomination), fineness);
         this.totalGrams = quantity * unit * denomination * fineness;
     }
 

@@ -16,7 +16,7 @@
   <table>
     <tr>
       <th>Location</th>
-      <th>Label</th>
+      <th>Description</th>
       <th>Type</th>
       <th>Quantity</th>
       <th>Denomination</th>

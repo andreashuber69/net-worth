@@ -20,8 +20,8 @@ interface ISummary {
 }
 
 export class CryptoAssetInfo extends AssetInfo {
-    public constructor(address: string, label: string, type: string) {
-        super(address, label, type, 8, type);
+    public constructor(address: string, description: string, type: string) {
+        super(address, description, type, 8, type);
     }
 
     public setCurrentQueryResult(result: string) {
