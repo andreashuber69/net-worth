@@ -17,5 +17,6 @@
         "plaintext",
         "typescript"
     ],
-    "git.confirmSync": false
+    "git.confirmSync": false,
+    "typescript.tsdk": "node_modules/typescript/lib"
 }
