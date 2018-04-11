@@ -37,8 +37,8 @@ export abstract class AssetInfo {
             return "";
         }
 
-        const value =
-            this.value.value ? this.value.value.toFixed(AssetInfo.getValueDecimals(this.value.valueCurrency)) : "";
+        const value = this.value.value !== undefined ?
+            this.value.value.toFixed(AssetInfo.getValueDecimals(this.value.valueCurrency)) : "";
         const currency = Currency[this.value.valueCurrency];
 
         return `${value} ${currency}`;
