@@ -44,7 +44,7 @@ export abstract class AssetInfo {
         return `${value} ${currency}`;
     }
 
-    public abstract getQueries(): IterableIterator<string>;
+    public abstract get queries(): IterableIterator<string>;
 
     public abstract set currentQueryResult(result: string);
 

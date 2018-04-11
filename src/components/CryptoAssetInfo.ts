@@ -24,21 +24,8 @@ export class CryptoAssetInfo extends AssetInfo {
         super(address, description, type, 8, type);
     }
 
-    public * getQueries() {
-        // TODO: This is a crude test to distinguish between xpub and a normal address
-        if (this.location.length <= 100) {
-            yield `https://blockchain.info/balance?active=${this.location}&cors=true`;
-        } else {
-            for (let chain = 0; chain < 2; ++chain) {
-                for (let index = 0; !this.changeChain;) {
-                    const batch = this.getAddressBatch(chain, index);
-                    index += batch.length;
-                    yield `https://blockchain.info/balance?active=${batch.join("|")}&cors=true`;
-                }
-
-                this.changeChain = false;
-            }
-        }
+    public get queries() {
+        return this.getQueriesImpl();
     }
 
     public set currentQueryResult(result: string) {
@@ -84,6 +71,23 @@ export class CryptoAssetInfo extends AssetInfo {
 
     private balance = 0;
     private changeChain = false;
+
+    private * getQueriesImpl() {
+        // TODO: This is a crude test to distinguish between xpub and a normal address
+        if (this.location.length <= 100) {
+            yield `https://blockchain.info/balance?active=${this.location}&cors=true`;
+        } else {
+            for (let chain = 0; chain < 2; ++chain) {
+                for (let index = 0; !this.changeChain;) {
+                    const batch = this.getAddressBatch(chain, index);
+                    index += batch.length;
+                    yield `https://blockchain.info/balance?active=${batch.join("|")}&cors=true`;
+                }
+
+                this.changeChain = false;
+            }
+        }
+    }
 
     private getAddressBatch(chain: number, offset: number) {
         const node = HDNode.fromBase58(this.location).derive(chain);

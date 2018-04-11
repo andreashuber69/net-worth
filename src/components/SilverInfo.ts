@@ -23,7 +23,13 @@ export class SilverInfo extends PreciousMetalInfo {
         super(location, description, "Silver", quantity, unit, denomination, fineness);
     }
 
-    public * getQueries() {
+    public get queries() {
+        return this.getQueriesImpl();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private * getQueriesImpl() {
         this.toString();
         yield "https://www.quandl.com/api/v1/datasets/lbma/silver.json?rows=1";
     }

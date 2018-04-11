@@ -54,7 +54,7 @@ export default class AssetList extends Vue {
         const result = new Map<AssetInfo, QueryIterator>();
 
         for (const asset of assets) {
-            result.set(asset, new QueryIterator(asset.getQueries()));
+            result.set(asset, new QueryIterator(asset.queries));
         }
 
         return result;
