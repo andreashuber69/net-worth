@@ -37,7 +37,8 @@ export abstract class AssetInfo {
             return "";
         }
 
-        const value = this.value.value.toFixed(AssetInfo.getValueDecimals(this.value.valueCurrency));
+        const value =
+            this.value.value ? this.value.value.toFixed(AssetInfo.getValueDecimals(this.value.valueCurrency)) : "";
         const currency = Currency[this.value.valueCurrency];
 
         return `${value} ${currency}`;
@@ -56,21 +57,25 @@ export abstract class AssetInfo {
         return this.iteratorResult.value;
     }
 
-    public setCurrentQueryResult(result: string) {
+    public abstract set currentQueryResult(result: string);
+
+    public nextQuery() {
         if (!this.iterator) {
-            throw new Error("currentQuery() must not be called before initialize().");
+            throw new Error("nextQuery() must not be called before initialize().");
         }
 
         this.iteratorResult = this.iterator.next();
+
+        if (this.iteratorResult.done) {
+            this.value = this.getValue();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected abstract getQueries(): IterableIterator<string>;
 
-    protected setValue(value: Value) {
-        this.value = value;
-    }
+    protected abstract getValue(): Value;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

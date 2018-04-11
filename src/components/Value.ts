@@ -18,6 +18,6 @@ export enum Currency {
 export class Value {
     public constructor(
         public readonly quantity: number,
-        public readonly value: number,
+        public readonly value: number | undefined,
         public readonly valueCurrency: Currency) {}
 }

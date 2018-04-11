@@ -56,7 +56,8 @@ export default class AssetList extends Vue {
                 const response = await (await window.fetch(query)).text();
 
                 for (const asset of assets) {
-                    asset.setCurrentQueryResult(response);
+                    asset.currentQueryResult = response;
+                    asset.nextQuery();
                 }
             }
         } while (queries.size > 0);

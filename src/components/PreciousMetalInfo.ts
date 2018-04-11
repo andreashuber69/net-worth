@@ -34,12 +34,19 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         this.totalGrams = quantity * unit * denomination * fineness;
     }
 
-    public setCurrentQueryResult(result: string) {
+    public set currentQueryResult(result: string) {
         const parsed = JSON.parse(result);
         const totalOunces = this.totalGrams / WeigthUnit.TroyOunce;
-        const value = PreciousMetalInfo.hasDataArrayTuple(parsed) ? totalOunces * parsed.data[0][1] : Number.NaN;
-        super.setCurrentQueryResult(result);
-        this.setValue(new Value(this.quantity, value, Currency.USD));
+
+        if (PreciousMetalInfo.hasDataArrayTuple(parsed)) {
+            this.fiatValue = totalOunces * parsed.data[0][1];
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected getValue() {
+        return new Value(this.quantity, this.fiatValue, Currency.USD);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,4 +90,5 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     }
 
     private readonly totalGrams: number;
+    private fiatValue?: number;
 }

@@ -24,7 +24,7 @@ export class CryptoAssetInfo extends AssetInfo {
         super(address, description, type, 8, type);
     }
 
-    public setCurrentQueryResult(result: string) {
+    public set currentQueryResult(result: string) {
         const summary = JSON.parse(result);
         let transactionCount = 0;
 
@@ -43,13 +43,6 @@ export class CryptoAssetInfo extends AssetInfo {
 
         if (!transactionCount) {
             this.changeChain = true;
-        }
-
-        super.setCurrentQueryResult(result);
-
-        if (!this.currentQuery) {
-            const quantity = this.balance / 100000000;
-            this.setValue(new Value(quantity, quantity, Currency.BTC));
         }
     }
 
@@ -72,6 +65,12 @@ export class CryptoAssetInfo extends AssetInfo {
         }
     }
 
+    protected getValue() {
+        const quantity = this.balance / 100000000;
+
+        return new Value(quantity, quantity, Currency.BTC);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static isObject(value: any): value is object {
@@ -87,7 +86,7 @@ export class CryptoAssetInfo extends AssetInfo {
     }
 
     private balance = 0;
-    private changeChain?: boolean;
+    private changeChain = false;
 
     private getAddressBatch(chain: number, offset: number) {
         const node = HDNode.fromBase58(this.location).derive(chain);
