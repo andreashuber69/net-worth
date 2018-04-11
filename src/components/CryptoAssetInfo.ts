@@ -24,6 +24,23 @@ export class CryptoAssetInfo extends AssetInfo {
         super(address, description, type, 8, type);
     }
 
+    public * getQueries() {
+        // TODO: This is a crude test to distinguish between xpub and a normal address
+        if (this.location.length <= 100) {
+            yield `https://blockchain.info/balance?active=${this.location}&cors=true`;
+        } else {
+            for (let chain = 0; chain < 2; ++chain) {
+                for (let index = 0; !this.changeChain;) {
+                    const batch = this.getAddressBatch(chain, index);
+                    index += batch.length;
+                    yield `https://blockchain.info/balance?active=${batch.join("|")}&cors=true`;
+                }
+
+                this.changeChain = false;
+            }
+        }
+    }
+
     public set currentQueryResult(result: string) {
         const summary = JSON.parse(result);
         let transactionCount = 0;
@@ -46,29 +63,9 @@ export class CryptoAssetInfo extends AssetInfo {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected * getQueries() {
-        // TODO: This is a crude test to distinguish between xpub and a normal address
-        if (this.location.length <= 100) {
-            yield `https://blockchain.info/balance?active=${this.location}&cors=true`;
-        } else {
-            for (let chain = 0; chain < 2; ++chain) {
-                for (let index = 0; !this.changeChain;) {
-                    const batch = this.getAddressBatch(chain, index);
-                    index += batch.length;
-                    yield `https://blockchain.info/balance?active=${batch.join("|")}&cors=true`;
-                }
-
-                this.changeChain = false;
-            }
-        }
-    }
-
-    protected getValue() {
+    public finalize() {
         const quantity = this.balance / 100000000;
-
-        return new Value(quantity, quantity, Currency.BTC);
+        this.setValue(new Value(quantity, quantity, Currency.BTC));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

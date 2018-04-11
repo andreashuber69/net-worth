@@ -10,21 +10,18 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { PreciousMetalInfo, WeigthUnit } from "./PreciousMetalInfo";
-
-export class SilverInfo extends PreciousMetalInfo {
-    public constructor(
-        location: string,
-        description: string,
-        quantity: number,
-        unit: WeigthUnit,
-        denomination: number,
-        fineness: number) {
-        super(location, description, "Silver", quantity, unit, denomination, fineness);
+export class QueryIterator {
+    public constructor(private readonly iterator: IterableIterator<string>) {
+        this.iteratorResult = iterator.next();
     }
 
-    public * getQueries() {
-        this.toString();
-        yield "https://www.quandl.com/api/v1/datasets/lbma/silver.json?rows=1";
+    public get value(): string | undefined {
+        return this.iteratorResult.value;
     }
+
+    public advance() {
+        this.iteratorResult = this.iterator.next();
+    }
+
+    private iteratorResult: IteratorResult<string>;
 }

@@ -44,38 +44,17 @@ export abstract class AssetInfo {
         return `${value} ${currency}`;
     }
 
-    public initializeQueries() {
-        this.iterator = this.getQueries();
-        this.iteratorResult = this.iterator.next();
-    }
-
-    public get currentQuery(): string | undefined {
-        if (!this.iteratorResult) {
-            throw new Error("currentQuery() must not be called before initialize().");
-        }
-
-        return this.iteratorResult.value;
-    }
+    public abstract getQueries(): IterableIterator<string>;
 
     public abstract set currentQueryResult(result: string);
 
-    public nextQuery() {
-        if (!this.iterator) {
-            throw new Error("nextQuery() must not be called before initialize().");
-        }
-
-        this.iteratorResult = this.iterator.next();
-
-        if (this.iteratorResult.done) {
-            this.value = this.getValue();
-        }
-    }
+    public abstract finalize(): void;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected abstract getQueries(): IterableIterator<string>;
-
-    protected abstract getValue(): Value;
+    protected setValue(value: Value) {
+        this.value = value;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -90,8 +69,6 @@ export abstract class AssetInfo {
         }
     }
 
-    private iterator?: IterableIterator<string>;
-    private iteratorResult?: IteratorResult<string>;
     // tslint:disable-next-line:no-null-keyword
     private value: Value | null = null;
 }

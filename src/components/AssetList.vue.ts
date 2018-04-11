@@ -15,6 +15,7 @@ import Asset from "./Asset.vue";
 import { AssetInfo } from "./AssetInfo";
 import { CryptoAssetInfo } from "./CryptoAssetInfo";
 import { WeigthUnit } from "./PreciousMetalInfo";
+import { QueryIterator } from "./QueryIterator";
 import { SilverInfo } from "./SilverInfo";
 
 // tslint:disable-next-line:no-unsafe-any
@@ -30,39 +31,59 @@ export default class AssetList extends Vue {
     ];
 
     public async mounted() {
-        let queries: Map<string, AssetInfo[]>;
+        const iterators = AssetList.createIterators(this.assets);
 
-        for (const asset of this.assets) {
-            asset.initializeQueries();
-        }
-
-        do {
-            queries = new Map<string, AssetInfo[]>();
-
-            for (const asset of this.assets) {
-                if (asset.currentQuery) {
-                    let equalQueryAssets = queries.get(asset.currentQuery);
-
-                    if (!equalQueryAssets) {
-                        equalQueryAssets = new Array<AssetInfo>();
-                        queries.set(asset.currentQuery, equalQueryAssets);
-                    }
-
-                    equalQueryAssets.push(asset);
-                }
-            }
+        while (iterators.size > 0) {
+            const queries = AssetList.getQueries(iterators);
 
             for (const [query, assets] of queries) {
                 const response = await (await window.fetch(query)).text();
 
                 for (const asset of assets) {
                     asset.currentQueryResult = response;
-                    asset.nextQuery();
+                    (iterators.get(asset) as QueryIterator).advance();
                 }
             }
-        } while (queries.size > 0);
+        }
     }
 
     // tslint:disable-next-line:max-line-length
     private static readonly address = "1F8i3SE7Zorf6F2rLh3Mxg4Mb8aHT2nkQf";
+
+    private static createIterators(assets: AssetInfo[]) {
+        const result = new Map<AssetInfo, QueryIterator>();
+
+        for (const asset of assets) {
+            result.set(asset, new QueryIterator(asset.getQueries()));
+        }
+
+        return result;
+    }
+
+    private static getQueries(queryIterators: Map<AssetInfo, QueryIterator>): Map<string, AssetInfo[]> {
+        const queries = new Map<string, AssetInfo[]>();
+        const doneAssets = new Array<AssetInfo>();
+
+        for (const [asset, queryIterator] of queryIterators) {
+            if (queryIterator.value) {
+                let equalQueryAssets = queries.get(queryIterator.value);
+
+                if (!equalQueryAssets) {
+                    equalQueryAssets = new Array<AssetInfo>();
+                    queries.set(queryIterator.value, equalQueryAssets);
+                }
+
+                equalQueryAssets.push(asset);
+            } else {
+                doneAssets.push(asset);
+            }
+        }
+
+        for (const asset of doneAssets) {
+            queryIterators.delete(asset);
+            asset.finalize();
+        }
+
+        return queries;
+    }
 }
