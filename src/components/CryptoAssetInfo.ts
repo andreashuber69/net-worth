@@ -28,7 +28,7 @@ export class CryptoAssetInfo extends AssetInfo {
         return this.getQueriesImpl();
     }
 
-    public set currentQueryResult(result: string) {
+    public set currentQueryResponse(result: string) {
         const summary = JSON.parse(result);
         let transactionCount = 0;
 

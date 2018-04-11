@@ -46,7 +46,7 @@ export abstract class AssetInfo {
 
     public abstract get queries(): IterableIterator<string>;
 
-    public abstract set currentQueryResult(result: string);
+    public abstract set currentQueryResponse(result: string);
 
     public abstract finalize(): void;
 

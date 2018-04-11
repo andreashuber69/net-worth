@@ -34,7 +34,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         this.totalGrams = quantity * unit * denomination * fineness;
     }
 
-    public set currentQueryResult(result: string) {
+    public set currentQueryResponse(result: string) {
         const parsed = JSON.parse(result);
         const totalOunces = this.totalGrams / WeigthUnit.TroyOunce;
 
