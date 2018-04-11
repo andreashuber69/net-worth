@@ -28,8 +28,8 @@ export class CryptoAssetInfo extends AssetInfo {
         return this.getQueriesImpl();
     }
 
-    public set currentQueryResponse(result: string) {
-        const summary = JSON.parse(result);
+    public processCurrentQueryResponse(response: string) {
+        const summary = JSON.parse(response);
         let transactionCount = 0;
 
         if (CryptoAssetInfo.hasStringIndexer(summary)) {
@@ -50,7 +50,7 @@ export class CryptoAssetInfo extends AssetInfo {
         }
     }
 
-    public finalize() {
+    public getValue() {
         const quantity = this.balance / 100000000;
 
         return new Value(quantity, quantity, Currency.BTC);

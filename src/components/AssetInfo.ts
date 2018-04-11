@@ -33,12 +33,12 @@ export abstract class AssetInfo {
 
     public abstract get queries(): IterableIterator<string>;
 
-    public abstract set currentQueryResponse(result: string);
+    public abstract processCurrentQueryResponse(response: string): void;
 
-    public abstract finalize(): Value;
+    public abstract getValue(): Value;
 
-    public processResult() {
-        const value = this.finalize();
+    public processValue() {
+        const value = this.getValue();
         this.formattedQuantity = value.quantity.toFixed(this.quantityDecimals);
         const val = value.value !== undefined ?
             value.value.toFixed(AssetInfo.getValueDecimals(value.valueCurrency)) : "";

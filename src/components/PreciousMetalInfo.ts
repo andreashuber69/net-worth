@@ -34,8 +34,8 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         this.totalGrams = quantity * unit * denomination * fineness;
     }
 
-    public set currentQueryResponse(result: string) {
-        const parsed = JSON.parse(result);
+    public processCurrentQueryResponse(response: string) {
+        const parsed = JSON.parse(response);
         const totalOunces = this.totalGrams / WeigthUnit.TroyOunce;
 
         if (PreciousMetalInfo.hasDataArrayTuple(parsed)) {
@@ -43,7 +43,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         }
     }
 
-    public finalize() {
+    public getValue() {
         return new Value(this.quantity, this.fiatValue, Currency.USD);
     }
 

@@ -40,7 +40,7 @@ export default class AssetList extends Vue {
                 const response = await (await window.fetch(query)).text();
 
                 for (const asset of assets) {
-                    asset.currentQueryResponse = response;
+                    asset.processCurrentQueryResponse(response);
                     (iterators.get(asset) as QueryIterator).advance();
                 }
             }
@@ -81,7 +81,7 @@ export default class AssetList extends Vue {
 
         for (const asset of doneAssets) {
             queryIterators.delete(asset);
-            asset.processResult();
+            asset.processValue();
         }
 
         return queries;
