@@ -14,15 +14,19 @@ import { Component, Vue } from "vue-property-decorator";
 import Asset from "./Asset.vue";
 import { AssetInfo } from "./AssetInfo";
 import { CryptoAssetInfo } from "./CryptoAssetInfo";
-import { PreciousMetalInfo, WeigthUnit } from "./PreciousMetalInfo";
+import { WeigthUnit } from "./PreciousMetalInfo";
+import { SilverInfo } from "./SilverInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { Asset } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetList extends Vue {
     public assets: AssetInfo[] = [
-        new PreciousMetalInfo("Home", "One", "Silver", 300, WeigthUnit.TroyOunce, 1, 1),
-        new CryptoAssetInfo(AssetList.xpub, "Two", "BTC", "BTC"),
+        new SilverInfo("Home", "5 CHF, Roll of 50", 1, WeigthUnit.Gram, 750, 0.835),
+        new SilverInfo("Home", "2 CHF, Roll of 50", 2, WeigthUnit.Gram, 500, 0.835),
+        new SilverInfo("Home", "1 CHF, Roll of 50", 3, WeigthUnit.Gram, 250, 0.835),
+        new SilverInfo("Home", "0.5 CHF, Roll of 50", 4, WeigthUnit.Gram, 125, 0.835),
+        new CryptoAssetInfo(AssetList.address, "Spending Wallet", "BTC"),
     ];
 
     public async mounted() {
@@ -59,5 +63,5 @@ export default class AssetList extends Vue {
     }
 
     // tslint:disable-next-line:max-line-length
-    private static readonly xpub = "";
+    private static readonly address = "1F8i3SE7Zorf6F2rLh3Mxg4Mb8aHT2nkQf";
 }

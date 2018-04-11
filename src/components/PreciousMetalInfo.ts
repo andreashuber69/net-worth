@@ -21,7 +21,7 @@ export enum WeigthUnit {
     AvdpOunce = Grain * 437.5, // https://en.wikipedia.org/wiki/Ounce
 }
 
-export class PreciousMetalInfo extends AssetInfo {
+export abstract class PreciousMetalInfo extends AssetInfo {
     public constructor(
         location: string,
         description: string,
@@ -40,13 +40,6 @@ export class PreciousMetalInfo extends AssetInfo {
         const value = PreciousMetalInfo.hasDataArrayTuple(parsed) ? totalOunces * parsed.data[0][1] : Number.NaN;
         super.setCurrentQueryResult(result);
         this.setValue(new Value(this.quantity, value, Currency.USD));
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected * getQueries() {
-        this.toString();
-        yield "https://www.quandl.com/api/v1/datasets/lbma/silver.json?rows=1";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
