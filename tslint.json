@@ -5,6 +5,7 @@
     "rules": {
         "comment-format": [ true, "check-space" ],
         "completed-docs": false,
+        "jsdoc-format": true,
         "max-line-length": { "options": [ 120 ] },
         "member-ordering": [
             true,
@@ -35,7 +36,6 @@
         "no-console": false,
         "no-magic-numbers": false,
         "no-parameter-properties": false,
-        "no-unnecessary-class": [ "allow-static-only" ],
         "no-void-expression": false,
         "promise-function-async": false,
         "strict-boolean-expressions": false,

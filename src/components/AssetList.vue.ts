@@ -47,6 +47,8 @@ export default class AssetList extends Vue {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // tslint:disable-next-line:max-line-length
     private static readonly address = "1F8i3SE7Zorf6F2rLh3Mxg4Mb8aHT2nkQf";
 

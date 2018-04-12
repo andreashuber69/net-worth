@@ -12,25 +12,33 @@
 
 import { PreciousMetalInfo, WeigthUnit } from "./PreciousMetalInfo";
 
+/** Provides information about an asset made of silver. */
 export class SilverInfo extends PreciousMetalInfo {
     public constructor(
+        /** The location of the silver, e.g. Saftey Deposit Box or Home Safe. */
         location: string,
+        /** Describes the asset, e.g. Bars, Coins, Medallions, ... */
         description: string,
+        /** How many items are there */
         quantity: number,
+        /** The weight unit to use for the denomination */
         unit: WeigthUnit,
+        /** How much does a single item weigh? */
         denomination: number,
-        fineness: number) {
+        /** The fineness, e.g. 0.999 */
+        fineness: number,
+    ) {
         super(location, description, "Silver", quantity, unit, denomination, fineness);
     }
 
+    /** @internal */
     public get queries() {
-        return this.getQueriesImpl();
+        return SilverInfo.getQueriesImpl();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private * getQueriesImpl() {
-        this.toString();
+    private static * getQueriesImpl() {
         yield "https://www.quandl.com/api/v1/datasets/lbma/silver.json?rows=1";
     }
 }

@@ -12,22 +12,25 @@
 
 import { HDNode } from "bitcoinjs-lib";
 import { AssetInfo } from "./AssetInfo";
-import { Currency, Value } from "./Value";
+import { Value, ValueCurrency } from "./Value";
 
 interface ISummary {
     final_balance: number;
     n_tx: number;
 }
 
+/** Provides information about a crypto currency asset. */
 export class CryptoAssetInfo extends AssetInfo {
     public constructor(address: string, description: string, type: string) {
         super(address, description, type, 8, type);
     }
 
+    /** @internal */
     public get queries() {
         return this.getQueriesImpl();
     }
 
+    /** @internal */
     public processCurrentQueryResponse(response: string) {
         const summary = JSON.parse(response);
         let transactionCount = 0;
@@ -50,10 +53,11 @@ export class CryptoAssetInfo extends AssetInfo {
         }
     }
 
+    /** @internal */
     public getValue() {
         const quantity = this.balance / 100000000;
 
-        return new Value(quantity, quantity, Currency.BTC);
+        return new Value(quantity, quantity, ValueCurrency.BTC);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

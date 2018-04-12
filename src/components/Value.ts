@@ -10,14 +10,20 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-export enum Currency {
+export enum ValueCurrency {
     BTC,
     USD,
 }
 
+/** Encapsulates the asset properties that can be determined by querying public internet APIs. */
 export class Value {
+    /** @internal */
     public constructor(
-        public readonly quantity: number,
+        /** @internal The quantity of the asset. Can be undefined when the query was not successful. */
+        public readonly quantity: number | undefined,
+        /** @internal The value of the asset. Can be undefined when the query was not successful. */
         public readonly value: number | undefined,
-        public readonly valueCurrency: Currency) {}
+        /** @internal The value currency. */
+        public readonly valueCurrency: ValueCurrency) {
+    }
 }

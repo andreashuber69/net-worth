@@ -10,18 +10,24 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+/** @internal */
 export class QueryIterator {
+    /** @internal */
     public constructor(private readonly iterator: IterableIterator<string>) {
         this.iteratorResult = iterator.next();
     }
 
+    /** @internal */
     public get value(): string | undefined {
         return this.iteratorResult.value;
     }
 
+    /** @internal */
     public advance() {
         this.iteratorResult = this.iterator.next();
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private iteratorResult: IteratorResult<string>;
 }

@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInfo } from "./AssetInfo";
-import { Currency, Value } from "./Value";
+import { Value, ValueCurrency } from "./Value";
 
 export enum WeigthUnit {
     Gram = 1,
@@ -21,19 +21,9 @@ export enum WeigthUnit {
     AvdpOunce = Grain * 437.5, // https://en.wikipedia.org/wiki/Ounce
 }
 
+/** Provides information about an asset made of a precious metal. */
 export abstract class PreciousMetalInfo extends AssetInfo {
-    public constructor(
-        location: string,
-        description: string,
-        type: string,
-        private readonly quantity: number,
-        unit: WeigthUnit,
-        denomination: number,
-        fineness: number) {
-        super(location, description, type, 0, PreciousMetalInfo.getDenomination(unit, denomination), fineness);
-        this.totalGrams = quantity * unit * denomination * fineness;
-    }
-
+    /** @internal */
     public processCurrentQueryResponse(response: string) {
         const parsed = JSON.parse(response);
         const totalOunces = this.totalGrams / WeigthUnit.TroyOunce;
@@ -43,8 +33,23 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         }
     }
 
+    /** @internal */
     public getValue() {
-        return new Value(this.quantity, this.fiatValue, Currency.USD);
+        return new Value(this.quantity, this.fiatValue, ValueCurrency.USD);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected constructor(
+        location: string,
+        description: string,
+        type: string,
+        private readonly quantity: number,
+        unit: WeigthUnit,
+        denomination: number,
+        fineness: number) {
+        super(location, description, type, 0, PreciousMetalInfo.getDenomination(unit, denomination), fineness);
+        this.totalGrams = quantity * unit * denomination * fineness;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

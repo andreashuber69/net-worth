@@ -10,13 +10,50 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Currency, Value } from "./Value";
+import { Value, ValueCurrency } from "./Value";
 
+/** Base of all classes that provide information about an asset. */
 export abstract class AssetInfo {
     public formattedQuantity = "Querying...";
     public formattedValue = "Querying...";
 
-    public constructor(
+    public get shortLocation() {
+        const maxLength = 15;
+
+        return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
+    }
+
+    /** @internal
+     * @description Provides a collection of HTTP GET queries that need to be executed in order to value and optionally
+     * quantify the asset.
+     * @returns An iterator that points to before the first query, call @see IterableIterator<string>.next() to get the
+     * first query.
+     */
+    public abstract get queries(): IterableIterator<string>;
+
+    /** @internal
+     * @description Processes the response to the query that the iterator returned by @see queries currently points to.
+     * Is called exactly once for each of the queries.
+     */
+    public abstract processCurrentQueryResponse(response: string): void;
+
+    /** @internal
+     * @description Returns the value as it has been determined by processing the responses passed to
+     * @see processCurrentQueryResponse
+     */
+    public abstract getValue(): Value;
+
+    /** @internal */
+    public processValue() {
+        const value = this.getValue();
+        this.formattedQuantity = AssetInfo.formatNumber(value.quantity, this.quantityDecimals);
+        const val = AssetInfo.formatNumber(value.value, AssetInfo.getValueDecimals(value.valueCurrency));
+        this.formattedValue = `${val} ${ValueCurrency[value.valueCurrency]}`;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected constructor(
         public readonly location: string,
         public readonly description: string,
         public readonly type: string,
@@ -25,34 +62,17 @@ export abstract class AssetInfo {
         public readonly fineness?: number) {
     }
 
-    public get shortLocation() {
-        const maxLength = 15;
-
-        return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
-    }
-
-    public abstract get queries(): IterableIterator<string>;
-
-    public abstract processCurrentQueryResponse(response: string): void;
-
-    public abstract getValue(): Value;
-
-    public processValue() {
-        const value = this.getValue();
-        this.formattedQuantity = value.quantity.toFixed(this.quantityDecimals);
-        const val = value.value !== undefined ?
-            value.value.toFixed(AssetInfo.getValueDecimals(value.valueCurrency)) : "";
-        const currency = Currency[value.valueCurrency];
-        this.formattedValue = `${val} ${currency}`;
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getValueDecimals(currency: Currency) {
+    private static formatNumber(num: number | undefined, decimals: number) {
+        return num !== undefined ? num.toFixed(decimals) : "Error";
+    }
+
+    private static getValueDecimals(currency: ValueCurrency) {
         switch (currency) {
-            case Currency.BTC:
+            case ValueCurrency.BTC:
                 return 8;
-            case Currency.USD:
+            case ValueCurrency.USD:
                 return 2;
             default:
                 throw new Error("Unknown Currency!");
