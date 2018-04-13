@@ -40,16 +40,26 @@ export abstract class PreciousMetalInfo extends AssetInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Creates a new instance of [PreciousMetalInfo].
+     * @param location The location of the precious metal items, e.g. Saftey Deposit Box.
+     * @param description Describes the precious metal items, e.g. Bars, Coins.
+     * @param type The type of precious metal, e.g. Silver, Gold.
+     * @param quantity The number of items.
+     * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
+     * @param weight The weight of a single item, expressed in `weightUnit`.
+     * @param fineness The fineness, e.g. 0.999.
+     */
     protected constructor(
         location: string,
         description: string,
         type: string,
         private readonly quantity: number,
-        unit: WeigthUnit,
-        denomination: number,
+        weightUnit: WeigthUnit,
+        weight: number,
         fineness: number) {
-        super(location, description, type, 0, PreciousMetalInfo.getDenomination(unit, denomination), fineness);
-        this.totalGrams = quantity * unit * denomination * fineness;
+        super(location, description, type, 0, PreciousMetalInfo.getQuantityUnit(weightUnit, weight), fineness);
+        this.totalGrams = quantity * weightUnit * weight * fineness;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,7 +81,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
             (typeof value.data[0][0] === "string") && (typeof value.data[0][1] === "number");
     }
 
-    private static getDenomination(unit: WeigthUnit, denomination: number) {
+    private static getQuantityUnit(unit: WeigthUnit, denomination: number) {
         return `${denomination.toFixed(0)} ${this.abbreviate(unit)}`;
     }
 

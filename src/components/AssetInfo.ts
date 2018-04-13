@@ -52,12 +52,22 @@ export abstract class AssetInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Creates a new instance of [AssetInfo].
+     * @param location The location of the asset, e.g. Saftey Deposit Box. For a crypto currency, this is the public
+     * address.
+     * @param description Describes the asset, e.g. Spending, Savings, Bars, Coins.
+     * @param type The type of asset, e.g. Silver, Gold, BTC.
+     * @param quantityDecimals The number of decimals to use to format the quantity.
+     * @param quantityUnit The quantity unit, e.g. 1 oz (troy), 10 g, BTC.
+     * @param fineness The fineness, e.g. 0.999 (applicable to precious metals only).
+     */
     protected constructor(
         public readonly location: string,
         public readonly description: string,
         public readonly type: string,
         private readonly quantityDecimals: number,
-        public readonly denomination: string,
+        public readonly quantityUnit: string,
         public readonly fineness?: number) {
     }
 
