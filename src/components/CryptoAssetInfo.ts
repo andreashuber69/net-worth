@@ -14,6 +14,7 @@ import { HDNode } from "bitcoinjs-lib";
 import { AssetInfo } from "./AssetInfo";
 import { Value, ValueCurrency } from "./Value";
 
+/** @internal */
 interface ISummary {
     final_balance: number;
     n_tx: number;

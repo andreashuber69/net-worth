@@ -14,33 +14,35 @@ import { Value, ValueCurrency } from "./Value";
 
 /** Base of all classes that provide information about an asset. */
 export abstract class AssetInfo {
-    public formattedQuantity = "Querying...";
-    public formattedValue = "Querying...";
-
     public get shortLocation() {
         const maxLength = 15;
 
         return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
     }
 
-    /** @internal Gets a collection of HTTP GET queries that need to be executed in order to value and optionally
+    public formattedQuantity = "Querying...";
+    public formattedValue = "Querying...";
+
+    /**
+     * @internal Gets a collection of HTTP GET queries that need to be executed in order to value and optionally
      * quantify the asset.
-     * @returns An iterator that points to before the first query, call @see IterableIterator<string>.next() to get the
-     * first query.
+     * @returns An iterator that points to before the first query, call `next()` to get the first query.
      */
     public abstract get queries(): IterableIterator<string>;
 
-    /** @internal Processes the response to the query that the iterator returned by @see queries currently points to.
+    /**
+     * @internal Processes the response to the query that the iterator returned by [[queries]] currently points to.
      * Is called exactly once for each of the queries.
      */
     public abstract processCurrentQueryResponse(response: string): void;
 
-    /** @internal Returns the value as it has been determined by processing the responses passed to
-     * @see processCurrentQueryResponse.
+    /**
+     * @internal Returns the value as it has been determined by processing the responses passed to
+     * [[processCurrentQueryResponse]].
      */
     public abstract getValue(): Value;
 
-    /** @internal Calls @see getValue and processes the result to set @see formattedQuantity and @see formattedValue. */
+    /** @internal Calls [[getValue]] and processes the result to set [[formattedQuantity]] and [[formattedValue]]. */
     public processValue() {
         const value = this.getValue();
         this.formattedQuantity = AssetInfo.formatNumber(value.quantity, this.quantityDecimals);

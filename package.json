@@ -9,7 +9,7 @@
     "serve-development": "vue-cli-service serve --mode development",
     "serve-production": "vue-cli-service serve --mode production",
     "build": "vue-cli-service build",
-    "build-doc": "typedoc --out ./doc"
+    "build-doc": "typedoc --excludePrivate --out ./doc"
   },
   "dependencies": {
     "bitcoinjs-lib": "^3.3.2",

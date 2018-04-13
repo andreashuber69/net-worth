@@ -15,15 +15,17 @@ export enum ValueCurrency {
     USD,
 }
 
-/** Encapsulates the asset properties that can be determined by querying public internet APIs. */
+/** @internal Encapsulates the asset properties that can be determined by querying public internet APIs. */
 export class Value {
-    /** @internal */
+    /**
+     * @internal Creates a new [[Value]] instance.
+     * @param quantity The quantity of the asset. Can be `undefined` when the query was not successful.
+     * @param value The value of the asset. Can be `undefined` when the query was not successful.
+     * @param valueCurrency The value currency.
+     */
     public constructor(
-        /** @internal The quantity of the asset. Can be undefined when the query was not successful. */
         public readonly quantity: number | undefined,
-        /** @internal The value of the asset. Can be undefined when the query was not successful. */
         public readonly value: number | undefined,
-        /** @internal The value currency. */
         public readonly valueCurrency: ValueCurrency) {
     }
 }
