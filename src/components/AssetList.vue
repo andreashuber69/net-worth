@@ -13,18 +13,21 @@
 -->
 
 <template>
-  <table>
-    <tr>
-      <th>Location</th>
-      <th>Description</th>
-      <th>Type</th>
-      <th>Quantity</th>
-      <th>Denomination</th>
-      <th>Fineness</th>
-      <th>Value</th>
-    </tr>
-    <Asset v-for="(asset, index) in assets" :key="index" :asset="asset"></Asset>
-  </table>
+  <div>
+    <table>
+      <tr>
+        <th>Location</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Quantity</th>
+        <th>Denomination</th>
+        <th>Fineness</th>
+        <th>Value</th>
+      </tr>
+      <Asset v-for="(asset, index) in assets" :key="index" :asset="asset"></Asset>
+    </table>
+    <button v-on:click="add">Add</button>
+  </div>
 </template>
 
 <script src="./AssetList.vue.ts" lang="ts">

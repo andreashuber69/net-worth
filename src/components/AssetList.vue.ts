@@ -35,27 +35,38 @@ export default class AssetList extends Vue {
         return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<AssetInfo>());
     }
 
-    public async mounted() {
-        const iterators = AssetList.createIterators(this.assets);
+    public mounted() {
+        return AssetList.update(this.assets);
+    }
 
-        while (iterators.size > 0) {
-            const queries = AssetList.getQueries(iterators);
+    public add() {
+        const bundle = new AssetBundle(new CryptoAssetInfo(AssetList.address, "XYZ", "BTC"));
+        this.bundles.push(bundle);
 
-            for (const [query, assets] of queries) {
-                const response = await (await window.fetch(query)).text();
-
-                for (const asset of assets) {
-                    asset.processCurrentQueryResponse(response);
-                    (iterators.get(asset) as QueryIterator).advance();
-                }
-            }
-        }
+        return AssetList.update(bundle.assets);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // tslint:disable-next-line:max-line-length
     private static readonly address = "1F8i3SE7Zorf6F2rLh3Mxg4Mb8aHT2nkQf";
+
+    private static async update(assets: AssetInfo[]) {
+        const iterators = AssetList.createIterators(assets);
+
+        while (iterators.size > 0) {
+            const queries = AssetList.getQueries(iterators);
+
+            for (const [query, sameQueryAssets] of queries) {
+                const response = await (await window.fetch(query)).text();
+
+                for (const asset of sameQueryAssets) {
+                    asset.processCurrentQueryResponse(response);
+                    (iterators.get(asset) as QueryIterator).advance();
+                }
+            }
+        }
+    }
 
     private static createIterators(assets: AssetInfo[]) {
         const result = new Map<AssetInfo, QueryIterator>();
