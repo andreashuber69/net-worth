@@ -12,6 +12,7 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import Asset from "./Asset.vue";
+import { AssetBundle } from "./AssetBundle";
 import { AssetInfo } from "./AssetInfo";
 import { CryptoAssetInfo } from "./CryptoAssetInfo";
 import { WeigthUnit } from "./PreciousMetalInfo";
@@ -22,13 +23,17 @@ import { SilverInfo } from "./SilverInfo";
 @Component({ components: { Asset } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetList extends Vue {
-    public assets: AssetInfo[] = [
-        new SilverInfo("Home", "5 CHF, Roll of 50", 1, WeigthUnit.Gram, 750, 0.835),
-        new SilverInfo("Home", "2 CHF, Roll of 50", 2, WeigthUnit.Gram, 500, 0.835),
-        new SilverInfo("Home", "1 CHF, Roll of 50", 3, WeigthUnit.Gram, 250, 0.835),
-        new SilverInfo("Home", "0.5 CHF, Roll of 50", 4, WeigthUnit.Gram, 125, 0.835),
-        new CryptoAssetInfo(AssetList.address, "Spending Wallet", "BTC"),
+    public bundles: AssetBundle[] = [
+        new AssetBundle(new SilverInfo("Home", "5 CHF, Roll of 50", 1, WeigthUnit.Gram, 750, 0.835)),
+        new AssetBundle(new SilverInfo("Home", "2 CHF, Roll of 50", 2, WeigthUnit.Gram, 500, 0.835)),
+        new AssetBundle(new SilverInfo("Home", "1 CHF, Roll of 50", 3, WeigthUnit.Gram, 250, 0.835)),
+        new AssetBundle(new SilverInfo("Home", "0.5 CHF, Roll of 50", 4, WeigthUnit.Gram, 125, 0.835)),
+        new AssetBundle(new CryptoAssetInfo(AssetList.address, "Spending Wallet", "BTC")),
     ];
+
+    public get assets() {
+        return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<AssetInfo>());
+    }
 
     public async mounted() {
         const iterators = AssetList.createIterators(this.assets);
