@@ -8,7 +8,8 @@
     "lint": "tslint --project tsconfig.json --config tslint.json --format verbose",
     "serve-development": "vue-cli-service serve --mode development",
     "serve-production": "vue-cli-service serve --mode production",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "build-doc": "typedoc --out ./doc"
   },
   "dependencies": {
     "bitcoinjs-lib": "^3.3.2",
@@ -21,6 +22,7 @@
     "@vue/cli-plugin-typescript": "^3.0.0-beta.6",
     "@vue/cli-service": "^3.0.0-beta.6",
     "tslint": "^5.9.1",
+    "typedoc": "^0.11.1",
     "vue-template-compiler": "^2.5.13"
   },
   "postcss": {

@@ -23,27 +23,24 @@ export abstract class AssetInfo {
         return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
     }
 
-    /** @internal
-     * @description Provides a collection of HTTP GET queries that need to be executed in order to value and optionally
+    /** @internal Gets a collection of HTTP GET queries that need to be executed in order to value and optionally
      * quantify the asset.
      * @returns An iterator that points to before the first query, call @see IterableIterator<string>.next() to get the
      * first query.
      */
     public abstract get queries(): IterableIterator<string>;
 
-    /** @internal
-     * @description Processes the response to the query that the iterator returned by @see queries currently points to.
+    /** @internal Processes the response to the query that the iterator returned by @see queries currently points to.
      * Is called exactly once for each of the queries.
      */
     public abstract processCurrentQueryResponse(response: string): void;
 
-    /** @internal
-     * @description Returns the value as it has been determined by processing the responses passed to
-     * @see processCurrentQueryResponse
+    /** @internal Returns the value as it has been determined by processing the responses passed to
+     * @see processCurrentQueryResponse.
      */
     public abstract getValue(): Value;
 
-    /** @internal */
+    /** @internal Calls @see getValue and processes the result to set @see formattedQuantity and @see formattedValue. */
     public processValue() {
         const value = this.getValue();
         this.formattedQuantity = AssetInfo.formatNumber(value.quantity, this.quantityDecimals);
