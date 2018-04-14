@@ -30,7 +30,9 @@ export abstract class AssetInfo {
      * quantify the asset.
      * @returns An iterator that points to before the first query, call `next()` to get the first query.
      */
-    public abstract get queries(): IterableIterator<string>;
+    public get queries() {
+        return this.getQueries();
+    }
 
     /**
      * @internal Processes the response to the query that the iterator returned by [[queries]] currently points to.
@@ -71,6 +73,8 @@ export abstract class AssetInfo {
         public readonly quantityUnit: string,
     ) {
     }
+
+    protected abstract getQueries(): IterableIterator<string>;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -30,11 +30,6 @@ export class BtcInfo extends CryptoAssetInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @internal */
-    public get queries() {
-        return this.getQueriesImpl();
-    }
-
-    /** @internal */
     public processCurrentQueryResponse(response: string) {
         const summary = JSON.parse(response);
         let transactionCount = 0;
@@ -66,22 +61,7 @@ export class BtcInfo extends CryptoAssetInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static isObject(value: any): value is object {
-        return value instanceof Object;
-    }
-
-    private static hasStringIndexer(value: any): value is { [key: string]: any } {
-        return this.isObject(value);
-    }
-
-    private static isSummary(value: any): value is ISummary {
-        return this.isObject(value) && value.hasOwnProperty("final_balance") && value.hasOwnProperty("n_tx");
-    }
-
-    private balance = 0;
-    private changeChain = false;
-
-    private * getQueriesImpl() {
+    protected * getQueries() {
         // TODO: This is a crude test to distinguish between xpub and a normal address
         if (this.location.length <= 100) {
             yield `https://blockchain.info/balance?active=${this.location}&cors=true`;
@@ -97,6 +77,23 @@ export class BtcInfo extends CryptoAssetInfo {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static isObject(value: any): value is object {
+        return value instanceof Object;
+    }
+
+    private static hasStringIndexer(value: any): value is { [key: string]: any } {
+        return this.isObject(value);
+    }
+
+    private static isSummary(value: any): value is ISummary {
+        return this.isObject(value) && value.hasOwnProperty("final_balance") && value.hasOwnProperty("n_tx");
+    }
+
+    private balance = 0;
+    private changeChain = false;
 
     private getAddressBatch(chain: number, offset: number) {
         const node = HDNode.fromBase58(this.location).derive(chain);

@@ -36,14 +36,8 @@ export class SilverInfo extends PreciousMetalInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /** @internal */
-    public get queries() {
-        return SilverInfo.getQueriesImpl();
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static * getQueriesImpl() {
+    // tslint:disable-next-line:prefer-function-over-method
+    protected * getQueries() {
         yield "https://www.quandl.com/api/v1/datasets/lbma/silver.json?rows=1";
     }
 }
