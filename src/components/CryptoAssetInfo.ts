@@ -22,9 +22,12 @@ interface ISummary {
 
 /** Provides information about a crypto currency asset. */
 export class CryptoAssetInfo extends AssetInfo {
+    /** Creates a new [[CryptoAssetInfo]] instance. */
     public constructor(address: string, description: string, type: string) {
         super(address, description, type, 8, type);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @internal */
     public get queries() {

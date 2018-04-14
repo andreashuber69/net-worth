@@ -15,23 +15,26 @@ import { PreciousMetalInfo, WeigthUnit } from "./PreciousMetalInfo";
 /** Provides information about an asset made of silver. */
 export class SilverInfo extends PreciousMetalInfo {
     /**
+     * Creates a new [[SilverInfo]] instance.
      * @param location The location of the silver, e.g. Saftey Deposit Box or Home Safe.
-     * @param description Describes the asset, e.g. Bars, Coins, Medallions.
+     * @param description Describes the silver items, e.g. Bars, Coins, Medallions.
      * @param quantity The number of items.
-     * @param unit The weight unit to use for the denomination.
-     * @param denomination The weight of a single item.
+     * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
+     * @param weight The weight of a single item, expressed in `weightUnit`.
      * @param fineness The fineness, e.g. 0.999.
      */
     public constructor(
         location: string,
         description: string,
         quantity: number,
-        unit: WeigthUnit,
-        denomination: number,
+        weightUnit: WeigthUnit,
+        weight: number,
         fineness: number,
     ) {
-        super(location, description, "Silver", quantity, unit, denomination, fineness);
+        super(location, description, "Silver", quantity, weightUnit, weight, fineness);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @internal */
     public get queries() {

@@ -18,8 +18,12 @@ import { AssetInfo } from "./AssetInfo";
  * of multiple currencies. For example, a BTC address could potentially hold balances of BTC, BCH, BTG, BCD and so on.
  */
 export class AssetBundle {
+    /** Gets the bundled assets. */
     public readonly assets: AssetInfo[];
 
+    /** Creates a new [[AssetBundle]] instance.
+     * @param assets The assets to bundle.
+     */
     public constructor(...assets: AssetInfo[]) {
         this.assets = assets;
     }

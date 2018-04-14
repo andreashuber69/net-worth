@@ -41,7 +41,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Creates a new instance of [PreciousMetalInfo].
+     * Creates a new [[PreciousMetalInfo]] instance.
      * @param location The location of the precious metal items, e.g. Saftey Deposit Box.
      * @param description Describes the precious metal items, e.g. Bars, Coins.
      * @param type The type of precious metal, e.g. Silver, Gold.

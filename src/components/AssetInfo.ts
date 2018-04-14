@@ -23,6 +23,8 @@ export abstract class AssetInfo {
     public formattedQuantity = "Querying...";
     public formattedValue = "Querying...";
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * @internal Gets a collection of HTTP GET queries that need to be executed in order to value and optionally
      * quantify the asset.
@@ -53,7 +55,7 @@ export abstract class AssetInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Creates a new instance of [AssetInfo].
+     * Creates a new [[AssetInfo]] instance.
      * @param location The location of the asset, e.g. Saftey Deposit Box. For a crypto currency, this is the public
      * address.
      * @param description Describes the asset, e.g. Spending, Savings, Bars, Coins.
