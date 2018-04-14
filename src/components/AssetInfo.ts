@@ -62,7 +62,6 @@ export abstract class AssetInfo {
      * @param type The type of asset, e.g. Silver, Gold, BTC.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      * @param quantityUnit The quantity unit, e.g. 1 oz (troy), 10 g, BTC.
-     * @param fineness The fineness, e.g. 0.999 (applicable to precious metals only).
      */
     protected constructor(
         public readonly location: string,
@@ -70,7 +69,7 @@ export abstract class AssetInfo {
         public readonly type: string,
         private readonly quantityDecimals: number,
         public readonly quantityUnit: string,
-        public readonly fineness?: number) {
+    ) {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

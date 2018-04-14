@@ -26,6 +26,7 @@ export class Value {
     public constructor(
         public readonly quantity: number | undefined,
         public readonly value: number | undefined,
-        public readonly valueCurrency: ValueCurrency) {
+        public readonly valueCurrency: ValueCurrency,
+    ) {
     }
 }

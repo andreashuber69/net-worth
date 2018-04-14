@@ -57,8 +57,9 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         private readonly quantity: number,
         weightUnit: WeigthUnit,
         weight: number,
-        fineness: number) {
-        super(location, description, type, 0, PreciousMetalInfo.getQuantityUnit(weightUnit, weight), fineness);
+        public readonly fineness: number,
+    ) {
+        super(location, description, type, 0, PreciousMetalInfo.getQuantityUnit(weightUnit, weight));
         this.totalGrams = quantity * weightUnit * weight * fineness;
     }
 
