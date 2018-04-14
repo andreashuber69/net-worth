@@ -37,8 +37,9 @@ export abstract class AssetInfo {
     /**
      * @internal Processes the response to the query that the iterator returned by [[queries]] currently points to.
      * Is called exactly once for each of the queries.
+     * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
      */
-    public abstract processCurrentQueryResponse(response: string): void;
+    public abstract processCurrentQueryResponse(response: string): boolean;
 
     /**
      * @internal Returns the value as it has been determined by processing the responses passed to

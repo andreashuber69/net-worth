@@ -31,6 +31,8 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         if (PreciousMetalInfo.hasDataArrayTuple(parsed)) {
             this.fiatValue = totalOunces * parsed.data[0][1];
         }
+
+        return false;
     }
 
     /** @internal */
