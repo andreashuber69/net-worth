@@ -21,7 +21,7 @@ interface ISummary {
 }
 
 /** Provides information about a crypto currency asset. */
-export class CryptoAssetInfo extends AssetInfo {
+export class BtcInfo extends AssetInfo {
     /** Creates a new [[CryptoAssetInfo]] instance. */
     public constructor(address: string, description: string, type: string) {
         super(address, description, type, 8, type);
@@ -39,12 +39,12 @@ export class CryptoAssetInfo extends AssetInfo {
         const summary = JSON.parse(response);
         let transactionCount = 0;
 
-        if (CryptoAssetInfo.hasStringIndexer(summary)) {
+        if (BtcInfo.hasStringIndexer(summary)) {
             for (const address in summary) {
                 if (summary.hasOwnProperty(address)) {
                     const balance = summary[address];
 
-                    if (CryptoAssetInfo.isSummary(balance)) {
+                    if (BtcInfo.isSummary(balance)) {
                         transactionCount += balance.n_tx;
                         this.balance += balance.final_balance;
                     }
