@@ -20,7 +20,10 @@ export abstract class AssetInfo {
         return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
     }
 
-    public formattedQuantity = "Querying...";
+    public get formattedQuantity() {
+        return AssetInfo.formatNumber(this.quantity, this.quantityDecimals);
+    }
+
     public formattedValue = "Querying...";
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,7 +41,6 @@ export abstract class AssetInfo {
     /** @internal */
     public processValue() {
         const value = this.getValue();
-        this.formattedQuantity = AssetInfo.formatNumber(value.quantity, this.quantityDecimals);
         this.formattedValue = `${AssetInfo.formatNumber(value.quantity * value.unitPrice, 2)} USD`;
     }
 
@@ -50,6 +52,7 @@ export abstract class AssetInfo {
      * address.
      * @param description Describes the asset, e.g. Spending, Savings, Bars, Coins.
      * @param type The type of asset, e.g. Silver, Gold, BTC.
+     * @param quantity The asset quantity.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      * @param unit The unit of the quantity, e.g. 1 oz (troy), 10 g, BTC.
      */
@@ -57,6 +60,7 @@ export abstract class AssetInfo {
         public readonly location: string,
         public readonly description: string,
         public readonly type: string,
+        protected quantity: number | undefined,
         private readonly quantityDecimals: number,
         public readonly unit: string,
     ) {
@@ -94,7 +98,13 @@ export abstract class AssetInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static formatNumber(num: number, decimals: number) {
-        return Number.isNaN(num) ? "Error" : num.toFixed(decimals);
+    private static formatNumber(num: number | undefined, decimals: number) {
+        if (num === undefined) {
+            return "Querying...";
+        } else if (Number.isNaN(num)) {
+            return "Error";
+        } else {
+            return num.toFixed(decimals);
+        }
     }
 }

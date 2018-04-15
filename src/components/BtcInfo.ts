@@ -60,7 +60,12 @@ export class BtcInfo extends CryptoAssetInfo {
 
                         if (BtcInfo.isSummary(balance)) {
                             transactionCount += balance.n_tx;
-                            this.balance += balance.final_balance;
+
+                            if (this.quantity === undefined) {
+                                this.quantity = 0;
+                            }
+
+                            this.quantity += balance.final_balance / 100000000;
                         }
                     }
                 }
@@ -75,7 +80,7 @@ export class BtcInfo extends CryptoAssetInfo {
     }
 
     protected getValue() {
-        return new Value(this.balance / 100000000, this.unitPrice);
+        return new Value(this.quantity, this.unitPrice);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,7 +90,6 @@ export class BtcInfo extends CryptoAssetInfo {
             (typeof value.n_tx === "number");
     }
 
-    private balance = 0;
     private changeChain = false;
 
     private getAddressBatch(chain: number, offset: number) {

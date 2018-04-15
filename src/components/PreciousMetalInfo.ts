@@ -37,12 +37,12 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         location: string,
         description: string,
         type: string,
-        private readonly quantity: number,
+        quantity: number,
         weightUnit: WeigthUnit,
         weight: number,
         public readonly fineness: number,
     ) {
-        super(location, description, type, 0, PreciousMetalInfo.getUnit(weightUnit, weight));
+        super(location, description, type, quantity, 0, PreciousMetalInfo.getUnit(weightUnit, weight));
         this.pureGramsPerUnit = weightUnit * weight * fineness;
     }
 
