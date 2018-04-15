@@ -20,7 +20,7 @@
         <th>Description</th>
         <th>Type</th>
         <th>Quantity</th>
-        <th>Denomination</th>
+        <th>Unit</th>
         <th>Fineness</th>
         <th>Value</th>
       </tr>

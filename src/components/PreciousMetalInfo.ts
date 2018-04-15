@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInfo } from "./AssetInfo";
-import { Value, ValueCurrency } from "./Value";
+import { Value } from "./Value";
 
 export enum WeigthUnit {
     Gram = 1,
@@ -37,7 +37,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
 
     /** @internal */
     public getValue() {
-        return new Value(this.quantity, this.fiatValue, ValueCurrency.USD);
+        return new Value(this.quantity, this.fiatValue);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,5 +106,5 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     }
 
     private readonly totalGrams: number;
-    private fiatValue?: number;
+    private fiatValue = Number.NaN;
 }

@@ -21,8 +21,7 @@ export abstract class CryptoAssetInfo extends AssetInfo {
             const parsed = JSON.parse(response);
 
             if (CryptoAssetInfo.isPriceInfo(parsed)) {
-                const price = parsed[0].price_usd;
-                price.toString();
+                this.priceImpl = Number.parseFloat(parsed[0].price_usd);
             }
         }
 
@@ -57,6 +56,10 @@ export abstract class CryptoAssetInfo extends AssetInfo {
         yield `https://api.coinmarketcap.com/v1/ticker/${this.cmcId}/`;
     }
 
+    protected get price() {
+        return this.priceImpl;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static isPriceInfo(value: any): value is Array<{ price_usd: string }> {
@@ -72,4 +75,5 @@ export abstract class CryptoAssetInfo extends AssetInfo {
     }
 
     private responseProcessed = false;
+    private priceImpl = Number.NaN;
 }

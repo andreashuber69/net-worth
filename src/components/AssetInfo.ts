@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Value, ValueCurrency } from "./Value";
+import { Value } from "./Value";
 
 /** Base of all classes that provide information about an asset. */
 export abstract class AssetInfo {
@@ -51,8 +51,7 @@ export abstract class AssetInfo {
     public processValue() {
         const value = this.getValue();
         this.formattedQuantity = AssetInfo.formatNumber(value.quantity, this.quantityDecimals);
-        const val = AssetInfo.formatNumber(value.value, AssetInfo.getValueDecimals(value.valueCurrency));
-        this.formattedValue = `${val} ${ValueCurrency[value.valueCurrency]}`;
+        this.formattedValue = `${AssetInfo.formatNumber(value.value, 2)} USD`;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,16 +80,5 @@ export abstract class AssetInfo {
 
     private static formatNumber(num: number | undefined, decimals: number) {
         return num !== undefined ? num.toFixed(decimals) : "Error";
-    }
-
-    private static getValueDecimals(currency: ValueCurrency) {
-        switch (currency) {
-            case ValueCurrency.BTC:
-                return 8;
-            case ValueCurrency.USD:
-                return 2;
-            default:
-                throw new Error("Unknown Currency!");
-        }
     }
 }

@@ -10,23 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-export enum ValueCurrency {
-    BTC,
-    USD,
-}
-
 /** @internal Encapsulates the asset properties that can be determined by querying public internet APIs. */
 export class Value {
     /**
      * @internal Creates a new [[Value]] instance.
-     * @param quantity The quantity of the asset. Can be `undefined` when the query was not successful.
-     * @param value The value of the asset. Can be `undefined` when the query was not successful.
-     * @param valueCurrency The value currency.
+     * @param quantity The quantity of the asset. Can be `NaN` when the query was not successful.
+     * @param value The value of the asset in USD. Can be `NaN` when the query was not successful.
      */
-    public constructor(
-        public readonly quantity: number | undefined,
-        public readonly value: number | undefined,
-        public readonly valueCurrency: ValueCurrency,
-    ) {
+    public constructor(public readonly quantity = Number.NaN, public readonly value = Number.NaN) {
     }
 }

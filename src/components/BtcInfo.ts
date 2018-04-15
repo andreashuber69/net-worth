@@ -12,7 +12,7 @@
 
 import { HDNode } from "bitcoinjs-lib";
 import { CryptoAssetInfo } from "./CryptoAssetInfo";
-import { Value, ValueCurrency } from "./Value";
+import { Value } from "./Value";
 
 /** @internal */
 interface ISummary {
@@ -60,7 +60,7 @@ export class BtcInfo extends CryptoAssetInfo {
     public getValue() {
         const quantity = this.balance / 100000000;
 
-        return new Value(quantity, quantity, ValueCurrency.BTC);
+        return new Value(quantity, quantity * this.price);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
