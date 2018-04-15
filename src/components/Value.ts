@@ -14,9 +14,10 @@
 export class Value {
     /**
      * @internal Creates a new [[Value]] instance.
+     * @description The total asset value is calculated by multiplying [[quantity]] with [[unitPrice]].
      * @param quantity The quantity of the asset. Can be `NaN` when the query was not successful.
-     * @param value The value of the asset in USD. Can be `NaN` when the query was not successful.
+     * @param unitPrice The price of a single unit in USD. Can be `NaN` when the query was not successful.
      */
-    public constructor(public readonly quantity = Number.NaN, public readonly value = Number.NaN) {
+    public constructor(public readonly quantity = Number.NaN, public readonly unitPrice = Number.NaN) {
     }
 }

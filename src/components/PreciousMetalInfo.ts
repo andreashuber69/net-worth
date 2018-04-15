@@ -47,18 +47,18 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     }
 
     protected processQueryResponse(response: string) {
-        const totalPureOunces = this.quantity * this.pureGramsPerUnit / WeigthUnit.TroyOunce;
+        const pureOuncesPerUnit = this.pureGramsPerUnit / WeigthUnit.TroyOunce;
         const parsed = JSON.parse(response);
 
         if (PreciousMetalInfo.hasDataTupleArray(parsed)) {
-            this.fiatValue = totalPureOunces * parsed.data[0][1];
+            this.unitPrice = pureOuncesPerUnit * parsed.data[0][1];
         }
 
         return false;
     }
 
     protected getValue() {
-        return new Value(this.quantity, this.fiatValue);
+        return new Value(this.quantity, this.unitPrice);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -102,5 +102,5 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     }
 
     private readonly pureGramsPerUnit: number;
-    private fiatValue = Number.NaN;
+    private unitPrice = Number.NaN;
 }

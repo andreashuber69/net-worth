@@ -47,15 +47,15 @@ export abstract class CryptoAssetInfo extends AssetInfo {
             const parsed = JSON.parse(response);
 
             if (CryptoAssetInfo.isPriceInfo(parsed)) {
-                this.priceImpl = Number.parseFloat(parsed[0].price_usd);
+                this.unitPriceImpl = Number.parseFloat(parsed[0].price_usd);
             }
         }
 
         return result;
     }
 
-    protected get price() {
-        return this.priceImpl;
+    protected get unitPrice() {
+        return this.unitPriceImpl;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,5 +73,5 @@ export abstract class CryptoAssetInfo extends AssetInfo {
     }
 
     private responseProcessed = false;
-    private priceImpl = Number.NaN;
+    private unitPriceImpl = Number.NaN;
 }

@@ -75,9 +75,7 @@ export class BtcInfo extends CryptoAssetInfo {
     }
 
     protected getValue() {
-        const quantity = this.balance / 100000000;
-
-        return new Value(quantity, quantity * this.price);
+        return new Value(this.balance / 100000000, this.unitPrice);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

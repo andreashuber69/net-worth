@@ -39,7 +39,7 @@ export abstract class AssetInfo {
     public processValue() {
         const value = this.getValue();
         this.formattedQuantity = AssetInfo.formatNumber(value.quantity, this.quantityDecimals);
-        this.formattedValue = `${AssetInfo.formatNumber(value.value, 2)} USD`;
+        this.formattedValue = `${AssetInfo.formatNumber(value.quantity * value.unitPrice, 2)} USD`;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
