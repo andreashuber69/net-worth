@@ -56,13 +56,6 @@ export class BtcInfo extends CryptoAssetInfo {
         return false;
     }
 
-    /** @internal */
-    public getValue() {
-        const quantity = this.balance / 100000000;
-
-        return new Value(quantity, quantity * this.price);
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected * getQueries() {
@@ -82,6 +75,12 @@ export class BtcInfo extends CryptoAssetInfo {
                 this.changeChain = false;
             }
         }
+    }
+
+    protected getValue() {
+        const quantity = this.balance / 100000000;
+
+        return new Value(quantity, quantity * this.price);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

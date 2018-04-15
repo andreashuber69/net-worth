@@ -35,11 +35,6 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         return false;
     }
 
-    /** @internal */
-    public getValue() {
-        return new Value(this.quantity, this.fiatValue);
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -63,6 +58,10 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     ) {
         super(location, description, type, 0, PreciousMetalInfo.getUnit(weightUnit, weight));
         this.pureGramsPerUnit = weightUnit * weight * fineness;
+    }
+
+    protected getValue() {
+        return new Value(this.quantity, this.fiatValue);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
