@@ -72,8 +72,8 @@ export abstract class PreciousMetalInfo extends AssetInfo {
             (typeof value.data[0][0] === "string") && (typeof value.data[0][1] === "number");
     }
 
-    private static getUnit(unit: WeigthUnit, denomination: number) {
-        return `${denomination.toFixed(0)} ${this.abbreviate(unit)}`;
+    private static getUnit(unit: WeigthUnit, weight: number) {
+        return `${weight.toFixed(0)} ${this.abbreviate(unit)}`;
     }
 
     private static hasDataArrayArray(value: any): value is { data: any[][] } {
