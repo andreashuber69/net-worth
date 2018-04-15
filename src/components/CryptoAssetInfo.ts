@@ -31,12 +31,8 @@ export abstract class CryptoAssetInfo extends AssetInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected static isObject(value: any): value is object {
-        return value instanceof Object;
-    }
-
     protected static hasStringIndexer(value: any): value is { [key: string]: any } {
-        return this.isObject(value);
+        return value instanceof Object;
     }
 
     /**
@@ -68,8 +64,7 @@ export abstract class CryptoAssetInfo extends AssetInfo {
     }
 
     private static isLengthOneObjectArray(value: any): value is Array<{ [key: string]: any }> {
-        return this.isArray(value) && (value.length === 1) && this.isObject(value[0]) &&
-            this.hasStringIndexer(value[0]);
+        return this.isArray(value) && (value.length === 1) && this.hasStringIndexer(value[0]);
     }
 
     private static isArray(value: any): value is any[] {

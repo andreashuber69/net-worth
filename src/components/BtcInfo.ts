@@ -87,7 +87,8 @@ export class BtcInfo extends CryptoAssetInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static isSummary(value: any): value is ISummary {
-        return this.isObject(value) && value.hasOwnProperty("final_balance") && value.hasOwnProperty("n_tx");
+        return this.hasStringIndexer(value) && (typeof value.final_balance === "number") &&
+            (typeof value.n_tx === "number");
     }
 
     private balance = 0;

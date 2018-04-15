@@ -28,7 +28,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         const parsed = JSON.parse(response);
         const totalOunces = this.totalGrams / WeigthUnit.TroyOunce;
 
-        if (PreciousMetalInfo.hasDataArrayTuple(parsed)) {
+        if (PreciousMetalInfo.hasDataTupleArray(parsed)) {
             this.fiatValue = totalOunces * parsed.data[0][1];
         }
 
@@ -67,25 +67,25 @@ export abstract class PreciousMetalInfo extends AssetInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static hasStringIndexer(value: any): value is { [key: string]: any } {
-        return value instanceof Object;
-    }
-
-    private static hasDataArray(value: any): value is { data: any[] } {
-        return this.hasStringIndexer(value) && (value.data instanceof Array);
-    }
-
-    private static hasDataArrayArray(value: any): value is { data: any[][] } {
-        return this.hasDataArray(value) && (value.data.length >= 1) && (value.data[0] instanceof Array);
-    }
-
-    private static hasDataArrayTuple(value: any): value is { data: Array<[ string, number ]> } {
+    private static hasDataTupleArray(value: any): value is { data: Array<[ string, number ]> } {
         return this.hasDataArrayArray(value) && (value.data[0].length >= 2) &&
             (typeof value.data[0][0] === "string") && (typeof value.data[0][1] === "number");
     }
 
     private static getQuantityUnit(unit: WeigthUnit, denomination: number) {
         return `${denomination.toFixed(0)} ${this.abbreviate(unit)}`;
+    }
+
+    private static hasDataArrayArray(value: any): value is { data: any[][] } {
+        return this.hasDataArray(value) && (value.data.length >= 1) && (value.data[0] instanceof Array);
+    }
+
+    private static hasDataArray(value: any): value is { data: any[] } {
+        return this.hasStringIndexer(value) && (value.data instanceof Array);
+    }
+
+    private static hasStringIndexer(value: any): value is { [key: string]: any } {
+        return value instanceof Object;
     }
 
     private static abbreviate(unit: WeigthUnit) {
