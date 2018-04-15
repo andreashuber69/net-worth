@@ -25,11 +25,11 @@ export enum WeigthUnit {
 export abstract class PreciousMetalInfo extends AssetInfo {
     /** @internal */
     public processCurrentQueryResponse(response: string) {
+        const totalPureOunces = this.quantity * this.pureGramsPerUnit / WeigthUnit.TroyOunce;
         const parsed = JSON.parse(response);
-        const totalOunces = this.totalGrams / WeigthUnit.TroyOunce;
 
         if (PreciousMetalInfo.hasDataTupleArray(parsed)) {
-            this.fiatValue = totalOunces * parsed.data[0][1];
+            this.fiatValue = totalPureOunces * parsed.data[0][1];
         }
 
         return false;
@@ -62,7 +62,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         public readonly fineness: number,
     ) {
         super(location, description, type, 0, PreciousMetalInfo.getUnit(weightUnit, weight));
-        this.totalGrams = quantity * weightUnit * weight * fineness;
+        this.pureGramsPerUnit = weightUnit * weight * fineness;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,6 +105,6 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         }
     }
 
-    private readonly totalGrams: number;
+    private readonly pureGramsPerUnit: number;
     private fiatValue = Number.NaN;
 }
