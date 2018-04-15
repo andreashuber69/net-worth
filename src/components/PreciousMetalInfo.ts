@@ -61,7 +61,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         weight: number,
         public readonly fineness: number,
     ) {
-        super(location, description, type, 0, PreciousMetalInfo.getQuantityUnit(weightUnit, weight));
+        super(location, description, type, 0, PreciousMetalInfo.getUnit(weightUnit, weight));
         this.totalGrams = quantity * weightUnit * weight * fineness;
     }
 
@@ -72,7 +72,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
             (typeof value.data[0][0] === "string") && (typeof value.data[0][1] === "number");
     }
 
-    private static getQuantityUnit(unit: WeigthUnit, denomination: number) {
+    private static getUnit(unit: WeigthUnit, denomination: number) {
         return `${denomination.toFixed(0)} ${this.abbreviate(unit)}`;
     }
 

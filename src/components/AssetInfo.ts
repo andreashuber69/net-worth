@@ -63,14 +63,14 @@ export abstract class AssetInfo {
      * @param description Describes the asset, e.g. Spending, Savings, Bars, Coins.
      * @param type The type of asset, e.g. Silver, Gold, BTC.
      * @param quantityDecimals The number of decimals to use to format the quantity.
-     * @param quantityUnit The quantity unit, e.g. 1 oz (troy), 10 g, BTC.
+     * @param unit The unit of the quantity, e.g. 1 oz (troy), 10 g, BTC.
      */
     protected constructor(
         public readonly location: string,
         public readonly description: string,
         public readonly type: string,
         private readonly quantityDecimals: number,
-        public readonly quantityUnit: string,
+        public readonly unit: string,
     ) {
     }
 
