@@ -29,9 +29,27 @@ export class BtcInfo extends CryptoAssetInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /** @internal */
-    public processCurrentQueryResponse(response: string) {
-        if (super.processCurrentQueryResponse(response)) {
+    protected * getQueries() {
+        yield * super.getQueries();
+
+        // TODO: This is a crude test to distinguish between xpub and a normal address
+        if (this.location.length <= 100) {
+            yield `https://blockchain.info/balance?active=${this.location}&cors=true`;
+        } else {
+            for (let chain = 0; chain < 2; ++chain) {
+                for (let index = 0; !this.changeChain;) {
+                    const batch = this.getAddressBatch(chain, index);
+                    index += batch.length;
+                    yield `https://blockchain.info/balance?active=${batch.join("|")}&cors=true`;
+                }
+
+                this.changeChain = false;
+            }
+        }
+    }
+
+    protected processQueryResponse(response: string) {
+        if (super.processQueryResponse(response)) {
             const summary = JSON.parse(response);
             let transactionCount = 0;
 
@@ -54,27 +72,6 @@ export class BtcInfo extends CryptoAssetInfo {
         }
 
         return false;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected * getQueries() {
-        yield * super.getQueries();
-
-        // TODO: This is a crude test to distinguish between xpub and a normal address
-        if (this.location.length <= 100) {
-            yield `https://blockchain.info/balance?active=${this.location}&cors=true`;
-        } else {
-            for (let chain = 0; chain < 2; ++chain) {
-                for (let index = 0; !this.changeChain;) {
-                    const batch = this.getAddressBatch(chain, index);
-                    index += batch.length;
-                    yield `https://blockchain.info/balance?active=${batch.join("|")}&cors=true`;
-                }
-
-                this.changeChain = false;
-            }
-        }
     }
 
     protected getValue() {

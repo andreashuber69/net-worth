@@ -23,20 +23,6 @@ export enum WeigthUnit {
 
 /** Provides information about an asset made of a precious metal. */
 export abstract class PreciousMetalInfo extends AssetInfo {
-    /** @internal */
-    public processCurrentQueryResponse(response: string) {
-        const totalPureOunces = this.quantity * this.pureGramsPerUnit / WeigthUnit.TroyOunce;
-        const parsed = JSON.parse(response);
-
-        if (PreciousMetalInfo.hasDataTupleArray(parsed)) {
-            this.fiatValue = totalPureOunces * parsed.data[0][1];
-        }
-
-        return false;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     /**
      * Creates a new [[PreciousMetalInfo]] instance.
      * @param location The location of the precious metal items, e.g. Saftey Deposit Box.
@@ -58,6 +44,17 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     ) {
         super(location, description, type, 0, PreciousMetalInfo.getUnit(weightUnit, weight));
         this.pureGramsPerUnit = weightUnit * weight * fineness;
+    }
+
+    protected processQueryResponse(response: string) {
+        const totalPureOunces = this.quantity * this.pureGramsPerUnit / WeigthUnit.TroyOunce;
+        const parsed = JSON.parse(response);
+
+        if (PreciousMetalInfo.hasDataTupleArray(parsed)) {
+            this.fiatValue = totalPureOunces * parsed.data[0][1];
+        }
+
+        return false;
     }
 
     protected getValue() {

@@ -30,18 +30,10 @@ export abstract class AssetInfo {
         return this.getQueries();
     }
 
-    /**
-     * @internal Processes the response to the query that the iterator returned by [[queries]] currently points to.
-     * Is called exactly once for each of the queries.
-     * @description This method can be overridden more than once. A good example for this practice can be found in
-     * [[CryptoAssetInfo]] and [[BtcInfo]]. The former is the base class of the latter and both override this method.
-     * [[CryptoAssetInfo]] processes the response to the price query and [[BtcInfo]] processes the responses to the
-     * balance queries. For everything to work as expected, the [[BtcInfo]] override must pass through the response
-     * meant for the [[CryptoAssetInfo]] override, by calling `super.processCurrentQueryResponse(response);` first
-     * and then only process a response if the base class implementation returned `true`.
-     * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
-     */
-    public abstract processCurrentQueryResponse(response: string): boolean;
+    /** @internal */
+    public processCurrentQueryResponse(response: string) {
+        return this.processQueryResponse(response);
+    }
 
     /** @internal */
     public processValue() {
@@ -83,6 +75,19 @@ export abstract class AssetInfo {
      * @returns An iterator that points to before the first query, call `next()` to get the first query.
      */
     protected abstract getQueries(): IterableIterator<string>;
+
+    /**
+     * Processes the response to the query that the iterator returned by [[getQueries]] currently points to.
+     * Is called exactly once for each of the queries.
+     * @description This method can be overridden more than once. A good example for this practice can be found in
+     * [[CryptoAssetInfo]] and [[BtcInfo]]. The former is the base class of the latter and both override this method.
+     * [[CryptoAssetInfo]] processes the response to the price query and [[BtcInfo]] processes the responses to the
+     * balance queries. For everything to work as expected, the [[BtcInfo]] override must pass through the response
+     * meant for the [[CryptoAssetInfo]] override, by calling `super.processCurrentQueryResponse(response);` first
+     * and then only process a response if the base class implementation returned `true`.
+     * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
+     */
+    protected abstract processQueryResponse(response: string): boolean;
 
     /** Returns the value as determined by processing the responses passed to [[processCurrentQueryResponse]]. */
     protected abstract getValue(): Value;

@@ -13,23 +13,6 @@
 import { AssetInfo } from "./AssetInfo";
 
 export abstract class CryptoAssetInfo extends AssetInfo {
-    public processCurrentQueryResponse(response: string) {
-        const result = this.responseProcessed;
-
-        if (!this.responseProcessed) {
-            this.responseProcessed = true;
-            const parsed = JSON.parse(response);
-
-            if (CryptoAssetInfo.isPriceInfo(parsed)) {
-                this.priceImpl = Number.parseFloat(parsed[0].price_usd);
-            }
-        }
-
-        return result;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     protected static hasStringIndexer(value: any): value is { [key: string]: any } {
         return value instanceof Object;
     }
@@ -54,6 +37,21 @@ export abstract class CryptoAssetInfo extends AssetInfo {
 
     protected * getQueries() {
         yield `https://api.coinmarketcap.com/v1/ticker/${this.cmcId}/`;
+    }
+
+    protected processQueryResponse(response: string) {
+        const result = this.responseProcessed;
+
+        if (!this.responseProcessed) {
+            this.responseProcessed = true;
+            const parsed = JSON.parse(response);
+
+            if (CryptoAssetInfo.isPriceInfo(parsed)) {
+                this.priceImpl = Number.parseFloat(parsed[0].price_usd);
+            }
+        }
+
+        return result;
     }
 
     protected get price() {
