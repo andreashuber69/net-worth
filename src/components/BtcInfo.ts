@@ -12,7 +12,6 @@
 
 import { HDNode } from "bitcoinjs-lib";
 import { CryptoAssetInfo } from "./CryptoAssetInfo";
-import { Value } from "./Value";
 
 /** @internal */
 interface ISummary {
@@ -77,10 +76,6 @@ export class BtcInfo extends CryptoAssetInfo {
         }
 
         return false;
-    }
-
-    protected getValue() {
-        return new Value(this.quantity, this.unitPrice);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

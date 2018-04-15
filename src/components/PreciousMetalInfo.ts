@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInfo } from "./AssetInfo";
-import { Value } from "./Value";
 
 export enum WeigthUnit {
     Gram = 1,
@@ -57,10 +56,6 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         return false;
     }
 
-    protected getValue() {
-        return new Value(this.quantity, this.unitPrice);
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static hasDataTupleArray(value: any): value is { data: Array<[ string, number ]> } {
@@ -102,5 +97,4 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     }
 
     private readonly pureGramsPerUnit: number;
-    private unitPrice = Number.NaN;
 }

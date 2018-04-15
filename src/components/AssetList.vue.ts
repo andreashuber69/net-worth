@@ -99,7 +99,6 @@ export default class AssetList extends Vue {
 
         for (const asset of doneAssets) {
             queryIterators.delete(asset);
-            asset.processValue();
         }
 
         return queries;

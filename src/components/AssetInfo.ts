@@ -10,8 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Value } from "./Value";
-
 /** Base of all classes that provide information about an asset. */
 export abstract class AssetInfo {
     public get shortLocation() {
@@ -24,7 +22,15 @@ export abstract class AssetInfo {
         return AssetInfo.formatNumber(this.quantity, this.quantityDecimals);
     }
 
-    public formattedValue = "Querying...";
+    public get formattedValue() {
+        let result: number | undefined;
+
+        if ((this.quantity !== undefined) && (this.unitPrice !== undefined)) {
+            result = this.quantity * this.unitPrice;
+        }
+
+        return `${AssetInfo.formatNumber(result, 2)} USD`;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -38,13 +44,9 @@ export abstract class AssetInfo {
         return this.processQueryResponse(response);
     }
 
-    /** @internal */
-    public processValue() {
-        const value = this.getValue();
-        this.formattedValue = `${AssetInfo.formatNumber(value.quantity * value.unitPrice, 2)} USD`;
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected unitPrice: number | undefined = undefined;
 
     /**
      * Creates a new [[AssetInfo]] instance.
@@ -92,9 +94,6 @@ export abstract class AssetInfo {
      * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
      */
     protected abstract processQueryResponse(response: string): boolean;
-
-    /** Returns the value as determined by processing the responses passed to [[processQueryResponse]]. */
-    protected abstract getValue(): Value;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
