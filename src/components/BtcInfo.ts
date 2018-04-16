@@ -49,29 +49,7 @@ export class BtcInfo extends CryptoAssetInfo {
 
     protected processQueryResponse(response: any) {
         if (super.processQueryResponse(response)) {
-            let transactionCount = 0;
-
-            if (BtcInfo.hasStringIndexer(response)) {
-                for (const address in response) {
-                    if (response.hasOwnProperty(address)) {
-                        const balance = response[address];
-
-                        if (BtcInfo.isSummary(balance)) {
-                            transactionCount += balance.n_tx;
-
-                            if (this.quantity === undefined) {
-                                this.quantity = 0;
-                            }
-
-                            this.quantity += balance.final_balance / 100000000;
-                        }
-                    }
-                }
-            }
-
-            if (!transactionCount) {
-                this.changeChain = true;
-            }
+            this.quantity = (this.quantity === undefined ? 0 : this.quantity) + this.getFinalBalance(response);
         }
 
         return false;
@@ -85,6 +63,30 @@ export class BtcInfo extends CryptoAssetInfo {
     }
 
     private changeChain = false;
+
+    private getFinalBalance(response: any) {
+        let result = Number.NaN;
+        let transactionCount = 0;
+
+        if (BtcInfo.hasStringIndexer(response)) {
+            for (const address in response) {
+                if (response.hasOwnProperty(address)) {
+                    const balance = response[address];
+
+                    if (BtcInfo.isSummary(balance)) {
+                        transactionCount += balance.n_tx;
+                        result = (Number.isNaN(result) ? 0 : result) + balance.final_balance / 100000000;
+                    }
+                }
+            }
+        }
+
+        if (!transactionCount) {
+            this.changeChain = true;
+        }
+
+        return result;
+    }
 
     private getAddressBatch(chain: number, offset: number) {
         const node = HDNode.fromBase58(this.location).derive(chain);
