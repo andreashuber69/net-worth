@@ -58,7 +58,7 @@ export default class AssetList extends Vue {
             const queries = AssetList.getQueries(iterators);
 
             for (const [query, sameQueryAssets] of queries) {
-                const response = await (await window.fetch(query)).text();
+                const response = await this.getQueryResponse(query);
 
                 for (const asset of sameQueryAssets) {
                     asset.processCurrentQueryResponse(response);
@@ -102,5 +102,14 @@ export default class AssetList extends Vue {
         }
 
         return queries;
+    }
+
+    private static async getQueryResponse(query: string) {
+        try {
+            return await (await window.fetch(query)).text();
+        } catch {
+            // It appears that after catch (e), e is often undefined at this point, which is why we go with plain catch.
+            return "{ \"error\": \"Can't fetch resource.\" }";
+        }
     }
 }

@@ -21,7 +21,8 @@ export class AssetBundle {
     /** Gets the bundled assets. */
     public readonly assets: AssetInfo[];
 
-    /** Creates a new [[AssetBundle]] instance.
+    /**
+     * Creates a new [[AssetBundle]] instance.
      * @param assets The assets to bundle.
      */
     public constructor(...assets: AssetInfo[]) {
