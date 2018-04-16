@@ -32,7 +32,7 @@ export abstract class CryptoAssetInfo extends AssetInfo {
         quantityDecimals: number,
         private readonly cmcId: string,
     ) {
-        super(address, description, currencySymbol, undefined, quantityDecimals, currencySymbol);
+        super(address, description, currencySymbol, currencySymbol, undefined, quantityDecimals);
     }
 
     protected * getQueries() {

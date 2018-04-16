@@ -17,9 +17,9 @@
     <td :title="asset.location">{{ asset.shortLocation }}</td>
     <td>{{ asset.description }}</td>
     <td>{{ asset.type }}</td>
-    <td>{{ asset.formattedQuantity }}</td>
     <td>{{ asset.unit }}</td>
     <td>{{ asset.fineness }}</td>
+    <td>{{ asset.formattedQuantity }}</td>
     <td>{{ asset.formattedTotalValue }}</td>
   </tr>
 </template>

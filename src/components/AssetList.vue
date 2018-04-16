@@ -19,9 +19,9 @@
         <th>Location</th>
         <th>Description</th>
         <th>Type</th>
-        <th>Quantity</th>
         <th>Unit</th>
         <th>Fineness</th>
+        <th>Quantity</th>
         <th>Total Value (USD)</th>
       </tr>
       <Asset v-for="(asset, index) in assets" :key="index" :asset="asset"></Asset>

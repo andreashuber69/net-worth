@@ -24,10 +24,10 @@ import { SilverInfo } from "./SilverInfo";
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetList extends Vue {
     public bundles: AssetBundle[] = [
-        new AssetBundle(new SilverInfo("Home", "5 CHF, Roll of 50", 1, WeigthUnit.Gram, 750, 0.835)),
-        new AssetBundle(new SilverInfo("Home", "2 CHF, Roll of 50", 2, WeigthUnit.Gram, 500, 0.835)),
-        new AssetBundle(new SilverInfo("Home", "1 CHF, Roll of 50", 3, WeigthUnit.Gram, 250, 0.835)),
-        new AssetBundle(new SilverInfo("Home", "0.5 CHF, Roll of 50", 4, WeigthUnit.Gram, 125, 0.835)),
+        new AssetBundle(new SilverInfo("Home", "5 CHF, Roll of 50", WeigthUnit.Gram, 750, 0.835, 1)),
+        new AssetBundle(new SilverInfo("Home", "2 CHF, Roll of 50", WeigthUnit.Gram, 500, 0.835, 2)),
+        new AssetBundle(new SilverInfo("Home", "1 CHF, Roll of 50", WeigthUnit.Gram, 250, 0.835, 3)),
+        new AssetBundle(new SilverInfo("Home", "0.5 CHF, Roll of 50", WeigthUnit.Gram, 125, 0.835, 4)),
         new AssetBundle(new BtcInfo(AssetList.address, "Spending Wallet")),
     ];
 

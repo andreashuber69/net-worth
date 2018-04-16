@@ -51,17 +51,17 @@ export abstract class AssetInfo {
      * address.
      * @param description Describes the asset, e.g. Spending, Savings, Bars, Coins.
      * @param type The type of asset, e.g. Silver, Gold, BTC.
+     * @param unit The unit of the quantity, e.g. 1 oz (troy), 10 g, BTC.
      * @param quantity The asset quantity.
      * @param quantityDecimals The number of decimals to use to format the quantity.
-     * @param unit The unit of the quantity, e.g. 1 oz (troy), 10 g, BTC.
      */
     protected constructor(
         public readonly location: string,
         public readonly description: string,
         public readonly type: string,
+        public readonly unit: string,
         protected quantity: number | undefined,
         private readonly quantityDecimals: number,
-        public readonly unit: string,
     ) {
     }
 

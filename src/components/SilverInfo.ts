@@ -18,20 +18,20 @@ export class SilverInfo extends PreciousMetalInfo {
      * Creates a new [[SilverInfo]] instance.
      * @param location The location of the silver, e.g. Saftey Deposit Box or Home Safe.
      * @param description Describes the silver items, e.g. Bars, Coins, Medallions.
-     * @param quantity The number of items.
      * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
      * @param weight The weight of a single item, expressed in `weightUnit`.
      * @param fineness The fineness, e.g. 0.999.
+     * @param quantity The number of items.
      */
     public constructor(
         location: string,
         description: string,
-        quantity: number,
         weightUnit: WeigthUnit,
         weight: number,
         fineness: number,
+        quantity: number,
     ) {
-        super(location, description, "Silver", quantity, weightUnit, weight, fineness);
+        super(location, description, "Silver", weightUnit, weight, fineness, quantity);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
