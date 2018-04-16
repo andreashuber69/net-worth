@@ -39,15 +39,14 @@ export abstract class CryptoAssetInfo extends AssetInfo {
         yield `https://api.coinmarketcap.com/v1/ticker/${this.cmcId}/`;
     }
 
-    protected processQueryResponse(response: string) {
+    protected processQueryResponse(response: any) {
         const result = this.responseProcessed;
 
         if (!this.responseProcessed) {
             this.responseProcessed = true;
-            const parsed = JSON.parse(response);
 
-            if (CryptoAssetInfo.isPriceInfo(parsed)) {
-                this.unitValue = Number.parseFloat(parsed[0].price_usd);
+            if (CryptoAssetInfo.isPriceInfo(response)) {
+                this.unitValue = Number.parseFloat(response[0].price_usd);
             }
         }
 

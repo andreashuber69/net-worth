@@ -45,12 +45,11 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         this.pureGramsPerUnit = weightUnit * weight * fineness;
     }
 
-    protected processQueryResponse(response: string) {
+    protected processQueryResponse(response: any) {
         const pureOuncesPerUnit = this.pureGramsPerUnit / WeigthUnit.TroyOunce;
-        const parsed = JSON.parse(response);
 
-        if (PreciousMetalInfo.hasDataTupleArray(parsed)) {
-            this.unitValue = pureOuncesPerUnit * parsed.data[0][1];
+        if (PreciousMetalInfo.hasDataTupleArray(response)) {
+            this.unitValue = pureOuncesPerUnit * response.data[0][1];
         }
 
         return false;

@@ -106,10 +106,11 @@ export default class AssetList extends Vue {
 
     private static async getQueryResponse(query: string) {
         try {
-            return await (await window.fetch(query)).text();
+            return JSON.parse(await (await window.fetch(query)).text());
         } catch {
-            // It appears that after catch (e), e is often undefined at this point, which is why we go with plain catch.
-            return "{ \"error\": \"Can't fetch resource.\" }";
+            // It appears that after catch (e), e is sometimes undefined at this point, which is why we go with plain
+            // catch.
+            return { error: "Can't fetch or parse response." };
         }
     }
 }

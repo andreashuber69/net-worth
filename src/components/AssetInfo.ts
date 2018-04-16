@@ -41,7 +41,7 @@ export abstract class AssetInfo {
     }
 
     /** @internal */
-    public processCurrentQueryResponse(response: string) {
+    public processCurrentQueryResponse(response: any) {
         return this.processQueryResponse(response);
     }
 
@@ -84,7 +84,7 @@ export abstract class AssetInfo {
     protected abstract getQueries(): IterableIterator<string>;
 
     /**
-     * Processes the response to the query that the iterator returned by [[getQueries]] currently points to.
+     * Processes the parsed response to the query that the iterator returned by [[getQueries]] currently points to.
      * Is called exactly once for each of the queries.
      * @description This method can be overridden more than once. A good example for this practice can be found in
      * [[CryptoAssetInfo]] and [[BtcInfo]]. The former is the base class of the latter and both override this method.
@@ -94,7 +94,7 @@ export abstract class AssetInfo {
      * and then only process a response if the base class implementation returned `true`.
      * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
      */
-    protected abstract processQueryResponse(response: string): boolean;
+    protected abstract processQueryResponse(response: any): boolean;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

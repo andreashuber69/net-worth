@@ -47,15 +47,14 @@ export class BtcInfo extends CryptoAssetInfo {
         }
     }
 
-    protected processQueryResponse(response: string) {
+    protected processQueryResponse(response: any) {
         if (super.processQueryResponse(response)) {
-            const summary = JSON.parse(response);
             let transactionCount = 0;
 
-            if (BtcInfo.hasStringIndexer(summary)) {
-                for (const address in summary) {
-                    if (summary.hasOwnProperty(address)) {
-                        const balance = summary[address];
+            if (BtcInfo.hasStringIndexer(response)) {
+                for (const address in response) {
+                    if (response.hasOwnProperty(address)) {
+                        const balance = response[address];
 
                         if (BtcInfo.isSummary(balance)) {
                             transactionCount += balance.n_tx;
