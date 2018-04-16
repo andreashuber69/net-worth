@@ -26,7 +26,7 @@ export abstract class AssetInfo {
         const result = (this.quantity === undefined) || (this.unitValue === undefined) ?
             undefined : this.quantity * this.unitValue;
 
-        return `${AssetInfo.formatNumber(result, 2)}`;
+        return AssetInfo.formatNumber(result, 2);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
