@@ -23,13 +23,10 @@ export abstract class AssetInfo {
     }
 
     public get formattedValue() {
-        let result: number | undefined;
+        const result = (this.quantity === undefined) || (this.unitPrice === undefined) ?
+            undefined : this.quantity * this.unitPrice;
 
-        if ((this.quantity !== undefined) && (this.unitPrice !== undefined)) {
-            result = this.quantity * this.unitPrice;
-        }
-
-        return `${AssetInfo.formatNumber(result, 2)} USD`;
+        return `${AssetInfo.formatNumber(result, 2)}`;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
