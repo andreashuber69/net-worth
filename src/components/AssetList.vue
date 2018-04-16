@@ -21,6 +21,7 @@
         <th>Type</th>
         <th>Unit</th>
         <th>Fineness</th>
+        <th>Unit Value (USD)</th>
         <th>Quantity</th>
         <th>Total Value (USD)</th>
       </tr>

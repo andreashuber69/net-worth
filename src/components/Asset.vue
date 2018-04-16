@@ -19,6 +19,7 @@
     <td>{{ asset.type }}</td>
     <td>{{ asset.unit }}</td>
     <td>{{ asset.fineness }}</td>
+    <td>{{ asset.formattedUnitValue }}</td>
     <td>{{ asset.formattedQuantity }}</td>
     <td>{{ asset.formattedTotalValue }}</td>
   </tr>

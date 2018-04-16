@@ -18,6 +18,10 @@ export abstract class AssetInfo {
         return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
     }
 
+    public get formattedUnitValue() {
+        return AssetInfo.formatNumber(this.unitValue, 2);
+    }
+
     public get formattedQuantity() {
         return AssetInfo.formatNumber(this.quantity, this.quantityDecimals);
     }
