@@ -22,9 +22,9 @@ export abstract class AssetInfo {
         return AssetInfo.formatNumber(this.quantity, this.quantityDecimals);
     }
 
-    public get formattedValue() {
-        const result = (this.quantity === undefined) || (this.unitPrice === undefined) ?
-            undefined : this.quantity * this.unitPrice;
+    public get formattedTotalValue() {
+        const result = (this.quantity === undefined) || (this.unitValue === undefined) ?
+            undefined : this.quantity * this.unitValue;
 
         return `${AssetInfo.formatNumber(result, 2)}`;
     }
@@ -43,7 +43,7 @@ export abstract class AssetInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected unitPrice: number | undefined = undefined;
+    protected unitValue: number | undefined = undefined;
 
     /**
      * Creates a new [[AssetInfo]] instance.

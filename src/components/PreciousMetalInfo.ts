@@ -50,7 +50,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         const parsed = JSON.parse(response);
 
         if (PreciousMetalInfo.hasDataTupleArray(parsed)) {
-            this.unitPrice = pureOuncesPerUnit * parsed.data[0][1];
+            this.unitValue = pureOuncesPerUnit * parsed.data[0][1];
         }
 
         return false;

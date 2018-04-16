@@ -20,7 +20,7 @@
     <td>{{ asset.formattedQuantity }}</td>
     <td>{{ asset.unit }}</td>
     <td>{{ asset.fineness }}</td>
-    <td>{{ asset.formattedValue }}</td>
+    <td>{{ asset.formattedTotalValue }}</td>
   </tr>
 </template>
 

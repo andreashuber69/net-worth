@@ -47,7 +47,7 @@ export abstract class CryptoAssetInfo extends AssetInfo {
             const parsed = JSON.parse(response);
 
             if (CryptoAssetInfo.isPriceInfo(parsed)) {
-                this.unitPrice = Number.parseFloat(parsed[0].price_usd);
+                this.unitValue = Number.parseFloat(parsed[0].price_usd);
             }
         }
 

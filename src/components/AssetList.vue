@@ -22,7 +22,7 @@
         <th>Quantity</th>
         <th>Unit</th>
         <th>Fineness</th>
-        <th>Value (USD)</th>
+        <th>Total Value (USD)</th>
       </tr>
       <Asset v-for="(asset, index) in assets" :key="index" :asset="asset"></Asset>
     </table>
