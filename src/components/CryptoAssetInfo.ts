@@ -44,16 +44,17 @@ export abstract class CryptoAssetInfo extends AssetInfo {
 
         if (!this.responseProcessed) {
             this.responseProcessed = true;
-
-            if (CryptoAssetInfo.isPriceInfo(response)) {
-                this.unitValue = Number.parseFloat(response[0].price_usd);
-            }
+            this.unitValue = CryptoAssetInfo.getPrice(response);
         }
 
         return result;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static getPrice(response: any) {
+        return CryptoAssetInfo.isPriceInfo(response) ? Number.parseFloat(response[0].price_usd) : Number.NaN;
+    }
 
     private static isPriceInfo(value: any): value is Array<{ price_usd: string }> {
         return this.isLengthOneObjectArray(value) && (typeof value[0].price_usd === "string");

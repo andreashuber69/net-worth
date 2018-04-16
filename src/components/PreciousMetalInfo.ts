@@ -46,16 +46,16 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     }
 
     protected processQueryResponse(response: any) {
-        const pureOuncesPerUnit = this.pureGramsPerUnit / WeigthUnit.TroyOunce;
-
-        if (PreciousMetalInfo.hasDataTupleArray(response)) {
-            this.unitValue = pureOuncesPerUnit * response.data[0][1];
-        }
+        this.unitValue = this.pureGramsPerUnit / WeigthUnit.TroyOunce * PreciousMetalInfo.getPrice(response);
 
         return false;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static getPrice(response: any) {
+        return PreciousMetalInfo.hasDataTupleArray(response) ? response.data[0][1] : Number.NaN;
+    }
 
     private static hasDataTupleArray(value: any): value is { data: Array<[ string, number ]> } {
         return this.hasDataArrayArray(value) && (value.data[0].length >= 2) &&
