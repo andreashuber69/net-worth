@@ -22,18 +22,18 @@ export enum WeigthUnit {
 
 /** Provides information about an asset made of a precious metal. */
 export abstract class PreciousMetalInfo extends AssetInfo {
-    public get finenessIntegral() {
+    public get finenessInteger() {
         return Math.trunc(this.fineness);
     }
 
-    public get finenessFractional() {
-        let fractional = (this.fineness % 1).toFixed(6).substr(1);
+    public get finenessFraction() {
+        let fraction = (this.fineness % 1).toFixed(6).substr(1);
 
-        while (fractional.endsWith("0")) {
-            fractional = fractional.substr(0, fractional.length - 1);
+        while (fraction.endsWith("0")) {
+            fraction = fraction.substr(0, fraction.length - 1);
         }
 
-        return fractional;
+        return fraction;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -18,14 +18,14 @@
     <td>{{ asset.description }}</td>
     <td>{{ asset.type }}</td>
     <td>{{ asset.unit }}</td>
-    <td class="integral">{{ asset.finenessIntegral }}</td>
-    <td class="fractional">{{ asset.finenessFractional }}</td>
-    <td class="integral">{{ asset.unitValueIntegral }}</td>
-    <td class="fractional">{{ asset.unitValueFractional }}</td>
-    <td class="integral">{{ asset.quantityIntegral }}</td>
-    <td class="fractional">{{ asset.quantityFractional }}</td>
-    <td class="integral">{{ asset.totalValueIntegral }}</td>
-    <td class="fractional">{{ asset.totalValueFractional }}</td>
+    <td class="integer">{{ asset.finenessInteger }}</td>
+    <td class="fraction">{{ asset.finenessFraction }}</td>
+    <td class="integer">{{ asset.unitValueInteger }}</td>
+    <td class="fraction">{{ asset.unitValueFraction }}</td>
+    <td class="integer">{{ asset.quantityInteger }}</td>
+    <td class="fraction">{{ asset.quantityFraction }}</td>
+    <td class="integer">{{ asset.totalValueInteger }}</td>
+    <td class="fraction">{{ asset.totalValueFraction }}</td>
   </tr>
 </template>
 

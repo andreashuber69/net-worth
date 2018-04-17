@@ -18,28 +18,28 @@ export abstract class AssetInfo {
         return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
     }
 
-    public get unitValueIntegral() {
-        return AssetInfo.formatIntegral(this.unitValue);
+    public get unitValueInteger() {
+        return AssetInfo.formatInteger(this.unitValue);
     }
 
-    public get unitValueFractional() {
-        return AssetInfo.formatFractional(this.unitValue, 2);
+    public get unitValueFraction() {
+        return AssetInfo.formatFraction(this.unitValue, 2);
     }
 
-    public get quantityIntegral() {
-        return AssetInfo.formatIntegral(this.quantity);
+    public get quantityInteger() {
+        return AssetInfo.formatInteger(this.quantity);
     }
 
-    public get quantityFractional() {
-        return AssetInfo.formatFractional(this.quantity, this.quantityDecimals);
+    public get quantityFraction() {
+        return AssetInfo.formatFraction(this.quantity, this.quantityDecimals);
     }
 
-    public get totalValueIntegral() {
-        return AssetInfo.formatIntegral(this.totalValue);
+    public get totalValueInteger() {
+        return AssetInfo.formatInteger(this.totalValue);
     }
 
-    public get totalValueFractional() {
-        return AssetInfo.formatFractional(this.totalValue, 2);
+    public get totalValueFraction() {
+        return AssetInfo.formatFraction(this.totalValue, 2);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,11 +107,11 @@ export abstract class AssetInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static formatIntegral(num: number | undefined) {
+    private static formatInteger(num: number | undefined) {
         return (num === undefined) || Number.isNaN(num) ? "" : Math.trunc(num);
     }
 
-    private static formatFractional(num: number | undefined, decimals: number) {
+    private static formatFraction(num: number | undefined, decimals: number) {
         if (num === undefined) {
             return "Querying...";
         } else if (Number.isNaN(num)) {
