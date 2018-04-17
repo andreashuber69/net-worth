@@ -12,6 +12,7 @@
 
 import { AssetInfo } from "./AssetInfo";
 
+/** Provides information about a crypto currency asset. */
 export abstract class CryptoAssetInfo extends AssetInfo {
     protected static hasStringIndexer(value: any): value is { [key: string]: any } {
         return value instanceof Object;

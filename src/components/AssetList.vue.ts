@@ -14,7 +14,7 @@ import { Component, Vue } from "vue-property-decorator";
 import Asset from "./Asset.vue";
 import { AssetBundle } from "./AssetBundle";
 import { AssetInfo } from "./AssetInfo";
-import { BtcInfo } from "./BtcInfo";
+import { BtcQuantityInfo } from "./BtcQuantityInfo";
 import { WeigthUnit } from "./PreciousMetalInfo";
 import { QueryIterator } from "./QueryIterator";
 import { SilverInfo } from "./SilverInfo";
@@ -28,7 +28,7 @@ export default class AssetList extends Vue {
         new AssetBundle(new SilverInfo("Home", "2 CHF, Roll of 50", WeigthUnit.Gram, 500, 0.835, 2)),
         new AssetBundle(new SilverInfo("Home", "1 CHF, Roll of 50", WeigthUnit.Gram, 250, 0.835, 3)),
         new AssetBundle(new SilverInfo("Home", "0.5 CHF, Roll of 50", WeigthUnit.Gram, 125, 0.835, 4)),
-        new AssetBundle(new BtcInfo(AssetList.address, "Spending Wallet")),
+        new AssetBundle(new BtcQuantityInfo(AssetList.address, "Spending Wallet")),
     ];
 
     public get assets() {
@@ -40,7 +40,7 @@ export default class AssetList extends Vue {
     }
 
     public add() {
-        const bundle = new AssetBundle(new BtcInfo(AssetList.address, "XYZ"));
+        const bundle = new AssetBundle(new BtcQuantityInfo(AssetList.address, "XYZ"));
         this.bundles.push(bundle);
 
         return AssetList.update(bundle.assets);

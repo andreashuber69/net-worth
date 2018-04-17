@@ -19,9 +19,9 @@ interface ISummary {
     n_tx: number;
 }
 
-/** Provides information about a crypto currency asset. */
-export class BtcInfo extends CryptoAssetInfo {
-    /** Creates a new [[BtcInfo]] instance. */
+/** Provides information about a BTC asset, */
+export class BtcQuantityInfo extends CryptoAssetInfo {
+    /** Creates a new [[BtcQuantityInfo]] instance. */
     public constructor(address: string, description: string) {
         super(address, description, "BTC", undefined, 8, "bitcoin");
     }
@@ -68,12 +68,12 @@ export class BtcInfo extends CryptoAssetInfo {
         let result = Number.NaN;
         let transactionCount = 0;
 
-        if (BtcInfo.hasStringIndexer(response)) {
+        if (BtcQuantityInfo.hasStringIndexer(response)) {
             for (const address in response) {
                 if (response.hasOwnProperty(address)) {
                     const balance = response[address];
 
-                    if (BtcInfo.isSummary(balance)) {
+                    if (BtcQuantityInfo.isSummary(balance)) {
                         transactionCount += balance.n_tx;
                         result = (Number.isNaN(result) ? 0 : result) + balance.final_balance / 100000000;
                     }
