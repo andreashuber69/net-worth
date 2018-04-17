@@ -57,6 +57,6 @@ td.fractional {
 }
 
 tr:nth-child(even) {
-  background-color: lightgrey;
+  background-color: lightgoldenrodyellow;
 }
 </style>

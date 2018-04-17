@@ -18,7 +18,8 @@
     <td>{{ asset.description }}</td>
     <td>{{ asset.type }}</td>
     <td>{{ asset.unit }}</td>
-    <td>{{ asset.fineness }}</td>
+    <td class="integral">{{ asset.finenessIntegral }}</td>
+    <td class="fractional">{{ asset.finenessFractional }}</td>
     <td class="integral">{{ asset.unitValueIntegral }}</td>
     <td class="fractional">{{ asset.unitValueFractional }}</td>
     <td class="integral">{{ asset.quantityIntegral }}</td>

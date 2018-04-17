@@ -20,7 +20,7 @@
         <th>Description</th>
         <th>Type</th>
         <th>Unit</th>
-        <th>Fineness</th>
+        <th class="number" colspan="2">Fineness</th>
         <th class="number" colspan="2">Unit Value</th>
         <th class="number" colspan="2">Quantity</th>
         <th class="number" colspan="2">Total Value</th>

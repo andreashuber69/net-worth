@@ -22,6 +22,22 @@ export enum WeigthUnit {
 
 /** Provides information about an asset made of a precious metal. */
 export abstract class PreciousMetalInfo extends AssetInfo {
+    public get finenessIntegral() {
+        return Math.trunc(this.fineness);
+    }
+
+    public get finenessFractional() {
+        let fractional = (this.fineness % 1).toFixed(6).substr(1);
+
+        while (fractional.endsWith("0")) {
+            fractional = fractional.substr(0, fractional.length - 1);
+        }
+
+        return fractional;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Creates a new [[PreciousMetalInfo]] instance.
      * @param location The location of the precious metal items, e.g. Saftey Deposit Box.
