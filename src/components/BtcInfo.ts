@@ -23,7 +23,7 @@ interface ISummary {
 export class BtcInfo extends CryptoAssetInfo {
     /** Creates a new [[BtcInfo]] instance. */
     public constructor(address: string, description: string) {
-        super(address, description, "BTC", 8, "bitcoin");
+        super(address, description, "BTC", undefined, 8, "bitcoin");
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -29,10 +29,11 @@ export abstract class CryptoAssetInfo extends AssetInfo {
         address: string,
         description: string,
         currencySymbol: string,
+        quantity: number | undefined,
         quantityDecimals: number,
         private readonly cmcId: string,
     ) {
-        super(address, description, currencySymbol, currencySymbol, undefined, quantityDecimals);
+        super(address, description, currencySymbol, currencySymbol, quantity, quantityDecimals);
     }
 
     protected * getQueries() {
