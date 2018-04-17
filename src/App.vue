@@ -45,7 +45,23 @@ th, td {
   padding: 8px;
 }
 
+td.alignright {
+  border-width: 1px 0px 1px 1px;
+  border-style: solid;
+  border-color: lightgray;
+  text-align: right;
+  padding: 8px 0px 8px 8px;
+}
+
+td.alignleft {
+  border-width: 1px 1px 1px 0px;
+  border-style: solid;
+  border-color: lightgray;
+  text-align: left;
+  padding: 8px 8px 8px 0px;
+}
+
 tr:nth-child(even) {
-    background-color: lightgrey;
+  background-color: lightgrey;
 }
 </style>

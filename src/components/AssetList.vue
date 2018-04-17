@@ -21,9 +21,9 @@
         <th>Type</th>
         <th>Unit</th>
         <th>Fineness</th>
-        <th>Unit Value (USD)</th>
-        <th>Quantity</th>
-        <th>Total Value (USD)</th>
+        <th colspan="2">Unit Value</th>
+        <th colspan="2">Quantity</th>
+        <th colspan="2">Total Value</th>
       </tr>
       <Asset v-for="(asset, index) in assets" :key="index" :asset="asset"></Asset>
     </table>

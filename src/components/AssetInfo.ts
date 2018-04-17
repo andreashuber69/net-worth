@@ -18,19 +18,28 @@ export abstract class AssetInfo {
         return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
     }
 
-    public get formattedUnitValue() {
-        return AssetInfo.formatNumber(this.unitValue, 2);
+    public get unitValueIntegral() {
+        return AssetInfo.formatIntegral(this.unitValue);
     }
 
-    public get formattedQuantity() {
-        return AssetInfo.formatNumber(this.quantity, this.quantityDecimals);
+    public get unitValueDecimal() {
+        return AssetInfo.formatDecimal(this.unitValue, 2);
     }
 
-    public get formattedTotalValue() {
-        const result = (this.quantity === undefined) || (this.unitValue === undefined) ?
-            undefined : this.quantity * this.unitValue;
+    public get quantityIntegral() {
+        return AssetInfo.formatIntegral(this.quantity);
+    }
 
-        return AssetInfo.formatNumber(result, 2);
+    public get quantityDecimal() {
+        return AssetInfo.formatDecimal(this.quantity, this.quantityDecimals);
+    }
+
+    public get totalValueIntegral() {
+        return AssetInfo.formatIntegral(this.totalValue);
+    }
+
+    public get totalValueDecimal() {
+        return AssetInfo.formatDecimal(this.totalValue, 2);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,13 +107,22 @@ export abstract class AssetInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static formatNumber(num: number | undefined, decimals: number) {
+    private static formatIntegral(num: number | undefined) {
+        return (num === undefined) || Number.isNaN(num) ? "" : Math.trunc(num);
+    }
+
+    private static formatDecimal(num: number | undefined, decimals: number) {
         if (num === undefined) {
             return "Querying...";
         } else if (Number.isNaN(num)) {
             return "Error";
         } else {
-            return num.toFixed(decimals);
+            return (num % 1).toFixed(decimals).substring(1);
         }
+    }
+
+    private get totalValue() {
+        return (this.quantity === undefined) || (this.unitValue === undefined) ?
+            undefined : this.quantity * this.unitValue;
     }
 }

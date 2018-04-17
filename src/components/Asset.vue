@@ -19,9 +19,12 @@
     <td>{{ asset.type }}</td>
     <td>{{ asset.unit }}</td>
     <td>{{ asset.fineness }}</td>
-    <td>{{ asset.formattedUnitValue }}</td>
-    <td>{{ asset.formattedQuantity }}</td>
-    <td>{{ asset.formattedTotalValue }}</td>
+    <td class="alignright">{{ asset.unitValueIntegral }}</td>
+    <td class="alignleft">{{ asset.unitValueDecimal }}</td>
+    <td class="alignright">{{ asset.quantityIntegral }}</td>
+    <td class="alignleft">{{ asset.quantityDecimal }}</td>
+    <td class="alignright">{{ asset.totalValueIntegral }}</td>
+    <td class="alignleft">{{ asset.totalValueDecimal }}</td>
   </tr>
 </template>
 
