@@ -22,24 +22,24 @@ export abstract class AssetInfo {
         return AssetInfo.formatIntegral(this.unitValue);
     }
 
-    public get unitValueDecimal() {
-        return AssetInfo.formatDecimal(this.unitValue, 2);
+    public get unitValueFractional() {
+        return AssetInfo.formatFractional(this.unitValue, 2);
     }
 
     public get quantityIntegral() {
         return AssetInfo.formatIntegral(this.quantity);
     }
 
-    public get quantityDecimal() {
-        return AssetInfo.formatDecimal(this.quantity, this.quantityDecimals);
+    public get quantityFractional() {
+        return AssetInfo.formatFractional(this.quantity, this.quantityDecimals);
     }
 
     public get totalValueIntegral() {
         return AssetInfo.formatIntegral(this.totalValue);
     }
 
-    public get totalValueDecimal() {
-        return AssetInfo.formatDecimal(this.totalValue, 2);
+    public get totalValueFractional() {
+        return AssetInfo.formatFractional(this.totalValue, 2);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +111,7 @@ export abstract class AssetInfo {
         return (num === undefined) || Number.isNaN(num) ? "" : Math.trunc(num);
     }
 
-    private static formatDecimal(num: number | undefined, decimals: number) {
+    private static formatFractional(num: number | undefined, decimals: number) {
         if (num === undefined) {
             return "Querying...";
         } else if (Number.isNaN(num)) {

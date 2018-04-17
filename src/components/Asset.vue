@@ -19,12 +19,12 @@
     <td>{{ asset.type }}</td>
     <td>{{ asset.unit }}</td>
     <td>{{ asset.fineness }}</td>
-    <td class="alignright">{{ asset.unitValueIntegral }}</td>
-    <td class="alignleft">{{ asset.unitValueDecimal }}</td>
-    <td class="alignright">{{ asset.quantityIntegral }}</td>
-    <td class="alignleft">{{ asset.quantityDecimal }}</td>
-    <td class="alignright">{{ asset.totalValueIntegral }}</td>
-    <td class="alignleft">{{ asset.totalValueDecimal }}</td>
+    <td class="integral">{{ asset.unitValueIntegral }}</td>
+    <td class="fractional">{{ asset.unitValueFractional }}</td>
+    <td class="integral">{{ asset.quantityIntegral }}</td>
+    <td class="fractional">{{ asset.quantityFractional }}</td>
+    <td class="integral">{{ asset.totalValueIntegral }}</td>
+    <td class="fractional">{{ asset.totalValueFractional }}</td>
   </tr>
 </template>
 
