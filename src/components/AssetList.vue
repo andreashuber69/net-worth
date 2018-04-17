@@ -21,9 +21,9 @@
         <th>Type</th>
         <th>Unit</th>
         <th>Fineness</th>
-        <th colspan="2">Unit Value</th>
-        <th colspan="2">Quantity</th>
-        <th colspan="2">Total Value</th>
+        <th class="number" colspan="2">Unit Value</th>
+        <th class="number" colspan="2">Quantity</th>
+        <th class="number" colspan="2">Total Value</th>
       </tr>
       <Asset v-for="(asset, index) in assets" :key="index" :asset="asset"></Asset>
     </table>
@@ -35,4 +35,7 @@
 </script>
 
 <style scoped>
+th.number {
+  text-align: center;
+}
 </style>
