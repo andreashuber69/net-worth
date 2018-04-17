@@ -12,7 +12,7 @@
 
 import { CryptoAssetInfo } from "./CryptoAssetInfo";
 
-/** Provides information about a BTC asset, */
+/** Provides information about a BTC asset. */
 export class BtcInfo extends CryptoAssetInfo {
     /** Creates a new [[BtcInfo]] instance. */
     public constructor(location: string, description: string, quantity: number) {

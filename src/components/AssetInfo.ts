@@ -109,7 +109,7 @@ export abstract class AssetInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static formatInteger(num: number | undefined) {
-        return (num === undefined) || Number.isNaN(num) ? "" : Math.trunc(num);
+        return (num === undefined) || Number.isNaN(num) ? "" : Math.trunc(num).toFixed(0);
     }
 
     private static formatFraction(num: number | undefined, decimals: number) {

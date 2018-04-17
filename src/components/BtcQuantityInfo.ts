@@ -19,7 +19,7 @@ interface ISummary {
     n_tx: number;
 }
 
-/** Provides information about a BTC asset, */
+/** Provides information about a BTC asset. */
 export class BtcQuantityInfo extends CryptoAssetInfo {
     /** Creates a new [[BtcQuantityInfo]] instance. */
     public constructor(address: string, description: string) {
