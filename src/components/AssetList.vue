@@ -35,6 +35,10 @@
 </script>
 
 <style scoped>
+tr:nth-child(even) {
+  background-color: lightgoldenrodyellow;
+}
+
 th.number {
   text-align: center;
 }
