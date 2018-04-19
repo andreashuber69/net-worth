@@ -70,7 +70,12 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getPrice(response: any) {
-        return PreciousMetalInfo.hasDataTupleArray(response) ? response.data[0][1] : Number.NaN;
+        return PreciousMetalInfo.hasDatasetProperty(response) && PreciousMetalInfo.hasDataTupleArray(response.dataset) ?
+            response.dataset.data[0][1] : Number.NaN;
+    }
+
+    private static hasDatasetProperty(value: any): value is { dataset: object } {
+        return this.hasStringIndexer(value) && (value.dataset instanceof Object);
     }
 
     private static hasDataTupleArray(value: any): value is { data: Array<[ string, number ]> } {

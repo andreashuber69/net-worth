@@ -38,6 +38,6 @@ export class SilverInfo extends PreciousMetalInfo {
 
     // tslint:disable-next-line:prefer-function-over-method
     protected * getQueries() {
-        yield "https://www.quandl.com/api/v1/datasets/lbma/silver.json?no-cors&rows=1";
+        yield "https://www.quandl.com/api/v3/datasets/lbma/silver.json?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1";
     }
 }
