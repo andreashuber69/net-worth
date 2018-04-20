@@ -56,9 +56,15 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         weight: number,
         public readonly fineness: number,
         quantity: number,
+        private readonly quandlId: string,
     ) {
         super(location, description, type, PreciousMetalInfo.getUnit(weightUnit, weight), quantity, 0);
         this.pureGramsPerUnit = weightUnit * weight * fineness;
+    }
+
+    // tslint:disable-next-line:prefer-function-over-method
+    protected * getQueries() {
+        yield `https://www.quandl.com/api/v3/datasets/lbma/${this.quandlId}.json?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`;
     }
 
     protected processQueryResponse(response: any) {

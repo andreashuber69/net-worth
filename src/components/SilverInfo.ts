@@ -31,13 +31,6 @@ export class SilverInfo extends PreciousMetalInfo {
         fineness: number,
         quantity: number,
     ) {
-        super(location, description, "Silver", weightUnit, weight, fineness, quantity);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // tslint:disable-next-line:prefer-function-over-method
-    protected * getQueries() {
-        yield "https://www.quandl.com/api/v3/datasets/lbma/silver.json?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1";
+        super(location, description, "Silver", weightUnit, weight, fineness, quantity, "silver");
     }
 }
