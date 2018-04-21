@@ -16,6 +16,7 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetInfo } from "./AssetInfo";
 import { BtcQuantityInfo } from "./BtcQuantityInfo";
 import { WeigthUnit } from "./PreciousMetalInfo";
+import { QueryCache } from "./QueryCache";
 import { QueryIterator } from "./QueryIterator";
 import { SilverInfo } from "./SilverInfo";
 
@@ -126,7 +127,7 @@ export default class AssetList extends Vue {
 
     private static async getQueryResponse(query: string) {
         try {
-            return JSON.parse(await (await window.fetch(query)).text());
+            return JSON.parse(await QueryCache.fetch(query));
         } catch {
             // It appears that after catch (e), e is sometimes undefined at this point, which is why we go with plain
             // catch.
