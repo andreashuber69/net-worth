@@ -127,11 +127,8 @@ export default class AssetList extends Vue {
 
         for (const bundle of this.bundles) {
             for (const asset of bundle.assets) {
-                if (result === undefined) {
-                    result = asset.totalValue;
-                } else {
-                    result += asset.totalValue === undefined ? 0 : asset.totalValue;
-                }
+                const value = asset.totalValue;
+                result = result === undefined ? value : result + (value === undefined ? 0 : value);
             }
         }
 

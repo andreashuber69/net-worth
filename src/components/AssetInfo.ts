@@ -14,7 +14,8 @@
 export abstract class AssetInfo {
     /** @internal */
     public static formatInteger(num: number | undefined) {
-        return (num === undefined) || Number.isNaN(num) ? "" : Math.trunc(num).toFixed(0);
+        return (num === undefined) || Number.isNaN(num) ?
+            "" : Math.trunc(num).toLocaleString(undefined, { useGrouping: true });
     }
 
     /** @internal */
