@@ -23,7 +23,15 @@ import { SilverInfo } from "./SilverInfo";
 @Component({ components: { Asset } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetList extends Vue {
-    public bundles: AssetBundle[] = [
+    public currencies = [
+        "USD",
+        "CHF",
+        "EUR",
+    ];
+
+    public selectedCurrency = this.currencies[0];
+
+    public bundles = [
         new AssetBundle(new SilverInfo("Home", "5 CHF, Roll of 50", WeigthUnit.Gram, 750, 0.835, 1)),
         new AssetBundle(new SilverInfo("Home", "2 CHF, Roll of 50", WeigthUnit.Gram, 500, 0.835, 2)),
         new AssetBundle(new SilverInfo("Home", "1 CHF, Roll of 50", WeigthUnit.Gram, 250, 0.835, 3)),
@@ -48,10 +56,14 @@ export default class AssetList extends Vue {
     }
 
     public add() {
-        const bundle = new AssetBundle(new BtcQuantityInfo(AssetList.address, "XYZ"));
+        const bundle = new AssetBundle(new SilverInfo("Home", "Bars", WeigthUnit.Kilogram, 1, 0.999, 3));
         this.bundles.push(bundle);
 
         return AssetList.update(bundle.assets);
+    }
+
+    public currencyChanged() {
+        this.selectedCurrency.toString();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,15 +135,7 @@ export default class AssetList extends Vue {
     }
 
     private get grandTotalValue() {
-        let result: number | undefined;
-
-        for (const bundle of this.bundles) {
-            for (const asset of bundle.assets) {
-                const value = asset.totalValue;
-                result = result === undefined ? value : result + (value === undefined ? 0 : value);
-            }
-        }
-
-        return result;
+        return this.assets.reduce<number | undefined>(
+            (s, a) => s === undefined ? a.totalValue : s + (a.totalValue === undefined ? 0 : a.totalValue), undefined);
     }
 }

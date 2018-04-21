@@ -14,6 +14,9 @@
 
 <template>
   <div>
+    <select v-model="selectedCurrency" @change="currencyChanged">
+      <option v-for="(currency, index) in currencies" :key="index">{{currency}}</option>
+    </select>
     <table>
       <tr>
         <th>Location</th>
@@ -32,7 +35,7 @@
         <td class="total fraction">{{ totalValueFraction }}</td>
       </tr>
     </table>
-    <button v-on:click="add">Add</button>
+    <button @click="add">Add</button>
   </div>
 </template>
 
