@@ -24,8 +24,8 @@
     <td class="fraction">{{ asset.unitValueFraction }}</td>
     <td class="integer">{{ asset.quantityInteger }}</td>
     <td class="fraction">{{ asset.quantityFraction }}</td>
-    <td class="integer">{{ asset.totalValueInteger }}</td>
-    <td class="fraction">{{ asset.totalValueFraction }}</td>
+    <td class="total integer">{{ asset.totalValueInteger }}</td>
+    <td class="total fraction">{{ asset.totalValueFraction }}</td>
   </tr>
 </template>
 
@@ -33,15 +33,4 @@
 </script>
 
 <style scoped>
-td.integer {
-  border-width: 1px 0px 1px 1px;
-  text-align: right;
-  padding: 8px 0px 8px 8px;
-}
-
-td.fraction {
-  border-width: 1px 1px 1px 0px;
-  text-align: left;
-  padding: 8px 8px 8px 0px;
-}
 </style>

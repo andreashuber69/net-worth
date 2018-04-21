@@ -43,4 +43,20 @@ th, td {
   text-align: left;
   padding: 8px;
 }
+
+td.integer {
+  border-width: 1px 0px 1px 1px;
+  text-align: right;
+  padding: 8px 0px 8px 8px;
+}
+
+td.fraction {
+  border-width: 1px 1px 1px 0px;
+  text-align: left;
+  padding: 8px 8px 8px 0px;
+}
+
+td.total {
+  font-weight: bold;
+}
 </style>

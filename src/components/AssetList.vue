@@ -26,6 +26,11 @@
         <th class="number" colspan="2">Total Value</th>
       </tr>
       <Asset v-for="(asset, index) in assets" :key="index" :asset="asset"></Asset>
+      <tr>
+        <td class="total" colspan="10">Grand Total</td>
+        <td class="total integer">{{ totalValueInteger }}</td>
+        <td class="total fraction">{{ totalValueFraction }}</td>
+      </tr>
     </table>
     <button v-on:click="add">Add</button>
   </div>
@@ -35,11 +40,11 @@
 </script>
 
 <style scoped>
-tr:nth-child(even) {
-  background-color: lightgoldenrodyellow;
-}
-
 th.number {
   text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: lightgoldenrodyellow;
 }
 </style>

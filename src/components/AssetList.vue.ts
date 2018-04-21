@@ -35,6 +35,14 @@ export default class AssetList extends Vue {
         return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<AssetInfo>());
     }
 
+    public get totalValueInteger() {
+        return AssetInfo.formatInteger(this.grandTotalValue);
+    }
+
+    public get totalValueFraction() {
+        return AssetInfo.formatFraction(this.grandTotalValue, 2);
+    }
+
     public mounted() {
         return AssetList.update(this.assets);
     }
@@ -112,5 +120,21 @@ export default class AssetList extends Vue {
             // catch.
             return { error: "Can't fetch or parse response." };
         }
+    }
+
+    private get grandTotalValue() {
+        let result: number | undefined;
+
+        for (const bundle of this.bundles) {
+            for (const asset of bundle.assets) {
+                if (result === undefined) {
+                    result = asset.totalValue;
+                } else {
+                    result += asset.totalValue === undefined ? 0 : asset.totalValue;
+                }
+            }
+        }
+
+        return result;
     }
 }

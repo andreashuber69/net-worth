@@ -12,6 +12,27 @@
 
 /** Base of all classes that provide information about an asset. */
 export abstract class AssetInfo {
+    /** @internal */
+    public static formatInteger(num: number | undefined) {
+        return (num === undefined) || Number.isNaN(num) ? "" : Math.trunc(num).toFixed(0);
+    }
+
+    /** @internal */
+    public static formatFraction(num: number | undefined, decimals: number) {
+        if (num === undefined) {
+            return "Querying...";
+        } else if (Number.isNaN(num)) {
+            return "Error";
+        } else {
+            return (num % 1).toFixed(decimals).substring(1);
+        }
+    }
+
+    public get totalValue() {
+        return (this.quantity === undefined) || (this.unitValue === undefined) ?
+            undefined : this.quantity * this.unitValue;
+    }
+
     public get shortLocation() {
         const maxLength = 15;
 
@@ -105,25 +126,4 @@ export abstract class AssetInfo {
      * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
      */
     protected abstract processQueryResponse(response: any): boolean;
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static formatInteger(num: number | undefined) {
-        return (num === undefined) || Number.isNaN(num) ? "" : Math.trunc(num).toFixed(0);
-    }
-
-    private static formatFraction(num: number | undefined, decimals: number) {
-        if (num === undefined) {
-            return "Querying...";
-        } else if (Number.isNaN(num)) {
-            return "Error";
-        } else {
-            return (num % 1).toFixed(decimals).substring(1);
-        }
-    }
-
-    private get totalValue() {
-        return (this.quantity === undefined) || (this.unitValue === undefined) ?
-            undefined : this.quantity * this.unitValue;
-    }
 }
