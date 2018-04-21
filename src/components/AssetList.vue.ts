@@ -76,15 +76,19 @@ export default class AssetList extends Vue {
         const iterators = AssetList.createIterators(assets);
 
         while (iterators.size > 0) {
-            const queries = AssetList.getQueries(iterators);
+            const doneAssets = new Array<AssetInfo>();
 
-            for (const [query, sameQueryAssets] of queries) {
-                const response = await this.getQueryResponse(query);
-
-                for (const asset of sameQueryAssets) {
-                    asset.processCurrentQueryResponse(response);
-                    (iterators.get(asset) as QueryIterator).advance();
+            for (const [asset, queryIterator] of iterators) {
+                if (queryIterator.value) {
+                    asset.processCurrentQueryResponse(await this.getQueryResponse(queryIterator.value));
+                    queryIterator.advance();
+                } else {
+                    doneAssets.push(asset);
                 }
+            }
+
+            for (const asset of doneAssets) {
+                iterators.delete(asset);
             }
         }
     }
@@ -97,32 +101,6 @@ export default class AssetList extends Vue {
         }
 
         return result;
-    }
-
-    private static getQueries(queryIterators: Map<AssetInfo, QueryIterator>): Map<string, AssetInfo[]> {
-        const queries = new Map<string, AssetInfo[]>();
-        const doneAssets = new Array<AssetInfo>();
-
-        for (const [asset, queryIterator] of queryIterators) {
-            if (queryIterator.value) {
-                let equalQueryAssets = queries.get(queryIterator.value);
-
-                if (!equalQueryAssets) {
-                    equalQueryAssets = new Array<AssetInfo>();
-                    queries.set(queryIterator.value, equalQueryAssets);
-                }
-
-                equalQueryAssets.push(asset);
-            } else {
-                doneAssets.push(asset);
-            }
-        }
-
-        for (const asset of doneAssets) {
-            queryIterators.delete(asset);
-        }
-
-        return queries;
     }
 
     private static async getQueryResponse(query: string) {
