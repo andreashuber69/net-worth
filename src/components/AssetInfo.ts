@@ -29,12 +29,8 @@ export abstract class AssetInfo {
         }
     }
 
+    /** @internal */
     public exchangeRate = 1;
-
-    public get totalValue() {
-        return (this.quantity === undefined) || (this.unitValue === undefined) ?
-            undefined : this.quantity * this.unitValue * this.exchangeRate;
-    }
 
     public get shortLocation() {
         const maxLength = 15;
@@ -66,8 +62,6 @@ export abstract class AssetInfo {
         return AssetInfo.formatFraction(this.totalValue, 2);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     /** @internal  */
     public get queries() {
         return this.getQueries();
@@ -78,9 +72,15 @@ export abstract class AssetInfo {
         return this.processQueryResponse(response);
     }
 
+    /** @internal */
+    public get totalValue() {
+        return (this.quantity === undefined) || (this.unitValue === undefined) ?
+            undefined : this.quantity * this.unitValue;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected unitValue: number | undefined = undefined;
+    protected unitValueUsd: number | undefined = undefined;
 
     /**
      * Creates a new [[AssetInfo]] instance.
@@ -129,4 +129,10 @@ export abstract class AssetInfo {
      * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
      */
     protected abstract processQueryResponse(response: any): boolean;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private get unitValue() {
+        return this.unitValueUsd === undefined ? undefined : this.unitValueUsd * this.exchangeRate;
+    }
 }

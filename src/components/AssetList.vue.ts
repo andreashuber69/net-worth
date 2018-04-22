@@ -58,12 +58,14 @@ export default class AssetList extends Vue {
         const rate = await AssetList.getExchangeRate(AssetList.currencyMap.get(this.selectedCurrency) as string);
 
         for (const asset of this.assets) {
+            // TODO: This doesn't work for newly added assets, as they come with the default of 1...
             asset.exchangeRate = rate;
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // TODO: Extend with XAU, XAG and BTC
     private static readonly currencyMap = new Map<string, string>([
         ["AUD", "XUDLADD"],
         ["CAD", "XUDLCDD"],
@@ -130,7 +132,8 @@ export default class AssetList extends Vue {
 
     private static async getExchangeRate(quandlId: string) {
         if (quandlId.length > 0) {
-            const response = await QueryCache.fetch(`https://www.quandl.com/api/v3/datasets/BOE/${quandlId}?rows=1`);
+            const response = await QueryCache.fetch(
+                `https://www.quandl.com/api/v3/datasets/BOE/${quandlId}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`);
 
             return QuandlParser.getPrice(response);
         } else {

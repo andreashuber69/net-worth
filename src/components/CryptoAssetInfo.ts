@@ -46,7 +46,7 @@ export abstract class CryptoAssetInfo extends AssetInfo {
 
         if (!this.responseProcessed) {
             this.responseProcessed = true;
-            this.unitValue = CryptoAssetInfo.getPrice(response);
+            this.unitValueUsd = CryptoAssetInfo.getPrice(response);
         }
 
         return result;

@@ -69,7 +69,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     }
 
     protected processQueryResponse(response: any) {
-        this.unitValue = this.pureGramsPerUnit / WeigthUnit.TroyOunce * QuandlParser.getPrice(response);
+        this.unitValueUsd = this.pureGramsPerUnit / WeigthUnit.TroyOunce * QuandlParser.getPrice(response);
 
         return false;
     }
