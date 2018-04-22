@@ -16,12 +16,24 @@ export class QueryCache {
         let result = this.cache.get(query);
 
         if (!result) {
-            result = await (await window.fetch(query)).text();
+            result = await this.fetchAndParse(query);
             this.cache.set(query, result);
         }
 
         return result;
     }
 
-    private static readonly cache = new Map<string, string>();
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static readonly cache = new Map<string, any>();
+
+    private static async fetchAndParse(query: string) {
+        try {
+            return JSON.parse(await (await window.fetch(query)).text());
+        } catch {
+            // It appears that after catch (e), e is sometimes undefined at this point, which is why we go with plain
+            // catch.
+            return { error: "Can't fetch or parse response." };
+        }
+    }
 }

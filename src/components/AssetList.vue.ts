@@ -16,6 +16,7 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetInfo } from "./AssetInfo";
 import { BtcQuantityInfo } from "./BtcQuantityInfo";
 import { WeigthUnit } from "./PreciousMetalInfo";
+import { QuandlParser } from "./QuandlParser";
 import { QueryCache } from "./QueryCache";
 import { QueryIterator } from "./QueryIterator";
 import { SilverInfo } from "./SilverInfo";
@@ -53,8 +54,11 @@ export default class AssetList extends Vue {
         return AssetList.update(bundle.assets);
     }
 
-    public currencyChanged() {
-        this.selectedCurrency.toString();
+    public async currencyChanged() {
+        const id = AssetList.currencyMap.get(this.selectedCurrency) as string;
+        const response = await QueryCache.fetch(`https://www.quandl.com/api/v3/datasets/BOE/${id}?rows=1`);
+        const price = QuandlParser.getPrice(response);
+        price.toString();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +104,7 @@ export default class AssetList extends Vue {
 
             for (const [asset, queryIterator] of iterators) {
                 if (queryIterator.value) {
-                    asset.processCurrentQueryResponse(await this.getQueryResponse(queryIterator.value));
+                    asset.processCurrentQueryResponse(await QueryCache.fetch(queryIterator.value));
                     queryIterator.advance();
                 } else {
                     doneAssets.push(asset);
@@ -121,16 +125,6 @@ export default class AssetList extends Vue {
         }
 
         return result;
-    }
-
-    private static async getQueryResponse(query: string) {
-        try {
-            return JSON.parse(await QueryCache.fetch(query));
-        } catch {
-            // It appears that after catch (e), e is sometimes undefined at this point, which is why we go with plain
-            // catch.
-            return { error: "Can't fetch or parse response." };
-        }
     }
 
     private readonly bundles = [
