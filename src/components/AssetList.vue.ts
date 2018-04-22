@@ -35,11 +35,11 @@ export default class AssetList extends Vue {
     }
 
     public get totalValueInteger() {
-        return AssetInfo.formatInteger(this.grandTotalValue);
+        return AssetInfo.formatInteger(this.totalValue);
     }
 
     public get totalValueFraction() {
-        return AssetInfo.formatFraction(this.grandTotalValue, 2);
+        return AssetInfo.formatFraction(this.totalValue, 2);
     }
 
     public mounted() {
@@ -141,7 +141,7 @@ export default class AssetList extends Vue {
         new AssetBundle(new BtcQuantityInfo(AssetList.address, "Spending Wallet")),
     ];
 
-    private get grandTotalValue() {
+    private get totalValue() {
         return this.assets.reduce<number | undefined>(
             (s, a) => s === undefined ? a.totalValue : s + (a.totalValue === undefined ? 0 : a.totalValue), undefined);
     }
