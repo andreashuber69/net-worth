@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInfo } from "./AssetInfo";
+import { QuandlParser } from "./QuandlParser";
 
 export enum WeigthUnit {
     Gram = 1,
@@ -68,41 +69,15 @@ export abstract class PreciousMetalInfo extends AssetInfo {
     }
 
     protected processQueryResponse(response: any) {
-        this.unitValue = this.pureGramsPerUnit / WeigthUnit.TroyOunce * PreciousMetalInfo.getPrice(response);
+        this.unitValue = this.pureGramsPerUnit / WeigthUnit.TroyOunce * QuandlParser.getPrice(response);
 
         return false;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getPrice(response: any) {
-        return PreciousMetalInfo.hasDatasetProperty(response) && PreciousMetalInfo.hasDataTupleArray(response.dataset) ?
-            response.dataset.data[0][1] : Number.NaN;
-    }
-
-    private static hasDatasetProperty(value: any): value is { dataset: object } {
-        return this.hasStringIndexer(value) && (value.dataset instanceof Object);
-    }
-
-    private static hasDataTupleArray(value: any): value is { data: Array<[ string, number ]> } {
-        return this.hasDataArrayArray(value) && (value.data[0].length >= 2) &&
-            (typeof value.data[0][0] === "string") && (typeof value.data[0][1] === "number");
-    }
-
     private static getUnit(unit: WeigthUnit, weight: number) {
         return `${weight.toFixed(0)} ${this.abbreviate(unit)}`;
-    }
-
-    private static hasDataArrayArray(value: any): value is { data: any[][] } {
-        return this.hasDataArray(value) && (value.data.length >= 1) && (value.data[0] instanceof Array);
-    }
-
-    private static hasDataArray(value: any): value is { data: any[] } {
-        return this.hasStringIndexer(value) && (value.data instanceof Array);
-    }
-
-    private static hasStringIndexer(value: any): value is { [key: string]: any } {
-        return value instanceof Object;
     }
 
     private static abbreviate(unit: WeigthUnit) {
