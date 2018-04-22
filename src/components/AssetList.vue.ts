@@ -24,21 +24,11 @@ import { SilverInfo } from "./SilverInfo";
 @Component({ components: { Asset } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetList extends Vue {
-    public currencies = [
-        "USD",
-        "CHF",
-        "EUR",
-    ];
+    public get currencies() {
+        return Array.from(AssetList.currencyMap.keys());
+    }
 
-    public selectedCurrency = this.currencies[0];
-
-    public bundles = [
-        new AssetBundle(new SilverInfo("Home", "5 CHF, Roll of 50", WeigthUnit.Gram, 750, 0.835, 1)),
-        new AssetBundle(new SilverInfo("Home", "2 CHF, Roll of 50", WeigthUnit.Gram, 500, 0.835, 2)),
-        new AssetBundle(new SilverInfo("Home", "1 CHF, Roll of 50", WeigthUnit.Gram, 250, 0.835, 3)),
-        new AssetBundle(new SilverInfo("Home", "0.5 CHF, Roll of 50", WeigthUnit.Gram, 125, 0.835, 4)),
-        new AssetBundle(new BtcQuantityInfo(AssetList.address, "Spending Wallet")),
-    ];
+    public selectedCurrency = "USD";
 
     public get assets() {
         return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<AssetInfo>());
@@ -68,6 +58,36 @@ export default class AssetList extends Vue {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static readonly currencyMap = new Map<string, string>([
+        ["AUD", "XUDLADD"],
+        ["CAD", "XUDLCDD"],
+        ["CNY", "XUDLBK73"],
+        ["CHF", "XUDLSFD"],
+        ["CZK", "XUDLBK27"],
+        ["DKK", "XUDLDKD"],
+        ["GBP", "XUDLGBD"],
+        ["HKD", "XUDLHDD"],
+        ["HUF", "XUDLBK35"],
+        ["INR", "XUDLBK64"],
+        ["JPY", "XUDLJYD"],
+        ["KRW", "XUDLBK74"],
+        ["LTL", "XUDLBK38"],
+        ["MYR", "XUDLBK66"],
+        ["NIS", "XUDLBK65"],
+        ["NOK", "XUDLNKD"],
+        ["NZD", "XUDLNDD"],
+        ["PLN", "XUDLBK49"],
+        ["RUB", "XUDLBK69"],
+        ["SAR", "XUDLSRD"],
+        ["SEK", "XUDLSKD"],
+        ["SGD", "XUDLSGD"],
+        ["THB", "XUDLBK72"],
+        ["TRY", "XUDLBK75"],
+        ["TWD", "XUDLTWD"],
+        ["USD", ""],
+        ["ZAR", "XUDLZRD"],
+    ]);
 
     // tslint:disable-next-line:max-line-length
     private static readonly address = "1F8i3SE7Zorf6F2rLh3Mxg4Mb8aHT2nkQf";
@@ -112,6 +132,14 @@ export default class AssetList extends Vue {
             return { error: "Can't fetch or parse response." };
         }
     }
+
+    private readonly bundles = [
+        new AssetBundle(new SilverInfo("Home", "5 CHF, Roll of 50", WeigthUnit.Gram, 750, 0.835, 1)),
+        new AssetBundle(new SilverInfo("Home", "2 CHF, Roll of 50", WeigthUnit.Gram, 500, 0.835, 2)),
+        new AssetBundle(new SilverInfo("Home", "1 CHF, Roll of 50", WeigthUnit.Gram, 250, 0.835, 3)),
+        new AssetBundle(new SilverInfo("Home", "0.5 CHF, Roll of 50", WeigthUnit.Gram, 125, 0.835, 4)),
+        new AssetBundle(new BtcQuantityInfo(AssetList.address, "Spending Wallet")),
+    ];
 
     private get grandTotalValue() {
         return this.assets.reduce<number | undefined>(
