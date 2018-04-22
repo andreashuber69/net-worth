@@ -29,9 +29,11 @@ export abstract class AssetInfo {
         }
     }
 
+    public exchangeRate = 1;
+
     public get totalValue() {
         return (this.quantity === undefined) || (this.unitValue === undefined) ?
-            undefined : this.quantity * this.unitValue;
+            undefined : this.quantity * this.unitValue * this.exchangeRate;
     }
 
     public get shortLocation() {

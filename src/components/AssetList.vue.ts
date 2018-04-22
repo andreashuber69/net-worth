@@ -55,10 +55,11 @@ export default class AssetList extends Vue {
     }
 
     public async currencyChanged() {
-        const id = AssetList.currencyMap.get(this.selectedCurrency) as string;
-        const response = await QueryCache.fetch(`https://www.quandl.com/api/v3/datasets/BOE/${id}?rows=1`);
-        const price = QuandlParser.getPrice(response);
-        price.toString();
+        const rate = await AssetList.getExchangeRate(AssetList.currencyMap.get(this.selectedCurrency) as string);
+
+        for (const asset of this.assets) {
+            asset.exchangeRate = rate;
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,6 +126,16 @@ export default class AssetList extends Vue {
         }
 
         return result;
+    }
+
+    private static async getExchangeRate(quandlId: string) {
+        if (quandlId.length > 0) {
+            const response = await QueryCache.fetch(`https://www.quandl.com/api/v3/datasets/BOE/${quandlId}?rows=1`);
+
+            return QuandlParser.getPrice(response);
+        } else {
+            return 1;
+        }
     }
 
     private readonly bundles = [
