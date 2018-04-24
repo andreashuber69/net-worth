@@ -14,18 +14,18 @@
 
 <template>
   <tr>
-    <td :title="asset.location">{{ asset.shortLocation }}</td>
+    <td :title="asset.location">{{ shortLocation }}</td>
     <td>{{ asset.description }}</td>
     <td>{{ asset.type }}</td>
     <td>{{ asset.unit }}</td>
-    <td class="integer">{{ asset.finenessInteger }}</td>
-    <td class="fraction">{{ asset.finenessFraction }}</td>
-    <td class="integer">{{ asset.unitValueInteger }}</td>
-    <td class="fraction">{{ asset.unitValueFraction }}</td>
-    <td class="integer">{{ asset.quantityInteger }}</td>
-    <td class="fraction">{{ asset.quantityFraction }}</td>
-    <td class="total integer">{{ asset.totalValueInteger }}</td>
-    <td class="total fraction">{{ asset.totalValueFraction }}</td>
+    <td class="integer">{{ finenessInteger }}</td>
+    <td class="fraction">{{ finenessFraction }}</td>
+    <td class="integer">{{ unitValueInteger }}</td>
+    <td class="fraction">{{ unitValueFraction }}</td>
+    <td class="integer">{{ quantityInteger }}</td>
+    <td class="fraction">{{ quantityFraction }}</td>
+    <td class="total integer">{{ totalValueInteger }}</td>
+    <td class="total fraction">{{ totalValueFraction }}</td>
   </tr>
 </template>
 

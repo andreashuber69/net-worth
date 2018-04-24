@@ -12,10 +12,13 @@
 
 // tslint:disable-next-line:no-unnecessary-class
 export class QuandlParser {
+    /** @internal */
     public static getPrice(response: any) {
         return this.hasDatasetProperty(response) && this.hasDataTupleArray(response.dataset) ?
             response.dataset.data[0][1] : Number.NaN;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static hasDatasetProperty(value: any): value is { dataset: object } {
         return this.hasStringIndexer(value) && (value.dataset instanceof Object);

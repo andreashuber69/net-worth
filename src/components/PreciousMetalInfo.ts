@@ -23,22 +23,6 @@ export enum WeigthUnit {
 
 /** Provides information about an asset made of a precious metal. */
 export abstract class PreciousMetalInfo extends AssetInfo {
-    public get finenessInteger() {
-        return Math.trunc(this.fineness);
-    }
-
-    public get finenessFraction() {
-        let fraction = (this.fineness % 1).toFixed(6).substr(1);
-
-        while (fraction.endsWith("0")) {
-            fraction = fraction.substr(0, fraction.length - 1);
-        }
-
-        return fraction;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     /**
      * Creates a new [[PreciousMetalInfo]] instance.
      * @param location The location of the precious metal items, e.g. Saftey Deposit Box.
@@ -48,6 +32,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
      * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
      * @param weight The weight of a single item, expressed in `weightUnit`.
      * @param fineness The fineness, e.g. 0.999.
+     * @param quantity The number of items.
      */
     protected constructor(
         location: string,
@@ -55,11 +40,11 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         type: string,
         weightUnit: WeigthUnit,
         weight: number,
-        public readonly fineness: number,
+        fineness: number,
         quantity: number,
         private readonly quandlId: string,
     ) {
-        super(location, description, type, PreciousMetalInfo.getUnit(weightUnit, weight), quantity, 0);
+        super(location, description, type, PreciousMetalInfo.getUnit(weightUnit, weight), fineness, quantity, 0);
         this.pureGramsPerUnit = weightUnit * weight * fineness;
     }
 

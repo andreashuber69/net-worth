@@ -23,6 +23,7 @@ export abstract class CryptoAssetInfo extends AssetInfo {
      * @param address The public address of the crypto asset.
      * @param description Describes the crypto asset, e.g. Savings, Speculation.
      * @param currencySymbol The crypto currency symbol, e.g. BTC, LTC.
+     * @param quantity The amount of crypto currency.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      * @param cmcId The coinmarketcap.com identifier of the currency.
      */
@@ -34,7 +35,7 @@ export abstract class CryptoAssetInfo extends AssetInfo {
         quantityDecimals: number,
         private readonly cmcId: string,
     ) {
-        super(address, description, currencySymbol, currencySymbol, quantity, quantityDecimals);
+        super(address, description, currencySymbol, currencySymbol, 1, quantity, quantityDecimals);
     }
 
     protected * getQueries() {

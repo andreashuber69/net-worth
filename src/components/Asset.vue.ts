@@ -19,4 +19,63 @@ import { AssetInfo } from "./AssetInfo";
 export default class Asset extends Vue {
     @Prop()
     public asset?: AssetInfo;
+
+    public get shortLocation() {
+        const maxLength = 15;
+
+        return this.info.location.length > maxLength ?
+            `${this.info.location.substr(0, maxLength)}...` : this.info.location;
+    }
+
+    public get finenessInteger() {
+        return this.info.fineness === 1 ? "" : Math.trunc(this.info.fineness);
+    }
+
+    public get finenessFraction() {
+        if (this.info.fineness === 1) {
+            return "";
+        } else {
+            let fraction = (this.info.fineness % 1).toFixed(6).substr(1);
+
+            while (fraction.endsWith("0")) {
+                fraction = fraction.substr(0, fraction.length - 1);
+            }
+
+            return fraction;
+        }
+    }
+
+    public get unitValueInteger() {
+        return AssetInfo.formatInteger(this.info.unitValue);
+    }
+
+    public get unitValueFraction() {
+        return AssetInfo.formatFraction(this.info.unitValue, 2);
+    }
+
+    public get quantityInteger() {
+        return AssetInfo.formatInteger(this.info.quantity);
+    }
+
+    public get quantityFraction() {
+        return AssetInfo.formatFraction(this.info.quantity, this.info.quantityDecimals);
+    }
+
+    public get totalValueInteger() {
+        return AssetInfo.formatInteger(this.info.totalValue);
+    }
+
+    public get totalValueFraction() {
+        return AssetInfo.formatFraction(this.info.totalValue, 2);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private get info() {
+        if (!this.asset) {
+            throw new Error("No asset set.");
+        }
+
+        return this.asset;
+    }
 }

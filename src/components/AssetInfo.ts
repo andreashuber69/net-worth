@@ -32,34 +32,15 @@ export abstract class AssetInfo {
     /** @internal */
     public exchangeRate = 1;
 
-    public get shortLocation() {
-        const maxLength = 15;
-
-        return this.location.length > maxLength ? `${this.location.substr(0, maxLength)}...` : this.location;
+    /** @internal */
+    public get unitValue() {
+        return this.unitValueUsd === undefined ? undefined : this.unitValueUsd * this.exchangeRate;
     }
 
-    public get unitValueInteger() {
-        return AssetInfo.formatInteger(this.unitValue);
-    }
-
-    public get unitValueFraction() {
-        return AssetInfo.formatFraction(this.unitValue, 2);
-    }
-
-    public get quantityInteger() {
-        return AssetInfo.formatInteger(this.quantity);
-    }
-
-    public get quantityFraction() {
-        return AssetInfo.formatFraction(this.quantity, this.quantityDecimals);
-    }
-
-    public get totalValueInteger() {
-        return AssetInfo.formatInteger(this.totalValue);
-    }
-
-    public get totalValueFraction() {
-        return AssetInfo.formatFraction(this.totalValue, 2);
+    /** @internal */
+    public get totalValue() {
+        return (this.quantity === undefined) || (this.unitValue === undefined) ?
+            undefined : this.quantity * this.unitValue;
     }
 
     /** @internal  */
@@ -70,12 +51,6 @@ export abstract class AssetInfo {
     /** @internal */
     public processCurrentQueryResponse(response: any) {
         return this.processQueryResponse(response);
-    }
-
-    /** @internal */
-    public get totalValue() {
-        return (this.quantity === undefined) || (this.unitValue === undefined) ?
-            undefined : this.quantity * this.unitValue;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,6 +64,7 @@ export abstract class AssetInfo {
      * @param description Describes the asset, e.g. Spending, Savings, Bars, Coins.
      * @param type The type of asset, e.g. Silver, Gold, BTC.
      * @param unit The unit of the quantity, e.g. 1 oz (troy), 10 g, BTC.
+     * @param fineness The fineness, e.g. 0.999.
      * @param quantity The asset quantity.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      */
@@ -97,8 +73,9 @@ export abstract class AssetInfo {
         public readonly description: string,
         public readonly type: string,
         public readonly unit: string,
-        protected quantity: number | undefined,
-        private readonly quantityDecimals: number,
+        public readonly fineness: number,
+        public quantity: number | undefined,
+        public readonly quantityDecimals: number,
     ) {
     }
 
@@ -131,8 +108,4 @@ export abstract class AssetInfo {
     protected abstract processQueryResponse(response: any): boolean;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private get unitValue() {
-        return this.unitValueUsd === undefined ? undefined : this.unitValueUsd * this.exchangeRate;
-    }
 }
