@@ -14,8 +14,8 @@
 
 <template>
   <div>
-    <select v-model="selectedCurrency" @change="currencyChanged">
-      <option v-for="(currency, index) in currencies" :key="index">{{currency}}</option>
+    <select v-model="model.selectedCurrency" @change="currencyChanged">
+      <option v-for="(currency, index) in model.currencies" :key="index">{{currency}}</option>
     </select>
     <table>
       <tr>
@@ -28,7 +28,7 @@
         <th class="number" colspan="2">Quantity</th>
         <th class="number" colspan="2">Total Value</th>
       </tr>
-      <Asset v-for="(asset, index) in assets" :key="index" :asset="asset"></Asset>
+      <Asset v-for="(asset, index) in model.assets" :key="index" :asset="asset"></Asset>
       <tr>
         <td class="total" colspan="10">Grand Total</td>
         <td class="total integer">{{ totalValueInteger }}</td>
