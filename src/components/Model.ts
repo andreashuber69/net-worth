@@ -8,18 +8,19 @@ import { QueryIterator } from "./QueryIterator";
 import { SilverInfo } from "./SilverInfo";
 
 export class Model {
-    /** @internal */
     public get currencies() {
         return Array.from(Model.currencyMap.keys());
     }
 
-    /** @internal */
     public selectedCurrency = "USD";
 
     /** @internal */
     public exchangeRate = 1;
 
-    /** @internal */
+    public async currencyChanged() {
+        this.exchangeRate = await Model.getExchangeRate(Model.currencyMap.get(this.selectedCurrency) as string);
+    }
+
     public get assets() {
         return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<AssetInfo>());
     }
@@ -31,10 +32,7 @@ export class Model {
         return Model.update(bundle.assets);
     }
 
-    public async currencyChanged() {
-        this.exchangeRate = await Model.getExchangeRate(Model.currencyMap.get(this.selectedCurrency) as string);
-    }
-
+    /** @internal */
     public update() {
         return Model.update(this.assets);
     }
