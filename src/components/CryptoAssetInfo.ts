@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInfo } from "./AssetInfo";
+import { AssetInfo, IModel } from "./AssetInfo";
 
 /** Provides information about a crypto currency asset. */
 export abstract class CryptoAssetInfo extends AssetInfo {
@@ -20,6 +20,7 @@ export abstract class CryptoAssetInfo extends AssetInfo {
 
     /**
      * Creates a new [[CryptoAssetInfo]] instance.
+     * @param model The model to which this asset belongs.
      * @param address The public address of the crypto asset.
      * @param description Describes the crypto asset, e.g. Savings, Speculation.
      * @param currencySymbol The crypto currency symbol, e.g. BTC, LTC.
@@ -28,6 +29,7 @@ export abstract class CryptoAssetInfo extends AssetInfo {
      * @param cmcId The coinmarketcap.com identifier of the currency.
      */
     protected constructor(
+        model: IModel,
         address: string,
         description: string,
         currencySymbol: string,
@@ -35,7 +37,7 @@ export abstract class CryptoAssetInfo extends AssetInfo {
         quantityDecimals: number,
         private readonly cmcId: string,
     ) {
-        super(address, description, currencySymbol, currencySymbol, 1, quantity, quantityDecimals);
+        super(model, address, description, currencySymbol, currencySymbol, 1, quantity, quantityDecimals);
     }
 
     protected * getQueries() {

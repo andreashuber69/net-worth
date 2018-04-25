@@ -10,12 +10,14 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { IModel } from "./AssetInfo";
 import { PreciousMetalInfo, WeigthUnit } from "./PreciousMetalInfo";
 
 /** Provides information about an asset made of silver. */
 export class SilverInfo extends PreciousMetalInfo {
     /**
      * Creates a new [[SilverInfo]] instance.
+     * @param model The model to which this asset belongs.
      * @param location The location of the silver, e.g. Saftey Deposit Box or Home Safe.
      * @param description Describes the silver items, e.g. Bars, Coins, Medallions.
      * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
@@ -24,6 +26,7 @@ export class SilverInfo extends PreciousMetalInfo {
      * @param quantity The number of items.
      */
     public constructor(
+        model: IModel,
         location: string,
         description: string,
         weightUnit: WeigthUnit,
@@ -31,6 +34,6 @@ export class SilverInfo extends PreciousMetalInfo {
         fineness: number,
         quantity: number,
     ) {
-        super(location, description, "Silver", weightUnit, weight, fineness, quantity, "silver");
+        super(model, location, description, "Silver", weightUnit, weight, fineness, quantity, "silver");
     }
 }

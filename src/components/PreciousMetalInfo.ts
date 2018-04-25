@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInfo } from "./AssetInfo";
+import { AssetInfo, IModel } from "./AssetInfo";
 import { QuandlParser } from "./QuandlParser";
 
 export enum WeigthUnit {
@@ -25,6 +25,7 @@ export enum WeigthUnit {
 export abstract class PreciousMetalInfo extends AssetInfo {
     /**
      * Creates a new [[PreciousMetalInfo]] instance.
+     * @param model The model to which this asset belongs.
      * @param location The location of the precious metal items, e.g. Saftey Deposit Box.
      * @param description Describes the precious metal items, e.g. Bars, Coins.
      * @param type The type of precious metal, e.g. Silver, Gold.
@@ -35,6 +36,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
      * @param quantity The number of items.
      */
     protected constructor(
+        model: IModel,
         location: string,
         description: string,
         type: string,
@@ -44,7 +46,7 @@ export abstract class PreciousMetalInfo extends AssetInfo {
         quantity: number,
         private readonly quandlId: string,
     ) {
-        super(location, description, type, PreciousMetalInfo.getUnit(weightUnit, weight), fineness, quantity, 0);
+        super(model, location, description, type, PreciousMetalInfo.getUnit(weightUnit, weight), fineness, quantity, 0);
         this.pureGramsPerUnit = weightUnit * weight * fineness;
     }
 

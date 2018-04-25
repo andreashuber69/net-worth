@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { HDNode } from "bitcoinjs-lib";
+import { IModel } from "./AssetInfo";
 import { CryptoAssetInfo } from "./CryptoAssetInfo";
 
 /** @internal */
@@ -21,9 +22,13 @@ interface ISummary {
 
 /** Provides information about a BTC asset. */
 export class BtcQuantityInfo extends CryptoAssetInfo {
-    /** Creates a new [[BtcQuantityInfo]] instance. */
-    public constructor(address: string, description: string) {
-        super(address, description, "BTC", undefined, 8, "bitcoin");
+    /** Creates a new [[BtcQuantityInfo]] instance.
+     * @param model The model to which this asset belongs.
+     * @param address The public address.
+     * @param description Describes the asset, e.g. Spending, Savings.
+     */
+    public constructor(model: IModel, address: string, description: string) {
+        super(model, address, description, "BTC", undefined, 8, "bitcoin");
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

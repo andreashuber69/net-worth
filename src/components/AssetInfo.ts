@@ -10,6 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+/** @internal */
+export interface IModel {
+    readonly exchangeRate: number;
+}
+
 /** Base of all classes that provide information about an asset. */
 export abstract class AssetInfo {
     /** @internal */
@@ -30,11 +35,8 @@ export abstract class AssetInfo {
     }
 
     /** @internal */
-    public exchangeRate = 1;
-
-    /** @internal */
     public get unitValue() {
-        return this.unitValueUsd === undefined ? undefined : this.unitValueUsd * this.exchangeRate;
+        return this.unitValueUsd === undefined ? undefined : this.unitValueUsd * this.model.exchangeRate;
     }
 
     /** @internal */
@@ -59,6 +61,7 @@ export abstract class AssetInfo {
 
     /**
      * Creates a new [[AssetInfo]] instance.
+     * @param model The model to which this asset belongs.
      * @param location The location of the asset, e.g. Saftey Deposit Box. For a crypto currency, this is the public
      * address.
      * @param description Describes the asset, e.g. Spending, Savings, Bars, Coins.
@@ -69,6 +72,7 @@ export abstract class AssetInfo {
      * @param quantityDecimals The number of decimals to use to format the quantity.
      */
     protected constructor(
+        private readonly model: IModel,
         public readonly location: string,
         public readonly description: string,
         public readonly type: string,

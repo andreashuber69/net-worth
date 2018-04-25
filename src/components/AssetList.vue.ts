@@ -41,7 +41,8 @@ export default class AssetList extends Vue {
     }
 
     public add() {
-        return this.model.add(new AssetBundle(new SilverInfo("Home", "Bars", WeigthUnit.Kilogram, 1, 0.999, 3)));
+        return this.model.add(
+            new AssetBundle(new SilverInfo(this.model, "Home", "Bars", WeigthUnit.Kilogram, 1, 0.999, 3)));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
