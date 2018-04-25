@@ -10,7 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-// tslint:disable-next-line:no-unnecessary-class
 export class QueryCache {
     public static async fetch(query: string) {
         let result = this.cache.get(query);

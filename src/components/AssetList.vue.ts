@@ -13,7 +13,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import Asset from "./Asset.vue";
 import { AssetBundle } from "./AssetBundle";
-import { AssetInfo } from "./AssetInfo";
+import { Format } from "./Format";
 import { Model } from "./Model";
 import { WeigthUnit } from "./PreciousMetalInfo";
 import { SilverInfo } from "./SilverInfo";
@@ -25,11 +25,11 @@ export default class AssetList extends Vue {
     public readonly model = new Model();
 
     public get totalValueInteger() {
-        return AssetInfo.formatInteger(this.totalValue);
+        return Format.integer(this.totalValue);
     }
 
     public get totalValueFraction() {
-        return AssetInfo.formatFraction(this.totalValue, 2);
+        return Format.fraction(this.totalValue, 2);
     }
 
     public mounted() {

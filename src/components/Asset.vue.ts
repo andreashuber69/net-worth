@@ -12,6 +12,7 @@
 
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { AssetInfo } from "./AssetInfo";
+import { Format } from "./Format";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
@@ -46,27 +47,27 @@ export default class Asset extends Vue {
     }
 
     public get unitValueInteger() {
-        return AssetInfo.formatInteger(this.info.unitValue);
+        return Format.integer(this.info.unitValue);
     }
 
     public get unitValueFraction() {
-        return AssetInfo.formatFraction(this.info.unitValue, 2);
+        return Format.fraction(this.info.unitValue, 2);
     }
 
     public get quantityInteger() {
-        return AssetInfo.formatInteger(this.info.quantity);
+        return Format.integer(this.info.quantity);
     }
 
     public get quantityFraction() {
-        return AssetInfo.formatFraction(this.info.quantity, this.info.quantityDecimals);
+        return Format.fraction(this.info.quantity, this.info.quantityDecimals);
     }
 
     public get totalValueInteger() {
-        return AssetInfo.formatInteger(this.info.totalValue);
+        return Format.integer(this.info.totalValue);
     }
 
     public get totalValueFraction() {
-        return AssetInfo.formatFraction(this.info.totalValue, 2);
+        return Format.fraction(this.info.totalValue, 2);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

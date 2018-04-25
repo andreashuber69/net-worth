@@ -18,23 +18,6 @@ export interface IModel {
 /** Base of all classes that provide information about an asset. */
 export abstract class AssetInfo {
     /** @internal */
-    public static formatInteger(num: number | undefined) {
-        return (num === undefined) || Number.isNaN(num) ?
-            "" : Math.trunc(num).toLocaleString(undefined, { useGrouping: true });
-    }
-
-    /** @internal */
-    public static formatFraction(num: number | undefined, decimals: number) {
-        if (num === undefined) {
-            return "Querying...";
-        } else if (Number.isNaN(num)) {
-            return "Error";
-        } else {
-            return (num % 1).toFixed(decimals).substring(1);
-        }
-    }
-
-    /** @internal */
     public get unitValue() {
         return this.unitValueUsd === undefined ? undefined : this.unitValueUsd * this.model.exchangeRate;
     }
