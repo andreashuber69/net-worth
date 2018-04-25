@@ -12,9 +12,9 @@
 
 export class QueryCache {
     public static async fetch(query: string) {
-        const result = this.cache.get(query);
+        const cached = this.cache.get(query);
 
-        return result ? result : this.fetchAndParse(query);
+        return cached ? cached : this.fetchAndParse(query);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
