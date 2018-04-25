@@ -15,9 +15,10 @@ export class Model {
     public selectedCurrency = "USD";
 
     /** @internal */
-    public exchangeRate = 1;
+    public exchangeRate: number | undefined = 1;
 
     public async currencyChanged() {
+        this.exchangeRate = undefined;
         this.exchangeRate = await Model.getExchangeRate(Model.currencyMap.get(this.selectedCurrency) as string);
     }
 

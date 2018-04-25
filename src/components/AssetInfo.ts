@@ -12,20 +12,19 @@
 
 /** @internal */
 export interface IModel {
-    readonly exchangeRate: number;
+    readonly exchangeRate: number | undefined;
 }
 
 /** Base of all classes that provide information about an asset. */
 export abstract class AssetInfo {
     /** @internal */
     public get unitValue() {
-        return this.unitValueUsd === undefined ? undefined : this.unitValueUsd * this.model.exchangeRate;
+        return AssetInfo.multiply(this.unitValueUsd, this.model.exchangeRate);
     }
 
     /** @internal */
     public get totalValue() {
-        return (this.quantity === undefined) || (this.unitValue === undefined) ?
-            undefined : this.quantity * this.unitValue;
+        return AssetInfo.multiply(this.quantity, this.unitValue);
     }
 
     /** @internal  */
@@ -93,4 +92,10 @@ export abstract class AssetInfo {
      * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
      */
     protected abstract processQueryResponse(response: any): boolean;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static multiply(factor1: number | undefined, factor2: number | undefined) {
+        return (factor1 === undefined) || (factor2 === undefined) ? undefined : factor1 * factor2;
+    }
 }
