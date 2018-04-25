@@ -93,6 +93,4 @@ export abstract class AssetInfo {
      * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
      */
     protected abstract processQueryResponse(response: any): boolean;
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
