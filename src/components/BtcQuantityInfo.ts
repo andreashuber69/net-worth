@@ -73,7 +73,7 @@ export class BtcQuantityInfo extends CryptoAssetInfo {
         let result = Number.NaN;
         let transactionCount = 0;
 
-        if (BtcQuantityInfo.hasStringIndexer(response)) {
+        if (CryptoAssetInfo.hasStringIndexer(response)) {
             for (const address in response) {
                 if (response.hasOwnProperty(address)) {
                     const balance = response[address];
