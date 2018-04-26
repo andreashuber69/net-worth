@@ -56,6 +56,7 @@ export class Model {
 
     // TODO: Extend with XAU, XAG and BTC
     private static readonly currencyMap = new Map<string, string>([
+        ["USD", ""],
         ["AUD", "XUDLADD"],
         ["CAD", "XUDLCDD"],
         ["CNY", "XUDLBK73"],
@@ -81,7 +82,6 @@ export class Model {
         ["THB", "XUDLBK72"],
         ["TRY", "XUDLBK75"],
         ["TWD", "XUDLTWD"],
-        ["USD", ""],
         ["ZAR", "XUDLZRD"],
     ]);
 
@@ -138,7 +138,7 @@ export class Model {
         new AssetBundle(new BtcQuantityInfo(this, Model.address, "Spending Wallet")),
     ];
 
-    private selectedCurrencyImpl = "USD";
+    private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
 
     private async currencyChanged() {
         this.exchangeRate = undefined;
