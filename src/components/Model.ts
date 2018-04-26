@@ -24,19 +24,21 @@ export class Model {
         return Array.from(Model.currencyMap.keys());
     }
 
-    public selectedCurrency = "USD";
+    public get selectedCurrency() {
+        return this.selectedCurrencyImpl;
+    }
 
-    /** @internal */
-    public exchangeRate: number | undefined = 1;
-
-    public async currencyChanged() {
-        this.exchangeRate = undefined;
-        this.exchangeRate = await Model.getExchangeRate(Model.currencyMap.get(this.selectedCurrency) as string);
+    public set selectedCurrency(currency: string) {
+        this.selectedCurrencyImpl = currency;
+        this.currencyChanged().catch((reason) => console.log(reason));
     }
 
     public get assets() {
         return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<AssetInfo>());
     }
+
+    /** @internal */
+    public exchangeRate: number | undefined = 1;
 
     /** @internal */
     public add(bundle: AssetBundle) {
@@ -135,4 +137,11 @@ export class Model {
         new AssetBundle(new SilverInfo(this, "Home", "0.5 CHF, Roll of 50", WeigthUnit.Gram, 125, 0.835, 4)),
         new AssetBundle(new BtcQuantityInfo(this, Model.address, "Spending Wallet")),
     ];
+
+    private selectedCurrencyImpl = "USD";
+
+    private async currencyChanged() {
+        this.exchangeRate = undefined;
+        this.exchangeRate = await Model.getExchangeRate(Model.currencyMap.get(this.selectedCurrency) as string);
+    }
 }
