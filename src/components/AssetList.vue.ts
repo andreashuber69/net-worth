@@ -32,10 +32,6 @@ export default class AssetList extends Vue {
         return Format.fraction(this.totalValue, 2);
     }
 
-    public mounted() {
-        return this.model.update();
-    }
-
     public add() {
         return this.model.add(
             new AssetBundle(new SilverInfo(this.model, "Home", "Bars", WeigthUnit.Kilogram, 1, 0.999, 3)));

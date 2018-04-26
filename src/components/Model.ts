@@ -30,7 +30,7 @@ export class Model {
 
     public set selectedCurrency(currency: string) {
         this.selectedCurrencyImpl = currency;
-        this.currencyChanged().catch((reason) => console.log(reason));
+        this.currencyChanged().catch((reason) => console.error(reason));
     }
 
     public get assets() {
@@ -41,15 +41,14 @@ export class Model {
     public exchangeRate: number | undefined = 1;
 
     /** @internal */
-    public add(bundle: AssetBundle) {
-        this.bundles.push(bundle);
-
-        return Model.update(bundle.assets);
+    public constructor() {
+        Model.update(this.assets);
     }
 
     /** @internal */
-    public update() {
-        return Model.update(this.assets);
+    public add(bundle: AssetBundle) {
+        this.bundles.push(bundle);
+        Model.update(bundle.assets);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +87,11 @@ export class Model {
     // tslint:disable-next-line:max-line-length
     private static readonly address = "1F8i3SE7Zorf6F2rLh3Mxg4Mb8aHT2nkQf";
 
-    private static async update(assets: AssetInfo[]) {
+    private static update(assets: AssetInfo[]) {
+        this.updateImpl(assets).catch((reason) => console.error(reason));
+    }
+
+    private static async updateImpl(assets: AssetInfo[]) {
         const iterators = Model.createIterators(assets);
 
         while (iterators.size > 0) {
