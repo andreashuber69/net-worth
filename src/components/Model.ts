@@ -56,32 +56,32 @@ export class Model {
     // TODO: Extend with XAU, XAG and BTC
     private static readonly currencyMap = new Map<string, string>([
         ["USD", ""],
-        ["AUD", "XUDLADD"],
-        ["CAD", "XUDLCDD"],
-        ["CNY", "XUDLBK73"],
-        ["CHF", "XUDLSFD"],
-        ["CZK", "XUDLBK27"],
-        ["DKK", "XUDLDKD"],
-        ["GBP", "XUDLGBD"],
-        ["HKD", "XUDLHDD"],
-        ["HUF", "XUDLBK35"],
-        ["INR", "XUDLBK64"],
-        ["JPY", "XUDLJYD"],
-        ["KRW", "XUDLBK74"],
-        ["LTL", "XUDLBK38"],
-        ["MYR", "XUDLBK66"],
-        ["NIS", "XUDLBK65"],
-        ["NOK", "XUDLNKD"],
-        ["NZD", "XUDLNDD"],
-        ["PLN", "XUDLBK49"],
-        ["RUB", "XUDLBK69"],
-        ["SAR", "XUDLSRD"],
-        ["SEK", "XUDLSKD"],
-        ["SGD", "XUDLSGD"],
-        ["THB", "XUDLBK72"],
-        ["TRY", "XUDLBK75"],
-        ["TWD", "XUDLTWD"],
-        ["ZAR", "XUDLZRD"],
+        ["AUD", "boe/XUDLADD"],
+        ["CAD", "boe/XUDLCDD"],
+        ["CNY", "boe/XUDLBK73"],
+        ["CHF", "boe/XUDLSFD"],
+        ["CZK", "boe/XUDLBK27"],
+        ["DKK", "boe/XUDLDKD"],
+        ["GBP", "boe/XUDLGBD"],
+        ["HKD", "boe/XUDLHDD"],
+        ["HUF", "boe/XUDLBK35"],
+        ["INR", "boe/XUDLBK64"],
+        ["JPY", "boe/XUDLJYD"],
+        ["KRW", "boe/XUDLBK74"],
+        ["LTL", "boe/XUDLBK38"],
+        ["MYR", "boe/XUDLBK66"],
+        ["NIS", "boe/XUDLBK65"],
+        ["NOK", "boe/XUDLNKD"],
+        ["NZD", "boe/XUDLNDD"],
+        ["PLN", "boe/XUDLBK49"],
+        ["RUB", "boe/XUDLBK69"],
+        ["SAR", "boe/XUDLSRD"],
+        ["SEK", "boe/XUDLSKD"],
+        ["SGD", "boe/XUDLSGD"],
+        ["THB", "boe/XUDLBK72"],
+        ["TRY", "boe/XUDLBK75"],
+        ["TWD", "boe/XUDLTWD"],
+        ["ZAR", "boe/XUDLZRD"],
     ]);
 
     // tslint:disable-next-line:max-line-length
@@ -125,7 +125,7 @@ export class Model {
     private static async getExchangeRate(quandlId: string) {
         if (quandlId.length > 0) {
             const response = await QueryCache.fetch(
-                `https://www.quandl.com/api/v3/datasets/BOE/${quandlId}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`);
+                `https://www.quandl.com/api/v3/datasets/${quandlId}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`);
 
             return QuandlParser.getPrice(response);
         } else {
