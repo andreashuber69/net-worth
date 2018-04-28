@@ -17,7 +17,7 @@ import { Format } from "./Format";
 // tslint:disable-next-line:no-unsafe-any
 @Component
 // tslint:disable-next-line:no-default-export no-unsafe-any
-export default class Asset extends Vue {
+export default class AssetListRow extends Vue {
     @Prop()
     public assetProp?: AssetInfo;
 

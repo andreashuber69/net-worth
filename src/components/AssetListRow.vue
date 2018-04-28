@@ -29,7 +29,7 @@
   </tr>
 </template>
 
-<script src="./Asset.vue.ts" lang="ts">
+<script src="./AssetListRow.vue.ts" lang="ts">
 </script>
 
 <style scoped>

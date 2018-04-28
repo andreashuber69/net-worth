@@ -11,15 +11,15 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Vue } from "vue-property-decorator";
-import Asset from "./Asset.vue";
 import { AssetBundle } from "./AssetBundle";
+import AssetListRow from "./AssetListRow.vue";
 import { Format } from "./Format";
 import { Model } from "./Model";
 import { WeigthUnit } from "./PreciousMetalInfo";
 import { SilverInfo } from "./SilverInfo";
 
 // tslint:disable-next-line:no-unsafe-any
-@Component({ components: { Asset } })
+@Component({ components: { AssetListRow } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetList extends Vue {
     public readonly model = new Model();
