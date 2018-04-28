@@ -14,8 +14,8 @@ import { IModel } from "./Asset";
 import { CryptoAsset } from "./CryptoAsset";
 
 /** Provides information about a BTC asset. */
-export class BtcInfo extends CryptoAsset {
-    /** Creates a new [[BtcInfo]] instance.
+export class BtcAsset extends CryptoAsset {
+    /** Creates a new [[BtcAsset]] instance.
      * @param model The model to which this asset belongs.
      * @param location The location of the Bitcoin, e.g. Paper Wallet or the public address.
      * @param description Describes the asset, e.g. Spending, Savings.
