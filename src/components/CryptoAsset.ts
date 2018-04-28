@@ -13,7 +13,7 @@
 import { Asset, IModel } from "./Asset";
 
 /** Provides information about a crypto currency asset. */
-export abstract class CryptoAssetInfo extends Asset {
+export abstract class CryptoAsset extends Asset {
     protected static hasStringIndexer(value: any): value is { [key: string]: any } {
         return value instanceof Object;
     }
@@ -49,7 +49,7 @@ export abstract class CryptoAssetInfo extends Asset {
 
         if (!this.responseProcessed) {
             this.responseProcessed = true;
-            this.unitValueUsd = CryptoAssetInfo.getPrice(response);
+            this.unitValueUsd = CryptoAsset.getPrice(response);
         }
 
         return result;
@@ -58,7 +58,7 @@ export abstract class CryptoAssetInfo extends Asset {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getPrice(response: any) {
-        return CryptoAssetInfo.isPriceInfo(response) ? Number.parseFloat(response[0].price_usd) : Number.NaN;
+        return CryptoAsset.isPriceInfo(response) ? Number.parseFloat(response[0].price_usd) : Number.NaN;
     }
 
     private static isPriceInfo(value: any): value is Array<{ price_usd: string }> {

@@ -11,10 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { CryptoAssetInfo } from "./CryptoAssetInfo";
+import { CryptoAsset } from "./CryptoAsset";
 
 /** Provides information about a BTC asset. */
-export class BtcInfo extends CryptoAssetInfo {
+export class BtcInfo extends CryptoAsset {
     /** Creates a new [[BtcInfo]] instance.
      * @param model The model to which this asset belongs.
      * @param location The location of the Bitcoin, e.g. Paper Wallet or the public address.

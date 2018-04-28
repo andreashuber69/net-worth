@@ -12,7 +12,7 @@
 
 import { HDNode } from "bitcoinjs-lib";
 import { IModel } from "./Asset";
-import { CryptoAssetInfo } from "./CryptoAssetInfo";
+import { CryptoAsset } from "./CryptoAsset";
 
 /** @internal */
 interface ISummary {
@@ -21,7 +21,7 @@ interface ISummary {
 }
 
 /** Provides information about a BTC asset. */
-export class BtcQuantityInfo extends CryptoAssetInfo {
+export class BtcQuantityInfo extends CryptoAsset {
     /** Creates a new [[BtcQuantityInfo]] instance.
      * @param model The model to which this asset belongs.
      * @param address The public address.
@@ -73,7 +73,7 @@ export class BtcQuantityInfo extends CryptoAssetInfo {
         let result = Number.NaN;
         let transactionCount = 0;
 
-        if (CryptoAssetInfo.hasStringIndexer(response)) {
+        if (CryptoAsset.hasStringIndexer(response)) {
             for (const address in response) {
                 if (response.hasOwnProperty(address)) {
                     const balance = response[address];
