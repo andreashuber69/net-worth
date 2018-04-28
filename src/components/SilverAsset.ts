@@ -14,7 +14,7 @@ import { IModel } from "./Asset";
 import { PreciousMetalAsset, WeigthUnit } from "./PreciousMetalAsset";
 
 /** Provides information about an asset made of silver. */
-export class SilverInfo extends PreciousMetalAsset {
+export class SilverAsset extends PreciousMetalAsset {
     /**
      * Creates a new [[SilverInfo]] instance.
      * @param model The model to which this asset belongs.

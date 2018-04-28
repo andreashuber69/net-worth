@@ -17,7 +17,7 @@ import { WeigthUnit } from "./PreciousMetalAsset";
 import { QuandlParser } from "./QuandlParser";
 import { QueryCache } from "./QueryCache";
 import { QueryIterator } from "./QueryIterator";
-import { SilverInfo } from "./SilverInfo";
+import { SilverAsset } from "./SilverAsset";
 
 export class Model {
     public get currencies() {
@@ -134,10 +134,10 @@ export class Model {
     }
 
     private readonly bundles = [
-        new AssetBundle(new SilverInfo(this, "Home", "5 CHF, Roll of 50", WeigthUnit.Gram, 750, 0.835, 1)),
-        new AssetBundle(new SilverInfo(this, "Home", "2 CHF, Roll of 50", WeigthUnit.Gram, 500, 0.835, 2)),
-        new AssetBundle(new SilverInfo(this, "Home", "1 CHF, Roll of 50", WeigthUnit.Gram, 250, 0.835, 3)),
-        new AssetBundle(new SilverInfo(this, "Home", "0.5 CHF, Roll of 50", WeigthUnit.Gram, 125, 0.835, 4)),
+        new AssetBundle(new SilverAsset(this, "Home", "5 CHF, Roll of 50", WeigthUnit.Gram, 750, 0.835, 1)),
+        new AssetBundle(new SilverAsset(this, "Home", "2 CHF, Roll of 50", WeigthUnit.Gram, 500, 0.835, 2)),
+        new AssetBundle(new SilverAsset(this, "Home", "1 CHF, Roll of 50", WeigthUnit.Gram, 250, 0.835, 3)),
+        new AssetBundle(new SilverAsset(this, "Home", "0.5 CHF, Roll of 50", WeigthUnit.Gram, 125, 0.835, 4)),
         new AssetBundle(new BtcQuantityAsset(this, Model.address, "Spending Wallet")),
     ];
 
