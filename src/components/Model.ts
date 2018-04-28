@@ -10,8 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { Asset } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { AssetInfo } from "./AssetInfo";
 import { BtcQuantityInfo } from "./BtcQuantityInfo";
 import { WeigthUnit } from "./PreciousMetalInfo";
 import { QuandlParser } from "./QuandlParser";
@@ -34,7 +34,7 @@ export class Model {
     }
 
     public get assets() {
-        return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<AssetInfo>());
+        return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<Asset>());
     }
 
     /** @internal */
@@ -87,15 +87,15 @@ export class Model {
     // tslint:disable-next-line:max-line-length
     private static readonly address = "1F8i3SE7Zorf6F2rLh3Mxg4Mb8aHT2nkQf";
 
-    private static update(assets: AssetInfo[]) {
+    private static update(assets: Asset[]) {
         this.updateImpl(assets).catch((reason) => console.error(reason));
     }
 
-    private static async updateImpl(assets: AssetInfo[]) {
+    private static async updateImpl(assets: Asset[]) {
         const iterators = Model.createIterators(assets);
 
         while (iterators.size > 0) {
-            const doneAssets = new Array<AssetInfo>();
+            const doneAssets = new Array<Asset>();
 
             for (const [asset, queryIterator] of iterators) {
                 if (queryIterator.value) {
@@ -112,8 +112,8 @@ export class Model {
         }
     }
 
-    private static createIterators(assets: AssetInfo[]) {
-        const result = new Map<AssetInfo, QueryIterator>();
+    private static createIterators(assets: Asset[]) {
+        const result = new Map<Asset, QueryIterator>();
 
         for (const asset of assets) {
             result.set(asset, new QueryIterator(asset.queries));

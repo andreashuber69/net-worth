@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInfo } from "./AssetInfo";
+import { Asset } from "./Asset";
 
 /**
  * Base of all classes that provide information about a bundle of assets.
@@ -19,13 +19,13 @@ import { AssetInfo } from "./AssetInfo";
  */
 export class AssetBundle {
     /** Gets the bundled assets. */
-    public readonly assets: AssetInfo[];
+    public readonly assets: Asset[];
 
     /**
      * Creates a new [[AssetBundle]] instance.
      * @param assets The assets to bundle.
      */
-    public constructor(...assets: AssetInfo[]) {
+    public constructor(...assets: Asset[]) {
         this.assets = assets;
     }
 }

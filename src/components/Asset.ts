@@ -16,15 +16,15 @@ export interface IModel {
 }
 
 /** Base of all classes that provide information about an asset. */
-export abstract class AssetInfo {
+export abstract class Asset {
     /** @internal */
     public get unitValue() {
-        return AssetInfo.multiply(this.unitValueUsd, this.model.exchangeRate);
+        return Asset.multiply(this.unitValueUsd, this.model.exchangeRate);
     }
 
     /** @internal */
     public get totalValue() {
-        return AssetInfo.multiply(this.quantity, this.unitValue);
+        return Asset.multiply(this.quantity, this.unitValue);
     }
 
     /** @internal  */
@@ -42,7 +42,7 @@ export abstract class AssetInfo {
     protected unitValueUsd: number | undefined = undefined;
 
     /**
-     * Creates a new [[AssetInfo]] instance.
+     * Creates a new [[Asset]] instance.
      * @param model The model to which this asset belongs.
      * @param location The location of the asset, e.g. Saftey Deposit Box. For a crypto currency, this is the public
      * address.

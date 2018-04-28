@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { HDNode } from "bitcoinjs-lib";
-import { IModel } from "./AssetInfo";
+import { IModel } from "./Asset";
 import { CryptoAssetInfo } from "./CryptoAssetInfo";
 
 /** @internal */

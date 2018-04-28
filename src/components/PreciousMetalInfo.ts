@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInfo, IModel } from "./AssetInfo";
+import { Asset, IModel } from "./Asset";
 import { QuandlParser } from "./QuandlParser";
 
 export enum WeigthUnit {
@@ -22,7 +22,7 @@ export enum WeigthUnit {
 }
 
 /** Provides information about an asset made of a precious metal. */
-export abstract class PreciousMetalInfo extends AssetInfo {
+export abstract class PreciousMetalInfo extends Asset {
     /**
      * Creates a new [[PreciousMetalInfo]] instance.
      * @param model The model to which this asset belongs.

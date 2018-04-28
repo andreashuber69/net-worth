@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./AssetInfo";
+import { IModel } from "./Asset";
 import { CryptoAssetInfo } from "./CryptoAssetInfo";
 
 /** Provides information about a BTC asset. */

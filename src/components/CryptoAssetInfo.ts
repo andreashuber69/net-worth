@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInfo, IModel } from "./AssetInfo";
+import { Asset, IModel } from "./Asset";
 
 /** Provides information about a crypto currency asset. */
-export abstract class CryptoAssetInfo extends AssetInfo {
+export abstract class CryptoAssetInfo extends Asset {
     protected static hasStringIndexer(value: any): value is { [key: string]: any } {
         return value instanceof Object;
     }

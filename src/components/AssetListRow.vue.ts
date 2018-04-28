@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { AssetInfo } from "./AssetInfo";
+import { Asset } from "./Asset";
 import { Format } from "./Format";
 
 // tslint:disable-next-line:no-unsafe-any
@@ -19,7 +19,7 @@ import { Format } from "./Format";
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetListRow extends Vue {
     @Prop()
-    public assetProp?: AssetInfo;
+    public assetProp?: Asset;
 
     public get shortLocation() {
         const maxLength = 15;
