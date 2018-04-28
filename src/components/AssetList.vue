@@ -28,7 +28,7 @@
         <th class="number" colspan="2">Quantity</th>
         <th class="number" colspan="2">Total Value</th>
       </tr>
-      <Asset v-for="(asset, index) in model.assets" :key="index" :asset="asset"></Asset>
+      <Asset v-for="(asset, index) in model.assets" :key="index" :assetProp="asset"></Asset>
       <tr>
         <td class="total" colspan="10">Grand Total</td>
         <td class="total integer">{{ totalValueInteger }}</td>

@@ -19,24 +19,24 @@ import { Format } from "./Format";
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class Asset extends Vue {
     @Prop()
-    public asset?: AssetInfo;
+    public assetProp?: AssetInfo;
 
     public get shortLocation() {
         const maxLength = 15;
 
-        return this.info.location.length > maxLength ?
-            `${this.info.location.substr(0, maxLength)}...` : this.info.location;
+        return this.asset.location.length > maxLength ?
+            `${this.asset.location.substr(0, maxLength)}...` : this.asset.location;
     }
 
     public get finenessInteger() {
-        return this.info.fineness === 1 ? "" : Math.trunc(this.info.fineness);
+        return this.asset.fineness === 1 ? "" : Math.trunc(this.asset.fineness);
     }
 
     public get finenessFraction() {
-        if (this.info.fineness === 1) {
+        if (this.asset.fineness === 1) {
             return "";
         } else {
-            let fraction = (this.info.fineness % 1).toFixed(6).substr(1);
+            let fraction = (this.asset.fineness % 1).toFixed(6).substr(1);
 
             while (fraction.endsWith("0")) {
                 fraction = fraction.substr(0, fraction.length - 1);
@@ -47,36 +47,36 @@ export default class Asset extends Vue {
     }
 
     public get unitValueInteger() {
-        return Format.integer(this.info.unitValue);
+        return Format.integer(this.asset.unitValue);
     }
 
     public get unitValueFraction() {
-        return Format.fraction(this.info.unitValue, 2);
+        return Format.fraction(this.asset.unitValue, 2);
     }
 
     public get quantityInteger() {
-        return Format.integer(this.info.quantity);
+        return Format.integer(this.asset.quantity);
     }
 
     public get quantityFraction() {
-        return Format.fraction(this.info.quantity, this.info.quantityDecimals);
+        return Format.fraction(this.asset.quantity, this.asset.quantityDecimals);
     }
 
     public get totalValueInteger() {
-        return Format.integer(this.info.totalValue);
+        return Format.integer(this.asset.totalValue);
     }
 
     public get totalValueFraction() {
-        return Format.fraction(this.info.totalValue, 2);
+        return Format.fraction(this.asset.totalValue, 2);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private get info() {
-        if (!this.asset) {
+    private get asset() {
+        if (!this.assetProp) {
             throw new Error("No asset set.");
         }
 
-        return this.asset;
+        return this.assetProp;
     }
 }
