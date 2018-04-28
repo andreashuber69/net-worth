@@ -12,7 +12,7 @@
 
 import { Asset } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { BtcQuantityInfo } from "./BtcQuantityInfo";
+import { BtcQuantityAsset } from "./BtcQuantityAsset";
 import { WeigthUnit } from "./PreciousMetalInfo";
 import { QuandlParser } from "./QuandlParser";
 import { QueryCache } from "./QueryCache";
@@ -138,7 +138,7 @@ export class Model {
         new AssetBundle(new SilverInfo(this, "Home", "2 CHF, Roll of 50", WeigthUnit.Gram, 500, 0.835, 2)),
         new AssetBundle(new SilverInfo(this, "Home", "1 CHF, Roll of 50", WeigthUnit.Gram, 250, 0.835, 3)),
         new AssetBundle(new SilverInfo(this, "Home", "0.5 CHF, Roll of 50", WeigthUnit.Gram, 125, 0.835, 4)),
-        new AssetBundle(new BtcQuantityInfo(this, Model.address, "Spending Wallet")),
+        new AssetBundle(new BtcQuantityAsset(this, Model.address, "Spending Wallet")),
     ];
 
     private selectedCurrencyImpl = Model.currencyMap.keys().next().value;

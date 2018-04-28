@@ -21,7 +21,7 @@ interface ISummary {
 }
 
 /** Provides information about a BTC asset. */
-export class BtcQuantityInfo extends CryptoAsset {
+export class BtcQuantityAsset extends CryptoAsset {
     /** Creates a new [[BtcQuantityInfo]] instance.
      * @param model The model to which this asset belongs.
      * @param address The public address.
@@ -78,7 +78,7 @@ export class BtcQuantityInfo extends CryptoAsset {
                 if (response.hasOwnProperty(address)) {
                     const balance = response[address];
 
-                    if (BtcQuantityInfo.isSummary(balance)) {
+                    if (BtcQuantityAsset.isSummary(balance)) {
                         transactionCount += balance.n_tx;
                         result = (Number.isNaN(result) ? 0 : result) + balance.final_balance / 100000000;
                     }
