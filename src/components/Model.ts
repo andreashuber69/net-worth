@@ -13,7 +13,7 @@
 import { Asset } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { BtcQuantityAsset } from "./BtcQuantityAsset";
-import { WeigthUnit } from "./PreciousMetalInfo";
+import { WeigthUnit } from "./PreciousMetalAsset";
 import { QuandlParser } from "./QuandlParser";
 import { QueryCache } from "./QueryCache";
 import { QueryIterator } from "./QueryIterator";

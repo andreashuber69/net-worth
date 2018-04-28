@@ -15,7 +15,7 @@ import { AssetBundle } from "./AssetBundle";
 import AssetListRow from "./AssetListRow.vue";
 import { Format } from "./Format";
 import { Model } from "./Model";
-import { WeigthUnit } from "./PreciousMetalInfo";
+import { WeigthUnit } from "./PreciousMetalAsset";
 import { SilverInfo } from "./SilverInfo";
 
 // tslint:disable-next-line:no-unsafe-any

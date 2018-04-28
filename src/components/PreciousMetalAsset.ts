@@ -22,7 +22,7 @@ export enum WeigthUnit {
 }
 
 /** Provides information about an asset made of a precious metal. */
-export abstract class PreciousMetalInfo extends Asset {
+export abstract class PreciousMetalAsset extends Asset {
     /**
      * Creates a new [[PreciousMetalInfo]] instance.
      * @param model The model to which this asset belongs.
@@ -46,7 +46,8 @@ export abstract class PreciousMetalInfo extends Asset {
         quantity: number,
         private readonly quandlId: string,
     ) {
-        super(model, location, description, type, PreciousMetalInfo.getUnit(weightUnit, weight), fineness, quantity, 0);
+        super(
+            model, location, description, type, PreciousMetalAsset.getUnit(weightUnit, weight), fineness, quantity, 0);
         this.pureGramsPerUnit = weightUnit * weight * fineness;
     }
 

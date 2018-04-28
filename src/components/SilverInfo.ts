@@ -11,10 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { PreciousMetalInfo, WeigthUnit } from "./PreciousMetalInfo";
+import { PreciousMetalAsset, WeigthUnit } from "./PreciousMetalAsset";
 
 /** Provides information about an asset made of silver. */
-export class SilverInfo extends PreciousMetalInfo {
+export class SilverInfo extends PreciousMetalAsset {
     /**
      * Creates a new [[SilverInfo]] instance.
      * @param model The model to which this asset belongs.
