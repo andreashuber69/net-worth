@@ -34,6 +34,6 @@ export class SilverAsset extends PreciousMetalAsset {
         fineness: number,
         quantity: number,
     ) {
-        super(model, location, description, "Silver", weightUnit, weight, fineness, quantity, "lbma/silver");
+        super(model, location, description, "Silver", weightUnit, weight, fineness, quantity, "lbma/silver.json");
     }
 }
