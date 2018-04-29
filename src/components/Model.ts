@@ -13,9 +13,9 @@
 import { Asset } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { BtcQuantityAsset } from "./BtcQuantityAsset";
+import { IWebRequest } from "./IWebRequest";
 import { WeigthUnit } from "./PreciousMetalAsset";
-import { QuandlParser } from "./QuandlParser";
-import { QuandlPriceInfo } from "./QuandlPriceInfo";
+import { QuandlRequest } from "./QuandlRequest";
 import { QueryCache } from "./QueryCache";
 import { QueryIterator } from "./QueryIterator";
 import { SilverAsset } from "./SilverAsset";
@@ -55,36 +55,36 @@ export class Model {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // TODO: Extend with BTC
-    private static readonly currencyMap = new Map<string, QuandlPriceInfo>([
-        ["USD", new QuandlPriceInfo("", false)],
-        ["AUD", new QuandlPriceInfo("boe/xudladd.json", false)],
-        ["CAD", new QuandlPriceInfo("boe/xudlcdd.json", false)],
-        ["CNY", new QuandlPriceInfo("boe/xudlbk73.json", false)],
-        ["CHF", new QuandlPriceInfo("boe/xudlsfd.json", false)],
-        ["CZK", new QuandlPriceInfo("boe/xudlbk27.json", false)],
-        ["DKK", new QuandlPriceInfo("boe/xudldkd.json", false)],
-        ["GBP", new QuandlPriceInfo("boe/xudlgbd.json", false)],
-        ["HKD", new QuandlPriceInfo("boe/xudlhdd.json", false)],
-        ["HUF", new QuandlPriceInfo("boe/xudlbk35.json", false)],
-        ["INR", new QuandlPriceInfo("boe/xudlbk64.json", false)],
-        ["JPY", new QuandlPriceInfo("boe/xudljyd.json", false)],
-        ["KRW", new QuandlPriceInfo("boe/xudlbk74.json", false)],
-        ["LTL", new QuandlPriceInfo("boe/xudlbk38.json", false)],
-        ["MYR", new QuandlPriceInfo("boe/xudlbk66.json", false)],
-        ["NIS", new QuandlPriceInfo("boe/xudlbk65.json", false)],
-        ["NOK", new QuandlPriceInfo("boe/xudlnkd.json", false)],
-        ["NZD", new QuandlPriceInfo("boe/xudlndd.json", false)],
-        ["PLN", new QuandlPriceInfo("boe/xudlbk49.json", false)],
-        ["RUB", new QuandlPriceInfo("boe/xudlbk69.json", false)],
-        ["SAR", new QuandlPriceInfo("boe/xudlsrd.json", false)],
-        ["SEK", new QuandlPriceInfo("boe/xudlskd.json", false)],
-        ["SGD", new QuandlPriceInfo("boe/xudlsgd.json", false)],
-        ["THB", new QuandlPriceInfo("boe/xudlbk72.json", false)],
-        ["TRY", new QuandlPriceInfo("boe/xudlbk75.json", false)],
-        ["TWD", new QuandlPriceInfo("boe/xudltwd.json", false)],
-        ["ZAR", new QuandlPriceInfo("boe/xudlzrd.json", false)],
-        ["XAG", new QuandlPriceInfo("lbma/silver.json", true)],
-        ["XAU", new QuandlPriceInfo("lbma/gold.json", true)],
+    private static readonly currencyMap = new Map<string, IWebRequest<number>>([
+        ["USD", new QuandlRequest("", false)],
+        ["AUD", new QuandlRequest("boe/xudladd.json", false)],
+        ["CAD", new QuandlRequest("boe/xudlcdd.json", false)],
+        ["CNY", new QuandlRequest("boe/xudlbk73.json", false)],
+        ["CHF", new QuandlRequest("boe/xudlsfd.json", false)],
+        ["CZK", new QuandlRequest("boe/xudlbk27.json", false)],
+        ["DKK", new QuandlRequest("boe/xudldkd.json", false)],
+        ["GBP", new QuandlRequest("boe/xudlgbd.json", false)],
+        ["HKD", new QuandlRequest("boe/xudlhdd.json", false)],
+        ["HUF", new QuandlRequest("boe/xudlbk35.json", false)],
+        ["INR", new QuandlRequest("boe/xudlbk64.json", false)],
+        ["JPY", new QuandlRequest("boe/xudljyd.json", false)],
+        ["KRW", new QuandlRequest("boe/xudlbk74.json", false)],
+        ["LTL", new QuandlRequest("boe/xudlbk38.json", false)],
+        ["MYR", new QuandlRequest("boe/xudlbk66.json", false)],
+        ["NIS", new QuandlRequest("boe/xudlbk65.json", false)],
+        ["NOK", new QuandlRequest("boe/xudlnkd.json", false)],
+        ["NZD", new QuandlRequest("boe/xudlndd.json", false)],
+        ["PLN", new QuandlRequest("boe/xudlbk49.json", false)],
+        ["RUB", new QuandlRequest("boe/xudlbk69.json", false)],
+        ["SAR", new QuandlRequest("boe/xudlsrd.json", false)],
+        ["SEK", new QuandlRequest("boe/xudlskd.json", false)],
+        ["SGD", new QuandlRequest("boe/xudlsgd.json", false)],
+        ["THB", new QuandlRequest("boe/xudlbk72.json", false)],
+        ["TRY", new QuandlRequest("boe/xudlbk75.json", false)],
+        ["TWD", new QuandlRequest("boe/xudltwd.json", false)],
+        ["ZAR", new QuandlRequest("boe/xudlzrd.json", false)],
+        ["XAG", new QuandlRequest("lbma/silver.json", true)],
+        ["XAU", new QuandlRequest("lbma/gold.json", true)],
     ]);
 
     // tslint:disable-next-line:max-line-length
@@ -125,17 +125,6 @@ export class Model {
         return result;
     }
 
-    private static async getExchangeRate(quandlId: string) {
-        if (quandlId.length > 0) {
-            const response = await QueryCache.fetch(
-                `https://www.quandl.com/api/v3/datasets/${quandlId}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`);
-
-            return QuandlParser.getPrice(response);
-        } else {
-            return 1;
-        }
-    }
-
     private readonly bundles = [
         new AssetBundle(new SilverAsset(this, "Home", "5 CHF, Roll of 50", WeigthUnit.Gram, 750, 0.835, 1)),
         new AssetBundle(new SilverAsset(this, "Home", "2 CHF, Roll of 50", WeigthUnit.Gram, 500, 0.835, 2)),
@@ -148,8 +137,7 @@ export class Model {
 
     private async currencyChanged() {
         this.exchangeRate = undefined;
-        const info = Model.currencyMap.get(this.selectedCurrency) as QuandlPriceInfo;
-        const rate = await Model.getExchangeRate(info.location);
-        this.exchangeRate = info.invert ? 1 / rate : rate;
+        const request = Model.currencyMap.get(this.selectedCurrency) as IWebRequest<number>;
+        this.exchangeRate = await request.getResponse();
     }
 }
