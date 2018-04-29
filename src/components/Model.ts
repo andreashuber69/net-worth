@@ -54,7 +54,7 @@ export class Model {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // TODO: Extend with XAU, XAG and BTC
+    // TODO: Extend with BTC
     private static readonly currencyMap = new Map<string, QuandlPriceInfo>([
         ["USD", new QuandlPriceInfo("", false)],
         ["AUD", new QuandlPriceInfo("boe/xudladd.json", false)],
@@ -84,6 +84,7 @@ export class Model {
         ["TWD", new QuandlPriceInfo("boe/xudltwd.json", false)],
         ["ZAR", new QuandlPriceInfo("boe/xudlzrd.json", false)],
         ["XAG", new QuandlPriceInfo("lbma/silver.json", true)],
+        ["XAU", new QuandlPriceInfo("lbma/gold.json", true)],
     ]);
 
     // tslint:disable-next-line:max-line-length
