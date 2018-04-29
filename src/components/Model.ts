@@ -13,6 +13,7 @@
 import { Asset } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { BtcQuantityAsset } from "./BtcQuantityAsset";
+import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { IWebRequest } from "./IWebRequest";
 import { WeigthUnit } from "./PreciousMetalAsset";
 import { QuandlRequest } from "./QuandlRequest";
@@ -54,7 +55,6 @@ export class Model {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // TODO: Extend with BTC
     private static readonly currencyMap = new Map<string, IWebRequest<number>>([
         ["USD", new QuandlRequest("", false)],
         ["AUD", new QuandlRequest("boe/xudladd.json", false)],
@@ -85,6 +85,7 @@ export class Model {
         ["ZAR", new QuandlRequest("boe/xudlzrd.json", false)],
         ["XAG", new QuandlRequest("lbma/silver.json", true)],
         ["XAU", new QuandlRequest("lbma/gold.json", true)],
+        ["BTC", new CoinMarketCapRequest("bitcoin")],
     ]);
 
     // tslint:disable-next-line:max-line-length
