@@ -138,6 +138,6 @@ export class Model {
     private async currencyChanged() {
         this.exchangeRate = undefined;
         const request = Model.currencyMap.get(this.selectedCurrency) as IWebRequest<number>;
-        this.exchangeRate = await request.getResponse();
+        this.exchangeRate = await request.execute();
     }
 }

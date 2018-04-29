@@ -11,5 +11,5 @@
 // <http://www.gnu.org/licenses/>.
 
 export interface IWebRequest<T> {
-    getResponse(): Promise<T>;
+    execute(): Promise<T>;
 }

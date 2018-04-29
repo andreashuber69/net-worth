@@ -18,7 +18,7 @@ export class QuandlRequest implements IWebRequest<number> {
     public constructor(private readonly path: string, private readonly invert: boolean) {
     }
 
-    public async getResponse() {
+    public async execute() {
         if (this.path.length > 0) {
             const response = await QueryCache.fetch(
                 `https://www.quandl.com/api/v3/datasets/${this.path}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`);
