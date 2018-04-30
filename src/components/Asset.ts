@@ -91,7 +91,7 @@ export abstract class Asset {
      * returned `true`.
      * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
      */
-    protected abstract processQueryResponse(response: any): boolean;
+    protected abstract processQueryResponse(response: any): Promise<boolean>;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

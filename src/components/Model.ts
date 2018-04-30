@@ -103,7 +103,7 @@ export class Model {
 
             for (const [asset, queryIterator] of iterators) {
                 if (queryIterator.value) {
-                    asset.processCurrentQueryResponse(await QueryCache.fetch(queryIterator.value));
+                    await asset.processCurrentQueryResponse(await QueryCache.fetch(queryIterator.value));
                     queryIterator.advance();
                 } else {
                     doneAssets.push(asset);

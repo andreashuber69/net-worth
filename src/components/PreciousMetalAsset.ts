@@ -56,7 +56,7 @@ export abstract class PreciousMetalAsset extends Asset {
         yield `https://www.quandl.com/api/v3/datasets/${this.quandlId}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`;
     }
 
-    protected processQueryResponse(response: any) {
+    protected async processQueryResponse(response: any) {
         this.unitValueUsd = this.pureGramsPerUnit / WeigthUnit.TroyOunce * QuandlParser.getPrice(response);
 
         return false;
