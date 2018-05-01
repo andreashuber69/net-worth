@@ -42,13 +42,13 @@ export class BtcQuantityAsset extends CryptoAsset {
             await this.add(`https://blockchain.info/balance?active=${this.location}&cors=true`);
         } else {
             for (let chain = 0; chain < 2; ++chain) {
-                for (let index = 0; !this.changeChain;) {
+                let changeChain = false;
+
+                for (let index = 0; !changeChain;) {
                     const batch = this.getAddressBatch(chain, index);
                     index += batch.length;
-                    await this.add(`https://blockchain.info/balance?active=${batch.join("|")}&cors=true`);
+                    changeChain = await this.add(`https://blockchain.info/balance?active=${batch.join("|")}&cors=true`);
                 }
-
-                this.changeChain = false;
             }
         }
     }
@@ -60,16 +60,8 @@ export class BtcQuantityAsset extends CryptoAsset {
             (typeof value.n_tx === "number");
     }
 
-    private changeChain = false;
-
-    private async add(query: string) {
-        this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
-            this.getFinalBalance(await QueryCache.fetch(query));
-    }
-
-    private getFinalBalance(response: any) {
-        let result = Number.NaN;
-        let transactionCount = 0;
+    private static getFinalBalance(response: any) {
+        const result = { finalBalance: Number.NaN, transactionCount: 0 };
 
         if (CryptoAsset.hasStringIndexer(response)) {
             for (const address in response) {
@@ -77,18 +69,22 @@ export class BtcQuantityAsset extends CryptoAsset {
                     const balance = response[address];
 
                     if (BtcQuantityAsset.isSummary(balance)) {
-                        transactionCount += balance.n_tx;
-                        result = (Number.isNaN(result) ? 0 : result) + balance.final_balance / 100000000;
+                        result.transactionCount += balance.n_tx;
+                        result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) +
+                            balance.final_balance / 100000000;
                     }
                 }
             }
         }
 
-        if (!transactionCount) {
-            this.changeChain = true;
-        }
-
         return result;
+    }
+
+    private async add(query: string) {
+        const result = BtcQuantityAsset.getFinalBalance(await QueryCache.fetch(query));
+        this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result.finalBalance;
+
+        return result.transactionCount === 0;
     }
 
     private getAddressBatch(chain: number, offset: number) {
