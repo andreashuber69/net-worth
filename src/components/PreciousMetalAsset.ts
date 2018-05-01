@@ -25,7 +25,7 @@ export enum WeigthUnit {
 /** Provides information about an asset made of a precious metal. */
 export abstract class PreciousMetalAsset extends Asset {
     /**
-     * Creates a new [[PreciousMetalInfo]] instance.
+     * Creates a new [[PreciousMetalAsset]] instance.
      * @param model The model to which this asset belongs.
      * @param location The location of the precious metal items, e.g. Saftey Deposit Box.
      * @param description Describes the precious metal items, e.g. Bars, Coins.

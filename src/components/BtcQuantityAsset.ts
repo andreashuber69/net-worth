@@ -23,7 +23,7 @@ interface ISummary {
 
 /** Provides information about a BTC asset. */
 export class BtcQuantityAsset extends CryptoAsset {
-    /** Creates a new [[BtcQuantityInfo]] instance.
+    /** Creates a new [[BtcQuantityAsset]] instance.
      * @param model The model to which this asset belongs.
      * @param address The public address.
      * @param description Describes the asset, e.g. Spending, Savings.

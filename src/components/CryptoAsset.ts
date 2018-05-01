@@ -20,7 +20,7 @@ export abstract class CryptoAsset extends Asset {
     }
 
     /**
-     * Creates a new [[CryptoAssetInfo]] instance.
+     * Creates a new [[CryptoAsset]] instance.
      * @param model The model to which this asset belongs.
      * @param address The public address of the crypto asset.
      * @param description Describes the crypto asset, e.g. Savings, Speculation.
