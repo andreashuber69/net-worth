@@ -27,5 +27,4 @@ export class Format {
             return (num % 1).toFixed(decimals).substring(1);
         }
     }
-
 }

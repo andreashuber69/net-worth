@@ -41,14 +41,10 @@ export abstract class CryptoAsset extends Asset {
         super(model, address, description, currencySymbol, currencySymbol, 1, quantity, quantityDecimals);
     }
 
-    protected * getQueries() {
-        yield `https://api.coinmarketcap.com/v1/ticker/${this.cmcId}/`;
-    }
-
     protected async executeQueries1(dummy: any) {
         const result = this.responseProcessed;
 
-        for (const query of this.getQueries()) {
+        for (const query of this.getQueries1()) {
             const response = await QueryCache.fetch(query);
 
             if (!this.responseProcessed) {
@@ -79,4 +75,8 @@ export abstract class CryptoAsset extends Asset {
     }
 
     private responseProcessed = false;
+
+    private * getQueries1() {
+        yield `https://api.coinmarketcap.com/v1/ticker/${this.cmcId}/`;
+    }
 }

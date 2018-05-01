@@ -52,10 +52,6 @@ export abstract class PreciousMetalAsset extends Asset {
         this.pureGramsPerUnit = weightUnit * weight * fineness;
     }
 
-    protected * getQueries() {
-        yield `https://www.quandl.com/api/v3/datasets/${this.quandlId}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`;
-    }
-
     protected async executeQueries1(dummy: any) {
         for (const query of this.getQueries()) {
             const response = await QueryCache.fetch(query);
@@ -89,4 +85,8 @@ export abstract class PreciousMetalAsset extends Asset {
     }
 
     private readonly pureGramsPerUnit: number;
+
+    private * getQueries() {
+        yield `https://www.quandl.com/api/v3/datasets/${this.quandlId}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`;
+    }
 }

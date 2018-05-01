@@ -34,9 +34,27 @@ export class BtcQuantityAsset extends CryptoAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected * getQueries() {
-        yield * super.getQueries();
+    protected async executeQueries1(dummy: any) {
+        await super.executeQueries1(dummy);
 
+        for (const query of this.getQueries2()) {
+            const response = await QueryCache.fetch(query);
+            this.quantity = (this.quantity === undefined ? 0 : this.quantity) + this.getFinalBalance(response);
+        }
+
+        return false;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static isSummary(value: any): value is ISummary {
+        return this.hasStringIndexer(value) && (typeof value.final_balance === "number") &&
+            (typeof value.n_tx === "number");
+    }
+
+    private changeChain = false;
+
+    private * getQueries2() {
         // TODO: This is a crude test to distinguish between xpub and a normal address
         if (this.location.length <= 100) {
             yield `https://blockchain.info/balance?active=${this.location}&cors=true`;
@@ -52,27 +70,6 @@ export class BtcQuantityAsset extends CryptoAsset {
             }
         }
     }
-
-    protected async executeQueries1(dummy: any) {
-        for (const query of this.getQueries()) {
-            const response = await QueryCache.fetch(query);
-
-            if (await super.executeQueries1(response)) {
-                this.quantity = (this.quantity === undefined ? 0 : this.quantity) + this.getFinalBalance(response);
-            }
-        }
-
-        return false;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static isSummary(value: any): value is ISummary {
-        return this.hasStringIndexer(value) && (typeof value.final_balance === "number") &&
-            (typeof value.n_tx === "number");
-    }
-
-    private changeChain = false;
 
     private getFinalBalance(response: any) {
         let result = Number.NaN;
