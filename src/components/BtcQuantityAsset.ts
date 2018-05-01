@@ -34,10 +34,10 @@ export class BtcQuantityAsset extends CryptoAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected async executeQueries1() {
-        await super.executeQueries1();
+    protected async executeQueries() {
+        await super.executeQueries();
 
-        for (const query of this.getQueries2()) {
+        for (const query of this.getQueries()) {
             const response = await QueryCache.fetch(query);
             this.quantity = (this.quantity === undefined ? 0 : this.quantity) + this.getFinalBalance(response);
         }
@@ -52,7 +52,7 @@ export class BtcQuantityAsset extends CryptoAsset {
 
     private changeChain = false;
 
-    private * getQueries2() {
+    private * getQueries() {
         // TODO: This is a crude test to distinguish between xpub and a normal address
         if (this.location.length <= 100) {
             yield `https://blockchain.info/balance?active=${this.location}&cors=true`;

@@ -28,8 +28,8 @@ export abstract class Asset {
     }
 
     /** @internal */
-    public executeQueries() {
-        return this.executeQueries1();
+    public value() {
+        return this.executeQueries();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,18 +61,13 @@ export abstract class Asset {
     }
 
     /**
-     * Processes the parsed response to the query that the iterator returned by [[getQueries]] currently points to.
-     * Is called exactly once for each of the queries.
+     * Executes the queries to value and optionally quantify the asset.
      * @description This method can be overridden more than once. A good example for this practice can be found in
-     * [[CryptoAssetInfo]] and [[BtcQuantityInfo]]. The former is the base class of the latter and both override this
-     * method. [[CryptoAssetInfo]] processes the response to the price query and [[BtcQuantityInfo]] processes the
-     * responses to the balance queries. For everything to work as expected, the [[BtcQuantityInfo]] override must pass
-     * through the response meant for the [[CryptoAssetInfo]] override, by calling
-     * `super.processQueryResponse(response);` first and then only process a response if the base class implementation
-     * returned `true`.
-     * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
+     * [[CryptoAsset]] and [[BtcQuantityAsset]]. The former is the base class of the latter and both override this
+     * method. [[CryptoAsset]] executes the price query and [[BtcQuantityAsset]] executes the balance queries. For
+     * everything to work as expected, the [[BtcQuantityAsset]] override must call the [[CryptoAsset]] override.
      */
-    protected abstract executeQueries1(): Promise<void>;
+    protected abstract executeQueries(): Promise<void>;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
