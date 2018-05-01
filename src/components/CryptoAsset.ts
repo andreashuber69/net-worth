@@ -45,7 +45,7 @@ export abstract class CryptoAsset extends Asset {
         yield `https://api.coinmarketcap.com/v1/ticker/${this.cmcId}/`;
     }
 
-    protected async processQueryResponse(dummy: any) {
+    protected async executeQueries1(dummy: any) {
         const result = this.responseProcessed;
 
         for (const query of this.getQueries()) {

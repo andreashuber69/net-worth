@@ -95,7 +95,7 @@ export class Model {
 
     private static async updateImpl(assets: Asset[]) {
         for (const asset of assets) {
-            await asset.processCurrentQueryResponse();
+            await asset.executeQueries();
         }
     }
 

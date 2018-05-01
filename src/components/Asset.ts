@@ -27,14 +27,9 @@ export abstract class Asset {
         return Asset.multiply(this.quantity, this.unitValue);
     }
 
-    /** @internal  */
-    public get queries() {
-        return this.getQueries();
-    }
-
     /** @internal */
-    public processCurrentQueryResponse() {
-        return this.processQueryResponse({});
+    public executeQueries() {
+        return this.executeQueries1({});
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,20 +61,6 @@ export abstract class Asset {
     }
 
     /**
-     * Gets a collection of HTTP GET queries that need to be executed in order to value and optionally quantify the
-     * asset.
-     * @description This method can be overridden more than once. A good example for this practice can be found in
-     * [[CryptoAssetInfo]] and [[BtcQuantityInfo]]. The former is the base class of the latter and both override this
-     * method. [[CryptoAssetInfo]] issues a query for the price and [[BtcQuantityInfo]] makes (possibly muultiple)
-     * queries for the balance of a given address or xpub. For everything to work as expected, [[BtcQuantityInfo]] must
-     * pass through the query of the [[CryptoAssetInfo]] implementation, e.g. by having `yield * super.getQueries();` as
-     * the very first statement of its own `getQueries()` implementation. Of course, a similar implementation strategy
-     * must be used to process the responses to the requests, see [[processQueryResponse]] for more information.
-     * @returns An iterator that points to before the first query, call `next()` to get the first query.
-     */
-    protected abstract getQueries(): IterableIterator<string>;
-
-    /**
      * Processes the parsed response to the query that the iterator returned by [[getQueries]] currently points to.
      * Is called exactly once for each of the queries.
      * @description This method can be overridden more than once. A good example for this practice can be found in
@@ -91,7 +72,7 @@ export abstract class Asset {
      * returned `true`.
      * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
      */
-    protected abstract processQueryResponse(response: any): Promise<boolean>;
+    protected abstract executeQueries1(response: any): Promise<boolean>;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
