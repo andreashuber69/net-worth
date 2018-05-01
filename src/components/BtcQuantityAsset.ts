@@ -13,6 +13,7 @@
 import { HDNode } from "bitcoinjs-lib";
 import { IModel } from "./Asset";
 import { CryptoAsset } from "./CryptoAsset";
+import { QueryCache } from "./QueryCache";
 
 /** @internal */
 interface ISummary {
@@ -52,9 +53,13 @@ export class BtcQuantityAsset extends CryptoAsset {
         }
     }
 
-    protected async processQueryResponse(response: any) {
-        if (await super.processQueryResponse(response)) {
-            this.quantity = (this.quantity === undefined ? 0 : this.quantity) + this.getFinalBalance(response);
+    protected async processQueryResponse(dummy: any) {
+        for (const query of this.getQueries()) {
+            const response = await QueryCache.fetch(query);
+
+            if (await super.processQueryResponse(response)) {
+                this.quantity = (this.quantity === undefined ? 0 : this.quantity) + this.getFinalBalance(response);
+            }
         }
 
         return false;

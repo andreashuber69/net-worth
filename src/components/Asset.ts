@@ -33,8 +33,8 @@ export abstract class Asset {
     }
 
     /** @internal */
-    public processCurrentQueryResponse(response: any) {
-        return this.processQueryResponse(response);
+    public processCurrentQueryResponse() {
+        return this.processQueryResponse({});
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

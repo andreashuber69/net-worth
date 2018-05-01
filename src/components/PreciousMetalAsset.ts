@@ -12,6 +12,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { QuandlParser } from "./QuandlParser";
+import { QueryCache } from "./QueryCache";
 
 export enum WeigthUnit {
     Gram = 1,
@@ -29,11 +30,11 @@ export abstract class PreciousMetalAsset extends Asset {
      * @param location The location of the precious metal items, e.g. Saftey Deposit Box.
      * @param description Describes the precious metal items, e.g. Bars, Coins.
      * @param type The type of precious metal, e.g. Silver, Gold.
-     * @param quantity The number of items.
      * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
      * @param weight The weight of a single item, expressed in `weightUnit`.
      * @param fineness The fineness, e.g. 0.999.
      * @param quantity The number of items.
+     * @param quandlId The quandl asset path.
      */
     protected constructor(
         model: IModel,
@@ -51,13 +52,15 @@ export abstract class PreciousMetalAsset extends Asset {
         this.pureGramsPerUnit = weightUnit * weight * fineness;
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
     protected * getQueries() {
         yield `https://www.quandl.com/api/v3/datasets/${this.quandlId}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`;
     }
 
-    protected async processQueryResponse(response: any) {
-        this.unitValueUsd = this.pureGramsPerUnit / WeigthUnit.TroyOunce * QuandlParser.getPrice(response);
+    protected async processQueryResponse(dummy: any) {
+        for (const query of this.getQueries()) {
+            const response = await QueryCache.fetch(query);
+            this.unitValueUsd = this.pureGramsPerUnit / WeigthUnit.TroyOunce * QuandlParser.getPrice(response);
+        }
 
         return false;
     }

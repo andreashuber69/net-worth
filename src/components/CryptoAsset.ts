@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "./Asset";
+import { QueryCache } from "./QueryCache";
 
 /** Provides information about a crypto currency asset. */
 export abstract class CryptoAsset extends Asset {
@@ -44,12 +45,16 @@ export abstract class CryptoAsset extends Asset {
         yield `https://api.coinmarketcap.com/v1/ticker/${this.cmcId}/`;
     }
 
-    protected async processQueryResponse(response: any) {
+    protected async processQueryResponse(dummy: any) {
         const result = this.responseProcessed;
 
-        if (!this.responseProcessed) {
-            this.responseProcessed = true;
-            this.unitValueUsd = CryptoAsset.getPrice(response);
+        for (const query of this.getQueries()) {
+            const response = await QueryCache.fetch(query);
+
+            if (!this.responseProcessed) {
+                this.responseProcessed = true;
+                this.unitValueUsd = CryptoAsset.getPrice(response);
+            }
         }
 
         return result;

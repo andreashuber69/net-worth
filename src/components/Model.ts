@@ -17,8 +17,6 @@ import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { IWebRequest } from "./IWebRequest";
 import { WeigthUnit } from "./PreciousMetalAsset";
 import { QuandlRequest } from "./QuandlRequest";
-import { QueryCache } from "./QueryCache";
-import { QueryIterator } from "./QueryIterator";
 import { SilverAsset } from "./SilverAsset";
 
 export class Model {
@@ -96,34 +94,9 @@ export class Model {
     }
 
     private static async updateImpl(assets: Asset[]) {
-        const iterators = Model.createIterators(assets);
-
-        while (iterators.size > 0) {
-            const doneAssets = new Array<Asset>();
-
-            for (const [asset, queryIterator] of iterators) {
-                if (queryIterator.value) {
-                    await asset.processCurrentQueryResponse(await QueryCache.fetch(queryIterator.value));
-                    queryIterator.advance();
-                } else {
-                    doneAssets.push(asset);
-                }
-            }
-
-            for (const asset of doneAssets) {
-                iterators.delete(asset);
-            }
-        }
-    }
-
-    private static createIterators(assets: Asset[]) {
-        const result = new Map<Asset, QueryIterator>();
-
         for (const asset of assets) {
-            result.set(asset, new QueryIterator(asset.queries));
+            await asset.processCurrentQueryResponse();
         }
-
-        return result;
     }
 
     private readonly bundles = [
