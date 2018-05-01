@@ -37,9 +37,19 @@ export class BtcQuantityAsset extends CryptoAsset {
     protected async executeQueries() {
         await super.executeQueries();
 
-        for (const query of this.getQueries()) {
-            const response = await QueryCache.fetch(query);
-            this.quantity = (this.quantity === undefined ? 0 : this.quantity) + this.getFinalBalance(response);
+        // TODO: This is a crude test to distinguish between xpub and a normal address
+        if (this.location.length <= 100) {
+            await this.add(`https://blockchain.info/balance?active=${this.location}&cors=true`);
+        } else {
+            for (let chain = 0; chain < 2; ++chain) {
+                for (let index = 0; !this.changeChain;) {
+                    const batch = this.getAddressBatch(chain, index);
+                    index += batch.length;
+                    await this.add(`https://blockchain.info/balance?active=${batch.join("|")}&cors=true`);
+                }
+
+                this.changeChain = false;
+            }
         }
     }
 
@@ -52,21 +62,9 @@ export class BtcQuantityAsset extends CryptoAsset {
 
     private changeChain = false;
 
-    private * getQueries() {
-        // TODO: This is a crude test to distinguish between xpub and a normal address
-        if (this.location.length <= 100) {
-            yield `https://blockchain.info/balance?active=${this.location}&cors=true`;
-        } else {
-            for (let chain = 0; chain < 2; ++chain) {
-                for (let index = 0; !this.changeChain;) {
-                    const batch = this.getAddressBatch(chain, index);
-                    index += batch.length;
-                    yield `https://blockchain.info/balance?active=${batch.join("|")}&cors=true`;
-                }
-
-                this.changeChain = false;
-            }
-        }
+    private async add(query: string) {
+        this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
+            this.getFinalBalance(await QueryCache.fetch(query));
     }
 
     private getFinalBalance(response: any) {
