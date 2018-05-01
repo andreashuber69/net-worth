@@ -29,7 +29,7 @@ export abstract class Asset {
 
     /** @internal */
     public executeQueries() {
-        return this.executeQueries1({});
+        return this.executeQueries1();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +72,7 @@ export abstract class Asset {
      * returned `true`.
      * @returns `false` if the base class implementation was responsible to process the response; otherwise, `true`.
      */
-    protected abstract executeQueries1(response: any): Promise<boolean>;
+    protected abstract executeQueries1(): Promise<void>;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

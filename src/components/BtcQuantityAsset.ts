@@ -34,15 +34,13 @@ export class BtcQuantityAsset extends CryptoAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected async executeQueries1(dummy: any) {
-        await super.executeQueries1(dummy);
+    protected async executeQueries1() {
+        await super.executeQueries1();
 
         for (const query of this.getQueries2()) {
             const response = await QueryCache.fetch(query);
             this.quantity = (this.quantity === undefined ? 0 : this.quantity) + this.getFinalBalance(response);
         }
-
-        return false;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

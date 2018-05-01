@@ -52,13 +52,11 @@ export abstract class PreciousMetalAsset extends Asset {
         this.pureGramsPerUnit = weightUnit * weight * fineness;
     }
 
-    protected async executeQueries1(dummy: any) {
+    protected async executeQueries1() {
         for (const query of this.getQueries()) {
             const response = await QueryCache.fetch(query);
             this.unitValueUsd = this.pureGramsPerUnit / WeigthUnit.TroyOunce * QuandlParser.getPrice(response);
         }
-
-        return false;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
