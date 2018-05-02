@@ -25,7 +25,7 @@ export default class AssetList extends Vue {
     public readonly model = new Model();
 
     public get totalValueInteger() {
-        return Format.integer(this.totalValue);
+        return Format.integer(this.totalValue, 2);
     }
 
     public get totalValueFraction() {

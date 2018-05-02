@@ -47,7 +47,7 @@ export default class AssetListRow extends Vue {
     }
 
     public get unitValueInteger() {
-        return Format.integer(this.asset.unitValue);
+        return Format.integer(this.asset.unitValue, 2);
     }
 
     public get unitValueFraction() {
@@ -55,7 +55,7 @@ export default class AssetListRow extends Vue {
     }
 
     public get quantityInteger() {
-        return Format.integer(this.asset.quantity);
+        return Format.integer(this.asset.quantity, this.asset.quantityDecimals);
     }
 
     public get quantityFraction() {
@@ -63,7 +63,7 @@ export default class AssetListRow extends Vue {
     }
 
     public get totalValueInteger() {
-        return Format.integer(this.asset.totalValue);
+        return Format.integer(this.asset.totalValue, 2);
     }
 
     public get totalValueFraction() {

@@ -12,9 +12,14 @@
 
 export class Format {
     /** @internal */
-    public static integer(num: number | undefined) {
-        return (num === undefined) || Number.isNaN(num) ?
-            "" : Math.trunc(num).toLocaleString(undefined, { useGrouping: true });
+    public static integer(num: number | undefined, decimals: number) {
+        if ((num === undefined) || Number.isNaN(num)) {
+            return "";
+        } else {
+            const formatted = this.format(num, decimals);
+
+            return formatted.substring(0, this.decimalPointPosition(formatted));
+        }
     }
 
     /** @internal */
@@ -24,7 +29,22 @@ export class Format {
         } else if (Number.isNaN(num)) {
             return "Error";
         } else {
-            return (num % 1).toFixed(decimals).substring(1);
+            const formatted = this.format(num, decimals);
+
+            return formatted.substring(this.decimalPointPosition(formatted));
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static format(num: number, decimals: number) {
+        return num.toLocaleString(
+            undefined, { maximumFractionDigits: decimals, minimumFractionDigits: decimals, useGrouping: true });
+    }
+
+    private static decimalPointPosition(formatted: string) {
+        const decimalPointPosition = formatted.lastIndexOf(".");
+
+        return decimalPointPosition < 0 ? formatted.length : decimalPointPosition;
     }
 }
