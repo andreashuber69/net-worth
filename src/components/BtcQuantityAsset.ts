@@ -39,10 +39,10 @@ export class BtcQuantityAsset extends CryptoAsset {
 
         // TODO: This is a crude test to distinguish between xpub and a normal address
         if (this.location.length <= 100) {
-            await this.add(`https://blockchain.info/balance?active=${this.location}&cors=true`);
+            await this.add([ this.location ]);
         } else {
-            await this.valueChain(0);
-            await this.valueChain(1);
+            await this.addChain(0);
+            await this.addChain(1);
         }
     }
 
@@ -73,21 +73,19 @@ export class BtcQuantityAsset extends CryptoAsset {
         return result;
     }
 
-    private async add(query: string) {
-        const result = BtcQuantityAsset.getFinalBalance(await QueryCache.fetch(query));
+    private async add(addresses: string[]) {
+        const result = BtcQuantityAsset.getFinalBalance(
+            await QueryCache.fetch(`https://blockchain.info/balance?active=${addresses.join("|")}&cors=true`));
         this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result.finalBalance;
 
         return result.transactionCount !== 0;
     }
 
-    private async valueChain(chain: number) {
+    private async addChain(chain: number) {
         let index = 0;
 
-        // tslint:disable:no-empty
-        for (
-            const batch = this.getBatch(chain, index);
-            await this.add(`https://blockchain.info/balance?active=${batch.join("|")}&cors=true`);
-            index += batch.length) {
+        // tslint:disable-next-line:no-empty
+        for (const batch = this.getBatch(chain, index); await this.add(batch); index += batch.length) {
         }
     }
 
