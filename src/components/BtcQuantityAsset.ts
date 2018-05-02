@@ -41,15 +41,8 @@ export class BtcQuantityAsset extends CryptoAsset {
         if (this.location.length <= 100) {
             await this.add(`https://blockchain.info/balance?active=${this.location}&cors=true`);
         } else {
-            for (let chain = 0; chain < 2; ++chain) {
-                let changeChain = false;
-
-                for (let index = 0; !changeChain;) {
-                    const batch = this.getAddressBatch(chain, index);
-                    index += batch.length;
-                    changeChain = await this.add(`https://blockchain.info/balance?active=${batch.join("|")}&cors=true`);
-                }
-            }
+            await this.valueChain(0);
+            await this.valueChain(1);
         }
     }
 
@@ -84,10 +77,21 @@ export class BtcQuantityAsset extends CryptoAsset {
         const result = BtcQuantityAsset.getFinalBalance(await QueryCache.fetch(query));
         this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result.finalBalance;
 
-        return result.transactionCount === 0;
+        return result.transactionCount !== 0;
     }
 
-    private getAddressBatch(chain: number, offset: number) {
+    private async valueChain(chain: number) {
+        let index = 0;
+
+        // tslint:disable:no-empty
+        for (
+            const batch = this.getBatch(chain, index);
+            await this.add(`https://blockchain.info/balance?active=${batch.join("|")}&cors=true`);
+            index += batch.length) {
+        }
+    }
+
+    private getBatch(chain: number, offset: number) {
         const node = HDNode.fromBase58(this.location).derive(chain);
         const result = new Array<string>(20);
 
