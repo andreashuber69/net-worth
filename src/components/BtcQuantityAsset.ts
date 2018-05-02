@@ -12,14 +12,8 @@
 
 import { HDNode } from "bitcoinjs-lib";
 import { IModel } from "./Asset";
+import { BlockchainRequest } from "./BlockchainRequest";
 import { CryptoAsset } from "./CryptoAsset";
-import { QueryCache } from "./QueryCache";
-
-/** @internal */
-interface ISummary {
-    final_balance: number;
-    n_tx: number;
-}
 
 /** Provides information about a BTC asset. */
 export class BtcQuantityAsset extends CryptoAsset {
@@ -39,7 +33,7 @@ export class BtcQuantityAsset extends CryptoAsset {
 
         // TODO: This is a crude test to distinguish between xpub and a normal address
         if (this.location.length <= 100) {
-            await this.add([ this.location ]);
+            await this.add(this.location);
         } else {
             await this.addChain(0);
             await this.addChain(1);
@@ -48,35 +42,9 @@ export class BtcQuantityAsset extends CryptoAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static isSummary(value: any): value is ISummary {
-        return this.hasStringIndexer(value) && (typeof value.final_balance === "number") &&
-            (typeof value.n_tx === "number");
-    }
-
-    private static getFinalBalance(response: any) {
-        const result = { finalBalance: Number.NaN, transactionCount: 0 };
-
-        if (CryptoAsset.hasStringIndexer(response)) {
-            for (const address in response) {
-                if (response.hasOwnProperty(address)) {
-                    const balance = response[address];
-
-                    if (BtcQuantityAsset.isSummary(balance)) {
-                        result.transactionCount += balance.n_tx;
-                        result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) +
-                            balance.final_balance / 100000000;
-                    }
-                }
-            }
-        }
-
-        return result;
-    }
-
-    private async add(addresses: string[]) {
-        const result = BtcQuantityAsset.getFinalBalance(
-            await QueryCache.fetch(`https://blockchain.info/balance?active=${addresses.join("|")}&cors=true`));
-        this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result.finalBalance;
+    private async add(...addresses: string[]) {
+        const result = await new BlockchainRequest(...addresses).execute();
+        this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result.current;
 
         return result.transactionCount !== 0;
     }
@@ -85,7 +53,7 @@ export class BtcQuantityAsset extends CryptoAsset {
         let index = 0;
 
         // tslint:disable-next-line:no-empty
-        for (const batch = this.getBatch(chain, index); await this.add(batch); index += batch.length) {
+        for (const batch = this.getBatch(chain, index); await this.add(...batch); index += batch.length) {
         }
     }
 
