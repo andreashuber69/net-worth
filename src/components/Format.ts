@@ -18,7 +18,7 @@ export class Format {
         } else {
             const formatted = this.format(num, decimals);
 
-            return formatted.substring(0, this.decimalPointPosition(formatted));
+            return formatted.substring(0, this.getDecimalPointPosition(formatted));
         }
     }
 
@@ -31,7 +31,7 @@ export class Format {
         } else {
             const formatted = this.format(num, decimals);
 
-            return formatted.substring(this.decimalPointPosition(formatted));
+            return formatted.substring(this.getDecimalPointPosition(formatted));
         }
     }
 
@@ -42,7 +42,7 @@ export class Format {
             undefined, { maximumFractionDigits: decimals, minimumFractionDigits: decimals, useGrouping: true });
     }
 
-    private static decimalPointPosition(formatted: string) {
+    private static getDecimalPointPosition(formatted: string) {
         const decimalPointPosition = formatted.lastIndexOf(".");
 
         return decimalPointPosition < 0 ? formatted.length : decimalPointPosition;
