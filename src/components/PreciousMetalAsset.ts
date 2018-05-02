@@ -13,7 +13,7 @@
 import { Asset, IModel } from "./Asset";
 import { QuandlRequest } from "./QuandlRequest";
 
-export enum WeigthUnit {
+export enum WeightUnit {
     Gram = 1,
     Kilogram = 1000,
     Grain = 0.06479891, // https://en.wikipedia.org/wiki/Grain_(unit)
@@ -26,7 +26,7 @@ export abstract class PreciousMetalAsset extends Asset {
     /**
      * Creates a new [[PreciousMetalAsset]] instance.
      * @param model The model to which this asset belongs.
-     * @param location The location of the precious metal items, e.g. Saftey Deposit Box.
+     * @param location The location of the precious metal items, e.g. Safety Deposit Box.
      * @param description Describes the precious metal items, e.g. Bars, Coins.
      * @param type The type of precious metal, e.g. Silver, Gold.
      * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
@@ -40,7 +40,7 @@ export abstract class PreciousMetalAsset extends Asset {
         location: string,
         description: string,
         type: string,
-        weightUnit: WeigthUnit,
+        weightUnit: WeightUnit,
         weight: number,
         fineness: number,
         quantity: number,
@@ -54,21 +54,21 @@ export abstract class PreciousMetalAsset extends Asset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getUnit(unit: WeigthUnit, weight: number) {
+    private static getUnit(unit: WeightUnit, weight: number) {
         return `${weight.toFixed(0)} ${this.abbreviate(unit)}`;
     }
 
-    private static abbreviate(unit: WeigthUnit) {
+    private static abbreviate(unit: WeightUnit) {
         switch (unit) {
-            case WeigthUnit.Gram:
+            case WeightUnit.Gram:
                 return "g";
-            case WeigthUnit.Kilogram:
+            case WeightUnit.Kilogram:
                 return "kg";
-            case WeigthUnit.Grain:
+            case WeightUnit.Grain:
                 return "gr";
-            case WeigthUnit.TroyOunce:
+            case WeightUnit.TroyOunce:
                 return "oz (troy)";
-            case WeigthUnit.AvdpOunce:
+            case WeightUnit.AvdpOunce:
                 return "oz (avdp)";
             default:
                 throw new Error("Unknown WeightUnit!");
@@ -79,6 +79,6 @@ export abstract class PreciousMetalAsset extends Asset {
 
     private async queryUnitValue() {
         this.unitValueUsd =
-            this.pureGramsPerUnit / WeigthUnit.TroyOunce * await new QuandlRequest(this.quandlId, false).execute();
+            this.pureGramsPerUnit / WeightUnit.TroyOunce * await new QuandlRequest(this.quandlId, false).execute();
     }
 }

@@ -17,6 +17,11 @@
         "plaintext",
         "typescript"
     ],
+    "cSpell.words": [
+        "Andreas",
+        "Dönni",
+        "Quandl"
+    ],
     "git.confirmSync": false,
     "typescript.tsdk": "node_modules/typescript/lib"
 }

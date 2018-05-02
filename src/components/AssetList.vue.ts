@@ -15,7 +15,7 @@ import { AssetBundle } from "./AssetBundle";
 import AssetListRow from "./AssetListRow.vue";
 import { Format } from "./Format";
 import { Model } from "./Model";
-import { WeigthUnit } from "./PreciousMetalAsset";
+import { WeightUnit } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
 
 // tslint:disable-next-line:no-unsafe-any
@@ -34,7 +34,7 @@ export default class AssetList extends Vue {
 
     public add() {
         return this.model.add(
-            new AssetBundle(new SilverAsset(this.model, "Home", "Bars", WeigthUnit.Kilogram, 1, 0.999, 3)));
+            new AssetBundle(new SilverAsset(this.model, "Home", "Bars", WeightUnit.Kilogram, 1, 0.999, 3)));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

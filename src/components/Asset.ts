@@ -34,7 +34,7 @@ export abstract class Asset {
     /**
      * Creates a new [[Asset]] instance.
      * @param model The model to which this asset belongs.
-     * @param location The location of the asset, e.g. Saftey Deposit Box. For a crypto currency, this is the public
+     * @param location The location of the asset, e.g. Safety Deposit Box. For a crypto currency, this is the public
      * address.
      * @param description Describes the asset, e.g. Spending, Savings, Bars, Coins.
      * @param type The type of asset, e.g. Silver, Gold, BTC.

@@ -11,14 +11,14 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { PreciousMetalAsset, WeigthUnit } from "./PreciousMetalAsset";
+import { PreciousMetalAsset, WeightUnit } from "./PreciousMetalAsset";
 
 /** Provides information about an asset made of silver. */
 export class SilverAsset extends PreciousMetalAsset {
     /**
      * Creates a new [[SilverAsset]] instance.
      * @param model The model to which this asset belongs.
-     * @param location The location of the silver, e.g. Saftey Deposit Box or Home Safe.
+     * @param location The location of the silver, e.g. Safety Deposit Box or Home Safe.
      * @param description Describes the silver items, e.g. Bars, Coins, Medallions.
      * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
      * @param weight The weight of a single item, expressed in `weightUnit`.
@@ -29,7 +29,7 @@ export class SilverAsset extends PreciousMetalAsset {
         model: IModel,
         location: string,
         description: string,
-        weightUnit: WeigthUnit,
+        weightUnit: WeightUnit,
         weight: number,
         fineness: number,
         quantity: number,

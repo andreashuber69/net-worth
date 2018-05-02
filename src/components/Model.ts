@@ -15,7 +15,7 @@ import { AssetBundle } from "./AssetBundle";
 import { BtcQuantityAsset } from "./BtcQuantityAsset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { IWebRequest } from "./IWebRequest";
-import { WeigthUnit } from "./PreciousMetalAsset";
+import { WeightUnit } from "./PreciousMetalAsset";
 import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
 
@@ -84,10 +84,10 @@ export class Model {
     private static readonly address = "1F8i3SE7Zorf6F2rLh3Mxg4Mb8aHT2nkQf";
 
     private readonly bundles = [
-        new AssetBundle(new SilverAsset(this, "Home", "5 CHF, Roll of 50", WeigthUnit.Gram, 750, 0.835, 1)),
-        new AssetBundle(new SilverAsset(this, "Home", "2 CHF, Roll of 50", WeigthUnit.Gram, 500, 0.835, 2)),
-        new AssetBundle(new SilverAsset(this, "Home", "1 CHF, Roll of 50", WeigthUnit.Gram, 250, 0.835, 3)),
-        new AssetBundle(new SilverAsset(this, "Home", "0.5 CHF, Roll of 50", WeigthUnit.Gram, 125, 0.835, 4)),
+        new AssetBundle(new SilverAsset(this, "Home", "5 CHF, Roll of 50", WeightUnit.Gram, 750, 0.835, 1)),
+        new AssetBundle(new SilverAsset(this, "Home", "2 CHF, Roll of 50", WeightUnit.Gram, 500, 0.835, 2)),
+        new AssetBundle(new SilverAsset(this, "Home", "1 CHF, Roll of 50", WeightUnit.Gram, 250, 0.835, 3)),
+        new AssetBundle(new SilverAsset(this, "Home", "0.5 CHF, Roll of 50", WeightUnit.Gram, 125, 0.835, 4)),
         new AssetBundle(new BtcQuantityAsset(this, Model.address, "Spending Wallet")),
     ];
 
