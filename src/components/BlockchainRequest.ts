@@ -19,7 +19,7 @@ interface ISummary {
 }
 
 export interface IBalance {
-    readonly current: number;
+    readonly finalBalance: number;
     readonly transactionCount: number;
 }
 
@@ -36,7 +36,7 @@ export class BlockchainRequest implements IWebRequest<IBalance> {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getFinalBalance(response: any) {
-        const result = { current: Number.NaN, transactionCount: 0 };
+        const result = { finalBalance: Number.NaN, transactionCount: 0 };
 
         if (this.hasStringIndexer(response)) {
             for (const address in response) {
@@ -45,8 +45,8 @@ export class BlockchainRequest implements IWebRequest<IBalance> {
 
                     if (this.isSummary(balance)) {
                         result.transactionCount += balance.n_tx;
-                        result.current =
-                            (Number.isNaN(result.current) ? 0 : result.current) + balance.final_balance / 100000000;
+                        result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) +
+                            balance.final_balance / 100000000;
                     }
                 }
             }

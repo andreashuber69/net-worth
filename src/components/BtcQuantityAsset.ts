@@ -44,7 +44,7 @@ export class BtcQuantityAsset extends CryptoAsset {
 
     private async add(...addresses: string[]) {
         const result = await new BlockchainRequest(...addresses).execute();
-        this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result.current;
+        this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result.finalBalance;
 
         return result.transactionCount !== 0;
     }

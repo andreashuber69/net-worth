@@ -15,10 +15,6 @@ import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 
 /** Provides information about a crypto currency asset. */
 export abstract class CryptoAsset extends Asset {
-    protected static hasStringIndexer(value: any): value is { [key: string]: any } {
-        return value instanceof Object;
-    }
-
     /**
      * Creates a new [[CryptoAsset]] instance.
      * @param model The model to which this asset belongs.
@@ -27,7 +23,7 @@ export abstract class CryptoAsset extends Asset {
      * @param currencySymbol The crypto currency symbol, e.g. BTC, LTC.
      * @param quantity The amount of crypto currency.
      * @param quantityDecimals The number of decimals to use to format the quantity.
-     * @param cmcId The coinmarketcap.com identifier of the currency.
+     * @param coin The coinmarketcap.com identifier of the currency.
      */
     protected constructor(
         model: IModel,
@@ -36,12 +32,12 @@ export abstract class CryptoAsset extends Asset {
         currencySymbol: string,
         quantity: number | undefined,
         quantityDecimals: number,
-        private readonly cmcId: string,
+        private readonly coin: string,
     ) {
         super(model, address, description, currencySymbol, currencySymbol, 1, quantity, quantityDecimals);
     }
 
     protected async executeQueries() {
-        this.unitValueUsd = await new CoinMarketCapRequest(this.cmcId, false).execute();
+        this.unitValueUsd = await new CoinMarketCapRequest(this.coin, false).execute();
     }
 }
