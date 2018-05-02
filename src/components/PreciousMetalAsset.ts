@@ -49,11 +49,7 @@ export abstract class PreciousMetalAsset extends Asset {
         super(
             model, location, description, type, PreciousMetalAsset.getUnit(weightUnit, weight), fineness, quantity, 0);
         this.pureGramsPerUnit = weightUnit * weight * fineness;
-    }
-
-    protected async executeQueries() {
-        this.unitValueUsd =
-            this.pureGramsPerUnit / WeigthUnit.TroyOunce * await new QuandlRequest(this.quandlId, false).execute();
+        this.queryUnitValue().catch((reason) => console.error(reason));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,4 +76,9 @@ export abstract class PreciousMetalAsset extends Asset {
     }
 
     private readonly pureGramsPerUnit: number;
+
+    private async queryUnitValue() {
+        this.unitValueUsd =
+            this.pureGramsPerUnit / WeigthUnit.TroyOunce * await new QuandlRequest(this.quandlId, false).execute();
+    }
 }

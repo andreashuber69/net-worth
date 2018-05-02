@@ -24,13 +24,12 @@ export class BtcQuantityAsset extends CryptoAsset {
      */
     public constructor(model: IModel, address: string, description: string) {
         super(model, address, description, "BTC", undefined, 8, "bitcoin");
+        this.queryQuantity().catch((reason) => console.error(reason));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected async executeQueries() {
-        await super.executeQueries();
-
+    private async queryQuantity() {
         // TODO: This is a crude test to distinguish between xpub and a normal address
         if (this.location.length <= 100) {
             await this.add(this.location);
@@ -39,8 +38,6 @@ export class BtcQuantityAsset extends CryptoAsset {
             await this.addChain(1);
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private async add(...addresses: string[]) {
         const result = await new BlockchainRequest(...addresses).execute();

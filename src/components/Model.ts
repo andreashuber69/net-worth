@@ -41,14 +41,8 @@ export class Model {
     public exchangeRate: number | undefined = 1;
 
     /** @internal */
-    public constructor() {
-        Model.update(this.assets);
-    }
-
-    /** @internal */
     public add(bundle: AssetBundle) {
         this.bundles.push(bundle);
-        Model.update(bundle.assets);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,16 +82,6 @@ export class Model {
 
     // tslint:disable-next-line:max-line-length
     private static readonly address = "1F8i3SE7Zorf6F2rLh3Mxg4Mb8aHT2nkQf";
-
-    private static update(assets: Asset[]) {
-        this.updateImpl(assets).catch((reason) => console.error(reason));
-    }
-
-    private static async updateImpl(assets: Asset[]) {
-        for (const asset of assets) {
-            await asset.value();
-        }
-    }
 
     private readonly bundles = [
         new AssetBundle(new SilverAsset(this, "Home", "5 CHF, Roll of 50", WeigthUnit.Gram, 750, 0.835, 1)),

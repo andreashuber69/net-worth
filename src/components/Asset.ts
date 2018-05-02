@@ -27,11 +27,6 @@ export abstract class Asset {
         return Asset.multiply(this.quantity, this.unitValue);
     }
 
-    /** @internal */
-    public value() {
-        return this.executeQueries();
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected unitValueUsd: number | undefined = undefined;
@@ -59,15 +54,6 @@ export abstract class Asset {
         public readonly quantityDecimals: number,
     ) {
     }
-
-    /**
-     * Executes the queries to value and optionally quantify the asset.
-     * @description This method can be overridden more than once. A good example for this practice can be found in
-     * [[CryptoAsset]] and [[BtcQuantityAsset]]. The former is the base class of the latter and both override this
-     * method. [[CryptoAsset]] executes the price query and [[BtcQuantityAsset]] executes the balance queries. For
-     * everything to work as expected, the [[BtcQuantityAsset]] override must call the [[CryptoAsset]] override.
-     */
-    protected abstract executeQueries(): Promise<void>;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -35,9 +35,12 @@ export abstract class CryptoAsset extends Asset {
         private readonly coin: string,
     ) {
         super(model, address, description, currencySymbol, currencySymbol, 1, quantity, quantityDecimals);
+        this.queryUnitValue().catch((reason) => console.error(reason));
     }
 
-    protected async executeQueries() {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private async queryUnitValue() {
         this.unitValueUsd = await new CoinMarketCapRequest(this.coin, false).execute();
     }
 }
