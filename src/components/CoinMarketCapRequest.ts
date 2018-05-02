@@ -14,12 +14,14 @@ import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 
 export class CoinMarketCapRequest implements IWebRequest<number> {
-    public constructor(private readonly coin: string) {
+    public constructor(private readonly coin: string, private readonly invert: boolean) {
     }
 
     public async execute() {
-        return 1 / CoinMarketCapRequest.getPrice(
+        const price = CoinMarketCapRequest.getPrice(
             await QueryCache.fetch(`https://api.coinmarketcap.com/v1/ticker/${this.coin}/`));
+
+        return this.invert ? 1 / price : price;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

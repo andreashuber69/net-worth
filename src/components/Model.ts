@@ -83,7 +83,7 @@ export class Model {
         ["ZAR", new QuandlRequest("boe/xudlzrd.json", false)],
         ["XAG", new QuandlRequest("lbma/silver.json", true)],
         ["XAU", new QuandlRequest("lbma/gold.json", true)],
-        ["BTC", new CoinMarketCapRequest("bitcoin")],
+        ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
 
     // tslint:disable-next-line:max-line-length

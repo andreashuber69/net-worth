@@ -42,6 +42,6 @@ export abstract class CryptoAsset extends Asset {
     }
 
     protected async executeQueries() {
-        this.unitValueUsd = await new CoinMarketCapRequest(this.cmcId).execute();
+        this.unitValueUsd = await new CoinMarketCapRequest(this.cmcId, false).execute();
     }
 }
