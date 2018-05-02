@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "./Asset";
-import { QueryCache } from "./QueryCache";
+import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 
 /** Provides information about a crypto currency asset. */
 export abstract class CryptoAsset extends Asset {
@@ -42,25 +42,6 @@ export abstract class CryptoAsset extends Asset {
     }
 
     protected async executeQueries() {
-        const response = await QueryCache.fetch(`https://api.coinmarketcap.com/v1/ticker/${this.cmcId}/`);
-        this.unitValueUsd = CryptoAsset.getPrice(response);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static getPrice(response: any) {
-        return CryptoAsset.isPriceInfo(response) ? Number.parseFloat(response[0].price_usd) : Number.NaN;
-    }
-
-    private static isPriceInfo(value: any): value is Array<{ price_usd: string }> {
-        return this.isLengthOneObjectArray(value) && (typeof value[0].price_usd === "string");
-    }
-
-    private static isLengthOneObjectArray(value: any): value is Array<{ [key: string]: any }> {
-        return this.isArray(value) && (value.length === 1) && this.hasStringIndexer(value[0]);
-    }
-
-    private static isArray(value: any): value is any[] {
-        return value instanceof Array;
+        this.unitValueUsd = await new CoinMarketCapRequest(this.cmcId).execute();
     }
 }
