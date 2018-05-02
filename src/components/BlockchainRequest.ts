@@ -13,7 +13,6 @@
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 
-/** @internal */
 interface ISummary {
     readonly final_balance: number;
     readonly n_tx: number;
@@ -26,12 +25,12 @@ export interface IBalance {
 
 export class BlockchainRequest implements IWebRequest<IBalance> {
     public constructor(...addresses: string[]) {
-        this.queryString = addresses.join("|");
+        this.addresses = addresses.join("|");
     }
 
     public async execute() {
         return BlockchainRequest.getFinalBalance(
-            await QueryCache.fetch(`https://blockchain.info/balance?active=${this.queryString}&cors=true`));
+            await QueryCache.fetch(`https://blockchain.info/balance?active=${this.addresses}&cors=true`));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,5 +64,5 @@ export class BlockchainRequest implements IWebRequest<IBalance> {
         return value instanceof Object;
     }
 
-    private readonly queryString: string;
+    private readonly addresses: string;
 }
