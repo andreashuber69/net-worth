@@ -11,8 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "./Asset";
-import { QuandlParser } from "./QuandlParser";
-import { QueryCache } from "./QueryCache";
+import { QuandlRequest } from "./QuandlRequest";
 
 export enum WeigthUnit {
     Gram = 1,
@@ -53,9 +52,8 @@ export abstract class PreciousMetalAsset extends Asset {
     }
 
     protected async executeQueries() {
-        const response = await QueryCache.fetch(
-            `https://www.quandl.com/api/v3/datasets/${this.quandlId}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`);
-        this.unitValueUsd = this.pureGramsPerUnit / WeigthUnit.TroyOunce * QuandlParser.getPrice(response);
+        this.unitValueUsd =
+            this.pureGramsPerUnit / WeigthUnit.TroyOunce * await new QuandlRequest(this.quandlId, false).execute();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
