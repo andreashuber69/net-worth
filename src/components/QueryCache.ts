@@ -11,22 +11,24 @@
 // <http://www.gnu.org/licenses/>.
 
 export class QueryCache {
-    public static async fetch(query: string) {
-        const cached = this.cache.get(query);
+    public static fetch(query: string) {
+        let result = this.cache.get(query);
 
-        return cached ? cached : this.fetchAndParse(query);
+        if (!result) {
+            result = this.fetchImpl(query);
+            this.cache.set(query, result);
+        }
+
+        return result;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly cache = new Map<string, any>();
+    private static readonly cache = new Map<string, Promise<any>>();
 
-    private static async fetchAndParse(query: string) {
+    private static async fetchImpl(query: string) {
         try {
-            const result = JSON.parse(await (await window.fetch(query)).text());
-            this.cache.set(query, result);
-
-            return result;
+            return JSON.parse(await (await window.fetch(query)).text());
         } catch {
             // It appears that after catch (e), e is sometimes undefined at this point, which is why we go with plain
             // catch.
