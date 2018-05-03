@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset } from "./Asset";
+import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { BtcQuantityAsset } from "./BtcQuantityAsset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
@@ -19,7 +19,7 @@ import { WeightUnit } from "./PreciousMetalAsset";
 import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
 
-export class Model {
+export class Model implements IModel {
     public get currencies() {
         return Array.from(Model.currencyMap.keys());
     }
