@@ -33,7 +33,7 @@ export abstract class PreciousMetalAsset extends Asset {
      * @param weight The weight of a single item, expressed in `weightUnit`.
      * @param fineness The fineness, e.g. 0.999.
      * @param quantity The number of items.
-     * @param quandlId The quandl asset path.
+     * @param quandlPath The quandl asset path.
      */
     protected constructor(
         model: IModel,
@@ -44,12 +44,12 @@ export abstract class PreciousMetalAsset extends Asset {
         weight: number,
         fineness: number,
         quantity: number,
-        private readonly quandlId: string,
+        quandlPath: string,
     ) {
         super(
             model, location, description, type, PreciousMetalAsset.getUnit(weightUnit, weight), fineness, quantity, 0);
         this.pureGramsPerUnit = weightUnit * weight * fineness;
-        this.queryUnitValue().catch((reason) => console.error(reason));
+        this.queryUnitValue(quandlPath).catch((reason) => console.error(reason));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,8 +77,8 @@ export abstract class PreciousMetalAsset extends Asset {
 
     private readonly pureGramsPerUnit: number;
 
-    private async queryUnitValue() {
+    private async queryUnitValue(quandlPath: string) {
         this.unitValueUsd =
-            this.pureGramsPerUnit / WeightUnit.TroyOunce * await new QuandlRequest(this.quandlId, false).execute();
+            this.pureGramsPerUnit / WeightUnit.TroyOunce * await new QuandlRequest(quandlPath, false).execute();
     }
 }
