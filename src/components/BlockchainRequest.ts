@@ -24,7 +24,7 @@ export interface IBalance {
 }
 
 export class BlockchainRequest implements IWebRequest<IBalance> {
-    public constructor(...addresses: string[]) {
+    public constructor(addresses: string[]) {
         this.addresses = addresses.join("|");
     }
 

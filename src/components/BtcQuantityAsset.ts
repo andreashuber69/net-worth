@@ -32,15 +32,15 @@ export class BtcQuantityAsset extends CryptoAsset {
     private async queryQuantity() {
         // TODO: This is a crude test to distinguish between xpub and a normal address
         if (this.location.length <= 100) {
-            await this.add(this.location);
+            await this.add([ this.location ]);
         } else {
             await this.addChain(0);
             await this.addChain(1);
         }
     }
 
-    private async add(...addresses: string[]) {
-        const result = await new BlockchainRequest(...addresses).execute();
+    private async add(addresses: string[]) {
+        const result = await new BlockchainRequest(addresses).execute();
         this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result.finalBalance;
 
         return result.transactionCount !== 0;
@@ -50,7 +50,7 @@ export class BtcQuantityAsset extends CryptoAsset {
         let index = 0;
 
         // tslint:disable-next-line:no-empty
-        for (const batch = this.getBatch(chain, index); await this.add(...batch); index += batch.length) {
+        for (const batch = this.getBatch(chain, index); await this.add(batch); index += batch.length) {
         }
     }
 
