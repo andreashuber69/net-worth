@@ -48,9 +48,10 @@ export class BtcQuantityAsset extends CryptoAsset {
 
     private async addChain(chain: number) {
         let index = 0;
+        let batch: string[] | undefined;
 
         // tslint:disable-next-line:no-empty
-        for (const batch = this.getBatch(chain, index); await this.add(batch); index += batch.length) {
+        for (; await this.add(batch = this.getBatch(chain, index)); index += batch.length) {
         }
     }
 
