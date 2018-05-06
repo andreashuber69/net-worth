@@ -29,11 +29,18 @@ export class BtcQuantityAsset extends CryptoAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private static delay(milliseconds: number) {
+        return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
+    }
+
     private async queryQuantity() {
         // TODO: This is a crude test to distinguish between xpub and a normal address
         if (this.location.length <= 100) {
             await this.add([ this.location ]);
         } else {
+            await BtcQuantityAsset.delay(1000);
+            // The following calls use a lot of CPU. By delaying first, we ensure that other queries can be sent,
+            // their respective responses received and even rendered in the UI before the CPU is blocked.
             await this.addChain(0);
             await this.addChain(1);
         }
