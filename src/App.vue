@@ -14,7 +14,13 @@
 
 <template>
   <div id="app">
-    <AssetList/>
+    <v-app>
+      <v-content>
+        <v-container fluid justify-center="true" fill-height="true">
+          <AssetList/>
+        </v-container>
+      </v-content>
+    </v-app>
   </div>
 </template>
 

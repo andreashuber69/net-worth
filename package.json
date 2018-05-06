@@ -15,7 +15,8 @@
     "bitcoinjs-lib": "^3.3.2",
     "vue": "^2.5.13",
     "vue-class-component": "^6.0.0",
-    "vue-property-decorator": "^6.0.0"
+    "vue-property-decorator": "^6.0.0",
+    "vuetify": "^1.0.17"
   },
   "devDependencies": {
     "@types/bitcoinjs-lib": "^3.3.3",

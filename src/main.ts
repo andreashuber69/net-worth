@@ -11,10 +11,16 @@
 // <http://www.gnu.org/licenses/>.
 
 import Vue from "vue";
+import Vuetify from "vuetify";
+// tslint:disable:no-import-side-effect
+// tslint:disable:no-implicit-dependencies
+// tslint:disable-next-line:no-submodule-imports
+import "vuetify/dist/vuetify.min.css";
 import App from "./App.vue";
 
 // tslint:disable:no-unsafe-any
 Vue.config.productionTip = false;
+Vue.use(Vuetify);
 
 new Vue({
   render: (h) => h(App),
