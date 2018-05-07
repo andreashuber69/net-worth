@@ -23,7 +23,7 @@
             TODO: The following element should be centered vertically inside the toolbar, but somehow this does not seem
             to be possible...
           -->
-          <v-select v-model="model.selectedCurrency" :items="model.currencies" single-line class="my-3"></v-select>
+          <v-select v-model="model.selectedCurrency" :items="model.currencies" single-line dense="true" class="my-3"></v-select>
         </v-toolbar-items>
       </v-toolbar>
       <v-content>
