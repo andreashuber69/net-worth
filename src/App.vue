@@ -19,7 +19,7 @@
       </v-toolbar>
       <v-content>
         <v-container fluid justify-center="true" fill-height="true">
-          <AssetList/>
+          <AssetList :modelProp="model"/>
         </v-container>
       </v-content>
     </v-app>

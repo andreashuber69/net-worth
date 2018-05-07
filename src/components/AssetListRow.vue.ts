@@ -21,6 +21,14 @@ export default class AssetListRow extends Vue {
     @Prop()
     public assetProp?: Asset;
 
+    public get asset() {
+        if (!this.assetProp) {
+            throw new Error("No asset set.");
+        }
+
+        return this.assetProp;
+    }
+
     public get shortLocation() {
         const maxLength = 15;
 
@@ -68,15 +76,5 @@ export default class AssetListRow extends Vue {
 
     public get totalValueFraction() {
         return Format.fraction(this.asset.totalValue, 2);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private get asset() {
-        if (!this.assetProp) {
-            throw new Error("No asset set.");
-        }
-
-        return this.assetProp;
     }
 }

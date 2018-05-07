@@ -12,8 +12,11 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import AssetList from "./components/AssetList.vue";
+import { Model } from "./components/Model";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { AssetList } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
-export default class App extends Vue {}
+export default class App extends Vue {
+    public readonly model = new Model();
+}

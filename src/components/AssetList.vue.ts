@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import { AssetBundle } from "./AssetBundle";
 import AssetListRow from "./AssetListRow.vue";
 import { Format } from "./Format";
@@ -22,7 +22,16 @@ import { SilverAsset } from "./SilverAsset";
 @Component({ components: { AssetListRow } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetList extends Vue {
-    public readonly model = new Model();
+    @Prop()
+    public modelProp?: Model;
+
+    public get model() {
+        if (!this.modelProp) {
+            throw new Error("No model set.");
+        }
+
+        return this.modelProp;
+    }
 
     public get totalValueInteger() {
         return Format.integer(this.totalValue, 2);
