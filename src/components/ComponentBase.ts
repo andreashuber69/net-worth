@@ -12,6 +12,7 @@
 
 import { Prop, Vue } from "vue-property-decorator";
 
+// tslint:disable-next-line:no-unsafe-any
 export class ComponentBase<T> extends Vue {
     @Prop()
     public modelProp?: T;

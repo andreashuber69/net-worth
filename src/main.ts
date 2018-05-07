@@ -10,12 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-// tslint:disable:no-import-side-effect
-// tslint:disable:no-implicit-dependencies
-// tslint:disable:no-submodule-imports
+// tslint:disable-next-line:no-import-side-effect no-implicit-dependencies no-submodule-imports
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import Vue from "vue";
 import Vuetify from "vuetify";
+// tslint:disable-next-line:no-import-side-effect no-implicit-dependencies no-submodule-imports
 import "vuetify/dist/vuetify.min.css";
 import App from "./App.vue";
 

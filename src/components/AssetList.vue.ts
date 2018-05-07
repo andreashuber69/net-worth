@@ -21,7 +21,7 @@ import { SilverAsset } from "./SilverAsset";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { AssetListRow } })
-// tslint:disable-next-line:no-default-export no-unsafe-any
+// tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
     public get totalValueInteger() {
         return Format.integer(this.totalValue, 2);

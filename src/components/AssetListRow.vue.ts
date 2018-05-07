@@ -17,7 +17,7 @@ import { Format } from "./Format";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
-// tslint:disable-next-line:no-default-export no-unsafe-any
+// tslint:disable-next-line:no-default-export
 export default class AssetListRow extends ComponentBase<Asset> {
     public get shortLocation() {
         const maxLength = 15;
