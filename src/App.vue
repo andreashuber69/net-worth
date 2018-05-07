@@ -16,10 +16,18 @@
   <div id="app">
     <v-app>
       <v-toolbar app>
-        <v-select label="Currency" v-model="model.selectedCurrency" :items="model.currencies"></v-select>
+        <v-toolbar-title>Asset Manager</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <!--
+            TODO: The following element should be centered vertically inside the toolbar, but somehow this does not seem
+            to be possible...
+          -->
+          <v-select v-model="model.selectedCurrency" :items="model.currencies" single-line class="my-3"></v-select>
+        </v-toolbar-items>
       </v-toolbar>
       <v-content>
-        <v-container fluid justify-center="true" fill-height="true">
+        <v-container justify-center="true" fill-height="true">
           <AssetList :modelProp="model"/>
         </v-container>
       </v-content>
