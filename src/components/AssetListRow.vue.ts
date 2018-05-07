@@ -10,25 +10,15 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import { Asset } from "./Asset";
+import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
 // tslint:disable-next-line:no-default-export no-unsafe-any
-export default class AssetListRow extends Vue {
-    @Prop()
-    public modelProp?: Asset;
-
-    public get model() {
-        if (!this.modelProp) {
-            throw new Error("No model set.");
-        }
-
-        return this.modelProp;
-    }
-
+export default class AssetListRow extends ComponentBase<Asset> {
     public get shortLocation() {
         const maxLength = 15;
 

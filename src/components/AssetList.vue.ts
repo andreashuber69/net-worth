@@ -10,9 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import { AssetBundle } from "./AssetBundle";
 import AssetListRow from "./AssetListRow.vue";
+import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 import { Model } from "./Model";
 import { WeightUnit } from "./PreciousMetalAsset";
@@ -21,18 +22,7 @@ import { SilverAsset } from "./SilverAsset";
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { AssetListRow } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
-export default class AssetList extends Vue {
-    @Prop()
-    public modelProp?: Model;
-
-    public get model() {
-        if (!this.modelProp) {
-            throw new Error("No model set.");
-        }
-
-        return this.modelProp;
-    }
-
+export default class AssetList extends ComponentBase<Model> {
     public get totalValueInteger() {
         return Format.integer(this.totalValue, 2);
     }
