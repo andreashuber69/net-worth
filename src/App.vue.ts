@@ -12,7 +12,7 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import AssetList from "./components/AssetList.vue";
-import { Model } from "./components/Model";
+import { Model } from "./model/Model";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { AssetList } })

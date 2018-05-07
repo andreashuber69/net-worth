@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component } from "vue-property-decorator";
-import { Asset } from "./Asset";
+import { Asset } from "../model/Asset";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 

@@ -11,13 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component } from "vue-property-decorator";
-import { AssetBundle } from "./AssetBundle";
+import { AssetBundle } from "../model/AssetBundle";
+import { Model } from "../model/Model";
+import { WeightUnit } from "../model/PreciousMetalAsset";
+import { SilverAsset } from "../model/SilverAsset";
 import AssetListRow from "./AssetListRow.vue";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
-import { Model } from "./Model";
-import { WeightUnit } from "./PreciousMetalAsset";
-import { SilverAsset } from "./SilverAsset";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { AssetListRow } })
