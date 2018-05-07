@@ -16,6 +16,7 @@
   <div id="app">
     <v-app>
       <v-toolbar app>
+        <v-select label="Currency" v-model="model.selectedCurrency" :items="model.currencies"></v-select>
       </v-toolbar>
       <v-content>
         <v-container fluid justify-center="true" fill-height="true">
