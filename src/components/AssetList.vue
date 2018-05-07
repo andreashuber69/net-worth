@@ -14,7 +14,7 @@
 
 <template>
   <div>
-    <v-select v-model="model.selectedCurrency" :items="model.currencies"></v-select>
+    <v-select label="Currency" v-model="model.selectedCurrency" :items="model.currencies" dense="true"></v-select>
     <table>
       <tr>
         <th>Location</th>
@@ -28,7 +28,7 @@
       </tr>
       <AssetListRow v-for="(asset, index) in model.assets" :key="index" :assetProp="asset"></AssetListRow>
       <tr>
-        <td class="total" colspan="10">Grand Total</td>
+        <td class="total" colspan="10">Grand Total ({{model.selectedCurrency}})</td>
         <td class="total integer">{{ totalValueInteger }}</td>
         <td class="total fraction">{{ totalValueFraction }}</td>
       </tr>
