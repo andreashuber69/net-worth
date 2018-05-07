@@ -14,7 +14,7 @@
 
 <template>
   <div>
-    <v-select label="Currency" v-model="model.selectedCurrency" :items="model.currencies" dense="true"></v-select>
+    <v-select label="Currency" v-model="model.selectedCurrency" :items="model.currencies"></v-select>
     <table>
       <tr>
         <th>Location</th>

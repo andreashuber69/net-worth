@@ -15,6 +15,8 @@
 <template>
   <div id="app">
     <v-app>
+      <v-toolbar app>
+      </v-toolbar>
       <v-content>
         <v-container fluid justify-center="true" fill-height="true">
           <AssetList/>
