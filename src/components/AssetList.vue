@@ -21,9 +21,9 @@
         <th>Type</th>
         <th>Unit</th>
         <th class="number" colspan="2">Fineness</th>
-        <th class="number" colspan="2">Unit Value<br>({{model.selectedCurrency}})</th>
+        <th class="number" colspan="2">Unit Value<br>({{ model.selectedCurrency }})</th>
         <th class="number" colspan="2">Quantity</th>
-        <th class="number" colspan="2">Total Value<br>({{model.selectedCurrency}})</th>
+        <th class="number" colspan="2">Total Value<br>({{ model.selectedCurrency }})</th>
       </tr>
       <AssetListRow v-for="(asset, index) in model.assets" :key="index" :modelProp="asset"></AssetListRow>
       <tr>
