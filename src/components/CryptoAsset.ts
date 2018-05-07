@@ -17,7 +17,7 @@ import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 export abstract class CryptoAsset extends Asset {
     /**
      * Creates a new [[CryptoAsset]] instance.
-     * @param model The model to which this asset belongs.
+     * @param parent The parent model to which this asset belongs.
      * @param address The public address of the crypto asset.
      * @param description Describes the crypto asset, e.g. Savings, Speculation.
      * @param currencySymbol The crypto currency symbol, e.g. BTC, LTC.
@@ -26,7 +26,7 @@ export abstract class CryptoAsset extends Asset {
      * @param coin The coinmarketcap.com identifier of the currency.
      */
     protected constructor(
-        model: IModel,
+        parent: IModel,
         address: string,
         description: string,
         currencySymbol: string,
@@ -34,7 +34,7 @@ export abstract class CryptoAsset extends Asset {
         quantityDecimals: number,
         coin: string,
     ) {
-        super(model, address, description, currencySymbol, currencySymbol, 1, quantity, quantityDecimals);
+        super(parent, address, description, currencySymbol, currencySymbol, 1, quantity, quantityDecimals);
         this.queryUnitValue(coin).catch((reason) => console.error(reason));
     }
 

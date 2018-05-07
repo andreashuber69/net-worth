@@ -19,32 +19,32 @@ import { Format } from "./Format";
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class AssetListRow extends Vue {
     @Prop()
-    public assetProp?: Asset;
+    public modelProp?: Asset;
 
-    public get asset() {
-        if (!this.assetProp) {
-            throw new Error("No asset set.");
+    public get model() {
+        if (!this.modelProp) {
+            throw new Error("No model set.");
         }
 
-        return this.assetProp;
+        return this.modelProp;
     }
 
     public get shortLocation() {
         const maxLength = 15;
 
-        return this.asset.location.length > maxLength ?
-            `${this.asset.location.substr(0, maxLength)}...` : this.asset.location;
+        return this.model.location.length > maxLength ?
+            `${this.model.location.substr(0, maxLength)}...` : this.model.location;
     }
 
     public get finenessInteger() {
-        return this.asset.fineness === 1 ? "" : Math.trunc(this.asset.fineness);
+        return this.model.fineness === 1 ? "" : Math.trunc(this.model.fineness);
     }
 
     public get finenessFraction() {
-        if (this.asset.fineness === 1) {
+        if (this.model.fineness === 1) {
             return "";
         } else {
-            let fraction = (this.asset.fineness % 1).toFixed(6).substr(1);
+            let fraction = (this.model.fineness % 1).toFixed(6).substr(1);
 
             while (fraction.endsWith("0")) {
                 fraction = fraction.substr(0, fraction.length - 1);
@@ -55,26 +55,26 @@ export default class AssetListRow extends Vue {
     }
 
     public get unitValueInteger() {
-        return Format.integer(this.asset.unitValue, 2);
+        return Format.integer(this.model.unitValue, 2);
     }
 
     public get unitValueFraction() {
-        return Format.fraction(this.asset.unitValue, 2);
+        return Format.fraction(this.model.unitValue, 2);
     }
 
     public get quantityInteger() {
-        return Format.integer(this.asset.quantity, this.asset.quantityDecimals);
+        return Format.integer(this.model.quantity, this.model.quantityDecimals);
     }
 
     public get quantityFraction() {
-        return Format.fraction(this.asset.quantity, this.asset.quantityDecimals);
+        return Format.fraction(this.model.quantity, this.model.quantityDecimals);
     }
 
     public get totalValueInteger() {
-        return Format.integer(this.asset.totalValue, 2);
+        return Format.integer(this.model.totalValue, 2);
     }
 
     public get totalValueFraction() {
-        return Format.fraction(this.asset.totalValue, 2);
+        return Format.fraction(this.model.totalValue, 2);
     }
 }

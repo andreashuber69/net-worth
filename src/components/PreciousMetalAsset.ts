@@ -25,7 +25,7 @@ export enum WeightUnit {
 export abstract class PreciousMetalAsset extends Asset {
     /**
      * Creates a new [[PreciousMetalAsset]] instance.
-     * @param model The model to which this asset belongs.
+     * @param parent The parent model to which this asset belongs.
      * @param location The location of the precious metal items, e.g. Safety Deposit Box.
      * @param description Describes the precious metal items, e.g. Bars, Coins.
      * @param type The type of precious metal, e.g. Silver, Gold.
@@ -36,7 +36,7 @@ export abstract class PreciousMetalAsset extends Asset {
      * @param quandlPath The quandl asset path.
      */
     protected constructor(
-        model: IModel,
+        parent: IModel,
         location: string,
         description: string,
         type: string,
@@ -47,7 +47,7 @@ export abstract class PreciousMetalAsset extends Asset {
         quandlPath: string,
     ) {
         super(
-            model, location, description, type, PreciousMetalAsset.getUnit(weightUnit, weight), fineness, quantity, 0);
+            parent, location, description, type, PreciousMetalAsset.getUnit(weightUnit, weight), fineness, quantity, 0);
         this.pureGramsPerUnit = weightUnit * weight * fineness;
         this.queryUnitValue(quandlPath).catch((reason) => console.error(reason));
     }

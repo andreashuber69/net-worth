@@ -17,7 +17,7 @@ import { PreciousMetalAsset, WeightUnit } from "./PreciousMetalAsset";
 export class SilverAsset extends PreciousMetalAsset {
     /**
      * Creates a new [[SilverAsset]] instance.
-     * @param model The model to which this asset belongs.
+     * @param parent The parent model to which this asset belongs.
      * @param location The location of the silver, e.g. Safety Deposit Box or Home Safe.
      * @param description Describes the silver items, e.g. Bars, Coins, Medallions.
      * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
@@ -26,7 +26,7 @@ export class SilverAsset extends PreciousMetalAsset {
      * @param quantity The number of items.
      */
     public constructor(
-        model: IModel,
+        parent: IModel,
         location: string,
         description: string,
         weightUnit: WeightUnit,
@@ -34,6 +34,6 @@ export class SilverAsset extends PreciousMetalAsset {
         fineness: number,
         quantity: number,
     ) {
-        super(model, location, description, "Silver", weightUnit, weight, fineness, quantity, "lbma/silver.json");
+        super(parent, location, description, "Silver", weightUnit, weight, fineness, quantity, "lbma/silver.json");
     }
 }

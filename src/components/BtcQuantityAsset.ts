@@ -18,12 +18,12 @@ import { CryptoAsset } from "./CryptoAsset";
 /** Provides information about a BTC asset. */
 export class BtcQuantityAsset extends CryptoAsset {
     /** Creates a new [[BtcQuantityAsset]] instance.
-     * @param model The model to which this asset belongs.
+     * @param parent The parent model to which this asset belongs.
      * @param address The public address.
      * @param description Describes the asset, e.g. Spending, Savings.
      */
-    public constructor(model: IModel, address: string, description: string) {
-        super(model, address, description, "BTC", undefined, 8, "bitcoin");
+    public constructor(parent: IModel, address: string, description: string) {
+        super(parent, address, description, "BTC", undefined, 8, "bitcoin");
         this.queryQuantity().catch((reason) => console.error(reason));
     }
 

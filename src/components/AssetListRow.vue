@@ -14,10 +14,10 @@
 
 <template>
   <tr>
-    <td :title="asset.location">{{ shortLocation }}</td>
-    <td>{{ asset.description }}</td>
-    <td>{{ asset.type }}</td>
-    <td>{{ asset.unit }}</td>
+    <td :title="model.location">{{ shortLocation }}</td>
+    <td>{{ model.description }}</td>
+    <td>{{ model.type }}</td>
+    <td>{{ model.unit }}</td>
     <td class="integer">{{ finenessInteger }}</td>
     <td class="fraction">{{ finenessFraction }}</td>
     <td class="integer">{{ unitValueInteger }}</td>

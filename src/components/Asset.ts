@@ -19,7 +19,7 @@ export interface IModel {
 export abstract class Asset {
     /** @internal */
     public get unitValue() {
-        return Asset.multiply(this.unitValueUsd, this.model.exchangeRate);
+        return Asset.multiply(this.unitValueUsd, this.parent.exchangeRate);
     }
 
     /** @internal */
@@ -33,7 +33,7 @@ export abstract class Asset {
 
     /**
      * Creates a new [[Asset]] instance.
-     * @param model The model to which this asset belongs.
+     * @param parent The parent model to which this asset belongs.
      * @param location The location of the asset, e.g. Safety Deposit Box. For a crypto currency, this is the public
      * address.
      * @param description Describes the asset, e.g. Spending, Savings, Bars, Coins.
@@ -44,7 +44,7 @@ export abstract class Asset {
      * @param quantityDecimals The number of decimals to use to format the quantity.
      */
     protected constructor(
-        private readonly model: IModel,
+        private readonly parent: IModel,
         public readonly location: string,
         public readonly description: string,
         public readonly type: string,
