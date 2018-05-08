@@ -18,14 +18,14 @@
     <td>{{ model.description }}</td>
     <td>{{ model.type }}</td>
     <td>{{ model.unit }}</td>
-    <td class="integer">{{ finenessInteger }}</td>
-    <td class="fraction">{{ finenessFraction }}</td>
-    <td class="integer">{{ unitValueInteger }}</td>
-    <td class="fraction">{{ unitValueFraction }}</td>
-    <td class="integer">{{ quantityInteger }}</td>
-    <td class="fraction">{{ quantityFraction }}</td>
-    <td class="total integer">{{ totalValueInteger }}</td>
-    <td class="total fraction">{{ totalValueFraction }}</td>
+    <td class="text-xs-right pr-0">{{ finenessInteger }}</td>
+    <td class="text-xs-left pl-0">{{ finenessFraction }}</td>
+    <td class="text-xs-right pr-0">{{ unitValueInteger }}</td>
+    <td class="text-xs-left pl-0">{{ unitValueFraction }}</td>
+    <td class="text-xs-right pr-0">{{ quantityInteger }}</td>
+    <td class="text-xs-left pl-0">{{ quantityFraction }}</td>
+    <td class="text-xs-right pr-0">{{ totalValueInteger }}</td>
+    <td class="text-xs-left pl-0">{{ totalValueFraction }}</td>
   </tr>
 </template>
 

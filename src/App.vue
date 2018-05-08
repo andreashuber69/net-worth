@@ -23,11 +23,11 @@
             TODO: The following element should be centered vertically inside the toolbar, but somehow this does not seem
             to be possible...
           -->
-          <v-select v-model="model.selectedCurrency" :items="model.currencies" single-line dense="true" class="my-3"></v-select>
+          <v-select v-model="model.selectedCurrency" :items="model.currencies" single-line class="my-3"></v-select>
         </v-toolbar-items>
       </v-toolbar>
       <v-content>
-        <v-container justify-center="true" fill-height="true">
+        <v-container>
           <AssetList :modelProp="model"/>
         </v-container>
       </v-content>
@@ -39,32 +39,4 @@
 </script>
 
 <style>
-table {
-  margin-left: auto;
-  margin-right: auto;
-  width: fit-content;
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid lightgrey;
-  text-align: left;
-  padding: 8px;
-}
-
-td.integer {
-  border-width: 1px 0px 1px 1px;
-  text-align: right;
-  padding: 8px 0px 8px 8px;
-}
-
-td.fraction {
-  border-width: 1px 1px 1px 0px;
-  text-align: left;
-  padding: 8px 8px 8px 0px;
-}
-
-td.total {
-  font-weight: bold;
-}
 </style>

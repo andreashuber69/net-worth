@@ -14,24 +14,28 @@
 
 <template>
   <div>
-    <table>
-      <tr>
-        <th>Location</th>
-        <th>Description</th>
-        <th>Type</th>
-        <th>Unit</th>
-        <th class="number" colspan="2">Fineness</th>
-        <th class="number" colspan="2">Unit Value<br>({{ model.selectedCurrency }})</th>
-        <th class="number" colspan="2">Quantity</th>
-        <th class="number" colspan="2">Total Value<br>({{ model.selectedCurrency }})</th>
-      </tr>
-      <AssetListRow v-for="(asset, index) in model.assets" :key="index" :modelProp="asset"></AssetListRow>
-      <tr>
-        <td class="total" colspan="10">Grand Total</td>
-        <td class="total integer">{{ totalValueInteger }}</td>
-        <td class="total fraction">{{ totalValueFraction }}</td>
-      </tr>
-    </table>
+    <v-data-table :items="model.assets">
+      <template slot="headers" slot-scope="props">
+        <tr>
+          <th>Location</th>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Unit</th>
+          <th colspan="2">Fineness</th>
+          <th colspan="2">Unit Value<br>({{ model.selectedCurrency }})</th>
+          <th colspan="2">Quantity</th>
+          <th colspan="2">Total Value<br>({{ model.selectedCurrency }})</th>
+        </tr>
+      </template>
+      <template slot="items" slot-scope="props">
+        <AssetListRow :modelProp="props.item"></AssetListRow>
+      </template>
+      <template slot="footer">
+        <td colspan="10">Grand Total</td>
+        <td class="text-xs-right pr-0">{{ totalValueInteger }}</td>
+        <td class="text-xs-left pl-0">{{ totalValueFraction }}</td>
+      </template>
+    </v-data-table>
     <v-btn @click="add">Add</v-btn>
   </div>
 </template>
@@ -40,11 +44,4 @@
 </script>
 
 <style scoped>
-th.number {
-  text-align: center;
-}
-
-tr:nth-child(even) {
-  background-color: lightgoldenrodyellow;
-}
 </style>
