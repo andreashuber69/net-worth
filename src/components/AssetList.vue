@@ -16,16 +16,14 @@
   <div>
     <v-data-table :items="model.assets" class="elevation-1">
       <template slot="headers" slot-scope="props">
-        <tr>
-          <th>Location</th>
-          <th>Description</th>
-          <th>Type</th>
-          <th>Unit</th>
-          <th colspan="2">Fineness</th>
-          <th colspan="2">Unit Value<br>({{ model.selectedCurrency }})</th>
-          <th colspan="2">Quantity</th>
-          <th colspan="2">Total Value<br>({{ model.selectedCurrency }})</th>
-        </tr>
+        <th>Location</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Unit</th>
+        <th colspan="2">Fineness</th>
+        <th colspan="2">Unit Value<br>({{ model.selectedCurrency }})</th>
+        <th colspan="2">Quantity</th>
+        <th colspan="2">Total Value<br>({{ model.selectedCurrency }})</th>
       </template>
       <template slot="items" slot-scope="props">
         <AssetListRow :modelProp="props.item"></AssetListRow>
