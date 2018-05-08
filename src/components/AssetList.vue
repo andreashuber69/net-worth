@@ -14,7 +14,7 @@
 
 <template>
   <div>
-    <v-data-table :items="model.assets">
+    <v-data-table :items="model.assets" class="elevation-1">
       <template slot="headers" slot-scope="props">
         <tr>
           <th>Location</th>
