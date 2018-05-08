@@ -24,8 +24,8 @@
     <td class="text-xs-left pl-0">{{ unitValueFraction }}</td>
     <td class="text-xs-right pr-0">{{ quantityInteger }}</td>
     <td class="text-xs-left pl-0">{{ quantityFraction }}</td>
-    <td class="text-xs-right pr-0">{{ totalValueInteger }}</td>
-    <td class="text-xs-left pl-0">{{ totalValueFraction }}</td>
+    <td class="text-xs-right pr-0 total">{{ totalValueInteger }}</td>
+    <td class="text-xs-left pl-0 total">{{ totalValueFraction }}</td>
   </tr>
 </template>
 
@@ -33,4 +33,7 @@
 </script>
 
 <style scoped>
+.total {
+  font-weight: bold;
+}
 </style>

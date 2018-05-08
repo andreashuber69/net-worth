@@ -23,15 +23,15 @@
         <th colspan="2">Fineness</th>
         <th colspan="2">Unit Value<br>({{ model.selectedCurrency }})</th>
         <th colspan="2">Quantity</th>
-        <th colspan="2">Total Value<br>({{ model.selectedCurrency }})</th>
+        <th colspan="2" class="total">Total Value<br>({{ model.selectedCurrency }})</th>
       </template>
       <template slot="items" slot-scope="props">
         <AssetListRow :modelProp="props.item"></AssetListRow>
       </template>
       <template slot="footer">
-        <td colspan="10">Grand Total</td>
-        <td class="text-xs-right pr-0">{{ totalValueInteger }}</td>
-        <td class="text-xs-left pl-0">{{ totalValueFraction }}</td>
+        <td colspan="10" class="total">Grand Total</td>
+        <td class="text-xs-right pr-0 total">{{ totalValueInteger }}</td>
+        <td class="text-xs-left pl-0 total">{{ totalValueFraction }}</td>
       </template>
     </v-data-table>
     <v-btn @click="add">Add</v-btn>
@@ -42,4 +42,7 @@
 </script>
 
 <style scoped>
+.total {
+  font-weight: bold;
+}
 </style>
