@@ -34,10 +34,10 @@ export abstract class Asset {
     /**
      * Creates a new [[Asset]] instance.
      * @param parent The parent model to which this asset belongs.
+     * @param type The type of asset, e.g. Silver, Gold, BTC.
+     * @param description Describes the asset, e.g. Spending, Savings, Bars, Coins.
      * @param location The location of the asset, e.g. Safety Deposit Box. For a crypto currency, this is the public
      * address.
-     * @param description Describes the asset, e.g. Spending, Savings, Bars, Coins.
-     * @param type The type of asset, e.g. Silver, Gold, BTC.
      * @param unit The unit of the quantity, e.g. 1 oz (troy), 10 g, BTC.
      * @param fineness The fineness, e.g. 0.999.
      * @param quantity The asset quantity.
@@ -45,11 +45,11 @@ export abstract class Asset {
      */
     protected constructor(
         private readonly parent: IModel,
-        public readonly location: string,
-        public readonly description: string,
         public readonly type: string,
-        public readonly unit: string,
-        public readonly fineness: number,
+        public description: string,
+        public location: string,
+        public unit: string,
+        public fineness: number,
         public quantity: number | undefined,
         public readonly quantityDecimals: number,
     ) {

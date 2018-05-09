@@ -16,9 +16,9 @@
   <div>
     <v-data-table :items="model.assets" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
-        <th class="text-xs-left">Location</th>
-        <th class="text-xs-left">Description</th>
         <th class="text-xs-left">Type</th>
+        <th class="text-xs-left">Description</th>
+        <th class="text-xs-left">Location</th>
         <th class="text-xs-left">Unit</th>
         <th colspan="2">Fineness</th>
         <th colspan="2">Unit Value<br>({{ model.selectedCurrency }})</th>

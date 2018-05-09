@@ -26,9 +26,9 @@ export abstract class PreciousMetalAsset extends Asset {
     /**
      * Creates a new [[PreciousMetalAsset]] instance.
      * @param parent The parent model to which this asset belongs.
-     * @param location The location of the precious metal items, e.g. Safety Deposit Box.
-     * @param description Describes the precious metal items, e.g. Bars, Coins.
      * @param type The type of precious metal, e.g. Silver, Gold.
+     * @param description Describes the precious metal items, e.g. Bars, Coins.
+     * @param location The location of the precious metal items, e.g. Safety Deposit Box.
      * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
      * @param weight The weight of a single item, expressed in `weightUnit`.
      * @param fineness The fineness, e.g. 0.999.
@@ -37,9 +37,9 @@ export abstract class PreciousMetalAsset extends Asset {
      */
     protected constructor(
         parent: IModel,
-        location: string,
-        description: string,
         type: string,
+        description: string,
+        location: string,
         weightUnit: WeightUnit,
         weight: number,
         fineness: number,
@@ -47,7 +47,7 @@ export abstract class PreciousMetalAsset extends Asset {
         quandlPath: string,
     ) {
         super(
-            parent, location, description, type, PreciousMetalAsset.getUnit(weightUnit, weight), fineness, quantity, 0);
+            parent, type, description, location, PreciousMetalAsset.getUnit(weightUnit, weight), fineness, quantity, 0);
         this.pureGramsPerUnit = weightUnit * weight * fineness;
         this.queryUnitValue(quandlPath).catch((reason) => console.error(reason));
     }

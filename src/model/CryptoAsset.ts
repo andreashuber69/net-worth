@@ -18,23 +18,23 @@ export abstract class CryptoAsset extends Asset {
     /**
      * Creates a new [[CryptoAsset]] instance.
      * @param parent The parent model to which this asset belongs.
-     * @param address The public address of the crypto asset.
-     * @param description Describes the crypto asset, e.g. Savings, Speculation.
      * @param currencySymbol The crypto currency symbol, e.g. BTC, LTC.
+     * @param description Describes the crypto asset, e.g. Savings, Speculation.
+     * @param address The public address of the crypto asset.
      * @param quantity The amount of crypto currency.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      * @param coin The coinmarketcap.com identifier of the currency.
      */
     protected constructor(
         parent: IModel,
-        address: string,
-        description: string,
         currencySymbol: string,
+        description: string,
+        address: string,
         quantity: number | undefined,
         quantityDecimals: number,
         coin: string,
     ) {
-        super(parent, address, description, currencySymbol, currencySymbol, 1, quantity, quantityDecimals);
+        super(parent, currencySymbol, description, address, currencySymbol, 1, quantity, quantityDecimals);
         this.queryUnitValue(coin).catch((reason) => console.error(reason));
     }
 
