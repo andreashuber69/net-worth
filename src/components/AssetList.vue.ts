@@ -13,8 +13,9 @@
 import { Component } from "vue-property-decorator";
 import { AssetBundle } from "../model/AssetBundle";
 import { Model } from "../model/Model";
-import { WeightUnit } from "../model/PreciousMetalAsset";
 import { SilverAsset } from "../model/SilverAsset";
+import { WeightUnit } from "../model/WeightUnit";
+import { AssetEditor } from "./AssetEditor";
 import AssetListRow from "./AssetListRow.vue";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
@@ -23,6 +24,9 @@ import { Format } from "./Format";
 @Component({ components: { AssetListRow } })
 // tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
+    public dialog = false;
+    public editor = new AssetEditor();
+
     public get totalValueInteger() {
         return Format.integer(this.totalValue, 2);
     }

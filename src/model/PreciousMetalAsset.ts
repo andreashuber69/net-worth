@@ -12,14 +12,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { QuandlRequest } from "./QuandlRequest";
-
-export enum WeightUnit {
-    Gram = 1,
-    Kilogram = 1000,
-    Grain = 0.06479891, // https://en.wikipedia.org/wiki/Grain_(unit)
-    TroyOunce = Grain * 480, // https://en.wikipedia.org/wiki/Ounce
-    AvdpOunce = Grain * 437.5, // https://en.wikipedia.org/wiki/Ounce
-}
+import { Weight, WeightUnit } from "./WeightUnit";
 
 /** Provides information about an asset made of a precious metal. */
 export abstract class PreciousMetalAsset extends Asset {
@@ -55,24 +48,7 @@ export abstract class PreciousMetalAsset extends Asset {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getUnit(unit: WeightUnit, weight: number) {
-        return `${weight.toFixed(0)} ${this.abbreviate(unit)}`;
-    }
-
-    private static abbreviate(unit: WeightUnit) {
-        switch (unit) {
-            case WeightUnit.Gram:
-                return "g";
-            case WeightUnit.Kilogram:
-                return "kg";
-            case WeightUnit.Grain:
-                return "gr";
-            case WeightUnit.TroyOunce:
-                return "oz (troy)";
-            case WeightUnit.AvdpOunce:
-                return "oz (avdp)";
-            default:
-                throw new Error("Unknown WeightUnit!");
-        }
+        return `${weight.toFixed(0)} ${Weight.abbreviate(unit)}`;
     }
 
     private readonly pureGramsPerUnit: number;

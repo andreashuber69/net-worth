@@ -14,6 +14,46 @@
 
 <template>
   <div>
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-btn slot="activator" color="primary" dark class="mb-2">New Asset</v-btn>
+      <v-card>
+        <v-card-title>
+          <span class="headline">New Asset</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex xs12>
+                <v-select label="Type" v-model="editor.info" :items="editor.infos" item-text="type"></v-select>
+              </v-flex>
+              <v-flex xs12 sm6>
+                <v-text-field label="Description" v-model="editor.description" v-if="editor.info.hasDescription"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6>
+                <v-text-field label="Location" v-model="editor.location" v-if="editor.info.hasLocation"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6>
+                <v-select label="Weight Unit" v-model="editor.weightUnit" :items="editor.weightUnits" v-if="editor.info.hasWeightUnit"></v-select>
+              </v-flex>
+              <v-flex xs12 sm6>
+                <v-text-field label="Weight" v-model="editor.weight" type="number" min="0" step="0.001" v-if="editor.info.hasWeight"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6>
+                <v-select label="Fineness" v-model="editor.fineness" :items="editor.finenesses" v-if="editor.info.hasFineness"></v-select>
+              </v-flex>
+              <v-flex xs12 sm6>
+                <v-text-field label="Quantity" v-model="editor.quantity" type="number" min="0" :step="editor.info.quantityStep" v-if="editor.info.hasQuantity"></v-text-field>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-data-table :items="model.assets" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
         <th class="text-xs-left">Type</th>

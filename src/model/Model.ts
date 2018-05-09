@@ -15,9 +15,9 @@ import { AssetBundle } from "./AssetBundle";
 import { BtcQuantityAsset } from "./BtcQuantityAsset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { IWebRequest } from "./IWebRequest";
-import { WeightUnit } from "./PreciousMetalAsset";
 import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
+import { WeightUnit } from "./WeightUnit";
 
 export class Model implements IModel {
     public get currencies() {

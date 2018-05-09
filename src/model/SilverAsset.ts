@@ -11,7 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { PreciousMetalAsset, WeightUnit } from "./PreciousMetalAsset";
+import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import { WeightUnit } from "./WeightUnit";
 
 /** Provides information about an asset made of silver. */
 export class SilverAsset extends PreciousMetalAsset {
