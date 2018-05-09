@@ -17,6 +17,10 @@ export interface IModel {
 
 /** Base of all classes that provide information about an asset. */
 export abstract class Asset {
+    public get quantityStep() {
+        return Math.pow(10, -this.quantityDecimals);
+    }
+
     /** @internal */
     public get unitValue() {
         return Asset.multiply(this.unitValueUsd, this.parent.exchangeRate);
