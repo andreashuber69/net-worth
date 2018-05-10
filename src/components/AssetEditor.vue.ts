@@ -12,7 +12,6 @@
 
 import { Component } from "vue-property-decorator";
 import { Model } from "../model/Model";
-import { SilverAsset } from "../model/SilverAsset";
 import { Weight, WeightUnit } from "../model/WeightUnit";
 import { AssetInfo } from "./AssetInfo";
 import { ComponentBase } from "./ComponentBase";
@@ -29,20 +28,20 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
     public readonly finenesses = [ 0.999, 0.9999, 0.99999, 0.9 ];
-    public isDialogOpen = false;
+    public isOpen = false;
 
     public info = new AssetInfo("", false, false, false, false, false, false, 0);
-    public description?: string;
+    public description = "";
     public descriptionMsg = new Array<string>();
-    public location?: string;
+    public location = "";
     public locationMsg = new Array<string>();
-    public weight?: number;
+    public weight: number | string = "";
     public weightMsg = new Array<string>();
     public weightUnit = new WeightInfo("", 0);
     public weightUnitMsg = new Array<string>();
-    public fineness?: number;
+    public fineness: number | string = "";
     public finenessMsg = new Array<string>();
-    public quantity?: number;
+    public quantity: number | string = "";
     public quantityMsg = new Array<string>();
 
     // tslint:disable-next-line:prefer-function-over-method
@@ -53,11 +52,11 @@ export default class AssetEditor extends ComponentBase<Model> {
         return result ? [ result ] : [];
     }
 
-    public close() {
-    }
+    // // public close() {
+    // // }
 
-    public save() {
-    }
+    // // public save() {
+    // // }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -14,46 +14,7 @@
 
 <template>
   <div>
-    <v-dialog v-model="dialog" max-width="500px">
-      <v-btn slot="activator" color="primary" dark class="mb-2">New Asset</v-btn>
-      <v-card>
-        <v-card-title>
-          <span class="headline">New Asset</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12>
-                <v-select label="Type" v-model="editor.info" :items="editor.infos" item-text="type"></v-select>
-              </v-flex>
-              <v-flex xs12 sm6 v-if="editor.info.hasDescription">
-                <v-text-field label="Description" required v-model="editor.description"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 v-if="editor.info.hasLocation">
-                <v-text-field label="Location" required v-model="editor.location"></v-text-field>
-              </v-flex>
-              <v-flex xs6 v-if="editor.info.hasWeight">
-                <v-text-field label="Weight" required v-model="editor.weight" type="number" min="0" step="0.001" ref="weight" :error-messages="weightMsg" @blur="(evt) => weightMsg = validate(evt)"></v-text-field>
-              </v-flex>
-              <v-flex xs6 v-if="editor.info.hasWeightUnit">
-                <v-select label="Unit" required v-model="editor.weightUnit" :items="editor.weightUnits" item-text="abbreviation"></v-select>
-              </v-flex>
-              <v-flex xs6 v-if="editor.info.hasFineness">
-                <v-select label="Fineness" required combobox v-model="editor.fineness" :items="editor.finenesses" type="number" min="0.5" max="0.999999" step="0.000001"></v-select>
-              </v-flex>
-              <v-flex xs6 v-if="editor.info.hasQuantity">
-                <v-text-field label="Quantity" required v-model="editor.quantity" type="number" min="0" :step="editor.info.quantityStep"></v-text-field>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <AssetEditor :modelProp="model"></AssetEditor>
     <v-data-table :items="model.assets" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
         <th class="text-xs-left">Type</th>

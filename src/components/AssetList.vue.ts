@@ -15,20 +15,15 @@ import { AssetBundle } from "../model/AssetBundle";
 import { Model } from "../model/Model";
 import { SilverAsset } from "../model/SilverAsset";
 import { WeightUnit } from "../model/WeightUnit";
-import { AssetEditorData } from "./AssetEditorData";
+import AssetEditor from "./AssetEditor.vue";
 import AssetListRow from "./AssetListRow.vue";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
 // tslint:disable-next-line:no-unsafe-any
-@Component({ components: { AssetListRow } })
+@Component({ components: { AssetListRow, AssetEditor } })
 // tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
-    public dialog = false;
-    public readonly editor = new AssetEditorData();
-
-    public weightMsg: string[] = [];
-
     public get totalValueInteger() {
         return Format.integer(this.totalValue, 2);
     }
@@ -40,14 +35,6 @@ export default class AssetList extends ComponentBase<Model> {
     public add() {
         return this.model.add(
             new AssetBundle(new SilverAsset(this.model, "Home", "Bars", 1, WeightUnit.Kilogram, 0.999, 3)));
-    }
-
-    // tslint:disable-next-line:prefer-function-over-method
-    public validate(event: any) {
-        // tslint:disable-next-line:no-unsafe-any
-        const message = (event.target as HTMLInputElement).validationMessage;
-
-        return message ? [ message ] : [];
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

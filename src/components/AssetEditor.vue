@@ -13,7 +13,7 @@
 -->
 
 <template>
-  <v-dialog v-model="isDialogOpen" max-width="500px">
+  <v-dialog v-model="isOpen" max-width="500px">
     <v-btn slot="activator" color="primary" dark class="mb-2">New Asset</v-btn>
     <v-card>
       <v-card-title>
