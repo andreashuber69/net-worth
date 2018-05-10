@@ -36,7 +36,7 @@
                 <v-text-field label="Weight" v-model="editor.weight" type="number" min="0" step="0.001"></v-text-field>
               </v-flex>
               <v-flex xs6 v-if="editor.info.hasWeightUnit">
-                <v-select label="Unit" v-model="editor.weightUnit" :items="editor.weightUnits"></v-select>
+                <v-select label="Unit" v-model="editor.weightUnit" :items="editor.weightUnits" item-text="abbreviation"></v-select>
               </v-flex>
               <v-flex xs6 v-if="editor.info.hasFineness">
                 <v-select label="Fineness" v-model="editor.fineness" :items="editor.finenesses"></v-select>

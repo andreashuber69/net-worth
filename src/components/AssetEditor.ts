@@ -12,6 +12,7 @@
 
 import { Weight, WeightUnit } from "../model/WeightUnit";
 import { AssetInfo } from "./AssetInfo";
+import { WeightInfo } from "./WeightInfo";
 
 export class AssetEditor {
     public readonly infos = [
@@ -26,11 +27,9 @@ export class AssetEditor {
 
     public weight = 0;
 
-    public get weightUnits() {
-        return Array.from(AssetEditor.weightUnitsMap.keys());
-    }
+    public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
 
-    public weightUnit = "";
+    public weightUnit = new WeightInfo("", 0);
 
     public fineness = 1;
 
@@ -39,13 +38,11 @@ export class AssetEditor {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly weightUnitsMap = new Map<string, WeightUnit>(AssetEditor.getWeightUnits());
-
     private static * getWeightUnits() {
         for (const weightUnitProperty in WeightUnit) {
             if (Number.parseFloat(weightUnitProperty)) {
                 const weightUnit = Number.parseFloat(weightUnitProperty) as WeightUnit;
-                yield [ Weight.abbreviate(weightUnit), weightUnit ] as [ string, WeightUnit ];
+                yield new WeightInfo(Weight.abbreviate(weightUnit), weightUnit);
             }
         }
     }
