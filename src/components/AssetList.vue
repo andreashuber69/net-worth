@@ -26,23 +26,23 @@
               <v-flex xs12>
                 <v-select label="Type" v-model="editor.info" :items="editor.infos" item-text="type"></v-select>
               </v-flex>
-              <v-flex xs12 sm6>
-                <v-text-field label="Description" v-model="editor.description" v-if="editor.info.hasDescription"></v-text-field>
+              <v-flex xs12 sm6 v-if="editor.info.hasDescription">
+                <v-text-field label="Description" v-model="editor.description"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6>
-                <v-text-field label="Location" v-model="editor.location" v-if="editor.info.hasLocation"></v-text-field>
+              <v-flex xs12 sm6 v-if="editor.info.hasLocation">
+                <v-text-field label="Location" v-model="editor.location"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6>
-                <v-select label="Weight Unit" v-model="editor.weightUnit" :items="editor.weightUnits" v-if="editor.info.hasWeightUnit"></v-select>
+              <v-flex xs6 v-if="editor.info.hasWeight">
+                <v-text-field label="Weight" v-model="editor.weight" type="number" min="0" step="0.001"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6>
-                <v-text-field label="Weight" v-model="editor.weight" type="number" min="0" step="0.001" v-if="editor.info.hasWeight"></v-text-field>
+              <v-flex xs6 v-if="editor.info.hasWeightUnit">
+                <v-select label="Unit" v-model="editor.weightUnit" :items="editor.weightUnits"></v-select>
               </v-flex>
-              <v-flex xs12 sm6>
-                <v-select label="Fineness" v-model="editor.fineness" :items="editor.finenesses" v-if="editor.info.hasFineness"></v-select>
+              <v-flex xs6 v-if="editor.info.hasFineness">
+                <v-select label="Fineness" v-model="editor.fineness" :items="editor.finenesses"></v-select>
               </v-flex>
-              <v-flex xs12 sm6>
-                <v-text-field label="Quantity" v-model="editor.quantity" type="number" min="0" :step="editor.info.quantityStep" v-if="editor.info.hasQuantity"></v-text-field>
+              <v-flex xs6 v-if="editor.info.hasQuantity">
+                <v-text-field label="Quantity" v-model="editor.quantity" type="number" min="0" :step="editor.info.quantityStep"></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>

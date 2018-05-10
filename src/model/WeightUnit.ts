@@ -28,9 +28,9 @@ export class Weight {
             case WeightUnit.Grain:
                 return "gr";
             case WeightUnit.TroyOunce:
-                return "troy oz";
+                return "t oz";
             case WeightUnit.AvdpOunce:
-                return "avdp oz";
+                return "oz";
             default:
                 throw new Error("Unknown WeightUnit!");
         }
