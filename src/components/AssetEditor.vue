@@ -13,7 +13,7 @@
 -->
 
 <template>
-  <v-dialog v-model="isOpen" max-width="500px">
+  <v-dialog persistent v-model="isOpen" max-width="500px">
     <v-btn slot="activator" color="primary" dark class="mb-2">New Asset</v-btn>
     <v-card>
       <v-card-title>
@@ -26,13 +26,13 @@
               <v-select label="Type" v-model="info" :items="infos" item-text="type"></v-select>
             </v-flex>
             <v-flex xs12 sm6 v-if="info.hasDescription">
-              <v-text-field label="Description" required v-model="description"></v-text-field>
+              <v-text-field label="Description" required v-model="description" :error-messages="descriptionMsg" @blur="(evt) => descriptionMsg = validateInput(evt)"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 v-if="info.hasLocation">
-              <v-text-field label="Location" required v-model="location"></v-text-field>
+              <v-text-field label="Location" required v-model="location" :error-messages="locationMsg" @blur="(evt) => locationMsg = validateInput(evt)"></v-text-field>
             </v-flex>
             <v-flex xs6 v-if="info.hasWeight">
-              <v-text-field label="Weight" required v-model="weight" type="number" min="0" step="0.001" :error-messages="weightMsg" @blur="(evt) => weightMsg = validate(evt)"></v-text-field>
+              <v-text-field label="Weight" required v-model="weight" type="number" min="0" step="0.001" :error-messages="weightMsg" @blur="(evt) => weightMsg = validateInput(evt)"></v-text-field>
             </v-flex>
             <v-flex xs6 v-if="info.hasWeightUnit">
               <v-select label="Unit" required v-model="weightUnit" :items="weightUnits" item-text="abbreviation"></v-select>
@@ -41,7 +41,7 @@
               <v-select label="Fineness" required combobox v-model="fineness" :items="finenesses" type="number" min="0.5" max="0.999999" step="0.000001"></v-select>
             </v-flex>
             <v-flex xs6 v-if="info.hasQuantity">
-              <v-text-field label="Quantity" required v-model="quantity" type="number" min="0" :step="info.quantityStep"></v-text-field>
+              <v-text-field label="Quantity" required v-model="quantity" type="number" min="0" :step="info.quantityStep" :error-messages="quantityMsg" @blur="(evt) => quantityMsg = validateInput(evt)"></v-text-field>
             </v-flex>
           </v-layout>
         </v-container>

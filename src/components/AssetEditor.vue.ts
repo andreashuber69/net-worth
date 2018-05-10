@@ -45,7 +45,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     public quantityMsg = new Array<string>();
 
     // tslint:disable-next-line:prefer-function-over-method
-    public validate(event: any) {
+    public validateInput(event: any) {
         // tslint:disable-next-line:no-unsafe-any
         const result = (event.target as HTMLInputElement).validationMessage;
 
