@@ -15,7 +15,7 @@ import { AssetBundle } from "../model/AssetBundle";
 import { Model } from "../model/Model";
 import { SilverAsset } from "../model/SilverAsset";
 import { WeightUnit } from "../model/WeightUnit";
-import { AssetEditor } from "./AssetEditor";
+import { AssetEditorData } from "./AssetEditorData";
 import AssetListRow from "./AssetListRow.vue";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
@@ -25,7 +25,7 @@ import { Format } from "./Format";
 // tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
     public dialog = false;
-    public readonly editor = new AssetEditor();
+    public readonly editor = new AssetEditorData();
 
     public weightMsg: string[] = [];
 

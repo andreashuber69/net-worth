@@ -14,7 +14,7 @@ import { Weight, WeightUnit } from "../model/WeightUnit";
 import { AssetInfo } from "./AssetInfo";
 import { WeightInfo } from "./WeightInfo";
 
-export class AssetEditor {
+export class AssetEditorData {
     public readonly infos = [
         new AssetInfo("BTC", true, true, false, false, false, true, 8),
         new AssetInfo("Silver", true, true, true, true, true, true, 0),
@@ -27,7 +27,7 @@ export class AssetEditor {
 
     public weight?: number;
 
-    public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
+    public readonly weightUnits = Array.from(AssetEditorData.getWeightUnits());
 
     public weightUnit = new WeightInfo("", 0);
 
