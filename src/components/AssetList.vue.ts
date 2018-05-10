@@ -25,7 +25,9 @@ import { Format } from "./Format";
 // tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
     public dialog = false;
-    public editor = new AssetEditor();
+    public readonly editor = new AssetEditor();
+
+    public weightMsg: string[] = [];
 
     public get totalValueInteger() {
         return Format.integer(this.totalValue, 2);
@@ -38,6 +40,14 @@ export default class AssetList extends ComponentBase<Model> {
     public add() {
         return this.model.add(
             new AssetBundle(new SilverAsset(this.model, "Home", "Bars", 1, WeightUnit.Kilogram, 0.999, 3)));
+    }
+
+    // tslint:disable-next-line:prefer-function-over-method
+    public validate(event: any) {
+        // tslint:disable-next-line:no-unsafe-any
+        const message = (event.target as HTMLInputElement).validationMessage;
+
+        return message ? [ message ] : [];
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

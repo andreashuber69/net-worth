@@ -22,19 +22,19 @@ export class AssetEditor {
 
     public info = new AssetInfo("", false, false, false, false, false, false, 0);
 
-    public description = "";
-    public location = "";
+    public description?: string;
+    public location?: string;
 
-    public weight = 0;
+    public weight?: number;
 
     public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
 
     public weightUnit = new WeightInfo("", 0);
 
-    public fineness = 1;
+    public fineness?: number;
 
     public readonly finenesses = [ 0.999, 0.9999, 0.99999, 0.9 ];
-    public quantity = 0;
+    public quantity?: number;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
