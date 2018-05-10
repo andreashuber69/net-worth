@@ -84,10 +84,10 @@ export class Model implements IModel {
     private static readonly address = "1F8i3SE7Zorf6F2rLh3Mxg4Mb8aHT2nkQf";
 
     private readonly bundles = [
-        new AssetBundle(new SilverAsset(this, "5 CHF, Roll of 50", "Home", WeightUnit.Gram, 750, 0.835, 1)),
-        new AssetBundle(new SilverAsset(this, "2 CHF, Roll of 50", "Home", WeightUnit.Gram, 500, 0.835, 2)),
-        new AssetBundle(new SilverAsset(this, "1 CHF, Roll of 50", "Home", WeightUnit.Gram, 250, 0.835, 3)),
-        new AssetBundle(new SilverAsset(this, "0.5 CHF, Roll of 50", "Home", WeightUnit.Gram, 125, 0.835, 4)),
+        new AssetBundle(new SilverAsset(this, "5 CHF, Roll of 50", "Home", 750, WeightUnit.Gram, 0.835, 1)),
+        new AssetBundle(new SilverAsset(this, "2 CHF, Roll of 50", "Home", 500, WeightUnit.Gram, 0.835, 2)),
+        new AssetBundle(new SilverAsset(this, "1 CHF, Roll of 50", "Home", 250, WeightUnit.Gram, 0.835, 3)),
+        new AssetBundle(new SilverAsset(this, "0.5 CHF, Roll of 50", "Home", 125, WeightUnit.Gram, 0.835, 4)),
         new AssetBundle(new BtcQuantityAsset(this, "Spending Wallet", Model.address)),
     ];
 

@@ -21,8 +21,8 @@ export class SilverAsset extends PreciousMetalAsset {
      * @param parent The parent model to which this asset belongs.
      * @param description Describes the silver items, e.g. Bars, Coins, Medallions.
      * @param location The location of the silver, e.g. Safety Deposit Box or Home Safe.
-     * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
      * @param weight The weight of a single item, expressed in `weightUnit`.
+     * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
      * @param fineness The fineness, e.g. 0.999.
      * @param quantity The number of items.
      */
@@ -30,11 +30,11 @@ export class SilverAsset extends PreciousMetalAsset {
         parent: IModel,
         description: string,
         location: string,
-        weightUnit: WeightUnit,
         weight: number,
+        weightUnit: WeightUnit,
         fineness: number,
         quantity: number,
     ) {
-        super(parent, "Silver", description, location, weightUnit, weight, fineness, quantity, "lbma/silver.json");
+        super(parent, "Silver", description, location, weight, weightUnit, fineness, quantity, "lbma/silver.json");
     }
 }

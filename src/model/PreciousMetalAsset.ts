@@ -22,8 +22,8 @@ export abstract class PreciousMetalAsset extends Asset {
      * @param type The type of precious metal, e.g. Silver, Gold.
      * @param description Describes the precious metal items, e.g. Bars, Coins.
      * @param location The location of the precious metal items, e.g. Safety Deposit Box.
-     * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
      * @param weight The weight of a single item, expressed in `weightUnit`.
+     * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
      * @param fineness The fineness, e.g. 0.999.
      * @param quantity The number of items.
      * @param quandlPath The quandl asset path.
@@ -33,21 +33,21 @@ export abstract class PreciousMetalAsset extends Asset {
         type: string,
         description: string,
         location: string,
-        weightUnit: WeightUnit,
         weight: number,
+        weightUnit: WeightUnit,
         fineness: number,
         quantity: number,
         quandlPath: string,
     ) {
         super(
-            parent, type, description, location, PreciousMetalAsset.getUnit(weightUnit, weight), fineness, quantity, 0);
-        this.pureGramsPerUnit = weightUnit * weight * fineness;
+            parent, type, description, location, PreciousMetalAsset.getUnit(weight, weightUnit), fineness, quantity, 0);
+        this.pureGramsPerUnit = weight * weightUnit * fineness;
         this.queryUnitValue(quandlPath).catch((reason) => console.error(reason));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getUnit(unit: WeightUnit, weight: number) {
+    private static getUnit(weight: number, unit: WeightUnit) {
         return `${weight.toFixed(0)} ${Weight.abbreviate(unit)}`;
     }
 

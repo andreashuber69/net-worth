@@ -24,12 +24,13 @@ export class AssetEditor {
     public description = "";
     public location = "";
 
+    public weight = 0;
+
     public get weightUnits() {
         return Array.from(AssetEditor.weightUnitsMap.keys());
     }
 
     public weightUnit = "";
-    public weight = 0;
 
     public fineness = 1;
 

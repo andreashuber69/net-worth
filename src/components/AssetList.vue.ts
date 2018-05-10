@@ -37,7 +37,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     public add() {
         return this.model.add(
-            new AssetBundle(new SilverAsset(this.model, "Home", "Bars", WeightUnit.Kilogram, 1, 0.999, 3)));
+            new AssetBundle(new SilverAsset(this.model, "Home", "Bars", 1, WeightUnit.Kilogram, 0.999, 3)));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
