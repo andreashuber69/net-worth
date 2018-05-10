@@ -39,7 +39,7 @@
                 <v-select label="Unit" v-model="editor.weightUnit" :items="editor.weightUnits" item-text="abbreviation"></v-select>
               </v-flex>
               <v-flex xs6 v-if="editor.info.hasFineness">
-                <v-select label="Fineness" v-model="editor.fineness" :items="editor.finenesses"></v-select>
+                <v-select label="Fineness" combobox v-model="editor.fineness" :items="editor.finenesses" type="number" min="0.5" max="0.999999" step="0.000001"></v-select>
               </v-flex>
               <v-flex xs6 v-if="editor.info.hasQuantity">
                 <v-text-field label="Quantity" v-model="editor.quantity" type="number" min="0" :step="editor.info.quantityStep"></v-text-field>
