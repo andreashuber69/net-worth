@@ -17,11 +17,12 @@ import { CryptoAsset } from "./CryptoAsset";
 export class BtcAsset extends CryptoAsset {
     /** Creates a new [[BtcAsset]] instance.
      * @param parent The parent model to which this asset belongs.
-     * @param description Describes the asset, e.g. Spending, Savings.
-     * @param location The location of the Bitcoin, e.g. Paper Wallet or the public address.
-     * @param quantity The BTC amount.
+     * @param description The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.
+     * @param location The location of the wallet, e.g. 'Mobile Phone', 'Hardware Wallet', 'Safety Deposit Box'.
+     * @param address The public address.
+     * @param quantity The amount in the wallet.
      */
-    public constructor(parent: IModel, description: string, location: string, quantity: number) {
-        super(parent, "BTC", description, location, quantity, 8, "bitcoin");
+    public constructor(parent: IModel, description: string, location: string, address: string, quantity: number) {
+        super(parent, "BTC", description, location, address, quantity, 8, "bitcoin");
     }
 }

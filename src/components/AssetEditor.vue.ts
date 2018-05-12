@@ -67,14 +67,15 @@ export default class AssetEditor extends ComponentBase<Model> {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly cryptoDescriptionHint =
-        "The purpose of the wallet, e.g. 'Cold Storage', 'Savings', 'Spending', ...";
-    private static readonly cryptoLocationHint = "The location of the wallet, e.g. Mobile Phone, Hardware Wallet, ...";
-    private static readonly cryptoQuantityHint = "The amount";
+        "The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.";
+    private static readonly cryptoLocationHint =
+        "The location of the wallet, e.g. 'Mobile Phone', 'Hardware Wallet', 'Safety Deposit Box'.";
+    private static readonly cryptoQuantityHint = "The amount in the wallet.";
 
-    private static readonly pmDescriptionHint = "The shape of the precious metal, e.g. 'Coins', 'Bars', ...";
-    private static readonly pmLocationHint = "E.g. Safe, Safety Deposit Box, ...";
+    private static readonly pmDescriptionHint = "The shape of the items, e.g. 'Coins', 'Bars'.";
+    private static readonly pmLocationHint = "The location, e.g. 'Safe', 'Safety Deposit Box'.";
 
-    private static readonly pmQuantityHint = "The number of precious metal items";
+    private static readonly pmQuantityHint = "The number of items.";
 
     private static * getWeightUnits() {
         for (const weightUnitProperty in WeightUnit) {

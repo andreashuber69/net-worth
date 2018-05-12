@@ -17,10 +17,6 @@ export interface IModel {
 
 /** Base of all classes that provide information about an asset. */
 export abstract class Asset {
-    public get quantityStep() {
-        return Math.pow(10, -this.quantityDecimals);
-    }
-
     /** @internal */
     public get unitValue() {
         return Asset.multiply(this.unitValueUsd, this.parent.exchangeRate);
@@ -38,22 +34,23 @@ export abstract class Asset {
     /**
      * Creates a new [[Asset]] instance.
      * @param parent The parent model to which this asset belongs.
-     * @param type The type of asset, e.g. Silver, Gold, BTC.
-     * @param description Describes the asset, e.g. Spending, Savings, Bars, Coins.
-     * @param location The location of the asset, e.g. Safety Deposit Box. For a crypto currency, this is the public
-     * address.
-     * @param unit The unit of the quantity, e.g. 1 oz (troy), 10 g, BTC.
-     * @param fineness The fineness, e.g. 0.999.
+     * @param type The type of asset, e.g. 'Silver, 'Gold', 'BTC', 'LTC'.
+     * @param description Describes the asset, e.g. 'Bars', 'Coins', 'Spending', 'Savings'.
+     * @param location The location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'.
+     * @param locationHint Further information on the location. For a crypto currency, this is the public address.
+     * @param unit The unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'.
+     * @param fineness The fineness, e.g. 0.999. For a crypto currency, this is always 1.
      * @param quantity The asset quantity.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      */
     protected constructor(
         private readonly parent: IModel,
         public readonly type: string,
-        public description: string,
-        public location: string,
-        public unit: string,
-        public fineness: number,
+        public readonly description: string,
+        public readonly location: string,
+        public readonly locationHint: string,
+        public readonly unit: string,
+        public readonly fineness: number,
         public quantity: number | undefined,
         public readonly quantityDecimals: number,
     ) {

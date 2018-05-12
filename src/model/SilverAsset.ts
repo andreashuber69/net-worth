@@ -19,8 +19,8 @@ export class SilverAsset extends PreciousMetalAsset {
     /**
      * Creates a new [[SilverAsset]] instance.
      * @param parent The parent model to which this asset belongs.
-     * @param description Describes the silver items, e.g. Bars, Coins, Medallions.
-     * @param location The location of the silver, e.g. Safety Deposit Box or Home Safe.
+     * @param description The shape of the items, e.g. 'Coins', 'Bars'.
+     * @param location The location, e.g. 'Safe', 'Safety Deposit Box'.
      * @param weight The weight of a single item, expressed in `weightUnit`.
      * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
      * @param fineness The fineness, e.g. 0.999.
