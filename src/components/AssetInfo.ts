@@ -14,11 +14,14 @@ export class AssetInfo {
     public constructor(
         public readonly type: string,
         public readonly hasDescription: boolean,
+        public readonly descriptionHint: string,
         public readonly hasLocation: boolean,
+        public readonly locationHint: string,
         public readonly hasWeightUnit: boolean,
         public readonly hasWeight: boolean,
         public readonly hasFineness: boolean,
         public readonly hasQuantity: boolean,
+        public readonly quantityHint: string,
         public readonly quantityDecimals: number,
     ) {
     }

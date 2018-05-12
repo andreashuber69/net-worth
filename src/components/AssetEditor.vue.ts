@@ -22,15 +22,19 @@ import { WeightInfo } from "./WeightInfo";
 // tslint:disable-next-line:no-default-export
 export default class AssetEditor extends ComponentBase<Model> {
     public readonly infos = [
-        new AssetInfo("BTC", true, true, false, false, false, true, 8),
-        new AssetInfo("Silver", true, true, true, true, true, true, 0),
+        new AssetInfo(
+            "BTC", true, AssetEditor.cryptoDescriptionHint, true,
+            AssetEditor.cryptoLocationHint, false, false, false, true, AssetEditor.cryptoQuantityHint, 8),
+        new AssetInfo(
+            "Silver", true, AssetEditor.pmDescriptionHint, true,
+            AssetEditor.pmLocationHint, true, true, true, true, AssetEditor.pmQuantityHint, 0),
     ];
 
     public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
     public readonly finenesses = [ 0.999, 0.9999, 0.99999, 0.9 ];
     public isOpen = false;
 
-    public info = new AssetInfo("", false, false, false, false, false, false, 0);
+    public info = new AssetInfo("", false, "", false, "", false, false, false, false, "", 0);
     public description = "";
     public descriptionMsg = new Array<string>();
     public location = "";
@@ -61,6 +65,16 @@ export default class AssetEditor extends ComponentBase<Model> {
     // // }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static readonly cryptoDescriptionHint =
+        "The purpose of the wallet, e.g. 'Cold Storage', 'Savings', 'Spending', ...";
+    private static readonly cryptoLocationHint = "The location of the wallet, e.g. Mobile Phone, Hardware Wallet, ...";
+    private static readonly cryptoQuantityHint = "The amount";
+
+    private static readonly pmDescriptionHint = "The shape of the precious metal, e.g. 'Coins', 'Bars', ...";
+    private static readonly pmLocationHint = "E.g. Safe, Safety Deposit Box, ...";
+
+    private static readonly pmQuantityHint = "The number of precious metal items";
 
     private static * getWeightUnits() {
         for (const weightUnitProperty in WeightUnit) {
