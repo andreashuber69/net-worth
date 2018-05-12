@@ -26,22 +26,22 @@
               <v-select label="Type" v-model="info" :items="infos" item-text="type"></v-select>
             </v-flex>
             <v-flex xs12 sm6 v-if="info.hasDescription">
-              <v-text-field label="Description" v-model="description" required ref="description" :error-messages="descriptionMsg" @blur="descriptionMsg = validate('description')"></v-text-field>
+              <v-text-field label="Description" v-model="description" required ref="description" :rules="[() => validate('description')]"></v-text-field>
             </v-flex>
             <v-flex xs12 sm6 v-if="info.hasLocation">
-              <v-text-field label="Location" v-model="location" required ref="location" :error-messages="locationMsg" @blur="locationMsg = validate('location')"></v-text-field>
+              <v-text-field label="Location" v-model="location" required ref="location" :rules="[() => validate('location')]"></v-text-field>
             </v-flex>
             <v-flex xs6 v-if="info.hasWeight">
-              <v-text-field label="Weight" v-model="weight" required type="number" min="0" step="0.001" ref="weight" :error-messages="weightMsg" @blur="weightMsg = validate('weight')"></v-text-field>
+              <v-text-field label="Weight" v-model="weight" required type="number" min="0.001" step="0.001" ref="weight" :rules="[() => validate('weight')]"></v-text-field>
             </v-flex>
             <v-flex xs6 v-if="info.hasWeightUnit">
-              <v-select label="Unit" v-model="weightUnit" :items="weightUnits" item-text="abbreviation" required ref="weightUnit" :error-messages="weightUnitMsg" @blur="weightUnitMsg = validate('weightUnit')"></v-select>
+              <v-select label="Unit" v-model="weightUnit" :items="weightUnits" item-text="abbreviation" required ref="weightUnit" :rules="[() => validate('weightUnit')]"></v-select>
             </v-flex>
             <v-flex xs6 v-if="info.hasFineness">
-              <v-select label="Fineness" v-model="fineness" :items="finenesses" required combobox type="number" min="0.5" max="0.999999" step="0.000001" ref="fineness" :error-messages="finenessMsg" @blur="finenessMsg = validate('fineness')"></v-select>
+              <v-select label="Fineness" v-model="fineness" :items="finenesses" required combobox type="number" min="0.5" max="0.999999" step="0.000001" ref="fineness" :rules="[() => validate('fineness')]"></v-select>
             </v-flex>
             <v-flex xs6 v-if="info.hasQuantity">
-              <v-text-field label="Quantity" v-model="quantity" required type="number" min="0" :step="info.quantityStep" ref="quantity" :error-messages="quantityMsg" @blur="quantityMsg = validate('quantity')"></v-text-field>
+              <v-text-field label="Quantity" v-model="quantity" required type="number" min="1" :step="info.quantityStep" ref="quantity" :rules="[() => validate('quantity')]"></v-text-field>
             </v-flex>
           </v-layout>
         </v-container>

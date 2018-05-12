@@ -51,9 +51,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         // no-unnecessary-type-assertion is probably a false positive, see
         // https://github.com/palantir/tslint/issues/3540
         // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
-        const result = ((this.$refs[ref] as Vue).$refs.input as HTMLInputElement).validationMessage;
-
-        return result ? [ result ] : [];
+        return ((this.$refs[ref] as Vue).$refs.input as HTMLInputElement).validationMessage || true;
     }
 
     // // public close() {
