@@ -40,7 +40,7 @@
             <v-flex xs12 sm6 v-if="info.hasAddress">
               <v-text-field
                 label="Address" hint="The public address or xpub of the wallet." v-model="address" ref="address"
-                :rules="[() => validate('address')]">
+                :rules="[() => validate('address'),validateAddressAndQuantity]">
               </v-text-field>
             </v-flex>
             <v-flex xs6 v-if="info.hasWeight">
@@ -64,7 +64,7 @@
             <v-flex xs6 v-if="info.hasQuantity">
               <v-text-field
                 label="Quantity" :hint="info.quantityHint" v-model="quantity" :required="info.isQuantityRequired"
-                type="number" min="1" :step="info.quantityStep" ref="quantity" :rules="[() => validate('quantity')]">
+                type="number" min="1" :step="info.quantityStep" ref="quantity" :rules="[() => validate('quantity'),validateAddressAndQuantity]">
               </v-text-field>
             </v-flex>
           </v-layout>

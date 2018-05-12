@@ -60,6 +60,11 @@ export default class AssetEditor extends ComponentBase<Model> {
         return ((this.$refs[ref] as Vue).$refs.input as HTMLInputElement).validationMessage || true;
     }
 
+    public validateAddressAndQuantity() {
+        return ((this.address === "") !== (this.quantity === null)) ||
+            "Please provide either the address or the quantity.";
+    }
+
     // // public close() {
     // // }
 
