@@ -16,7 +16,7 @@
   <tr>
     <td>{{ model.type }}</td>
     <td>{{ model.description }}</td>
-    <td :title="model.location">{{ shortLocation }}</td>
+    <td :title="model.locationHint">{{ model.location }}</td>
     <td>{{ model.unit }}</td>
     <td class="text-xs-right pr-0">{{ finenessInteger }}</td>
     <td class="text-xs-left pl-0">{{ finenessFraction }}</td>

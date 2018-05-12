@@ -39,6 +39,8 @@ export default class AssetEditor extends ComponentBase<Model> {
     public descriptionMsg = new Array<string>();
     public location = "";
     public locationMsg = new Array<string>();
+    public address = "";
+    public addressMsg = new Array<string>();
     // tslint:disable-next-line:no-null-keyword
     public weight: number | null = null;
     public weightMsg = new Array<string>();

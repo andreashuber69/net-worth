@@ -19,13 +19,6 @@ import { Format } from "./Format";
 @Component
 // tslint:disable-next-line:no-default-export
 export default class AssetListRow extends ComponentBase<Asset> {
-    public get shortLocation() {
-        const maxLength = 15;
-
-        return this.model.location.length > maxLength ?
-            `${this.model.location.substr(0, maxLength)}...` : this.model.location;
-    }
-
     public get finenessInteger() {
         return this.model.fineness === 1 ? "" : Math.trunc(this.model.fineness);
     }

@@ -36,8 +36,8 @@ export class BtcQuantityAsset extends CryptoAsset {
 
     private async queryQuantity() {
         // TODO: This is a crude test to distinguish between xpub and a normal address
-        if (this.location.length <= 100) {
-            await this.add([ this.location ]);
+        if (this.locationHint.length <= 100) {
+            await this.add([ this.locationHint ]);
         } else {
             await BtcQuantityAsset.delay(1000);
             // The following calls use a lot of CPU. By delaying first, we ensure that other queries can be sent,
@@ -64,7 +64,7 @@ export class BtcQuantityAsset extends CryptoAsset {
     }
 
     private getBatch(chain: number, offset: number) {
-        const node = HDNode.fromBase58(this.location).derive(chain);
+        const node = HDNode.fromBase58(this.locationHint).derive(chain);
         const result = new Array<string>(20);
 
         for (let index = 0; index < result.length; ++index) {
