@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { Model } from "../model/Model";
 import { Weight, WeightUnit } from "../model/WeightUnit";
 import { AssetInfo } from "./AssetInfo";
@@ -35,19 +35,23 @@ export default class AssetEditor extends ComponentBase<Model> {
     public descriptionMsg = new Array<string>();
     public location = "";
     public locationMsg = new Array<string>();
-    public weight: number | string = "";
+    // tslint:disable-next-line:no-null-keyword
+    public weight: number | null = null;
     public weightMsg = new Array<string>();
     public weightUnit = new WeightInfo("", 0);
     public weightUnitMsg = new Array<string>();
-    public fineness: number | string = "";
+    // tslint:disable-next-line:no-null-keyword
+    public fineness: number | null = null;
     public finenessMsg = new Array<string>();
-    public quantity: number | string = "";
+    // tslint:disable-next-line:no-null-keyword
+    public quantity: number | null = null;
     public quantityMsg = new Array<string>();
 
-    // tslint:disable-next-line:prefer-function-over-method
-    public validateInput(event: any) {
-        // tslint:disable-next-line:no-unsafe-any
-        const result = (event.target as HTMLInputElement).validationMessage;
+    public validate(ref: string) {
+        // no-unnecessary-type-assertion is probably a false positive, see
+        // https://github.com/palantir/tslint/issues/3540
+        // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
+        const result = ((this.$refs[ref] as Vue).$refs.input as HTMLInputElement).validationMessage;
 
         return result ? [ result ] : [];
     }
