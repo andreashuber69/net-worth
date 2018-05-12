@@ -17,10 +17,12 @@ export class AssetInfo {
         public readonly descriptionHint: string,
         public readonly hasLocation: boolean,
         public readonly locationHint: string,
+        public readonly hasAddress: boolean,
         public readonly hasWeightUnit: boolean,
         public readonly hasWeight: boolean,
         public readonly hasFineness: boolean,
         public readonly hasQuantity: boolean,
+        public readonly isQuantityRequired: boolean,
         public readonly quantityHint: string,
         public readonly quantityDecimals: number,
     ) {

@@ -23,18 +23,18 @@ import { WeightInfo } from "./WeightInfo";
 export default class AssetEditor extends ComponentBase<Model> {
     public readonly infos = [
         new AssetInfo(
-            "BTC", true, AssetEditor.cryptoDescriptionHint, true,
-            AssetEditor.cryptoLocationHint, false, false, false, true, AssetEditor.cryptoQuantityHint, 8),
+            "BTC", true, AssetEditor.cryptoDescriptionHint, true, AssetEditor.cryptoLocationHint,
+            true, false, false, false, true, false, AssetEditor.cryptoQuantityHint, 8),
         new AssetInfo(
-            "Silver", true, AssetEditor.pmDescriptionHint, true,
-            AssetEditor.pmLocationHint, true, true, true, true, AssetEditor.pmQuantityHint, 0),
+            "Silver", true, AssetEditor.pmDescriptionHint, true, AssetEditor.pmLocationHint,
+            false, true, true, true, true, true, AssetEditor.pmQuantityHint, 0),
     ];
 
     public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
     public readonly finenesses = [ 0.999, 0.9999, 0.99999, 0.9 ];
     public isOpen = false;
 
-    public info = new AssetInfo("", false, "", false, "", false, false, false, false, "", 0);
+    public info = new AssetInfo("", false, "", false, "", false, false, false, false, false, false, "", 0);
     public description = "";
     public descriptionMsg = new Array<string>();
     public location = "";
