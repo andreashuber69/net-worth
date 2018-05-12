@@ -33,6 +33,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
     public readonly finenesses = [ 0.999, 0.9999, 0.99999, 0.9 ];
     public isOpen = false;
+    public isValid = false;
 
     public info = new AssetInfo("", false, "", false, "", false, false, false, false, false, false, "", 0);
     public description = "";
@@ -40,29 +41,31 @@ export default class AssetEditor extends ComponentBase<Model> {
     public location = "";
     public locationMsg = new Array<string>();
     public address = "";
+    public addressVisited = false;
     public addressMsg = new Array<string>();
-    // tslint:disable-next-line:no-null-keyword
-    public weight: number | null = null;
+    public weight = "";
     public weightMsg = new Array<string>();
     public weightUnit = new WeightInfo("", 0);
     public weightUnitMsg = new Array<string>();
-    // tslint:disable-next-line:no-null-keyword
-    public fineness: number | null = null;
+    public fineness = "";
     public finenessMsg = new Array<string>();
-    // tslint:disable-next-line:no-null-keyword
-    public quantity: number | null = null;
+    public quantity  = "";
     public quantityMsg = new Array<string>();
+    public quantityVisited = false;
 
     public validate(ref: string) {
         // no-unnecessary-type-assertion is probably a false positive, see
         // https://github.com/palantir/tslint/issues/3540
         // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
-        return ((this.$refs[ref] as Vue).$refs.input as HTMLInputElement).validationMessage || true;
+        return (this.getControl(ref).$refs.input as HTMLInputElement).validationMessage || true;
     }
 
-    public validateAddressAndQuantity() {
-        return ((this.address === "") !== (this.quantity === null)) ||
-            "Please provide either the address or the quantity.";
+    public validateAddressAndQuantity(otherVisited: boolean) {
+        const result = this.info.isQuantityRequired || !otherVisited ||
+            ((this.address === "") !== (this.quantity === "")) ||
+            "Please fill out either the Address or the Quantity.";
+
+        return result;
     }
 
     // // public close() {
@@ -91,5 +94,9 @@ export default class AssetEditor extends ComponentBase<Model> {
                 yield new WeightInfo(Weight.abbreviate(weightUnit), weightUnit);
             }
         }
+    }
+
+    private getControl(ref: string) {
+        return this.$refs[ref] as Vue;
     }
 }
