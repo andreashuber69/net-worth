@@ -32,7 +32,6 @@ export default class AssetEditor extends ComponentBase<Model> {
     ];
 
     public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
-    public readonly finenesses = [ "0.999", "0.9999", "0.99999", "0.9" ];
     public isOpen = false;
     public isValid = true;
     public isGlobal = false;
@@ -122,9 +121,6 @@ export default class AssetEditor extends ComponentBase<Model> {
             case "weightUnit":
                 // tslint:disable-next-line:no-unsafe-any
                 return !!(value as WeightInfo).abbreviation;
-            case "fineness":
-                // tslint:disable-next-line:no-unsafe-any
-                return !!value;
             default:
                 return "Unknown select";
         }

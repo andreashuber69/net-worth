@@ -62,11 +62,11 @@
                 </v-select>
               </v-flex>
               <v-flex xs6 v-if="info.hasFineness">
-                <v-select
-                  label="Fineness" hint="The precious metal fineness." v-model="data.fineness" :items="finenesses"
-                  required combobox type="number" min="0.5" max="0.999999" step="0.000001" ref="fineness"
+                <v-text-field
+                  label="Fineness" hint="The precious metal fineness." v-model="data.fineness"
+                  required type="number" min="0.5" max="0.999999" step="0.000001" ref="fineness"
                   :rules="[() => validate('fineness')]">
-                </v-select>
+                </v-text-field>
               </v-flex>
               <v-flex xs6 v-if="info.hasQuantity">
                 <v-text-field
