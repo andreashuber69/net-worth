@@ -65,6 +65,14 @@ export default class AssetEditor extends ComponentBase<Model> {
             ((this.address === "") !== (this.quantity === "")) ||
             "Please fill out either the Address or the Quantity.";
 
+        // // const other = (this.getControl(otherRef) as any);
+
+        // // // tslint:disable-next-line:no-unsafe-any
+        // // if ((result !== true) && other.valid) {
+        // //     // tslint:disable-next-line:no-unsafe-any
+        // //     other.validate();
+        // // }
+
         return result;
     }
 
