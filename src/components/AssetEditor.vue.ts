@@ -24,7 +24,7 @@ import { WeightInfo } from "./WeightInfo";
 export default class AssetEditor extends ComponentBase<Model> {
     public readonly infos = [
         new AssetInfo(
-            "BTC", true, AssetEditor.cryptoDescriptionHint, true, AssetEditor.cryptoLocationHint,
+            "Bitcoin Wallet", true, AssetEditor.cryptoDescriptionHint, true, AssetEditor.cryptoLocationHint,
             true, false, false, false, true, false, AssetEditor.cryptoQuantityHint, 8),
         new AssetInfo(
             "Silver", true, AssetEditor.pmDescriptionHint, true, AssetEditor.pmLocationHint,

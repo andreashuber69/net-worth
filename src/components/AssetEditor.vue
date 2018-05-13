@@ -43,7 +43,7 @@
               </v-flex>
               <v-flex xs12 sm6 v-if="info.hasAddress">
                 <v-text-field
-                  label="Address" hint="The public address or xpub of the wallet." v-model="data.address" ref="address"
+                  label="Address" hint="The public address of the wallet (single address or xpub)." v-model="data.address" ref="address"
                   :rules="[() => validate('address')]">
                 </v-text-field>
               </v-flex>
