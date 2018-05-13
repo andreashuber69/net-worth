@@ -33,7 +33,6 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
     public isOpen = false;
-    public isValid = true;
     public isGlobal = false;
 
     public info = AssetEditor.noInfo;
@@ -122,7 +121,7 @@ export default class AssetEditor extends ComponentBase<Model> {
                 // tslint:disable-next-line:no-unsafe-any
                 return !!(value as WeightInfo).abbreviation;
             default:
-                return "Unknown select";
+                return false;
         }
     }
 
