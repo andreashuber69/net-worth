@@ -13,6 +13,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { Model } from "../model/Model";
 import { Weight, WeightUnit } from "../model/WeightUnit";
+import { AssetEditorData } from "./AssetEditorData";
 import { AssetInfo } from "./AssetInfo";
 import { ComponentBase } from "./ComponentBase";
 import { WeightInfo } from "./WeightInfo";
@@ -31,56 +32,62 @@ export default class AssetEditor extends ComponentBase<Model> {
     ];
 
     public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
-    public readonly finenesses = [ 0.999, 0.9999, 0.99999, 0.9 ];
+    public readonly finenesses = [ "0.999", "0.9999", "0.99999", "0.9" ];
     public isOpen = false;
-    public isValid = false;
+    public isValid = true;
+    public isGlobal = false;
 
-    public info = new AssetInfo("", false, "", false, "", false, false, false, false, false, false, "", 0);
-    public description = "";
-    public descriptionMsg = new Array<string>();
-    public location = "";
-    public locationMsg = new Array<string>();
-    public address = "";
-    public addressVisited = false;
-    public addressMsg = new Array<string>();
-    public weight = "";
-    public weightMsg = new Array<string>();
-    public weightUnit = new WeightInfo("", 0);
-    public weightUnitMsg = new Array<string>();
-    public fineness = "";
-    public finenessMsg = new Array<string>();
-    public quantity  = "";
-    public quantityMsg = new Array<string>();
-    public quantityVisited = false;
+    public info = AssetEditor.noInfo;
+    public data = new AssetEditorData();
 
     public validate(ref: string) {
-        // no-unnecessary-type-assertion is probably a false positive, see
+        const control = this.getControl(ref);
+
+        if (!control) {
+            return true;
+        }
+
+        // TODO: This is a workaround for #4, remove as soon as the associated bug has been fixed in vuetify.
+        // tslint:disable-next-line:no-unsafe-any
+        if (control.$vnode.tag && control.$vnode.tag.endsWith("v-select") &&
+            !AssetEditor.isFilledSelect(control, ref)) {
+            return "Please fill out this field.";
+        }
+
+        if (!this.info.isQuantityRequired && this.isGlobal && ((ref === "address") || (ref === "quantity")) &&
+            ((this.data.address === "") === (this.data.quantity === ""))) {
+            return "Please fill out either the Address or the Quantity.";
+        }
+
+        // TODO: no-unnecessary-type-assertion is probably a false positive, see
         // https://github.com/palantir/tslint/issues/3540
         // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
-        return (this.getControl(ref).$refs.input as HTMLInputElement).validationMessage || true;
+        return (control.$refs.input as HTMLInputElement).validationMessage || true;
     }
 
-    public validateAddressAndQuantity(otherVisited: boolean) {
-        const result = this.info.isQuantityRequired || !otherVisited ||
-            ((this.address === "") !== (this.quantity === "")) ||
-            "Please fill out either the Address or the Quantity.";
+    public save() {
+        this.isGlobal = true;
 
-        // // const other = (this.getControl(otherRef) as any);
-
-        // // // tslint:disable-next-line:no-unsafe-any
-        // // if ((result !== true) && other.valid) {
-        // //     // tslint:disable-next-line:no-unsafe-any
-        // //     other.validate();
-        // // }
-
-        return result;
+        try {
+            // tslint:disable-next-line:no-unsafe-any
+            if ((this.getControl("form") as any).validate()) {
+                this.isOpen = false;
+            }
+        } finally {
+            this.isGlobal = false;
+        }
     }
 
-    // // public close() {
-    // // }
+    public reset() {
+        // tslint:disable-next-line:no-unsafe-any
+        (this.getControl("form") as any).reset();
+        this.data = new AssetEditorData();
+        this.info = AssetEditor.noInfo;
+    }
 
-    // // public save() {
-    // // }
+    public cancel() {
+        this.isOpen = false;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -92,8 +99,9 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     private static readonly pmDescriptionHint = "The shape of the items, e.g. 'Coins', 'Bars'.";
     private static readonly pmLocationHint = "The location, e.g. 'Safe', 'Safety Deposit Box'.";
-
     private static readonly pmQuantityHint = "The number of items.";
+    private static readonly noInfo =
+        new AssetInfo("", false, "", false, "", false, false, false, false, false, false, "", 0);
 
     private static * getWeightUnits() {
         for (const weightUnitProperty in WeightUnit) {
@@ -104,7 +112,28 @@ export default class AssetEditor extends ComponentBase<Model> {
         }
     }
 
+    private static isFilledSelect(control: Vue, ref: string) {
+        const value = (control as any).value;
+
+        switch (ref) {
+            case "type":
+                // tslint:disable-next-line:no-unsafe-any
+                return !!(value as AssetInfo).type;
+            case "weightUnit":
+                // tslint:disable-next-line:no-unsafe-any
+                return !!(value as WeightInfo).abbreviation;
+            case "fineness":
+                // tslint:disable-next-line:no-unsafe-any
+                return !!value;
+            default:
+                return "Unknown select";
+        }
+    }
+
     private getControl(ref: string) {
+        // TODO: no-unnecessary-type-assertion is probably a false positive, see
+        // https://github.com/palantir/tslint/issues/3540
+        // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
         return this.$refs[ref] as Vue;
     }
 }
