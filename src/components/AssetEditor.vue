@@ -17,7 +17,7 @@
     <v-btn slot="activator" color="primary" dark class="mb-2">New Asset</v-btn>
     <v-card>
       <v-card-title>
-        <span class="headline">New Asset</span>
+        <span class="headline">{{ title }}</span>
       </v-card-title>
       <v-card-text>
         <v-form ref="form">

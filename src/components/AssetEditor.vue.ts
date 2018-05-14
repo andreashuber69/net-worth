@@ -33,10 +33,15 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
     public isOpen = false;
-    public isGlobalValidation = false;
 
+    public get title() {
+        return this.editIndex === -1 ? "New Asset" : "Edit Asset";
+    }
+
+    public editIndex = -1;
     public info = AssetEditor.noInfo;
     public data = new AssetEditorData();
+    public isGlobalValidation = false;
 
     public validate(ref: string) {
         const control = this.getControl(ref);
@@ -63,6 +68,13 @@ export default class AssetEditor extends ComponentBase<Model> {
         return (control.$refs.input as HTMLInputElement).validationMessage || true;
     }
 
+    public reset() {
+        // tslint:disable-next-line:no-unsafe-any
+        (this.getControl("form") as any).reset();
+        this.data = new AssetEditorData();
+        this.info = AssetEditor.noInfo;
+    }
+
     public save() {
         this.isGlobalValidation = true;
 
@@ -74,13 +86,6 @@ export default class AssetEditor extends ComponentBase<Model> {
         } finally {
             this.isGlobalValidation = false;
         }
-    }
-
-    public reset() {
-        // tslint:disable-next-line:no-unsafe-any
-        (this.getControl("form") as any).reset();
-        this.data = new AssetEditorData();
-        this.info = AssetEditor.noInfo;
     }
 
     public cancel() {
