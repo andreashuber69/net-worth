@@ -30,7 +30,7 @@ export class Model implements IModel {
 
     public set selectedCurrency(currency: string) {
         this.selectedCurrencyImpl = currency;
-        this.currencyChanged().catch((reason) => console.error(reason));
+        this.onCurrencyChanged().catch((reason) => console.error(reason));
     }
 
     public get assets() {
@@ -93,7 +93,7 @@ export class Model implements IModel {
 
     private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
 
-    private async currencyChanged() {
+    private async onCurrencyChanged() {
         this.exchangeRate = undefined;
         const request = Model.currencyMap.get(this.selectedCurrency) as IWebRequest<number>;
         this.exchangeRate = await request.execute();
