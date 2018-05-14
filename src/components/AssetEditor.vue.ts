@@ -33,7 +33,7 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
     public isOpen = false;
-    public isGlobal = false;
+    public isGlobalValidation = false;
 
     public info = AssetEditor.noInfo;
     public data = new AssetEditorData();
@@ -52,7 +52,7 @@ export default class AssetEditor extends ComponentBase<Model> {
             return "Please fill out this field.";
         }
 
-        if (!this.info.isQuantityRequired && this.isGlobal && ((ref === "address") || (ref === "quantity")) &&
+        if (!this.info.isQuantityRequired && this.isGlobalValidation && ((ref === "address") || (ref === "quantity")) &&
             ((this.data.address === "") === (this.data.quantity === ""))) {
             return "Please fill out either the Address or the Quantity.";
         }
@@ -64,7 +64,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     public save() {
-        this.isGlobal = true;
+        this.isGlobalValidation = true;
 
         try {
             // tslint:disable-next-line:no-unsafe-any
@@ -72,7 +72,7 @@ export default class AssetEditor extends ComponentBase<Model> {
                 this.isOpen = false;
             }
         } finally {
-            this.isGlobal = false;
+            this.isGlobalValidation = false;
         }
     }
 
