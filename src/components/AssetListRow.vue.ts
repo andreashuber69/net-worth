@@ -60,4 +60,14 @@ export default class AssetListRow extends ComponentBase<Asset> {
     public get totalValueFraction() {
         return Format.fraction(this.model.totalValue, 2);
     }
+
+    public edit() {
+        // tslint:disable-next-line:no-unsafe-any
+        this.$emit("edit", this.model);
+    }
+
+    public remove() {
+        // tslint:disable-next-line:no-unsafe-any
+        this.$emit("remove", this.model);
+    }
 }

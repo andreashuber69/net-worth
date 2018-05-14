@@ -28,4 +28,12 @@ export class AssetBundle {
     public constructor(...assets: Asset[]) {
         this.assets = assets;
     }
+
+    public removeAsset(asset: Asset) {
+        const index = this.assets.indexOf(asset);
+
+        if (index >= 0) {
+            this.assets.splice(index, 1);
+        }
+    }
 }

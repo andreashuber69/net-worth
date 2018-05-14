@@ -24,4 +24,13 @@ export class ComponentBase<T> extends Vue {
 
         return this.modelProp;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected getControl(ref: string) {
+        // TODO: no-unnecessary-type-assertion is probably a false positive, see
+        // https://github.com/palantir/tslint/issues/3540
+        // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
+        return this.$refs[ref] as Vue;
+    }
 }

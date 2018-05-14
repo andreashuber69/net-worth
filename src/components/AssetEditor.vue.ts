@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Vue } from "vue-property-decorator";
+import { Asset } from "../model/Asset";
 import { Model } from "../model/Model";
 import { Weight, WeightUnit } from "../model/WeightUnit";
 import { AssetEditorData } from "./AssetEditorData";
@@ -42,6 +43,11 @@ export default class AssetEditor extends ComponentBase<Model> {
     public info = AssetEditor.noInfo;
     public data = new AssetEditorData();
     public isGlobalValidation = false;
+
+    public edit(asset: Asset) {
+        this.isOpen = true;
+        console.log(asset);
+    }
 
     public validate(ref: string) {
         const control = this.getControl(ref);
@@ -128,12 +134,5 @@ export default class AssetEditor extends ComponentBase<Model> {
             default:
                 return false;
         }
-    }
-
-    private getControl(ref: string) {
-        // TODO: no-unnecessary-type-assertion is probably a false positive, see
-        // https://github.com/palantir/tslint/issues/3540
-        // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
-        return this.$refs[ref] as Vue;
     }
 }

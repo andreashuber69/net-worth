@@ -26,6 +26,14 @@
     <td class="text-xs-left pl-0">{{ quantityFraction }}</td>
     <td class="text-xs-right pr-0 total">{{ totalValueInteger }}</td>
     <td class="text-xs-left pl-0 total">{{ totalValueFraction }}</td>
+    <td class="justify-center layout px-0">
+      <v-btn icon class="mx-0" @click="edit">
+        <v-icon color="teal">edit</v-icon>
+      </v-btn>
+      <v-btn icon class="mx-0" @click="remove">
+        <v-icon color="pink">delete</v-icon>
+      </v-btn>
+    </td>
   </tr>
 </template>
 

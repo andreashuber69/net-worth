@@ -41,8 +41,15 @@ export class Model implements IModel {
     public exchangeRate: number | undefined = 1;
 
     /** @internal */
-    public add(bundle: AssetBundle) {
+    public addAsset(bundle: AssetBundle) {
         this.bundles.push(bundle);
+    }
+
+    /** @internal */
+    public removeAsset(asset: Asset) {
+        for (const bundle of this.bundles) {
+            bundle.removeAsset(asset);
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

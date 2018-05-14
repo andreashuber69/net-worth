@@ -14,7 +14,7 @@
 
 <template>
   <div>
-    <AssetEditor :modelProp="model"></AssetEditor>
+    <AssetEditor :modelProp="model" ref="editor"></AssetEditor>
     <v-data-table :items="model.assets" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
         <th class="text-xs-left">Type</th>
@@ -25,9 +25,10 @@
         <th colspan="2">Unit Value<br>({{ model.selectedCurrency }})</th>
         <th colspan="2">Quantity</th>
         <th colspan="2" class="total">Total Value<br>({{ model.selectedCurrency }})</th>
+        <th>Actions</th>
       </template>
       <template slot="items" slot-scope="props">
-        <AssetListRow :modelProp="props.item"></AssetListRow>
+        <AssetListRow :modelProp="props.item" v-on:edit="edit" v-on:remove="remove"></AssetListRow>
       </template>
       <template slot="footer">
         <td colspan="10" class="total">Grand Total</td>
@@ -35,7 +36,6 @@
         <td class="text-xs-left pl-0 total">{{ totalValueFraction }}</td>
       </template>
     </v-data-table>
-    <v-btn @click="add">Add</v-btn>
   </div>
 </template>
 

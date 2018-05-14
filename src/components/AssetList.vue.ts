@@ -11,10 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component } from "vue-property-decorator";
+import { Asset } from "../model/Asset";
 import { AssetBundle } from "../model/AssetBundle";
 import { Model } from "../model/Model";
-import { SilverAsset } from "../model/SilverAsset";
-import { WeightUnit } from "../model/WeightUnit";
 import AssetEditor from "./AssetEditor.vue";
 import AssetListRow from "./AssetListRow.vue";
 import { ComponentBase } from "./ComponentBase";
@@ -32,9 +31,19 @@ export default class AssetList extends ComponentBase<Model> {
         return Format.fraction(this.totalValue, 2);
     }
 
-    public add() {
-        return this.model.add(
-            new AssetBundle(new SilverAsset(this.model, "Bars", "Home", 1, WeightUnit.Kilogram, 0.999, 3)));
+    /** @internal */
+    public add(bundle: AssetBundle) {
+        this.model.addAsset(bundle);
+    }
+
+    /** @internal */
+    public edit(asset: Asset) {
+        (this.getControl("editor") as AssetEditor).edit(asset);
+    }
+
+    /** @internal */
+    public remove(asset: Asset) {
+        this.model.removeAsset(asset);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
