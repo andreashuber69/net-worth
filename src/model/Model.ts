@@ -12,7 +12,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { BtcQuantityAsset } from "./BtcQuantityAsset";
+import { BtcWallet } from "./BtcWallet";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { IWebRequest } from "./IWebRequest";
 import { QuandlRequest } from "./QuandlRequest";
@@ -88,7 +88,7 @@ export class Model implements IModel {
         new AssetBundle(new SilverAsset(this, "2 CHF, Roll of 50", "Home", 500, WeightUnit.Gram, 0.835, 2)),
         new AssetBundle(new SilverAsset(this, "1 CHF, Roll of 50", "Home", 250, WeightUnit.Gram, 0.835, 3)),
         new AssetBundle(new SilverAsset(this, "0.5 CHF, Roll of 50", "Home", 125, WeightUnit.Gram, 0.835, 4)),
-        new AssetBundle(new BtcQuantityAsset(this, "Spending Wallet", "Mobile Phone", Model.address)),
+        new AssetBundle(new BtcWallet(this, "Spending Wallet", "Mobile Phone", Model.address, undefined)),
     ];
 
     private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
