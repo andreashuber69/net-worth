@@ -33,7 +33,9 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
         return PreciousMetalAsset.getUnit(this.weight, this.weightUnit);
     }
 
-    /** The number of items. */
+    /** The fineness, e.g. 0.999. */
+    public readonly fineness: number;
+
     public readonly quantity: number;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,9 +47,10 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
      * @param quandlPath The quandl asset path.
      */
     protected constructor(properties: IPreciousMetalProperties, type: string, quandlPath: string) {
-        super(properties, type, properties.fineness, 0);
+        super(properties, type, 0);
         this.weight = properties.weight;
         this.weightUnit = properties.weightUnit;
+        this.fineness = properties.fineness;
         this.quantity = properties.quantity;
         this.pureGramsPerUnit = this.weight * this.weightUnit * this.fineness;
         this.queryUnitValue(quandlPath).catch((reason) => console.error(reason));

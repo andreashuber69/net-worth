@@ -48,6 +48,9 @@ export abstract class Asset {
     /** The unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'. */
     public abstract get unit(): string;
 
+    /** The fineness, e.g. 0.999. For a crypto currency, this is always 1. */
+    public abstract get fineness(): number;
+
     /** The asset quantity. */
     public abstract get quantity(): number | undefined;
 
@@ -74,7 +77,6 @@ export abstract class Asset {
     protected constructor(
         properties: IAssetProperties,
         public readonly type: string,
-        public readonly fineness: number,
         public readonly quantityDecimals: number,
     ) {
         this.parent = properties.parent;

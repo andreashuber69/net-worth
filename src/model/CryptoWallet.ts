@@ -31,6 +31,10 @@ export abstract class CryptoWallet extends Asset implements ICryptoProperties {
         return this.currencySymbol;
     }
 
+    public get fineness() {
+        return 1;
+    }
+
     public quantity: number | undefined;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +52,7 @@ export abstract class CryptoWallet extends Asset implements ICryptoProperties {
         quantityDecimals: number,
         coin: string,
     ) {
-        super(properties, currencySymbol, 1, quantityDecimals);
+        super(properties, currencySymbol, quantityDecimals);
         this.address = properties.address;
         this.quantity = properties.quantity;
         this.queryUnitValue(coin).catch((reason) => console.error(reason));
