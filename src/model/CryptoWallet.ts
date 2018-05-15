@@ -10,15 +10,19 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IAssetProperties, IModel } from "./Asset";
+import { Asset, IAssetProperties } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 
 export interface ICryptoProperties extends IAssetProperties {
+    /** The public address. */
     readonly address: string;
 }
 
-/** Provides information about a crypto currency asset. */
-export abstract class CryptoAsset extends Asset implements ICryptoProperties {
+/** Provides information about a crypto currency wallet. */
+export abstract class CryptoWallet extends Asset implements ICryptoProperties {
+    /** The public address. */
+    public readonly address: string;
+
     public get locationHint() {
         return this.address;
     }
@@ -27,30 +31,26 @@ export abstract class CryptoAsset extends Asset implements ICryptoProperties {
         return this.currencySymbol;
     }
 
+    public quantity: number | undefined;
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Creates a new [[CryptoAsset]] instance.
-     * @param parent The parent model to which this asset belongs.
+     * Creates a new [[CryptoWallet]] instance.
+     * @param properties The crypto wallet properties.
      * @param currencySymbol The crypto currency symbol, e.g. 'BTC', 'LTC'.
-     * @param description The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.
-     * @param location The location of the wallet, e.g. 'Mobile Phone', 'Hardware Wallet', 'Safety Deposit Box'.
-     * @param address The public address.
-     * @param quantity The amount in the wallet.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      * @param coin The coinmarketcap.com identifier of the currency.
      */
     protected constructor(
-        parent: IModel,
+        properties: ICryptoProperties,
         private readonly currencySymbol: string,
-        description: string,
-        location: string,
-        public readonly address: string,
-        public quantity: number | undefined,
         quantityDecimals: number,
         coin: string,
     ) {
-        super(parent, currencySymbol, description, location, 1, quantityDecimals);
+        super(properties, currencySymbol, 1, quantityDecimals);
+        this.address = properties.address;
+        this.quantity = properties.quantity;
         this.queryUnitValue(coin).catch((reason) => console.error(reason));
     }
 

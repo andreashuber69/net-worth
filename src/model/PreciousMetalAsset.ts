@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IAssetProperties, IModel } from "./Asset";
+import { Asset, IAssetProperties } from "./Asset";
 import { QuandlRequest } from "./QuandlRequest";
 import { Weight, WeightUnit } from "./WeightUnit";
 
@@ -23,37 +23,33 @@ export interface IPreciousMetalProperties extends IAssetProperties {
 
 /** Provides information about an asset made of a precious metal. */
 export abstract class PreciousMetalAsset extends Asset implements IPreciousMetalProperties {
+    /** The weight of a single item, expressed in `weightUnit`. */
+    public readonly weight: number;
+
+    /** The unit used for `weight`, e.g. [[TroyOunce]]. */
+    public readonly weightUnit: WeightUnit;
+
     public get unit() {
         return PreciousMetalAsset.getUnit(this.weight, this.weightUnit);
     }
+
+    /** The number of items. */
+    public readonly quantity: number;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Creates a new [[PreciousMetalAsset]] instance.
-     * @param parent The parent model to which this asset belongs.
+     * @param properties The precious metal asset properties.
      * @param type The type of precious metal, e.g. 'Silver', 'Gold'.
-     * @param description The shape of the items, e.g. 'Coins', 'Bars'.
-     * @param location The location, e.g. 'Safe', 'Safety Deposit Box'.
-     * @param weight The weight of a single item, expressed in `weightUnit`.
-     * @param weightUnit The unit used for `weight`, e.g. [[TroyOunce]].
-     * @param fineness The fineness, e.g. 0.999.
-     * @param quantity The number of items.
      * @param quandlPath The quandl asset path.
      */
-    protected constructor(
-        parent: IModel,
-        type: string,
-        description: string,
-        location: string,
-        public readonly weight: number,
-        public readonly weightUnit: WeightUnit,
-        fineness: number,
-        public readonly quantity: number,
-        quandlPath: string,
-    ) {
-        super(parent, type, description, location, fineness, 0);
-        this.pureGramsPerUnit = weight * weightUnit * fineness;
+    protected constructor(properties: IPreciousMetalProperties, type: string, quandlPath: string) {
+        super(properties, type, properties.fineness, 0);
+        this.weight = properties.weight;
+        this.weightUnit = properties.weightUnit;
+        this.quantity = properties.quantity;
+        this.pureGramsPerUnit = this.weight * this.weightUnit * this.fineness;
         this.queryUnitValue(quandlPath).catch((reason) => console.error(reason));
     }
 

@@ -11,25 +11,19 @@
 // <http://www.gnu.org/licenses/>.
 
 import { HDNode } from "bitcoinjs-lib";
-import { IModel } from "./Asset";
 import { BlockchainRequest } from "./BlockchainRequest";
-import { CryptoAsset } from "./CryptoAsset";
+import { CryptoWallet, ICryptoProperties } from "./CryptoWallet";
 
-/** Provides information about a BTC asset. */
-export class BtcWallet extends CryptoAsset {
-    /** Creates a new [[BtcQuantityAsset]] instance.
-     * @description If a non-empty string is passed for address, then an attempt is made to retrieve the wallet
-     * balance, which is then added to whatever is passed for quantity. It therefore usually only makes sense
-     * specify either address or quantity, not both.
-     * @param parent The parent model to which this asset belongs.
-     * @param description The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.
-     * @param location The location of the wallet, e.g. 'Mobile Phone', 'Hardware Wallet', 'Safety Deposit Box'.
-     * @param address The public address of the wallet (single address or xpub).
-     * @param quantity The amount in the wallet.
+/** Provides information about a BTC wallet. */
+export class BtcWallet extends CryptoWallet {
+    /** Creates a new [[BtcWallet]] instance.
+     * @description If a non-empty string is passed for [[ICryptoProperties.address]], then an attempt is made to
+     * retrieve the wallet balance, which is then added to whatever is passed for [[ICryptoProperties.quantity]]. It
+     * therefore usually only makes sense specify either address or quantity, not both.
+     * @param properties The crypto wallet properties.
      */
-    public constructor(
-        parent: IModel, description: string, location: string, address: string, quantity: number | undefined) {
-        super(parent, "BTC", description, location, address, quantity, 8, "bitcoin");
+    public constructor(properties: ICryptoProperties) {
+        super(properties, "BTC", 8, "bitcoin");
         this.queryQuantity().catch((reason) => console.error(reason));
     }
 

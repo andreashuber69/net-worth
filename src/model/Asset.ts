@@ -16,24 +16,40 @@ export interface IModel {
 }
 
 export interface IAssetProperties {
+    /** The parent model to which this asset belongs. */
     readonly parent: IModel;
+
+    /** The asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
     readonly description: string;
+
+    /** The location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
     readonly location: string;
+
+    /** The asset quantity. */
     readonly quantity: number | undefined;
 }
 
 /** Base of all classes that provide information about an asset. */
 export abstract class Asset {
-    /** The unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'. */
-    public abstract get unit(): string;
+    /** The parent model to which this asset belongs. */
+    public readonly parent: IModel;
 
-    /** The asset quantity. */
-    public abstract get quantity(): number | undefined;
+    /** The asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
+    public readonly description: string;
+
+    /** The location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
+    public readonly location: string;
 
     /** Further information on the location. */
     public get locationHint() {
         return "";
     }
+
+    /** The unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'. */
+    public abstract get unit(): string;
+
+    /** The asset quantity. */
+    public abstract get quantity(): number | undefined;
 
     /** @internal */
     public get unitValue() {
@@ -51,21 +67,19 @@ export abstract class Asset {
 
     /**
      * Creates a new [[Asset]] instance.
-     * @param parent The parent model to which this asset belongs.
      * @param type The type of asset, e.g. 'Silver, 'Gold', 'BTC', 'LTC'.
-     * @param description Describes the asset, e.g. 'Bars', 'Coins', 'Spending', 'Savings'.
-     * @param location The location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'.
      * @param fineness The fineness, e.g. 0.999. For a crypto currency, this is always 1.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      */
     protected constructor(
-        public readonly parent: IModel,
+        properties: IAssetProperties,
         public readonly type: string,
-        public readonly description: string,
-        public readonly location: string,
         public readonly fineness: number,
         public readonly quantityDecimals: number,
     ) {
+        this.parent = properties.parent;
+        this.description = properties.description;
+        this.location = properties.location;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
