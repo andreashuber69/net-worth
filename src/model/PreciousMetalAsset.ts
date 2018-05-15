@@ -10,12 +10,19 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { Asset, IAssetProperties, IModel } from "./Asset";
 import { QuandlRequest } from "./QuandlRequest";
 import { Weight, WeightUnit } from "./WeightUnit";
 
+export interface IPreciousMetalProperties extends IAssetProperties {
+    readonly weight: number;
+    readonly weightUnit: WeightUnit;
+    readonly fineness: number;
+    readonly quantity: number;
+}
+
 /** Provides information about an asset made of a precious metal. */
-export abstract class PreciousMetalAsset extends Asset {
+export abstract class PreciousMetalAsset extends Asset implements IPreciousMetalProperties {
     public get unit() {
         return PreciousMetalAsset.getUnit(this.weight, this.weightUnit);
     }
@@ -39,8 +46,8 @@ export abstract class PreciousMetalAsset extends Asset {
         type: string,
         description: string,
         location: string,
-        private readonly weight: number,
-        private readonly weightUnit: WeightUnit,
+        public readonly weight: number,
+        public readonly weightUnit: WeightUnit,
         fineness: number,
         public readonly quantity: number,
         quandlPath: string,

@@ -10,11 +10,15 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { Asset, IAssetProperties, IModel } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 
+export interface ICryptoProperties extends IAssetProperties {
+    readonly address: string;
+}
+
 /** Provides information about a crypto currency asset. */
-export abstract class CryptoAsset extends Asset {
+export abstract class CryptoAsset extends Asset implements ICryptoProperties {
     public get locationHint() {
         return this.address;
     }

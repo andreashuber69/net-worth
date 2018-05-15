@@ -15,6 +15,13 @@ export interface IModel {
     readonly exchangeRate: number | undefined;
 }
 
+export interface IAssetProperties {
+    readonly parent: IModel;
+    readonly description: string;
+    readonly location: string;
+    readonly quantity: number | undefined;
+}
+
 /** Base of all classes that provide information about an asset. */
 export abstract class Asset {
     /** The unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'. */
@@ -52,7 +59,7 @@ export abstract class Asset {
      * @param quantityDecimals The number of decimals to use to format the quantity.
      */
     protected constructor(
-        private readonly parent: IModel,
+        public readonly parent: IModel,
         public readonly type: string,
         public readonly description: string,
         public readonly location: string,
