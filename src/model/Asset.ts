@@ -23,6 +23,11 @@ export abstract class Asset {
     /** The asset quantity. */
     public abstract get quantity(): number | undefined;
 
+    /** Further information on the location. */
+    public get locationHint() {
+        return "";
+    }
+
     /** @internal */
     public get unitValue() {
         return Asset.multiply(this.unitValueUsd, this.parent.exchangeRate);
@@ -43,7 +48,6 @@ export abstract class Asset {
      * @param type The type of asset, e.g. 'Silver, 'Gold', 'BTC', 'LTC'.
      * @param description Describes the asset, e.g. 'Bars', 'Coins', 'Spending', 'Savings'.
      * @param location The location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'.
-     * @param locationHint Further information on the location. For a crypto currency, this is the public address.
      * @param fineness The fineness, e.g. 0.999. For a crypto currency, this is always 1.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      */
@@ -52,7 +56,6 @@ export abstract class Asset {
         public readonly type: string,
         public readonly description: string,
         public readonly location: string,
-        public readonly locationHint: string,
         public readonly fineness: number,
         public readonly quantityDecimals: number,
     ) {

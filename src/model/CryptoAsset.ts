@@ -15,6 +15,10 @@ import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 
 /** Provides information about a crypto currency asset. */
 export abstract class CryptoAsset extends Asset {
+    public get locationHint() {
+        return this.address;
+    }
+
     public get unit() {
         return this.currencySymbol;
     }
@@ -37,12 +41,12 @@ export abstract class CryptoAsset extends Asset {
         private readonly currencySymbol: string,
         description: string,
         location: string,
-        address: string,
+        public readonly address: string,
         public quantity: number | undefined,
         quantityDecimals: number,
         coin: string,
     ) {
-        super(parent, currencySymbol, description, location, address, 1, quantityDecimals);
+        super(parent, currencySymbol, description, location, 1, quantityDecimals);
         this.queryUnitValue(coin).catch((reason) => console.error(reason));
     }
 
