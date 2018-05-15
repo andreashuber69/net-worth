@@ -16,6 +16,12 @@ import { Weight, WeightUnit } from "./WeightUnit";
 
 /** Provides information about an asset made of a precious metal. */
 export abstract class PreciousMetalAsset extends Asset {
+    public get unit() {
+        return PreciousMetalAsset.getUnit(this.weight, this.weightUnit);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Creates a new [[PreciousMetalAsset]] instance.
      * @param parent The parent model to which this asset belongs.
@@ -33,15 +39,13 @@ export abstract class PreciousMetalAsset extends Asset {
         type: string,
         description: string,
         location: string,
-        weight: number,
-        weightUnit: WeightUnit,
+        private readonly weight: number,
+        private readonly weightUnit: WeightUnit,
         fineness: number,
         quantity: number,
         quandlPath: string,
     ) {
-        super(
-            parent, type, description, location, "",
-            PreciousMetalAsset.getUnit(weight, weightUnit), fineness, quantity, 0);
+        super(parent, type, description, location, "", fineness, quantity, 0);
         this.pureGramsPerUnit = weight * weightUnit * fineness;
         this.queryUnitValue(quandlPath).catch((reason) => console.error(reason));
     }

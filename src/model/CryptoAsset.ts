@@ -15,6 +15,12 @@ import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 
 /** Provides information about a crypto currency asset. */
 export abstract class CryptoAsset extends Asset {
+    public get unit() {
+        return this.currencySymbol;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Creates a new [[CryptoAsset]] instance.
      * @param parent The parent model to which this asset belongs.
@@ -28,7 +34,7 @@ export abstract class CryptoAsset extends Asset {
      */
     protected constructor(
         parent: IModel,
-        currencySymbol: string,
+        private readonly currencySymbol: string,
         description: string,
         location: string,
         address: string,
@@ -36,7 +42,7 @@ export abstract class CryptoAsset extends Asset {
         quantityDecimals: number,
         coin: string,
     ) {
-        super(parent, currencySymbol, description, location, address, currencySymbol, 1, quantity, quantityDecimals);
+        super(parent, currencySymbol, description, location, address, 1, quantity, quantityDecimals);
         this.queryUnitValue(coin).catch((reason) => console.error(reason));
     }
 

@@ -17,6 +17,9 @@ export interface IModel {
 
 /** Base of all classes that provide information about an asset. */
 export abstract class Asset {
+    /** The unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'. */
+    public abstract get unit(): string;
+
     /** @internal */
     public get unitValue() {
         return Asset.multiply(this.unitValueUsd, this.parent.exchangeRate);
@@ -38,7 +41,6 @@ export abstract class Asset {
      * @param description Describes the asset, e.g. 'Bars', 'Coins', 'Spending', 'Savings'.
      * @param location The location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'.
      * @param locationHint Further information on the location. For a crypto currency, this is the public address.
-     * @param unit The unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'.
      * @param fineness The fineness, e.g. 0.999. For a crypto currency, this is always 1.
      * @param quantity The asset quantity.
      * @param quantityDecimals The number of decimals to use to format the quantity.
@@ -49,7 +51,6 @@ export abstract class Asset {
         public readonly description: string,
         public readonly location: string,
         public readonly locationHint: string,
-        public readonly unit: string,
         public readonly fineness: number,
         public quantity: number | undefined,
         public readonly quantityDecimals: number,
