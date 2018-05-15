@@ -42,10 +42,10 @@ export abstract class PreciousMetalAsset extends Asset {
         private readonly weight: number,
         private readonly weightUnit: WeightUnit,
         fineness: number,
-        quantity: number,
+        public readonly quantity: number,
         quandlPath: string,
     ) {
-        super(parent, type, description, location, "", fineness, quantity, 0);
+        super(parent, type, description, location, "", fineness, 0);
         this.pureGramsPerUnit = weight * weightUnit * fineness;
         this.queryUnitValue(quandlPath).catch((reason) => console.error(reason));
     }

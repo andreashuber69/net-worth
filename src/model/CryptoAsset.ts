@@ -38,11 +38,11 @@ export abstract class CryptoAsset extends Asset {
         description: string,
         location: string,
         address: string,
-        quantity: number | undefined,
+        public quantity: number | undefined,
         quantityDecimals: number,
         coin: string,
     ) {
-        super(parent, currencySymbol, description, location, address, 1, quantity, quantityDecimals);
+        super(parent, currencySymbol, description, location, address, 1, quantityDecimals);
         this.queryUnitValue(coin).catch((reason) => console.error(reason));
     }
 

@@ -20,6 +20,9 @@ export abstract class Asset {
     /** The unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'. */
     public abstract get unit(): string;
 
+    /** The asset quantity. */
+    public abstract get quantity(): number | undefined;
+
     /** @internal */
     public get unitValue() {
         return Asset.multiply(this.unitValueUsd, this.parent.exchangeRate);
@@ -42,7 +45,6 @@ export abstract class Asset {
      * @param location The location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'.
      * @param locationHint Further information on the location. For a crypto currency, this is the public address.
      * @param fineness The fineness, e.g. 0.999. For a crypto currency, this is always 1.
-     * @param quantity The asset quantity.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      */
     protected constructor(
@@ -52,7 +54,6 @@ export abstract class Asset {
         public readonly location: string,
         public readonly locationHint: string,
         public readonly fineness: number,
-        public quantity: number | undefined,
         public readonly quantityDecimals: number,
     ) {
     }
