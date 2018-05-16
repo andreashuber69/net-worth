@@ -23,20 +23,20 @@ export class AssetEditorData {
     public fineness = "";
     public quantity  = "";
 
-    public constructor(weightUnits: WeightInfo[], properties?: ICryptoWallet | IPreciousMetalAsset) {
-        if (properties) {
-            this.description = properties.description;
-            this.location = properties.location;
+    public constructor(weightUnits: WeightInfo[], asset?: ICryptoWallet | IPreciousMetalAsset) {
+        if (asset) {
+            this.description = asset.description;
+            this.location = asset.location;
 
-            if (properties.tag === "pm") {
-                this.weight = properties.weight.toString();
-                this.weightUnit = weightUnits.find((info) => info.unit === properties.weightUnit) as WeightInfo;
-                this.fineness = properties.fineness.toString();
+            if (asset.tag === "IPreciousMetalAsset") {
+                this.weight = asset.weight.toString();
+                this.weightUnit = weightUnits.find((info) => info.unit === asset.weightUnit) as WeightInfo;
+                this.fineness = asset.fineness.toString();
             } else {
-                this.address = properties.address;
+                this.address = asset.address;
             }
 
-            this.quantity = properties.quantity ? properties.quantity.toString() : "";
+            this.quantity = asset.quantity ? asset.quantity.toString() : "";
         }
     }
 }

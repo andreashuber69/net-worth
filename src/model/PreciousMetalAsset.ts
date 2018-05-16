@@ -22,7 +22,7 @@ export interface IPreciousMetalAssetProperties extends IAssetProperties {
 }
 
 export interface IPreciousMetalAsset extends IPreciousMetalAssetProperties {
-    readonly tag: "pm";
+    readonly tag: "IPreciousMetalAsset";
 }
 
 /** Provides information about an asset made of a precious metal. */
@@ -48,7 +48,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     }
 
     /** @internal */
-    public readonly tag = "pm";
+    public readonly tag = "IPreciousMetalAsset";
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
