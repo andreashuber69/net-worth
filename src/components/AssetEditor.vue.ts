@@ -64,7 +64,7 @@ export default class AssetEditor extends ComponentBase<Model> {
                 throw new Error("Unknown asset type.");
         }
 
-        this.data = new AssetEditorData(this.weightUnits, AssetEditor.getInterface(asset));
+        this.data = new AssetEditorData(this.weightUnits, asset.interface);
         this.isOpen = true;
         console.log(asset);
     }
@@ -149,17 +149,6 @@ export default class AssetEditor extends ComponentBase<Model> {
                 const weightUnit = Number.parseFloat(weightUnitProperty) as WeightUnit;
                 yield new WeightInfo(Weight.abbreviate(weightUnit), weightUnit);
             }
-        }
-    }
-
-    private static getInterface(asset: Asset): ICryptoWallet | IPreciousMetalAsset | undefined {
-        // TODO: Very hacky way of getting the right info, refactor!
-        if (asset instanceof CryptoWallet) {
-            return asset;
-        } else if (asset instanceof PreciousMetalAsset) {
-            return asset;
-        } else {
-            return undefined;
         }
     }
 

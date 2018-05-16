@@ -10,6 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { ICryptoWallet } from "./CryptoWallet";
+import { IPreciousMetalAsset } from "./PreciousMetalAsset";
+
 /** @internal */
 export interface IModel {
     readonly exchangeRate: number | undefined;
@@ -63,6 +66,9 @@ export abstract class Asset {
     public get totalValue() {
         return Asset.multiply(this.quantity, this.unitValue);
     }
+
+    /** @internal */
+    public abstract get interface(): ICryptoWallet | IPreciousMetalAsset;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

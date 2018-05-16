@@ -42,6 +42,12 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
 
     public readonly quantity: number;
 
+    /** @internal */
+    public get interface() {
+        return this;
+    }
+
+    /** @internal */
     public readonly tag = "pm";
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

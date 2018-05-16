@@ -41,6 +41,12 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
 
     public quantity: number | undefined;
 
+    /** @internal */
+    public get interface() {
+        return this;
+    }
+
+    /** @internal */
     public readonly tag = "crypto";
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
