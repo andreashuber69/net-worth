@@ -32,10 +32,10 @@ export default class AssetEditor extends ComponentBase<Model> {
     public readonly infos = [
         new AssetInfo(
             "Bitcoin Wallet", true, AssetEditor.cryptoDescriptionHint, true, AssetEditor.cryptoLocationHint,
-            true, false, false, false, true, false, AssetEditor.cryptoQuantityHint, 8),
+            true, false, false, false, true, false, AssetEditor.cryptoQuantityHint, 8, BtcWallet),
         new AssetInfo(
             "Silver", true, AssetEditor.pmDescriptionHint, true, AssetEditor.pmLocationHint,
-            false, true, true, true, true, true, AssetEditor.pmQuantityHint, 0),
+            false, true, true, true, true, true, AssetEditor.pmQuantityHint, 0, SilverAsset),
     ];
 
     public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
@@ -107,7 +107,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         try {
             // tslint:disable-next-line:no-unsafe-any
             if ((this.getControl("form") as any).validate()) {
-                const newAsset = this.createAsset();
+                const newAsset = this.info.createAsset(new AssetProperties(this.model, this.data));
 
                 if (this.editedAsset) {
                     this.model.replaceAsset(this.editedAsset, newAsset);
@@ -169,18 +169,4 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     // tslint:disable-next-line:no-null-keyword
     private editedAsset: Asset | null = null;
-
-    private createAsset() {
-        const properties = new AssetProperties(this.model, this.data);
-
-        // TODO: Very hacky way of getting the right info, refactor!
-        switch (this.info.type) {
-            case "Bitcoin Wallet":
-                return new BtcWallet(properties);
-            case "Silver":
-                return new SilverAsset(properties);
-            default:
-                throw new Error("Unknown info type.");
-        }
-    }
 }

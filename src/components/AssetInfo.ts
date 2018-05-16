@@ -10,6 +10,14 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { Asset } from "../model/Asset";
+import { ICryptoWalletProperties } from "../model/CryptoWallet";
+import { IPreciousMetalAssetProperties } from "../model/PreciousMetalAsset";
+
+interface IConstructor {
+    new (properties: ICryptoWalletProperties & IPreciousMetalAssetProperties): Asset;
+}
+
 export class AssetInfo {
     public constructor(
         public readonly type: string,
@@ -25,10 +33,19 @@ export class AssetInfo {
         public readonly isQuantityRequired: boolean,
         public readonly quantityHint: string,
         public readonly quantityDecimals: number,
+        private readonly constructor?: IConstructor,
     ) {
     }
 
     public get quantityStep() {
         return Math.pow(10, -this.quantityDecimals);
+    }
+
+    public createAsset(properties: ICryptoWalletProperties & IPreciousMetalAssetProperties) {
+        if (!this.constructor) {
+            throw new Error("No constructor specified.");
+        }
+
+        return new this.constructor(properties);
     }
 }
