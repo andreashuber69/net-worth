@@ -12,10 +12,16 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
+import { AssetBundle } from "../model/AssetBundle";
+import { BtcWallet } from "../model/BtcWallet";
+import { CryptoWallet, ICryptoWallet } from "../model/CryptoWallet";
 import { Model } from "../model/Model";
+import { IPreciousMetalAsset, PreciousMetalAsset } from "../model/PreciousMetalAsset";
+import { SilverAsset } from "../model/SilverAsset";
 import { Weight, WeightUnit } from "../model/WeightUnit";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetInfo } from "./AssetInfo";
+import { AssetProperties } from "./AssetProperties";
 import { ComponentBase } from "./ComponentBase";
 import { WeightInfo } from "./WeightInfo";
 
@@ -36,15 +42,29 @@ export default class AssetEditor extends ComponentBase<Model> {
     public isOpen = false;
 
     public get title() {
-        return this.editIndex === -1 ? "New Asset" : "Edit Asset";
+        return this.editedAsset ? "Edit Asset" : "New Asset";
     }
 
-    public editIndex = -1;
     public info = AssetEditor.noInfo;
-    public data = new AssetEditorData();
+    public data = new AssetEditorData(this.weightUnits);
     public isGlobalValidation = false;
 
     public edit(asset: Asset) {
+        this.editedAsset = asset;
+
+        // TODO: Very hacky way of getting the right info, refactor!
+        switch (asset.type) {
+            case "BTC":
+                this.info = this.infos[0];
+                break;
+            case "Silver":
+                this.info = this.infos[1];
+                break;
+            default:
+                throw new Error("Unknown asset type.");
+        }
+
+        this.data = new AssetEditorData(this.weightUnits, AssetEditor.getInterface(asset));
         this.isOpen = true;
         console.log(asset);
     }
@@ -77,7 +97,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     public reset() {
         // tslint:disable-next-line:no-unsafe-any
         (this.getControl("form") as any).reset();
-        this.data = new AssetEditorData();
+        this.data = new AssetEditorData(this.weightUnits);
         this.info = AssetEditor.noInfo;
     }
 
@@ -87,7 +107,15 @@ export default class AssetEditor extends ComponentBase<Model> {
         try {
             // tslint:disable-next-line:no-unsafe-any
             if ((this.getControl("form") as any).validate()) {
-                this.isOpen = false;
+                const newAsset = this.createAsset();
+
+                if (this.editedAsset) {
+                    this.model.replaceAsset(this.editedAsset, newAsset);
+                } else {
+                    this.model.addAsset(new AssetBundle(newAsset));
+                }
+
+                this.cancel();
             }
         } finally {
             this.isGlobalValidation = false;
@@ -95,6 +123,9 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     public cancel() {
+        this.reset();
+        // tslint:disable-next-line:no-null-keyword
+        this.editedAsset = null;
         this.isOpen = false;
     }
 
@@ -121,6 +152,17 @@ export default class AssetEditor extends ComponentBase<Model> {
         }
     }
 
+    private static getInterface(asset: Asset): ICryptoWallet | IPreciousMetalAsset | undefined {
+        // TODO: Very hacky way of getting the right info, refactor!
+        if (asset instanceof CryptoWallet) {
+            return asset;
+        } else if (asset instanceof PreciousMetalAsset) {
+            return asset;
+        } else {
+            return undefined;
+        }
+    }
+
     private static isFilledSelect(control: Vue, ref: string) {
         const value = (control as any).value;
 
@@ -133,6 +175,23 @@ export default class AssetEditor extends ComponentBase<Model> {
                 return !!(value as WeightInfo).abbreviation;
             default:
                 return false;
+        }
+    }
+
+    // tslint:disable-next-line:no-null-keyword
+    private editedAsset: Asset | null = null;
+
+    private createAsset() {
+        const properties = new AssetProperties(this.model, this.data);
+
+        // TODO: Very hacky way of getting the right info, refactor!
+        switch (this.info.type) {
+            case "Bitcoin Wallet":
+                return new BtcWallet(properties);
+            case "Silver":
+                return new SilverAsset(properties);
+            default:
+                throw new Error("Unknown info type.");
         }
     }
 }

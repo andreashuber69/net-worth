@@ -18,8 +18,12 @@ export interface ICryptoProperties extends IAssetProperties {
     readonly address: string;
 }
 
+export interface ICryptoWallet extends ICryptoProperties {
+    readonly tag: "crypto";
+}
+
 /** Provides information about a crypto currency wallet. */
-export abstract class CryptoWallet extends Asset implements ICryptoProperties {
+export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     /** The public address. */
     public readonly address: string;
 
@@ -36,6 +40,8 @@ export abstract class CryptoWallet extends Asset implements ICryptoProperties {
     }
 
     public quantity: number | undefined;
+
+    public readonly tag = "crypto";
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

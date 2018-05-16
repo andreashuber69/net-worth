@@ -36,4 +36,14 @@ export class AssetBundle {
             this.assets.splice(index, 1);
         }
     }
+
+    public replaceAsset(oldAsset: Asset, newAsset: Asset) {
+        const index = this.assets.indexOf(oldAsset);
+
+        if (index >= 0) {
+            // Apparently, Vue cannot detect the obvious way of replacing (this.assets[index] = newAsset):
+            // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
+            this.assets.splice(index, 1, newAsset);
+        }
+    }
 }

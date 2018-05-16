@@ -52,6 +52,12 @@ export class Model implements IModel {
         }
     }
 
+    public replaceAsset(oldAsset: Asset, newAsset: Asset) {
+        for (const bundle of this.bundles) {
+            bundle.replaceAsset(oldAsset, newAsset);
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly currencyMap = new Map<string, IWebRequest<number>>([

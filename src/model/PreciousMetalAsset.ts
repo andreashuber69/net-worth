@@ -21,8 +21,12 @@ export interface IPreciousMetalProperties extends IAssetProperties {
     readonly quantity: number;
 }
 
+export interface IPreciousMetalAsset extends IPreciousMetalProperties {
+    readonly tag: "pm";
+}
+
 /** Provides information about an asset made of a precious metal. */
-export abstract class PreciousMetalAsset extends Asset implements IPreciousMetalProperties {
+export abstract class PreciousMetalAsset extends Asset implements IPreciousMetalAsset {
     /** The weight of a single item, expressed in `weightUnit`. */
     public readonly weight: number;
 
@@ -37,6 +41,8 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     public readonly fineness: number;
 
     public readonly quantity: number;
+
+    public readonly tag = "pm";
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

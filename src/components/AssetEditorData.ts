@@ -10,6 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { ICryptoWallet } from "../model/CryptoWallet";
+import { IPreciousMetalAsset } from "../model/PreciousMetalAsset";
 import { WeightInfo } from "./WeightInfo";
 
 export class AssetEditorData {
@@ -20,4 +22,21 @@ export class AssetEditorData {
     public weightUnit = new WeightInfo("", 0);
     public fineness = "";
     public quantity  = "";
+
+    public constructor(weightUnits: WeightInfo[], properties?: ICryptoWallet | IPreciousMetalAsset) {
+        if (properties) {
+            this.description = properties.description;
+            this.location = properties.location;
+
+            if (properties.tag === "pm") {
+                this.weight = properties.weight.toString();
+                this.weightUnit = weightUnits.find((info) => info.unit === properties.weightUnit) as WeightInfo;
+                this.fineness = properties.fineness.toString();
+            } else {
+                this.address = properties.address;
+            }
+
+            this.quantity = properties.quantity ? properties.quantity.toString() : "";
+        }
+    }
 }
