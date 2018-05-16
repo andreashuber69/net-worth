@@ -13,7 +13,13 @@
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 
+/** Represents a single coinmarketcap.com request. */
 export class CoinMarketCapRequest implements IWebRequest<number> {
+    /**
+     * Creates a new [[CoinMarketCapRequest]] instance.
+     * @param coin The coin to query the current price for.
+     * @param invert Whether the returned price should be inverted.
+     */
     public constructor(private readonly coin: string, private readonly invert: boolean) {
     }
 

@@ -13,17 +13,26 @@
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 
+/** @internal */
 interface ISummary {
     readonly final_balance: number;
     readonly n_tx: number;
 }
 
+/** Represents the result returned by [[BlockchainRequest.execute]]. */
 export interface IBalance {
+    /** The sum of the final BTC balance of the addresses passed to the constructor. */
     readonly finalBalance: number;
+
+    /** The sum of the transactions found for the addresses passed to the constructor. */
     readonly transactionCount: number;
 }
 
+/** Represents a single blockchain.info request. */
 export class BlockchainRequest implements IWebRequest<IBalance> {
+    /** Creates a new [[BlockchainRequest]] instance.
+     *  @param addresses The addresses to query the balance for.
+     */
     public constructor(addresses: string[]) {
         this.addresses = addresses.join("|");
     }

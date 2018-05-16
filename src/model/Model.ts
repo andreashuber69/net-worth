@@ -19,20 +19,25 @@ import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
 import { WeightUnit } from "./WeightUnit";
 
+/** Represents the main model of the application. */
 export class Model implements IModel {
+    /** The available currencies to value the assets in. */
     public get currencies() {
         return Array.from(Model.currencyMap.keys());
     }
 
+    /** The selected currency. */
     public get selectedCurrency() {
         return this.selectedCurrencyImpl;
     }
 
+    /** The selected currency. */
     public set selectedCurrency(currency: string) {
         this.selectedCurrencyImpl = currency;
         this.onCurrencyChanged().catch((reason) => console.error(reason));
     }
 
+    /** The assets to value. */
     public get assets() {
         return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<Asset>());
     }
@@ -52,6 +57,7 @@ export class Model implements IModel {
         }
     }
 
+    /** @internal */
     public replaceAsset(oldAsset: Asset, newAsset: Asset) {
         for (const bundle of this.bundles) {
             bundle.replaceAsset(oldAsset, newAsset);

@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+/** Enumerates the weight units supported by the application. */
 export enum WeightUnit {
     Gram = 1,
     Kilogram = 1000,
@@ -18,7 +19,9 @@ export enum WeightUnit {
     AvdpOunce = Grain * 437.5, // https://en.wikipedia.org/wiki/Ounce
 }
 
+/** @internal */
 export class Weight {
+    /** @internal */
     public static abbreviate(unit: WeightUnit) {
         switch (unit) {
             case WeightUnit.Gram:

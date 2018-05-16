@@ -13,7 +13,13 @@
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 
+/** Represents a single quandl.com request. */
 export class QuandlRequest implements IWebRequest<number> {
+    /**
+     * Creates a new [[QuandlRequest]] instance.
+     * @param path The path to query.
+     * @param invert Whether the returned price should be inverted.
+     */
     public constructor(private readonly path: string, private readonly invert: boolean) {
     }
 

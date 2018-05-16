@@ -18,6 +18,7 @@ export interface IModel {
     readonly exchangeRate: number | undefined;
 }
 
+/** Defines the common properties of all assets. */
 export interface IAssetProperties {
     /** The parent model to which this asset belongs. */
     readonly parent: IModel;
@@ -32,7 +33,7 @@ export interface IAssetProperties {
     readonly quantity: number | undefined;
 }
 
-/** Base of all classes that provide information about an asset. */
+/** Defines the base of all classes that represent an asset. */
 export abstract class Asset {
     /** The parent model to which this asset belongs. */
     public readonly parent: IModel;

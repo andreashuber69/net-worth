@@ -13,12 +13,12 @@
 import { Asset } from "./Asset";
 
 /**
- * Base of all classes that provide information about a bundle of assets.
+ * Defines the base of all classes that represent a bundle of assets.
  * @description This is most commonly used in conjunction with crypto currencies, where one address can hold a balance
  * of multiple currencies. For example, a BTC address could potentially hold balances of BTC, BCH, BTG, BCD and so on.
  */
 export class AssetBundle {
-    /** Gets the bundled assets. */
+    /** The bundled assets. */
     public readonly assets: Asset[];
 
     /**
@@ -29,6 +29,7 @@ export class AssetBundle {
         this.assets = assets;
     }
 
+    /** Removes the `asset` from [[assets]]. */
     public removeAsset(asset: Asset) {
         const index = this.assets.indexOf(asset);
 
@@ -37,6 +38,7 @@ export class AssetBundle {
         }
     }
 
+    /** Removes the `oldAsset` from [[assets]] and then inserts `newAsset` in its place. */
     public replaceAsset(oldAsset: Asset, newAsset: Asset) {
         const index = this.assets.indexOf(oldAsset);
 

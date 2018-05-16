@@ -10,6 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+/** Represents a single web request. */
 export interface IWebRequest<T> {
+    /** Executes the request and returns a promise for the result. */
     execute(): Promise<T>;
 }

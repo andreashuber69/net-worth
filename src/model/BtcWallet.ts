@@ -14,7 +14,7 @@ import { HDNode } from "bitcoinjs-lib";
 import { BlockchainRequest } from "./BlockchainRequest";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 
-/** Provides information about a BTC wallet. */
+/** Represents a BTC wallet. */
 export class BtcWallet extends CryptoWallet {
     /** Creates a new [[BtcWallet]] instance.
      * @description If a non-empty string is passed for [[ICryptoProperties.address]], then an attempt is made to

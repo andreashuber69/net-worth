@@ -12,7 +12,7 @@
 
 import { IPreciousMetalAssetProperties, PreciousMetalAsset } from "./PreciousMetalAsset";
 
-/** Provides information about an asset made of silver. */
+/** Represents an asset made of silver. */
 export class SilverAsset extends PreciousMetalAsset {
     /**
      * Creates a new [[SilverAsset]] instance.

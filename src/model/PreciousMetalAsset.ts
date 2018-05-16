@@ -14,30 +14,36 @@ import { Asset, IAssetProperties } from "./Asset";
 import { QuandlRequest } from "./QuandlRequest";
 import { Weight, WeightUnit } from "./WeightUnit";
 
+/** Defines the common properties of all classes that represent a precious metal assets. */
 export interface IPreciousMetalAssetProperties extends IAssetProperties {
+    /** The weight of a single item, expressed in `weightUnit`. */
     readonly weight: number;
+
+    /** The unit used for `weight`, e.g. [[TroyOunce]]. */
     readonly weightUnit: WeightUnit;
+
+    /** The fineness, e.g. 0.999. */
     readonly fineness: number;
+
     readonly quantity: number;
 }
 
+/** @internal */
 export interface IPreciousMetalAsset extends IPreciousMetalAssetProperties {
+    /** @internal */
     readonly tag: "IPreciousMetalAsset";
 }
 
-/** Provides information about an asset made of a precious metal. */
+/** Defines the base of all classes that represent a precious metal asset. */
 export abstract class PreciousMetalAsset extends Asset implements IPreciousMetalAsset {
-    /** The weight of a single item, expressed in `weightUnit`. */
     public readonly weight: number;
 
-    /** The unit used for `weight`, e.g. [[TroyOunce]]. */
     public readonly weightUnit: WeightUnit;
 
     public get unit() {
         return PreciousMetalAsset.getUnit(this.weight, this.weightUnit);
     }
 
-    /** The fineness, e.g. 0.999. */
     public readonly fineness: number;
 
     public readonly quantity: number;
