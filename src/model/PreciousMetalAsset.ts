@@ -14,14 +14,14 @@ import { Asset, IAssetProperties } from "./Asset";
 import { QuandlRequest } from "./QuandlRequest";
 import { Weight, WeightUnit } from "./WeightUnit";
 
-export interface IPreciousMetalProperties extends IAssetProperties {
+export interface IPreciousMetalAssetProperties extends IAssetProperties {
     readonly weight: number;
     readonly weightUnit: WeightUnit;
     readonly fineness: number;
     readonly quantity: number;
 }
 
-export interface IPreciousMetalAsset extends IPreciousMetalProperties {
+export interface IPreciousMetalAsset extends IPreciousMetalAssetProperties {
     readonly tag: "pm";
 }
 
@@ -52,7 +52,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
      * @param type The type of precious metal, e.g. 'Silver', 'Gold'.
      * @param quandlPath The quandl asset path.
      */
-    protected constructor(properties: IPreciousMetalProperties, type: string, quandlPath: string) {
+    protected constructor(properties: IPreciousMetalAssetProperties, type: string, quandlPath: string) {
         super(properties, type, 0);
         this.weight = properties.weight;
         this.weightUnit = properties.weightUnit;

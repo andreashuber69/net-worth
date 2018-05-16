@@ -11,11 +11,11 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "../model/Asset";
-import { ICryptoProperties } from "../model/CryptoWallet";
-import { IPreciousMetalProperties } from "../model/PreciousMetalAsset";
+import { ICryptoWalletProperties } from "../model/CryptoWallet";
+import { IPreciousMetalAssetProperties } from "../model/PreciousMetalAsset";
 import { AssetEditorData } from "./AssetEditorData";
 
-export class AssetProperties implements ICryptoProperties, IPreciousMetalProperties {
+export class AssetProperties implements ICryptoWalletProperties, IPreciousMetalAssetProperties {
     public get description() {
         return this.data.description;
     }

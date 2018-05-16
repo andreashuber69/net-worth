@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IPreciousMetalProperties, PreciousMetalAsset } from "./PreciousMetalAsset";
+import { IPreciousMetalAssetProperties, PreciousMetalAsset } from "./PreciousMetalAsset";
 
 /** Provides information about an asset made of silver. */
 export class SilverAsset extends PreciousMetalAsset {
@@ -18,7 +18,7 @@ export class SilverAsset extends PreciousMetalAsset {
      * Creates a new [[SilverAsset]] instance.
      * @param properties The precious metal asset properties.
      */
-    public constructor(properties: IPreciousMetalProperties) {
+    public constructor(properties: IPreciousMetalAssetProperties) {
         super(properties, "Silver", "lbma/silver.json");
     }
 }

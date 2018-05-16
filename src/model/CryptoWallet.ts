@@ -13,12 +13,12 @@
 import { Asset, IAssetProperties } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 
-export interface ICryptoProperties extends IAssetProperties {
+export interface ICryptoWalletProperties extends IAssetProperties {
     /** The public address. */
     readonly address: string;
 }
 
-export interface ICryptoWallet extends ICryptoProperties {
+export interface ICryptoWallet extends ICryptoWalletProperties {
     readonly tag: "crypto";
 }
 
@@ -53,7 +53,7 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
      * @param coin The coinmarketcap.com identifier of the currency.
      */
     protected constructor(
-        properties: ICryptoProperties,
+        properties: ICryptoWalletProperties,
         private readonly currencySymbol: string,
         quantityDecimals: number,
         coin: string,

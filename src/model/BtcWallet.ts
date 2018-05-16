@@ -12,7 +12,7 @@
 
 import { HDNode } from "bitcoinjs-lib";
 import { BlockchainRequest } from "./BlockchainRequest";
-import { CryptoWallet, ICryptoProperties } from "./CryptoWallet";
+import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 
 /** Provides information about a BTC wallet. */
 export class BtcWallet extends CryptoWallet {
@@ -22,7 +22,7 @@ export class BtcWallet extends CryptoWallet {
      * therefore usually only makes sense specify either address or quantity, not both.
      * @param properties The crypto wallet properties.
      */
-    public constructor(properties: ICryptoProperties) {
+    public constructor(properties: ICryptoWalletProperties) {
         super(properties, "BTC", 8, "bitcoin");
         this.queryQuantity().catch((reason) => console.error(reason));
     }
