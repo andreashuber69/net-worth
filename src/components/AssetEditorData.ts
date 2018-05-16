@@ -28,7 +28,7 @@ export class AssetEditorData {
             this.description = asset.description;
             this.location = asset.location;
 
-            if (asset.tag === "IPreciousMetalAsset") {
+            if (asset.propertyTag === "IPreciousMetalAsset") {
                 this.weight = asset.weight.toString();
                 this.weightUnit = weightUnits.find((info) => info.unit === asset.weightUnit) as WeightInfo;
                 this.fineness = asset.fineness.toString();

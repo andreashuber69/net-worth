@@ -22,7 +22,7 @@ export interface ICryptoWalletProperties extends IAssetProperties {
 /** @internal */
 export interface ICryptoWallet extends ICryptoWalletProperties {
     /** @internal */
-    readonly tag: "ICryptoWallet";
+    readonly propertyTag: "ICryptoWallet";
 }
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
@@ -49,7 +49,7 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     }
 
     /** @internal */
-    public readonly tag = "ICryptoWallet";
+    public readonly propertyTag = "ICryptoWallet";
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
