@@ -14,6 +14,7 @@ import { ICryptoWallet } from "../model/CryptoWallet";
 import { IPreciousMetalAsset } from "../model/PreciousMetalAsset";
 import { WeightInfo } from "./WeightInfo";
 
+/** Represents the data being edited in the asset editor. */
 export class AssetEditorData {
     public description = "";
     public location = "";
@@ -23,6 +24,7 @@ export class AssetEditorData {
     public fineness = "";
     public quantity  = "";
 
+    /** @internal */
     public constructor(weightUnits: WeightInfo[], asset?: ICryptoWallet | IPreciousMetalAsset) {
         if (asset) {
             this.description = asset.description;

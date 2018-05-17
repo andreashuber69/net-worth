@@ -18,7 +18,7 @@ import { Asset } from "./Asset";
  * of multiple currencies. For example, a BTC address could potentially hold balances of BTC, BCH, BTG, BCD and so on.
  */
 export class AssetBundle {
-    /** The bundled assets. */
+    /** Provides the bundled assets. */
     public readonly assets: Asset[];
 
     /**
@@ -29,7 +29,7 @@ export class AssetBundle {
         this.assets = assets;
     }
 
-    /** Removes the `asset` from [[assets]]. */
+    /** Removes `asset` from [[assets]]. */
     public removeAsset(asset: Asset) {
         const index = this.assets.indexOf(asset);
 
@@ -38,7 +38,7 @@ export class AssetBundle {
         }
     }
 
-    /** Removes the `oldAsset` from [[assets]] and then inserts `newAsset` in its place. */
+    /** Removes `oldAsset` from [[assets]] and then inserts `newAsset` in its place. */
     public replaceAsset(oldAsset: Asset, newAsset: Asset) {
         const index = this.assets.indexOf(oldAsset);
 

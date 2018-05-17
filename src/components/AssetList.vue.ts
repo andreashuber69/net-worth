@@ -21,6 +21,7 @@ import { Format } from "./Format";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { AssetListRow, AssetEditor } })
+/** Implements the asset list UI. */
 // tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
     public get totalValueInteger() {

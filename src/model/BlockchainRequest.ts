@@ -21,10 +21,10 @@ interface ISummary {
 
 /** Represents the result returned by [[BlockchainRequest.execute]]. */
 export interface IBalance {
-    /** The sum of the final BTC balance of the addresses passed to the constructor. */
+    /** Provides the sum of the final BTC balance of the addresses passed to the constructor. */
     readonly finalBalance: number;
 
-    /** The sum of the transactions found for the addresses passed to the constructor. */
+    /** Provides the sum of the transactions found for the addresses passed to the constructor. */
     readonly transactionCount: number;
 }
 

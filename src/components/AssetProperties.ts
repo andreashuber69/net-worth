@@ -15,6 +15,9 @@ import { ICryptoWalletProperties } from "../model/CryptoWallet";
 import { IPreciousMetalAssetProperties } from "../model/PreciousMetalAsset";
 import { AssetEditorData } from "./AssetEditorData";
 
+/**
+ * Converts the data edited in the editor into the format necessary to construct [[Asset]] subclass objects.
+ */
 export class AssetProperties implements ICryptoWalletProperties, IPreciousMetalAssetProperties {
     public get description() {
         return this.data.description;
@@ -44,7 +47,6 @@ export class AssetProperties implements ICryptoWalletProperties, IPreciousMetalA
         return Number.parseFloat(this.data.quantity);
     }
 
-    /** @internal */
     public constructor(public readonly parent: IModel, private readonly data: AssetEditorData) {
     }
 }

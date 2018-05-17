@@ -17,6 +17,11 @@ import { Format } from "./Format";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
+/**
+ * Implements the UI for a single row of the asset list.
+ * @description Most of the members split asset properties into the integral and fractional parts. This is necessary
+ * so that the UI can justify the values on the decimal point.
+ */
 // tslint:disable-next-line:no-default-export
 export default class AssetListRow extends ComponentBase<Asset> {
     public get finenessInteger() {
@@ -61,11 +66,13 @@ export default class AssetListRow extends ComponentBase<Asset> {
         return Format.fraction(this.model.totalValue, 2);
     }
 
+    /** Instructs the parent UI element to open the asset editor dialog with the given asset. */
     public edit() {
         // tslint:disable-next-line:no-unsafe-any
         this.$emit("edit", this.model);
     }
 
+    /** Instructs the parent UI element to remove the given asset from the list. */
     public remove() {
         // tslint:disable-next-line:no-unsafe-any
         this.$emit("remove", this.model);

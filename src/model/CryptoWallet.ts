@@ -15,7 +15,7 @@ import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 
 /** Defines the common properties of all crypto wallets. */
 export interface ICryptoWalletProperties extends IAssetProperties {
-    /** The public address. */
+    /** Provides the public address. */
     readonly address: string;
 }
 

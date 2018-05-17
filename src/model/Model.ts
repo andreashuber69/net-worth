@@ -21,23 +21,23 @@ import { WeightUnit } from "./WeightUnit";
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
-    /** The available currencies to value the assets in. */
+    /** Provides the available currencies to value the assets in. */
     public get currencies() {
         return Array.from(Model.currencyMap.keys());
     }
 
-    /** The selected currency. */
+    /** Provides the selected currency. */
     public get selectedCurrency() {
         return this.selectedCurrencyImpl;
     }
 
-    /** The selected currency. */
+    /** Provides the selected currency. */
     public set selectedCurrency(currency: string) {
         this.selectedCurrencyImpl = currency;
         this.onCurrencyChanged().catch((reason) => console.error(reason));
     }
 
-    /** The assets to value. */
+    /** Provides the assets to value. */
     public get assets() {
         return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<Asset>());
     }

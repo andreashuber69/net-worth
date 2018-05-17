@@ -27,8 +27,10 @@ import { WeightInfo } from "./WeightInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
+/** Implements the dialog used to edit assets. */
 // tslint:disable-next-line:no-default-export
 export default class AssetEditor extends ComponentBase<Model> {
+    /** Provides the list of the possible asset types. */
     public readonly infos = [
         new AssetInfo(
             "Bitcoin Wallet", true, AssetEditor.cryptoDescriptionHint, true, AssetEditor.cryptoLocationHint,
@@ -38,37 +40,30 @@ export default class AssetEditor extends ComponentBase<Model> {
             false, true, true, true, true, true, AssetEditor.pmQuantityHint, 0, SilverAsset),
     ];
 
+    /** Provides the list of the possible weight units */
     public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
+
+    /** Provides a value indicating whether the asset editor is currently open. */
     public isOpen = false;
 
+    /** Provides the title of the asset editor. */
     public get title() {
         return this.editedAsset ? "Edit Asset" : "New Asset";
     }
 
+    /** Provides the currently selected asset type. */
     public info = AssetEditor.noInfo;
+
+    /** Provides the data currently displayed in the asset editor. */
     public data = new AssetEditorData(this.weightUnits);
+
+    /** @internal */
     public isGlobalValidation = false;
 
-    public edit(asset: Asset) {
-        this.editedAsset = asset;
-
-        // TODO: Very hacky way of getting the right info, refactor!
-        switch (asset.type) {
-            case "BTC":
-                this.info = this.infos[0];
-                break;
-            case "Silver":
-                this.info = this.infos[1];
-                break;
-            default:
-                throw new Error("Unknown asset type.");
-        }
-
-        this.data = new AssetEditorData(this.weightUnits, asset.interface);
-        this.isOpen = true;
-        console.log(asset);
-    }
-
+    /**
+     * Validates the value currently displayed.
+     * @param ref The ref of the control containing the value to validate.
+     */
     public validate(ref: string) {
         const control = this.getControl(ref);
 
@@ -94,13 +89,19 @@ export default class AssetEditor extends ComponentBase<Model> {
         return (control.$refs.input as HTMLInputElement).validationMessage || true;
     }
 
+    /** Resets all controls to their initial state. */
     public reset() {
+        // TODO: Check whether the reset() call is even necessary.
         // tslint:disable-next-line:no-unsafe-any
         (this.getControl("form") as any).reset();
         this.data = new AssetEditorData(this.weightUnits);
         this.info = AssetEditor.noInfo;
     }
 
+    /**
+     * Validates the values in all controls. If validation succeeds, the edited asset is saved and the editor is
+     * closed. Otherwise the editor remains open.
+     */
     public save() {
         this.isGlobalValidation = true;
 
@@ -122,11 +123,33 @@ export default class AssetEditor extends ComponentBase<Model> {
         }
     }
 
+    /** Closes the asset editor without saving the edited values. */
     public cancel() {
         this.reset();
         // tslint:disable-next-line:no-null-keyword
         this.editedAsset = null;
         this.isOpen = false;
+    }
+
+    /** @internal */
+    public edit(asset: Asset) {
+        this.editedAsset = asset;
+
+        // TODO: Very hacky way of getting the right info, refactor!
+        switch (asset.type) {
+            case "BTC":
+                this.info = this.infos[0];
+                break;
+            case "Silver":
+                this.info = this.infos[1];
+                break;
+            default:
+                throw new Error("Unknown asset type.");
+        }
+
+        this.data = new AssetEditorData(this.weightUnits, asset.interface);
+        this.isOpen = true;
+        console.log(asset);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

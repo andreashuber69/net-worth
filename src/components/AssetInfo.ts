@@ -18,7 +18,27 @@ interface IConstructor {
     new (properties: ICryptoWalletProperties & IPreciousMetalAssetProperties): Asset;
 }
 
+/**
+ * Defines how a particular asset type is displayed in the asset editor UI.
+ */
 export class AssetInfo {
+    /**
+     * Creates a new instance of the [[AssetInfo]] class.
+     * @param type The name of the asset.
+     * @param hasDescription Whether the asset has a description property.
+     * @param descriptionHint The hint to display for the description.
+     * @param hasLocation Whether the asset has a location property.
+     * @param locationHint The hint to display for the location.
+     * @param hasAddress Whether the asset has an address property.
+     * @param hasWeightUnit Whether the asset has an weightUnit property.
+     * @param hasWeight Whether the asset has a weight property.
+     * @param hasFineness Whether the asset has a fineness property.
+     * @param hasQuantity Whether the asset has a quantity property.
+     * @param isQuantityRequired Whether the asset requires a quantity.
+     * @param quantityHint The hint to display for the quantity.
+     * @param quantityDecimals The number of decimals to format the quantity to.
+     * @param constructor The constructor function to create a new asset.
+     */
     public constructor(
         public readonly type: string,
         public readonly hasDescription: boolean,
@@ -32,15 +52,17 @@ export class AssetInfo {
         public readonly hasQuantity: boolean,
         public readonly isQuantityRequired: boolean,
         public readonly quantityHint: string,
-        public readonly quantityDecimals: number,
+        private readonly quantityDecimals: number,
         private readonly constructor?: IConstructor,
     ) {
     }
 
+    /** The smallest number the quantity of the asset can be increased or decreased by. */
     public get quantityStep() {
         return Math.pow(10, -this.quantityDecimals);
     }
 
+    /** @internal */
     public createAsset(properties: ICryptoWalletProperties & IPreciousMetalAssetProperties) {
         if (!this.constructor) {
             throw new Error("No constructor specified.");

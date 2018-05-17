@@ -16,13 +16,13 @@ import { Weight, WeightUnit } from "./WeightUnit";
 
 /** Defines the common properties of all classes that represent a precious metal assets. */
 export interface IPreciousMetalAssetProperties extends IAssetProperties {
-    /** The weight of a single item, expressed in `weightUnit`. */
+    /** Provides the weight of a single item, expressed in `weightUnit`. */
     readonly weight: number;
 
-    /** The unit used for `weight`, e.g. [[TroyOunce]]. */
+    /** Provides the unit used for `weight`, e.g. [[TroyOunce]]. */
     readonly weightUnit: WeightUnit;
 
-    /** The fineness, e.g. 0.999. */
+    /** Provides the fineness, e.g. 0.999. */
     readonly fineness: number;
 
     readonly quantity: number;
