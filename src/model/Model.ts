@@ -109,7 +109,7 @@ export class Model implements IModel {
         new AssetBundle(new SilverAsset(this.getProperties("0.5 CHF, Roll of 50", "Home", 125, 0.835, 4))),
         new AssetBundle(new BtcWallet({
             address: Model.address,
-            description: "Spending Wallet",
+            description: "Spending",
             location: "Mobile Phone",
             parent: this,
             quantity: undefined,
