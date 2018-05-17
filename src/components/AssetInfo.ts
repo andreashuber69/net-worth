@@ -11,14 +11,11 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset } from "../model/Asset";
+import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
 import { AssetTypes } from "../model/AssetTypes";
-import { ICryptoWalletProperties } from "../model/CryptoWallet";
-import { IPreciousMetalAssetProperties } from "../model/PreciousMetalAsset";
-
-type IAllAssetProperties = ICryptoWalletProperties & IPreciousMetalAssetProperties;
 
 interface IConstructor {
-    new (properties: IAllAssetProperties): Asset;
+    new (properties: IAssetPropertiesIntersection): Asset;
 }
 
 /**
@@ -66,7 +63,7 @@ export class AssetInfo {
     }
 
     /** @internal */
-    public createAsset(properties: IAllAssetProperties) {
+    public createAsset(properties: IAssetPropertiesIntersection) {
         if (!this.constructor) {
             throw new Error("No constructor specified.");
         }

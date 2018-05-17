@@ -10,7 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWallet } from "./CryptoWallet";
-import { IPreciousMetalAsset } from "./PreciousMetalAsset";
+import { ICryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
+import { IPreciousMetalAsset, IPreciousMetalAssetProperties } from "./PreciousMetalAsset";
 
-export type AssetInterfaces = ICryptoWallet | IPreciousMetalAsset;
+export type IAssetUnion = ICryptoWallet | IPreciousMetalAsset;
+export type IAssetPropertiesIntersection = ICryptoWalletProperties & IPreciousMetalAssetProperties;

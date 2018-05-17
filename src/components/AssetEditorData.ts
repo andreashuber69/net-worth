@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInterfaces } from "../model/AssetInterfaces";
+import { IAssetUnion } from "../model/AssetInterfaces";
 import { WeightInfo } from "./WeightInfo";
 
 /** Represents the data being edited in the asset editor. */
@@ -24,7 +24,7 @@ export class AssetEditorData {
     public quantity  = "";
 
     /** @internal */
-    public constructor(weightUnits: WeightInfo[], asset?: AssetInterfaces) {
+    public constructor(weightUnits: WeightInfo[], asset?: IAssetUnion) {
         if (asset) {
             this.description = asset.description;
             this.location = asset.location;
