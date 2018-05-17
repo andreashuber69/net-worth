@@ -30,8 +30,8 @@ export class AssetInfo {
      * @param hasLocation Whether the asset has a location property.
      * @param locationHint The hint to display for the location.
      * @param hasAddress Whether the asset has an address property.
-     * @param hasWeightUnit Whether the asset has an weightUnit property.
      * @param hasWeight Whether the asset has a weight property.
+     * @param hasWeightUnit Whether the asset has an weightUnit property.
      * @param hasFineness Whether the asset has a fineness property.
      * @param hasQuantity Whether the asset has a quantity property.
      * @param isQuantityRequired Whether the asset requires a quantity.
@@ -46,8 +46,8 @@ export class AssetInfo {
         public readonly hasLocation: boolean,
         public readonly locationHint: string,
         public readonly hasAddress: boolean,
-        public readonly hasWeightUnit: boolean,
         public readonly hasWeight: boolean,
+        public readonly hasWeightUnit: boolean,
         public readonly hasFineness: boolean,
         public readonly hasQuantity: boolean,
         public readonly isQuantityRequired: boolean,

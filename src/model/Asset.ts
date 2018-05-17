@@ -18,7 +18,7 @@ export interface IModel {
     readonly exchangeRate: number | undefined;
 }
 
-/** Defines the common properties of all assets. */
+/** Defines the common editable properties of all assets. */
 export interface IAssetProperties {
     /** The asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
     readonly description: string;

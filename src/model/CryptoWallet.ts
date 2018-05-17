@@ -14,7 +14,7 @@ import { Asset, IAssetProperties, IModel } from "./Asset";
 import { AssetTypes } from "./AssetTypes";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 
-/** Defines the common properties of all crypto currency wallets. */
+/** Defines the common editable properties of all crypto currency wallets. */
 export interface ICryptoWalletProperties extends IAssetProperties {
     /** Provides the public address. */
     readonly address: string;
