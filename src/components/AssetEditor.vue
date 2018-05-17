@@ -29,46 +29,46 @@
                   ref="type" :rules="[() => validate('type')]">                  
                 </v-select>
               </v-flex>
-              <v-flex xs12 sm6 v-if="info.hasDescription">
+              <v-flex xs12 sm6 v-if="info.has.description">
                 <v-text-field
                   label="Description" :hint="info.descriptionHint" v-model="data.description" required
                   ref="description" :rules="[() => validate('description')]">
                 </v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 v-if="info.hasLocation">
+              <v-flex xs12 sm6 v-if="info.has.location">
                 <v-text-field
                   label="Location" :hint="info.locationHint" v-model="data.location"
                   ref="location" :rules="[() => validate('location')]">
                 </v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 v-if="info.hasAddress">
+              <v-flex xs12 sm6 v-if="info.has.address">
                 <v-text-field
                   label="Address" hint="The public address of the wallet (single address or xpub)." v-model="data.address"
                   ref="address" :rules="[() => validate('address')]">
                 </v-text-field>
               </v-flex>
-              <v-flex xs6 v-if="info.hasWeight">
+              <v-flex xs6 v-if="info.has.weight">
                 <v-text-field
                   label="Weight" hint="The weight of a single item, expressed in Unit." v-model="data.weight"
                   required type="number" min="0.001" step="0.001"
                   ref="weight" :rules="[() => validate('weight')]">
                 </v-text-field>
               </v-flex>
-              <v-flex xs6 v-if="info.hasWeightUnit">
+              <v-flex xs6 v-if="info.has.weightUnit">
                 <v-select
                   label="Unit" hint="The unit the of the Weight." v-model="data.weightUnit" :items="weightUnits"
                   item-text="abbreviation" required
                   ref="weightUnit" :rules="[() => validate('weightUnit')]">
                 </v-select>
               </v-flex>
-              <v-flex xs6 v-if="info.hasFineness">
+              <v-flex xs6 v-if="info.has.fineness">
                 <v-text-field
                   label="Fineness" hint="The precious metal fineness." v-model="data.fineness"
                   required type="number" min="0.5" max="0.999999" step="0.000001"
                   ref="fineness" :rules="[() => validate('fineness')]">
                 </v-text-field>
               </v-flex>
-              <v-flex xs6 v-if="info.hasQuantity">
+              <v-flex xs6 v-if="info.has.quantity">
                 <v-text-field
                   label="Quantity" :hint="info.quantityHint" v-model="data.quantity"
                   :required="info.isQuantityRequired" type="number" min="1" :step="info.quantityStep"

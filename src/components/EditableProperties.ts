@@ -14,24 +14,26 @@ import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
 
 type IEditableProperties = { [K in keyof IAssetPropertiesIntersection]: boolean };
 
+/** Defines what properties are editable for a given asset type. */
 export class EditableProperties implements IEditableProperties {
-    public readonly address: boolean;
     public readonly description: boolean;
     public readonly location: boolean;
-    public readonly quantity: boolean;
+    public readonly address: boolean;
     public readonly weight: boolean;
     public readonly weightUnit: boolean;
     public readonly fineness: boolean;
+    public readonly quantity: boolean;
 
+    /** Creates a new [[EditableProperties]] instance. */
     public constructor(
-        address: boolean, description: boolean, location: boolean,
-        quantity: boolean, weight: boolean, weightUnit: boolean, fineness: boolean) {
-        this.address = address;
+        description: boolean, location: boolean, address: boolean,
+        weight: boolean, weightUnit: boolean, fineness: boolean, quantity: boolean) {
         this.description = description;
         this.location = location;
-        this.quantity = quantity;
+        this.address = address;
         this.weight = weight;
-        this. weightUnit = weightUnit;
-        this. fineness = fineness;
+        this.weightUnit = weightUnit;
+        this.fineness = fineness;
+        this.quantity = quantity;
     }
 }
