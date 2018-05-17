@@ -13,7 +13,7 @@
 import { Asset, IModel } from "../model/Asset";
 import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
 import { AssetTypes } from "../model/AssetTypes";
-import { EditableProperties } from "./EditableProperties";
+import { Properties } from "./Properties";
 
 interface IConstructor {
     new (parent: IModel, properties: IAssetPropertiesIntersection): Asset;
@@ -29,7 +29,7 @@ export class AssetInfo {
      * @param isQuantityRequired Whether the asset requires a quantity.
      * @param quantityHint The hint to display for the quantity.
      * @param quantityDecimals The number of decimals to format the quantity to.
-     * @param has What properties are editable for the asset.
+     * @param show The controls for which asset properties should be shown.
      * @param constructor The constructor function to create a new asset.
      */
     public constructor(
@@ -39,7 +39,7 @@ export class AssetInfo {
         public readonly isQuantityRequired: boolean,
         public readonly quantityHint: string,
         private readonly quantityDecimals: number,
-        public readonly has: EditableProperties,
+        public readonly show: Properties,
         private readonly constructor?: IConstructor,
     ) {
     }

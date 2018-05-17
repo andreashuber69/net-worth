@@ -21,7 +21,7 @@ import { AssetEditorData } from "./AssetEditorData";
 import { AssetInfo } from "./AssetInfo";
 import { AssetProperties } from "./AssetProperties";
 import { ComponentBase } from "./ComponentBase";
-import { EditableProperties } from "./EditableProperties";
+import { Properties } from "./Properties";
 import { WeightInfo } from "./WeightInfo";
 
 // tslint:disable-next-line:no-unsafe-any
@@ -33,11 +33,10 @@ export default class AssetEditor extends ComponentBase<Model> {
     public readonly infos = [
         new AssetInfo(
             "Bitcoin Wallet", AssetEditor.cryptoDescriptionHint, AssetEditor.cryptoLocationHint, false,
-            AssetEditor.cryptoQuantityHint, 8,
-            new EditableProperties(true, true, true, false, false, false, true), BtcWallet),
+            AssetEditor.cryptoQuantityHint, 8, new Properties(true, true, true, false, false, false, true), BtcWallet),
         new AssetInfo(
-            "Silver", AssetEditor.pmDescriptionHint, AssetEditor.pmLocationHint, true, AssetEditor.pmQuantityHint,
-            0, new EditableProperties(true, true, false, true, true, true, true), SilverAsset),
+            "Silver", AssetEditor.pmDescriptionHint, AssetEditor.pmLocationHint, true,
+            AssetEditor.pmQuantityHint, 0, new Properties(true, true, false, true, true, true, true), SilverAsset),
     ];
 
     /** Provides the list of the possible weight units */
@@ -164,7 +163,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     private static readonly pmLocationHint = "The location, e.g. 'Safe', 'Safety Deposit Box'.";
     private static readonly pmQuantityHint = "The number of items.";
     private static readonly noInfo = new AssetInfo(
-        "", "", "", false, "", 0, new EditableProperties(false, false, false, false, false, false, false));
+        "", "", "", false, "", 0, new Properties(false, false, false, false, false, false, false));
 
     private static * getWeightUnits() {
         for (const weightUnitProperty in WeightUnit) {
