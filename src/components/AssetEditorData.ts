@@ -10,8 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWallet } from "../model/CryptoWallet";
-import { IPreciousMetalAsset } from "../model/PreciousMetalAsset";
+import { AssetInterfaces } from "../model/AssetInterfaces";
 import { WeightInfo } from "./WeightInfo";
 
 /** Represents the data being edited in the asset editor. */
@@ -25,7 +24,7 @@ export class AssetEditorData {
     public quantity  = "";
 
     /** @internal */
-    public constructor(weightUnits: WeightInfo[], asset?: ICryptoWallet | IPreciousMetalAsset) {
+    public constructor(weightUnits: WeightInfo[], asset?: AssetInterfaces) {
         if (asset) {
             this.description = asset.description;
             this.location = asset.location;

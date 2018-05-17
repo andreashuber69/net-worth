@@ -15,8 +15,10 @@ import { AssetTypes } from "../model/AssetTypes";
 import { ICryptoWalletProperties } from "../model/CryptoWallet";
 import { IPreciousMetalAssetProperties } from "../model/PreciousMetalAsset";
 
+type IAllAssetProperties = ICryptoWalletProperties & IPreciousMetalAssetProperties;
+
 interface IConstructor {
-    new (properties: ICryptoWalletProperties & IPreciousMetalAssetProperties): Asset;
+    new (properties: IAllAssetProperties): Asset;
 }
 
 /**
@@ -64,7 +66,7 @@ export class AssetInfo {
     }
 
     /** @internal */
-    public createAsset(properties: ICryptoWalletProperties & IPreciousMetalAssetProperties) {
+    public createAsset(properties: IAllAssetProperties) {
         if (!this.constructor) {
             throw new Error("No constructor specified.");
         }
