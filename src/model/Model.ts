@@ -102,16 +102,27 @@ export class Model implements IModel {
     // tslint:disable-next-line:max-line-length
     private static readonly address = "1F8i3SE7Zorf6F2rLh3Mxg4Mb8aHT2nkQf";
 
+    private static getProperties(descr: string, loc: string, weightInGrams: number, fine: number, quant: number) {
+        return {
+            address: Model.address,
+            description: descr,
+            fineness: fine,
+            location: loc,
+            quantity: quant,
+            weight: weightInGrams,
+            weightUnit: WeightUnit.Gram,
+        };
+    }
+
     private readonly bundles = [
-        new AssetBundle(new SilverAsset(this.getProperties("5 CHF, Roll of 50", "Home", 750, 0.835, 1))),
-        new AssetBundle(new SilverAsset(this.getProperties("2 CHF, Roll of 50", "Home", 500, 0.835, 2))),
-        new AssetBundle(new SilverAsset(this.getProperties("1 CHF, Roll of 50", "Home", 250, 0.835, 3))),
-        new AssetBundle(new SilverAsset(this.getProperties("0.5 CHF, Roll of 50", "Home", 125, 0.835, 4))),
-        new AssetBundle(new BtcWallet({
+        new AssetBundle(new SilverAsset(this, Model.getProperties("5 CHF, Roll of 50", "Home", 750, 0.835, 1))),
+        new AssetBundle(new SilverAsset(this, Model.getProperties("2 CHF, Roll of 50", "Home", 500, 0.835, 2))),
+        new AssetBundle(new SilverAsset(this, Model.getProperties("1 CHF, Roll of 50", "Home", 250, 0.835, 3))),
+        new AssetBundle(new SilverAsset(this, Model.getProperties("0.5 CHF, Roll of 50", "Home", 125, 0.835, 4))),
+        new AssetBundle(new BtcWallet(this, {
             address: Model.address,
             description: "Spending",
             location: "Mobile Phone",
-            parent: this,
             quantity: undefined,
         })),
     ];
@@ -122,18 +133,5 @@ export class Model implements IModel {
         this.exchangeRate = undefined;
         const request = Model.currencyMap.get(this.selectedCurrency) as IWebRequest<number>;
         this.exchangeRate = await request.execute();
-    }
-
-    private getProperties(descr: string, loc: string, weightInGrams: number, fine: number, quant: number) {
-        return {
-            address: Model.address,
-            description: descr,
-            fineness: fine,
-            location: loc,
-            parent: this,
-            quantity: quant,
-            weight: weightInGrams,
-            weightUnit: WeightUnit.Gram,
-        };
     }
 }

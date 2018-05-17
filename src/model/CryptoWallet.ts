@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IAssetProperties } from "./Asset";
+import { Asset, IAssetProperties, IModel } from "./Asset";
 import { AssetTypes } from "./AssetTypes";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 
@@ -56,6 +56,7 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
 
     /**
      * Creates a new [[CryptoWallet]] instance.
+     * @param parent The parent model to which this asset belongs.
      * @param properties The crypto wallet properties.
      * @param type The type of the crypto wallet, e.g. 'Bitcoin Wallet', 'Litecoin Wallet'
      * @param currencySymbol The crypto currency symbol, e.g. 'BTC', 'LTC'.
@@ -63,13 +64,14 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
      * @param coin The coinmarketcap.com identifier of the currency.
      */
     protected constructor(
+        parent: IModel,
         properties: ICryptoWalletProperties,
         type: AssetTypes,
         private readonly currencySymbol: string,
         quantityDecimals: number,
         coin: string,
     ) {
-        super(properties, type, quantityDecimals);
+        super(parent, properties, type, quantityDecimals);
         this.address = properties.address;
         this.quantity = properties.quantity;
         this.queryUnitValue(coin).catch((reason) => console.error(reason));

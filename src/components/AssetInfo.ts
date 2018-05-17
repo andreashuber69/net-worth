@@ -10,12 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset } from "../model/Asset";
+import { Asset, IModel } from "../model/Asset";
 import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
 import { AssetTypes } from "../model/AssetTypes";
 
 interface IConstructor {
-    new (properties: IAssetPropertiesIntersection): Asset;
+    new (parent: IModel, properties: IAssetPropertiesIntersection): Asset;
 }
 
 /**
@@ -63,11 +63,11 @@ export class AssetInfo {
     }
 
     /** @internal */
-    public createAsset(properties: IAssetPropertiesIntersection) {
+    public createAsset(parent: IModel, properties: IAssetPropertiesIntersection) {
         if (!this.constructor) {
             throw new Error("No constructor specified.");
         }
 
-        return new this.constructor(properties);
+        return new this.constructor(parent, properties);
     }
 }

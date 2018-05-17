@@ -106,7 +106,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         try {
             // tslint:disable-next-line:no-unsafe-any
             if ((this.getControl("form") as any).validate()) {
-                const newAsset = this.info.createAsset(new AssetProperties(this.model, this.data));
+                const newAsset = this.info.createAsset(this.model, new AssetProperties(this.data));
 
                 if (this.editedAsset) {
                     this.model.replaceAsset(this.editedAsset, newAsset);

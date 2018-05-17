@@ -20,9 +20,6 @@ export interface IModel {
 
 /** Defines the common properties of all assets. */
 export interface IAssetProperties {
-    /** The parent model to which this asset belongs. */
-    readonly parent: IModel;
-
     /** The asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
     readonly description: string;
 
@@ -77,16 +74,18 @@ export abstract class Asset {
 
     /**
      * Creates a new [[Asset]] instance.
+     * @param parent The parent model to which this asset belongs.
+     * @param properties The asset properties.
      * @param type The type of asset, e.g. 'Silver, 'Gold', 'Bitcoin Wallet', 'Litecoin Wallet'.
-     * @param fineness The fineness, e.g. 0.999. For a crypto currency, this is always 1.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      */
     protected constructor(
+        parent: IModel,
         properties: IAssetProperties,
         public readonly type: AssetTypes,
         public readonly quantityDecimals: number,
     ) {
-        this.parent = properties.parent;
+        this.parent = parent;
         this.description = properties.description;
         this.location = properties.location;
     }

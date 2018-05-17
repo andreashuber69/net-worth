@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { HDNode } from "bitcoinjs-lib";
+import { IModel } from "./Asset";
 import { BlockchainRequest } from "./BlockchainRequest";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 
@@ -20,10 +21,11 @@ export class BtcWallet extends CryptoWallet {
      * @description If a non-empty string is passed for [[ICryptoProperties.address]], then an attempt is made to
      * retrieve the wallet balance, which is then added to whatever is passed for [[ICryptoProperties.quantity]]. It
      * therefore usually only makes sense specify either address or quantity, not both.
+     * @param parent The parent model to which this asset belongs.
      * @param properties The crypto wallet properties.
      */
-    public constructor(properties: ICryptoWalletProperties) {
-        super(properties, "Bitcoin Wallet", "BTC", 8, "bitcoin");
+    public constructor(parent: IModel, properties: ICryptoWalletProperties) {
+        super(parent, properties, "Bitcoin Wallet", "BTC", 8, "bitcoin");
         this.queryQuantity().catch((reason) => console.error(reason));
     }
 
