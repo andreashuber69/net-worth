@@ -23,7 +23,7 @@ export class BtcWallet extends CryptoWallet {
      * @param properties The crypto wallet properties.
      */
     public constructor(properties: ICryptoWalletProperties) {
-        super(properties, "BTC", 8, "bitcoin");
+        super(properties, "Bitcoin Wallet", "BTC", 8, "bitcoin");
         this.queryQuantity().catch((reason) => console.error(reason));
     }
 

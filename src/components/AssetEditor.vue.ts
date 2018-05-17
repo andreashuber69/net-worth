@@ -137,7 +137,7 @@ export default class AssetEditor extends ComponentBase<Model> {
 
         // TODO: Very hacky way of getting the right info, refactor!
         switch (asset.type) {
-            case "BTC":
+            case "Bitcoin Wallet":
                 this.info = this.infos[0];
                 break;
             case "Silver":

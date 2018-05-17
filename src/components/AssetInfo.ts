@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset } from "../model/Asset";
+import { AssetTypes } from "../model/AssetTypes";
 import { ICryptoWalletProperties } from "../model/CryptoWallet";
 import { IPreciousMetalAssetProperties } from "../model/PreciousMetalAsset";
 
@@ -40,7 +41,7 @@ export class AssetInfo {
      * @param constructor The constructor function to create a new asset.
      */
     public constructor(
-        public readonly type: string,
+        public readonly type: "" | AssetTypes,
         public readonly hasDescription: boolean,
         public readonly descriptionHint: string,
         public readonly hasLocation: boolean,

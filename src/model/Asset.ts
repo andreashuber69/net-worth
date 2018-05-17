@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { AssetTypes } from "./AssetTypes";
 import { ICryptoWallet } from "./CryptoWallet";
 import { IPreciousMetalAsset } from "./PreciousMetalAsset";
 
@@ -77,13 +78,13 @@ export abstract class Asset {
 
     /**
      * Creates a new [[Asset]] instance.
-     * @param type The type of asset, e.g. 'Silver, 'Gold', 'BTC', 'LTC'.
+     * @param type The type of asset, e.g. 'Silver, 'Gold', 'Bitcoin Wallet', 'Litecoin Wallet'.
      * @param fineness The fineness, e.g. 0.999. For a crypto currency, this is always 1.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      */
     protected constructor(
         properties: IAssetProperties,
-        public readonly type: string,
+        public readonly type: AssetTypes,
         public readonly quantityDecimals: number,
     ) {
         this.parent = properties.parent;
