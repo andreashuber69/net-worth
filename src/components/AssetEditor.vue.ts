@@ -75,7 +75,8 @@ export default class AssetEditor extends ComponentBase<Model> {
             return "Please fill out this field.";
         }
 
-        if (!this.info.quantity.required && this.isGlobalValidation && ((ref === "address") || (ref === "quantity")) &&
+        if (!this.info.quantity.isRequired && this.isGlobalValidation &&
+            ((ref === "address") || (ref === "quantity")) &&
             ((this.data.address === "") === (this.data.quantity === ""))) {
             return "Please fill out either the Address or the Quantity.";
         }

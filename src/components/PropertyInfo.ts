@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 export class PropertyInfo {
-    public constructor(public readonly show = false, public readonly required = false, public readonly hint = "") {
+    public constructor(
+        public readonly isVisible = false, public readonly isRequired = false, public readonly hint = "") {
     }
 }
