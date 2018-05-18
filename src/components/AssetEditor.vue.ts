@@ -18,10 +18,12 @@ import { Model } from "../model/Model";
 import { SilverAsset } from "../model/SilverAsset";
 import { Weight, WeightUnit } from "../model/WeightUnit";
 import { AssetEditorData } from "./AssetEditorData";
-import { AssetInfo } from "./AssetInfo";
+import { IAssetInfo } from "./AssetInfo";
 import { AssetProperties } from "./AssetProperties";
 import { ComponentBase } from "./ComponentBase";
-import { Properties } from "./Properties";
+import { CryptoWalletInfo } from "./CryptoWalletInfo";
+import { NoAssetInfo } from "./NoAssetInfo";
+import { PreciousMetalAssetInfo } from "./PreciousMetalAssetInfo";
 import { WeightInfo } from "./WeightInfo";
 
 // tslint:disable-next-line:no-unsafe-any
@@ -30,13 +32,9 @@ import { WeightInfo } from "./WeightInfo";
 // tslint:disable-next-line:no-default-export
 export default class AssetEditor extends ComponentBase<Model> {
     /** Provides the list of the possible asset types. */
-    public readonly infos = [
-        new AssetInfo(
-            "Bitcoin Wallet", AssetEditor.cryptoDescriptionHint, AssetEditor.cryptoLocationHint, false,
-            AssetEditor.cryptoQuantityHint, 8, new Properties(true, true, true, false, false, false, true), BtcWallet),
-        new AssetInfo(
-            "Silver", AssetEditor.pmDescriptionHint, AssetEditor.pmLocationHint, true,
-            AssetEditor.pmQuantityHint, 0, new Properties(true, true, false, true, true, true, true), SilverAsset),
+    public readonly infos: IAssetInfo[] = [
+        new CryptoWalletInfo("Bitcoin Wallet", 8, BtcWallet),
+        new PreciousMetalAssetInfo("Silver", 0, SilverAsset),
     ];
 
     /** Provides the list of the possible weight units */
@@ -51,7 +49,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     /** Provides the currently selected asset type. */
-    public info = AssetEditor.noInfo;
+    public info: IAssetInfo = new NoAssetInfo();
 
     /** Provides the data currently displayed in the asset editor. */
     public data = new AssetEditorData(this.weightUnits);
@@ -77,7 +75,7 @@ export default class AssetEditor extends ComponentBase<Model> {
             return "Please fill out this field.";
         }
 
-        if (!this.info.isQuantityRequired && this.isGlobalValidation && ((ref === "address") || (ref === "quantity")) &&
+        if (!this.info.quantity.required && this.isGlobalValidation && ((ref === "address") || (ref === "quantity")) &&
             ((this.data.address === "") === (this.data.quantity === ""))) {
             return "Please fill out either the Address or the Quantity.";
         }
@@ -94,7 +92,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         // tslint:disable-next-line:no-unsafe-any
         (this.getControl("form") as any).reset();
         this.data = new AssetEditorData(this.weightUnits);
-        this.info = AssetEditor.noInfo;
+        this.info = new NoAssetInfo();
     }
 
     /**
@@ -153,18 +151,6 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly cryptoDescriptionHint =
-        "The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.";
-    private static readonly cryptoLocationHint =
-        "The location of the wallet, e.g. 'Mobile Phone', 'Hardware Wallet', 'Safety Deposit Box'.";
-    private static readonly cryptoQuantityHint = "The amount in the wallet.";
-
-    private static readonly pmDescriptionHint = "The shape of the items, e.g. 'Coins', 'Bars'.";
-    private static readonly pmLocationHint = "The location, e.g. 'Safe', 'Safety Deposit Box'.";
-    private static readonly pmQuantityHint = "The number of items.";
-    private static readonly noInfo = new AssetInfo(
-        "", "", "", false, "", 0, new Properties(false, false, false, false, false, false, false));
-
     private static * getWeightUnits() {
         for (const weightUnitProperty in WeightUnit) {
             if (Number.parseFloat(weightUnitProperty)) {
@@ -180,7 +166,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         switch (ref) {
             case "type":
                 // tslint:disable-next-line:no-unsafe-any
-                return !!(value as AssetInfo).type;
+                return !!(value as IAssetInfo).type;
             case "weightUnit":
                 // tslint:disable-next-line:no-unsafe-any
                 return !!(value as WeightInfo).abbreviation;

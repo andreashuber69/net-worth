@@ -10,4 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-export type AssetTypes = "Silver" | "Bitcoin Wallet";
+export type CryptoWalletTypes = "Bitcoin Wallet";
+export type PreciousMetalAssetTypes = "Silver";
+export type AssetTypes = CryptoWalletTypes | PreciousMetalAssetTypes;

@@ -13,37 +13,23 @@
 import { Asset, IModel } from "../model/Asset";
 import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
 import { AssetTypes } from "../model/AssetTypes";
-import { Properties } from "./Properties";
+import { PropertyInfo } from "./PropertyInfo";
 
-interface IConstructor {
+type IProperties<T> = { [K in keyof IAssetPropertiesIntersection]: T };
+
+export interface IAssetInfo extends IProperties<PropertyInfo> {
+    readonly type: "" | AssetTypes;
+    readonly quantityStep: number;
+
+    createAsset(parent: IModel, properties: IAssetPropertiesIntersection): Asset;
+}
+
+export interface IAssetConstructor {
     new (parent: IModel, properties: IAssetPropertiesIntersection): Asset;
 }
 
-/** Defines how a particular asset type is displayed in the asset editor UI. */
+/** Provides the base for all [[IAssetInfo]] implementations. */
 export class AssetInfo {
-    /**
-     * Creates a new instance of the [[AssetInfo]] class.
-     * @param type The type of the asset.
-     * @param descriptionHint The hint to display for the description.
-     * @param locationHint The hint to display for the location.
-     * @param isQuantityRequired Whether the asset requires a quantity.
-     * @param quantityHint The hint to display for the quantity.
-     * @param quantityDecimals The number of decimals to format the quantity to.
-     * @param show The controls for which asset properties should be shown.
-     * @param constructor The constructor function to create a new asset.
-     */
-    public constructor(
-        public readonly type: "" | AssetTypes,
-        public readonly descriptionHint: string,
-        public readonly locationHint: string,
-        public readonly isQuantityRequired: boolean,
-        public readonly quantityHint: string,
-        private readonly quantityDecimals: number,
-        public readonly show: Properties<boolean>,
-        private readonly constructor?: IConstructor,
-    ) {
-    }
-
     /** The smallest number the quantity of the asset can be increased or decreased by. */
     public get quantityStep() {
         return Math.pow(10, -this.quantityDecimals);
@@ -56,5 +42,14 @@ export class AssetInfo {
         }
 
         return new this.constructor(parent, properties);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /** @internal */
+    protected constructor(
+        private readonly quantityDecimals: number,
+        private readonly constructor?: IAssetConstructor,
+    ) {
     }
 }
