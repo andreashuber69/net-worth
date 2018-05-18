@@ -10,11 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
-import { IPreciousMetalAsset, IPreciousMetalAssetProperties } from "./PreciousMetalAsset";
-
-/** Defines the editable properties of all assets. */
-export type IAssetPropertiesIntersection = ICryptoWalletProperties & IPreciousMetalAssetProperties;
-
-/** @internal */
-export type IAssetUnion = ICryptoWallet | IPreciousMetalAsset;
+export class PropertyInfo {
+    public constructor(public readonly show: boolean, public readonly required: boolean, public readonly hint: string) {
+    }
+}

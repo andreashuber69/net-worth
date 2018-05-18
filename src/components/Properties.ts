@@ -12,22 +12,19 @@
 
 import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
 
-type IProperties = { [K in keyof IAssetPropertiesIntersection]: boolean };
+type IProperties<T> = { [K in keyof IAssetPropertiesIntersection]: T };
 
-/** Defines what properties are editable for a given asset type. */
-export class Properties implements IProperties {
-    public readonly description: boolean;
-    public readonly location: boolean;
-    public readonly address: boolean;
-    public readonly weight: boolean;
-    public readonly weightUnit: boolean;
-    public readonly fineness: boolean;
-    public readonly quantity: boolean;
+export class Properties<T> implements IProperties<T> {
+    public readonly description: T;
+    public readonly location: T;
+    public readonly address: T;
+    public readonly weight: T;
+    public readonly weightUnit: T;
+    public readonly fineness: T;
+    public readonly quantity: T;
 
     /** Creates a new [[Properties]] instance. */
-    public constructor(
-        description: boolean, location: boolean, address: boolean,
-        weight: boolean, weightUnit: boolean, fineness: boolean, quantity: boolean) {
+    public constructor(description: T, location: T, address: T, weight: T, weightUnit: T, fineness: T, quantity: T) {
         this.description = description;
         this.location = location;
         this.address = address;

@@ -39,7 +39,7 @@ export class AssetInfo {
         public readonly isQuantityRequired: boolean,
         public readonly quantityHint: string,
         private readonly quantityDecimals: number,
-        public readonly show: Properties,
+        public readonly show: Properties<boolean>,
         private readonly constructor?: IConstructor,
     ) {
     }

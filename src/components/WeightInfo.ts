@@ -13,7 +13,6 @@
 import { WeightUnit } from "../model/WeightUnit";
 
 export class WeightInfo {
-    public constructor(
-        public readonly abbreviation: string, public readonly unit: WeightUnit) {
+    public constructor(public readonly abbreviation: string, public readonly unit: WeightUnit) {
     }
 }
