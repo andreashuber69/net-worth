@@ -132,22 +132,9 @@ export default class AssetEditor extends ComponentBase<Model> {
     /** @internal */
     public edit(asset: Asset) {
         this.editedAsset = asset;
-
-        // TODO: Very hacky way of getting the right info, refactor!
-        switch (asset.type) {
-            case "Bitcoin Wallet":
-                this.info = this.infos[0];
-                break;
-            case "Silver":
-                this.info = this.infos[1];
-                break;
-            default:
-                throw new Error("Unknown asset type.");
-        }
-
+        this.info = this.infos.find((info) => info.type === asset.type) as IAssetInfo;
         this.data = new AssetEditorData(this.weightUnits, asset.interface);
         this.isOpen = true;
-        console.log(asset);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
