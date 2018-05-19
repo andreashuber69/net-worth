@@ -13,9 +13,8 @@
 import { Asset, IModel } from "../model/Asset";
 import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
 import { AssetTypes } from "../model/AssetTypes";
+import { IProperties } from "./IProperties";
 import { PropertyInfo } from "./PropertyInfo";
-
-type IProperties<T> = { [K in keyof IAssetPropertiesIntersection]: T };
 
 export interface IAssetInfo extends IProperties<PropertyInfo> {
     readonly type: "" | AssetTypes;
