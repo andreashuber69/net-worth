@@ -16,7 +16,7 @@ import { AssetBundle } from "../model/AssetBundle";
 import { BtcWallet } from "../model/BtcWallet";
 import { Model } from "../model/Model";
 import { SilverAsset } from "../model/SilverAsset";
-import { Weight, WeightUnit } from "../model/WeightUnit";
+import { WeightUnit, WeightUnitConverter } from "../model/WeightUnit";
 import { AssetEditorData } from "./AssetEditorData";
 import { IAssetInfo } from "./AssetInfo";
 import { AssetProperties } from "./AssetProperties";
@@ -143,7 +143,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         for (const weightUnitProperty in WeightUnit) {
             if (Number.parseFloat(weightUnitProperty)) {
                 const weightUnit = Number.parseFloat(weightUnitProperty) as WeightUnit;
-                yield new WeightInfo(Weight.abbreviate(weightUnit), weightUnit);
+                yield new WeightInfo(WeightUnitConverter.toString(weightUnit), weightUnit);
             }
         }
     }

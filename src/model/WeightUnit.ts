@@ -20,9 +20,9 @@ export enum WeightUnit {
 }
 
 /** @internal */
-export class Weight {
+export class WeightUnitConverter {
     /** @internal */
-    public static abbreviate(unit: WeightUnit) {
+    public static toString(unit: WeightUnit) {
         switch (unit) {
             case WeightUnit.Gram:
                 return "g";
@@ -36,6 +36,27 @@ export class Weight {
                 return "oz";
             default:
                 throw new Error("Unknown WeightUnit!");
+        }
+    }
+
+    public static toWeightUnit(str: string) {
+        const result = this.unitMap.get(str);
+
+        if (!result) {
+            throw new Error("Unknown WeightUnit string!");
+        }
+
+        return result;
+    }
+
+    private static readonly unitMap = new Map<string, WeightUnit>(WeightUnitConverter.getWeightUnits());
+
+    private static * getWeightUnits(): IterableIterator<[string, WeightUnit]> {
+        for (const weightUnitProperty in WeightUnit) {
+            if (Number.parseFloat(weightUnitProperty)) {
+                const weightUnit = Number.parseFloat(weightUnitProperty) as WeightUnit;
+                yield [ WeightUnitConverter.toString(weightUnit), weightUnit ];
+            }
         }
     }
 }
