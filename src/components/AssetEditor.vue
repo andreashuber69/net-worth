@@ -57,8 +57,7 @@
               <v-flex xs6 v-if="info.weightUnit.isVisible">
                 <v-select
                   label="Unit" :hint="info.weightUnit.hint" v-model="data.weightUnit" :items="weightUnits"
-                  item-text="abbreviation" :required="info.weightUnit.isRequired"
-                  ref="weightUnit" :rules="[() => validate('weightUnit')]">
+                  :required="info.weightUnit.isRequired" ref="weightUnit" :rules="[() => validate('weightUnit')]">
                 </v-select>
               </v-flex>
               <v-flex xs6 v-if="info.fineness.isVisible">

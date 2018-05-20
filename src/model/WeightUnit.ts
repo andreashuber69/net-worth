@@ -20,7 +20,7 @@ export enum WeightUnit {
 }
 
 /** @internal */
-export class WeightUnitConverter {
+export class WeightUnits {
     /** @internal */
     public static toString(unit: WeightUnit) {
         switch (unit) {
@@ -39,6 +39,7 @@ export class WeightUnitConverter {
         }
     }
 
+    /** @internal */
     public static toWeightUnit(str: string) {
         const result = this.unitMap.get(str);
 
@@ -49,13 +50,20 @@ export class WeightUnitConverter {
         return result;
     }
 
-    private static readonly unitMap = new Map<string, WeightUnit>(WeightUnitConverter.getWeightUnits());
+    /** @internal */
+    public static getAllStrings() {
+        return this.unitMap.keys();
+    }
 
-    private static * getWeightUnits(): IterableIterator<[string, WeightUnit]> {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static readonly unitMap = new Map<string, WeightUnit>(WeightUnits.getMapEntries());
+
+    private static * getMapEntries(): IterableIterator<[string, WeightUnit]> {
         for (const weightUnitProperty in WeightUnit) {
             if (Number.parseFloat(weightUnitProperty)) {
                 const weightUnit = Number.parseFloat(weightUnitProperty) as WeightUnit;
-                yield [ WeightUnitConverter.toString(weightUnit), weightUnit ];
+                yield [ WeightUnits.toString(weightUnit), weightUnit ];
             }
         }
     }

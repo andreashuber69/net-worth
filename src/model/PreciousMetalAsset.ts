@@ -13,7 +13,7 @@
 import { Asset, IAssetProperties, IModel } from "./Asset";
 import { AssetTypes } from "./AssetTypes";
 import { QuandlRequest } from "./QuandlRequest";
-import { WeightUnit, WeightUnitConverter } from "./WeightUnit";
+import { WeightUnit, WeightUnits } from "./WeightUnit";
 
 /** Defines the common editable properties of all classes that represent a precious metal assets. */
 export interface IPreciousMetalAssetProperties extends IAssetProperties {
@@ -80,7 +80,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getUnit(weight: number, unit: WeightUnit) {
-        return `${weight.toFixed(0)} ${WeightUnitConverter.toString(unit)}`;
+        return `${weight.toFixed(0)} ${WeightUnits.toString(unit)}`;
     }
 
     private readonly pureGramsPerUnit: number;

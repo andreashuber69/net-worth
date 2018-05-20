@@ -16,7 +16,7 @@ import { AssetBundle } from "../model/AssetBundle";
 import { BtcWallet } from "../model/BtcWallet";
 import { Model } from "../model/Model";
 import { SilverAsset } from "../model/SilverAsset";
-import { WeightUnit, WeightUnitConverter } from "../model/WeightUnit";
+import { WeightUnits } from "../model/WeightUnit";
 import { AssetEditorData } from "./AssetEditorData";
 import { IAssetInfo } from "./AssetInfo";
 import { AssetProperties } from "./AssetProperties";
@@ -24,7 +24,6 @@ import { ComponentBase } from "./ComponentBase";
 import { CryptoWalletInfo } from "./CryptoWalletInfo";
 import { NoAssetInfo } from "./NoAssetInfo";
 import { PreciousMetalAssetInfo } from "./PreciousMetalAssetInfo";
-import { WeightInfo } from "./WeightInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
@@ -37,8 +36,8 @@ export default class AssetEditor extends ComponentBase<Model> {
         new PreciousMetalAssetInfo("Silver", 0, SilverAsset),
     ];
 
-    /** Provides the list of the possible weight units */
-    public readonly weightUnits = Array.from(AssetEditor.getWeightUnits());
+    /** Provides the list of the possible weight units. */
+    public readonly weightUnits = Array.from(WeightUnits.getAllStrings());
 
     /** Provides a value indicating whether the asset editor is currently open. */
     public isOpen = false;
@@ -52,7 +51,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     public info: IAssetInfo = new NoAssetInfo();
 
     /** Provides the data currently displayed in the asset editor. */
-    public data = new AssetEditorData(this.weightUnits);
+    public data = new AssetEditorData();
 
     /** @internal */
     public isGlobalValidation = false;
@@ -92,7 +91,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         // TODO: Check whether the reset() call is even necessary.
         // tslint:disable-next-line:no-unsafe-any
         (this.getControl("form") as any).reset();
-        this.data = new AssetEditorData(this.weightUnits);
+        this.data = new AssetEditorData();
         this.info = new NoAssetInfo();
     }
 
@@ -133,20 +132,11 @@ export default class AssetEditor extends ComponentBase<Model> {
     public edit(asset: Asset) {
         this.editedAsset = asset;
         this.info = this.infos.find((info) => info.type === asset.type) as IAssetInfo;
-        this.data = new AssetEditorData(this.weightUnits, asset.interface);
+        this.data = new AssetEditorData(asset.interface);
         this.isOpen = true;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static * getWeightUnits() {
-        for (const weightUnitProperty in WeightUnit) {
-            if (Number.parseFloat(weightUnitProperty)) {
-                const weightUnit = Number.parseFloat(weightUnitProperty) as WeightUnit;
-                yield new WeightInfo(WeightUnitConverter.toString(weightUnit), weightUnit);
-            }
-        }
-    }
 
     private static isFilledSelect(control: Vue, ref: string) {
         const value = (control as any).value;
@@ -157,7 +147,7 @@ export default class AssetEditor extends ComponentBase<Model> {
                 return !!(value as IAssetInfo).type;
             case "weightUnit":
                 // tslint:disable-next-line:no-unsafe-any
-                return !!(value as WeightInfo).abbreviation;
+                return !!value;
             default:
                 return false;
         }

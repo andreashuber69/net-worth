@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAssetUnion } from "../model/AssetInterfaces";
-import { WeightInfo } from "./WeightInfo";
+import { WeightUnits } from "../model/WeightUnit";
 
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData {
@@ -19,19 +19,19 @@ export class AssetEditorData {
     public location = "";
     public address = "";
     public weight = "";
-    public weightUnit = new WeightInfo("", 0);
+    public weightUnit = "";
     public fineness = "";
     public quantity  = "";
 
     /** @internal */
-    public constructor(weightUnits: WeightInfo[], asset?: IAssetUnion) {
+    public constructor(asset?: IAssetUnion) {
         if (asset) {
             this.description = asset.description;
             this.location = asset.location;
 
             if (asset.propertyTag === "IPreciousMetalAsset") {
                 this.weight = asset.weight.toString();
-                this.weightUnit = weightUnits.find((info) => info.unit === asset.weightUnit) as WeightInfo;
+                this.weightUnit = WeightUnits.toString(asset.weightUnit);
                 this.fineness = asset.fineness.toString();
             } else {
                 this.address = asset.address;
