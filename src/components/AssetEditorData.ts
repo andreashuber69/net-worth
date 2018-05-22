@@ -12,9 +12,10 @@
 
 import { IAssetUnion } from "../model/AssetInterfaces";
 import { WeightUnits } from "../model/WeightUnit";
+import { IProperties } from "./IProperties";
 
 /** Represents the data being edited in the asset editor. */
-export class AssetEditorData {
+export class AssetEditorData implements IProperties<string> {
     public description = "";
     public location = "";
     public address = "";
