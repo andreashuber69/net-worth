@@ -74,6 +74,7 @@
                   ref="quantity" :rules="[() => validate('quantity')]">
                 </v-text-field>
               </v-flex>
+              <TextView v-model="data.quantity"></TextView>
             </v-layout>
           </v-container>
         </v-form>

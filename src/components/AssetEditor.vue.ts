@@ -24,9 +24,10 @@ import { ComponentBase } from "./ComponentBase";
 import { CryptoWalletInfo } from "./CryptoWalletInfo";
 import { NoAssetInfo } from "./NoAssetInfo";
 import { PreciousMetalAssetInfo } from "./PreciousMetalAssetInfo";
+import TextView from "./TextView.vue";
 
 // tslint:disable-next-line:no-unsafe-any
-@Component
+@Component({ components: { TextView } })
 /** Implements the dialog used to edit assets. */
 // tslint:disable-next-line:no-default-export
 export default class AssetEditor extends ComponentBase<Model> {
