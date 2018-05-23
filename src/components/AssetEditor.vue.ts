@@ -88,7 +88,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         return (control.$refs.input as HTMLInputElement).validationMessage || true;
     }
 
-    public validate2(propertyInfo: PropertyInfo, control: Vue) {
+    public validateTextField(propertyInfo: PropertyInfo, control: Vue) {
         if (!this.info.quantity.isRequired && this.isGlobalValidation &&
             ((propertyInfo === this.info.address) || (propertyInfo === this.info.quantity)) &&
             ((!this.data.address) === (!this.data.quantity))) {
