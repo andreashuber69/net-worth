@@ -14,7 +14,7 @@
 
 <template>
   <v-flex xs6 v-if="true">
-    <v-text-field label="Quantity" hint="The quantity" v-model="val" required type="number" min="1" step="1">
+    <v-text-field label="Quantity" hint="The quantity" v-model="checkedValue" required type="number" min="1" step="1">
     </v-text-field>
   </v-flex>
 </template>

@@ -26,7 +26,7 @@ export default class TextView extends ComponentBase<string> {
     @Prop()
     public value?: string;
 
-    public get val() {
+    public get checkedValue() {
         if (this.value === undefined) {
             throw new Error("No value set!");
         }
@@ -34,7 +34,7 @@ export default class TextView extends ComponentBase<string> {
         return this.value;
     }
 
-    public set val(value: string) {
+    public set checkedValue(value: string) {
         // tslint:disable-next-line:no-unsafe-any
         this.$emit("input", value);
     }
