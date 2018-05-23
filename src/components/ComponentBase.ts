@@ -15,6 +15,7 @@ import { Prop, Vue } from "vue-property-decorator";
 /** Provides common component functionality. */
 // tslint:disable-next-line:no-unsafe-any
 export class ComponentBase<T> extends Vue {
+    // TODO: Check whether this should be renamed to value
     @Prop()
     public modelProp?: T;
 
