@@ -35,7 +35,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     /** Provides the list of the possible asset types. */
     public readonly infos: IAssetInfo[] = [
         new CryptoWalletInfo("Bitcoin Wallet", 8, BtcWallet),
-        new PreciousMetalAssetInfo("Silver", 0, SilverAsset),
+        new PreciousMetalAssetInfo("Silver", SilverAsset),
     ];
 
     /** Provides the list of the possible weight units. */

@@ -27,6 +27,6 @@ export class NoAssetInfo extends AssetInfo implements IAssetInfo {
 
     /** @internal */
     public constructor() {
-        super(0);
+        super();
     }
 }

@@ -19,11 +19,6 @@ export interface IAssetConstructor {
 
 /** Provides the base for all [[IAssetInfo]] implementations. */
 export class AssetInfo {
-    /** The smallest number the quantity of the asset can be increased or decreased by. */
-    public get quantityStep() {
-        return Math.pow(10, -this.quantityDecimals);
-    }
-
     /** @internal */
     public createAsset(parent: IModel, properties: IAssetPropertiesIntersection) {
         if (!this.constructor) {
@@ -36,9 +31,6 @@ export class AssetInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @internal */
-    protected constructor(
-        private readonly quantityDecimals: number,
-        private readonly constructor?: IAssetConstructor,
-    ) {
+    protected constructor(private readonly constructor?: IAssetConstructor) {
     }
 }

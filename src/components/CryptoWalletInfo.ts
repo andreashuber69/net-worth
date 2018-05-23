@@ -32,7 +32,7 @@ export class CryptoWalletInfo extends AssetInfo implements IAssetInfo {
     /** @internal */
     public constructor(
         public readonly type: CryptoWalletTypes, quantityDecimals: number, constructor: IAssetConstructor) {
-        super(quantityDecimals, constructor);
+        super(constructor);
         this.quantity = new PropertyInfo(
             "Quantity", "The amount in the wallet.", true, false, 0, undefined, Math.pow(10, -quantityDecimals));
     }
