@@ -11,7 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { CryptoWalletTypes } from "../model/AssetTypes";
-import { AssetInfo, IAssetConstructor, IAssetInfo } from "./AssetInfo";
+import { AssetInfo, IAssetConstructor } from "./AssetInfo";
+import { IAssetInfo } from "./IAssetInfo";
 import { PropertyInfo } from "./PropertyInfo";
 
 /** Defines how a crypto currency wallet is displayed in the asset editor UI. */

@@ -12,16 +12,6 @@
 
 import { Asset, IModel } from "../model/Asset";
 import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
-import { AssetTypes } from "../model/AssetTypes";
-import { IProperties } from "./IProperties";
-import { PropertyInfo } from "./PropertyInfo";
-
-export interface IAssetInfo extends IProperties<PropertyInfo> {
-    readonly type: "" | AssetTypes;
-    readonly quantityStep: number;
-
-    createAsset(parent: IModel, properties: IAssetPropertiesIntersection): Asset;
-}
 
 export interface IAssetConstructor {
     new (parent: IModel, properties: IAssetPropertiesIntersection): Asset;

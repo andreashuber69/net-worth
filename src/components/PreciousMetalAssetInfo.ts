@@ -11,7 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { PreciousMetalAssetTypes } from "../model/AssetTypes";
-import { AssetInfo, IAssetConstructor, IAssetInfo } from "./AssetInfo";
+import { AssetInfo, IAssetConstructor } from "./AssetInfo";
+import { IAssetInfo } from "./IAssetInfo";
 import { PropertyInfo } from "./PropertyInfo";
 
 /** Defines how a precious metal asset is displayed in the asset editor UI. */

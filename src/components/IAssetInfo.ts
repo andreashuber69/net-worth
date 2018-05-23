@@ -10,23 +10,15 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInfo } from "./AssetInfo";
-import { IAssetInfo } from "./IAssetInfo";
+import { Asset, IModel } from "../model/Asset";
+import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
+import { AssetTypes } from "../model/AssetTypes";
+import { IProperties } from "./IProperties";
 import { PropertyInfo } from "./PropertyInfo";
 
-/** Defines how the asset editor UI looks like when the asset type has not yet been selected. */
-export class NoAssetInfo extends AssetInfo implements IAssetInfo {
-    public readonly type = "";
-    public readonly description = new PropertyInfo();
-    public readonly location = new PropertyInfo();
-    public readonly address = new PropertyInfo();
-    public readonly weight = new PropertyInfo();
-    public readonly weightUnit = new PropertyInfo();
-    public readonly fineness = new PropertyInfo();
-    public readonly quantity = new PropertyInfo();
+export interface IAssetInfo extends IProperties<PropertyInfo> {
+    readonly type: "" | AssetTypes;
+    readonly quantityStep: number;
 
-    /** @internal */
-    public constructor() {
-        super(0);
-    }
+    createAsset(parent: IModel, properties: IAssetPropertiesIntersection): Asset;
 }
