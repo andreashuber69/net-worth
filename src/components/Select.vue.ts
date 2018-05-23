@@ -20,14 +20,14 @@ import { SelectInfo } from "./SelectInfo";
 // tslint:disable-next-line:no-default-export
 export default class Select extends ComponentBase<string> {
     @Prop()
-    public propertyInfo?: SelectInfo;
+    public inputInfo?: SelectInfo;
 
     // tslint:disable-next-line:no-unsafe-any
     @Prop()
     public value?: string;
 
     @Prop()
-    public validator?: (propertyInfo: SelectInfo, control: Vue) => string | true;
+    public validator?: (inputInfo: SelectInfo, control: Vue) => string | true;
 
     public get checkedValue() {
         if (this.value === undefined) {
@@ -43,11 +43,11 @@ export default class Select extends ComponentBase<string> {
     }
 
     public get checkedInfo() {
-        if (this.propertyInfo === undefined) {
+        if (this.inputInfo === undefined) {
             throw new Error("No info set!");
         }
 
-        return this.propertyInfo;
+        return this.inputInfo;
     }
 
     public validate() {

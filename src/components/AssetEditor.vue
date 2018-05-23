@@ -29,20 +29,19 @@
                   :rules="[() => validateSelect('type')]">
                 </v-select>
               </v-flex>
-              <TextField
-                :propertyInfo="assetInfo.description" v-model="data.description" :validator="validateTextField">
+              <TextField :inputInfo="assetInfo.description" v-model="data.description" :validator="validateTextField">
               </TextField>
-              <TextField :propertyInfo="assetInfo.location" v-model="data.location" :validator="validateTextField">
+              <TextField :inputInfo="assetInfo.location" v-model="data.location" :validator="validateTextField">
               </TextField>
-              <TextField :propertyInfo="assetInfo.address" v-model="data.address" :validator="validateTextField">
+              <TextField :inputInfo="assetInfo.address" v-model="data.address" :validator="validateTextField">
               </TextField>
-              <TextField :propertyInfo="assetInfo.weight" v-model="data.weight" :validator="validateTextField">
+              <TextField :inputInfo="assetInfo.weight" v-model="data.weight" :validator="validateTextField">
               </TextField>
-              <Select :propertyInfo="assetInfo.weightUnit" v-model="data.weightUnit" :validator="validateSelect2">                
+              <Select :inputInfo="assetInfo.weightUnit" v-model="data.weightUnit" :validator="validateSelect2">                
               </Select>
-              <TextField :propertyInfo="assetInfo.fineness" v-model="data.fineness" :validator="validateTextField">
+              <TextField :inputInfo="assetInfo.fineness" v-model="data.fineness" :validator="validateTextField">
               </TextField>
-              <TextField :propertyInfo="assetInfo.quantity" v-model="data.quantity" :validator="validateTextField">
+              <TextField :inputInfo="assetInfo.quantity" v-model="data.quantity" :validator="validateTextField">
               </TextField>
             </v-layout>
           </v-container>

@@ -20,14 +20,14 @@ import { TextFieldInfo } from "./TextFieldInfo";
 // tslint:disable-next-line:no-default-export
 export default class TextField extends ComponentBase<string> {
     @Prop()
-    public propertyInfo?: TextFieldInfo;
+    public inputInfo?: TextFieldInfo;
 
     // tslint:disable-next-line:no-unsafe-any
     @Prop()
     public value?: string;
 
     @Prop()
-    public validator?: (propertyInfo: TextFieldInfo, control: Vue) => string | true;
+    public validator?: (inputInfo: TextFieldInfo, control: Vue) => string | true;
 
     public get checkedValue() {
         if (this.value === undefined) {
@@ -43,11 +43,11 @@ export default class TextField extends ComponentBase<string> {
     }
 
     public get checkedInfo() {
-        if (this.propertyInfo === undefined) {
+        if (this.inputInfo === undefined) {
             throw new Error("No info set!");
         }
 
-        return this.propertyInfo;
+        return this.inputInfo;
     }
 
     public validate() {

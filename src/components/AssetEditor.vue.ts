@@ -83,7 +83,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         return AssetEditor.getNativeValidationMessage(control);
     }
 
-    public validateSelect2(propertyInfo: SelectInfo, control: Vue) {
+    public validateSelect2(inputInfo: SelectInfo, control: Vue) {
         this.type.toString(); // TODO
 
         // TODO: This is a workaround for #4, remove as soon as the associated bug has been fixed in vuetify.
@@ -94,9 +94,9 @@ export default class AssetEditor extends ComponentBase<Model> {
         return AssetEditor.getNativeValidationMessage(control);
     }
 
-    public validateTextField(propertyInfo: TextFieldInfo, control: Vue) {
+    public validateTextField(inputInfo: TextFieldInfo, control: Vue) {
         if (!this.assetInfo.quantity.isRequired && this.isGlobalValidation &&
-            ((propertyInfo === this.assetInfo.address) || (propertyInfo === this.assetInfo.quantity)) &&
+            ((inputInfo === this.assetInfo.address) || (inputInfo === this.assetInfo.quantity)) &&
             ((!this.data.address) === (!this.data.quantity))) {
             return "Please fill out either the Address or the Quantity.";
         }
