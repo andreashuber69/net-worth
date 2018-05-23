@@ -17,18 +17,18 @@ import { PropertyInfo } from "./PropertyInfo";
 /** Defines how a precious metal asset is displayed in the asset editor UI. */
 export class PreciousMetalAssetInfo extends AssetInfo implements IAssetInfo {
     public readonly description = new PropertyInfo(
-        true, true, "The shape of the items, e.g. 'Coins', 'Bars'.");
+        "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
     public readonly location = new PropertyInfo(
-        true, false, "The location, e.g. 'Safe', 'Safety Deposit Box'.");
+        "The location, e.g. 'Safe', 'Safety Deposit Box'.", true, false);
     public readonly address = new PropertyInfo();
     public readonly weight = new PropertyInfo(
-        true, true, "The weight of a single item, expressed in Unit.");
+        "The weight of a single item, expressed in Unit.", true, true);
     public readonly weightUnit = new PropertyInfo(
-        true, true, "The unit Weight is expressed in.");
+        "The unit Weight is expressed in.", true, true);
     public readonly fineness = new PropertyInfo(
-        true, true, "The precious metal fineness.");
+        "The precious metal fineness.", true, true);
     public readonly quantity = new PropertyInfo(
-        true, true, "The number of items.");
+        "The number of items.", true, true);
 
     /** @internal */
     public constructor(

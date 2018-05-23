@@ -35,6 +35,7 @@ export default class TextView extends ComponentBase<string> {
     }
 
     public set val(value: string) {
+        // tslint:disable-next-line:no-unsafe-any
         this.$emit("input", value);
     }
 }

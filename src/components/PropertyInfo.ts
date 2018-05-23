@@ -12,6 +12,6 @@
 
 export class PropertyInfo {
     public constructor(
-        public readonly isVisible = false, public readonly isRequired = false, public readonly hint = "") {
+        public readonly hint = "", public readonly isVisible = false, public readonly isRequired = false) {
     }
 }

@@ -17,15 +17,15 @@ import { PropertyInfo } from "./PropertyInfo";
 /** Defines how a crypto currency wallet is displayed in the asset editor UI. */
 export class CryptoWalletInfo extends AssetInfo implements IAssetInfo {
     public readonly description = new PropertyInfo(
-        true, true, "The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.");
+        "The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.", true, true);
     public readonly location = new PropertyInfo(
-        true, false, "The location of the wallet, e.g. 'Mobile Phone', 'Hardware Wallet', 'Safety Deposit Box'.");
+        "The location of the wallet, e.g. 'Mobile Phone', 'Hardware Wallet', 'Safety Deposit Box'.", true, false);
     public readonly address = new PropertyInfo(
-        true, false, "The public address of the wallet (single address or xpub).");
+        "The public address of the wallet (single address or xpub).", true, false);
     public readonly weight = new PropertyInfo();
     public readonly weightUnit = new PropertyInfo();
     public readonly fineness = new PropertyInfo();
-    public readonly quantity = new PropertyInfo(true, false, "The amount in the wallet.");
+    public readonly quantity = new PropertyInfo("The amount in the wallet.", true, false);
 
     /** @internal */
     public constructor(
