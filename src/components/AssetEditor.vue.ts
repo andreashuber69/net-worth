@@ -32,15 +32,6 @@ import TextField from "./TextField.vue";
 /** Implements the dialog used to edit assets. */
 // tslint:disable-next-line:no-default-export
 export default class AssetEditor extends ComponentBase<Model> {
-    /** Provides the list containing information about all the possible asset types. */
-    public readonly assetInfos: IAssetInfo[] = [
-        new CryptoWalletInfo("Bitcoin Wallet", 8, BtcWallet),
-        new PreciousMetalAssetInfo("Silver", SilverAsset),
-    ];
-
-    /** Provides the list of the possible weight units. */
-    public readonly weightUnits = Array.from(WeightUnits.getAllStrings());
-
     /** Provides a value indicating whether the asset editor is currently open. */
     public isOpen = false;
 
@@ -49,8 +40,17 @@ export default class AssetEditor extends ComponentBase<Model> {
         return this.editedAsset ? "Edit Asset" : "New Asset";
     }
 
-    /** Provides information abot the currently selected asset type. */
+    /** Provides the list containing information about all the possible asset types. */
+    public readonly assetInfos: IAssetInfo[] = [
+        new CryptoWalletInfo("Bitcoin Wallet", 8, BtcWallet),
+        new PreciousMetalAssetInfo("Silver", SilverAsset),
+    ];
+
+    /** Provides information about the currently selected asset type. */
     public assetInfo: IAssetInfo = new NoAssetInfo();
+
+    /** Provides the list of the possible weight units. */
+    public readonly weightUnits = Array.from(WeightUnits.getAllStrings());
 
     /** Provides the data currently displayed in the asset editor. */
     public data = new AssetEditorData();
