@@ -13,27 +13,27 @@
 import { CryptoWalletTypes } from "../model/AssetTypes";
 import { AssetInfo, IAssetConstructor } from "./AssetInfo";
 import { IAssetInfo } from "./IAssetInfo";
-import { PropertyInfo } from "./PropertyInfo";
+import { TextFieldInfo } from "./TextFieldInfo";
 
 /** Defines how a crypto currency wallet is displayed in the asset editor UI. */
 export class CryptoWalletInfo extends AssetInfo implements IAssetInfo {
-    public readonly description = new PropertyInfo(
+    public readonly description = new TextFieldInfo(
         "Description", "The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.", true, true);
-    public readonly location = new PropertyInfo(
+    public readonly location = new TextFieldInfo(
         "Location", "The location of the wallet, e.g. 'Mobile Phone', 'Hardware Wallet', 'Safety Deposit Box'.",
         true, false);
-    public readonly address = new PropertyInfo(
+    public readonly address = new TextFieldInfo(
         "Address", "The public address of the wallet (single address or xpub).", true, false);
-    public readonly weight = new PropertyInfo();
-    public readonly weightUnit = new PropertyInfo();
-    public readonly fineness = new PropertyInfo();
-    public readonly quantity: PropertyInfo;
+    public readonly weight = new TextFieldInfo();
+    public readonly weightUnit = new TextFieldInfo();
+    public readonly fineness = new TextFieldInfo();
+    public readonly quantity: TextFieldInfo;
 
     /** @internal */
     public constructor(
         public readonly type: CryptoWalletTypes, quantityDecimals: number, constructor: IAssetConstructor) {
         super(constructor);
-        this.quantity = new PropertyInfo(
+        this.quantity = new TextFieldInfo(
             "Quantity", "The amount in the wallet.", true, false, 0, undefined, Math.pow(10, -quantityDecimals));
     }
 }

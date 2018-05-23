@@ -13,21 +13,21 @@
 import { PreciousMetalAssetTypes } from "../model/AssetTypes";
 import { AssetInfo, IAssetConstructor } from "./AssetInfo";
 import { IAssetInfo } from "./IAssetInfo";
-import { PropertyInfo } from "./PropertyInfo";
+import { TextFieldInfo } from "./TextFieldInfo";
 
 /** Defines how a precious metal asset is displayed in the asset editor UI. */
 export class PreciousMetalAssetInfo extends AssetInfo implements IAssetInfo {
     public readonly description =
-        new PropertyInfo("Description", "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
+        new TextFieldInfo("Description", "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
     public readonly location =
-        new PropertyInfo("Location", "The location, e.g. 'Safe', 'Safety Deposit Box'.", true, false);
-    public readonly address = new PropertyInfo();
+        new TextFieldInfo("Location", "The location, e.g. 'Safe', 'Safety Deposit Box'.", true, false);
+    public readonly address = new TextFieldInfo();
     public readonly weight =
-        new PropertyInfo("Weight", "The weight of a single item, expressed in Unit.", true, true, 0, undefined, 1e-3);
-    public readonly weightUnit = new PropertyInfo("Unit", "The unit Weight is expressed in.", true, true);
+        new TextFieldInfo("Weight", "The weight of a single item, expressed in Unit.", true, true, 0, undefined, 1e-3);
+    public readonly weightUnit = new TextFieldInfo("Unit", "The unit Weight is expressed in.", true, true);
     public readonly fineness =
-        new PropertyInfo("Fineness", "The precious metal fineness.", true, true, 0.5, 1 - 1e-6, 1e-6);
-    public readonly quantity = new PropertyInfo("Quantity", "The number of items.", true, true, 0);
+        new TextFieldInfo("Fineness", "The precious metal fineness.", true, true, 0.5, 1 - 1e-6, 1e-6);
+    public readonly quantity = new TextFieldInfo("Quantity", "The number of items.", true, true, 0);
 
     /** @internal */
     public constructor(public readonly type: PreciousMetalAssetTypes, constructor: IAssetConstructor) {

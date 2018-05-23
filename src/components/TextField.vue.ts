@@ -12,7 +12,7 @@
 
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { ComponentBase } from "./ComponentBase";
-import { PropertyInfo } from "./PropertyInfo";
+import { TextFieldInfo } from "./TextFieldInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
@@ -20,14 +20,14 @@ import { PropertyInfo } from "./PropertyInfo";
 // tslint:disable-next-line:no-default-export
 export default class TextField extends ComponentBase<string> {
     @Prop()
-    public propertyInfo?: PropertyInfo;
+    public propertyInfo?: TextFieldInfo;
 
     // tslint:disable-next-line:no-unsafe-any
     @Prop()
     public value?: string;
 
     @Prop()
-    public validator?: (propertyInfo: PropertyInfo, control: Vue) => string | true;
+    public validator?: (propertyInfo: TextFieldInfo, control: Vue) => string | true;
 
     public get checkedValue() {
         if (this.value === undefined) {

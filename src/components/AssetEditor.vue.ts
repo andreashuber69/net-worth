@@ -24,8 +24,8 @@ import { CryptoWalletInfo } from "./CryptoWalletInfo";
 import { IAssetInfo } from "./IAssetInfo";
 import { NoAssetInfo } from "./NoAssetInfo";
 import { PreciousMetalAssetInfo } from "./PreciousMetalAssetInfo";
-import { PropertyInfo } from "./PropertyInfo";
 import TextField from "./TextField.vue";
+import { TextFieldInfo } from "./TextFieldInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { TextField } })
@@ -79,7 +79,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         return AssetEditor.getNativeValidationMessage(control);
     }
 
-    public validateTextField(propertyInfo: PropertyInfo, control: Vue) {
+    public validateTextField(propertyInfo: TextFieldInfo, control: Vue) {
         if (!this.assetInfo.quantity.isRequired && this.isGlobalValidation &&
             ((propertyInfo === this.assetInfo.address) || (propertyInfo === this.assetInfo.quantity)) &&
             ((!this.data.address) === (!this.data.quantity))) {

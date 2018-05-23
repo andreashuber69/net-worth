@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-export class PropertyInfo {
+export class TextFieldInfo {
     public constructor(
         public readonly label = "", public readonly hint = "",
         public readonly isVisible = false, public readonly isRequired = false,
