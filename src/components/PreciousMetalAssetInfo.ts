@@ -11,8 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { PreciousMetalAssetTypes } from "../model/AssetTypes";
+import { WeightUnits } from "../model/WeightUnit";
 import { AssetInfo, IAssetConstructor } from "./AssetInfo";
 import { IAssetInfo } from "./IAssetInfo";
+import { SelectInfo } from "./SelectInfo";
 import { TextFieldInfo } from "./TextFieldInfo";
 
 /** Defines how a precious metal asset is displayed in the asset editor UI. */
@@ -24,7 +26,8 @@ export class PreciousMetalAssetInfo extends AssetInfo implements IAssetInfo {
     public readonly address = new TextFieldInfo();
     public readonly weight =
         new TextFieldInfo("Weight", "The weight of a single item, expressed in Unit.", true, true, 0, undefined, 1e-3);
-    public readonly weightUnit = new TextFieldInfo("Unit", "The unit Weight is expressed in.", true, true);
+    public readonly weightUnit = new SelectInfo<string>(
+        "Unit", "The unit Weight is expressed in.", true, true, Array.from(WeightUnits.getAllStrings()));
     public readonly fineness =
         new TextFieldInfo("Fineness", "The precious metal fineness.", true, true, 0.5, 1 - 1e-6, 1e-6);
     public readonly quantity = new TextFieldInfo("Quantity", "The number of items.", true, true, 0);

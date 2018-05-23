@@ -13,6 +13,7 @@
 import { CryptoWalletTypes } from "../model/AssetTypes";
 import { AssetInfo, IAssetConstructor } from "./AssetInfo";
 import { IAssetInfo } from "./IAssetInfo";
+import { SelectInfo } from "./SelectInfo";
 import { TextFieldInfo } from "./TextFieldInfo";
 
 /** Defines how a crypto currency wallet is displayed in the asset editor UI. */
@@ -25,7 +26,7 @@ export class CryptoWalletInfo extends AssetInfo implements IAssetInfo {
     public readonly address = new TextFieldInfo(
         "Address", "The public address of the wallet (single address or xpub).", true, false);
     public readonly weight = new TextFieldInfo();
-    public readonly weightUnit = new TextFieldInfo();
+    public readonly weightUnit = new SelectInfo<string>();
     public readonly fineness = new TextFieldInfo();
     public readonly quantity: TextFieldInfo;
 

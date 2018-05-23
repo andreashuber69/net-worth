@@ -12,6 +12,7 @@
 
 import { AssetInfo } from "./AssetInfo";
 import { IAssetInfo } from "./IAssetInfo";
+import { SelectInfo } from "./SelectInfo";
 import { TextFieldInfo } from "./TextFieldInfo";
 
 /** Defines how the asset editor UI looks like when the asset type has not yet been selected. */
@@ -21,7 +22,7 @@ export class NoAssetInfo extends AssetInfo implements IAssetInfo {
     public readonly location = new TextFieldInfo();
     public readonly address = new TextFieldInfo();
     public readonly weight = new TextFieldInfo();
-    public readonly weightUnit = new TextFieldInfo();
+    public readonly weightUnit = new SelectInfo<string>();
     public readonly fineness = new TextFieldInfo();
     public readonly quantity = new TextFieldInfo();
 
