@@ -32,8 +32,8 @@ import TextField from "./TextField.vue";
 /** Implements the dialog used to edit assets. */
 // tslint:disable-next-line:no-default-export
 export default class AssetEditor extends ComponentBase<Model> {
-    /** Provides the list of the possible asset types. */
-    public readonly infos: IAssetInfo[] = [
+    /** Provides the list containing information about all the possible asset types. */
+    public readonly assetInfos: IAssetInfo[] = [
         new CryptoWalletInfo("Bitcoin Wallet", 8, BtcWallet),
         new PreciousMetalAssetInfo("Silver", SilverAsset),
     ];
@@ -49,8 +49,8 @@ export default class AssetEditor extends ComponentBase<Model> {
         return this.editedAsset ? "Edit Asset" : "New Asset";
     }
 
-    /** Provides the currently selected asset type. */
-    public info: IAssetInfo = new NoAssetInfo();
+    /** Provides information abot the currently selected asset type. */
+    public assetInfo: IAssetInfo = new NoAssetInfo();
 
     /** Provides the data currently displayed in the asset editor. */
     public data = new AssetEditorData();
@@ -80,8 +80,8 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     public validateTextField(propertyInfo: PropertyInfo, control: Vue) {
-        if (!this.info.quantity.isRequired && this.isGlobalValidation &&
-            ((propertyInfo === this.info.address) || (propertyInfo === this.info.quantity)) &&
+        if (!this.assetInfo.quantity.isRequired && this.isGlobalValidation &&
+            ((propertyInfo === this.assetInfo.address) || (propertyInfo === this.assetInfo.quantity)) &&
             ((!this.data.address) === (!this.data.quantity))) {
             return "Please fill out either the Address or the Quantity.";
         }
@@ -95,7 +95,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         // tslint:disable-next-line:no-unsafe-any
         (this.getControl("form") as any).reset();
         this.data = new AssetEditorData();
-        this.info = new NoAssetInfo();
+        this.assetInfo = new NoAssetInfo();
     }
 
     /**
@@ -108,7 +108,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         try {
             // tslint:disable-next-line:no-unsafe-any
             if ((this.getControl("form") as any).validate()) {
-                const newAsset = this.info.createAsset(this.model, new AssetProperties(this.data));
+                const newAsset = this.assetInfo.createAsset(this.model, new AssetProperties(this.data));
 
                 if (this.editedAsset) {
                     this.model.replaceAsset(this.editedAsset, newAsset);
@@ -134,7 +134,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     /** @internal */
     public edit(asset: Asset) {
         this.editedAsset = asset;
-        this.info = this.infos.find((info) => info.type === asset.type) as IAssetInfo;
+        this.assetInfo = this.assetInfos.find((info) => info.type === asset.type) as IAssetInfo;
         this.data = new AssetEditorData(asset.interface);
         this.isOpen = true;
     }

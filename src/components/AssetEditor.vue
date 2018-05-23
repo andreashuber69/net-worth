@@ -25,23 +25,30 @@
             <v-layout wrap>
               <v-flex xs12>
                 <v-select
-                  label="Type" v-model="info" :items="infos" required item-text="type"
+                  label="Type" v-model="assetInfo" :items="assetInfos" required item-text="type"
                   ref="type" :rules="[() => validateSelect('type')]">                  
                 </v-select>
               </v-flex>
-              <TextField :propertyInfo="info.description" v-model="data.description" :validator="validateTextField">
+              <TextField
+                :propertyInfo="assetInfo.description" v-model="data.description" :validator="validateTextField">
               </TextField>
-              <TextField :propertyInfo="info.location" v-model="data.location" :validator="validateTextField"></TextField>
-              <TextField :propertyInfo="info.address" v-model="data.address" :validator="validateTextField"></TextField>
-              <TextField :propertyInfo="info.weight" v-model="data.weight" :validator="validateTextField"></TextField>
-              <v-flex xs6 v-if="info.weightUnit.isVisible">
+              <TextField :propertyInfo="assetInfo.location" v-model="data.location" :validator="validateTextField">
+              </TextField>
+              <TextField :propertyInfo="assetInfo.address" v-model="data.address" :validator="validateTextField">
+              </TextField>
+              <TextField :propertyInfo="assetInfo.weight" v-model="data.weight" :validator="validateTextField">
+              </TextField>
+              <v-flex xs6 v-if="assetInfo.weightUnit.isVisible">
                 <v-select
-                  label="Unit" :hint="info.weightUnit.hint" v-model="data.weightUnit" :items="weightUnits"
-                  :required="info.weightUnit.isRequired" ref="weightUnit" :rules="[() => validateSelect('weightUnit')]">
+                  label="Unit" :hint="assetInfo.weightUnit.hint" v-model="data.weightUnit" :items="weightUnits"
+                  :required="assetInfo.weightUnit.isRequired" ref="weightUnit"
+                  :rules="[() => validateSelect('weightUnit')]">
                 </v-select>
               </v-flex>
-              <TextField :propertyInfo="info.fineness" v-model="data.fineness" :validator="validateTextField"></TextField>
-              <TextField :propertyInfo="info.quantity" v-model="data.quantity" :validator="validateTextField"></TextField>
+              <TextField :propertyInfo="assetInfo.fineness" v-model="data.fineness" :validator="validateTextField">
+              </TextField>
+              <TextField :propertyInfo="assetInfo.quantity" v-model="data.quantity" :validator="validateTextField">
+              </TextField>
             </v-layout>
           </v-container>
         </v-form>
