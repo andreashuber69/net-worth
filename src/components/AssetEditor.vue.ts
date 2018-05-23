@@ -24,11 +24,12 @@ import { CryptoWalletInfo } from "./CryptoWalletInfo";
 import { IAssetInfo } from "./IAssetInfo";
 import { NoAssetInfo } from "./NoAssetInfo";
 import { PreciousMetalAssetInfo } from "./PreciousMetalAssetInfo";
+import Select from "./Select.vue";
 import TextField from "./TextField.vue";
 import { TextFieldInfo } from "./TextFieldInfo";
 
 // tslint:disable-next-line:no-unsafe-any
-@Component({ components: { TextField } })
+@Component({ components: { Select, TextField } })
 /** Implements the dialog used to edit assets. */
 // tslint:disable-next-line:no-default-export
 export default class AssetEditor extends ComponentBase<Model> {
