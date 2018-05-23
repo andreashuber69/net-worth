@@ -13,8 +13,10 @@
 -->
 
 <template>
-  <v-flex xs6 v-if="true">
-    <v-text-field label="Quantity" hint="The quantity" v-model="checkedValue" required type="number" min="1" step="1">
+  <v-flex xs6 v-if="checkedInfo.isVisible">
+    <v-text-field :label="checkedInfo.label" :hint="checkedInfo.hint" v-model="checkedValue"
+      :required="checkedInfo.isRequired"
+      :type="checkedInfo.type" :min="checkedInfo.min" :max="checkedInfo.max" :step="checkedInfo.step">
     </v-text-field>
   </v-flex>
 </template>

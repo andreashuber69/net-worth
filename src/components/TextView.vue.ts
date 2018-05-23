@@ -12,16 +12,16 @@
 
 import { Component, Prop } from "vue-property-decorator";
 import { ComponentBase } from "./ComponentBase";
+import { PropertyInfo } from "./PropertyInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
-/**
- * Implements the UI for a single row of the asset list.
- * @description Most of the members split asset properties into the integral and fractional parts. This is necessary
- * so that the UI can justify the values on the decimal point.
- */
+/** Implements a text view */
 // tslint:disable-next-line:no-default-export
 export default class TextView extends ComponentBase<string> {
+    @Prop()
+    public behavior?: PropertyInfo;
+
     // tslint:disable-next-line:no-unsafe-any
     @Prop()
     public value?: string;
@@ -37,5 +37,13 @@ export default class TextView extends ComponentBase<string> {
     public set checkedValue(value: string) {
         // tslint:disable-next-line:no-unsafe-any
         this.$emit("input", value);
+    }
+
+    public get checkedInfo() {
+        if (this.behavior === undefined) {
+            throw new Error("No info set!");
+        }
+
+        return this.behavior;
     }
 }

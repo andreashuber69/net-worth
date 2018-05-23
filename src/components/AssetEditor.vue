@@ -70,11 +70,11 @@
               <v-flex xs6 v-if="info.quantity.isVisible">
                 <v-text-field
                   label="Quantity" :hint="info.quantity.hint" v-model="data.quantity"
-                  :required="info.quantity.isRequired" type="number" min="1" :step="info.quantityStep"
+                  :required="info.quantity.isRequired" type="number" :min="info.quantityStep" :step="info.quantityStep"
                   ref="quantity" :rules="[() => validate('quantity')]">
                 </v-text-field>
               </v-flex>
-              <TextView v-model="data.quantity"></TextView>
+              <TextView :behavior="info.quantity" v-model="data.quantity"></TextView>
             </v-layout>
           </v-container>
         </v-form>
