@@ -29,6 +29,14 @@ export default class Select extends ComponentBase<string> {
     @Prop()
     public validator?: (inputInfo: SelectInfo, control: Vue) => string | true;
 
+    public get checkedInfo() {
+        if (this.inputInfo === undefined) {
+            throw new Error("No info set!");
+        }
+
+        return this.inputInfo;
+    }
+
     public get checkedValue() {
         if (this.value === undefined) {
             throw new Error("No value set!");
@@ -40,14 +48,6 @@ export default class Select extends ComponentBase<string> {
     public set checkedValue(value: string) {
         // tslint:disable-next-line:no-unsafe-any
         this.$emit("input", value);
-    }
-
-    public get checkedInfo() {
-        if (this.inputInfo === undefined) {
-            throw new Error("No info set!");
-        }
-
-        return this.inputInfo;
     }
 
     public validate() {
