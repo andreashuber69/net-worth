@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IAssetProperties, IModel } from "./Asset";
-import { AssetTypes } from "./AssetTypes";
+import { CryptoWalletTypes } from "./AssetTypes";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 
 /** Defines the common editable properties of all crypto currency wallets. */
@@ -66,7 +66,7 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     protected constructor(
         parent: IModel,
         properties: ICryptoWalletProperties,
-        type: AssetTypes,
+        type: CryptoWalletTypes,
         private readonly currencySymbol: string,
         quantityDecimals: number,
         coin: string,

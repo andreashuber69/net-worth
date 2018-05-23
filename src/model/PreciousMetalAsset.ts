@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IAssetProperties, IModel } from "./Asset";
-import { AssetTypes } from "./AssetTypes";
+import { PreciousMetalAssetTypes } from "./AssetTypes";
 import { QuandlRequest } from "./QuandlRequest";
 import { WeightUnit, WeightUnits } from "./WeightUnit";
 
@@ -67,7 +67,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
      * @param quandlPath The quandl asset path.
      */
     protected constructor(
-        parent: IModel, properties: IPreciousMetalAssetProperties, type: AssetTypes, quandlPath: string) {
+        parent: IModel, properties: IPreciousMetalAssetProperties, type: PreciousMetalAssetTypes, quandlPath: string) {
         super(parent, properties, type, 0);
         this.weight = properties.weight;
         this.weightUnit = properties.weightUnit;
