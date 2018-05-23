@@ -10,11 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { SelectInfoBase } from "./SelectInfoBase";
+import { InputInfo } from "./InputInfo";
 
-export class SelectInfo<T> extends SelectInfoBase {
-    public constructor(
-        label = "", hint = "", isVisible = false, isRequired = false, items: T[] = [], itemText: keyof T | "" = "") {
-        super(label, hint, isVisible, isRequired, items, itemText);
+export class SelectInfoBase extends InputInfo {
+    protected constructor(
+        label: string, hint: string, isVisible: boolean, isRequired: boolean,
+        public readonly items: any[] = [], public readonly itemText = "") {
+        super(label, hint, isVisible, isRequired);
     }
 }
