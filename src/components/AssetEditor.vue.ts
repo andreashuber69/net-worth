@@ -62,30 +62,21 @@ export default class AssetEditor extends ComponentBase<Model> {
      * Validates the value currently displayed.
      * @param ref The ref of the control containing the value to validate.
      */
-    public validate(ref: string) {
+    public validateSelect(ref: string) {
         const control = this.getControl(ref);
 
         if (!control) {
             return true;
         }
 
+        const value = (control as any).value;
+
         // TODO: This is a workaround for #4, remove as soon as the associated bug has been fixed in vuetify.
-        // tslint:disable-next-line:no-unsafe-any
-        if (control.$vnode.tag && control.$vnode.tag.endsWith("v-select") &&
-            !AssetEditor.isFilledSelect(control, ref)) {
+        if (ref === "type" ? !(value as IAssetInfo).type : !value) {
             return "Please fill out this field.";
         }
 
-        if (!this.info.quantity.isRequired && this.isGlobalValidation &&
-            ((ref === "address") || (ref === "quantity")) &&
-            ((!this.data.address) === (!this.data.quantity))) {
-            return "Please fill out either the Address or the Quantity.";
-        }
-
-        // TODO: no-unnecessary-type-assertion is probably a false positive, see
-        // https://github.com/palantir/tslint/issues/3540
-        // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
-        return (control.$refs.input as HTMLInputElement).validationMessage || true;
+        return AssetEditor.getNativeValidationMessage(control);
     }
 
     public validateTextField(propertyInfo: PropertyInfo, control: Vue) {
@@ -95,10 +86,7 @@ export default class AssetEditor extends ComponentBase<Model> {
             return "Please fill out either the Address or the Quantity.";
         }
 
-        // TODO: no-unnecessary-type-assertion is probably a false positive, see
-        // https://github.com/palantir/tslint/issues/3540
-        // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
-        return (control.$refs.input as HTMLInputElement).validationMessage || true;
+        return AssetEditor.getNativeValidationMessage(control);
     }
 
     /** Resets all controls to their initial state. */
@@ -153,19 +141,11 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static isFilledSelect(control: Vue, ref: string) {
-        const value = (control as any).value;
-
-        switch (ref) {
-            case "type":
-                // tslint:disable-next-line:no-unsafe-any
-                return !!(value as IAssetInfo).type;
-            case "weightUnit":
-                // tslint:disable-next-line:no-unsafe-any
-                return !!value;
-            default:
-                return false;
-        }
+    private static getNativeValidationMessage(control: Vue) {
+        // TODO: no-unnecessary-type-assertion is probably a false positive, see
+        // https://github.com/palantir/tslint/issues/3540
+        // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
+        return (control.$refs.input as HTMLInputElement).validationMessage || true;
     }
 
     // tslint:disable-next-line:no-null-keyword

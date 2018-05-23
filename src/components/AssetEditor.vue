@@ -26,7 +26,7 @@
               <v-flex xs12>
                 <v-select
                   label="Type" v-model="info" :items="infos" required item-text="type"
-                  ref="type" :rules="[() => validate('type')]">                  
+                  ref="type" :rules="[() => validateSelect('type')]">                  
                 </v-select>
               </v-flex>
               <TextField :propertyInfo="info.description" v-model="data.description" :validator="validateTextField">
@@ -37,7 +37,7 @@
               <v-flex xs6 v-if="info.weightUnit.isVisible">
                 <v-select
                   label="Unit" :hint="info.weightUnit.hint" v-model="data.weightUnit" :items="weightUnits"
-                  :required="info.weightUnit.isRequired" ref="weightUnit" :rules="[() => validate('weightUnit')]">
+                  :required="info.weightUnit.isRequired" ref="weightUnit" :rules="[() => validateSelect('weightUnit')]">
                 </v-select>
               </v-flex>
               <TextField :propertyInfo="info.fineness" v-model="data.fineness" :validator="validateTextField"></TextField>
