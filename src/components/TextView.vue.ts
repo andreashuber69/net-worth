@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component, Prop } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import { ComponentBase } from "./ComponentBase";
 import { PropertyInfo } from "./PropertyInfo";
 
@@ -25,6 +25,9 @@ export default class TextView extends ComponentBase<string> {
     // tslint:disable-next-line:no-unsafe-any
     @Prop()
     public value?: string;
+
+    @Prop()
+    public validator?: (propertyInfo: PropertyInfo, control: Vue) => string | true;
 
     public get checkedValue() {
         if (this.value === undefined) {
@@ -45,5 +48,11 @@ export default class TextView extends ComponentBase<string> {
         }
 
         return this.propertyInfo;
+    }
+
+    public validate() {
+        const control = this.getControl("control");
+
+        return !this.validator || !control || this.validator(this.checkedInfo, control);
     }
 }

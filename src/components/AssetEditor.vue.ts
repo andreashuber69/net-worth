@@ -24,6 +24,7 @@ import { CryptoWalletInfo } from "./CryptoWalletInfo";
 import { IAssetInfo } from "./IAssetInfo";
 import { NoAssetInfo } from "./NoAssetInfo";
 import { PreciousMetalAssetInfo } from "./PreciousMetalAssetInfo";
+import { PropertyInfo } from "./PropertyInfo";
 import TextView from "./TextView.vue";
 
 // tslint:disable-next-line:no-unsafe-any
@@ -77,6 +78,19 @@ export default class AssetEditor extends ComponentBase<Model> {
 
         if (!this.info.quantity.isRequired && this.isGlobalValidation &&
             ((ref === "address") || (ref === "quantity")) &&
+            ((this.data.address === "") === (this.data.quantity === ""))) {
+            return "Please fill out either the Address or the Quantity.";
+        }
+
+        // TODO: no-unnecessary-type-assertion is probably a false positive, see
+        // https://github.com/palantir/tslint/issues/3540
+        // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
+        return (control.$refs.input as HTMLInputElement).validationMessage || true;
+    }
+
+    public validate2(propertyInfo: PropertyInfo, control: Vue) {
+        if (!this.info.quantity.isRequired && this.isGlobalValidation &&
+            ((propertyInfo === this.info.address) || (propertyInfo === this.info.quantity)) &&
             ((this.data.address === "") === (this.data.quantity === ""))) {
             return "Please fill out either the Address or the Quantity.";
         }
