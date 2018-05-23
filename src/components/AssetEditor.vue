@@ -23,21 +23,16 @@
         <v-form ref="form">
           <v-container grid-list-md>
             <v-layout wrap>
-              <v-flex xs12>
-                <v-select
-                  label="Type" v-model="type" :items="types" required ref="type"
-                  :rules="[() => validateSelect('type')]">
-                </v-select>
-              </v-flex>
+              <Select :inputInfo="typeInputInfo" v-model="type" :validator="validateSelect">                
+              </Select>
               <TextField :inputInfo="assetInfo.description" v-model="data.description" :validator="validateTextField">
               </TextField>
               <TextField :inputInfo="assetInfo.location" v-model="data.location" :validator="validateTextField">
               </TextField>
               <TextField :inputInfo="assetInfo.address" v-model="data.address" :validator="validateTextField">
               </TextField>
-              <TextField :inputInfo="assetInfo.weight" v-model="data.weight" :validator="validateTextField">
-              </TextField>
-              <Select :inputInfo="assetInfo.weightUnit" v-model="data.weightUnit" :validator="validateSelect2">                
+              <TextField :inputInfo="assetInfo.weight" v-model="data.weight" :validator="validateTextField"></TextField>
+              <Select :inputInfo="assetInfo.weightUnit" v-model="data.weightUnit" :validator="validateSelect">                
               </Select>
               <TextField :inputInfo="assetInfo.fineness" v-model="data.fineness" :validator="validateTextField">
               </TextField>

@@ -41,9 +41,9 @@ export default class AssetEditor extends ComponentBase<Model> {
         return this.editedAsset ? "Edit Asset" : "New Asset";
     }
 
-    /** Provides the list of all the possible asset types. */
-    public get types() {
-        return this.assetInfos.map((info) => info.type);
+    /** Provides the asset type input information. */
+    public get typeInputInfo() {
+        return  new SelectInfo("Type", "", true, true, this.assetInfos.map((info) => info.type));
     }
 
     /** Provides the currently selected asset type. */
@@ -64,26 +64,8 @@ export default class AssetEditor extends ComponentBase<Model> {
     /** @internal */
     public isGlobalValidation = false;
 
-    /**
-     * Validates the value currently displayed.
-     * @param ref The ref of the control containing the value to validate.
-     */
-    public validateSelect(ref: string) {
-        const control = this.getControl(ref);
-
-        if (!control) {
-            return true;
-        }
-
-        // TODO: This is a workaround for #4, remove as soon as the associated bug has been fixed in vuetify.
-        if (!(control as any).value) {
-            return "Please fill out this field.";
-        }
-
-        return AssetEditor.getNativeValidationMessage(control);
-    }
-
-    public validateSelect2(inputInfo: SelectInfo, control: Vue) {
+    /** Validates select input. */
+    public validateSelect(inputInfo: SelectInfo, control: Vue) {
         this.type.toString(); // TODO
 
         // TODO: This is a workaround for #4, remove as soon as the associated bug has been fixed in vuetify.
@@ -94,6 +76,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         return AssetEditor.getNativeValidationMessage(control);
     }
 
+    /** Validates text field input. */
     public validateTextField(inputInfo: TextFieldInfo, control: Vue) {
         if (!this.assetInfo.quantity.isRequired && this.isGlobalValidation &&
             ((inputInfo === this.assetInfo.address) || (inputInfo === this.assetInfo.quantity)) &&
