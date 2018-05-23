@@ -20,7 +20,7 @@ import { PropertyInfo } from "./PropertyInfo";
 // tslint:disable-next-line:no-default-export
 export default class TextView extends ComponentBase<string> {
     @Prop()
-    public behavior?: PropertyInfo;
+    public propertyInfo?: PropertyInfo;
 
     // tslint:disable-next-line:no-unsafe-any
     @Prop()
@@ -40,10 +40,10 @@ export default class TextView extends ComponentBase<string> {
     }
 
     public get checkedInfo() {
-        if (this.behavior === undefined) {
+        if (this.propertyInfo === undefined) {
             throw new Error("No info set!");
         }
 
-        return this.behavior;
+        return this.propertyInfo;
     }
 }
