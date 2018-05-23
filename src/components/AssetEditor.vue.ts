@@ -16,7 +16,6 @@ import { AssetBundle } from "../model/AssetBundle";
 import { BtcWallet } from "../model/BtcWallet";
 import { Model } from "../model/Model";
 import { SilverAsset } from "../model/SilverAsset";
-import { WeightUnits } from "../model/WeightUnit";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetProperties } from "./AssetProperties";
 import { ComponentBase } from "./ComponentBase";
@@ -25,6 +24,7 @@ import { IAssetInfo } from "./IAssetInfo";
 import { NoAssetInfo } from "./NoAssetInfo";
 import { PreciousMetalAssetInfo } from "./PreciousMetalAssetInfo";
 import Select from "./Select.vue";
+import { SelectInfoBase } from "./SelectInfoBase";
 import TextField from "./TextField.vue";
 import { TextFieldInfo } from "./TextFieldInfo";
 
@@ -41,17 +41,22 @@ export default class AssetEditor extends ComponentBase<Model> {
         return this.editedAsset ? "Edit Asset" : "New Asset";
     }
 
-    /** Provides the list containing information about all the possible asset types. */
-    public readonly assetInfos: IAssetInfo[] = [
-        new CryptoWalletInfo("Bitcoin Wallet", 8, BtcWallet),
-        new PreciousMetalAssetInfo("Silver", SilverAsset),
-    ];
+    /** Provides the list of all the possible asset types. */
+    public get types() {
+        return this.assetInfos.map((info) => info.type);
+    }
+
+    /** Provides the currently selected asset type. */
+    public get type() {
+        return this.assetInfo.type;
+    }
+
+    public set type(value: string) {
+        this.assetInfo = this.assetInfos.find((info) => info.type === value) as IAssetInfo;
+    }
 
     /** Provides information about the currently selected asset type. */
     public assetInfo: IAssetInfo = new NoAssetInfo();
-
-    /** Provides the list of the possible weight units. */
-    public readonly weightUnits = Array.from(WeightUnits.getAllStrings());
 
     /** Provides the data currently displayed in the asset editor. */
     public data = new AssetEditorData();
@@ -70,10 +75,19 @@ export default class AssetEditor extends ComponentBase<Model> {
             return true;
         }
 
-        const value = (control as any).value;
+        // TODO: This is a workaround for #4, remove as soon as the associated bug has been fixed in vuetify.
+        if (!(control as any).value) {
+            return "Please fill out this field.";
+        }
+
+        return AssetEditor.getNativeValidationMessage(control);
+    }
+
+    public validateSelect2(propertyInfo: SelectInfoBase, control: Vue) {
+        this.type.toString(); // TODO
 
         // TODO: This is a workaround for #4, remove as soon as the associated bug has been fixed in vuetify.
-        if (ref === "type" ? !(value as IAssetInfo).type : !value) {
+        if (!(control as any).value) {
             return "Please fill out this field.";
         }
 
@@ -148,6 +162,11 @@ export default class AssetEditor extends ComponentBase<Model> {
         // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
         return (control.$refs.input as HTMLInputElement).validationMessage || true;
     }
+
+    private readonly assetInfos: IAssetInfo[] = [
+        new CryptoWalletInfo("Bitcoin Wallet", 8, BtcWallet),
+        new PreciousMetalAssetInfo("Silver", SilverAsset),
+    ];
 
     // tslint:disable-next-line:no-null-keyword
     private editedAsset: Asset | null = null;

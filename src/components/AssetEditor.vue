@@ -25,8 +25,8 @@
             <v-layout wrap>
               <v-flex xs12>
                 <v-select
-                  label="Type" v-model="assetInfo" :items="assetInfos" required item-text="type"
-                  ref="type" :rules="[() => validateSelect('type')]">                  
+                  label="Type" v-model="type" :items="types" required ref="type"
+                  :rules="[() => validateSelect('type')]">
                 </v-select>
               </v-flex>
               <TextField
@@ -38,13 +38,8 @@
               </TextField>
               <TextField :propertyInfo="assetInfo.weight" v-model="data.weight" :validator="validateTextField">
               </TextField>
-              <v-flex xs6 v-if="assetInfo.weightUnit.isVisible">
-                <v-select
-                  label="Unit" :hint="assetInfo.weightUnit.hint" v-model="data.weightUnit" :items="weightUnits"
-                  :required="assetInfo.weightUnit.isRequired" ref="weightUnit"
-                  :rules="[() => validateSelect('weightUnit')]">
-                </v-select>
-              </v-flex>
+              <Select :propertyInfo="assetInfo.weightUnit" v-model="data.weightUnit" :validator="validateSelect2">                
+              </Select>
               <TextField :propertyInfo="assetInfo.fineness" v-model="data.fineness" :validator="validateTextField">
               </TextField>
               <TextField :propertyInfo="assetInfo.quantity" v-model="data.quantity" :validator="validateTextField">
