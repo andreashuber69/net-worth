@@ -10,16 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { InputInfo } from "./InputInfo";
-
-export class TextFieldInfo extends InputInfo {
-    public constructor(
-        label = "", hint = "", isVisible = false, isRequired = false,
-        public readonly min?: number, public readonly max?: number, public step?: number) {
-        super(label, hint, isVisible, isRequired);
-    }
-
-    public get type() {
-        return ((this.min !== undefined) || (this.max !== undefined) || (this.step !== undefined)) ? "number" : "text";
+export class InputInfo {
+    protected constructor(
+        public readonly label: string, public readonly hint: string,
+        public readonly isVisible: boolean, public readonly isRequired: boolean) {
     }
 }
