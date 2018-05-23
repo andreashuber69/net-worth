@@ -13,10 +13,10 @@
 import { Asset, IModel } from "../model/Asset";
 import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
 import { AssetTypes } from "../model/AssetTypes";
+import { InputInfo } from "./InputInfo";
 import { IProperties } from "./IProperties";
-import { TextFieldInfo } from "./TextFieldInfo";
 
-export interface IAssetInfo extends IProperties<TextFieldInfo> {
+export interface IAssetInfo extends IProperties<InputInfo> {
     readonly type: "" | AssetTypes;
 
     createAsset(parent: IModel, properties: IAssetPropertiesIntersection): Asset;
