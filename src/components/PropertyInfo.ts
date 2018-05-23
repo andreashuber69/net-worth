@@ -12,6 +12,12 @@
 
 export class PropertyInfo {
     public constructor(
-        public readonly hint = "", public readonly isVisible = false, public readonly isRequired = false) {
+        public readonly label = "", public readonly hint = "",
+        public readonly isVisible = false, public readonly isRequired = false,
+        public readonly min?: number, public readonly max?: number, public step?: number) {
+    }
+
+    public get type() {
+        return ((this.min !== undefined) || (this.max !== undefined) || (this.step !== undefined)) ? "number" : "text";
     }
 }
