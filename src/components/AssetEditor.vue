@@ -29,19 +29,19 @@
                   ref="type" :rules="[() => validate('type')]">                  
                 </v-select>
               </v-flex>
-              <TextView :propertyInfo="info.description" v-model="data.description" :validator="validateTextField">
-              </TextView>
-              <TextView :propertyInfo="info.location" v-model="data.location" :validator="validateTextField"></TextView>
-              <TextView :propertyInfo="info.address" v-model="data.address" :validator="validateTextField"></TextView>
-              <TextView :propertyInfo="info.weight" v-model="data.weight" :validator="validateTextField"></TextView>
+              <TextField :propertyInfo="info.description" v-model="data.description" :validator="validateTextField">
+              </TextField>
+              <TextField :propertyInfo="info.location" v-model="data.location" :validator="validateTextField"></TextField>
+              <TextField :propertyInfo="info.address" v-model="data.address" :validator="validateTextField"></TextField>
+              <TextField :propertyInfo="info.weight" v-model="data.weight" :validator="validateTextField"></TextField>
               <v-flex xs6 v-if="info.weightUnit.isVisible">
                 <v-select
                   label="Unit" :hint="info.weightUnit.hint" v-model="data.weightUnit" :items="weightUnits"
                   :required="info.weightUnit.isRequired" ref="weightUnit" :rules="[() => validate('weightUnit')]">
                 </v-select>
               </v-flex>
-              <TextView :propertyInfo="info.fineness" v-model="data.fineness" :validator="validateTextField"></TextView>
-              <TextView :propertyInfo="info.quantity" v-model="data.quantity" :validator="validateTextField"></TextView>
+              <TextField :propertyInfo="info.fineness" v-model="data.fineness" :validator="validateTextField"></TextField>
+              <TextField :propertyInfo="info.quantity" v-model="data.quantity" :validator="validateTextField"></TextField>
             </v-layout>
           </v-container>
         </v-form>

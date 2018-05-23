@@ -22,7 +22,7 @@
   </v-flex>
 </template>
 
-<script src="./TextView.vue.ts" lang="ts">
+<script src="./TextField.vue.ts" lang="ts">
 </script>
 
 <style scoped>

@@ -18,7 +18,7 @@ import { PropertyInfo } from "./PropertyInfo";
 @Component
 /** Implements a text view */
 // tslint:disable-next-line:no-default-export
-export default class TextView extends ComponentBase<string> {
+export default class TextField extends ComponentBase<string> {
     @Prop()
     public propertyInfo?: PropertyInfo;
 
