@@ -26,7 +26,7 @@ export class PreciousMetalAssetInfo extends AssetInfo implements IAssetInfo {
     public readonly address = new TextFieldInfo();
     public readonly weight =
         new TextFieldInfo("Weight", "The weight of a single item, expressed in Unit.", true, true, 0, undefined, 1e-3);
-    public readonly weightUnit = new SelectInfo<string>(
+    public readonly weightUnit = new SelectInfo(
         "Unit", "The unit Weight is expressed in.", true, true, Array.from(WeightUnits.getAllStrings()));
     public readonly fineness =
         new TextFieldInfo("Fineness", "The precious metal fineness.", true, true, 0.5, 1 - 1e-6, 1e-6);

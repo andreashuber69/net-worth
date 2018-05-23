@@ -12,7 +12,7 @@
 
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { ComponentBase } from "./ComponentBase";
-import { SelectInfoBase } from "./SelectInfoBase";
+import { SelectInfo } from "./SelectInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
@@ -20,14 +20,14 @@ import { SelectInfoBase } from "./SelectInfoBase";
 // tslint:disable-next-line:no-default-export
 export default class Select extends ComponentBase<string> {
     @Prop()
-    public propertyInfo?: SelectInfoBase;
+    public propertyInfo?: SelectInfo;
 
     // tslint:disable-next-line:no-unsafe-any
     @Prop()
     public value?: string;
 
     @Prop()
-    public validator?: (propertyInfo: SelectInfoBase, control: Vue) => string | true;
+    public validator?: (propertyInfo: SelectInfo, control: Vue) => string | true;
 
     public get checkedValue() {
         if (this.value === undefined) {

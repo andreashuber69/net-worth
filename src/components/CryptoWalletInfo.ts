@@ -26,7 +26,7 @@ export class CryptoWalletInfo extends AssetInfo implements IAssetInfo {
     public readonly address = new TextFieldInfo(
         "Address", "The public address of the wallet (single address or xpub).", true, false);
     public readonly weight = new TextFieldInfo();
-    public readonly weightUnit = new SelectInfo<string>();
+    public readonly weightUnit = new SelectInfo();
     public readonly fineness = new TextFieldInfo();
     public readonly quantity: TextFieldInfo;
 

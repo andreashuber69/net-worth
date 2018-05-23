@@ -22,7 +22,7 @@ export class NoAssetInfo extends AssetInfo implements IAssetInfo {
     public readonly location = new TextFieldInfo();
     public readonly address = new TextFieldInfo();
     public readonly weight = new TextFieldInfo();
-    public readonly weightUnit = new SelectInfo<string>();
+    public readonly weightUnit = new SelectInfo();
     public readonly fineness = new TextFieldInfo();
     public readonly quantity = new TextFieldInfo();
 

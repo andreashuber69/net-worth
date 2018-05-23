@@ -24,7 +24,7 @@ import { IAssetInfo } from "./IAssetInfo";
 import { NoAssetInfo } from "./NoAssetInfo";
 import { PreciousMetalAssetInfo } from "./PreciousMetalAssetInfo";
 import Select from "./Select.vue";
-import { SelectInfoBase } from "./SelectInfoBase";
+import { SelectInfo } from "./SelectInfo";
 import TextField from "./TextField.vue";
 import { TextFieldInfo } from "./TextFieldInfo";
 
@@ -83,7 +83,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         return AssetEditor.getNativeValidationMessage(control);
     }
 
-    public validateSelect2(propertyInfo: SelectInfoBase, control: Vue) {
+    public validateSelect2(propertyInfo: SelectInfo, control: Vue) {
         this.type.toString(); // TODO
 
         // TODO: This is a workaround for #4, remove as soon as the associated bug has been fixed in vuetify.
