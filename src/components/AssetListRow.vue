@@ -15,9 +15,9 @@
 <template>
   <tr>
     <td>{{ checkedValue.type }}</td>
-    <td class="hidden-sm-and-down">{{ checkedValue.description }}</td>
+    <td>{{ checkedValue.description }}</td>
     <td class="hidden-md-and-down" :title="checkedValue.locationHint">{{ checkedValue.location }}</td>
-    <td class="hidden-sm-and-down">{{ checkedValue.unit }}</td>
+    <td>{{ checkedValue.unit }}</td>
     <td class="hidden-md-and-down text-xs-right pr-0">{{ finenessInteger }}</td>
     <td class="hidden-md-and-down text-xs-left pl-0">{{ finenessFraction }}</td>
     <td class="text-xs-right pr-0">{{ unitValueInteger }}</td>
