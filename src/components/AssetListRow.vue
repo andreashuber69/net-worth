@@ -15,15 +15,15 @@
 <template>
   <tr>
     <td>{{ checkedValue.type }}</td>
-    <td>{{ checkedValue.description }}</td>
+    <td class="hidden-xs-only">{{ checkedValue.description }}</td>
     <td class="hidden-md-and-down" :title="checkedValue.locationHint">{{ checkedValue.location }}</td>
-    <td>{{ checkedValue.unit }}</td>
+    <td class="hidden-sm-and-down">{{ checkedValue.unit }}</td>
     <td class="hidden-md-and-down text-xs-right pr-0">{{ finenessInteger }}</td>
     <td class="hidden-md-and-down text-xs-left pl-0">{{ finenessFraction }}</td>
     <td class="hidden-sm-and-down text-xs-right pr-0">{{ unitValueInteger }}</td>
     <td class="hidden-sm-and-down text-xs-left pl-0">{{ unitValueFraction }}</td>
-    <td class="text-xs-right pr-0">{{ quantityInteger }}</td>
-    <td class="text-xs-left pl-0">{{ quantityFraction }}</td>
+    <td class="hidden-sm-and-down text-xs-right pr-0">{{ quantityInteger }}</td>
+    <td class="hidden-sm-and-down text-xs-left pl-0">{{ quantityFraction }}</td>
     <td class="text-xs-right pr-0 total">{{ totalValueInteger }}</td>
     <td class="text-xs-left pl-0 total">{{ totalValueFraction }}</td>
     <td class="justify-center layout px-0">

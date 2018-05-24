@@ -18,12 +18,12 @@
     <v-data-table :items="checkedValue.assets" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
         <th class="text-xs-left">Type</th>
-        <th class="text-xs-left">Description</th>
+        <th class="hidden-xs-only text-xs-left">Description</th>
         <th class="hidden-md-and-down text-xs-left">Location</th>
-        <th class="text-xs-left">Unit</th>
+        <th class="hidden-sm-and-down text-xs-left">Unit</th>
         <th colspan="2" class="hidden-md-and-down">Fineness</th>
         <th colspan="2" class="hidden-sm-and-down">Unit Value<br>({{ checkedValue.selectedCurrency }})</th>
-        <th colspan="2">Quantity</th>
+        <th colspan="2" class="hidden-sm-and-down">Quantity</th>
         <th colspan="2" class="total">Total Value<br>({{ checkedValue.selectedCurrency }})</th>
         <th>Actions</th>
       </template>
@@ -32,12 +32,12 @@
       </template>
       <template slot="footer">
         <td class="total">Grand Total</td>
-        <td></td>
+        <td class="hidden-xs-only"></td>
         <td class="hidden-md-and-down"></td>
-        <td></td>
+        <td class="hidden-sm-and-down"></td>
         <td colspan="2" class="hidden-md-and-down"></td>
         <td colspan="2" class="hidden-sm-and-down"></td>
-        <td colspan="2"></td>
+        <td colspan="2" class="hidden-sm-and-down"></td>
         <td class="text-xs-right pr-0 total">{{ totalValueInteger }}</td>
         <td class="text-xs-left pl-0 total">{{ totalValueFraction }}</td>
         <td></td>
