@@ -16,14 +16,14 @@ import { AssetBundle } from "../model/AssetBundle";
 import { Model } from "../model/Model";
 import AssetEditor from "./AssetEditor.vue";
 import AssetListRow from "./AssetListRow.vue";
-import { ComponentBase2 } from "./ComponentBase2";
+import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { AssetListRow, AssetEditor } })
 /** Implements the asset list UI. */
 // tslint:disable-next-line:no-default-export
-export default class AssetList extends ComponentBase2<Model> {
+export default class AssetList extends ComponentBase<Model> {
     public get totalValueInteger() {
         return Format.integer(this.totalValue, 2);
     }

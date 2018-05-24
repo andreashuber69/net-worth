@@ -14,7 +14,7 @@ import { Prop, Vue } from "vue-property-decorator";
 
 /** Provides common component functionality. */
 // tslint:disable-next-line:no-unsafe-any
-export class ComponentBase2<T> extends Vue {
+export class ComponentBase<T> extends Vue {
     @Prop()
     // value should be declared as having the type T but doing so triggers the following issue, if T happens to be
     // e.g. string: https://github.com/kaorun343/vue-property-decorator/issues/69

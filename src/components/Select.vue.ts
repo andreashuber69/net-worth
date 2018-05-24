@@ -11,14 +11,14 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { ComponentBase2 } from "./ComponentBase2";
+import { ComponentBase } from "./ComponentBase";
 import { SelectInfo } from "./SelectInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
 /** Provides a select control that simplifies common functionality like e.g. validation. */
 // tslint:disable-next-line:no-default-export
-export default class Select extends ComponentBase2<string> {
+export default class Select extends ComponentBase<string> {
     @Prop()
     public inputInfo?: SelectInfo;
 

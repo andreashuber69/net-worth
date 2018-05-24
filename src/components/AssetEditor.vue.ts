@@ -18,7 +18,7 @@ import { Model } from "../model/Model";
 import { SilverAsset } from "../model/SilverAsset";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetProperties } from "./AssetProperties";
-import { ComponentBase2 } from "./ComponentBase2";
+import { ComponentBase } from "./ComponentBase";
 import { CryptoWalletInfo } from "./CryptoWalletInfo";
 import { IAssetInfo } from "./IAssetInfo";
 import { NoAssetInfo } from "./NoAssetInfo";
@@ -32,7 +32,7 @@ import { TextFieldInfo } from "./TextFieldInfo";
 @Component({ components: { Select, TextField } })
 /** Implements the dialog used to edit assets. */
 // tslint:disable-next-line:no-default-export
-export default class AssetEditor extends ComponentBase2<Model> {
+export default class AssetEditor extends ComponentBase<Model> {
     /** Provides a value indicating whether the asset editor is currently open. */
     public isOpen = false;
 

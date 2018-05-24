@@ -12,7 +12,7 @@
 
 import { Component } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
-import { ComponentBase2 } from "./ComponentBase2";
+import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
 // tslint:disable-next-line:no-unsafe-any
@@ -23,7 +23,7 @@ import { Format } from "./Format";
  * so that the UI can justify the values on the decimal point.
  */
 // tslint:disable-next-line:no-default-export
-export default class AssetListRow extends ComponentBase2<Asset> {
+export default class AssetListRow extends ComponentBase<Asset> {
     public get finenessInteger() {
         return this.checkedValue.fineness === 1 ? "" : Math.trunc(this.checkedValue.fineness);
     }
