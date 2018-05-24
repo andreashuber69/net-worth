@@ -19,9 +19,9 @@
       <template slot="headers" slot-scope="props">
         <th class="text-xs-left">Type</th>
         <th class="text-xs-left hidden-sm-and-down">Description</th>
-        <th class="text-xs-left hidden-sm-and-down">Location</th>
+        <th class="text-xs-left hidden-md-and-down">Location</th>
         <th class="text-xs-left hidden-sm-and-down">Unit</th>
-        <th colspan="2" class="hidden-sm-and-down">Fineness</th>
+        <th colspan="2" class="hidden-md-and-down">Fineness</th>
         <th colspan="2">Unit Value<br>({{ checkedValue.selectedCurrency }})</th>
         <th colspan="2">Quantity</th>
         <th colspan="2" class="total">Total Value<br>({{ checkedValue.selectedCurrency }})</th>
@@ -33,9 +33,9 @@
       <template slot="footer">
         <td class="total">Grand Total</td>
         <td class="hidden-sm-and-down"></td>
+        <td class="hidden-md-and-down"></td>
         <td class="hidden-sm-and-down"></td>
-        <td class="hidden-sm-and-down"></td>
-        <td colspan="2" class="hidden-sm-and-down"></td>
+        <td colspan="2" class="hidden-md-and-down"></td>
         <td colspan="4"></td>
         <td class="text-xs-right pr-0 total">{{ totalValueInteger }}</td>
         <td class="text-xs-left pl-0 total">{{ totalValueFraction }}</td>
