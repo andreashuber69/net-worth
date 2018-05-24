@@ -16,13 +16,13 @@ import { IAllAssetProperties } from "./IAllAssetProperties";
 
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements IAllAssetProperties<string> {
-    public description = "";
-    public location = "";
-    public address = "";
-    public weight = "";
-    public weightUnit = "";
-    public fineness = "";
-    public quantity  = "";
+    public description: string;
+    public location: string;
+    public address: string;
+    public weight: string;
+    public weightUnit: string;
+    public fineness: string;
+    public quantity: string;
 
     /** @internal */
     public constructor(asset?: IAssetUnion) {
@@ -31,14 +31,26 @@ export class AssetEditorData implements IAllAssetProperties<string> {
             this.location = asset.location;
 
             if (asset.propertyTag === "IPreciousMetalAsset") {
+                this.address = "";
                 this.weight = asset.weight.toString();
                 this.weightUnit = WeightUnits.toString(asset.weightUnit);
                 this.fineness = asset.fineness.toString();
             } else {
                 this.address = asset.address;
+                this.weight = "";
+                this.weightUnit = "";
+                this.fineness = "";
             }
 
             this.quantity = asset.quantity ? asset.quantity.toString() : "";
+        } else {
+            this.description = "";
+            this.location = "";
+            this.address = "";
+            this.weight = "";
+            this.weightUnit = "";
+            this.fineness = "";
+            this.quantity  = "";
         }
     }
 }
