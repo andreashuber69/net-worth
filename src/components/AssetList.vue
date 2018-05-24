@@ -18,10 +18,10 @@
     <v-data-table :items="checkedValue.assets" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
         <th class="text-xs-left">Type</th>
-        <th class="text-xs-left">Description</th>
-        <th class="text-xs-left">Location</th>
-        <th class="text-xs-left">Unit</th>
-        <th colspan="2">Fineness</th>
+        <th class="text-xs-left hidden-sm-and-down">Description</th>
+        <th class="text-xs-left hidden-sm-and-down">Location</th>
+        <th class="text-xs-left hidden-sm-and-down">Unit</th>
+        <th colspan="2" class="hidden-sm-and-down">Fineness</th>
         <th colspan="2">Unit Value<br>({{ checkedValue.selectedCurrency }})</th>
         <th colspan="2">Quantity</th>
         <th colspan="2" class="total">Total Value<br>({{ checkedValue.selectedCurrency }})</th>
@@ -31,7 +31,12 @@
         <AssetListRow :value="props.item" v-on:edit="edit" v-on:remove="remove"></AssetListRow>
       </template>
       <template slot="footer">
-        <td colspan="10" class="total">Grand Total</td>
+        <td class="total">Grand Total</td>
+        <td class="hidden-sm-and-down"></td>
+        <td class="hidden-sm-and-down"></td>
+        <td class="hidden-sm-and-down"></td>
+        <td colspan="2" class="hidden-sm-and-down"></td>
+        <td colspan="4"></td>
         <td class="text-xs-right pr-0 total">{{ totalValueInteger }}</td>
         <td class="text-xs-left pl-0 total">{{ totalValueFraction }}</td>
       </template>
