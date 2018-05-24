@@ -14,17 +14,17 @@
 
 <template>
   <div>
-    <AssetEditor :modelProp="model" ref="editor"></AssetEditor>
-    <v-data-table :items="model.assets" hide-actions class="elevation-1">
+    <AssetEditor :modelProp="checkedValue" ref="editor"></AssetEditor>
+    <v-data-table :items="checkedValue.assets" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
         <th class="text-xs-left">Type</th>
         <th class="text-xs-left">Description</th>
         <th class="text-xs-left">Location</th>
         <th class="text-xs-left">Unit</th>
         <th colspan="2">Fineness</th>
-        <th colspan="2">Unit Value<br>({{ model.selectedCurrency }})</th>
+        <th colspan="2">Unit Value<br>({{ checkedValue.selectedCurrency }})</th>
         <th colspan="2">Quantity</th>
-        <th colspan="2" class="total">Total Value<br>({{ model.selectedCurrency }})</th>
+        <th colspan="2" class="total">Total Value<br>({{ checkedValue.selectedCurrency }})</th>
         <th>Actions</th>
       </template>
       <template slot="items" slot-scope="props">

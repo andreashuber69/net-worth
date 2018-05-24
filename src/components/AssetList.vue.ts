@@ -16,14 +16,14 @@ import { AssetBundle } from "../model/AssetBundle";
 import { Model } from "../model/Model";
 import AssetEditor from "./AssetEditor.vue";
 import AssetListRow from "./AssetListRow.vue";
-import { ComponentBase } from "./ComponentBase";
+import { ComponentBase2 } from "./ComponentBase2";
 import { Format } from "./Format";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { AssetListRow, AssetEditor } })
 /** Implements the asset list UI. */
 // tslint:disable-next-line:no-default-export
-export default class AssetList extends ComponentBase<Model> {
+export default class AssetList extends ComponentBase2<Model> {
     public get totalValueInteger() {
         return Format.integer(this.totalValue, 2);
     }
@@ -34,7 +34,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     /** @internal */
     public add(bundle: AssetBundle) {
-        this.model.addAsset(bundle);
+        this.checkedValue.addAsset(bundle);
     }
 
     /** @internal */
@@ -44,13 +44,13 @@ export default class AssetList extends ComponentBase<Model> {
 
     /** @internal */
     public remove(asset: Asset) {
-        this.model.removeAsset(asset);
+        this.checkedValue.removeAsset(asset);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private get totalValue() {
-        return this.model.assets.reduce<number | undefined>(
+        return this.checkedValue.assets.reduce<number | undefined>(
             (s, a) => s === undefined ? a.totalValue : s + (a.totalValue === undefined ? 0 : a.totalValue), undefined);
     }
 }

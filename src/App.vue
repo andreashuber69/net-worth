@@ -28,7 +28,7 @@
       </v-toolbar>
       <v-content>
         <v-container>
-          <AssetList :modelProp="model"/>
+          <AssetList :value="model"/>
         </v-container>
       </v-content>
     </v-app>
