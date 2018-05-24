@@ -23,7 +23,7 @@
         <v-form ref="form">
           <v-container grid-list-md>
             <v-layout wrap>
-              <Select :inputInfo="typeInputInfo" v-model="type" :validator="validateSelect"></Select>
+              <Select large :inputInfo="typeInputInfo" v-model="type" :validator="validateSelect"></Select>
               <TextField :inputInfo="assetInfo.description" v-model="data.description" :validator="validateTextField">
               </TextField>
               <TextField :inputInfo="assetInfo.location" v-model="data.location" :validator="validateTextField">

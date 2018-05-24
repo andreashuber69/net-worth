@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 import { ControlBase } from "./ControlBase";
 import { SelectInfo } from "./SelectInfo";
 
@@ -19,6 +19,9 @@ import { SelectInfo } from "./SelectInfo";
 /** Provides a select control that simplifies common functionality like e.g. validation. */
 // tslint:disable-next-line:no-default-export
 export default class Select extends ControlBase<SelectInfo> {
+    @Prop()
+    public large?: boolean;
+
     /**
      * @description This redundant method is only necessary because a method called from a template apparently needs to
      * be a member of the class associated with the template.
