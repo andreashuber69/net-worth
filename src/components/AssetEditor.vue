@@ -23,8 +23,7 @@
         <v-form ref="form">
           <v-container grid-list-md>
             <v-layout wrap>
-              <Select :inputInfo="typeInputInfo" v-model="type" :validator="validateSelect">                
-              </Select>
+              <Select :inputInfo="typeInputInfo" v-model="type" :validator="validateSelect"></Select>
               <TextField :inputInfo="assetInfo.description" v-model="data.description" :validator="validateTextField">
               </TextField>
               <TextField :inputInfo="assetInfo.location" v-model="data.location" :validator="validateTextField">
@@ -32,7 +31,7 @@
               <TextField :inputInfo="assetInfo.address" v-model="data.address" :validator="validateTextField">
               </TextField>
               <TextField :inputInfo="assetInfo.weight" v-model="data.weight" :validator="validateTextField"></TextField>
-              <Select :inputInfo="assetInfo.weightUnit" v-model="data.weightUnit" :validator="validateSelect">                
+              <Select :inputInfo="assetInfo.weightUnit" v-model="data.weightUnit" :validator="validateSelect">
               </Select>
               <TextField :inputInfo="assetInfo.fineness" v-model="data.fineness" :validator="validateTextField">
               </TextField>
