@@ -11,13 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { CryptoWalletTypes } from "../model/AssetTypes";
-import { AssetInfo, IAssetConstructor } from "./AssetInfo";
-import { IAssetInfo } from "./IAssetInfo";
+import { AssetEditInfo, IAssetConstructor } from "./AssetEditInfo";
+import { IAssetEditInfo } from "./IAssetEditInfo";
 import { SelectInfo } from "./SelectInfo";
 import { TextFieldInfo } from "./TextFieldInfo";
 
-/** Defines how a crypto currency wallet is displayed in the asset editor UI. */
-export class CryptoWalletInfo extends AssetInfo implements IAssetInfo {
+/** Defines how a crypto currency wallet is edited in the asset editor UI. */
+export class CryptoWalletEditInfo extends AssetEditInfo implements IAssetEditInfo {
     public readonly description = new TextFieldInfo(
         "Description", "The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.", true, true);
     public readonly location = new TextFieldInfo(

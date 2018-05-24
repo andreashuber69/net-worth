@@ -15,6 +15,6 @@ import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
 /**
  * Defines a property of type `T` for each of the properties of every asset.
  * @description This is useful to have the compiler flag all pieces of code that have to be changed when a new asset
- * type  or new a asset property is added.
+ * type or a new asset property is added.
  */
 export type IAllAssetProperties<T> = { [K in keyof IAssetPropertiesIntersection]: T };

@@ -10,13 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInfo } from "./AssetInfo";
-import { IAssetInfo } from "./IAssetInfo";
+import { AssetEditInfo } from "./AssetEditInfo";
+import { IAssetEditInfo } from "./IAssetEditInfo";
 import { SelectInfo } from "./SelectInfo";
 import { TextFieldInfo } from "./TextFieldInfo";
 
 /** Defines how the asset editor UI looks like when the asset type has not yet been selected. */
-export class NoAssetInfo extends AssetInfo implements IAssetInfo {
+export class NoAssetEditInfo extends AssetEditInfo implements IAssetEditInfo {
     public readonly type = "";
     public readonly description = new TextFieldInfo();
     public readonly location = new TextFieldInfo();

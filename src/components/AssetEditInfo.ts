@@ -12,12 +12,25 @@
 
 import { Asset, IModel } from "../model/Asset";
 import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
-import { AssetTypes } from "../model/AssetTypes";
-import { IAllAssetProperties } from "./IAllAssetProperties";
-import { InputInfo } from "./InputInfo";
 
-export interface IAssetInfo extends IAllAssetProperties<InputInfo> {
-    readonly type: "" | AssetTypes;
+export interface IAssetConstructor {
+    new (parent: IModel, properties: IAssetPropertiesIntersection): Asset;
+}
 
-    createAsset(parent: IModel, properties: IAssetPropertiesIntersection): Asset;
+/** Provides the base for all [[IAssetEditInfo]] implementations. */
+export class AssetEditInfo {
+    /** @internal */
+    public createAsset(parent: IModel, properties: IAssetPropertiesIntersection) {
+        if (!this.constructor) {
+            throw new Error("No constructor specified.");
+        }
+
+        return new this.constructor(parent, properties);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /** @internal */
+    protected constructor(private readonly constructor?: IAssetConstructor) {
+    }
 }

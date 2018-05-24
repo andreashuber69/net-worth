@@ -19,10 +19,10 @@ import { SilverAsset } from "../model/SilverAsset";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetProperties } from "./AssetProperties";
 import { ComponentBase } from "./ComponentBase";
-import { CryptoWalletInfo } from "./CryptoWalletInfo";
-import { IAssetInfo } from "./IAssetInfo";
-import { NoAssetInfo } from "./NoAssetInfo";
-import { PreciousMetalAssetInfo } from "./PreciousMetalAssetInfo";
+import { CryptoWalletEditInfo } from "./CryptoWalletEditInfo";
+import { IAssetEditInfo } from "./IAssetEditInfo";
+import { NoAssetEditInfo } from "./NoAssetEditInfo";
+import { PreciousMetalAssetEditInfo } from "./PreciousMetalAssetEditInfo";
 import Select from "./Select.vue";
 import { SelectInfo } from "./SelectInfo";
 import TextField from "./TextField.vue";
@@ -52,11 +52,11 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     public set type(value: string) {
-        this.assetInfo = this.assetInfos.find((info) => info.type === value) as IAssetInfo;
+        this.assetInfo = this.assetInfos.find((info) => info.type === value) as IAssetEditInfo;
     }
 
     /** Provides information about the currently selected asset type. */
-    public assetInfo: IAssetInfo = new NoAssetInfo();
+    public assetInfo: IAssetEditInfo = new NoAssetEditInfo();
 
     /** Provides the data currently displayed in the asset editor. */
     public data = new AssetEditorData();
@@ -92,7 +92,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         // tslint:disable-next-line:no-unsafe-any
         (this.getControl("form") as any).reset();
         this.data = new AssetEditorData();
-        this.assetInfo = new NoAssetInfo();
+        this.assetInfo = new NoAssetEditInfo();
     }
 
     /**
@@ -131,7 +131,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     /** @internal */
     public edit(asset: Asset) {
         this.editedAsset = asset;
-        this.assetInfo = this.assetInfos.find((info) => info.type === asset.type) as IAssetInfo;
+        this.assetInfo = this.assetInfos.find((info) => info.type === asset.type) as IAssetEditInfo;
         this.data = new AssetEditorData(asset.interface);
         this.isOpen = true;
     }
@@ -145,9 +145,9 @@ export default class AssetEditor extends ComponentBase<Model> {
         return (control.$refs.input as HTMLInputElement).validationMessage || true;
     }
 
-    private readonly assetInfos: IAssetInfo[] = [
-        new CryptoWalletInfo("Bitcoin Wallet", 8, BtcWallet),
-        new PreciousMetalAssetInfo("Silver", SilverAsset),
+    private readonly assetInfos: IAssetEditInfo[] = [
+        new CryptoWalletEditInfo("Bitcoin Wallet", 8, BtcWallet),
+        new PreciousMetalAssetEditInfo("Silver", SilverAsset),
     ];
 
     // tslint:disable-next-line:no-null-keyword
