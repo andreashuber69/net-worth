@@ -36,7 +36,8 @@
         <td class="hidden-md-and-down"></td>
         <td></td>
         <td colspan="2" class="hidden-md-and-down"></td>
-        <td colspan="4"></td>
+        <td colspan="2"></td>
+        <td colspan="2"></td>
         <td class="text-xs-right pr-0 total">{{ totalValueInteger }}</td>
         <td class="text-xs-left pl-0 total">{{ totalValueFraction }}</td>
         <td></td>
