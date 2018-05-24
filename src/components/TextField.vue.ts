@@ -10,32 +10,20 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { ComponentBase } from "./ComponentBase";
+import { Component } from "vue-property-decorator";
+import { ControlBase } from "./ControlBase";
 import { TextFieldInfo } from "./TextFieldInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
 /** Provides a text field control that simplifies common functionality like e.g. validation. */
 // tslint:disable-next-line:no-default-export
-export default class TextField extends ComponentBase<string> {
-    @Prop()
-    public inputInfo?: TextFieldInfo;
-
-    @Prop()
-    public validator?: (inputInfo: TextFieldInfo, control: Vue) => string | true;
-
-    public get checkedInfo() {
-        if (this.inputInfo === undefined) {
-            throw new Error("No info set!");
-        }
-
-        return this.inputInfo;
-    }
-
+export default class TextField extends ControlBase<TextFieldInfo> {
+    /**
+     * @description This redundant method is only necessary because a method called from a template apparently needs to
+     * be a member of the class associated with the template.
+     */
     public validate() {
-        const control = this.getControl("control");
-
-        return !this.validator || !control || this.validator(this.checkedInfo, control);
+        return super.validate();
     }
 }
