@@ -14,10 +14,10 @@
 
 <template>
   <tr>
-    <td>{{ model.type }}</td>
-    <td>{{ model.description }}</td>
-    <td :title="model.locationHint">{{ model.location }}</td>
-    <td>{{ model.unit }}</td>
+    <td>{{ checkedValue.type }}</td>
+    <td>{{ checkedValue.description }}</td>
+    <td :title="checkedValue.locationHint">{{ checkedValue.location }}</td>
+    <td>{{ checkedValue.unit }}</td>
     <td class="text-xs-right pr-0">{{ finenessInteger }}</td>
     <td class="text-xs-left pl-0">{{ finenessFraction }}</td>
     <td class="text-xs-right pr-0">{{ unitValueInteger }}</td>

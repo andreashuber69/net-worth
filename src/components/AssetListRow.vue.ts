@@ -12,7 +12,7 @@
 
 import { Component } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
-import { ComponentBase } from "./ComponentBase";
+import { ComponentBase2 } from "./ComponentBase2";
 import { Format } from "./Format";
 
 // tslint:disable-next-line:no-unsafe-any
@@ -23,16 +23,16 @@ import { Format } from "./Format";
  * so that the UI can justify the values on the decimal point.
  */
 // tslint:disable-next-line:no-default-export
-export default class AssetListRow extends ComponentBase<Asset> {
+export default class AssetListRow extends ComponentBase2<Asset> {
     public get finenessInteger() {
-        return this.model.fineness === 1 ? "" : Math.trunc(this.model.fineness);
+        return this.checkedValue.fineness === 1 ? "" : Math.trunc(this.checkedValue.fineness);
     }
 
     public get finenessFraction() {
-        if (this.model.fineness === 1) {
+        if (this.checkedValue.fineness === 1) {
             return "";
         } else {
-            let fraction = (this.model.fineness % 1).toFixed(6).substr(1);
+            let fraction = (this.checkedValue.fineness % 1).toFixed(6).substr(1);
 
             while (fraction.endsWith("0")) {
                 fraction = fraction.substr(0, fraction.length - 1);
@@ -43,38 +43,38 @@ export default class AssetListRow extends ComponentBase<Asset> {
     }
 
     public get unitValueInteger() {
-        return Format.integer(this.model.unitValue, 2);
+        return Format.integer(this.checkedValue.unitValue, 2);
     }
 
     public get unitValueFraction() {
-        return Format.fraction(this.model.unitValue, 2);
+        return Format.fraction(this.checkedValue.unitValue, 2);
     }
 
     public get quantityInteger() {
-        return Format.integer(this.model.quantity, this.model.quantityDecimals);
+        return Format.integer(this.checkedValue.quantity, this.checkedValue.quantityDecimals);
     }
 
     public get quantityFraction() {
-        return Format.fraction(this.model.quantity, this.model.quantityDecimals);
+        return Format.fraction(this.checkedValue.quantity, this.checkedValue.quantityDecimals);
     }
 
     public get totalValueInteger() {
-        return Format.integer(this.model.totalValue, 2);
+        return Format.integer(this.checkedValue.totalValue, 2);
     }
 
     public get totalValueFraction() {
-        return Format.fraction(this.model.totalValue, 2);
+        return Format.fraction(this.checkedValue.totalValue, 2);
     }
 
     /** Instructs the parent UI element to open the asset editor dialog with the given asset. */
     public edit() {
         // tslint:disable-next-line:no-unsafe-any
-        this.$emit("edit", this.model);
+        this.$emit("edit", this.checkedValue);
     }
 
     /** Instructs the parent UI element to remove the given asset from the list. */
     public remove() {
         // tslint:disable-next-line:no-unsafe-any
-        this.$emit("remove", this.model);
+        this.$emit("remove", this.checkedValue);
     }
 }
