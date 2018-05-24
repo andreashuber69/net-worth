@@ -14,7 +14,7 @@
 
 <template>
   <div>
-    <AssetEditor :modelProp="checkedValue" ref="editor"></AssetEditor>
+    <AssetEditor :value="checkedValue" ref="editor"></AssetEditor>
     <v-data-table :items="checkedValue.assets" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
         <th class="text-xs-left">Type</th>

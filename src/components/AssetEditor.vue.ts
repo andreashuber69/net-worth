@@ -18,7 +18,7 @@ import { Model } from "../model/Model";
 import { SilverAsset } from "../model/SilverAsset";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetProperties } from "./AssetProperties";
-import { ComponentBase } from "./ComponentBase";
+import { ComponentBase2 } from "./ComponentBase2";
 import { CryptoWalletInfo } from "./CryptoWalletInfo";
 import { IAssetInfo } from "./IAssetInfo";
 import { NoAssetInfo } from "./NoAssetInfo";
@@ -32,7 +32,7 @@ import { TextFieldInfo } from "./TextFieldInfo";
 @Component({ components: { Select, TextField } })
 /** Implements the dialog used to edit assets. */
 // tslint:disable-next-line:no-default-export
-export default class AssetEditor extends ComponentBase<Model> {
+export default class AssetEditor extends ComponentBase2<Model> {
     /** Provides a value indicating whether the asset editor is currently open. */
     public isOpen = false;
 
@@ -105,12 +105,12 @@ export default class AssetEditor extends ComponentBase<Model> {
         try {
             // tslint:disable-next-line:no-unsafe-any
             if ((this.getControl("form") as any).validate()) {
-                const newAsset = this.assetInfo.createAsset(this.model, new AssetProperties(this.data));
+                const newAsset = this.assetInfo.createAsset(this.checkedValue, new AssetProperties(this.data));
 
                 if (this.editedAsset) {
-                    this.model.replaceAsset(this.editedAsset, newAsset);
+                    this.checkedValue.replaceAsset(this.editedAsset, newAsset);
                 } else {
-                    this.model.addAsset(new AssetBundle(newAsset));
+                    this.checkedValue.addAsset(new AssetBundle(newAsset));
                 }
 
                 this.cancel();
