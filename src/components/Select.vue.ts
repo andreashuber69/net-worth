@@ -11,20 +11,16 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { ComponentBase } from "./ComponentBase";
+import { ComponentBase2 } from "./ComponentBase2";
 import { SelectInfo } from "./SelectInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
-/** Implements a text view */
+/** Provides a select control that simplifies common functionality like e.g. validation. */
 // tslint:disable-next-line:no-default-export
-export default class Select extends ComponentBase<string> {
+export default class Select extends ComponentBase2<string> {
     @Prop()
     public inputInfo?: SelectInfo;
-
-    // tslint:disable-next-line:no-unsafe-any
-    @Prop()
-    public value?: string;
 
     @Prop()
     public validator?: (inputInfo: SelectInfo, control: Vue) => string | true;
@@ -35,19 +31,6 @@ export default class Select extends ComponentBase<string> {
         }
 
         return this.inputInfo;
-    }
-
-    public get checkedValue() {
-        if (this.value === undefined) {
-            throw new Error("No value set!");
-        }
-
-        return this.value;
-    }
-
-    public set checkedValue(value: string) {
-        // tslint:disable-next-line:no-unsafe-any
-        this.$emit("input", value);
     }
 
     public validate() {

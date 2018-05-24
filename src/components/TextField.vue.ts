@@ -11,20 +11,16 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { ComponentBase } from "./ComponentBase";
+import { ComponentBase2 } from "./ComponentBase2";
 import { TextFieldInfo } from "./TextFieldInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
-/** Implements a text view */
+/** Provides a text field control that simplifies common functionality like e.g. validation. */
 // tslint:disable-next-line:no-default-export
-export default class TextField extends ComponentBase<string> {
+export default class TextField extends ComponentBase2<string> {
     @Prop()
     public inputInfo?: TextFieldInfo;
-
-    // tslint:disable-next-line:no-unsafe-any
-    @Prop()
-    public value?: string;
 
     @Prop()
     public validator?: (inputInfo: TextFieldInfo, control: Vue) => string | true;
@@ -35,19 +31,6 @@ export default class TextField extends ComponentBase<string> {
         }
 
         return this.inputInfo;
-    }
-
-    public get checkedValue() {
-        if (this.value === undefined) {
-            throw new Error("No value set!");
-        }
-
-        return this.value;
-    }
-
-    public set checkedValue(value: string) {
-        // tslint:disable-next-line:no-unsafe-any
-        this.$emit("input", value);
     }
 
     public validate() {
