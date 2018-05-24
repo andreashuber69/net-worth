@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+/** Defines the base of all classes supplying information to custom controls. */
 export class InputInfo {
     protected constructor(
         public readonly label: string, public readonly hint: string,

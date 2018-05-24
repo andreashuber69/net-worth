@@ -12,6 +12,7 @@
 
 import { InputInfo } from "./InputInfo";
 
+/** Provides information to the [[TextField]] control. */
 export class TextFieldInfo extends InputInfo {
     public constructor(
         label = "", hint = "", isVisible = false, isRequired = false,
