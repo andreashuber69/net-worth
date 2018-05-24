@@ -43,7 +43,7 @@ export class AssetProperties implements IAssetPropertiesIntersection {
     }
 
     public get quantity() {
-        return Number.parseFloat(this.data.quantity);
+        return this.data.quantity ? Number.parseFloat(this.data.quantity) : undefined;
     }
 
     public constructor(private readonly data: AssetEditorData) {

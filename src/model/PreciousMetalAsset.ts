@@ -25,8 +25,6 @@ export interface IPreciousMetalAssetProperties extends IAssetProperties {
 
     /** Provides the fineness, e.g. 0.999. */
     readonly fineness: number;
-
-    readonly quantity: number;
 }
 
 /** @internal */
@@ -72,7 +70,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
         this.weight = properties.weight;
         this.weightUnit = properties.weightUnit;
         this.fineness = properties.fineness;
-        this.quantity = properties.quantity;
+        this.quantity = properties.quantity !== undefined ? properties.quantity : Number.NaN;
         this.pureGramsPerUnit = this.weight * this.weightUnit * this.fineness;
         this.queryUnitValue(quandlPath).catch((reason) => console.error(reason));
     }
