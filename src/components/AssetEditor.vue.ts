@@ -65,9 +65,8 @@ export default class AssetEditor extends ComponentBase<Model> {
     public isGlobalValidation = false;
 
     /** Validates select input. */
+    // tslint:disable-next-line:prefer-function-over-method
     public validateSelect(inputInfo: SelectInfo, control: Vue) {
-        this.type.toString(); // TODO
-
         // TODO: This is a workaround for #4, remove as soon as the associated bug has been fixed in vuetify.
         if (!(control as any).value) {
             return "Please fill out this field.";
