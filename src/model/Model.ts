@@ -115,10 +115,10 @@ export class Model implements IModel {
     }
 
     private readonly bundles = [
-        new AssetBundle(new SilverAsset(this, Model.getProperties("5 CHF, Roll of 50", "Home", 750, 0.835, 1))),
-        new AssetBundle(new SilverAsset(this, Model.getProperties("2 CHF, Roll of 50", "Home", 500, 0.835, 2))),
-        new AssetBundle(new SilverAsset(this, Model.getProperties("1 CHF, Roll of 50", "Home", 250, 0.835, 3))),
-        new AssetBundle(new SilverAsset(this, Model.getProperties("0.5 CHF, Roll of 50", "Home", 125, 0.835, 4))),
+        new AssetBundle(new SilverAsset(this, Model.getProperties("5 CHF, Rolls of 50", "Home", 750, 0.835, 1))),
+        new AssetBundle(new SilverAsset(this, Model.getProperties("2 CHF, Rolls of 50", "Home", 500, 0.835, 2))),
+        new AssetBundle(new SilverAsset(this, Model.getProperties("1 CHF, Rolls of 50", "Home", 250, 0.835, 3))),
+        new AssetBundle(new SilverAsset(this, Model.getProperties("0.5 CHF, Rolls of 50", "Home", 125, 0.835, 4))),
         new AssetBundle(new BtcWallet(this, {
             address: Model.address,
             description: "Spending",

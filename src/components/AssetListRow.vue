@@ -24,8 +24,8 @@
     <td class="hidden-sm-and-down text-xs-left pl-0">{{ unitValueFraction }}</td>
     <td class="hidden-sm-and-down text-xs-right pr-0">{{ quantityInteger }}</td>
     <td class="hidden-sm-and-down text-xs-left pl-0">{{ quantityFraction }}</td>
-    <td class="text-xs-right pr-0 total">{{ totalValueInteger }}</td>
-    <td class="text-xs-left pl-0 total">{{ totalValueFraction }}</td>
+    <td class="total text-xs-right pr-0">{{ totalValueInteger }}</td>
+    <td class="total text-xs-left pl-0">{{ totalValueFraction }}</td>
     <td class="justify-center layout px-0">
       <v-btn icon class="mx-0" @click="edit">
         <v-icon color="teal">edit</v-icon>
