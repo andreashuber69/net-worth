@@ -26,7 +26,7 @@
           Description <v-icon small>arrow_upward</v-icon>
         </th>
         <th
-          :class="['hidden-xs-only text-xs-left column sortable', sortDirection, getActive('location')]"
+          :class="['hidden-md-and-down text-xs-left column sortable', sortDirection, getActive('location')]"
           @click="changeSort('location')">
           Location <v-icon small>arrow_upward</v-icon>
         </th>
@@ -35,7 +35,7 @@
         <th colspan="2" class="hidden-sm-and-down">Unit Value<br>({{ checkedValue.selectedCurrency }})</th>
         <th colspan="2" class="hidden-sm-and-down">Quantity</th>
         <th
-          colspan="2" :class="['total hidden-xs-only column sortable', sortDirection, getActive('totalValue')]"
+          colspan="2" :class="['total column sortable', sortDirection, getActive('totalValue')]"
           @click="changeSort('totalValue')">
           Total Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.selectedCurrency }})
         </th>
