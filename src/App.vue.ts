@@ -18,5 +18,6 @@ import { Model } from "./model/Model";
 @Component({ components: { AssetList } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
+    public isDrawerVisible = false;
     public readonly model = new Model();
 }
