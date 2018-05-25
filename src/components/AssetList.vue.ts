@@ -19,17 +19,52 @@ import AssetListRow from "./AssetListRow.vue";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
+type SortableProperties = "type" | "description" | "location" | "totalValue";
+type SortBy = "" | SortableProperties;
+
+interface IPagination {
+    sortBy: SortBy;
+    descending: boolean;
+}
+
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { AssetListRow, AssetEditor } })
 /** Implements the asset list UI. */
 // tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
+    /** Provides the information required for sorting and paginating the table. */
+    public pagination: IPagination = { sortBy: "", descending: false };
+
+    /** Provides the current sort direction. */
+    public get sortDirection() {
+        return this.pagination.descending ? "desc" : "asc";
+    }
+
     public get totalValueInteger() {
         return Format.integer(this.totalValue, 2);
     }
 
     public get totalValueFraction() {
         return Format.fraction(this.totalValue, 2);
+    }
+
+    /** Gets the active status for the given property. */
+    public getActive(property: SortableProperties) {
+        return this.pagination.sortBy === property ? "active" : "";
+    }
+
+    /** Changes the sorting for the given property. */
+    public changeSort(property: SortableProperties) {
+        if (this.pagination.sortBy === property) {
+            if (this.pagination.descending) {
+                this.pagination.sortBy = "";
+            }
+
+            this.pagination.descending = !this.pagination.descending;
+        } else {
+            this.pagination.sortBy = property;
+            this.pagination.descending = false;
+        }
     }
 
     /** @internal */

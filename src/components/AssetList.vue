@@ -15,9 +15,9 @@
 <template>
   <div>
     <AssetEditor :value="checkedValue" ref="editor"></AssetEditor>
-    <v-data-table :items="checkedValue.assets" hide-actions class="elevation-1">
+    <v-data-table :items="checkedValue.assets" :pagination.sync="pagination" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
-        <th class="text-xs-left">Type</th>
+        <th :class="['text-xs-left column sortable', sortDirection, getActive('type')]" @click="changeSort('type')">Type <v-icon small>arrow_upward</v-icon></th>
         <th class="hidden-xs-only text-xs-left">Description</th>
         <th class="hidden-md-and-down text-xs-left">Location</th>
         <th class="hidden-sm-and-down text-xs-left">Unit</th>
