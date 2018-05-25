@@ -17,14 +17,28 @@
     <AssetEditor :value="checkedValue" ref="editor"></AssetEditor>
     <v-data-table :items="checkedValue.assets" :pagination.sync="pagination" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
-        <th :class="['text-xs-left column sortable', sortDirection, getActive('type')]" @click="changeSort('type')">Type <v-icon small>arrow_upward</v-icon></th>
-        <th class="hidden-xs-only text-xs-left">Description</th>
-        <th class="hidden-md-and-down text-xs-left">Location</th>
+        <th :class="['text-xs-left column sortable', sortDirection, getActive('type')]" @click="changeSort('type')">
+          Type <v-icon small>arrow_upward</v-icon>
+        </th>
+        <th
+          :class="['hidden-xs-only text-xs-left column sortable', sortDirection, getActive('description')]"
+          @click="changeSort('description')">
+          Description <v-icon small>arrow_upward</v-icon>
+        </th>
+        <th
+          :class="['hidden-xs-only text-xs-left column sortable', sortDirection, getActive('location')]"
+          @click="changeSort('location')">
+          Location <v-icon small>arrow_upward</v-icon>
+        </th>
         <th class="hidden-sm-and-down text-xs-left">Unit</th>
         <th colspan="2" class="hidden-md-and-down">Fineness</th>
         <th colspan="2" class="hidden-sm-and-down">Unit Value<br>({{ checkedValue.selectedCurrency }})</th>
         <th colspan="2" class="hidden-sm-and-down">Quantity</th>
-        <th colspan="2" class="total">Total Value<br>({{ checkedValue.selectedCurrency }})</th>
+        <th
+          colspan="2" :class="['total hidden-xs-only column sortable', sortDirection, getActive('totalValue')]"
+          @click="changeSort('totalValue')">
+          Total Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.selectedCurrency }})
+        </th>
         <th>Actions</th>
       </template>
       <template slot="items" slot-scope="props">
