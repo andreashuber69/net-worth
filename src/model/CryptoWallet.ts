@@ -39,7 +39,7 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     }
 
     public get fineness() {
-        return 1;
+        return undefined;
     }
 
     public quantity: number | undefined;

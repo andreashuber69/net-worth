@@ -25,11 +25,11 @@ import { Format } from "./Format";
 // tslint:disable-next-line:no-default-export
 export default class AssetListRow extends ComponentBase<Asset> {
     public get finenessInteger() {
-        return this.checkedValue.fineness === 1 ? "" : Math.trunc(this.checkedValue.fineness);
+        return this.checkedValue.fineness === undefined ? "" : Math.trunc(this.checkedValue.fineness);
     }
 
     public get finenessFraction() {
-        if (this.checkedValue.fineness === 1) {
+        if (this.checkedValue.fineness === undefined) {
             return "";
         } else {
             let fraction = (this.checkedValue.fineness % 1).toFixed(6).substr(1);

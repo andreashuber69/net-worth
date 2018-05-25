@@ -49,8 +49,8 @@ export abstract class Asset {
     /** The unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'. */
     public abstract get unit(): string;
 
-    /** The fineness, e.g. 0.999. For a crypto currency, this is always 1. */
-    public abstract get fineness(): number;
+    /** The fineness, e.g. 0.999. For anything other than precious metals this is always undefined. */
+    public abstract get fineness(): number | undefined;
 
     /** The asset quantity. */
     public abstract get quantity(): number | undefined;
