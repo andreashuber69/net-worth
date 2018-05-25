@@ -17,15 +17,16 @@
     <v-app>
       <v-navigation-drawer v-model="isDrawerVisible" temporary app>
         <v-list dense>
-          <v-list-tile>
+          <v-list-tile @click="load">
             <v-list-tile-action>
               <v-icon>add</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>Load Assets</v-list-tile-title>
+              <input ref="fileInput" type="file" style="display:none" @change="handleFiles">
             </v-list-tile-content>
           </v-list-tile>
-          <v-list-tile>
+          <v-list-tile @click="save">
             <v-list-tile-action>
               <v-icon>save</v-icon>
             </v-list-tile-action>

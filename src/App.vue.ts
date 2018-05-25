@@ -20,4 +20,44 @@ import { Model } from "./model/Model";
 export default class App extends Vue {
     public isDrawerVisible = false;
     public readonly model = new Model();
+
+    public load() {
+        const fileInput = this.$refs.fileInput as HTMLInputElement;
+
+        if (!fileInput) {
+            throw new Error("File input not found!");
+        }
+
+        fileInput.click();
+    }
+
+    public save() {
+        console.log(this);
+    }
+
+    // tslint:disable-next-line:prefer-function-over-method
+    public async handleFiles(event: Event) {
+        const files = (event.target as any).files as FileList;
+
+        if (files.length === 1) {
+            const content = await App.read(files[0]);
+            console.log(content);
+        }
+    }
+
+    private static async read(blob: Blob) {
+        return new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onload = (ev) => {
+                resolve(reader.result as string);
+            };
+
+            reader.onerror = (ev) => {
+                reject(ev.type);
+            };
+
+            reader.readAsText(blob);
+        });
+    }
 }
