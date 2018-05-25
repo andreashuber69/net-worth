@@ -74,7 +74,9 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
     /** Instructs the parent UI element to remove the given asset from the list. */
     public remove() {
-        // tslint:disable-next-line:no-unsafe-any
-        this.$emit("remove", this.checkedValue);
+        if (confirm(`Are you sure you want to delete ${this.checkedValue.type}: ${this.checkedValue.description}`)) {
+            // tslint:disable-next-line:no-unsafe-any
+            this.$emit("remove", this.checkedValue);
+        }
     }
 }
