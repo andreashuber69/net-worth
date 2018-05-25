@@ -22,13 +22,7 @@ export default class App extends Vue {
     public readonly model = new Model();
 
     public load() {
-        const fileInput = this.$refs.fileInput as HTMLInputElement;
-
-        if (!fileInput) {
-            throw new Error("File input not found!");
-        }
-
-        fileInput.click();
+        (this.$refs.fileInput as HTMLInputElement).click();
     }
 
     public save() {
@@ -48,15 +42,8 @@ export default class App extends Vue {
     private static async read(blob: Blob) {
         return new Promise<string>((resolve, reject) => {
             const reader = new FileReader();
-
-            reader.onload = (ev) => {
-                resolve(reader.result as string);
-            };
-
-            reader.onerror = (ev) => {
-                reject(ev.type);
-            };
-
+            reader.onload = (ev) => resolve(reader.result as string);
+            reader.onerror = (ev) => reject("Unable to read file.");
             reader.readAsText(blob);
         });
     }
