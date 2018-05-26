@@ -33,7 +33,7 @@ export default class App extends Vue {
 
     public onSaveClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
-        const blob = new Blob([ "hello" ], { type : "application/json" });
+        const blob = new Blob([ JSON.stringify(this.model, undefined, 2) ], { type : "application/json" });
         App.write("MyAssets.json", blob);
     }
 
@@ -66,7 +66,7 @@ export default class App extends Vue {
 
             // We should call window.URL.revokeObjectURL as soon as the user has either successfully downloaded the
             // file or cancelled the download, but there seems to be no reliable way to detect these events. According
-            // to the docs the objects will garbage collected anyway when the user closes the tab or navigates away.
+            // to the docs the objects will be garbage collected anyway when the user closes the tab or navigates away.
             // Given the currently small size of these downloads, not calling revokeObjectURL is probably good enough.
             elem.href = window.URL.createObjectURL(blob);
             elem.download = filename;

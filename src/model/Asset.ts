@@ -68,6 +68,8 @@ export abstract class Asset {
     /** @internal */
     public abstract get interface(): IAssetUnion;
 
+    public abstract toJSON(): { [key: string]: any } | any[];
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected unitValueUsd: number | undefined = undefined;

@@ -64,6 +64,10 @@ export class Model implements IModel {
         }
     }
 
+    public toJSON() {
+        return this.bundles.map((bundle) => bundle.toJSON());
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly currencyMap = new Map<string, IWebRequest<number>>([

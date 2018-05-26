@@ -48,4 +48,8 @@ export class AssetBundle {
             this.assets.splice(index, 1, newAsset);
         }
     }
+
+    public toJSON() {
+        return this.assets.map((asset) => asset.toJSON());
+    }
 }

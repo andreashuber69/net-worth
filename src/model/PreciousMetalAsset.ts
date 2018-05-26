@@ -55,6 +55,19 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     /** @internal */
     public readonly propertyTag = "IPreciousMetalAsset";
 
+    public toJSON() {
+        return {
+            type: this.type,
+            // tslint:disable-next-line:object-literal-sort-keys
+            description: this.description,
+            location: this.location,
+            weight: this.weight,
+            weightUnit: this.weightUnit,
+            fineness: this.fineness,
+            quantity: this.quantity,
+        };
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
