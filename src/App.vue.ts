@@ -63,6 +63,11 @@ export default class App extends Vue {
             window.navigator.msSaveBlob(blob, filename);
         } else {
             const elem = window.document.createElement("a");
+
+            // We should call window.URL.revokeObjectURL as soon as the user has either successfully downloaded the
+            // file or cancelled the download, but there seems to be no reliable way to detect these events. According
+            // to the docs the objects will garbage collected anyway when the user closes the tab or navigates away.
+            // Given the currently small size of these downloads, not calling revokeObjectURL is probably good enough.
             elem.href = window.URL.createObjectURL(blob);
             elem.download = filename;
             document.body.appendChild(elem);
