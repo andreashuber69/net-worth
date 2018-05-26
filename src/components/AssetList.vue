@@ -42,7 +42,7 @@
         <th>Actions</th>
       </template>
       <template slot="items" slot-scope="props">
-        <AssetListRow :value="props.item" @edit="onEdit" @remove="onRemove"></AssetListRow>
+        <AssetListRow :value="props.item" @edit="onEdit" @delete="onDelete"></AssetListRow>
       </template>
       <template slot="footer">
         <td class="total">Grand Total</td>

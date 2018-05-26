@@ -29,8 +29,8 @@ export class AssetBundle {
         this.assets = assets;
     }
 
-    /** Removes `asset` from [[assets]]. */
-    public removeAsset(asset: Asset) {
+    /** Deletes `asset` from [[assets]]. */
+    public deleteAsset(asset: Asset) {
         const index = this.assets.indexOf(asset);
 
         if (index >= 0) {
@@ -38,7 +38,7 @@ export class AssetBundle {
         }
     }
 
-    /** Removes `oldAsset` from [[assets]] and then inserts `newAsset` in its place. */
+    /** Deletes `oldAsset` from [[assets]] and then inserts `newAsset` in its place. */
     public replaceAsset(oldAsset: Asset, newAsset: Asset) {
         const index = this.assets.indexOf(oldAsset);
 

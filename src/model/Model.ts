@@ -51,9 +51,9 @@ export class Model implements IModel {
     }
 
     /** @internal */
-    public removeAsset(asset: Asset) {
+    public deleteAsset(asset: Asset) {
         for (const bundle of this.bundles) {
-            bundle.removeAsset(asset);
+            bundle.deleteAsset(asset);
         }
     }
 

@@ -76,7 +76,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
     public onDeleteClicked(event: MouseEvent) {
         if (confirm(`Are you sure you want to delete ${this.checkedValue.type}: ${this.checkedValue.description}`)) {
             // tslint:disable-next-line:no-unsafe-any
-            this.$emit("remove", this.checkedValue);
+            this.$emit("delete", this.checkedValue);
         }
     }
 }

@@ -70,8 +70,8 @@ export default class AssetList extends ComponentBase<Model> {
         (this.getControl("editor") as AssetEditor).edit(asset);
     }
 
-    public onRemove(asset: Asset) {
-        this.checkedValue.removeAsset(asset);
+    public onDelete(asset: Asset) {
+        this.checkedValue.deleteAsset(asset);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
