@@ -67,13 +67,13 @@ export default class AssetListRow extends ComponentBase<Asset> {
     }
 
     /** Instructs the parent UI element to open the asset editor dialog with the given asset. */
-    public edit() {
+    public onEditClicked(event: MouseEvent) {
         // tslint:disable-next-line:no-unsafe-any
         this.$emit("edit", this.checkedValue);
     }
 
-    /** Instructs the parent UI element to remove the given asset from the list. */
-    public remove() {
+    /** Instructs the parent UI element to delete the given asset from the list. */
+    public onDeleteClicked(event: MouseEvent) {
         if (confirm(`Are you sure you want to delete ${this.checkedValue.type}: ${this.checkedValue.description}`)) {
             // tslint:disable-next-line:no-unsafe-any
             this.$emit("remove", this.checkedValue);

@@ -21,16 +21,22 @@ export default class App extends Vue {
     public isDrawerVisible = false;
     public readonly model = new Model();
 
-    public load() {
+    public onMenuIconClicked(event: MouseEvent) {
+        this.isDrawerVisible = !this.isDrawerVisible;
+    }
+
+    public onOpenClicked(event: MouseEvent) {
+        this.isDrawerVisible = false;
+        // tslint:disable-next-line:no-unsafe-any
         (this.$refs.fileInput as HTMLInputElement).click();
     }
 
-    public save() {
-        console.log(this);
+    public onSaveClicked(event: MouseEvent) {
+        this.isDrawerVisible = false;
     }
 
     // tslint:disable-next-line:prefer-function-over-method
-    public async handleFiles(event: Event) {
+    public async onFileInputChanged(event: Event) {
         const files = (event.target as any).files as FileList;
 
         if (files.length === 1) {

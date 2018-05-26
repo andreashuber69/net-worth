@@ -43,7 +43,7 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     /** Provides the asset type input information. */
     public get typeInputInfo() {
-        return  new SelectInfo("Type", "", true, true, this.assetInfos.map((info) => info.type));
+        return new SelectInfo("Type", "", true, true, this.assetInfos.map((info) => info.type));
     }
 
     /** Provides the currently selected asset type. */
@@ -86,46 +86,19 @@ export default class AssetEditor extends ComponentBase<Model> {
         return AssetEditor.getNativeValidationMessage(control);
     }
 
-    /** Resets all controls to their initial state. */
-    public reset() {
-        // TODO: Check whether the reset() call is even necessary.
-        // tslint:disable-next-line:no-unsafe-any
-        (this.getControl("form") as any).reset();
-        this.data = new AssetEditorData();
-        this.assetInfo = new NoAssetEditInfo();
+    public onResetClicked(event: MouseEvent) {
+        this.reset();
     }
 
-    /**
-     * Validates the values in all controls. If validation succeeds, the edited asset is saved and the editor is
-     * closed. Otherwise the editor remains open.
-     */
-    public save() {
-        this.isGlobalValidation = true;
-
-        try {
-            // tslint:disable-next-line:no-unsafe-any
-            if ((this.getControl("form") as any).validate()) {
-                const newAsset = this.assetInfo.createAsset(this.checkedValue, new AssetProperties(this.data));
-
-                if (this.editedAsset) {
-                    this.checkedValue.replaceAsset(this.editedAsset, newAsset);
-                } else {
-                    this.checkedValue.addAsset(new AssetBundle(newAsset));
-                }
-
-                this.cancel();
-            }
-        } finally {
-            this.isGlobalValidation = false;
+    public onSaveClicked(event: MouseEvent) {
+        if (this.isValid()) {
+            this.save();
+            this.close();
         }
     }
 
-    /** Closes the asset editor without saving the edited values. */
-    public cancel() {
-        this.reset();
-        // tslint:disable-next-line:no-null-keyword
-        this.editedAsset = null;
-        this.isOpen = false;
+    public onCancelClicked(event: MouseEvent) {
+        this.close();
     }
 
     /** @internal */
@@ -152,4 +125,40 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     // tslint:disable-next-line:no-null-keyword
     private editedAsset: Asset | null = null;
+
+    private reset() {
+        // TODO: Check whether the reset() call is even necessary.
+        // tslint:disable-next-line:no-unsafe-any
+        (this.getControl("form") as any).reset();
+        this.data = new AssetEditorData();
+        this.assetInfo = new NoAssetEditInfo();
+    }
+
+    private isValid() {
+        this.isGlobalValidation = true;
+
+        try {
+            // tslint:disable-next-line:no-unsafe-any
+            return (this.getControl("form") as any).validate();
+        } finally {
+            this.isGlobalValidation = false;
+        }
+    }
+
+    private save() {
+        const newAsset = this.assetInfo.createAsset(this.checkedValue, new AssetProperties(this.data));
+
+        if (this.editedAsset) {
+            this.checkedValue.replaceAsset(this.editedAsset, newAsset);
+        } else {
+            this.checkedValue.addAsset(new AssetBundle(newAsset));
+        }
+    }
+
+    private close() {
+        this.reset();
+        // tslint:disable-next-line:no-null-keyword
+        this.editedAsset = null;
+        this.isOpen = false;
+    }
 }

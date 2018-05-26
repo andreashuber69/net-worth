@@ -67,19 +67,17 @@ export default class AssetList extends ComponentBase<Model> {
         }
     }
 
-    /** @internal */
-    public add(bundle: AssetBundle) {
-        this.checkedValue.addAsset(bundle);
-    }
-
-    /** @internal */
-    public edit(asset: Asset) {
+    public onEdit(asset: Asset) {
         (this.getControl("editor") as AssetEditor).edit(asset);
     }
 
-    /** @internal */
-    public remove(asset: Asset) {
+    public onRemove(asset: Asset) {
         this.checkedValue.removeAsset(asset);
+    }
+
+    /** @internal */
+    public add(bundle: AssetBundle) {
+        this.checkedValue.addAsset(bundle);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

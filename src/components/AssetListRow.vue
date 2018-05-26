@@ -27,11 +27,11 @@
     <td class="total text-xs-right pr-0">{{ totalValueInteger }}</td>
     <td class="total text-xs-left pl-0">{{ totalValueFraction }}</td>
     <td class="justify-center layout px-0">
-      <v-btn icon class="mx-0" @click="edit">
+      <v-btn icon class="mx-0" @click="onEditClicked">
         <v-icon color="teal">edit</v-icon>
       </v-btn>
-      <v-btn icon class="mx-0" @click="remove">
-        <v-icon color="pink">delete</v-icon>
+      <v-btn icon class="mx-0" @click="onDeleteClicked">
+        <v-icon color="pink">delete_forever</v-icon>
       </v-btn>
     </td>
   </tr>

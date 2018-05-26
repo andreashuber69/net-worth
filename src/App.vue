@@ -17,27 +17,27 @@
     <v-app>
       <v-navigation-drawer v-model="isDrawerVisible" temporary app>
         <v-list dense>
-          <v-list-tile @click="load">
+          <v-list-tile @click="onOpenClicked">
             <v-list-tile-action>
-              <v-icon>add</v-icon>
+              <v-icon>open_in_browser</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>Load Assets</v-list-tile-title>
-              <input ref="fileInput" type="file" style="display:none" @change="handleFiles">
+              <v-list-tile-title>Open...</v-list-tile-title>
+              <input ref="fileInput" type="file" style="display:none" @change="onFileInputChanged">
             </v-list-tile-content>
           </v-list-tile>
-          <v-list-tile @click="save">
+          <v-list-tile @click="onSaveClicked">
             <v-list-tile-action>
               <v-icon>save</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>Save Assets</v-list-tile-title>
+              <v-list-tile-title>Save...</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
       </v-navigation-drawer>
       <v-toolbar app>
-        <v-toolbar-side-icon @click.stop="isDrawerVisible = !isDrawerVisible"></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click.stop="onMenuIconClicked"></v-toolbar-side-icon>
         <v-toolbar-title>Asset Manager</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
