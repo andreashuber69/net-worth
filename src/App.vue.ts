@@ -33,6 +33,8 @@ export default class App extends Vue {
 
     public onSaveClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
+        const blob = new Blob([ "hello" ], { type : "application/json" });
+        App.write("MyAssets.json", blob);
     }
 
     // tslint:disable-next-line:prefer-function-over-method
@@ -54,5 +56,18 @@ export default class App extends Vue {
             reader.onerror = (ev) => reject("Unable to read file.");
             reader.readAsText(blob);
         });
+    }
+
+    private static write(filename: string, blob: Blob) {
+        if (window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveBlob(blob, filename);
+        } else {
+            const elem = window.document.createElement("a");
+            elem.href = window.URL.createObjectURL(blob);
+            elem.download = filename;
+            document.body.appendChild(elem);
+            elem.click();
+            document.body.removeChild(elem);
+        }
     }
 }
