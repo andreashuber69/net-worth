@@ -45,6 +45,8 @@ export default class App extends Vue {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     private static async read(blob: Blob) {
         return new Promise<string>((resolve, reject) => {
             const reader = new FileReader();

@@ -23,7 +23,7 @@
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>Open...</v-list-tile-title>
-              <input ref="fileInput" type="file" style="display:none" @change="onFileInputChanged">
+              <input ref="fileInput" type="file" accept=".assets.json" style="display:none" @change="onFileInputChanged">
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile @click="onSaveClicked">
