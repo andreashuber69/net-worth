@@ -12,7 +12,6 @@
 
 import { Component } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
-import { AssetBundle } from "../model/AssetBundle";
 import { Model } from "../model/Model";
 import AssetEditor from "./AssetEditor.vue";
 import AssetListRow from "./AssetListRow.vue";
@@ -73,11 +72,6 @@ export default class AssetList extends ComponentBase<Model> {
 
     public onRemove(asset: Asset) {
         this.checkedValue.removeAsset(asset);
-    }
-
-    /** @internal */
-    public add(bundle: AssetBundle) {
-        this.checkedValue.addAsset(bundle);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
