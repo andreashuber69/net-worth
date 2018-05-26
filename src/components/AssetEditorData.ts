@@ -35,14 +35,14 @@ export class AssetEditorData implements IAllAssetProperties<string> {
                 this.weight = asset.weight.toString();
                 this.weightUnit = WeightUnits.toString(asset.weightUnit);
                 this.fineness = asset.fineness.toString();
+                this.quantity = AssetEditorData.getQuantity(asset);
             } else {
                 this.address = asset.address;
                 this.weight = "";
                 this.weightUnit = "";
                 this.fineness = "";
+                this.quantity = this.address ? "" : AssetEditorData.getQuantity(asset);
             }
-
-            this.quantity = asset.quantity ? asset.quantity.toString() : "";
         } else {
             this.description = "";
             this.location = "";
@@ -52,5 +52,11 @@ export class AssetEditorData implements IAllAssetProperties<string> {
             this.fineness = "";
             this.quantity  = "";
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static getQuantity(asset: IAssetUnion) {
+        return asset.quantity !== undefined ? asset.quantity.toString() : "";
     }
 }
