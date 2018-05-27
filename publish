@@ -1,0 +1,30 @@
+#!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+WORK_DIR=`mktemp -d`
+
+# Make sure we've really created an empty directory, so that we can safely delete it later
+if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
+  echo "Could not create temp directory!"
+  exit 1
+fi
+
+echo "Clone gh-pages and delete all files..."
+git clone -q --branch gh-pages "https://github.com/andreashuber69/asset-manager.git" "$WORK_DIR"
+pushd $WORK_DIR
+git rm -rf *
+popd
+
+echo "Build and copy ./dist contents to the working directory..."
+npm run build
+cp -R dist/* $WORK_DIR
+
+echo "Commit and push..."
+pushd $WORK_DIR
+git add -A
+git commit -m "Publish current version."
+git push
+popd
+rm -rf $WORK_DIR
