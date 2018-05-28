@@ -17,6 +17,8 @@ import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 
 /** Represents a BTC wallet. */
 export class BtcWallet extends CryptoWallet {
+    public static readonly type = "Bitcoin Wallet";
+
     /** Creates a new [[BtcWallet]] instance.
      * @description If a non-empty string is passed for [[ICryptoProperties.address]], then an attempt is made to
      * retrieve the wallet balance, which is then added to whatever is passed for [[ICryptoProperties.quantity]]. It
@@ -25,7 +27,7 @@ export class BtcWallet extends CryptoWallet {
      * @param properties The crypto wallet properties.
      */
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
-        super(parent, properties, "Bitcoin Wallet", "BTC", 8, "bitcoin");
+        super(parent, properties, BtcWallet.type, "BTC", 8, "bitcoin");
         this.queryQuantity().catch((reason) => console.error(reason));
     }
 

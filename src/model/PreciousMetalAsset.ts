@@ -16,6 +16,7 @@ import { QuandlRequest } from "./QuandlRequest";
 import { WeightUnit, WeightUnits } from "./WeightUnit";
 
 /** Defines the common editable properties of all classes that represent a precious metal assets. */
+// TODO: Check whether we can make quantity a number (i.e. not undefined) for this interface
 export interface IPreciousMetalAssetProperties extends IAssetProperties {
     /** Provides the weight of a single item, expressed in `weightUnit`. */
     readonly weight: number;

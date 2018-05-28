@@ -12,12 +12,9 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { BtcWallet } from "./BtcWallet";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { IWebRequest } from "./IWebRequest";
 import { QuandlRequest } from "./QuandlRequest";
-import { SilverAsset } from "./SilverAsset";
-import { WeightUnit } from "./WeightUnit";
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
@@ -103,33 +100,7 @@ export class Model implements IModel {
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
 
-    // tslint:disable-next-line:max-line-length
-    private static readonly address = "1F8i3SE7Zorf6F2rLh3Mxg4Mb8aHT2nkQf";
-
-    private static getProperties(descr: string, loc: string, weightInGrams: number, fine: number, quant: number) {
-        return {
-            address: Model.address,
-            description: descr,
-            fineness: fine,
-            location: loc,
-            quantity: quant,
-            weight: weightInGrams,
-            weightUnit: WeightUnit.Gram,
-        };
-    }
-
-    private readonly bundles = [
-        new AssetBundle(new SilverAsset(this, Model.getProperties("5 CHF, Rolls of 50", "Home", 750, 0.835, 1))),
-        new AssetBundle(new SilverAsset(this, Model.getProperties("2 CHF, Rolls of 50", "Home", 500, 0.835, 2))),
-        new AssetBundle(new SilverAsset(this, Model.getProperties("1 CHF, Rolls of 50", "Home", 250, 0.835, 3))),
-        new AssetBundle(new SilverAsset(this, Model.getProperties("0.5 CHF, Rolls of 50", "Home", 125, 0.835, 4))),
-        new AssetBundle(new BtcWallet(this, {
-            address: Model.address,
-            description: "Spending",
-            location: "Mobile Phone",
-            quantity: undefined,
-        })),
-    ];
+    private readonly bundles = new Array<AssetBundle>();
 
     private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
 
