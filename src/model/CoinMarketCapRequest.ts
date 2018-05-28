@@ -33,19 +33,15 @@ export class CoinMarketCapRequest implements IWebRequest<number> {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getPrice(response: any) {
-        return this.isPriceInfo(response) ? Number.parseFloat(response[0].price_usd) : Number.NaN;
-    }
+        if ((response instanceof Array) && (response.length === 1)) {
+            const value = response[0];
 
-    private static isPriceInfo(value: any): value is Array<{ price_usd: string }> {
-        return this.isLengthOneObjectArray(value) && (typeof value[0].price_usd === "string");
-    }
+            if (this.hasStringIndexer(value) && (typeof value.price_usd === "string")) {
+                return Number.parseFloat(value.price_usd);
+            }
+        }
 
-    private static isLengthOneObjectArray(value: any): value is Array<{ [key: string]: any }> {
-        return this.isArray(value) && (value.length === 1) && this.hasStringIndexer(value[0]);
-    }
-
-    private static isArray(value: any): value is any[] {
-        return value instanceof Array;
+        return  Number.NaN;
     }
 
     private static hasStringIndexer(value: any): value is { [key: string]: any } {

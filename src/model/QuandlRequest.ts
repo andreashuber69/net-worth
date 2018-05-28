@@ -38,25 +38,19 @@ export class QuandlRequest implements IWebRequest<number> {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getPrice(response: any) {
-        return this.hasDatasetProperty(response) && this.hasDataTupleArray(response.dataset) ?
-            response.dataset.data[0][1] : Number.NaN;
-    }
+        if (this.hasStringIndexer(response) && this.hasStringIndexer(response.dataset)) {
+            const data = response.dataset.data;
 
-    private static hasDatasetProperty(value: any): value is { dataset: object } {
-        return this.hasStringIndexer(value) && (value.dataset instanceof Object);
-    }
+            if ((data instanceof Array) && (data.length >= 1)) {
+                const array = data[0];
 
-    private static hasDataTupleArray(value: any): value is { data: Array<[ string, number ]> } {
-        return this.hasDataArrayArray(value) && (value.data[0].length >= 2) &&
-            (typeof value.data[0][0] === "string") && (typeof value.data[0][1] === "number");
-    }
+                if ((array instanceof Array) && (array.length >= 2) && (typeof array[1] === "number")) {
+                    return array[1] as number;
+                }
+            }
+        }
 
-    private static hasDataArrayArray(value: any): value is { data: any[][] } {
-        return this.hasDataArray(value) && (value.data.length >= 1) && (value.data[0] instanceof Array);
-    }
-
-    private static hasDataArray(value: any): value is { data: any[] } {
-        return this.hasStringIndexer(value) && (value.data instanceof Array);
+        return Number.NaN;
     }
 
     private static hasStringIndexer(value: any): value is { [key: string]: any } {
