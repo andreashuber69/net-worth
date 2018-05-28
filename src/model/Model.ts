@@ -12,12 +12,56 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
+import { BtcWallet } from "./BtcWallet";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
+import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 import { IWebRequest } from "./IWebRequest";
+import { IPreciousMetalAssetProperties, PreciousMetalAsset } from "./PreciousMetalAsset";
 import { QuandlRequest } from "./QuandlRequest";
+import { SilverAsset } from "./SilverAsset";
+import { WeightUnit } from "./WeightUnit";
+
+interface IStringIndexable {
+    [key: string]: any;
+}
+
+interface ICryptoWalletConstructor {
+    new (parent: IModel, properties: ICryptoWalletProperties): CryptoWallet;
+}
+
+interface IPreciousMetalAssetConstructor {
+    new (parent: IModel, properties: IPreciousMetalAssetProperties): PreciousMetalAsset;
+}
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
+    public static parse(json: string) {
+        const rawModel = JSON.parse(json);
+        const model = new Model();
+
+        if (rawModel instanceof Array) {
+            for (const rawBundle of rawModel) {
+                if (rawBundle instanceof Array) {
+                    const bundle = new AssetBundle();
+
+                    for (const rawAsset of rawBundle) {
+                        const asset = Model.createAsset(model, rawAsset);
+
+                        if (asset) {
+                            bundle.assets.push(asset);
+                        }
+                    }
+
+                    if (bundle.assets.length > 0) {
+                        model.addAsset(bundle);
+                    }
+                }
+            }
+        }
+
+        return model;
+    }
+
     /** Provides the available currencies to value the assets in. */
     public get currencies() {
         return Array.from(Model.currencyMap.keys());
@@ -100,6 +144,64 @@ export class Model implements IModel {
         ["XAU", new QuandlRequest("lbma/gold.json", true)],
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
+
+    private static createAsset(model: IModel, rawAsset: any) {
+        if (Model.hasStringIndexer(rawAsset)) {
+            if (Model.hasTypeMember(rawAsset)) {
+                switch (rawAsset.type) {
+                    case BtcWallet.type:
+                        return this.createCryptoWallet(model, rawAsset, BtcWallet);
+                    case SilverAsset.type:
+                        return this.createPreciousMetalAsset(model, rawAsset, SilverAsset);
+                    default:
+                }
+            }
+        }
+
+        return undefined;
+    }
+
+    private static hasStringIndexer(value: any): value is IStringIndexable {
+        return value instanceof Object;
+    }
+
+    private static hasTypeMember(value: IStringIndexable): value is { type: string } {
+        return typeof value.type === "string";
+    }
+
+    private static createCryptoWallet(
+        model: IModel, raw: IStringIndexable, constructor: ICryptoWalletConstructor) {
+        if (!this.hasCryptoWalletProperties(raw) || (!raw.address === !raw.quantity) ||
+            (raw.quantity && (raw.quantity <= 0))) {
+            return undefined;
+        }
+
+        return new constructor(model, raw);
+    }
+
+    private static createPreciousMetalAsset(
+        model: IModel, raw: IStringIndexable, constructor: IPreciousMetalAssetConstructor) {
+        if (!this.hasPreciousMetalAssetProperties(raw) || (raw.weight <= 0) || !WeightUnit[raw.weightUnit] ||
+            (raw.fineness < 0.5) || (raw.fineness > 0.999999) || (!raw.quantity) || (raw.quantity <= 0) ||
+            (raw.quantity % 1 !== 0)) {
+            return undefined;
+        }
+
+        return new constructor(model, raw);
+    }
+
+    private static hasCryptoWalletProperties(value: IStringIndexable): value is ICryptoWalletProperties {
+        const quantityType = typeof value.quantity;
+
+        return (typeof value.description === "string") && (typeof value.location === "string") &&
+            (typeof value.address === "string") && ((quantityType === "number") || (quantityType === "undefined"));
+    }
+
+    private static hasPreciousMetalAssetProperties(value: IStringIndexable): value is IPreciousMetalAssetProperties {
+        return (typeof value.description === "string") && (typeof value.location === "string") &&
+            (typeof value.weight === "number") && (typeof value.weightUnit === "number") &&
+            (typeof value.fineness === "number") && (typeof value.quantity === "number");
+    }
 
     private readonly bundles = new Array<AssetBundle>();
 

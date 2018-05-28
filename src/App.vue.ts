@@ -12,26 +12,7 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import AssetList from "./components/AssetList.vue";
-import { IModel } from "./model/Asset";
-import { AssetBundle } from "./model/AssetBundle";
-import { BtcWallet } from "./model/BtcWallet";
-import { CryptoWallet, ICryptoWalletProperties } from "./model/CryptoWallet";
 import { Model } from "./model/Model";
-import { IPreciousMetalAssetProperties, PreciousMetalAsset } from "./model/PreciousMetalAsset";
-import { SilverAsset } from "./model/SilverAsset";
-import { WeightUnit } from "./model/WeightUnit";
-
-interface IStringIndexable {
-    [key: string]: any;
-}
-
-interface ICryptoWalletConstructor {
-    new (parent: IModel, properties: ICryptoWalletProperties): CryptoWallet;
-}
-
-interface IPreciousMetalAssetConstructor {
-    new (parent: IModel, properties: IPreciousMetalAssetProperties): PreciousMetalAsset;
-}
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { AssetList } })
@@ -61,30 +42,7 @@ export default class App extends Vue {
         const files = (event.target as any).files as FileList;
 
         if (files.length === 1) {
-            const rawModel = JSON.parse(await App.read(files[0]));
-            const model = new Model();
-
-            if (rawModel instanceof Array) {
-                for (const rawBundle of rawModel) {
-                    if (rawBundle instanceof Array) {
-                        const bundle = new AssetBundle();
-
-                        for (const rawAsset of rawBundle) {
-                            const asset = App.createAsset(model, rawAsset);
-
-                            if (asset) {
-                                bundle.assets.push(asset);
-                            }
-                        }
-
-                        if (bundle.assets.length > 0) {
-                            model.addAsset(bundle);
-                        }
-                    }
-                }
-            }
-
-            this.model = model;
+            this.model = Model.parse(await App.read(files[0]));
         }
     }
 
@@ -115,63 +73,5 @@ export default class App extends Vue {
             reader.onerror = (ev) => reject("Unable to read file.");
             reader.readAsText(blob);
         });
-    }
-
-    private static createAsset(model: IModel, rawAsset: any) {
-        if (App.hasStringIndexer(rawAsset)) {
-            if (App.hasTypeMember(rawAsset)) {
-                switch (rawAsset.type) {
-                    case BtcWallet.type:
-                        return this.createCryptoWallet(model, rawAsset, BtcWallet);
-                    case SilverAsset.type:
-                        return this.createPreciousMetalAsset(model, rawAsset, SilverAsset);
-                    default:
-                }
-            }
-        }
-
-        return undefined;
-    }
-
-    private static hasStringIndexer(value: any): value is IStringIndexable {
-        return value instanceof Object;
-    }
-
-    private static hasTypeMember(value: IStringIndexable): value is { type: string } {
-        return typeof value.type === "string";
-    }
-
-    private static createCryptoWallet(
-        model: IModel, raw: IStringIndexable, constructor: ICryptoWalletConstructor) {
-        if (!this.hasCryptoWalletProperties(raw) || (!raw.address === !raw.quantity) ||
-            (raw.quantity && (raw.quantity <= 0))) {
-            return undefined;
-        }
-
-        return new constructor(model, raw);
-    }
-
-    private static createPreciousMetalAsset(
-        model: IModel, raw: IStringIndexable, constructor: IPreciousMetalAssetConstructor) {
-        if (!this.hasPreciousMetalAssetProperties(raw) || (raw.weight <= 0) || !WeightUnit[raw.weightUnit] ||
-            (raw.fineness < 0.5) || (raw.fineness > 0.999999) || (!raw.quantity) || (raw.quantity <= 0) ||
-            (raw.quantity % 1 !== 0)) {
-            return undefined;
-        }
-
-        return new constructor(model, raw);
-    }
-
-    private static hasCryptoWalletProperties(value: IStringIndexable): value is ICryptoWalletProperties {
-        const quantityType = typeof value.quantity;
-
-        return (typeof value.description === "string") && (typeof value.location === "string") &&
-            (typeof value.address === "string") && ((quantityType === "number") || (quantityType === "undefined"));
-    }
-
-    private static hasPreciousMetalAssetProperties(value: IStringIndexable): value is IPreciousMetalAssetProperties {
-        return (typeof value.description === "string") && (typeof value.location === "string") &&
-            (typeof value.weight === "number") && (typeof value.weightUnit === "number") &&
-            (typeof value.fineness === "number") && (typeof value.quantity === "number");
     }
 }
