@@ -31,7 +31,7 @@ export class AssetEditorData implements IAllAssetProperties<string> {
             this.description = asset.description;
             this.location = asset.location;
 
-            if (asset.propertyTag === PreciousMetalAsset.propertyTag) {
+            if (asset.superType === PreciousMetalAsset.superType) {
                 this.address = "";
                 this.weight = asset.weight.toString();
                 this.weightUnit = WeightUnits.toString(asset.weightUnit);

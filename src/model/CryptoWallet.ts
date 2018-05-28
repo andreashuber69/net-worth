@@ -22,13 +22,13 @@ export interface ICryptoWalletProperties extends IAssetProperties {
 /** @internal */
 export interface ICryptoWallet extends ICryptoWalletProperties {
     /** @internal */
-    readonly propertyTag: typeof CryptoWallet.propertyTag;
+    readonly superType: typeof CryptoWallet.superType;
 }
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     /** @internal */
-    public static readonly propertyTag = "ICryptoWallet";
+    public static readonly superType = "Crypto Wallet";
 
     public readonly address: string;
 
@@ -52,7 +52,7 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     }
 
     /** @internal */
-    public readonly propertyTag = CryptoWallet.propertyTag;
+    public readonly superType = CryptoWallet.superType;
 
     public toJSON() {
         const result: { [key: string]: any } = {
