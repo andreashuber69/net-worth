@@ -57,6 +57,7 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     /** @internal */
     public readonly superType = CryptoWallet.superType;
 
+    /** @internal */
     public toJSON() {
         const result: { [key: string]: any } = {
             type: this.type,

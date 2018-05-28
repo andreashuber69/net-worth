@@ -49,6 +49,7 @@ export class AssetBundle {
         }
     }
 
+    /** @internal */
     public toJSON() {
         return this.assets.map((asset) => asset.toJSON());
     }

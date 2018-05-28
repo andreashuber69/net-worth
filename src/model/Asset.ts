@@ -20,42 +20,42 @@ export interface IModel {
 
 /** Defines the common editable properties of all assets. */
 export interface IAssetProperties {
-    /** The asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
+    /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
     readonly description: string;
 
-    /** The location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
+    /** Provides the location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
     readonly location: string;
 
-    /** The asset quantity. */
+    /** Provides the asset quantity. */
     readonly quantity: number | undefined;
 }
 
 /** Defines the base of all classes that represent an asset. */
 export abstract class Asset {
-    /** The parent model to which this asset belongs. */
+    /** Provides the parent model to which this asset belongs. */
     public readonly parent: IModel;
 
-    /** The type of asset, e.g. 'Silver, 'Gold', 'Bitcoin Wallet', 'Litecoin Wallet'. */
+    /** Provides the type of asset, e.g. 'Silver, 'Gold', 'Bitcoin Wallet', 'Litecoin Wallet'. */
     public abstract get type(): AssetTypes;
 
-    /** The asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
+    /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
     public readonly description: string;
 
-    /** The location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
+    /** Provides the location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
     public readonly location: string;
 
-    /** Further information on the location. */
+    /** Provides further information on the location. */
     public get locationHint() {
         return "";
     }
 
-    /** The unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'. */
+    /** Provides the unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'. */
     public abstract get unit(): string;
 
-    /** The fineness, e.g. 0.999. For anything other than precious metals this is always undefined. */
+    /** Provides the fineness, e.g. 0.999. For anything other than precious metals this is always undefined. */
     public abstract get fineness(): number | undefined;
 
-    /** The asset quantity. */
+    /** Provides the asset quantity. */
     public abstract get quantity(): number | undefined;
 
     /** @internal */
@@ -71,6 +71,7 @@ export abstract class Asset {
     /** @internal */
     public abstract get interface(): IAssetUnion;
 
+    /** @internal */
     public abstract toJSON(): { [key: string]: any } | any[];
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

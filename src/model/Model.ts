@@ -61,6 +61,7 @@ export class Model implements IModel {
         }
     }
 
+    /** @internal */
     public toJSON() {
         return this.bundles.map((bundle) => bundle.toJSON());
     }

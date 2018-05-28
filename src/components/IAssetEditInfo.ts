@@ -20,5 +20,6 @@ import { InputInfo } from "./InputInfo";
 export interface IAssetEditInfo extends IAllAssetProperties<InputInfo> {
     readonly type: "" | AssetTypes;
 
+    /** @internal */
     createAsset(parent: IModel, properties: IAssetPropertiesIntersection): Asset;
 }

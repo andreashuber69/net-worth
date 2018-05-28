@@ -14,6 +14,7 @@ import { InputInfo } from "./InputInfo";
 
 /** Provides information to the [[Select]] control. */
 export class SelectInfo extends InputInfo {
+    /** @internal */
     public constructor(
         label = "", hint = "", isVisible = false, isRequired = false, public readonly items: string[] = []) {
         super(label, hint, isVisible, isRequired);

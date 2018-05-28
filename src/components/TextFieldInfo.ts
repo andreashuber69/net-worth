@@ -14,6 +14,7 @@ import { InputInfo } from "./InputInfo";
 
 /** Provides information to the [[TextField]] control. */
 export class TextFieldInfo extends InputInfo {
+    /** @internal */
     public constructor(
         label = "", hint = "", isVisible = false, isRequired = false,
         public readonly min?: number, public readonly max?: number, public step?: number) {

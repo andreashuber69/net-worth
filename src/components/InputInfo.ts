@@ -12,6 +12,7 @@
 
 /** Defines the base of all classes supplying information to custom controls. */
 export class InputInfo {
+    /** @internal */
     protected constructor(
         public readonly label: string, public readonly hint: string,
         public readonly isVisible: boolean, public readonly isRequired: boolean) {

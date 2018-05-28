@@ -60,6 +60,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     /** @internal */
     public readonly superType = PreciousMetalAsset.superType;
 
+    /** @internal */
     public toJSON() {
         return {
             type: this.type,
