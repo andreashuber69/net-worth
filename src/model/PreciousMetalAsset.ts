@@ -29,7 +29,7 @@ export interface IPreciousMetalAssetProperties extends IAssetProperties {
 /** @internal */
 export interface IPreciousMetalAsset extends IPreciousMetalAssetProperties {
     /** @internal */
-    readonly propertyTag: PreciousMetalAsset["propertyTag"];
+    readonly propertyTag: typeof PreciousMetalAsset.propertyTag;
 }
 
 /** Defines the base of all classes that represent a precious metal asset. */

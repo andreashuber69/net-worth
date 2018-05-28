@@ -13,6 +13,6 @@
 import { BtcWallet } from "./BtcWallet";
 import { SilverAsset } from "./SilverAsset";
 
-export type CryptoWalletTypes = BtcWallet["type"];
-export type PreciousMetalAssetTypes = SilverAsset["type"];
+export type CryptoWalletTypes = typeof BtcWallet.type;
+export type PreciousMetalAssetTypes = typeof SilverAsset.type;
 export type AssetTypes = CryptoWalletTypes | PreciousMetalAssetTypes;
