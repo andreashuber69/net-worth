@@ -20,15 +20,18 @@ export interface ICryptoWalletProperties extends IAssetProperties {
 }
 
 /** @internal */
+const superType = "Crypto Wallet";
+
+/** @internal */
 export interface ICryptoWallet extends ICryptoWalletProperties {
     /** @internal */
-    readonly superType: typeof CryptoWallet.superType;
+    readonly superType: typeof superType;
 }
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     /** @internal */
-    public static readonly superType = "Crypto Wallet";
+    public static readonly superType = superType;
 
     public readonly address: string;
 
