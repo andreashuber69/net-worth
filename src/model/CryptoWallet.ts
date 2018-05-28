@@ -22,11 +22,14 @@ export interface ICryptoWalletProperties extends IAssetProperties {
 /** @internal */
 export interface ICryptoWallet extends ICryptoWalletProperties {
     /** @internal */
-    readonly propertyTag: "ICryptoWallet";
+    readonly propertyTag: CryptoWallet["propertyTag"];
 }
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends Asset implements ICryptoWallet {
+    /** @internal */
+    public static readonly propertyTag = "ICryptoWallet";
+
     public readonly address: string;
 
     public get locationHint() {
@@ -49,7 +52,7 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     }
 
     /** @internal */
-    public readonly propertyTag = "ICryptoWallet";
+    public readonly propertyTag = CryptoWallet.propertyTag;
 
     public toJSON() {
         const result: { [key: string]: any } = {

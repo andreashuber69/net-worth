@@ -29,11 +29,14 @@ export interface IPreciousMetalAssetProperties extends IAssetProperties {
 /** @internal */
 export interface IPreciousMetalAsset extends IPreciousMetalAssetProperties {
     /** @internal */
-    readonly propertyTag: "IPreciousMetalAsset";
+    readonly propertyTag: PreciousMetalAsset["propertyTag"];
 }
 
 /** Defines the base of all classes that represent a precious metal asset. */
 export abstract class PreciousMetalAsset extends Asset implements IPreciousMetalAsset {
+    /** @internal */
+    public static readonly propertyTag = "IPreciousMetalAsset";
+
     public readonly weight: number;
 
     public readonly weightUnit: WeightUnit;
@@ -52,7 +55,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     }
 
     /** @internal */
-    public readonly propertyTag = "IPreciousMetalAsset";
+    public readonly propertyTag = PreciousMetalAsset.propertyTag;
 
     public toJSON() {
         return {

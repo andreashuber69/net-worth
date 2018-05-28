@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAssetUnion } from "../model/AssetInterfaces";
+import { PreciousMetalAsset } from "../model/PreciousMetalAsset";
 import { WeightUnits } from "../model/WeightUnit";
 import { IAllAssetProperties } from "./IAllAssetProperties";
 
@@ -30,7 +31,7 @@ export class AssetEditorData implements IAllAssetProperties<string> {
             this.description = asset.description;
             this.location = asset.location;
 
-            if (asset.propertyTag === "IPreciousMetalAsset") {
+            if (asset.propertyTag === PreciousMetalAsset.propertyTag) {
                 this.address = "";
                 this.weight = asset.weight.toString();
                 this.weightUnit = WeightUnits.toString(asset.weightUnit);
