@@ -10,7 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-// TODO: These duplicate BtcWallet.type and SilverAsset.type
-export type CryptoWalletTypes = "Bitcoin Wallet";
-export type PreciousMetalAssetTypes = "Silver";
+import { BtcWallet } from "./BtcWallet";
+import { SilverAsset } from "./SilverAsset";
+
+export type CryptoWalletTypes = BtcWallet["type"];
+export type PreciousMetalAssetTypes = SilverAsset["type"];
 export type AssetTypes = CryptoWalletTypes | PreciousMetalAssetTypes;

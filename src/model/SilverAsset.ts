@@ -17,12 +17,14 @@ import { IPreciousMetalAssetProperties, PreciousMetalAsset } from "./PreciousMet
 export class SilverAsset extends PreciousMetalAsset {
     public static readonly type = "Silver";
 
+    public readonly type = SilverAsset.type;
+
     /**
      * Creates a new [[SilverAsset]] instance.
      * @param parent The parent model to which this asset belongs.
      * @param properties The precious metal asset properties.
      */
     public constructor(parent: IModel, properties: IPreciousMetalAssetProperties) {
-        super(parent, properties, SilverAsset.type, "lbma/silver.json");
+        super(parent, properties, "lbma/silver.json");
     }
 }

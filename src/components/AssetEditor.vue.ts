@@ -119,8 +119,8 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     private readonly assetInfos: IAssetEditInfo[] = [
-        new CryptoWalletEditInfo("Bitcoin Wallet", 8, BtcWallet),
-        new PreciousMetalAssetEditInfo("Silver", SilverAsset),
+        new CryptoWalletEditInfo(BtcWallet.type, 8, BtcWallet),
+        new PreciousMetalAssetEditInfo(SilverAsset.type, SilverAsset),
     ];
 
     // tslint:disable-next-line:no-null-keyword

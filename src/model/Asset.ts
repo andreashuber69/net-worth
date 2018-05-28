@@ -35,6 +35,9 @@ export abstract class Asset {
     /** The parent model to which this asset belongs. */
     public readonly parent: IModel;
 
+    /** The type of asset, e.g. 'Silver, 'Gold', 'Bitcoin Wallet', 'Litecoin Wallet'. */
+    public abstract get type(): AssetTypes;
+
     /** The asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
     public readonly description: string;
 
@@ -78,15 +81,9 @@ export abstract class Asset {
      * Creates a new [[Asset]] instance.
      * @param parent The parent model to which this asset belongs.
      * @param properties The asset properties.
-     * @param type The type of asset, e.g. 'Silver, 'Gold', 'Bitcoin Wallet', 'Litecoin Wallet'.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      */
-    protected constructor(
-        parent: IModel,
-        properties: IAssetProperties,
-        public readonly type: AssetTypes,
-        public readonly quantityDecimals: number,
-    ) {
+    protected constructor(parent: IModel, properties: IAssetProperties, public readonly quantityDecimals: number) {
         this.parent = parent;
         this.description = properties.description;
         this.location = properties.location;

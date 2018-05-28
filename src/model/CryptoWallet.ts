@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IAssetProperties, IModel } from "./Asset";
-import { CryptoWalletTypes } from "./AssetTypes";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 
 /** Defines the common editable properties of all crypto currency wallets. */
@@ -75,7 +74,6 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
      * Creates a new [[CryptoWallet]] instance.
      * @param parent The parent model to which this asset belongs.
      * @param properties The crypto wallet properties.
-     * @param type The type of the crypto wallet, e.g. 'Bitcoin Wallet', 'Litecoin Wallet'
      * @param currencySymbol The crypto currency symbol, e.g. 'BTC', 'LTC'.
      * @param quantityDecimals The number of decimals to use to format the quantity.
      * @param coin The coinmarketcap.com identifier of the currency.
@@ -83,12 +81,11 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     protected constructor(
         parent: IModel,
         properties: ICryptoWalletProperties,
-        type: CryptoWalletTypes,
         private readonly currencySymbol: string,
         quantityDecimals: number,
         coin: string,
     ) {
-        super(parent, properties, type, quantityDecimals);
+        super(parent, properties, quantityDecimals);
         this.address = properties.address;
         this.quantity = properties.quantity;
         this.queryUnitValue(coin).catch((reason) => console.error(reason));
