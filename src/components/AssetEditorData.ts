@@ -13,10 +13,10 @@
 import { IAssetUnion } from "../model/AssetInterfaces";
 import { PreciousMetalAsset } from "../model/PreciousMetalAsset";
 import { WeightUnits } from "../model/WeightUnit";
-import { IAllAssetProperties } from "./IAllAssetProperties";
+import { IAuxProperties } from "./IAuxProperties";
 
 /** Represents the data being edited in the asset editor. */
-export class AssetEditorData implements IAllAssetProperties<string> {
+export class AssetEditorData implements IAuxProperties<string> {
     public description: string;
     public location: string;
     public address: string;

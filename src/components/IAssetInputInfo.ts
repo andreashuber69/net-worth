@@ -13,14 +13,14 @@
 import { Asset, IModel } from "../model/Asset";
 import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
 import { AssetTypes } from "../model/AssetTypes";
-import { IAllAssetProperties } from "./IAllAssetProperties";
+import { IAuxProperties } from "./IAuxProperties";
 import { ValueInputInfo } from "./ValueInputInfo";
 
 /**
  * For an asset of a given type, defines how its properties need to be input and provides a method to create the
  * asset.
  */
-export interface IAssetInputInfo extends IAllAssetProperties<ValueInputInfo> {
+export interface IAssetInputInfo extends IAuxProperties<ValueInputInfo> {
     readonly type: "" | AssetTypes;
 
     /** @internal */
