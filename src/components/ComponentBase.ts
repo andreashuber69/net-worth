@@ -12,7 +12,7 @@
 
 import { Prop, Vue } from "vue-property-decorator";
 
-/** Provides common component functionality. */
+/** Defines common component functionality. */
 // tslint:disable-next-line:no-unsafe-any
 export class ComponentBase<T> extends Vue {
     @Prop()

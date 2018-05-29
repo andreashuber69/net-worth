@@ -16,7 +16,7 @@ import { SelectInputInfo } from "./SelectInputInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
-/** Provides a select control that simplifies common functionality like e.g. validation. */
+/** Implements a select control that simplifies common functionality like e.g. validation. */
 // tslint:disable-next-line:no-default-export
 export default class Select extends ControlBase<SelectInputInfo> {
     @Prop()

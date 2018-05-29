@@ -16,7 +16,7 @@ import { TextInputInfo } from "./TextInputInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
-/** Provides a text field control that simplifies common functionality like e.g. validation. */
+/** Implements a text field control that simplifies common functionality like e.g. validation. */
 // tslint:disable-next-line:no-default-export
 export default class TextField extends ControlBase<TextInputInfo> {
     /**

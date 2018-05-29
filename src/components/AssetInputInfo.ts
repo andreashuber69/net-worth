@@ -17,7 +17,7 @@ export interface IAssetConstructor {
     new (parent: IModel, properties: IAllAssetProperties): Asset;
 }
 
-/** Provides the base for all [[IAssetInputInfo]] implementations. */
+/** Defines the base for all [[IAssetInputInfo]] implementations. */
 export class AssetInputInfo {
     /** @internal */
     public createAsset(parent: IModel, properties: IAllAssetProperties) {

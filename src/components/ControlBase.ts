@@ -14,7 +14,7 @@ import { Prop, Vue } from "vue-property-decorator";
 import { ComponentBase } from "./ComponentBase";
 import { ValueInputInfo } from "./ValueInputInfo";
 
-/** Provides the base for all controls that simplify common functionality like e.g. validation. */
+/** Defines the base for all controls that simplify common functionality like e.g. validation. */
 export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string> {
     @Prop()
     public inputInfo?: T;
