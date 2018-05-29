@@ -16,8 +16,11 @@ import { IAssetInputInfo } from "./IAssetInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 
-/** Defines how a crypto currency wallet is edited in the asset editor UI. */
-export class CryptoWalletEditInfo extends AssetInputInfo implements IAssetInputInfo {
+/**
+ * Defines how the properties of a crypto currency wallet need to be input and provides a method to create a
+ * representation of the wallet.
+ */
+export class CryptoWalletInputInfo extends AssetInputInfo implements IAssetInputInfo {
     public readonly description = new TextInputInfo(
         "Description", "The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.", true, true);
     public readonly location = new TextInputInfo(

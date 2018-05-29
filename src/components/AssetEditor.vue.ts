@@ -19,10 +19,10 @@ import { SilverAsset } from "../model/SilverAsset";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetProperties } from "./AssetProperties";
 import { ComponentBase } from "./ComponentBase";
-import { CryptoWalletEditInfo } from "./CryptoWalletEditInfo";
+import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { IAssetInputInfo } from "./IAssetInputInfo";
 import { NoAssetEditInfo } from "./NoAssetEditInfo";
-import { PreciousMetalAssetEditInfo } from "./PreciousMetalAssetEditInfo";
+import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import Select from "./Select.vue";
 import { SelectInputInfo } from "./SelectInputInfo";
 import TextField from "./TextField.vue";
@@ -119,8 +119,8 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     private readonly assetInfos: IAssetInputInfo[] = [
-        new CryptoWalletEditInfo(BtcWallet.type, 8, BtcWallet),
-        new PreciousMetalAssetEditInfo(SilverAsset.type, SilverAsset),
+        new CryptoWalletInputInfo(BtcWallet.type, 8, BtcWallet),
+        new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
     ];
 
     // tslint:disable-next-line:no-null-keyword

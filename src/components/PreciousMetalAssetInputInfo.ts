@@ -17,8 +17,11 @@ import { IAssetInputInfo } from "./IAssetInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 
-/** Defines how a precious metal asset is edited in the asset editor UI. */
-export class PreciousMetalAssetEditInfo extends AssetInputInfo implements IAssetInputInfo {
+/**
+ * Defines how the properties of a precious metal asset need to be input and provides a method to create a
+ * representation of the asset.
+ */
+export class PreciousMetalAssetInputInfo extends AssetInputInfo implements IAssetInputInfo {
     public readonly description =
         new TextInputInfo("Description", "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
     public readonly location =
