@@ -11,12 +11,12 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetEditInfo } from "./AssetEditInfo";
-import { IAssetEditInfo } from "./IAssetEditInfo";
+import { IAssetInputInfo } from "./IAssetInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 
 /** Defines how the asset editor UI looks like when the asset type has not yet been selected. */
-export class NoAssetEditInfo extends AssetEditInfo implements IAssetEditInfo {
+export class NoAssetEditInfo extends AssetEditInfo implements IAssetInputInfo {
     public readonly type = "";
     public readonly description = new TextInputInfo();
     public readonly location = new TextInputInfo();

@@ -16,8 +16,11 @@ import { AssetTypes } from "../model/AssetTypes";
 import { IAllAssetProperties } from "./IAllAssetProperties";
 import { ValueInputInfo } from "./ValueInputInfo";
 
-/** Defines the interface used by the asset editor UI to edit an asset of a given type. */
-export interface IAssetEditInfo extends IAllAssetProperties<ValueInputInfo> {
+/**
+ * For an asset of a given type, defines how its properties need to be input and provides a method to create the
+ * asset.
+ */
+export interface IAssetInputInfo extends IAllAssetProperties<ValueInputInfo> {
     readonly type: "" | AssetTypes;
 
     /** @internal */

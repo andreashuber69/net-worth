@@ -12,12 +12,12 @@
 
 import { CryptoWalletTypes } from "../model/AssetTypes";
 import { AssetEditInfo, IAssetConstructor } from "./AssetEditInfo";
-import { IAssetEditInfo } from "./IAssetEditInfo";
+import { IAssetInputInfo } from "./IAssetInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 
 /** Defines how a crypto currency wallet is edited in the asset editor UI. */
-export class CryptoWalletEditInfo extends AssetEditInfo implements IAssetEditInfo {
+export class CryptoWalletEditInfo extends AssetEditInfo implements IAssetInputInfo {
     public readonly description = new TextInputInfo(
         "Description", "The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.", true, true);
     public readonly location = new TextInputInfo(
