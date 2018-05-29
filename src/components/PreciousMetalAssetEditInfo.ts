@@ -12,13 +12,13 @@
 
 import { PreciousMetalAssetTypes } from "../model/AssetTypes";
 import { WeightUnits } from "../model/WeightUnit";
-import { AssetEditInfo, IAssetConstructor } from "./AssetEditInfo";
+import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
 import { IAssetInputInfo } from "./IAssetInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 
 /** Defines how a precious metal asset is edited in the asset editor UI. */
-export class PreciousMetalAssetEditInfo extends AssetEditInfo implements IAssetInputInfo {
+export class PreciousMetalAssetEditInfo extends AssetInputInfo implements IAssetInputInfo {
     public readonly description =
         new TextInputInfo("Description", "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
     public readonly location =

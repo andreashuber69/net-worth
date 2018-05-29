@@ -17,8 +17,8 @@ export interface IAssetConstructor {
     new (parent: IModel, properties: IAssetPropertiesIntersection): Asset;
 }
 
-/** Provides the base for all [[IAssetEditInfo]] implementations. */
-export class AssetEditInfo {
+/** Provides the base for all [[IAssetInputInfo]] implementations. */
+export class AssetInputInfo {
     /** @internal */
     public createAsset(parent: IModel, properties: IAssetPropertiesIntersection) {
         if (!this.constructor) {
