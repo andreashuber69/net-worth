@@ -21,7 +21,7 @@ import { AssetProperties } from "./AssetProperties";
 import { ComponentBase } from "./ComponentBase";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { IAssetInputInfo } from "./IAssetInputInfo";
-import { NoAssetEditInfo } from "./NoAssetEditInfo";
+import { NoAssetInputInfo } from "./NoAssetInputInfo";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import Select from "./Select.vue";
 import { SelectInputInfo } from "./SelectInputInfo";
@@ -56,7 +56,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     /** Provides information about the currently selected asset type. */
-    public assetInfo: IAssetInputInfo = new NoAssetEditInfo();
+    public assetInfo: IAssetInputInfo = new NoAssetInputInfo();
 
     /** Provides the data currently displayed in the asset editor. */
     public data = new AssetEditorData();
@@ -131,7 +131,7 @@ export default class AssetEditor extends ComponentBase<Model> {
         // tslint:disable-next-line:no-unsafe-any
         (this.getControl("form") as any).reset();
         this.data = new AssetEditorData();
-        this.assetInfo = new NoAssetEditInfo();
+        this.assetInfo = new NoAssetInputInfo();
     }
 
     private isValid() {
