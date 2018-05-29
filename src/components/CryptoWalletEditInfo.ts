@@ -13,28 +13,28 @@
 import { CryptoWalletTypes } from "../model/AssetTypes";
 import { AssetEditInfo, IAssetConstructor } from "./AssetEditInfo";
 import { IAssetEditInfo } from "./IAssetEditInfo";
-import { SelectInfo } from "./SelectInfo";
-import { TextFieldInfo } from "./TextFieldInfo";
+import { SelectInputInfo } from "./SelectInputInfo";
+import { TextInputInfo } from "./TextInputInfo";
 
 /** Defines how a crypto currency wallet is edited in the asset editor UI. */
 export class CryptoWalletEditInfo extends AssetEditInfo implements IAssetEditInfo {
-    public readonly description = new TextFieldInfo(
+    public readonly description = new TextInputInfo(
         "Description", "The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.", true, true);
-    public readonly location = new TextFieldInfo(
+    public readonly location = new TextInputInfo(
         "Location", "The location of the wallet, e.g. 'Mobile Phone', 'Hardware Wallet', 'Safety Deposit Box'.",
         true, false);
-    public readonly address = new TextFieldInfo(
+    public readonly address = new TextInputInfo(
         "Address", "The public address of the wallet (single address or xpub).", true, false);
-    public readonly weight = new TextFieldInfo();
-    public readonly weightUnit = new SelectInfo();
-    public readonly fineness = new TextFieldInfo();
-    public readonly quantity: TextFieldInfo;
+    public readonly weight = new TextInputInfo();
+    public readonly weightUnit = new SelectInputInfo();
+    public readonly fineness = new TextInputInfo();
+    public readonly quantity: TextInputInfo;
 
     /** @internal */
     public constructor(
         public readonly type: CryptoWalletTypes, quantityDecimals: number, constructor: IAssetConstructor) {
         super(constructor);
-        this.quantity = new TextFieldInfo(
+        this.quantity = new TextInputInfo(
             "Quantity", "The amount in the wallet.", true, false, 0, undefined, Math.pow(10, -quantityDecimals));
     }
 }

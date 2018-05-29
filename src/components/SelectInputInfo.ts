@@ -10,18 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { InputInfo } from "./InputInfo";
+import { ValueInputInfo } from "./ValueInputInfo";
 
-/** Provides information to the [[TextField]] control. */
-export class TextFieldInfo extends InputInfo {
+/** Provides input information for a property where a valid value needs to be equal to one of a given list of values. */
+export class SelectInputInfo extends ValueInputInfo {
     /** @internal */
     public constructor(
-        label = "", hint = "", isVisible = false, isRequired = false,
-        public readonly min?: number, public readonly max?: number, public step?: number) {
+        label = "", hint = "", isVisible = false, isRequired = false, public readonly items: string[] = []) {
         super(label, hint, isVisible, isRequired);
-    }
-
-    public get type() {
-        return ((this.min !== undefined) || (this.max !== undefined) || (this.step !== undefined)) ? "number" : "text";
     }
 }

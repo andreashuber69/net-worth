@@ -14,10 +14,10 @@ import { Asset, IModel } from "../model/Asset";
 import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
 import { AssetTypes } from "../model/AssetTypes";
 import { IAllAssetProperties } from "./IAllAssetProperties";
-import { InputInfo } from "./InputInfo";
+import { ValueInputInfo } from "./ValueInputInfo";
 
 /** Defines the interface used by the asset editor UI to edit an asset of a given type. */
-export interface IAssetEditInfo extends IAllAssetProperties<InputInfo> {
+export interface IAssetEditInfo extends IAllAssetProperties<ValueInputInfo> {
     readonly type: "" | AssetTypes;
 
     /** @internal */

@@ -24,9 +24,9 @@ import { IAssetEditInfo } from "./IAssetEditInfo";
 import { NoAssetEditInfo } from "./NoAssetEditInfo";
 import { PreciousMetalAssetEditInfo } from "./PreciousMetalAssetEditInfo";
 import Select from "./Select.vue";
-import { SelectInfo } from "./SelectInfo";
+import { SelectInputInfo } from "./SelectInputInfo";
 import TextField from "./TextField.vue";
-import { TextFieldInfo } from "./TextFieldInfo";
+import { TextInputInfo } from "./TextInputInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { Select, TextField } })
@@ -43,7 +43,7 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     /** Provides the asset type input information. */
     public get typeInputInfo() {
-        return new SelectInfo("Type", "", true, true, this.assetInfos.map((info) => info.type));
+        return new SelectInputInfo("Type", "", true, true, this.assetInfos.map((info) => info.type));
     }
 
     /** Provides the currently selected asset type. */
@@ -66,7 +66,7 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     /** Validates select input. */
     // tslint:disable-next-line:prefer-function-over-method
-    public validateSelect(inputInfo: SelectInfo, control: Vue) {
+    public validateSelect(inputInfo: SelectInputInfo, control: Vue) {
         // TODO: This is a workaround for #4, remove as soon as the associated bug has been fixed in vuetify.
         if (!(control as any).value) {
             return "Please fill out this field.";
@@ -76,7 +76,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     /** Validates text field input. */
-    public validateTextField(inputInfo: TextFieldInfo, control: Vue) {
+    public validateTextField(inputInfo: TextInputInfo, control: Vue) {
         if (!this.assetInfo.quantity.isRequired && this.isGlobalValidation &&
             ((inputInfo === this.assetInfo.address) || (inputInfo === this.assetInfo.quantity)) &&
             ((!this.data.address) === (!this.data.quantity))) {

@@ -10,11 +10,21 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-/** Defines the base of all classes supplying information to custom controls. */
-export class InputInfo {
+import { ValueInputInfo } from "./ValueInputInfo";
+
+/**
+ * Provides input information for a property where a valid value either needs to be a number with certain constraints
+ * (minimum, maximum, step) or text.
+ */
+export class TextInputInfo extends ValueInputInfo {
     /** @internal */
-    protected constructor(
-        public readonly label: string, public readonly hint: string,
-        public readonly isVisible: boolean, public readonly isRequired: boolean) {
+    public constructor(
+        label = "", hint = "", isVisible = false, isRequired = false,
+        public readonly min?: number, public readonly max?: number, public step?: number) {
+        super(label, hint, isVisible, isRequired);
+    }
+
+    public get type() {
+        return ((this.min !== undefined) || (this.max !== undefined) || (this.step !== undefined)) ? "number" : "text";
     }
 }

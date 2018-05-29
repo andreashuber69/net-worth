@@ -14,23 +14,23 @@ import { PreciousMetalAssetTypes } from "../model/AssetTypes";
 import { WeightUnits } from "../model/WeightUnit";
 import { AssetEditInfo, IAssetConstructor } from "./AssetEditInfo";
 import { IAssetEditInfo } from "./IAssetEditInfo";
-import { SelectInfo } from "./SelectInfo";
-import { TextFieldInfo } from "./TextFieldInfo";
+import { SelectInputInfo } from "./SelectInputInfo";
+import { TextInputInfo } from "./TextInputInfo";
 
 /** Defines how a precious metal asset is edited in the asset editor UI. */
 export class PreciousMetalAssetEditInfo extends AssetEditInfo implements IAssetEditInfo {
     public readonly description =
-        new TextFieldInfo("Description", "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
+        new TextInputInfo("Description", "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
     public readonly location =
-        new TextFieldInfo("Location", "The location, e.g. 'Safe', 'Safety Deposit Box'.", true, false);
-    public readonly address = new TextFieldInfo();
+        new TextInputInfo("Location", "The location, e.g. 'Safe', 'Safety Deposit Box'.", true, false);
+    public readonly address = new TextInputInfo();
     public readonly weight =
-        new TextFieldInfo("Weight", "The weight of a single item, expressed in Unit.", true, true, 0, undefined, 1e-3);
-    public readonly weightUnit = new SelectInfo(
+        new TextInputInfo("Weight", "The weight of a single item, expressed in Unit.", true, true, 0, undefined, 1e-3);
+    public readonly weightUnit = new SelectInputInfo(
         "Unit", "The unit Weight is expressed in.", true, true, Array.from(WeightUnits.getAllStrings()));
     public readonly fineness =
-        new TextFieldInfo("Fineness", "The precious metal fineness.", true, true, 0.5, 1 - 1e-6, 1e-6);
-    public readonly quantity = new TextFieldInfo("Quantity", "The number of items.", true, true, 0);
+        new TextInputInfo("Fineness", "The precious metal fineness.", true, true, 0.5, 1 - 1e-6, 1e-6);
+    public readonly quantity = new TextInputInfo("Quantity", "The number of items.", true, true, 0);
 
     /** @internal */
     public constructor(public readonly type: PreciousMetalAssetTypes, constructor: IAssetConstructor) {

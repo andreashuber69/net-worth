@@ -10,13 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { InputInfo } from "./InputInfo";
-
-/** Provides information to the [[Select]] control. */
-export class SelectInfo extends InputInfo {
+/** Defines the base for all classes that provide input information for the value of a property. */
+export class ValueInputInfo {
     /** @internal */
-    public constructor(
-        label = "", hint = "", isVisible = false, isRequired = false, public readonly items: string[] = []) {
-        super(label, hint, isVisible, isRequired);
+    protected constructor(
+        public readonly label: string, public readonly hint: string,
+        public readonly isVisible: boolean, public readonly isRequired: boolean) {
     }
 }
