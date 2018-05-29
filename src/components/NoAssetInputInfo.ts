@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInputInfo } from "./AssetInputInfo";
-import { IAssetInputInfo } from "./IAssetInputInfo";
-import { SelectInputInfo } from "./SelectInputInfo";
-import { TextInputInfo } from "./TextInputInfo";
+import { AssetInputInfo } from "../model/AssetInputInfo";
+import { IAssetInputInfo } from "../model/IAssetInputInfo";
+import { SelectInputInfo } from "../model/SelectInputInfo";
+import { TextInputInfo } from "../model/TextInputInfo";
 
 /**
  * Defines how an asset with no properties needs to be "input".

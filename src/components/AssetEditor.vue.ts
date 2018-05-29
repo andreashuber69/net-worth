@@ -14,19 +14,19 @@ import { Component, Vue } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
 import { AssetBundle } from "../model/AssetBundle";
 import { BtcWallet } from "../model/BtcWallet";
+import { CryptoWalletInputInfo } from "../model/CryptoWalletInputInfo";
+import { IAssetInputInfo } from "../model/IAssetInputInfo";
 import { Model } from "../model/Model";
+import { PreciousMetalAssetInputInfo } from "../model/PreciousMetalAssetInputInfo";
+import { SelectInputInfo } from "../model/SelectInputInfo";
 import { SilverAsset } from "../model/SilverAsset";
+import { TextInputInfo } from "../model/TextInputInfo";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetProperties } from "./AssetProperties";
 import { ComponentBase } from "./ComponentBase";
-import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
-import { IAssetInputInfo } from "./IAssetInputInfo";
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
-import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import Select from "./Select.vue";
-import { SelectInputInfo } from "./SelectInputInfo";
 import TextField from "./TextField.vue";
-import { TextInputInfo } from "./TextInputInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { Select, TextField } })

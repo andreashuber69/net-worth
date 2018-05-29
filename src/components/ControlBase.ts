@@ -11,8 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Prop, Vue } from "vue-property-decorator";
+import { ValueInputInfo } from "../model/ValueInputInfo";
 import { ComponentBase } from "./ComponentBase";
-import { ValueInputInfo } from "./ValueInputInfo";
 
 /** Defines the base for all controls that simplify common functionality like e.g. validation. */
 export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string> {

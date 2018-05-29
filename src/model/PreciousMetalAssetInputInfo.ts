@@ -10,12 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { PreciousMetalAssetTypes } from "../model/AssetTypes";
-import { WeightUnits } from "../model/WeightUnit";
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
+import { PreciousMetalAssetTypes } from "./AssetTypes";
 import { IAssetInputInfo } from "./IAssetInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
+import { WeightUnits } from "./WeightUnit";
 
 /**
  * Defines how the properties of a precious metal asset need to be input and provides a method to create a

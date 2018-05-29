@@ -10,9 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "../model/Asset";
-import { IAllAssetProperties } from "../model/AssetInterfaces";
-import { AssetTypes } from "../model/AssetTypes";
+import { Asset, IModel } from "./Asset";
+import { IAllAssetProperties } from "./AssetInterfaces";
+import { AssetTypes } from "./AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
 import { ValueInputInfo } from "./ValueInputInfo";
 

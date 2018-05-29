@@ -11,8 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Prop } from "vue-property-decorator";
+import { SelectInputInfo } from "../model/SelectInputInfo";
 import { ControlBase } from "./ControlBase";
-import { SelectInputInfo } from "./SelectInputInfo";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component

@@ -11,9 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAssetUnion } from "../model/AssetInterfaces";
+import { IAuxProperties } from "../model/IAuxProperties";
 import { PreciousMetalAsset } from "../model/PreciousMetalAsset";
 import { WeightUnits } from "../model/WeightUnit";
-import { IAuxProperties } from "./IAuxProperties";
 
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements IAuxProperties<string> {

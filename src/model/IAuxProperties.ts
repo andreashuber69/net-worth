@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAllAssetProperties } from "../model/AssetInterfaces";
+import { IAllAssetProperties } from "./AssetInterfaces";
 
 /**
  * Defines an auxiliary property of type `T` for each of the properties of every asset.
