@@ -19,9 +19,9 @@ import { ValueInputInfo } from "./ValueInputInfo";
 export class TextInputInfo extends ValueInputInfo {
     /** @internal */
     public constructor(
-        label = "", hint = "", isVisible = false, isRequired = false,
+        label = "", hint = "", isPresent = false, isRequired = false,
         public readonly min?: number, public readonly max?: number, public step?: number) {
-        super(label, hint, isVisible, isRequired);
+        super(label, hint, isPresent, isRequired);
     }
 
     public get type() {

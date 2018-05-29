@@ -16,7 +16,7 @@ import { ValueInputInfo } from "./ValueInputInfo";
 export class SelectInputInfo extends ValueInputInfo {
     /** @internal */
     public constructor(
-        label = "", hint = "", isVisible = false, isRequired = false, public readonly items: string[] = []) {
-        super(label, hint, isVisible, isRequired);
+        label = "", hint = "", isPresent = false, isRequired = false, public readonly items: string[] = []) {
+        super(label, hint, isPresent, isRequired);
     }
 }

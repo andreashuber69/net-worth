@@ -15,6 +15,6 @@ export class ValueInputInfo {
     /** @internal */
     protected constructor(
         public readonly label: string, public readonly hint: string,
-        public readonly isVisible: boolean, public readonly isRequired: boolean) {
+        public readonly isPresent: boolean, public readonly isRequired: boolean) {
     }
 }

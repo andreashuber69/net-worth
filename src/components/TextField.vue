@@ -13,7 +13,7 @@
 -->
 
 <template>
-  <v-flex xs12 sm6 v-if="checkedInfo.isVisible">
+  <v-flex xs12 sm6 v-if="checkedInfo.isPresent">
     <v-text-field :label="checkedInfo.label" :hint="checkedInfo.hint" v-model="checkedValue"
       :required="checkedInfo.isRequired"
       :type="checkedInfo.type" :min="checkedInfo.min" :max="checkedInfo.max" :step="checkedInfo.step"
