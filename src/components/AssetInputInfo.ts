@@ -11,16 +11,16 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "../model/Asset";
-import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
+import { IAllAssetProperties } from "../model/AssetInterfaces";
 
 export interface IAssetConstructor {
-    new (parent: IModel, properties: IAssetPropertiesIntersection): Asset;
+    new (parent: IModel, properties: IAllAssetProperties): Asset;
 }
 
 /** Provides the base for all [[IAssetInputInfo]] implementations. */
 export class AssetInputInfo {
     /** @internal */
-    public createAsset(parent: IModel, properties: IAssetPropertiesIntersection) {
+    public createAsset(parent: IModel, properties: IAllAssetProperties) {
         if (!this.constructor) {
             throw new Error("No constructor specified.");
         }

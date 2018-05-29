@@ -10,14 +10,14 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
+import { IAllAssetProperties } from "../model/AssetInterfaces";
 import { WeightUnits } from "../model/WeightUnit";
 import { AssetEditorData } from "./AssetEditorData";
 
 /**
  * Converts the data edited in the editor into the format necessary to construct [[Asset]] subclass objects.
  */
-export class AssetProperties implements IAssetPropertiesIntersection {
+export class AssetProperties implements IAllAssetProperties {
     public get description() {
         return this.data.description;
     }

@@ -13,8 +13,8 @@
 import { ICryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 import { IPreciousMetalAsset, IPreciousMetalAssetProperties } from "./PreciousMetalAsset";
 
-/** Defines the editable properties of all assets. */
-export type IAssetPropertiesIntersection = ICryptoWalletProperties & IPreciousMetalAssetProperties;
+/** Combines the defining properties of all assets. */
+export type IAllAssetProperties = ICryptoWalletProperties & IPreciousMetalAssetProperties;
 
 /** @internal */
 export type IAssetUnion = ICryptoWallet | IPreciousMetalAsset;

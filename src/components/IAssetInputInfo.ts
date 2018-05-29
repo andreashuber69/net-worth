@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "../model/Asset";
-import { IAssetPropertiesIntersection } from "../model/AssetInterfaces";
+import { IAllAssetProperties } from "../model/AssetInterfaces";
 import { AssetTypes } from "../model/AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
 import { ValueInputInfo } from "./ValueInputInfo";
@@ -24,5 +24,5 @@ export interface IAssetInputInfo extends IAuxProperties<ValueInputInfo> {
     readonly type: "" | AssetTypes;
 
     /** @internal */
-    createAsset(parent: IModel, properties: IAssetPropertiesIntersection): Asset;
+    createAsset(parent: IModel, properties: IAllAssetProperties): Asset;
 }
