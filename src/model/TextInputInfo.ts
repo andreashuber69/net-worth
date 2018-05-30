@@ -25,6 +25,54 @@ export class TextInputInfo extends ValueInputInfo {
     }
 
     public get type() {
-        return ((this.min !== undefined) || (this.max !== undefined) || (this.step !== undefined)) ? "number" : "text";
+        return this.isNumber ? "number" : "text";
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @internal
+     * @description This duplicates the validation a HTML input control (or a v-text-field) does out of the box. The
+     * duplication is necessary for the following reasons:
+     * - Some browsers localize the validation message. Since this application is in English only, users with a
+     *   non-English locale would get mixed languages in the UI.
+     * - We want to use exactly the same rules to validate file content.
+     */
+    protected validateImpl(value: number | string) {
+        if (this.isNumber) {
+            const numericValue = typeof value === "number" ? value : Number.parseFloat(value);
+
+            if ((this.min !== undefined) && (this.min - numericValue > Number.EPSILON)) {
+                return `Value must be greater than or equal to ${this.min}.`;
+            }
+
+            if ((this.max !== undefined) && (numericValue - this.max > Number.EPSILON)) {
+                return `Value must be less than or equal to ${this.max}.`;
+            }
+
+            const bottom = this.min !== undefined ? this.min : 0;
+            const step = this.step !== undefined ? this.step : 1;
+            const lower = Math.floor((numericValue - bottom) / step) * step + bottom;
+            const upper = lower + step;
+            // The calculations for the conditions below each involve at most 6 operations, each of which might produce
+            // a result that could be wrong by at most Number.EPSILON.
+            const maxError = Math.abs(numericValue) * 6 * Number.EPSILON;
+
+            if ((numericValue - lower > maxError) && (upper - numericValue > maxError)) {
+                const options = { maximumFractionDigits: Math.floor(-Math.log10(maxError)) };
+                const lowerText = lower.toLocaleString(undefined, options);
+                const upperText = upper.toLocaleString(undefined, options);
+
+                return `Please enter a valid value. The two nearest valid values are ${lowerText} and ${upperText}.`;
+            }
+        }
+
+        return true;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private get isNumber() {
+        return (this.min !== undefined) || (this.max !== undefined) || (this.step !== undefined);
     }
 }

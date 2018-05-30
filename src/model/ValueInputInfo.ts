@@ -11,10 +11,27 @@
 // <http://www.gnu.org/licenses/>.
 
 /** Defines the base for all classes that provide input information for the value of a property. */
-export class ValueInputInfo {
+export abstract class ValueInputInfo {
+    public validate(value: number | string | undefined | null) {
+        if (!this.isPresent) {
+            return true;
+        }
+
+        if ((value === undefined) || (value === null) || (value === "")) {
+            return this.isRequired ? "Please fill out this field." : true;
+        }
+
+        return this.validateImpl(value);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /** @internal */
     protected constructor(
         public readonly label: string, public readonly hint: string,
         public readonly isPresent: boolean, public readonly isRequired: boolean) {
     }
+
+    /** @internal */
+    protected abstract validateImpl(value: number | string): true | string;
 }
