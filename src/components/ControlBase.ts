@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Prop, Vue } from "vue-property-decorator";
+import { Prop } from "vue-property-decorator";
 import { ValueInputInfo } from "../model/ValueInputInfo";
 import { ComponentBase } from "./ComponentBase";
 
@@ -20,7 +20,7 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string>
     public inputInfo?: T;
 
     @Prop()
-    public validator?: (inputInfo: T, control: Vue) => string | true;
+    public validator?: (inputInfo: T) => string | true;
 
     public get checkedInfo() {
         if (this.inputInfo === undefined) {
@@ -37,8 +37,6 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string>
             return localValidationResult;
         }
 
-        const control = this.getControl("control");
-
-        return !this.validator || !control || this.validator(this.checkedInfo, control);
+        return !this.validator || this.validator(this.checkedInfo);
     }
 }

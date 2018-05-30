@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component, Vue } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
 import { AssetBundle } from "../model/AssetBundle";
 import { BtcWallet } from "../model/BtcWallet";
@@ -65,7 +65,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     public isGlobalValidation = false;
 
     /** Validates text field input. */
-    public validateTextField(inputInfo: TextInputInfo, control: Vue) {
+    public validateTextField(inputInfo: TextInputInfo) {
         if (!this.assetInfo.quantity.isRequired && this.isGlobalValidation &&
             ((inputInfo === this.assetInfo.address) || (inputInfo === this.assetInfo.quantity)) &&
             ((!this.data.address) === (!this.data.quantity))) {

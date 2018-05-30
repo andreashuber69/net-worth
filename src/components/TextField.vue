@@ -17,7 +17,7 @@
     <v-text-field :label="checkedInfo.label" :hint="checkedInfo.hint" v-model="checkedValue"
       :required="checkedInfo.isRequired"
       :type="checkedInfo.type" :min="checkedInfo.min" :max="checkedInfo.max" :step="checkedInfo.step"
-      ref="control" :rules="[validate]" >
+      :rules="[validate]" >
     </v-text-field>
   </v-flex>
 </template>

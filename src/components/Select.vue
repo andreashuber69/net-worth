@@ -16,7 +16,7 @@
   <v-flex xs12 :sm6="!large" v-if="checkedInfo.isPresent">
     <v-select :label="checkedInfo.label" :hint="checkedInfo.hint" v-model="checkedValue"
       :items="checkedInfo.items" :item-text="checkedInfo.itemText"
-      :required="checkedInfo.isRequired" ref="control" :rules="[validate]" >
+      :required="checkedInfo.isRequired" :rules="[validate]" >
     </v-select>
   </v-flex>
 </template>
