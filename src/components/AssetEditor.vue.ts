@@ -64,17 +64,6 @@ export default class AssetEditor extends ComponentBase<Model> {
     /** @internal */
     public isGlobalValidation = false;
 
-    /** Validates select input. */
-    // tslint:disable-next-line:prefer-function-over-method
-    public validateSelect(inputInfo: SelectInputInfo, control: Vue) {
-        // TODO: This is a workaround for #4, remove as soon as the associated bug has been fixed in vuetify.
-        if (!(control as any).value) {
-            return "Please fill out this field.";
-        }
-
-        return AssetEditor.getNativeValidationMessage(control);
-    }
-
     /** Validates text field input. */
     public validateTextField(inputInfo: TextInputInfo, control: Vue) {
         if (!this.assetInfo.quantity.isRequired && this.isGlobalValidation &&
@@ -83,7 +72,7 @@ export default class AssetEditor extends ComponentBase<Model> {
             return "Please fill out either the Address or the Quantity.";
         }
 
-        return AssetEditor.getNativeValidationMessage(control);
+        return true;
     }
 
     public onResetClicked(event: MouseEvent) {
@@ -110,13 +99,6 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static getNativeValidationMessage(control: Vue) {
-        // TODO: no-unnecessary-type-assertion is probably a false positive, see
-        // https://github.com/palantir/tslint/issues/3540
-        // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
-        return (control.$refs.input as HTMLInputElement).validationMessage || true;
-    }
 
     private readonly assetInfos: IAssetInputInfo[] = [
         new CryptoWalletInputInfo(BtcWallet.type, 8, BtcWallet),
