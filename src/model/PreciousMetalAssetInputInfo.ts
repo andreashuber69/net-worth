@@ -23,17 +23,17 @@ import { WeightUnits } from "./WeightUnit";
  * representation of the asset.
  */
 export class PreciousMetalAssetInputInfo extends AssetInputInfo implements IAssetInputInfo {
-    public readonly description =
-        new TextInputInfo("Description", "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
-    public readonly location =
-        new TextInputInfo("Location", "The location, e.g. 'Safe', 'Safety Deposit Box'.", true, false);
+    public readonly description = new TextInputInfo(
+        "Description", "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
+    public readonly location = new TextInputInfo(
+        "Location", "The location, e.g. 'Safe', 'Safety Deposit Box'.", true, false);
     public readonly address = new TextInputInfo();
-    public readonly weight =
-        new TextInputInfo("Weight", "The weight of a single item, expressed in Unit.", true, true, 0, undefined, 1e-3);
+    public readonly weight = new TextInputInfo(
+        "Weight", "The weight of a single item, expressed in Unit.", true, true, 1e-3, undefined, 1e-3);
     public readonly weightUnit = new SelectInputInfo(
         "Unit", "The unit Weight is expressed in.", true, true, Array.from(WeightUnits.getAllStrings()));
-    public readonly fineness =
-        new TextInputInfo("Fineness", "The precious metal fineness.", true, true, 0.5, 1 - 1e-6, 1e-6);
+    public readonly fineness = new TextInputInfo(
+        "Fineness", "The precious metal fineness.", true, true, 0.5, 1 - 1e-6, 1e-6);
     public readonly quantity = new TextInputInfo("Quantity", "The number of items.", true, true, 0);
 
     /** @internal */
