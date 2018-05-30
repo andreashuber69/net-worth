@@ -10,8 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { IValidator } from "./IValidator";
+
 /** Defines the base for all classes that provide input information for the value of a property. */
-export abstract class ValueInputInfo {
+export abstract class ValueInputInfo implements IValidator<number | string | undefined | null> {
     public validate(value: number | string | undefined | null) {
         if (!this.isPresent) {
             return true;

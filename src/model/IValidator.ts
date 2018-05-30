@@ -10,20 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
-import { IAllAssetProperties } from "./AssetInterfaces";
-import { AssetTypes } from "./AssetTypes";
-import { IAuxProperties } from "./IAuxProperties";
-import { IValidator } from "./IValidator";
-import { ValueInputInfo } from "./ValueInputInfo";
-
-/**
- * For an asset of a given type, defines how its properties need to be input and provides a method to create the
- * asset.
- */
-export interface IAssetInputInfo extends IAuxProperties<ValueInputInfo>, IValidator<IAllAssetProperties> {
-    readonly type: "" | AssetTypes;
-
-    /** @internal */
-    createAsset(parent: IModel, properties: IAllAssetProperties): Asset;
+/** Defines a method used to validate a value. */
+export interface IValidator<T> {
+    /**
+     * Validates `value`.
+     * @returns `true` if validation succeeded; otherwise a string that describes the failure.
+     */
+    validate(value: T, property?: string): true | string;
 }

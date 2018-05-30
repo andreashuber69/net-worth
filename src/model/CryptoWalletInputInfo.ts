@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
+import { IAllAssetProperties } from "./AssetInterfaces";
 import { CryptoWalletTypes } from "./AssetTypes";
 import { IAssetInputInfo } from "./IAssetInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
@@ -39,5 +40,11 @@ export class CryptoWalletInputInfo extends AssetInputInfo implements IAssetInput
         super(constructor);
         this.quantity = new TextInputInfo(
             "Quantity", "The amount in the wallet.", true, false, 0, undefined, Math.pow(10, -quantityDecimals));
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected getInfo(property: keyof IAllAssetProperties) {
+        return this[property];
     }
 }

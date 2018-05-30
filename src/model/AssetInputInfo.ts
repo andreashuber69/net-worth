@@ -12,13 +12,14 @@
 
 import { Asset, IModel } from "./Asset";
 import { IAllAssetProperties } from "./AssetInterfaces";
+import { ValueInputInfo } from "./ValueInputInfo";
 
 export interface IAssetConstructor {
     new (parent: IModel, properties: IAllAssetProperties): Asset;
 }
 
 /** Defines the base for all [[IAssetInputInfo]] implementations. */
-export class AssetInputInfo {
+export abstract class AssetInputInfo {
     /** @internal */
     public createAsset(parent: IModel, properties: IAllAssetProperties) {
         if (!this.constructor) {
@@ -28,9 +29,34 @@ export class AssetInputInfo {
         return new this.constructor(parent, properties);
     }
 
+    /** @internal */
+    public validate(value: IAllAssetProperties, property?: keyof IAllAssetProperties): true | string {
+        if (property === undefined) {
+            // TODO: Iterate over all properties
+            return true;
+        }
+
+        const singleResult = this.validateProperty(value, property);
+
+        return singleResult === true ? this.validateImpl(value) : singleResult;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @internal */
     protected constructor(private readonly constructor?: IAssetConstructor) {
+    }
+
+    protected abstract getInfo(property: keyof IAllAssetProperties): ValueInputInfo;
+
+    // tslint:disable-next-line:prefer-function-over-method
+    protected validateImpl(value: IAllAssetProperties): true | string {
+        return true;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private validateProperty(value: IAllAssetProperties, property: keyof IAllAssetProperties) {
+        return this.getInfo(property).validate(value[property]);
     }
 }

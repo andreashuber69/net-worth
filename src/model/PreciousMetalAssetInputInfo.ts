@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
+import { IAllAssetProperties } from "./AssetInterfaces";
 import { PreciousMetalAssetTypes } from "./AssetTypes";
 import { IAssetInputInfo } from "./IAssetInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
@@ -38,5 +39,11 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo implements IAsse
     /** @internal */
     public constructor(public readonly type: PreciousMetalAssetTypes, constructor: IAssetConstructor) {
         super(constructor);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected getInfo(property: keyof IAllAssetProperties) {
+        return this[property];
     }
 }
