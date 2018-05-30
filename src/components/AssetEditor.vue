@@ -23,18 +23,18 @@
         <v-form ref="form">
           <v-container grid-list-md>
             <v-layout wrap>
-              <Select large :inputInfo="typeInputInfo" v-model="type"></Select>
-              <TextField :inputInfo="assetInfo.description" v-model="data.description" :validator="validateTextField">
+              <Select large :info="typeInputInfo" v-model="type"></Select>
+              <TextField :info="assetInfo.description" v-model="data.description" :validator="validateTextField">
               </TextField>
-              <TextField :inputInfo="assetInfo.location" v-model="data.location" :validator="validateTextField">
+              <TextField :info="assetInfo.location" v-model="data.location" :validator="validateTextField">
               </TextField>
-              <TextField :inputInfo="assetInfo.address" v-model="data.address" :validator="validateTextField">
+              <TextField :info="assetInfo.address" v-model="data.address" :validator="validateTextField">
               </TextField>
-              <TextField :inputInfo="assetInfo.weight" v-model="data.weight" :validator="validateTextField"></TextField>
-              <Select :inputInfo="assetInfo.weightUnit" v-model="data.weightUnit"></Select>
-              <TextField :inputInfo="assetInfo.fineness" v-model="data.fineness" :validator="validateTextField">
+              <TextField :info="assetInfo.weight" v-model="data.weight" :validator="validateTextField"></TextField>
+              <Select :info="assetInfo.weightUnit" v-model="data.weightUnit"></Select>
+              <TextField :info="assetInfo.fineness" v-model="data.fineness" :validator="validateTextField">
               </TextField>
-              <TextField :inputInfo="assetInfo.quantity" v-model="data.quantity" :validator="validateTextField">
+              <TextField :info="assetInfo.quantity" v-model="data.quantity" :validator="validateTextField">
               </TextField>
             </v-layout>
           </v-container>

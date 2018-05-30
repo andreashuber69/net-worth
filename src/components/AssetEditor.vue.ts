@@ -65,9 +65,9 @@ export default class AssetEditor extends ComponentBase<Model> {
     public isGlobalValidation = false;
 
     /** Validates text field input. */
-    public validateTextField(inputInfo: TextInputInfo) {
+    public validateTextField(info: TextInputInfo) {
         if (!this.assetInfo.quantity.isRequired && this.isGlobalValidation &&
-            ((inputInfo === this.assetInfo.address) || (inputInfo === this.assetInfo.quantity)) &&
+            ((info === this.assetInfo.address) || (info === this.assetInfo.quantity)) &&
             ((!this.data.address) === (!this.data.quantity))) {
             return "Please fill out either the Address or the Quantity.";
         }

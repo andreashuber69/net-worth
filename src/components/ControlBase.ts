@@ -17,17 +17,17 @@ import { ComponentBase } from "./ComponentBase";
 /** Defines the base for all controls that simplify common functionality like e.g. validation. */
 export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string> {
     @Prop()
-    public inputInfo?: T;
+    public info?: T;
 
     @Prop()
-    public validator?: (inputInfo: T) => string | true;
+    public validator?: (info: T) => string | true;
 
     public get checkedInfo() {
-        if (this.inputInfo === undefined) {
+        if (this.info === undefined) {
             throw new Error("No info set!");
         }
 
-        return this.inputInfo;
+        return this.info;
     }
 
     public validate(value: string) {

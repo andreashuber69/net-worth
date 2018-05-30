@@ -13,10 +13,9 @@
 -->
 
 <template>
-  <v-flex xs12 sm6 v-if="checkedInfo.isPresent">
-    <v-text-field :label="checkedInfo.label" :hint="checkedInfo.hint" v-model="checkedValue"
-      :required="checkedInfo.isRequired"
-      :type="checkedInfo.type" :min="checkedInfo.min" :max="checkedInfo.max" :step="checkedInfo.step"
+  <v-flex xs12 sm6 v-if="info.isPresent">
+    <v-text-field :label="info.label" :hint="info.hint" v-model="checkedValue"
+      :required="info.isRequired" :type="info.type" :min="info.min" :max="info.max" :step="info.step"
       :rules="[validate]" >
     </v-text-field>
   </v-flex>
