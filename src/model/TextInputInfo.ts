@@ -43,11 +43,11 @@ export class TextInputInfo extends ValueInputInfo {
             const numericValue = typeof value === "number" ? value : Number.parseFloat(value);
 
             if ((this.min !== undefined) && (this.min - numericValue > Number.EPSILON)) {
-                return `Value must be greater than or equal to ${this.min}.`;
+                return `Value must be greater than or equal to ${TextInputInfo.format(this.min)}.`;
             }
 
             if ((this.max !== undefined) && (numericValue - this.max > Number.EPSILON)) {
-                return `Value must be less than or equal to ${this.max}.`;
+                return `Value must be less than or equal to ${TextInputInfo.format(this.max)}.`;
             }
 
             const bottom = this.min !== undefined ? this.min : 0;
@@ -56,12 +56,11 @@ export class TextInputInfo extends ValueInputInfo {
             const upper = lower + step;
             // The calculations for the conditions below each involve at most 6 operations, each of which might produce
             // a result that could be wrong by at most Number.EPSILON.
-            const maxError = Math.abs(numericValue) * 6 * Number.EPSILON;
+            const maxError = TextInputInfo.getMaxError(upper, 6);
 
             if ((numericValue - lower > maxError) && (upper - numericValue > maxError)) {
-                const options = { maximumFractionDigits: Math.floor(-Math.log10(maxError)) };
-                const lowerText = lower.toLocaleString(undefined, options);
-                const upperText = upper.toLocaleString(undefined, options);
+                const lowerText = TextInputInfo.format(lower, 4);
+                const upperText = TextInputInfo.format(upper, 5);
 
                 return `Please enter a valid value. The two nearest valid values are ${lowerText} and ${upperText}.`;
             }
@@ -74,5 +73,14 @@ export class TextInputInfo extends ValueInputInfo {
 
     private get isNumber() {
         return (this.min !== undefined) || (this.max !== undefined) || (this.step !== undefined);
+    }
+
+    private static format(value: number, epsilonFactor: number = 1) {
+        return value.toLocaleString(
+            undefined, { maximumFractionDigits: Math.floor(-Math.log10(this.getMaxError(value, epsilonFactor))) });
+    }
+
+    private static getMaxError(value: number, epsilonFactor: number = 1) {
+        return Math.max(Math.abs(value) * epsilonFactor, 1) * Number.EPSILON;
     }
 }
