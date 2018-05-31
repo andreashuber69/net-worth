@@ -22,12 +22,20 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string>
     @Prop()
     public validator?: (info: T) => string | true;
 
-    public get checkedInfo() {
-        if (this.info === undefined) {
-            throw new Error("No info set!");
-        }
+    public get isPresent() {
+        return this.checkedInfo.isPresent;
+    }
 
-        return this.info;
+    public get isRequired() {
+        return this.checkedInfo.isRequired;
+    }
+
+    public get label() {
+        return this.checkedInfo.label;
+    }
+
+    public get hint() {
+        return this.checkedInfo.hint;
     }
 
     public validate(value: string) {
@@ -38,5 +46,15 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string>
         }
 
         return !this.validator || this.validator(this.checkedInfo);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected get checkedInfo() {
+        if (this.info === undefined) {
+            throw new Error("No info set!");
+        }
+
+        return this.info;
     }
 }

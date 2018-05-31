@@ -22,6 +22,10 @@ export default class Select extends ControlBase<SelectInputInfo> {
     @Prop()
     public large?: boolean;
 
+    public get items() {
+        return this.checkedInfo.items;
+    }
+
     /**
      * @description This redundant method is only necessary because a method called from a template apparently needs to
      * be a member of the class associated with the template.

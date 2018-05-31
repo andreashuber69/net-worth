@@ -13,9 +13,9 @@
 -->
 
 <template>
-  <v-flex xs12 :sm6="!large" v-if="info.isPresent">
-    <v-select :label="info.label" :hint="info.hint" v-model="checkedValue" :items="info.items" :required="info.isRequired"
-      :rules="[validate]">
+  <v-flex xs12 :sm6="!large" v-if="isPresent">
+    <v-select :label="label" :hint="hint" v-model="checkedValue"
+      :required="isRequired" :items="items" :rules="[validate]">
     </v-select>
   </v-flex>
 </template>
