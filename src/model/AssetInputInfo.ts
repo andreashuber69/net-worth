@@ -14,6 +14,7 @@ import { Asset, IModel } from "./Asset";
 import { IAllAssetProperties } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
+import { IInputInfo } from "./IInputInfo";
 import { IValidator } from "./IValidator";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
@@ -27,7 +28,8 @@ export interface IAssetConstructor {
  * Defines how the properties of a given asset type need to be input and validated and provides a method to create a
  * representation of the asset.
  */
-export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, IValidator<IAllAssetProperties> {
+export abstract class AssetInputInfo implements
+    IAuxProperties<ValueInputInfo>, IValidator<IAllAssetProperties>, IInputInfo {
     public abstract get type(): "" | AssetTypes;
 
     public abstract get description(): TextInputInfo;
@@ -40,11 +42,11 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
 
     /** @internal */
     public createAsset(parent: IModel, properties: IAllAssetProperties) {
-        if (!this.constructor) {
+        if (!this.ctor) {
             throw new Error("No constructor specified.");
         }
 
-        return new this.constructor(parent, properties);
+        return new this.ctor(parent, properties);
     }
 
     /** @internal */
@@ -59,10 +61,25 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
         return singleResult === true ? this.validateImpl(value) : singleResult;
     }
 
+    public get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAllAssetProperties): T {
+        if (property === undefined) {
+            throw new Error("The property parameter must not be undefined.");
+        }
+
+        const result = this[property];
+
+        if (!(result instanceof ctor)) {
+            throw new Error(
+                `The requested type ${ctor.name} does not match the actual type of the property ${property}.`);
+        }
+
+        return result;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @internal */
-    protected constructor(private readonly constructor?: IAssetConstructor) {
+    protected constructor(private readonly ctor?: IAssetConstructor) {
     }
 
     /** @internal */
