@@ -16,5 +16,5 @@ export interface IValidator<T> {
      * Validates `value`.
      * @returns `true` if validation succeeded; otherwise a string that describes the failure.
      */
-    validate(value: T, property?: string): true | string;
+    validate(value: T, property: string): true | string;
 }

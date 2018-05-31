@@ -50,20 +50,16 @@ export abstract class AssetInputInfo implements
     }
 
     /** @internal */
-    public validate(value: IAllAssetProperties, property?: keyof IAllAssetProperties): true | string {
-        if (property === undefined) {
-            // TODO: Iterate over all properties
-            return true;
-        }
-
-        const singleResult = this.validateProperty(value, property);
+    public validate(value: IAllAssetProperties, property: keyof IAllAssetProperties): true | string {
+        const singleResult = this[property].validate(value[property]);
 
         return singleResult === true ? this.validateImpl(value) : singleResult;
     }
 
+    /** @internal */
     public get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAllAssetProperties): T {
         if (property === undefined) {
-            throw new Error("The property parameter must not be undefined.");
+            throw new Error("The property argument must not be undefined.");
         }
 
         const result = this[property];
@@ -86,11 +82,5 @@ export abstract class AssetInputInfo implements
     // tslint:disable-next-line:prefer-function-over-method
     protected validateImpl(value: IAllAssetProperties): true | string {
         return true;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private validateProperty(value: IAllAssetProperties, property: keyof IAllAssetProperties) {
-        return this[property].validate(value[property]);
     }
 }
