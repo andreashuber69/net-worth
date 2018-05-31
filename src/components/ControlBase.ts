@@ -47,11 +47,8 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string>
     public validate(value: string) {
         const localValidationResult = this.checkedInfo.validate(value);
 
-        if (localValidationResult !== true) {
-            return localValidationResult;
-        }
-
-        return !this.validator || this.validator(this.checkedInfo);
+        return localValidationResult === true ?
+            !this.validator || this.validator(this.checkedInfo) : localValidationResult;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
