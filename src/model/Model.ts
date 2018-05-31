@@ -169,25 +169,24 @@ export class Model implements IModel {
         return typeof value.type === "string";
     }
 
-    private static createCryptoWallet(
-        model: IModel, raw: IStringIndexable, constructor: ICryptoWalletConstructor) {
+    private static createCryptoWallet(model: IModel, raw: IStringIndexable, ctor: ICryptoWalletConstructor) {
         if (!this.hasCryptoWalletProperties(raw) || (!raw.address === !raw.quantity) ||
             (raw.quantity && (raw.quantity <= 0))) {
             return undefined;
         }
 
-        return new constructor(model, raw);
+        return new ctor(model, raw);
     }
 
     private static createPreciousMetalAsset(
-        model: IModel, raw: IStringIndexable, constructor: IPreciousMetalAssetConstructor) {
+        model: IModel, raw: IStringIndexable, ctor: IPreciousMetalAssetConstructor) {
         if (!this.hasPreciousMetalAssetProperties(raw) || (raw.weight <= 0) || !WeightUnit[raw.weightUnit] ||
             (raw.fineness < 0.5) || (raw.fineness > 0.999999) || (!raw.quantity) || (raw.quantity <= 0) ||
             (raw.quantity % 1 !== 0)) {
             return undefined;
         }
 
-        return new constructor(model, raw);
+        return new ctor(model, raw);
     }
 
     private static hasCryptoWalletProperties(value: IStringIndexable): value is ICryptoWalletProperties {

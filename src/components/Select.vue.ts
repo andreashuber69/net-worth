@@ -26,6 +26,11 @@ export default class Select extends ControlBase<SelectInputInfo> {
         return this.checkedInfo.items;
     }
 
+    /** @internal */
+    public constructor() {
+        super(SelectInputInfo);
+    }
+
     /**
      * @description This redundant method is only necessary because a method called from a template apparently needs to
      * be a member of the class associated with the template.

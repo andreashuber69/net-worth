@@ -35,7 +35,7 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     public readonly quantity = new TextInputInfo("Quantity", "The number of items.", true, true, 0);
 
     /** @internal */
-    public constructor(public readonly type: PreciousMetalAssetTypes, constructor: IAssetConstructor) {
-        super(constructor);
+    public constructor(public readonly type: PreciousMetalAssetTypes, ctor: IAssetConstructor) {
+        super(ctor);
     }
 }

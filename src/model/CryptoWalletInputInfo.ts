@@ -33,9 +33,8 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly quantity: TextInputInfo;
 
     /** @internal */
-    public constructor(
-        public readonly type: CryptoWalletTypes, quantityDecimals: number, constructor: IAssetConstructor) {
-        super(constructor);
+    public constructor(public readonly type: CryptoWalletTypes, quantityDecimals: number, ctor: IAssetConstructor) {
+        super(ctor);
         this.quantity = new TextInputInfo(
             "Quantity", "The amount in the wallet.", true, false, 0, undefined, Math.pow(10, -quantityDecimals));
     }
