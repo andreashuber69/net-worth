@@ -17,7 +17,7 @@ import { TextInputInfo } from "./TextInputInfo";
 import { WeightUnits } from "./WeightUnit";
 
 /**
- * Defines how the properties of a precious metal asset need to be input and provides a method to create a
+ * Defines how the properties of a precious metal asset need to be input and validated and provides a method to create a
  * representation of the asset.
  */
 export class PreciousMetalAssetInputInfo extends AssetInputInfo {

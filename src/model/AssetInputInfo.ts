@@ -23,7 +23,10 @@ export interface IAssetConstructor {
     new (parent: IModel, properties: IAllAssetProperties): Asset;
 }
 
-/** Defines the base for all [[IAssetInputInfo]] implementations. */
+/**
+ * Defines how the properties of a given asset type need to be input and validated and provides a method to create a
+ * representation of the asset.
+ */
 export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, IValidator<IAllAssetProperties> {
     public abstract get type(): "" | AssetTypes;
 
