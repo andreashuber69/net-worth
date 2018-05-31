@@ -20,5 +20,5 @@ export interface IInputInfo {
      * @description When implemented by [[TextInputInfo]] or [[SelectInputInfo]], this method simply returns `this`.
      * @throws `Error` if `T` does not match the type implied by `property`.
      */
-    getInfo<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAllAssetProperties): T;
+    get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAllAssetProperties): T;
 }

@@ -60,6 +60,6 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string>
             throw new Error("No info set!");
         }
 
-        return this.info.getInfo(this.ctor);
+        return this.info.get(this.ctor);
     }
 }

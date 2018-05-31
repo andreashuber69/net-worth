@@ -28,7 +28,7 @@ export abstract class ValueInputInfo implements IValidator<number | string | und
         return this.validateImpl(value);
     }
 
-    public getInfo<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAllAssetProperties): T {
+    public get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAllAssetProperties): T {
         if (!(this instanceof ctor)) {
             throw new Error(`The requested type ${ctor.name} does not match the actual type.`);
         }
