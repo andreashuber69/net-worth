@@ -10,21 +10,15 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { IAllAssetProperties } from "./AssetInterfaces";
 import { ValueInputInfo } from "./ValueInputInfo";
 
-/** Provides input information for a property where a valid value needs to be equal to one of a given list of values. */
-export class SelectInputInfo extends ValueInputInfo {
-    /** @internal */
-    public constructor(
-        label = "", hint = "", isPresent = false, isRequired = false, public readonly items: string[] = []) {
-        super(label, hint, isPresent, isRequired);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /** @internal */
-    // tslint:disable-next-line:prefer-function-over-method
-    protected validateImpl(value: number | string): true | string {
-        return true;
-    }
+/** Defines a method used to validate a value. */
+export interface IInputInfo {
+    /**
+     * Gets the [[ValueInputInfo]] subclass object for `property`.
+     * @description When implemented by [[TextInputInfo]] or [[SelectInputInfo]], this method simply returns `this`.
+     * @throws `Error` if `T` does not match the type implied by `property`.
+     */
+    getInfo<T extends ValueInputInfo>(constructor: { new(): T }, property: keyof IAllAssetProperties): T;
 }

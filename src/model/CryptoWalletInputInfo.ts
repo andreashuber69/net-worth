@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
-import { IAllAssetProperties } from "./AssetInterfaces";
 import { CryptoWalletTypes } from "./AssetTypes";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";

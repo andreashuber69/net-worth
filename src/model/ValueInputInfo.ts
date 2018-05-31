@@ -10,10 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { IAllAssetProperties } from "./AssetInterfaces";
+import { IInputInfo } from "./IInputInfo";
 import { IValidator } from "./IValidator";
 
 /** Defines the base for all classes that provide input information for the value of a property. */
-export abstract class ValueInputInfo implements IValidator<number | string | undefined | null> {
+export abstract class ValueInputInfo implements IValidator<number | string | undefined | null>, IInputInfo {
     public validate(value: number | string | undefined | null) {
         if (!this.isPresent) {
             return true;
@@ -24,6 +26,14 @@ export abstract class ValueInputInfo implements IValidator<number | string | und
         }
 
         return this.validateImpl(value);
+    }
+
+    public getInfo<T extends ValueInputInfo>(ctor: { new(): T }, property: keyof IAllAssetProperties): T {
+        if (!(this instanceof ctor)) {
+            throw new Error(`The requested type ${ctor.name} does not match the actual type.`);
+        }
+
+        return this;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
