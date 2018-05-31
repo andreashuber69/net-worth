@@ -43,6 +43,7 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo implements IAsse
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /** @internal */
     protected getInfo(property: keyof IAllAssetProperties) {
         return this[property];
     }

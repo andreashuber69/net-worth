@@ -47,8 +47,10 @@ export abstract class AssetInputInfo {
     protected constructor(private readonly constructor?: IAssetConstructor) {
     }
 
+    /** @internal */
     protected abstract getInfo(property: keyof IAllAssetProperties): ValueInputInfo;
 
+    /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
     protected validateImpl(value: IAllAssetProperties): true | string {
         return true;

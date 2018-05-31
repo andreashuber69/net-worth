@@ -44,6 +44,7 @@ export class CryptoWalletInputInfo extends AssetInputInfo implements IAssetInput
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /** @internal */
     protected getInfo(property: keyof IAllAssetProperties) {
         return this[property];
     }
