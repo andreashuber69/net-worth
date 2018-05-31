@@ -21,6 +21,11 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string>
     public info?: IInputInfo;
 
     @Prop()
+    // property should be declared as having the type keyof IAllAssetProperties but doing so triggers the following
+    // issue: https://github.com/kaorun343/vue-property-decorator/issues/69
+    public property: undefined;
+
+    @Prop()
     public validator?: (info: T) => string | true;
 
     public get isPresent() {
@@ -60,6 +65,6 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string>
             throw new Error("No info set!");
         }
 
-        return this.info.get(this.ctor);
+        return this.info.get(this.ctor, this.property);
     }
 }
