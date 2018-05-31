@@ -12,6 +12,11 @@
 
 import { Asset, IModel } from "./Asset";
 import { IAllAssetProperties } from "./AssetInterfaces";
+import { AssetTypes } from "./AssetTypes";
+import { IAuxProperties } from "./IAuxProperties";
+import { IValidator } from "./IValidator";
+import { SelectInputInfo } from "./SelectInputInfo";
+import { TextInputInfo } from "./TextInputInfo";
 import { ValueInputInfo } from "./ValueInputInfo";
 
 export interface IAssetConstructor {
@@ -19,7 +24,17 @@ export interface IAssetConstructor {
 }
 
 /** Defines the base for all [[IAssetInputInfo]] implementations. */
-export abstract class AssetInputInfo {
+export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, IValidator<IAllAssetProperties> {
+    public abstract get type(): "" | AssetTypes;
+
+    public abstract get description(): TextInputInfo;
+    public abstract get location(): TextInputInfo;
+    public abstract get address(): TextInputInfo;
+    public abstract get weight(): TextInputInfo;
+    public abstract get weightUnit(): SelectInputInfo;
+    public abstract get fineness(): TextInputInfo;
+    public abstract get quantity(): TextInputInfo;
+
     /** @internal */
     public createAsset(parent: IModel, properties: IAllAssetProperties) {
         if (!this.constructor) {
@@ -48,9 +63,6 @@ export abstract class AssetInputInfo {
     }
 
     /** @internal */
-    protected abstract getInfo(property: keyof IAllAssetProperties): ValueInputInfo;
-
-    /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
     protected validateImpl(value: IAllAssetProperties): true | string {
         return true;
@@ -59,6 +71,6 @@ export abstract class AssetInputInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private validateProperty(value: IAllAssetProperties, property: keyof IAllAssetProperties) {
-        return this.getInfo(property).validate(value[property]);
+        return this[property].validate(value[property]);
     }
 }

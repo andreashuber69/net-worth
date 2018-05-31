@@ -13,7 +13,6 @@
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
 import { IAllAssetProperties } from "./AssetInterfaces";
 import { PreciousMetalAssetTypes } from "./AssetTypes";
-import { IAssetInputInfo } from "./IAssetInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { WeightUnits } from "./WeightUnit";
@@ -22,7 +21,7 @@ import { WeightUnits } from "./WeightUnit";
  * Defines how the properties of a precious metal asset need to be input and provides a method to create a
  * representation of the asset.
  */
-export class PreciousMetalAssetInputInfo extends AssetInputInfo implements IAssetInputInfo {
+export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     public readonly description = new TextInputInfo(
         "Description", "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
     public readonly location = new TextInputInfo(
@@ -39,12 +38,5 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo implements IAsse
     /** @internal */
     public constructor(public readonly type: PreciousMetalAssetTypes, constructor: IAssetConstructor) {
         super(constructor);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /** @internal */
-    protected getInfo(property: keyof IAllAssetProperties) {
-        return this[property];
     }
 }

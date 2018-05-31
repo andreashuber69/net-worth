@@ -12,7 +12,6 @@
 
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { IAllAssetProperties } from "../model/AssetInterfaces";
-import { IAssetInputInfo } from "../model/IAssetInputInfo";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { TextInputInfo } from "../model/TextInputInfo";
 
@@ -21,7 +20,7 @@ import { TextInputInfo } from "../model/TextInputInfo";
  * @description This is a virtual asset that is only useful to define how the [[AssetEditor]] UI looks like when no
  * asset type has been selected yet.
  */
-export class NoAssetInputInfo extends AssetInputInfo implements IAssetInputInfo {
+export class NoAssetInputInfo extends AssetInputInfo {
     public readonly type = "";
     public readonly description = new TextInputInfo();
     public readonly location = new TextInputInfo();
