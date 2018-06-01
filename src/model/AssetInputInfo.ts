@@ -15,7 +15,7 @@ import { IAllAssetProperties } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
 import { IInputInfo } from "./IInputInfo";
-import { IValidator } from "./IValidator";
+import { IProperties } from "./IProperties";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { ValueInputInfo } from "./ValueInputInfo";
@@ -28,8 +28,7 @@ export interface IAssetConstructor {
  * Defines how the properties of a given asset type need to be input and validated and provides a method to create a
  * representation of the asset.
  */
-export abstract class AssetInputInfo implements
-    IAuxProperties<ValueInputInfo>, IValidator<IAllAssetProperties>, IInputInfo {
+export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, IInputInfo {
     public abstract get type(): "" | AssetTypes;
 
     public abstract get description(): TextInputInfo;
@@ -50,16 +49,20 @@ export abstract class AssetInputInfo implements
     }
 
     /** @internal */
-    public validate(value: IAllAssetProperties, property: keyof IAllAssetProperties): true | string {
-        const singleResult = this[property].validate(value[property]);
+    public validate(properties: IProperties, property?: keyof IAuxProperties<string>): true | string {
+        if (property === undefined) {
+            throw AssetInputInfo.createPropertyArgumentError();
+        }
 
-        return singleResult === true ? this.validateImpl(value) : singleResult;
+        const singleResult = this[property].validate(properties, property);
+
+        return singleResult === true ? this.validateImpl(properties) : singleResult;
     }
 
     /** @internal */
     public get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAuxProperties<ValueInputInfo>): T {
         if (property === undefined) {
-            throw new Error("The property argument must not be undefined.");
+            throw AssetInputInfo.createPropertyArgumentError();
         }
 
         const result = this[property];
@@ -80,7 +83,13 @@ export abstract class AssetInputInfo implements
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateImpl(value: IAllAssetProperties): true | string {
+    protected validateImpl(properties: IProperties): true | string {
         return true;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static createPropertyArgumentError() {
+        return new Error("The property argument must not be undefined.");
     }
 }

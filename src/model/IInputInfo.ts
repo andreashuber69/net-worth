@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAuxProperties } from "./IAuxProperties";
+import { IProperties } from "./IProperties";
 import { ValueInputInfo } from "./ValueInputInfo";
 
 /** Defines a method used to validate a value. */
@@ -21,4 +22,6 @@ export interface IInputInfo {
      * @throws `Error` if `T` does not match the type implied by `property`.
      */
     get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAuxProperties<ValueInputInfo>): T;
+
+    validate(properties: IProperties, property?: keyof IAuxProperties<string>): true | string;
 }

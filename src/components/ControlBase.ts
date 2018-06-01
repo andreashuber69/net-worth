@@ -54,7 +54,7 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IProper
     }
 
     public validate(value: string) {
-        const localValidationResult = this.checkedInfo.validate(value);
+        const localValidationResult = this.inputInfo.validate(this.checkedValue, this.property);
 
         return localValidationResult === true ?
             !this.validator || this.validator(this.checkedInfo) : localValidationResult;
@@ -67,10 +67,16 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IProper
     }
 
     protected get checkedInfo() {
+        return this.inputInfo.get(this.ctor, this.property);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private get inputInfo() {
         if (this.info === undefined) {
             throw new Error("No info set!");
         }
 
-        return this.info.get(this.ctor, this.property);
+        return this.info;
     }
 }

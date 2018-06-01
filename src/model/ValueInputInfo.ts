@@ -12,16 +12,18 @@
 
 import { IAuxProperties } from "./IAuxProperties";
 import { IInputInfo } from "./IInputInfo";
-import { IValidator } from "./IValidator";
+import { IProperties } from "./IProperties";
 
 /** Defines the base for all classes that provide input information for the value of a property. */
-export abstract class ValueInputInfo implements IValidator<number | string | undefined | null>, IInputInfo {
-    public validate(value: number | string | undefined | null) {
+export abstract class ValueInputInfo implements IInputInfo {
+    public validate(properties: IProperties, property?: keyof IAuxProperties<string>) {
         if (!this.isPresent) {
             return true;
         }
 
-        if ((value === undefined) || (value === null) || (value === "")) {
+        const value = properties.get(property);
+
+        if (value.length === 0) {
             return this.isRequired ? "Please fill out this field." : true;
         }
 
