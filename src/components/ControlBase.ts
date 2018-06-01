@@ -12,11 +12,12 @@
 
 import { Prop } from "vue-property-decorator";
 import { IInputInfo } from "../model/IInputInfo";
+import { IProperties } from "../model/IProperties";
 import { ValueInputInfo } from "../model/ValueInputInfo";
 import { ComponentBase } from "./ComponentBase";
 
 /** Defines the base for all controls that simplify common functionality like e.g. validation. */
-export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string> {
+export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IProperties> {
     @Prop()
     public info?: IInputInfo;
 
@@ -42,6 +43,14 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<string>
 
     public get hint() {
         return this.checkedInfo.hint;
+    }
+
+    public get propertyValue() {
+        return this.checkedValue.get(this.property);
+    }
+
+    public set propertyValue(value: string) {
+        this.checkedValue.set(value, this.property);
     }
 
     public validate(value: string) {

@@ -48,15 +48,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     /** Provides the currently selected asset type. */
-    public get type() {
-        return this.assetInfo.type;
-    }
-
-    public set type(value: string) {
-        this.assetInfo = this.assetInfos.find((info) => info.type === value) as AssetInputInfo;
-    }
-
-    public readonly typeWrapper = new Property(() => this.type, (value) => this.type = value);
+    public readonly type = new Property(() => this.getType(), (value) => this.setType(value));
 
     /** Provides information about the currently selected asset type. */
     public assetInfo: AssetInputInfo = new NoAssetInputInfo();
@@ -110,6 +102,16 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     // tslint:disable-next-line:no-null-keyword
     private editedAsset: Asset | null = null;
+
+    private getType() {
+        return this.assetInfo.type;
+    }
+
+    private setType(value: string) {
+        // TODO: It appears that it is not possible to inline these methods and pass them as lambdas to the Property
+        // constructor. Compiler bug?
+        this.assetInfo = this.assetInfos.find((info) => info.type === value) as AssetInputInfo;
+    }
 
     private reset() {
         // TODO: Check whether the reset() call is even necessary.
