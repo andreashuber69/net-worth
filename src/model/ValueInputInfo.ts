@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAllAssetProperties } from "./AssetInterfaces";
+import { IAuxProperties } from "./IAuxProperties";
 import { IInputInfo } from "./IInputInfo";
 import { IValidator } from "./IValidator";
 
@@ -28,7 +28,7 @@ export abstract class ValueInputInfo implements IValidator<number | string | und
         return this.validateImpl(value);
     }
 
-    public get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAllAssetProperties): T {
+    public get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAuxProperties<ValueInputInfo>): T {
         if (!(this instanceof ctor)) {
             throw new Error(`The requested type ${ctor.name} does not match the actual type.`);
         }

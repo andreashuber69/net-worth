@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInputInfo } from "../model/AssetInputInfo";
-import { IAllAssetProperties } from "../model/AssetInterfaces";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { TextInputInfo } from "../model/TextInputInfo";
 
@@ -33,11 +32,5 @@ export class NoAssetInputInfo extends AssetInputInfo {
     /** @internal */
     public constructor() {
         super();
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected getInfo(property: keyof IAllAssetProperties) {
-        return this[property];
     }
 }

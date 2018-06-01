@@ -57,7 +57,7 @@ export abstract class AssetInputInfo implements
     }
 
     /** @internal */
-    public get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAllAssetProperties): T {
+    public get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAuxProperties<ValueInputInfo>): T {
         if (property === undefined) {
             throw new Error("The property argument must not be undefined.");
         }

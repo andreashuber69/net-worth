@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAllAssetProperties } from "./AssetInterfaces";
+import { IAuxProperties } from "./IAuxProperties";
 import { ValueInputInfo } from "./ValueInputInfo";
 
 /** Defines a method used to validate a value. */
@@ -20,5 +20,5 @@ export interface IInputInfo {
      * @description When implemented by [[TextInputInfo]] or [[SelectInputInfo]], this method simply returns `this`.
      * @throws `Error` if `T` does not match the type implied by `property`.
      */
-    get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAllAssetProperties): T;
+    get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAuxProperties<ValueInputInfo>): T;
 }
