@@ -12,11 +12,12 @@
 
 import { IAssetUnion } from "../model/AssetInterfaces";
 import { IAuxProperties } from "../model/IAuxProperties";
+import { IProperties } from "../model/IProperties";
 import { PreciousMetalAsset } from "../model/PreciousMetalAsset";
 import { WeightUnits } from "../model/WeightUnit";
 
 /** Represents the data being edited in the asset editor. */
-export class AssetEditorData implements IAuxProperties<string> {
+export class AssetEditorData implements IAuxProperties<string>, IProperties {
     public description: string;
     public location: string;
     public address: string;
@@ -53,6 +54,22 @@ export class AssetEditorData implements IAuxProperties<string> {
             this.fineness = "";
             this.quantity  = "";
         }
+    }
+
+    public get(property?: keyof IAuxProperties<string>) {
+        if (property === undefined) {
+            throw new Error("The property argument must not be undefined.");
+        }
+
+        return this[property];
+    }
+
+    public set(value: string, property?: keyof IAuxProperties<string>) {
+        if (property === undefined) {
+            throw new Error("The property argument must not be undefined.");
+        }
+
+        this[property] = value;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
