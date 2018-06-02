@@ -21,7 +21,6 @@ import { PreciousMetalAssetInputInfo } from "../model/PreciousMetalAssetInputInf
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { SilverAsset } from "../model/SilverAsset";
 import { SinglePropertyEntity } from "../model/SinglePropertyEntity";
-import { TextInputInfo } from "../model/TextInputInfo";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetProperties } from "./AssetProperties";
 import { ComponentBase } from "./ComponentBase";
@@ -55,15 +54,6 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     /** Provides the data currently displayed in the asset editor. */
     public data = new AssetEditorData();
-
-    /** @internal */
-    public isGlobalValidation = false;
-
-    /** Validates text field input. */
-    // tslint:disable-next-line:prefer-function-over-method
-    public validateTextField(info: TextInputInfo) {
-        return true;
-    }
 
     public onResetClicked(event: MouseEvent) {
         this.reset();
