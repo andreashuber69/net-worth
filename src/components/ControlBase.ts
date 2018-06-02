@@ -27,19 +27,19 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IEntity
     public property: undefined;
 
     public get isPresent() {
-        return this.checkedInfo.isPresent;
+        return this.valueInputInfo.isPresent;
     }
 
     public get isRequired() {
-        return this.checkedInfo.isRequired;
+        return this.valueInputInfo.isRequired;
     }
 
     public get label() {
-        return this.checkedInfo.label;
+        return this.valueInputInfo.label;
     }
 
     public get hint() {
-        return this.checkedInfo.hint;
+        return this.valueInputInfo.hint;
     }
 
     public get propertyValue() {
@@ -51,7 +51,7 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IEntity
     }
 
     public validate() {
-        return this.inputInfo.validate(this.checkedValue, this.property);
+        return this.checkedInfo.validate(this.checkedValue, this.property);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -60,13 +60,13 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IEntity
         super();
     }
 
-    protected get checkedInfo() {
-        return this.inputInfo.get(this.ctor, this.property);
+    protected get valueInputInfo() {
+        return this.checkedInfo.get(this.ctor, this.property);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private get inputInfo() {
+    private get checkedInfo() {
         if (this.info === undefined) {
             throw new Error("No info set!");
         }

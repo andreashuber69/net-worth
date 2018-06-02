@@ -20,19 +20,19 @@ import { ControlBase } from "./ControlBase";
 // tslint:disable-next-line:no-default-export
 export default class TextField extends ControlBase<TextInputInfo> {
     public get type() {
-        return this.checkedInfo.type;
+        return this.valueInputInfo.type;
     }
 
     public get min() {
-        return this.checkedInfo.min;
+        return this.valueInputInfo.min;
     }
 
     public get max() {
-        return this.checkedInfo.max;
+        return this.valueInputInfo.max;
     }
 
     public get step() {
-        return this.checkedInfo.step;
+        return this.valueInputInfo.step;
     }
 
     /** @internal */
