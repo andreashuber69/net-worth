@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAuxProperties } from "./IAuxProperties";
+import { AllAssetPropertyNames } from "./AssetInterfaces";
 import { IEntity } from "./IEntity";
 import { ValueInputInfo } from "./ValueInputInfo";
 
@@ -21,7 +21,7 @@ export interface IInputInfo {
      * @description When implemented by [[TextInputInfo]] or [[SelectInputInfo]], this method simply returns `this`.
      * @throws `Error` if `T` does not match the type implied by `property`.
      */
-    get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: keyof IAuxProperties<ValueInputInfo>): T;
+    get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T;
 
-    validate(entity: IEntity, propertyName?: keyof IAuxProperties<string>): true | string;
+    validate(entity: IEntity, propertyName?: AllAssetPropertyNames): true | string;
 }

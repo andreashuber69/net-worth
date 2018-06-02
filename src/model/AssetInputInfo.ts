@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "./Asset";
-import { IAllAssetProperties } from "./AssetInterfaces";
+import { AllAssetPropertyNames, IAllAssetProperties } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
 import { IEntity } from "./IEntity";
@@ -49,7 +49,7 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
     }
 
     /** @internal */
-    public validate(entity: IEntity, propertyName?: keyof IAuxProperties<string>): true | string {
+    public validate(entity: IEntity, propertyName?: AllAssetPropertyNames): true | string {
         if (propertyName === undefined) {
             throw AssetInputInfo.createPropertyArgumentError();
         }
@@ -60,7 +60,7 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
     }
 
     /** @internal */
-    public get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: keyof IAuxProperties<ValueInputInfo>): T {
+    public get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
         if (propertyName === undefined) {
             throw AssetInputInfo.createPropertyArgumentError();
         }

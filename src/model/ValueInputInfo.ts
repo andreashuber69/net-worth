@@ -10,13 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAuxProperties } from "./IAuxProperties";
+import { AllAssetPropertyNames } from "./AssetInterfaces";
 import { IEntity } from "./IEntity";
 import { IInputInfo } from "./IInputInfo";
 
 /** Defines the base for all classes that provide input information for the value of a property. */
 export abstract class ValueInputInfo implements IInputInfo {
-    public validate(entity: IEntity, propertyName?: keyof IAuxProperties<string>) {
+    public validate(entity: IEntity, propertyName?: AllAssetPropertyNames) {
         if (!this.isPresent) {
             return true;
         }
@@ -30,7 +30,7 @@ export abstract class ValueInputInfo implements IInputInfo {
         return this.validateImpl(value);
     }
 
-    public get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: keyof IAuxProperties<ValueInputInfo>): T {
+    public get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
         if (!(this instanceof ctor)) {
             throw new Error(`The requested type ${ctor.name} does not match the actual type.`);
         }

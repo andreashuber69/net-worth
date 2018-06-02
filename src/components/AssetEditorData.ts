@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetUnion } from "../model/AssetInterfaces";
+import { AllAssetPropertyNames, IAssetUnion } from "../model/AssetInterfaces";
 import { IAuxProperties } from "../model/IAuxProperties";
 import { IEntity } from "../model/IEntity";
 import { PreciousMetalAsset } from "../model/PreciousMetalAsset";
@@ -56,7 +56,7 @@ export class AssetEditorData implements IAuxProperties<string>, IEntity {
         }
     }
 
-    public getProperty(name?: keyof IAuxProperties<string>) {
+    public getProperty(name?: AllAssetPropertyNames) {
         if (name === undefined) {
             throw AssetEditorData.createError();
         }
@@ -64,7 +64,7 @@ export class AssetEditorData implements IAuxProperties<string>, IEntity {
         return this[name];
     }
 
-    public setProperty(value: string, name?: keyof IAuxProperties<string>) {
+    public setProperty(value: string, name?: AllAssetPropertyNames) {
         if (name === undefined) {
             throw AssetEditorData.createError();
         }

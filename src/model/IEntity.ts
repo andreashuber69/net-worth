@@ -10,13 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAuxProperties } from "./IAuxProperties";
+import { AllAssetPropertyNames } from "./AssetInterfaces";
 
 /** Provides methods to get and set the properties of an entity. */
 export interface IEntity {
     /** Gets the value of a property. */
-    getProperty(name?: keyof IAuxProperties<string>): string;
+    getProperty(name?: AllAssetPropertyNames): string;
 
     /** Sets the value of a property. */
-    setProperty(value: string, name?: keyof IAuxProperties<string>): void;
+    setProperty(value: string, name?: AllAssetPropertyNames): void;
 }

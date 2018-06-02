@@ -22,8 +22,8 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IEntity
     public info?: IInputInfo;
 
     @Prop()
-    // property should be declared as having the type keyof IAuxProperties<string> but doing so triggers the following
-    // issue: https://github.com/kaorun343/vue-property-decorator/issues/69
+    // property should be declared as having the type AllAssetPropertyNames but doing so triggers the following issue:
+    // https://github.com/kaorun343/vue-property-decorator/issues/69
     public property: undefined;
 
     @Prop()
