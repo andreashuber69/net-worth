@@ -60,13 +60,8 @@ export default class AssetEditor extends ComponentBase<Model> {
     public isGlobalValidation = false;
 
     /** Validates text field input. */
+    // tslint:disable-next-line:prefer-function-over-method
     public validateTextField(info: TextInputInfo) {
-        if (!this.assetInfo.quantity.isRequired && this.isGlobalValidation &&
-            ((info === this.assetInfo.address) || (info === this.assetInfo.quantity)) &&
-            ((!this.data.address) === (!this.data.quantity))) {
-            return "Please fill out either the Address or the Quantity.";
-        }
-
         return true;
     }
 
@@ -122,13 +117,13 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     private isValid() {
-        this.isGlobalValidation = true;
+        this.assetInfo.includeRelations = true;
 
         try {
             // tslint:disable-next-line:no-unsafe-any
             return (this.getControl("form") as any).validate();
         } finally {
-            this.isGlobalValidation = false;
+            this.assetInfo.includeRelations = false;
         }
     }
 

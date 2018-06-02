@@ -23,5 +23,9 @@ export interface IInputInfo {
      */
     get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T;
 
+    /**
+     * Validates a property of `entity`.
+     * @returns `true` if the property value is valid; otherwise a string describing why the value is invalid.
+     */
     validate(entity: IEntity, propertyName?: AllAssetPropertyNames): true | string;
 }

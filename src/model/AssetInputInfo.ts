@@ -39,6 +39,17 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
     public abstract get fineness(): TextInputInfo;
     public abstract get quantity(): TextInputInfo;
 
+    /**
+     * @internal
+     * @description This is a property rather than a parameter of [[validate]], because [[validate]] is often
+     * (indirectly) called from a context where it is not known whether relations should be validated. For example,
+     * validation for Vuetify controls is specified by supplying a function to each control. Said function is then
+     * called while the bound value is modified in the control. However, the same function is also called when the
+     * whole form is validated. Obviously relations should not be validated in the former case but they must be in the
+     * latter.
+     */
+    public includeRelations = false;
+
     /** @internal */
     public createAsset(parent: IModel, properties: IAllAssetProperties) {
         if (!this.ctor) {
@@ -48,7 +59,6 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
         return new this.ctor(parent, properties);
     }
 
-    /** @internal */
     public validate(entity: IEntity, propertyName?: AllAssetPropertyNames): true | string {
         if (propertyName === undefined) {
             throw AssetInputInfo.createPropertyArgumentError();
@@ -56,10 +66,10 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
 
         const singleResult = this[propertyName].validate(entity, propertyName);
 
-        return singleResult === true ? this.validateImpl(entity) : singleResult;
+        return (singleResult === true) && this.includeRelations ?
+            this.validateRelations(entity, propertyName) : singleResult;
     }
 
-    /** @internal */
     public get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
         if (propertyName === undefined) {
             throw AssetInputInfo.createPropertyArgumentError();
@@ -83,7 +93,7 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateImpl(entity: IEntity): true | string {
+    protected validateRelations(entity: IEntity, propertyName: AllAssetPropertyNames): true | string {
         return true;
     }
 

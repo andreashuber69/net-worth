@@ -26,9 +26,6 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IEntity
     // https://github.com/kaorun343/vue-property-decorator/issues/69
     public property: undefined;
 
-    @Prop()
-    public validator?: (info: T) => string | true;
-
     public get isPresent() {
         return this.checkedInfo.isPresent;
     }
@@ -54,10 +51,7 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IEntity
     }
 
     public validate() {
-        const localValidationResult = this.inputInfo.validate(this.checkedValue, this.property);
-
-        return localValidationResult === true ?
-            !this.validator || this.validator(this.checkedInfo) : localValidationResult;
+        return this.inputInfo.validate(this.checkedValue, this.property);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
