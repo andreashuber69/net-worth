@@ -14,8 +14,8 @@ import { Asset, IModel } from "./Asset";
 import { IAllAssetProperties } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
+import { IEntity } from "./IEntity";
 import { IInputInfo } from "./IInputInfo";
-import { IProperties } from "./IProperties";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { ValueInputInfo } from "./ValueInputInfo";
@@ -49,27 +49,27 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
     }
 
     /** @internal */
-    public validate(properties: IProperties, property?: keyof IAuxProperties<string>): true | string {
-        if (property === undefined) {
+    public validate(entity: IEntity, propertyName?: keyof IAuxProperties<string>): true | string {
+        if (propertyName === undefined) {
             throw AssetInputInfo.createPropertyArgumentError();
         }
 
-        const singleResult = this[property].validate(properties, property);
+        const singleResult = this[propertyName].validate(entity, propertyName);
 
-        return singleResult === true ? this.validateImpl(properties) : singleResult;
+        return singleResult === true ? this.validateImpl(entity) : singleResult;
     }
 
     /** @internal */
-    public get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAuxProperties<ValueInputInfo>): T {
-        if (property === undefined) {
+    public get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: keyof IAuxProperties<ValueInputInfo>): T {
+        if (propertyName === undefined) {
             throw AssetInputInfo.createPropertyArgumentError();
         }
 
-        const result = this[property];
+        const result = this[propertyName];
 
         if (!(result instanceof ctor)) {
             throw new Error(
-                `The requested type ${ctor.name} does not match the actual type of the property ${property}.`);
+                `The requested type ${ctor.name} does not match the actual type of the property ${propertyName}.`);
         }
 
         return result;
@@ -83,7 +83,7 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateImpl(properties: IProperties): true | string {
+    protected validateImpl(entity: IEntity): true | string {
         return true;
     }
 

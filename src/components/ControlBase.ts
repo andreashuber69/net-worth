@@ -11,13 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Prop } from "vue-property-decorator";
+import { IEntity } from "../model/IEntity";
 import { IInputInfo } from "../model/IInputInfo";
-import { IProperties } from "../model/IProperties";
 import { ValueInputInfo } from "../model/ValueInputInfo";
 import { ComponentBase } from "./ComponentBase";
 
 /** Defines the base for all controls that simplify common functionality like e.g. validation. */
-export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IProperties> {
+export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IEntity> {
     @Prop()
     public info?: IInputInfo;
 
@@ -46,11 +46,11 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IProper
     }
 
     public get propertyValue() {
-        return this.checkedValue.get(this.property);
+        return this.checkedValue.getProperty(this.property);
     }
 
     public set propertyValue(value: string) {
-        this.checkedValue.set(value, this.property);
+        this.checkedValue.setProperty(value, this.property);
     }
 
     public validate(value: string) {

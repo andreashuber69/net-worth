@@ -11,17 +11,17 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAuxProperties } from "./IAuxProperties";
+import { IEntity } from "./IEntity";
 import { IInputInfo } from "./IInputInfo";
-import { IProperties } from "./IProperties";
 
 /** Defines the base for all classes that provide input information for the value of a property. */
 export abstract class ValueInputInfo implements IInputInfo {
-    public validate(properties: IProperties, property?: keyof IAuxProperties<string>) {
+    public validate(entity: IEntity, propertyName?: keyof IAuxProperties<string>) {
         if (!this.isPresent) {
             return true;
         }
 
-        const value = properties.get(property);
+        const value = entity.getProperty(propertyName);
 
         if (value.length === 0) {
             return this.isRequired ? "Please fill out this field." : true;
@@ -30,7 +30,7 @@ export abstract class ValueInputInfo implements IInputInfo {
         return this.validateImpl(value);
     }
 
-    public get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAuxProperties<ValueInputInfo>): T {
+    public get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: keyof IAuxProperties<ValueInputInfo>): T {
         if (!(this instanceof ctor)) {
             throw new Error(`The requested type ${ctor.name} does not match the actual type.`);
         }

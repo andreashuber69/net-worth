@@ -10,10 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IProperties } from "./IProperties";
+import { IEntity } from "./IEntity";
 
-/** Defines methods to get and set the value of a property. */
-export class Property implements IProperties {
-    public constructor(public readonly get: () => string, public readonly set: (value: string) => void) {
+/** Represents an entity that consists of a single property. */
+export class SinglePropertyEntity implements IEntity {
+    public constructor(
+        public readonly getProperty: () => string, public readonly setProperty: (value: string) => void) {
     }
 }

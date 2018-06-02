@@ -12,12 +12,12 @@
 
 import { IAssetUnion } from "../model/AssetInterfaces";
 import { IAuxProperties } from "../model/IAuxProperties";
-import { IProperties } from "../model/IProperties";
+import { IEntity } from "../model/IEntity";
 import { PreciousMetalAsset } from "../model/PreciousMetalAsset";
 import { WeightUnits } from "../model/WeightUnit";
 
 /** Represents the data being edited in the asset editor. */
-export class AssetEditorData implements IAuxProperties<string>, IProperties {
+export class AssetEditorData implements IAuxProperties<string>, IEntity {
     public description: string;
     public location: string;
     public address: string;
@@ -56,25 +56,29 @@ export class AssetEditorData implements IAuxProperties<string>, IProperties {
         }
     }
 
-    public get(property?: keyof IAuxProperties<string>) {
-        if (property === undefined) {
-            throw new Error("The property argument must not be undefined.");
+    public getProperty(name?: keyof IAuxProperties<string>) {
+        if (name === undefined) {
+            throw AssetEditorData.createError();
         }
 
-        return this[property];
+        return this[name];
     }
 
-    public set(value: string, property?: keyof IAuxProperties<string>) {
-        if (property === undefined) {
-            throw new Error("The property argument must not be undefined.");
+    public setProperty(value: string, name?: keyof IAuxProperties<string>) {
+        if (name === undefined) {
+            throw AssetEditorData.createError();
         }
 
-        this[property] = value;
+        this[name] = value;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getQuantity(asset: IAssetUnion) {
         return asset.quantity !== undefined ? asset.quantity.toString() : "";
+    }
+
+    private static createError() {
+        return new Error("The name argument must not be undefined.");
     }
 }

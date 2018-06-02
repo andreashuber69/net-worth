@@ -11,17 +11,17 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAuxProperties } from "./IAuxProperties";
-import { IProperties } from "./IProperties";
+import { IEntity } from "./IEntity";
 import { ValueInputInfo } from "./ValueInputInfo";
 
 /** Defines a method used to validate a value. */
 export interface IInputInfo {
     /**
-     * Gets the [[ValueInputInfo]] subclass object for `property`.
+     * Gets the [[ValueInputInfo]] subclass object for a property.
      * @description When implemented by [[TextInputInfo]] or [[SelectInputInfo]], this method simply returns `this`.
      * @throws `Error` if `T` does not match the type implied by `property`.
      */
-    get<T extends ValueInputInfo>(ctor: { new(): T }, property?: keyof IAuxProperties<ValueInputInfo>): T;
+    get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: keyof IAuxProperties<ValueInputInfo>): T;
 
-    validate(properties: IProperties, property?: keyof IAuxProperties<string>): true | string;
+    validate(entity: IEntity, propertyName?: keyof IAuxProperties<string>): true | string;
 }

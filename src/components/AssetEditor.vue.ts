@@ -18,9 +18,9 @@ import { BtcWallet } from "../model/BtcWallet";
 import { CryptoWalletInputInfo } from "../model/CryptoWalletInputInfo";
 import { Model } from "../model/Model";
 import { PreciousMetalAssetInputInfo } from "../model/PreciousMetalAssetInputInfo";
-import { Property } from "../model/Property";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { SilverAsset } from "../model/SilverAsset";
+import { SinglePropertyEntity } from "../model/SinglePropertyEntity";
 import { TextInputInfo } from "../model/TextInputInfo";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetProperties } from "./AssetProperties";
@@ -48,7 +48,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     /** Provides the currently selected asset type. */
-    public readonly type = new Property(() => this.getType(), (value) => this.setType(value));
+    public readonly type = new SinglePropertyEntity(() => this.getType(), (value) => this.setType(value));
 
     /** Provides information about the currently selected asset type. */
     public assetInfo: AssetInputInfo = new NoAssetInputInfo();

@@ -12,11 +12,11 @@
 
 import { IAuxProperties } from "./IAuxProperties";
 
-/** Defines methods to get and set the value of a property. */
-export interface IProperties {
-    /** Gets the value for `property`. */
-    get(property?: keyof IAuxProperties<string>): string;
+/** Provides methods to get and set the properties of an entity. */
+export interface IEntity {
+    /** Gets the value of a property. */
+    getProperty(name?: keyof IAuxProperties<string>): string;
 
-    /** Sets the value for `property`. */
-    set(value: string, property?: keyof IAuxProperties<string>): void;
+    /** Sets the value of a property. */
+    setProperty(value: string, name?: keyof IAuxProperties<string>): void;
 }
