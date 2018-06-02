@@ -53,7 +53,7 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IEntity
         this.checkedValue.setProperty(value, this.property);
     }
 
-    public validate(value: string) {
+    public validate() {
         const localValidationResult = this.inputInfo.validate(this.checkedValue, this.property);
 
         return localValidationResult === true ?

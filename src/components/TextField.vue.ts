@@ -44,7 +44,7 @@ export default class TextField extends ControlBase<TextInputInfo> {
      * @description This redundant method is only necessary because a method called from a template apparently needs to
      * be a member of the class associated with the template.
      */
-    public validate(value: string) {
-        return super.validate(value);
+    public validate() {
+        return super.validate();
     }
 }
