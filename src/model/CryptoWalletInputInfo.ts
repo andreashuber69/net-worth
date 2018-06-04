@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { IAuxProperties } from "../model/IAuxProperties";
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
 import { AllAssetPropertyNames } from "./AssetInterfaces";
 import { CryptoWalletTypes } from "./AssetTypes";
-import { IEntity } from "./IEntity";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 
@@ -43,9 +43,8 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected validateRelations(entity: IEntity, propertyName: AllAssetPropertyNames) {
-        if (((propertyName === "address") || (propertyName === "quantity")) &&
-            ((!entity.getProperty("address") === (!entity.getProperty("quantity"))))) {
+    protected validateRelations(entity: IAuxProperties<string>, propertyName: AllAssetPropertyNames) {
+        if (((propertyName === "address") || (propertyName === "quantity")) && (!entity.address === !entity.quantity)) {
             return `Please fill out either the ${this.address.label} or the ${this.quantity.label}.`;
         }
 

@@ -11,13 +11,15 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Prop } from "vue-property-decorator";
-import { IEntity } from "../model/IEntity";
+import { AllAssetPropertyNames } from "../model/AssetInterfaces";
+import { Entity } from "../model/Entity";
+import { IAuxProperties } from "../model/IAuxProperties";
 import { IInputInfo } from "../model/IInputInfo";
 import { ValueInputInfo } from "../model/ValueInputInfo";
 import { ComponentBase } from "./ComponentBase";
 
 /** Defines the base for all controls that simplify common functionality like e.g. validation. */
-export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IEntity> {
+export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IAuxProperties<string> | string> {
     @Prop()
     public info?: IInputInfo;
 
@@ -43,11 +45,16 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IEntity
     }
 
     public get propertyValue() {
-        return this.checkedValue.getProperty(this.property);
+        return Entity.isComposite(this.checkedValue) ?
+            this.checkedValue[this.property as any as AllAssetPropertyNames] : this.checkedValue;
     }
 
     public set propertyValue(value: string) {
-        this.checkedValue.setProperty(value, this.property);
+        if (Entity.isComposite(this.checkedValue)) {
+            this.checkedValue[this.property as any as AllAssetPropertyNames] = value;
+        } else {
+            this.checkedValue = value;
+        }
     }
 
     public validate() {

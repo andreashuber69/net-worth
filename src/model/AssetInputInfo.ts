@@ -13,8 +13,8 @@
 import { Asset, IModel } from "./Asset";
 import { AllAssetPropertyNames, IAllAssetProperties } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
+import { Entity } from "./Entity";
 import { IAuxProperties } from "./IAuxProperties";
-import { IEntity } from "./IEntity";
 import { IInputInfo } from "./IInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
@@ -45,8 +45,8 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
      * (indirectly) called from a context where it is not known whether relations should be validated. For example,
      * validation for Vuetify controls is specified by supplying a function to each control. Said function is then
      * called while the bound value is modified in the control. However, the same function is also called when the
-     * whole form is validated. Obviously relations should not be validated in the former case but they must be in the
-     * latter.
+     * whole form is validated. Obviously, relations should not be validated in the former case but they must be in the
+     * latter one.
      */
     public includeRelations = false;
 
@@ -59,8 +59,8 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
         return new this.ctor(parent, properties);
     }
 
-    public validate(entity: IEntity, propertyName?: AllAssetPropertyNames): true | string {
-        if (propertyName === undefined) {
+    public validate(entity: IAuxProperties<string> | string, propertyName?: AllAssetPropertyNames): true | string {
+        if ((propertyName === undefined) || !Entity.isComposite(entity)) {
             throw AssetInputInfo.createPropertyArgumentError();
         }
 
@@ -93,13 +93,13 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateRelations(entity: IEntity, propertyName: AllAssetPropertyNames): true | string {
+    protected validateRelations(entity: IAuxProperties<string>, propertyName: AllAssetPropertyNames): true | string {
         return true;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static createPropertyArgumentError() {
-        return new Error("The property argument must not be undefined.");
+        return new Error("The propertyName argument must not be undefined.");
     }
 }

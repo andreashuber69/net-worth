@@ -10,14 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AllAssetPropertyNames, IAssetUnion } from "../model/AssetInterfaces";
+import { IAssetUnion } from "../model/AssetInterfaces";
 import { IAuxProperties } from "../model/IAuxProperties";
-import { IEntity } from "../model/IEntity";
 import { PreciousMetalAsset } from "../model/PreciousMetalAsset";
 import { WeightUnits } from "../model/WeightUnit";
 
 /** Represents the data being edited in the asset editor. */
-export class AssetEditorData implements IAuxProperties<string>, IEntity {
+export class AssetEditorData implements IAuxProperties<string> {
     public description: string;
     public location: string;
     public address: string;
@@ -56,29 +55,9 @@ export class AssetEditorData implements IAuxProperties<string>, IEntity {
         }
     }
 
-    public getProperty(name?: AllAssetPropertyNames) {
-        if (name === undefined) {
-            throw AssetEditorData.createError();
-        }
-
-        return this[name];
-    }
-
-    public setProperty(value: string, name?: AllAssetPropertyNames) {
-        if (name === undefined) {
-            throw AssetEditorData.createError();
-        }
-
-        this[name] = value;
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getQuantity(asset: IAssetUnion) {
         return asset.quantity !== undefined ? asset.quantity.toString() : "";
-    }
-
-    private static createError() {
-        return new Error("The name argument must not be undefined.");
     }
 }

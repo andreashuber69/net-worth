@@ -10,13 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AllAssetPropertyNames } from "./AssetInterfaces";
+import { IAuxProperties } from "./IAuxProperties";
 
-/** Provides methods to get and set the properties of an entity. */
-export interface IEntity {
-    /** Gets the value of a property. */
-    getProperty(name?: AllAssetPropertyNames): string;
-
-    /** Sets the value of a property. */
-    setProperty(value: string, name?: AllAssetPropertyNames): void;
+export class Entity {
+    public static isComposite(value: IAuxProperties<string> | string): value is IAuxProperties<string> {
+        return typeof value === "object";
+    }
 }

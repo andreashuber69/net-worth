@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AllAssetPropertyNames } from "./AssetInterfaces";
-import { IEntity } from "./IEntity";
+import { IAuxProperties } from "./IAuxProperties";
 import { ValueInputInfo } from "./ValueInputInfo";
 
 /** Defines a method used to validate a value. */
@@ -27,5 +27,5 @@ export interface IInputInfo {
      * Validates a property of `entity`.
      * @returns `true` if the property value is valid; otherwise a string describing why the value is invalid.
      */
-    validate(entity: IEntity, propertyName?: AllAssetPropertyNames): true | string;
+    validate(entity: IAuxProperties<string> | string, propertyName?: AllAssetPropertyNames): true | string;
 }

@@ -11,17 +11,18 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AllAssetPropertyNames } from "./AssetInterfaces";
-import { IEntity } from "./IEntity";
+import { Entity } from "./Entity";
+import { IAuxProperties } from "./IAuxProperties";
 import { IInputInfo } from "./IInputInfo";
 
 /** Defines the base for all classes that provide input information for the value of a property. */
 export abstract class ValueInputInfo implements IInputInfo {
-    public validate(entity: IEntity, propertyName?: AllAssetPropertyNames) {
+    public validate(entity: IAuxProperties<string> | string, propertyName?: AllAssetPropertyNames) {
         if (!this.isPresent) {
             return true;
         }
 
-        const value = entity.getProperty(propertyName);
+        const value = ValueInputInfo.getValue(entity, propertyName);
 
         if (value.length === 0) {
             return this.isRequired ? "Please fill out this field." : true;
@@ -48,4 +49,16 @@ export abstract class ValueInputInfo implements IInputInfo {
 
     /** @internal */
     protected abstract validateImpl(value: number | string): true | string;
+
+    private static getValue(entity: IAuxProperties<string> | string, propertyName?: AllAssetPropertyNames) {
+        if (!Entity.isComposite(entity)) {
+            return entity;
+        }
+
+        if (propertyName === undefined) {
+            throw new Error("The propertyName argument must not be undefined.");
+        }
+
+        return entity[propertyName];
+    }
 }
