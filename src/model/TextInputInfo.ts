@@ -38,7 +38,7 @@ export class TextInputInfo extends SimpleInputInfo {
      *   non-English locale would get mixed languages in the UI.
      * - We want to use exactly the same rules to validate file content.
      */
-    protected validateImpl(value: number | string) {
+    protected validateContent(value: number | string) {
         if (this.isNumber) {
             const numericValue = typeof value === "number" ? value : Number.parseFloat(value);
 
@@ -66,7 +66,7 @@ export class TextInputInfo extends SimpleInputInfo {
             }
         }
 
-        return true;
+        return super.validateContent(value);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

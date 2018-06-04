@@ -19,12 +19,4 @@ export class SelectInputInfo extends SimpleInputInfo {
         label = "", hint = "", isPresent = false, isRequired = false, public readonly items: string[] = []) {
         super(label, hint, isPresent, isRequired);
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /** @internal */
-    // tslint:disable-next-line:prefer-function-over-method
-    protected validateImpl(value: number | string): true | string {
-        return true;
-    }
 }

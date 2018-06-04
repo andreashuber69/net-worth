@@ -46,9 +46,12 @@ export abstract class SimpleInputInfo extends InputInfo {
             return this.isRequired ? "Please fill out this field." : true;
         }
 
-        return this.validateImpl(value);
+        return this.validateContent(value);
     }
 
     /** @internal */
-    protected abstract validateImpl(value: number | string): true | string;
+    // tslint:disable-next-line:prefer-function-over-method
+    protected validateContent(value: number | string): true | string {
+        return true;
+    }
 }
