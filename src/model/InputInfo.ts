@@ -22,13 +22,6 @@ import { Value } from "./Value";
  */
 export abstract class InputInfo {
     /**
-     * Gets the [[SimpleInputInfo]] subclass object for a property.
-     * @description When implemented by [[SimpleInputInfo]], this method simply returns `this`.
-     * @throws `Error` if `T` does not match the type implied by `propertyName`.
-     */
-    public abstract get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T;
-
-    /**
      * Validates `value` or a property of `value`.
      * @description As the type indicates, `value` can be of primitive or composite type. In the former case, `value`
      * itself is validated. In the latter case, the value of the property with the passed name is validated. Either
@@ -50,6 +43,13 @@ export abstract class InputInfo {
             return this.validatePrimitive(value);
         }
     }
+
+    /**
+     * Gets the [[SimpleInputInfo]] subclass object for a property.
+     * @description When implemented by [[SimpleInputInfo]], this method simply returns `this`.
+     * @throws `Error` if `T` does not match the type implied by `propertyName`.
+     */
+    public abstract get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
