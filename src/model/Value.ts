@@ -12,7 +12,7 @@
 
 import { IAuxProperties } from "./IAuxProperties";
 
-export class Entity {
+export class Value {
     public static isComposite(value: IAuxProperties<string> | string): value is IAuxProperties<string> {
         return typeof value === "object";
     }

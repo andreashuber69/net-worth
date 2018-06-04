@@ -11,27 +11,15 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AllAssetPropertyNames } from "./AssetInterfaces";
-import { Entity } from "./Entity";
-import { IAuxProperties } from "./IAuxProperties";
-import { IInputInfo } from "./IInputInfo";
+import { InputInfo } from "./InputInfo";
 
-/** Defines the base for all classes that provide input information for the value of a property. */
-export abstract class ValueInputInfo implements IInputInfo {
-    public validate(entity: IAuxProperties<string> | string, propertyName?: AllAssetPropertyNames) {
-        if (!this.isPresent) {
-            return true;
+/** Defines the base for all classes that provide input information for a simple value. */
+export abstract class SimpleInputInfo extends InputInfo {
+    public get<T extends SimpleInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
+        if (propertyName !== undefined) {
+            throw new Error("The propertyName argument must be undefined for a simple input.");
         }
 
-        const value = ValueInputInfo.getValue(entity, propertyName);
-
-        if (value.length === 0) {
-            return this.isRequired ? "Please fill out this field." : true;
-        }
-
-        return this.validateImpl(value);
-    }
-
-    public get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
         if (!(this instanceof ctor)) {
             throw new Error(`The requested type ${ctor.name} does not match the actual type.`);
         }
@@ -45,20 +33,22 @@ export abstract class ValueInputInfo implements IInputInfo {
     protected constructor(
         public readonly label: string, public readonly hint: string,
         public readonly isPresent: boolean, public readonly isRequired: boolean) {
+        super();
+    }
+
+    /** @internal */
+    protected validateSimple(value: string) {
+        if (!this.isPresent) {
+            return true;
+        }
+
+        if (value.length === 0) {
+            return this.isRequired ? "Please fill out this field." : true;
+        }
+
+        return this.validateImpl(value);
     }
 
     /** @internal */
     protected abstract validateImpl(value: number | string): true | string;
-
-    private static getValue(entity: IAuxProperties<string> | string, propertyName?: AllAssetPropertyNames) {
-        if (!Entity.isComposite(entity)) {
-            return entity;
-        }
-
-        if (propertyName === undefined) {
-            throw new Error("The propertyName argument must not be undefined.");
-        }
-
-        return entity[propertyName];
-    }
 }

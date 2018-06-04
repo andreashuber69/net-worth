@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ValueInputInfo } from "./ValueInputInfo";
+import { SimpleInputInfo } from "./SimpleInputInfo";
 
 /** Provides input information for a property where a valid value needs to be equal to one of a given list of values. */
-export class SelectInputInfo extends ValueInputInfo {
+export class SelectInputInfo extends SimpleInputInfo {
     /** @internal */
     public constructor(
         label = "", hint = "", isPresent = false, isRequired = false, public readonly items: string[] = []) {

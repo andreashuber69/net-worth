@@ -43,11 +43,11 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected validateRelations(entity: IAuxProperties<string>, propertyName: AllAssetPropertyNames) {
-        if (((propertyName === "address") || (propertyName === "quantity")) && (!entity.address === !entity.quantity)) {
+    protected validateRelations(value: IAuxProperties<string>, propertyName: AllAssetPropertyNames) {
+        if (((propertyName === "address") || (propertyName === "quantity")) && (!value.address === !value.quantity)) {
             return `Please fill out either the ${this.address.label} or the ${this.quantity.label}.`;
         }
 
-        return super.validateRelations(entity, propertyName);
+        return super.validateRelations(value, propertyName);
     }
 }

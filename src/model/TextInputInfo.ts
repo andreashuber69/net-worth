@@ -10,13 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ValueInputInfo } from "./ValueInputInfo";
+import { SimpleInputInfo } from "./SimpleInputInfo";
 
 /**
  * Provides input information for a property where a valid value either needs to be a number with certain constraints
  * (minimum, maximum, step) or text.
  */
-export class TextInputInfo extends ValueInputInfo {
+export class TextInputInfo extends SimpleInputInfo {
     /** @internal */
     public constructor(
         label = "", hint = "", isPresent = false, isRequired = false,

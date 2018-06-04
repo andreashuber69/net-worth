@@ -13,12 +13,11 @@
 import { Asset, IModel } from "./Asset";
 import { AllAssetPropertyNames, IAllAssetProperties } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
-import { Entity } from "./Entity";
 import { IAuxProperties } from "./IAuxProperties";
-import { IInputInfo } from "./IInputInfo";
+import { InputInfo } from "./InputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
+import { SimpleInputInfo } from "./SimpleInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { ValueInputInfo } from "./ValueInputInfo";
 
 export interface IAssetConstructor {
     new (parent: IModel, properties: IAllAssetProperties): Asset;
@@ -28,7 +27,7 @@ export interface IAssetConstructor {
  * Defines how the properties of a given asset type need to be input and validated and provides a method to create a
  * representation of the asset.
  */
-export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, IInputInfo {
+export abstract class AssetInputInfo extends InputInfo implements IAuxProperties<SimpleInputInfo> {
     public abstract get type(): "" | AssetTypes;
 
     public abstract get description(): TextInputInfo;
@@ -59,20 +58,9 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
         return new this.ctor(parent, properties);
     }
 
-    public validate(entity: IAuxProperties<string> | string, propertyName?: AllAssetPropertyNames): true | string {
-        if ((propertyName === undefined) || !Entity.isComposite(entity)) {
-            throw AssetInputInfo.createPropertyArgumentError();
-        }
-
-        const singleResult = this[propertyName].validate(entity, propertyName);
-
-        return (singleResult === true) && this.includeRelations ?
-            this.validateRelations(entity, propertyName) : singleResult;
-    }
-
-    public get<T extends ValueInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
+    public get<T extends SimpleInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
         if (propertyName === undefined) {
-            throw AssetInputInfo.createPropertyArgumentError();
+            throw new Error("The propertyName argument cannot be undefined for a composite input.");
         }
 
         const result = this[propertyName];
@@ -89,17 +77,20 @@ export abstract class AssetInputInfo implements IAuxProperties<ValueInputInfo>, 
 
     /** @internal */
     protected constructor(private readonly ctor?: IAssetConstructor) {
+        super();
+    }
+
+    /** @internal */
+    protected validateComposite(value: IAuxProperties<string>, propertyName: AllAssetPropertyNames) {
+        const singleResult = this[propertyName].validate(value[propertyName], undefined);
+
+        return (singleResult === true) && this.includeRelations ?
+            this.validateRelations(value, propertyName) : singleResult;
     }
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateRelations(entity: IAuxProperties<string>, propertyName: AllAssetPropertyNames): true | string {
+    protected validateRelations(value: IAuxProperties<string>, propertyName: AllAssetPropertyNames): true | string {
         return true;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static createPropertyArgumentError() {
-        return new Error("The propertyName argument must not be undefined.");
     }
 }

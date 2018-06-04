@@ -12,16 +12,16 @@
 
 import { Prop } from "vue-property-decorator";
 import { AllAssetPropertyNames } from "../model/AssetInterfaces";
-import { Entity } from "../model/Entity";
 import { IAuxProperties } from "../model/IAuxProperties";
-import { IInputInfo } from "../model/IInputInfo";
-import { ValueInputInfo } from "../model/ValueInputInfo";
+import { InputInfo } from "../model/InputInfo";
+import { SimpleInputInfo } from "../model/SimpleInputInfo";
+import { Value } from "../model/Value";
 import { ComponentBase } from "./ComponentBase";
 
 /** Defines the base for all controls that simplify common functionality like e.g. validation. */
-export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IAuxProperties<string> | string> {
+export class ControlBase<T extends SimpleInputInfo> extends ComponentBase<IAuxProperties<string> | string> {
     @Prop()
-    public info?: IInputInfo;
+    public info?: InputInfo;
 
     @Prop()
     // property should be declared as having the type AllAssetPropertyNames but doing so triggers the following issue:
@@ -45,12 +45,12 @@ export class ControlBase<T extends ValueInputInfo> extends ComponentBase<IAuxPro
     }
 
     public get propertyValue() {
-        return Entity.isComposite(this.checkedValue) ?
+        return Value.isComposite(this.checkedValue) ?
             this.checkedValue[this.property as any as AllAssetPropertyNames] : this.checkedValue;
     }
 
     public set propertyValue(value: string) {
-        if (Entity.isComposite(this.checkedValue)) {
+        if (Value.isComposite(this.checkedValue)) {
             this.checkedValue[this.property as any as AllAssetPropertyNames] = value;
         } else {
             this.checkedValue = value;

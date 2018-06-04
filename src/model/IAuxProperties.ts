@@ -12,11 +12,5 @@
 
 import { AllAssetPropertyNames } from "./AssetInterfaces";
 
-/**
- * Defines an auxiliary property of type `T` for each of the properties of every asset.
- * @description Classes implementing this interface could just as well not do so and code would continue to work. In
- * other words, there are no methods taking parameters of this type. Instead, the only purpose of this interface is to
- * have the compiler flag all pieces of code that have to be changed when a new asset type or a new asset property is
- * added.
- */
+/** Defines an auxiliary property of type `T` for each of the properties of every asset. */
 export type IAuxProperties<T> = { [K in AllAssetPropertyNames]: T };
