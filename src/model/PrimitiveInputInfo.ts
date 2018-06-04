@@ -13,11 +13,11 @@
 import { AllAssetPropertyNames } from "./AssetInterfaces";
 import { InputInfo } from "./InputInfo";
 
-/** Defines the base for all classes that provide input information for a simple value. */
-export abstract class SimpleInputInfo extends InputInfo {
-    public get<T extends SimpleInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
+/** Defines the base for all classes that provide input information for a primitive value. */
+export abstract class PrimitiveInputInfo extends InputInfo {
+    public get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
         if (propertyName !== undefined) {
-            throw new Error("The propertyName argument must be undefined for a simple input.");
+            throw new Error("The propertyName argument must be undefined for a primitive input.");
         }
 
         if (!(this instanceof ctor)) {
@@ -37,7 +37,7 @@ export abstract class SimpleInputInfo extends InputInfo {
     }
 
     /** @internal */
-    protected validateSimple(value: string) {
+    protected validatePrimitive(value: string) {
         if (!this.isPresent) {
             return true;
         }

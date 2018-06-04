@@ -15,8 +15,8 @@ import { AllAssetPropertyNames, IAllAssetProperties } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
 import { InputInfo } from "./InputInfo";
+import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
-import { SimpleInputInfo } from "./SimpleInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 
 export interface IAssetConstructor {
@@ -27,7 +27,7 @@ export interface IAssetConstructor {
  * Defines how the properties of a given asset type need to be input and validated and provides a method to create a
  * representation of the asset.
  */
-export abstract class AssetInputInfo extends InputInfo implements IAuxProperties<SimpleInputInfo> {
+export abstract class AssetInputInfo extends InputInfo implements IAuxProperties<PrimitiveInputInfo> {
     public abstract get type(): "" | AssetTypes;
 
     public abstract get description(): TextInputInfo;
@@ -58,7 +58,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
         return new this.ctor(parent, properties);
     }
 
-    public get<T extends SimpleInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
+    public get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
         if (propertyName === undefined) {
             throw new Error("The propertyName argument cannot be undefined for a composite input.");
         }
