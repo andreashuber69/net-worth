@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
+import { PrimitiveValue } from "./Value";
 
 /**
  * Provides input information for a property where a valid value either needs to be a number with certain constraints
@@ -38,9 +39,9 @@ export class TextInputInfo extends PrimitiveInputInfo {
      *   non-English locale would get mixed languages in the UI.
      * - We want to use exactly the same rules to validate file content.
      */
-    protected validateContent(value: number | string) {
-        if (this.isNumber) {
-            const numericValue = typeof value === "number" ? value : Number.parseFloat(value);
+    protected validateContent(value: PrimitiveValue) {
+        if (this.isNumber && (typeof value !== "undefined")) {
+            const numericValue = TextInputInfo.convertToNumeric(value);
 
             if ((this.min !== undefined) && (this.min - numericValue > Number.EPSILON)) {
                 return `Value must be greater than or equal to ${TextInputInfo.format(this.min)}.`;
@@ -73,6 +74,18 @@ export class TextInputInfo extends PrimitiveInputInfo {
 
     private get isNumber() {
         return (this.min !== undefined) || (this.max !== undefined) || (this.step !== undefined);
+    }
+
+    private static convertToNumeric(value: boolean | number | string) {
+        // This should rather be a switch statement but it appears that the current TypeScript compiler is unable to
+        // reason about types in switch-case statements: https://github.com/Microsoft/TypeScript/issues/2214.
+        if (typeof value === "string") {
+            return Number.parseFloat(value);
+        } else if (typeof value === "number") {
+            return value;
+        } else {
+            return value ? 1 : 0;
+        }
     }
 
     private static format(value: number, epsilonFactor: number = 1) {

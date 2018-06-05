@@ -43,7 +43,7 @@ export abstract class PrimitiveInputInfo extends InputInfo {
             return true;
         }
 
-        if (value.length === 0) {
+        if ((value === undefined) || ((typeof value === "string") && value.length === 0)) {
             return this.isRequired ? "Please fill out this field." : true;
         }
 
@@ -52,7 +52,7 @@ export abstract class PrimitiveInputInfo extends InputInfo {
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateContent(value: number | string): true | string {
+    protected validateContent(value: PrimitiveValue): true | string {
         return true;
     }
 }

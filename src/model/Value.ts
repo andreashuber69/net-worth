@@ -12,7 +12,7 @@
 
 import { IAuxProperties } from "./IAuxProperties";
 
-export type PrimitiveValue = string;
+export type PrimitiveValue = boolean | number | string | undefined;
 export type CompositeValue = IAuxProperties<PrimitiveValue>;
 export type Value = CompositeValue | PrimitiveValue;
 
