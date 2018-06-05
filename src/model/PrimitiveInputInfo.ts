@@ -12,7 +12,7 @@
 
 import { AllAssetPropertyNames } from "./AssetInterfaces";
 import { InputInfo } from "./InputInfo";
-import { PrimitiveValue } from "./Value";
+import { PrimitiveValue, RequiredPrimitiveValue } from "./Value";
 
 /** Defines the base for all classes that provide input information for a primitive value. */
 export abstract class PrimitiveInputInfo extends InputInfo {
@@ -52,7 +52,7 @@ export abstract class PrimitiveInputInfo extends InputInfo {
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateContent(value: PrimitiveValue): true | string {
+    protected validateContent(value: RequiredPrimitiveValue): true | string {
         return true;
     }
 }
