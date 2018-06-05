@@ -43,7 +43,7 @@ export abstract class PrimitiveInputInfo extends InputInfo {
             return true;
         }
 
-        if ((value === undefined) || ((typeof value === "string") && value.length === 0)) {
+        if ((value === undefined) || ((typeof value === "string") && (value.length === 0))) {
             return this.isRequired ? "Please fill out this field." : true;
         }
 
