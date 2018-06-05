@@ -12,8 +12,12 @@
 
 import { IAuxProperties } from "./IAuxProperties";
 
-export class Value {
-    public static isComposite(value: IAuxProperties<string> | string): value is IAuxProperties<string> {
+export type PrimitiveValue = string;
+export type CompositeValue = IAuxProperties<PrimitiveValue>;
+export type Value = CompositeValue | PrimitiveValue;
+
+export class ValueUtility {
+    public static isComposite(value: Value): value is CompositeValue {
         return typeof value === "object";
     }
 }

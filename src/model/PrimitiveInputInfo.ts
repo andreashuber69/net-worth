@@ -12,6 +12,7 @@
 
 import { AllAssetPropertyNames } from "./AssetInterfaces";
 import { InputInfo } from "./InputInfo";
+import { PrimitiveValue } from "./Value";
 
 /** Defines the base for all classes that provide input information for a primitive value. */
 export abstract class PrimitiveInputInfo extends InputInfo {
@@ -37,7 +38,7 @@ export abstract class PrimitiveInputInfo extends InputInfo {
     }
 
     /** @internal */
-    protected validatePrimitive(value: string) {
+    protected validatePrimitive(value: PrimitiveValue) {
         if (!this.isPresent) {
             return true;
         }

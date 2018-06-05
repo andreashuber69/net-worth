@@ -15,7 +15,7 @@ import { AllAssetPropertyNames } from "../model/AssetInterfaces";
 import { IAuxProperties } from "../model/IAuxProperties";
 import { InputInfo } from "../model/InputInfo";
 import { PrimitiveInputInfo } from "../model/PrimitiveInputInfo";
-import { Value } from "../model/Value";
+import { ValueUtility } from "../model/Value";
 import { ComponentBase } from "./ComponentBase";
 
 /** Defines the base for all controls that simplify common functionality like e.g. validation. */
@@ -45,12 +45,12 @@ export class ControlBase<T extends PrimitiveInputInfo> extends ComponentBase<IAu
     }
 
     public get propertyValue() {
-        return Value.isComposite(this.checkedValue) ?
+        return ValueUtility.isComposite(this.checkedValue) ?
             this.checkedValue[this.property as any as AllAssetPropertyNames] : this.checkedValue;
     }
 
     public set propertyValue(value: string) {
-        if (Value.isComposite(this.checkedValue)) {
+        if (ValueUtility.isComposite(this.checkedValue)) {
             this.checkedValue[this.property as any as AllAssetPropertyNames] = value;
         } else {
             this.checkedValue = value;

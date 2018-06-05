@@ -18,6 +18,7 @@ import { InputInfo } from "./InputInfo";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
+import { CompositeValue } from "./Value";
 
 export interface IAssetConstructor {
     new (parent: IModel, properties: IAllAssetProperties): Asset;
@@ -81,7 +82,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     }
 
     /** @internal */
-    protected validateComposite(value: IAuxProperties<string>, propertyName: AllAssetPropertyNames) {
+    protected validateComposite(value: CompositeValue, propertyName: AllAssetPropertyNames) {
         const singleResult = this[propertyName].validate(value[propertyName], undefined);
 
         return (singleResult === true) && this.includeRelations ?
@@ -90,7 +91,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateRelations(value: IAuxProperties<string>, propertyName: AllAssetPropertyNames): true | string {
+    protected validateRelations(value: CompositeValue, propertyName: AllAssetPropertyNames): true | string {
         return true;
     }
 }
