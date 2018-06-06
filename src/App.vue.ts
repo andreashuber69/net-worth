@@ -51,6 +51,7 @@ export default class App extends Vue {
             }
         }
 
+        // tslint:disable-next-line:no-unsafe-any
         (this.$refs.fileInput as HTMLInputElement).value = "";
     }
 

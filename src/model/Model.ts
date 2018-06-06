@@ -29,10 +29,10 @@ export class Model implements IModel {
     ];
 
     public static parse(json: string) {
-        let rawModel: any;
+        let rawModel: {};
 
         try {
-            rawModel = JSON.parse(json);
+            rawModel = JSON.parse(json) as {};
         } catch (e) {
             return (e as Error).message;
         }
@@ -51,7 +51,7 @@ export class Model implements IModel {
             const bundle = new AssetBundle();
 
             for (const rawAsset of rawBundle) {
-                const asset = Model.createAsset(model, rawAsset);
+                const asset = Model.createAsset(model, rawAsset as {});
 
                 if (!(asset instanceof Asset)) {
                     return asset;
@@ -151,32 +151,32 @@ export class Model implements IModel {
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
 
-    private static createAsset(model: IModel, rawAsset: any) {
-        if (!Model.hasStringIndexer(rawAsset)) {
+    private static createAsset(model: IModel, raw: {}) {
+        if (!Model.hasStringIndexer(raw)) {
             return "An asset must be of type Object.";
         }
 
-        if (typeof rawAsset.type !== "string") {
+        if (typeof raw.type !== "string") {
             return "An asset must have a 'type' property of type string.";
         }
 
-        const assetInfo = this.assetInfos.find((info) => info.type === rawAsset.type);
+        const assetInfo = this.assetInfos.find((info) => info.type === raw.type);
 
         if (!assetInfo) {
-            return `type: Unknown asset type '${rawAsset.type}'.`;
+            return `type: Unknown asset type '${raw.type}'.`;
         }
 
-        switch (rawAsset.type) {
+        switch (raw.type) {
             case BtcWallet.type:
-                return this.createAssetImpl(assetInfo, model, rawAsset, BtcWallet);
+                return this.createAssetImpl(assetInfo, model, raw, BtcWallet);
             case SilverAsset.type:
-                return this.createAssetImpl(assetInfo, model, rawAsset, SilverAsset);
+                return this.createAssetImpl(assetInfo, model, raw, SilverAsset);
             default:
                 return "Internal error.";
         }
     }
 
-    private static hasStringIndexer(value: any): value is { [key: string]: any } {
+    private static hasStringIndexer(value: {}): value is { [key: string]: {} } {
         return value instanceof Object;
     }
 
@@ -189,8 +189,8 @@ export class Model implements IModel {
         return new ctor(model, raw);
     }
 
-    private static hasProperties<T extends IAssetProperties>(info: AssetInputInfo, value: {}): value is T {
-        return info.validateAll(value) === true;
+    private static hasProperties<T extends IAssetProperties>(info: AssetInputInfo, raw: {}): raw is T {
+        return info.validateAll(raw) === true;
     }
 
     private readonly bundles = new Array<AssetBundle>();
