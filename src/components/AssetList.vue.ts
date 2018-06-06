@@ -24,6 +24,7 @@ type SortBy = "" | SortableProperties;
 interface IPagination {
     sortBy: SortBy;
     descending: boolean;
+    rowsPerPage: -1;
 }
 
 // tslint:disable-next-line:no-unsafe-any
@@ -32,7 +33,7 @@ interface IPagination {
 // tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
     /** Provides the information required for sorting and paginating the table. */
-    public pagination: IPagination = { sortBy: "", descending: false };
+    public pagination: IPagination = { sortBy: "", descending: false, rowsPerPage: -1 };
 
     /** Provides the current sort direction. */
     public get sortDirection() {
