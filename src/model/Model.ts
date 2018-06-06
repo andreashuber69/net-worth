@@ -39,30 +39,30 @@ export class Model implements IModel {
 
         const model = new Model();
 
-        if (rawModel instanceof Array) {
-            for (const rawBundle of rawModel) {
-                if (rawBundle instanceof Array) {
-                    const bundle = new AssetBundle();
-
-                    for (const rawAsset of rawBundle) {
-                        const asset = Model.createAsset(model, rawAsset);
-
-                        if (asset instanceof Asset) {
-                            bundle.assets.push(asset);
-                        } else {
-                            return asset;
-                        }
-                    }
-
-                    if (bundle.assets.length > 0) {
-                        model.addAsset(bundle);
-                    }
-                } else {
-                    return "An asset bundle must be of type Array.";
-                }
-            }
-        } else {
+        if (!(rawModel instanceof Array)) {
             return "The outermost object must be of type Array.";
+        }
+
+        for (const rawBundle of rawModel) {
+            if (!(rawBundle instanceof Array)) {
+                return "An asset bundle must be of type Array.";
+            }
+
+            const bundle = new AssetBundle();
+
+            for (const rawAsset of rawBundle) {
+                const asset = Model.createAsset(model, rawAsset);
+
+                if (!(asset instanceof Asset)) {
+                    return asset;
+                }
+
+                bundle.assets.push(asset);
+            }
+
+            if (bundle.assets.length > 0) {
+                model.addAsset(bundle);
+            }
         }
 
         return model;
@@ -152,27 +152,27 @@ export class Model implements IModel {
     ]);
 
     private static createAsset(model: IModel, rawAsset: any) {
-        if (Model.hasStringIndexer(rawAsset)) {
-            if (typeof rawAsset.type === "string") {
-                const assetInfo = this.assetInfos.find((info) => info.type === rawAsset.type);
-
-                if (assetInfo) {
-                    switch (rawAsset.type) {
-                        case BtcWallet.type:
-                            return this.createAssetImpl(assetInfo, model, rawAsset, BtcWallet);
-                        case SilverAsset.type:
-                            return this.createAssetImpl(assetInfo, model, rawAsset, SilverAsset);
-                        default:
-                            return "Internal error.";
-                    }
-                } else {
-                    return `type: Unknown asset type '${rawAsset.type}'.`;
-                }
-            } else {
-                return "An asset must have a 'type' property of type string.";
-            }
-        } else {
+        if (!Model.hasStringIndexer(rawAsset)) {
             return "An asset must be of type Object.";
+        }
+
+        if (typeof rawAsset.type !== "string") {
+            return "An asset must have a 'type' property of type string.";
+        }
+
+        const assetInfo = this.assetInfos.find((info) => info.type === rawAsset.type);
+
+        if (!assetInfo) {
+            return `type: Unknown asset type '${rawAsset.type}'.`;
+        }
+
+        switch (rawAsset.type) {
+            case BtcWallet.type:
+                return this.createAssetImpl(assetInfo, model, rawAsset, BtcWallet);
+            case SilverAsset.type:
+                return this.createAssetImpl(assetInfo, model, rawAsset, SilverAsset);
+            default:
+                return "Internal error.";
         }
     }
 
