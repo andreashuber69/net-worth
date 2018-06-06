@@ -44,7 +44,7 @@ export class BlockchainRequest implements IWebRequest<IBalance> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getFinalBalance(response: any) {
+    private static getFinalBalance(response: {}) {
         const result = { finalBalance: Number.NaN, transactionCount: 0 };
 
         if (this.hasStringIndexer(response)) {

@@ -37,7 +37,7 @@ export class QuandlRequest implements IWebRequest<number> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getPrice(response: any) {
+    private static getPrice(response: {}) {
         if (this.hasStringIndexer(response) && this.hasStringIndexer(response.dataset)) {
             const data = response.dataset.data;
 
