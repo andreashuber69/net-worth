@@ -83,14 +83,14 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
 
         try {
             const results: IValidationResults = {
-                description: this.validateComposite(value, "description"),
-                location: this.validateComposite(value, "location"),
+                description: this.validateComposite(true, value, "description"),
+                location: this.validateComposite(true, value, "location"),
                 // tslint:disable-next-line:object-literal-sort-keys
-                address: this.validateComposite(value, "address"),
-                weight: this.validateComposite(value, "weight"),
-                weightUnit: this.validateComposite(value, "weightUnit"),
-                fineness: this.validateComposite(value, "fineness"),
-                quantity: this.validateComposite(value, "quantity"),
+                address: this.validateComposite(true, value, "address"),
+                weight: this.validateComposite(true, value, "weight"),
+                weightUnit: this.validateComposite(true, value, "weightUnit"),
+                fineness: this.validateComposite(true, value, "fineness"),
+                quantity: this.validateComposite(true, value, "quantity"),
             };
 
             let message = "";
@@ -120,12 +120,12 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     }
 
     /** @internal */
-    protected validateComposite(value: CompositeValue, propertyName?: AllAssetPropertyNames) {
+    protected validateComposite(strict: boolean, value: CompositeValue, propertyName?: AllAssetPropertyNames) {
         if (propertyName === undefined) {
             throw new Error("The propertyName argument cannot be undefined for a composite value.");
         }
 
-        const singleResult = this[propertyName].validate(value[propertyName], undefined);
+        const singleResult = this[propertyName].validate(strict, value[propertyName], undefined);
 
         return (singleResult === true) && this.includeRelations ?
             this.validateRelations(value, propertyName) : singleResult;

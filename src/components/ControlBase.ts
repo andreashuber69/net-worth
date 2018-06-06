@@ -58,7 +58,7 @@ export abstract class ControlBase<T extends PrimitiveInputInfo> extends Componen
     }
 
     public validate() {
-        return this.checkedInfo.validate(this.checkedValue, this.property);
+        return this.checkedInfo.validate(false, this.checkedValue, this.property);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

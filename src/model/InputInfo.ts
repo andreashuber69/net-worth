@@ -27,11 +27,11 @@ export abstract class InputInfo {
      * way, this method only ever validates a single primitive value.
      * @returns `true` if the property value is valid; otherwise a string describing why the value is invalid.
      */
-    public validate(value: Value, propertyName?: AllAssetPropertyNames) {
+    public validate(strict: boolean, value: Value, propertyName?: AllAssetPropertyNames) {
         if (ValueUtility.isComposite(value)) {
-            return this.validateComposite(value, propertyName);
+            return this.validateComposite(strict, value, propertyName);
         } else {
-            return this.validatePrimitive(value);
+            return this.validatePrimitive(strict, value, propertyName);
         }
     }
 
@@ -45,12 +45,14 @@ export abstract class InputInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // tslint:disable-next-line:prefer-function-over-method
-    protected validatePrimitive(value: {} | undefined | null, propertyName?: AllAssetPropertyNames): true | string {
+    protected validatePrimitive(
+        strict: boolean, value: {} | undefined | null, propertyName?: AllAssetPropertyNames): true | string {
         return "A primitive value was provided when a composite one was expected.";
     }
 
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateComposite(value: CompositeValue, propertyName?: AllAssetPropertyNames): true | string {
+    protected validateComposite(
+        strict: boolean, value: CompositeValue, propertyName?: AllAssetPropertyNames): true | string {
         return "A composite value was provided when a primitive one was expected.";
     }
 }

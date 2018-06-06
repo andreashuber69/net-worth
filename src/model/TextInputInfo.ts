@@ -38,9 +38,14 @@ export class TextInputInfo extends PrimitiveInputInfo {
      *   non-English locale would get mixed languages in the UI.
      * - We want to use exactly the same rules to validate file content.
      */
-    protected validateContent(value: {}) {
+    protected validateContent(strict: boolean, value: {}) {
         if ((typeof value !== "string") && (typeof value !== "number")) {
             return "Value must either be a number or a string.";
+        }
+
+        if (strict && ((typeof value === "number") !== this.isNumber)) {
+            return `The actual type '${typeof value}' does not match ` +
+                `the expected type '${this.isNumber ? "number" : "string"}'.`;
         }
 
         if (this.isNumber) {
@@ -70,7 +75,7 @@ export class TextInputInfo extends PrimitiveInputInfo {
             }
         }
 
-        return super.validateContent(value);
+        return super.validateContent(strict, value);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
