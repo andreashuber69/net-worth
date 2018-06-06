@@ -50,6 +50,8 @@ export default class App extends Vue {
                 alert(result);
             }
         }
+
+        (this.$refs.fileInput as HTMLInputElement).value = "";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
