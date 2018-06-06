@@ -23,7 +23,7 @@ export default class Select extends ControlBase<SelectInputInfo> {
     public large?: boolean;
 
     public get items() {
-        return this.valueInputInfo.items;
+        return this.primitiveInputInfo.items;
     }
 
     /**
@@ -36,7 +36,7 @@ export default class Select extends ControlBase<SelectInputInfo> {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected get valueInputInfo(): SelectInputInfo {
+    protected get primitiveInputInfo(): SelectInputInfo {
         return this.checkedInfo.get(SelectInputInfo, this.property);
     }
 }

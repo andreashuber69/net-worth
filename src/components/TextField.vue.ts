@@ -20,19 +20,19 @@ import { ControlBase } from "./ControlBase";
 // tslint:disable-next-line:no-default-export
 export default class TextField extends ControlBase<TextInputInfo> {
     public get type() {
-        return this.valueInputInfo.type;
+        return this.primitiveInputInfo.type;
     }
 
     public get min() {
-        return this.valueInputInfo.min;
+        return this.primitiveInputInfo.min;
     }
 
     public get max() {
-        return this.valueInputInfo.max;
+        return this.primitiveInputInfo.max;
     }
 
     public get step() {
-        return this.valueInputInfo.step;
+        return this.primitiveInputInfo.step;
     }
 
     /**
@@ -45,7 +45,7 @@ export default class TextField extends ControlBase<TextInputInfo> {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected get valueInputInfo(): TextInputInfo {
+    protected get primitiveInputInfo(): TextInputInfo {
         return this.checkedInfo.get(TextInputInfo, this.property);
     }
 }

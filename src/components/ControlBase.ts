@@ -29,19 +29,19 @@ export abstract class ControlBase<T extends PrimitiveInputInfo> extends Componen
     public property: undefined;
 
     public get isPresent() {
-        return this.valueInputInfo.isPresent;
+        return this.primitiveInputInfo.isPresent;
     }
 
     public get isRequired() {
-        return this.valueInputInfo.isRequired;
+        return this.primitiveInputInfo.isRequired;
     }
 
     public get label() {
-        return this.valueInputInfo.label;
+        return this.primitiveInputInfo.label;
     }
 
     public get hint() {
-        return this.valueInputInfo.hint;
+        return this.primitiveInputInfo.hint;
     }
 
     public get propertyValue() {
@@ -63,7 +63,7 @@ export abstract class ControlBase<T extends PrimitiveInputInfo> extends Componen
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected abstract get valueInputInfo(): T;
+    protected abstract get primitiveInputInfo(): T;
 
     protected get checkedInfo() {
         if (this.info === undefined) {
