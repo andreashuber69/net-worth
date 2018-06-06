@@ -12,7 +12,6 @@
 
 import { AllAssetPropertyNames } from "./AssetInterfaces";
 import { InputInfo } from "./InputInfo";
-import { PrimitiveValue, RequiredPrimitiveValue } from "./Value";
 
 /** Defines the base for all classes that provide input information for a primitive value. */
 export abstract class PrimitiveInputInfo extends InputInfo {
@@ -38,12 +37,14 @@ export abstract class PrimitiveInputInfo extends InputInfo {
     }
 
     /** @internal */
-    protected validatePrimitive(value: PrimitiveValue) {
+    // TODO: The parameter type should be a type definition rather than explicitly spelled out here, but somehow the
+    // typescript compiler then seems to conclude that the (typeof value === "string") below is always false...
+    protected validatePrimitive(value: {} | undefined |  null) {
         if (!this.isPresent) {
             return true;
         }
 
-        if ((value === undefined) || ((typeof value === "string") && (value.length === 0))) {
+        if ((value === undefined) || (value === null) || ((typeof value === "string") && (value.length === 0))) {
             return this.isRequired ? "Please fill out this field." : true;
         }
 
@@ -52,7 +53,7 @@ export abstract class PrimitiveInputInfo extends InputInfo {
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateContent(value: RequiredPrimitiveValue): true | string {
+    protected validateContent(value: {}): true | string {
         return true;
     }
 }

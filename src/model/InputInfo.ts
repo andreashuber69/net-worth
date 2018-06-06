@@ -12,7 +12,7 @@
 
 import { AllAssetPropertyNames } from "./AssetInterfaces";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
-import { CompositeValue, PrimitiveValue, Value, ValueUtility } from "./Value";
+import { CompositeValue, Value, ValueUtility } from "./Value";
 
 /**
  * Defines the base for all classes that provide input information for a primitive or composite value.
@@ -44,8 +44,8 @@ export abstract class InputInfo {
     }
 
     /**
-     * Gets the [[SimpleInputInfo]] subclass object for a property.
-     * @description When implemented by [[SimpleInputInfo]], this method simply returns `this`.
+     * Gets the [[PrimitiveInputInfo]] subclass object for a property.
+     * @description When implemented by [[PrimitiveInputInfo]], this method simply returns `this`.
      * @throws `Error` if `T` does not match the type implied by `propertyName`.
      */
     public abstract get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T;
@@ -53,12 +53,12 @@ export abstract class InputInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // tslint:disable-next-line:prefer-function-over-method
-    protected validatePrimitive(value: PrimitiveValue): true | string {
-        throw new Error("A primitive value was provided when a composite one was expected.");
+    protected validatePrimitive(value: {} | undefined | null): true | string {
+        return "A primitive value was provided when a composite one was expected.";
     }
 
     // tslint:disable-next-line:prefer-function-over-method
     protected validateComposite(value: CompositeValue, propertyName: AllAssetPropertyNames): true | string {
-        throw new Error("A composite value was provided when a primitive one was expected.");
+        return "A composite value was provided when a primitive one was expected.";
     }
 }
