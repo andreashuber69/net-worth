@@ -10,31 +10,16 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { Asset, IAssetProperties, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { BtcWallet } from "./BtcWallet";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
-import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { IWebRequest } from "./IWebRequest";
-import { IPreciousMetalAssetProperties, PreciousMetalAsset } from "./PreciousMetalAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
-import { WeightUnit } from "./WeightUnit";
-
-interface IStringIndexable {
-    [key: string]: any;
-}
-
-interface ICryptoWalletConstructor {
-    new (parent: IModel, properties: ICryptoWalletProperties): CryptoWallet;
-}
-
-interface IPreciousMetalAssetConstructor {
-    new (parent: IModel, properties: IPreciousMetalAssetProperties): PreciousMetalAsset;
-}
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
@@ -154,13 +139,15 @@ export class Model implements IModel {
     ]);
 
     private static createAsset(model: IModel, rawAsset: any) {
-        if (Model.hasStringIndexer(rawAsset)) {
-            if (Model.hasTypeMember(rawAsset)) {
+        if (Model.hasStringIndexer(rawAsset) && (typeof rawAsset.type === "string")) {
+            const assetInfo = this.assetInfos.find((info) => info.type === rawAsset.type);
+
+            if (assetInfo) {
                 switch (rawAsset.type) {
                     case BtcWallet.type:
-                        return this.createCryptoWallet(model, rawAsset, BtcWallet);
+                        return this.createAssetImpl(assetInfo, model, rawAsset, BtcWallet);
                     case SilverAsset.type:
-                        return this.createPreciousMetalAsset(model, rawAsset, SilverAsset);
+                        return this.createAssetImpl(assetInfo, model, rawAsset, SilverAsset);
                     default:
                 }
             }
@@ -169,45 +156,21 @@ export class Model implements IModel {
         return undefined;
     }
 
-    private static hasStringIndexer(value: any): value is IStringIndexable {
+    private static hasStringIndexer(value: any): value is { [key: string]: any } {
         return value instanceof Object;
     }
 
-    private static hasTypeMember(value: IStringIndexable): value is { type: string } {
-        return typeof value.type === "string";
-    }
-
-    private static createCryptoWallet(model: IModel, raw: IStringIndexable, ctor: ICryptoWalletConstructor) {
-        if (!this.hasCryptoWalletProperties(raw) || (!raw.address === !raw.quantity) ||
-            (raw.quantity && (raw.quantity <= 0))) {
+    private static createAssetImpl<T extends IAssetProperties, U extends Asset>(
+        info: AssetInputInfo, model: IModel, raw: {}, ctor: { new (parent: IModel, properties: T): U }) {
+        if (!this.hasProperties<T>(info, raw)) {
             return undefined;
         }
 
         return new ctor(model, raw);
     }
 
-    private static createPreciousMetalAsset(
-        model: IModel, raw: IStringIndexable, ctor: IPreciousMetalAssetConstructor) {
-        if (!this.hasPreciousMetalAssetProperties(raw) || (raw.weight <= 0) || !WeightUnit[raw.weightUnit] ||
-            (raw.fineness < 0.5) || (raw.fineness > 0.999999) || (!raw.quantity) || (raw.quantity <= 0) ||
-            (raw.quantity % 1 !== 0)) {
-            return undefined;
-        }
-
-        return new ctor(model, raw);
-    }
-
-    private static hasCryptoWalletProperties(value: IStringIndexable): value is ICryptoWalletProperties {
-        const quantityType = typeof value.quantity;
-
-        return (typeof value.description === "string") && (typeof value.location === "string") &&
-            (typeof value.address === "string") && ((quantityType === "number") || (quantityType === "undefined"));
-    }
-
-    private static hasPreciousMetalAssetProperties(value: IStringIndexable): value is IPreciousMetalAssetProperties {
-        return (typeof value.description === "string") && (typeof value.location === "string") &&
-            (typeof value.weight === "number") && (typeof value.weightUnit === "number") &&
-            (typeof value.fineness === "number") && (typeof value.quantity === "number");
+    private static hasProperties<T extends IAssetProperties>(info: AssetInputInfo, value: {}): value is T {
+        return info.validateAll(value) === true;
     }
 
     private readonly bundles = new Array<AssetBundle>();
