@@ -19,7 +19,7 @@ import { ValueUtility } from "../model/Value";
 import { ComponentBase } from "./ComponentBase";
 
 /** Defines the base for all controls that simplify common functionality like e.g. validation. */
-export class ControlBase<T extends PrimitiveInputInfo> extends ComponentBase<IAuxProperties<string> | string> {
+export abstract class ControlBase<T extends PrimitiveInputInfo> extends ComponentBase<IAuxProperties<string> | string> {
     @Prop()
     public info?: InputInfo;
 
@@ -63,17 +63,9 @@ export class ControlBase<T extends PrimitiveInputInfo> extends ComponentBase<IAu
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected constructor(private readonly ctor: { new(): T }) {
-        super();
-    }
+    protected abstract get valueInputInfo(): T;
 
-    protected get valueInputInfo() {
-        return this.checkedInfo.get(this.ctor, this.property);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private get checkedInfo() {
+    protected get checkedInfo() {
         if (this.info === undefined) {
             throw new Error("No info set!");
         }
