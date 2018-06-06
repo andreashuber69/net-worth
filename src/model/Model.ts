@@ -21,6 +21,10 @@ import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
 
+interface IRootPrototype {
+    [key: string]: string | Asset[][];
+}
+
 /** Represents the main model of the application. */
 export class Model implements IModel {
     public static readonly assetInfos: AssetInputInfo[] = [
@@ -39,11 +43,29 @@ export class Model implements IModel {
 
         const model = new Model();
 
-        if (!(rawModel instanceof Array)) {
-            return "The outermost object must be of type Array.";
+        if (!this.hasStringIndexer(rawModel)) {
+            return "The outermost object must be of type Object.";
         }
 
-        for (const rawBundle of rawModel) {
+        for (const propertyName in this.jsonRootPrototype) {
+            if (this.jsonRootPrototype.hasOwnProperty(propertyName)) {
+                if (typeof rawModel[propertyName] !== typeof this.jsonRootPrototype[propertyName]) {
+                    const typeName = Model.getTypeName(this.jsonRootPrototype[propertyName]);
+
+                    return `${propertyName}: Value must be of type ${typeName}`;
+                }
+            }
+        }
+
+        const selectedCurrency = rawModel.selectedCurrency as string;
+
+        if (model.currencies.findIndex((currency) => currency === selectedCurrency) < 0) {
+            return "selectedCurrency: Unknown currency.";
+        }
+
+        model.selectedCurrency = selectedCurrency;
+
+        for (const rawBundle of rawModel.bundles as any[]) {
             if (!(rawBundle instanceof Array)) {
                 return "An asset bundle must be of type Array.";
             }
@@ -113,10 +135,20 @@ export class Model implements IModel {
 
     /** @internal */
     public toJSON() {
-        return this.bundles.map((bundle) => bundle.toJSON());
+        return {
+            selectedCurrency: this.selectedCurrency,
+            // tslint:disable-next-line:object-literal-sort-keys
+            bundles: this.bundles.map((bundle) => bundle.toJSON()),
+        };
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static readonly jsonRootPrototype: IRootPrototype = {
+        selectedCurrency: "",
+        // tslint:disable-next-line:object-literal-sort-keys
+        bundles: new Array<Asset[]>(),
+    };
 
     private static readonly currencyMap = new Map<string, IWebRequest<number>>([
         ["USD", new QuandlRequest("", false)],
@@ -150,6 +182,12 @@ export class Model implements IModel {
         ["XAU", new QuandlRequest("lbma/gold.json", true)],
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
+
+    private static getTypeName(value: {}) {
+        const type = typeof value;
+
+        return type === "object" ? (Array.isArray(value) ? "Array" : "Object") : type;
+    }
 
     private static createAsset(model: IModel, raw: {}) {
         if (!Model.hasStringIndexer(raw)) {
