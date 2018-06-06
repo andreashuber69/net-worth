@@ -176,7 +176,7 @@ export class Model implements IModel {
         }
     }
 
-    private static hasStringIndexer(value: {}): value is { [key: string]: {} } {
+    private static hasStringIndexer(value: any): value is { [key: string]: any } {
         return value instanceof Object;
     }
 
