@@ -46,12 +46,12 @@ export abstract class ControlBase<T extends PrimitiveInputInfo> extends Componen
 
     public get propertyValue() {
         return ValueUtility.isComposite(this.checkedValue) ?
-            this.checkedValue[this.property as any as AllAssetPropertyNames] : this.checkedValue;
+            this.checkedValue[this.checkedProperty] : this.checkedValue;
     }
 
     public set propertyValue(value: string) {
         if (ValueUtility.isComposite(this.checkedValue)) {
-            this.checkedValue[this.property as any as AllAssetPropertyNames] = value;
+            this.checkedValue[this.checkedProperty] = value;
         } else {
             this.checkedValue = value;
         }
@@ -71,5 +71,15 @@ export abstract class ControlBase<T extends PrimitiveInputInfo> extends Componen
         }
 
         return this.info;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private get checkedProperty() {
+        if (this.property as any === undefined) {
+            throw new Error("No property set!");
+        }
+
+        return this.property as any as AllAssetPropertyNames;
     }
 }
