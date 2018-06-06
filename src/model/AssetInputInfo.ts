@@ -120,7 +120,11 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     }
 
     /** @internal */
-    protected validateComposite(value: CompositeValue, propertyName: AllAssetPropertyNames) {
+    protected validateComposite(value: CompositeValue, propertyName?: AllAssetPropertyNames) {
+        if (propertyName === undefined) {
+            throw new Error("The propertyName argument cannot be undefined for a composite value.");
+        }
+
         const singleResult = this[propertyName].validate(value[propertyName], undefined);
 
         return (singleResult === true) && this.includeRelations ?

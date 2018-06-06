@@ -29,16 +29,8 @@ export abstract class InputInfo {
      */
     public validate(value: Value, propertyName?: AllAssetPropertyNames) {
         if (ValueUtility.isComposite(value)) {
-            if (propertyName === undefined) {
-                throw new Error("The propertyName argument cannot be undefined for a composite value.");
-            }
-
             return this.validateComposite(value, propertyName);
         } else {
-            if (propertyName !== undefined) {
-                throw new Error("The propertyName argument must be undefined for a primitive value.");
-            }
-
             return this.validatePrimitive(value);
         }
     }
@@ -53,12 +45,12 @@ export abstract class InputInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // tslint:disable-next-line:prefer-function-over-method
-    protected validatePrimitive(value: {} | undefined | null): true | string {
+    protected validatePrimitive(value: {} | undefined | null, propertyName?: AllAssetPropertyNames): true | string {
         return "A primitive value was provided when a composite one was expected.";
     }
 
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateComposite(value: CompositeValue, propertyName: AllAssetPropertyNames): true | string {
+    protected validateComposite(value: CompositeValue, propertyName?: AllAssetPropertyNames): true | string {
         return "A composite value was provided when a primitive one was expected.";
     }
 }

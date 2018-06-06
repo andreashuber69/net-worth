@@ -47,7 +47,7 @@ export class Model implements IModel {
                     for (const rawAsset of rawBundle) {
                         const asset = Model.createAsset(model, rawAsset);
 
-                        if (typeof asset === "object") {
+                        if (asset instanceof Asset) {
                             bundle.assets.push(asset);
                         } else {
                             return asset;
@@ -166,10 +166,10 @@ export class Model implements IModel {
                             return "Internal error.";
                     }
                 } else {
-                    return `type: Unknown asset type "${rawAsset.type}".`;
+                    return `type: Unknown asset type '${rawAsset.type}'.`;
                 }
             } else {
-                return "An asset must have a type property.";
+                return "An asset must have a 'type' property of type string.";
             }
         } else {
             return "An asset must be of type Object.";

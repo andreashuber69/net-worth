@@ -18,6 +18,6 @@ export type Value = CompositeValue | PrimitiveValue | undefined;
 
 export class ValueUtility {
     public static isComposite(value: Value): value is CompositeValue {
-        return typeof value === "object";
+        return value instanceof Object;
     }
 }

@@ -39,7 +39,11 @@ export abstract class PrimitiveInputInfo extends InputInfo {
     /** @internal */
     // TODO: The parameter type should be a type definition rather than explicitly spelled out here, but somehow the
     // typescript compiler then seems to conclude that the (typeof value === "string") below is always false...
-    protected validatePrimitive(value: {} | undefined |  null) {
+    protected validatePrimitive(value: {} | undefined |  null, propertyName?: AllAssetPropertyNames) {
+        if (propertyName !== undefined) {
+            throw new Error("The propertyName argument must be undefined for a primitive value.");
+        }
+
         if (!this.isPresent) {
             return true;
         }
