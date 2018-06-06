@@ -20,6 +20,10 @@ import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { CompositeValue } from "./Value";
 
+interface IValidationResults extends IAuxProperties<true | string> {
+    [key: string]: true | string;
+}
+
 export interface IAssetConstructor {
     new (parent: IModel, properties: IAllAssetProperties): Asset;
 }
@@ -72,6 +76,39 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
         }
 
         return result;
+    }
+
+    public validateAll(value: {}) {
+        this.includeRelations = true;
+
+        try {
+            const results: IValidationResults = {
+                description: this.validateComposite(value, "description"),
+                location: this.validateComposite(value, "location"),
+                // tslint:disable-next-line:object-literal-sort-keys
+                address: this.validateComposite(value, "address"),
+                weight: this.validateComposite(value, "weight"),
+                weightUnit: this.validateComposite(value, "weightUnit"),
+                fineness: this.validateComposite(value, "fineness"),
+                quantity: this.validateComposite(value, "quantity"),
+            };
+
+            let message = "";
+
+            for (const key in results) {
+                if (results.hasOwnProperty(key)) {
+                    const result = results[key];
+
+                    if (result !== true) {
+                        message += `${key}: ${result}`;
+                    }
+                }
+            }
+
+            return message ? message : true;
+        } finally {
+            this.includeRelations = false;
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

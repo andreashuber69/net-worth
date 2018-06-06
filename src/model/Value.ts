@@ -10,11 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAuxProperties } from "./IAuxProperties";
+import { AllAssetPropertyNames } from "./AssetInterfaces";
 
-type PrimitiveValue = {} | undefined | null;
-export type CompositeValue = IAuxProperties<PrimitiveValue>;
-export type Value = CompositeValue | PrimitiveValue;
+type PrimitiveValue = {} | null;
+export type CompositeValue = { [K in AllAssetPropertyNames]?: PrimitiveValue };
+export type Value = CompositeValue | PrimitiveValue | undefined;
 
 export class ValueUtility {
     public static isComposite(value: Value): value is CompositeValue {
