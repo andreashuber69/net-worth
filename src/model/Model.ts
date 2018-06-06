@@ -12,11 +12,14 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
+import { AssetInputInfo } from "./AssetInputInfo";
 import { BtcWallet } from "./BtcWallet";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
+import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { IWebRequest } from "./IWebRequest";
 import { IPreciousMetalAssetProperties, PreciousMetalAsset } from "./PreciousMetalAsset";
+import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
 import { WeightUnit } from "./WeightUnit";
@@ -35,6 +38,11 @@ interface IPreciousMetalAssetConstructor {
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
+    public static readonly assetInfos: AssetInputInfo[] = [
+        new CryptoWalletInputInfo(BtcWallet.type, 8, BtcWallet),
+        new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
+    ];
+
     public static parse(json: string) {
         const rawModel = JSON.parse(json);
         const model = new Model();

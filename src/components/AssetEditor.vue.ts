@@ -14,12 +14,8 @@ import { Component } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
 import { AssetBundle } from "../model/AssetBundle";
 import { AssetInputInfo } from "../model/AssetInputInfo";
-import { BtcWallet } from "../model/BtcWallet";
-import { CryptoWalletInputInfo } from "../model/CryptoWalletInputInfo";
 import { Model } from "../model/Model";
-import { PreciousMetalAssetInputInfo } from "../model/PreciousMetalAssetInputInfo";
 import { SelectInputInfo } from "../model/SelectInputInfo";
-import { SilverAsset } from "../model/SilverAsset";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetProperties } from "./AssetProperties";
 import { ComponentBase } from "./ComponentBase";
@@ -42,7 +38,7 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     /** Provides the asset type input information. */
     public get typeInputInfo() {
-        return new SelectInputInfo("Type", "", true, true, this.assetInfos.map((info) => info.type));
+        return new SelectInputInfo("Type", "", true, true, Model.assetInfos.map((info) => info.type));
     }
 
     /** Provides the currently selected asset type. */
@@ -51,7 +47,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     public set type(value: string) {
-        this.assetInfo = this.assetInfos.find((info) => info.type === value) as AssetInputInfo;
+        this.assetInfo = Model.assetInfos.find((info) => info.type === value) as AssetInputInfo;
     }
 
     /** Provides information about the currently selected asset type. */
@@ -78,17 +74,12 @@ export default class AssetEditor extends ComponentBase<Model> {
     /** @internal */
     public edit(asset: Asset) {
         this.editedAsset = asset;
-        this.assetInfo = this.assetInfos.find((info) => info.type === asset.type) as AssetInputInfo;
+        this.assetInfo = Model.assetInfos.find((info) => info.type === asset.type) as AssetInputInfo;
         this.data = new AssetEditorData(asset.interface);
         this.isOpen = true;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private readonly assetInfos: AssetInputInfo[] = [
-        new CryptoWalletInputInfo(BtcWallet.type, 8, BtcWallet),
-        new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
-    ];
 
     // tslint:disable-next-line:no-null-keyword
     private editedAsset: Asset | null = null;
