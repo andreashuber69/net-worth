@@ -100,7 +100,8 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
                     const result = results[key];
 
                     if (result !== true) {
-                        message += `${key}: ${result}`;
+                        message += `${key}: ${result}
+`;
                     }
                 }
             }

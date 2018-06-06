@@ -29,7 +29,14 @@ export class Model implements IModel {
     ];
 
     public static parse(json: string) {
-        const rawModel = JSON.parse(json);
+        let rawModel: any;
+
+        try {
+            rawModel = JSON.parse(json);
+        } catch (e) {
+            return (e as Error).message;
+        }
+
         const model = new Model();
 
         if (rawModel instanceof Array) {
@@ -40,16 +47,22 @@ export class Model implements IModel {
                     for (const rawAsset of rawBundle) {
                         const asset = Model.createAsset(model, rawAsset);
 
-                        if (asset) {
+                        if (typeof asset === "object") {
                             bundle.assets.push(asset);
+                        } else {
+                            return asset;
                         }
                     }
 
                     if (bundle.assets.length > 0) {
                         model.addAsset(bundle);
                     }
+                } else {
+                    return "An asset bundle must be of type Array.";
                 }
             }
+        } else {
+            return "The outermost object must be of type Array.";
         }
 
         return model;
@@ -139,21 +152,28 @@ export class Model implements IModel {
     ]);
 
     private static createAsset(model: IModel, rawAsset: any) {
-        if (Model.hasStringIndexer(rawAsset) && (typeof rawAsset.type === "string")) {
-            const assetInfo = this.assetInfos.find((info) => info.type === rawAsset.type);
+        if (Model.hasStringIndexer(rawAsset)) {
+            if (typeof rawAsset.type === "string") {
+                const assetInfo = this.assetInfos.find((info) => info.type === rawAsset.type);
 
-            if (assetInfo) {
-                switch (rawAsset.type) {
-                    case BtcWallet.type:
-                        return this.createAssetImpl(assetInfo, model, rawAsset, BtcWallet);
-                    case SilverAsset.type:
-                        return this.createAssetImpl(assetInfo, model, rawAsset, SilverAsset);
-                    default:
+                if (assetInfo) {
+                    switch (rawAsset.type) {
+                        case BtcWallet.type:
+                            return this.createAssetImpl(assetInfo, model, rawAsset, BtcWallet);
+                        case SilverAsset.type:
+                            return this.createAssetImpl(assetInfo, model, rawAsset, SilverAsset);
+                        default:
+                            return "Internal error.";
+                    }
+                } else {
+                    return `type: Unknown asset type "${rawAsset.type}".`;
                 }
+            } else {
+                return "An asset must have a type property.";
             }
+        } else {
+            return "An asset must be of type Object.";
         }
-
-        return undefined;
     }
 
     private static hasStringIndexer(value: any): value is { [key: string]: any } {
@@ -163,7 +183,7 @@ export class Model implements IModel {
     private static createAssetImpl<T extends IAssetProperties, U extends Asset>(
         info: AssetInputInfo, model: IModel, raw: {}, ctor: { new (parent: IModel, properties: T): U }) {
         if (!this.hasProperties<T>(info, raw)) {
-            return undefined;
+            return info.validateAll(raw) as string;
         }
 
         return new ctor(model, raw);

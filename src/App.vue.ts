@@ -42,7 +42,13 @@ export default class App extends Vue {
         const files = (event.target as any).files as FileList;
 
         if (files.length === 1) {
-            this.model = Model.parse(await App.read(files[0]));
+            const result = Model.parse(await App.read(files[0]));
+
+            if (result instanceof Model) {
+                this.model = result;
+            } else {
+                alert(result);
+            }
         }
     }
 
