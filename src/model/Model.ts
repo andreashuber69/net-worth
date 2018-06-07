@@ -17,13 +17,10 @@ import { BtcWallet } from "./BtcWallet";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { IWebRequest } from "./IWebRequest";
+import { ParsedValue, ParseHelper } from "./ParseHelper";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
-
-interface IRootPrototype {
-    [key: string]: string | Asset[][];
-}
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
@@ -33,47 +30,49 @@ export class Model implements IModel {
     ];
 
     public static parse(json: string) {
-        let rawModel: {};
+        let rawModel: ParsedValue;
 
         try {
-            rawModel = JSON.parse(json) as {};
+            rawModel = JSON.parse(json) as ParsedValue;
         } catch (e) {
             return (e as Error).message;
         }
 
         const model = new Model();
 
-        if (!this.hasStringIndexer(rawModel)) {
-            return "The outermost object must be of type Object.";
+        if (!ParseHelper.isObject(rawModel)) {
+            return ParseHelper.getTypeMismatch(rawModel, {});
         }
 
-        for (const propertyName in this.jsonRootPrototype) {
-            if (this.jsonRootPrototype.hasOwnProperty(propertyName)) {
-                if (typeof rawModel[propertyName] !== typeof this.jsonRootPrototype[propertyName]) {
-                    const typeName = Model.getTypeName(this.jsonRootPrototype[propertyName]);
+        const selectedCurrencyName = "selectedCurrency";
 
-                    return `${propertyName}: Value must be of type ${typeName}`;
-                }
-            }
+        if (!ParseHelper.hasStringProperty(rawModel, selectedCurrencyName)) {
+            return ParseHelper.getPropertyTypeMismatch(selectedCurrencyName, rawModel, "");
         }
 
-        const selectedCurrency = rawModel.selectedCurrency as string;
+        const selectedCurrency = rawModel.selectedCurrency;
 
         if (model.currencies.findIndex((currency) => currency === selectedCurrency) < 0) {
-            return "selectedCurrency: Unknown currency.";
+            return ParseHelper.getUnknownValue(selectedCurrencyName, selectedCurrency);
+        }
+
+        const bundlesName = "bundles";
+
+        if (!ParseHelper.hasArrayProperty(rawModel, bundlesName)) {
+            return ParseHelper.getPropertyTypeMismatch(bundlesName, rawModel, []);
         }
 
         model.selectedCurrency = selectedCurrency;
 
-        for (const rawBundle of rawModel.bundles as any[]) {
-            if (!(rawBundle instanceof Array)) {
-                return "An asset bundle must be of type Array.";
+        for (const rawBundle of rawModel.bundles) {
+            if (!ParseHelper.isArray(rawBundle)) {
+                return ParseHelper.getTypeMismatch(rawBundle, []);
             }
 
             const bundle = new AssetBundle();
 
             for (const rawAsset of rawBundle) {
-                const asset = Model.createAsset(model, rawAsset as {});
+                const asset = Model.createAsset(model, rawAsset);
 
                 if (!(asset instanceof Asset)) {
                     return asset;
@@ -144,12 +143,6 @@ export class Model implements IModel {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly jsonRootPrototype: IRootPrototype = {
-        selectedCurrency: "",
-        // tslint:disable-next-line:object-literal-sort-keys
-        bundles: new Array<Asset[]>(),
-    };
-
     private static readonly currencyMap = new Map<string, IWebRequest<number>>([
         ["USD", new QuandlRequest("", false)],
         ["AUD", new QuandlRequest("boe/xudladd.json", false)],
@@ -183,25 +176,21 @@ export class Model implements IModel {
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
 
-    private static getTypeName(value: {}) {
-        const type = typeof value;
-
-        return type === "object" ? (Array.isArray(value) ? "Array" : "Object") : type;
-    }
-
-    private static createAsset(model: IModel, raw: {}) {
-        if (!Model.hasStringIndexer(raw)) {
-            return "An asset must be of type Object.";
+    private static createAsset(model: IModel, raw: ParsedValue) {
+        if (!ParseHelper.isObject(raw)) {
+            return ParseHelper.getTypeMismatch(raw, {});
         }
 
-        if (typeof raw.type !== "string") {
-            return "An asset must have a 'type' property of type string.";
+        const typeName = "type";
+
+        if (!ParseHelper.hasStringProperty(raw, typeName)) {
+            return ParseHelper.getPropertyTypeMismatch(typeName, raw, "");
         }
 
         const assetInfo = this.assetInfos.find((info) => info.type === raw.type);
 
         if (!assetInfo) {
-            return `type: Unknown asset type '${raw.type}'.`;
+            return ParseHelper.getUnknownValue(typeName, raw.type);
         }
 
         switch (raw.type) {
@@ -212,10 +201,6 @@ export class Model implements IModel {
             default:
                 return "Internal error.";
         }
-    }
-
-    private static hasStringIndexer(value: any): value is { [key: string]: any } {
-        return value instanceof Object;
     }
 
     private static createAssetImpl<T extends IAssetProperties, U extends Asset>(
