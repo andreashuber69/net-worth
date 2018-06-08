@@ -27,7 +27,7 @@ export interface IAssetProperties {
     readonly location: string;
 
     /** Provides the asset quantity. */
-    readonly quantity: number | undefined;
+    readonly quantity?: number;
 }
 
 /** Defines the base of all classes that represent an asset. */

@@ -10,6 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+// tslint:disable-next-line:ban-types
+export type DefinedPrimitiveUnknown = boolean | number | string | symbol | Function | null;
+
+export type PrimitiveUnknown = DefinedPrimitiveUnknown | undefined;
+
 /**
  * Represents a defined unknown value, a value that can be of any type except `undefined`.
  * @description [[DefinedUnknown]] = {} | null would be a more sensible definition as any type is assignable to an empty
@@ -17,8 +22,7 @@
  * precisely, the rule `strict-type-predicates` often reports false positives. With the current definition, there are
  * still some false positives but much fewer.
  */
-// tslint:disable-next-line:ban-types
-export type DefinedUnknown = boolean | number | string | symbol | Function | null | { [key: string]: Unknown } | any[];
+export type DefinedUnknown = DefinedPrimitiveUnknown | { [key: string]: Unknown } | any[];
 
 /**
  * Represents an unknown value.
