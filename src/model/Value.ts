@@ -58,15 +58,15 @@ export class Value {
     }
 
     /** @internal */
-    public static hasArrayProperty<T extends string>(
-        value: Unknown | null | undefined, propertyName: T): value is { [K in T]: Array<Unknown | null | undefined> } {
-        return this.hasProperty(value, propertyName) && this.isArray(value[propertyName]);
-    }
-
-    /** @internal */
     public static hasObjectProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: Unknown | null | undefined } {
         return this.hasProperty(value, propertyName) && this.isObject(value[propertyName]);
+    }
+
+    /** @internal */
+    public static hasArrayProperty<T extends string>(
+        value: Unknown | null | undefined, propertyName: T): value is { [K in T]: Array<Unknown | null | undefined> } {
+        return this.hasProperty(value, propertyName) && this.isArray(value[propertyName]);
     }
 
     /** @internal */

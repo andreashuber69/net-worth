@@ -30,10 +30,10 @@ export class Model implements IModel {
     ];
 
     public static parse(json: string) {
-        let rawModel: Unknown | null | undefined;
+        let rawModel: Unknown | null;
 
         try {
-            rawModel = JSON.parse(json) as Unknown | null | undefined;
+            rawModel = JSON.parse(json) as Unknown | null;
         } catch (e) {
             return (e as Error).message;
         }
