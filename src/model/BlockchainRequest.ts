@@ -11,13 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IWebRequest } from "./IWebRequest";
+import { ParseHelper, RequiredParsedValue } from "./ParseHelper";
 import { QueryCache } from "./QueryCache";
-
-/** @internal */
-interface ISummary {
-    readonly final_balance: number;
-    readonly n_tx: number;
-}
 
 /** Represents the result returned by [[BlockchainRequest.execute]]. */
 export interface IBalance {
@@ -44,15 +39,16 @@ export class BlockchainRequest implements IWebRequest<IBalance> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getFinalBalance(response: {}) {
+    private static getFinalBalance(response: RequiredParsedValue) {
         const result = { finalBalance: Number.NaN, transactionCount: 0 };
 
-        if (this.hasStringIndexer(response)) {
+        if (ParseHelper.isObject(response)) {
             for (const address in response) {
                 if (response.hasOwnProperty(address)) {
                     const balance = response[address];
 
-                    if (this.isSummary(balance)) {
+                    if (ParseHelper.hasNumberProperty(balance, "final_balance") &&
+                        ParseHelper.hasNumberProperty(balance, "n_tx")) {
                         result.transactionCount += balance.n_tx;
                         result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) +
                             balance.final_balance / 100000000;
@@ -62,15 +58,6 @@ export class BlockchainRequest implements IWebRequest<IBalance> {
         }
 
         return result;
-    }
-
-    private static isSummary(value: any): value is ISummary {
-        return this.hasStringIndexer(value) && (typeof value.final_balance === "number") &&
-            (typeof value.n_tx === "number");
-    }
-
-    private static hasStringIndexer(value: any): value is { [key: string]: any } {
-        return value instanceof Object;
     }
 
     private readonly addresses: string;

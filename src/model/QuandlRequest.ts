@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IWebRequest } from "./IWebRequest";
+import { ParseHelper, RequiredParsedValue } from "./ParseHelper";
 import { QueryCache } from "./QueryCache";
 
 /** Represents a single quandl.com request. */
@@ -37,23 +38,16 @@ export class QuandlRequest implements IWebRequest<number> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getPrice(response: {}) {
-        if (this.hasStringIndexer(response) && this.hasStringIndexer(response.dataset)) {
-            const data = response.dataset.data;
+    private static getPrice(response: RequiredParsedValue) {
+        if (ParseHelper.hasObjectProperty(response, "dataset") &&
+            ParseHelper.hasArrayProperty(response.dataset, "data") && response.dataset.data.length >= 1) {
+            const array = response.dataset.data[0];
 
-            if ((data instanceof Array) && (data.length >= 1)) {
-                const array = data[0];
-
-                if ((array instanceof Array) && (array.length >= 2) && (typeof array[1] === "number")) {
-                    return array[1] as number;
-                }
+            if (ParseHelper.isArray(array) && (array.length >= 2) && (typeof array[1] === "number")) {
+                return array[1] as number;
             }
         }
 
         return Number.NaN;
-    }
-
-    private static hasStringIndexer(value: any): value is { [key: string]: any } {
-        return value instanceof Object;
     }
 }

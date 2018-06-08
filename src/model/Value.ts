@@ -11,10 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AllAssetPropertyNames } from "./AssetInterfaces";
+import { RequiredParsedValue } from "./ParseHelper";
 
-type PrimitiveValue = {} | null;
-export type CompositeValue = { [K in AllAssetPropertyNames]?: PrimitiveValue };
-export type Value = CompositeValue | PrimitiveValue | undefined;
+export type CompositeValue = { [K in AllAssetPropertyNames]?: RequiredParsedValue };
+export type Value = CompositeValue | RequiredParsedValue | undefined;
 
 export class ValueUtility {
     public static isComposite(value: Value): value is CompositeValue {

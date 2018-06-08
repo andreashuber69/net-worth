@@ -12,13 +12,15 @@
 
 // Theoretically, parsed JSON should never contain undefined or function values, but since it's no additional effort to
 // not rely on that, we don't.
-// Again theoretically, ParsedValue = {} | undefined | null would be a more sensible definition as any type is
+// Again theoretically, ParsedValue = {} | null would be a more sensible definition as any type is
 // assignable to an empty interface. However, it appears that tslint is currently unable to handle such a type
 // definition correctly. More precisely, the rule strict-type-predicates often reports false positives. With the current
 // definition, there are still some false positives but much fewer.
-export type ParsedValue =
+export type RequiredParsedValue =
     // tslint:disable-next-line:ban-types
-    boolean | number | string | symbol | Function | undefined | null | { [key: string]: ParsedValue } | any[];
+    boolean | number | string | symbol | Function | null | { [key: string]: ParsedValue } | any[];
+
+export type ParsedValue = RequiredParsedValue | undefined;
 
 export class ParseHelper {
     /** @internal */
@@ -32,6 +34,14 @@ export class ParseHelper {
     }
 
     /** @internal */
+    public static hasNumberProperty<T extends string>(
+        value: ParsedValue, propertyName: T): value is { [K in T]: number } {
+        // False positive
+        // tslint:disable-next-line:strict-type-predicates
+        return this.hasProperty(value, propertyName) && (typeof value[propertyName] === "number");
+    }
+
+    /** @internal */
     public static hasStringProperty<T extends string>(
         value: ParsedValue, propertyName: T): value is { [K in T]: string } {
         // False positive
@@ -42,7 +52,13 @@ export class ParseHelper {
     /** @internal */
     public static hasArrayProperty<T extends string>(
         value: ParsedValue, propertyName: T): value is { [K in T]: ParsedValue[] } {
-        return this.hasProperty(value, propertyName) && (value[propertyName] instanceof Array);
+        return this.hasProperty(value, propertyName) && this.isArray(value[propertyName]);
+    }
+
+    /** @internal */
+    public static hasObjectProperty<T extends string>(
+        value: ParsedValue, propertyName: T): value is { [K in T]: ParsedValue } {
+        return this.hasProperty(value, propertyName) && this.isObject(value[propertyName]);
     }
 
     /** @internal */
@@ -63,6 +79,7 @@ export class ParseHelper {
     public static getUnknownValue(propertyName: string, value: string) {
         return this.addPropertyName(propertyName, `Unknown value '${value}'.`);
     }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static hasProperty<T extends string>(

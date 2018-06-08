@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IWebRequest } from "./IWebRequest";
+import { ParseHelper, RequiredParsedValue } from "./ParseHelper";
 import { QueryCache } from "./QueryCache";
 
 /** Represents a single coinmarketcap.com request. */
@@ -32,19 +33,15 @@ export class CoinMarketCapRequest implements IWebRequest<number> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getPrice(response: any) {
-        if ((response instanceof Array) && (response.length === 1)) {
+    private static getPrice(response: RequiredParsedValue) {
+        if (ParseHelper.isArray(response) && (response.length === 1)) {
             const value = response[0];
 
-            if (this.hasStringIndexer(value) && (typeof value.price_usd === "string")) {
+            if (ParseHelper.hasStringProperty(value, "price_usd")) {
                 return Number.parseFloat(value.price_usd);
             }
         }
 
         return  Number.NaN;
-    }
-
-    private static hasStringIndexer(value: any): value is { [key: string]: any } {
-        return value instanceof Object;
     }
 }
