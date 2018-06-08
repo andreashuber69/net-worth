@@ -16,7 +16,7 @@ import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 /** Contains the defining properties common to all crypto currency wallets. */
 export interface ICryptoWalletProperties extends IAssetProperties {
     /** Provides the public address. */
-    readonly address: string;
+    readonly address?: string;
 }
 
 /** @internal */
@@ -33,10 +33,10 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     /** @internal */
     public static readonly superType = superType;
 
-    public readonly address: string;
+    public readonly address?: string;
 
     public get locationHint() {
-        return this.address;
+        return this.address ? this.address : "";
     }
 
     public get unit() {

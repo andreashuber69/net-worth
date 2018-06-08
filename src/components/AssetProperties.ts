@@ -27,7 +27,7 @@ export class AssetProperties implements IAllAssetProperties {
     }
 
     public get address() {
-        return this.data.address;
+        return this.data.address ? this.data.address : undefined;
     }
 
     public get weight() {
