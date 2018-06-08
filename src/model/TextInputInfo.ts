@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
+import { Unknown } from "./Value";
 
 /**
  * Provides input information for a property where a valid value either needs to be a number with certain constraints
@@ -38,7 +39,7 @@ export class TextInputInfo extends PrimitiveInputInfo {
      *   non-English locale would get mixed languages in the UI.
      * - We want to use exactly the same rules to validate file content.
      */
-    protected validateContent(strict: boolean, input: {}) {
+    protected validateContent(strict: boolean, input: Unknown) {
         if ((typeof input !== "string") && (typeof input !== "number")) {
             return "Value must either be a number or a string.";
         }

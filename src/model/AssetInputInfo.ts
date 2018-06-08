@@ -14,11 +14,12 @@ import { Asset, IModel } from "./Asset";
 import { AllAssetPropertyNames, IAllAssetProperties } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
-import { CompositeInput } from "./Input";
+import { CompositeInput, InputUtility } from "./Input";
 import { InputInfo } from "./InputInfo";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
+import { Unknown, Value } from "./Value";
 
 interface IValidationResults extends IAuxProperties<true | string> {
     [key: string]: true | string;
@@ -78,7 +79,11 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
         return result;
     }
 
-    public validateAll(input: {}) {
+    public validateAll(input: Unknown) {
+        if (!InputUtility.isComposite(input)) {
+            return Value.getTypeMismatch(input, {});
+        }
+
         this.includeRelations = true;
 
         try {

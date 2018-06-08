@@ -204,7 +204,7 @@ export class Model implements IModel {
     }
 
     private static createAssetImpl<T extends IAssetProperties, U extends Asset>(
-        info: AssetInputInfo, model: IModel, raw: {}, ctor: { new (parent: IModel, properties: T): U }) {
+        info: AssetInputInfo, model: IModel, raw: Unknown, ctor: { new (parent: IModel, properties: T): U }) {
         if (!this.hasProperties<T>(info, raw)) {
             return info.validateAll(raw) as string;
         }
@@ -212,7 +212,7 @@ export class Model implements IModel {
         return new ctor(model, raw);
     }
 
-    private static hasProperties<T extends IAssetProperties>(info: AssetInputInfo, raw: {}): raw is T {
+    private static hasProperties<T extends IAssetProperties>(info: AssetInputInfo, raw: Unknown): raw is T {
         return info.validateAll(raw) === true;
     }
 

@@ -13,6 +13,7 @@
 import { AllAssetPropertyNames } from "./AssetInterfaces";
 import { CompositeInput, Input, InputUtility } from "./Input";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
+import { Unknown } from "./Value";
 
 /**
  * Defines the base for all classes that provide input information for a primitive or composite value.
@@ -46,7 +47,7 @@ export abstract class InputInfo {
 
     // tslint:disable-next-line:prefer-function-over-method
     protected validatePrimitive(
-        strict: boolean, input: {} | undefined | null, propertyName?: AllAssetPropertyNames): true | string {
+        strict: boolean, input: Unknown | undefined | null, propertyName?: AllAssetPropertyNames): true | string {
         return "A primitive value was provided when a composite one was expected.";
     }
 
