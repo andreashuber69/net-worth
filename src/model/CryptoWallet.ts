@@ -59,20 +59,14 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
 
     /** @internal */
     public toJSON() {
-        const result: { [key: string]: {} | undefined } = {
+        return {
             type: this.type,
             // tslint:disable-next-line:object-literal-sort-keys
             description: this.description,
             location: this.location,
+            address: this.address ? this.address : undefined,
+            quantity: this.address ? undefined : this.quantity,
         };
-
-        if (this.address) {
-            result.address = this.address;
-        } else {
-            result.quantity = this.quantity;
-        }
-
-        return result;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

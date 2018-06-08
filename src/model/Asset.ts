@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetUnion } from "./AssetInterfaces";
+import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 
 /** @internal */
@@ -72,7 +72,7 @@ export abstract class Asset {
     public abstract get interface(): IAssetUnion;
 
     /** @internal */
-    public abstract toJSON(): { [key: string]: {} | undefined } | Array<{}>;
+    public abstract toJSON(): ISerializedAsset;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

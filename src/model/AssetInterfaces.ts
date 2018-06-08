@@ -22,4 +22,4 @@ export type AllAssetPropertyNames = keyof IAllAssetProperties;
 export type IAssetUnion = ICryptoWallet | IPreciousMetalAsset;
 
 /** @internal */
-export type ISerializedAsset = { type: string } & (ICryptoWalletProperties | IPreciousMetalAssetProperties);
+export type ISerializedAsset = { readonly type: string } & (ICryptoWalletProperties | IPreciousMetalAssetProperties);
