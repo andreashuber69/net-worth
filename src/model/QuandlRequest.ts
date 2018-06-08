@@ -11,8 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IWebRequest } from "./IWebRequest";
-import { ParseHelper, RequiredParsedValue } from "./ParseHelper";
 import { QueryCache } from "./QueryCache";
+import { DefinedUnknown, Value } from "./Value";
 
 /** Represents a single quandl.com request. */
 export class QuandlRequest implements IWebRequest<number> {
@@ -38,12 +38,12 @@ export class QuandlRequest implements IWebRequest<number> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getPrice(response: RequiredParsedValue) {
-        if (ParseHelper.hasObjectProperty(response, "dataset") &&
-            ParseHelper.hasArrayProperty(response.dataset, "data") && response.dataset.data.length >= 1) {
+    private static getPrice(response: DefinedUnknown) {
+        if (Value.hasObjectProperty(response, "dataset") &&
+            Value.hasArrayProperty(response.dataset, "data") && response.dataset.data.length >= 1) {
             const array = response.dataset.data[0];
 
-            if (ParseHelper.isArray(array) && (array.length >= 2) && (typeof array[1] === "number")) {
+            if (Value.isArray(array) && (array.length >= 2) && (typeof array[1] === "number")) {
                 return array[1] as number;
             }
         }

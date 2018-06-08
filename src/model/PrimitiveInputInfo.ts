@@ -39,7 +39,7 @@ export abstract class PrimitiveInputInfo extends InputInfo {
     /** @internal */
     // TODO: The parameter type should be a type definition rather than explicitly spelled out here, but somehow the
     // typescript compiler then seems to conclude that the (typeof value === "string") below is always false...
-    protected validatePrimitive(strict: boolean, value: {} | undefined |  null, propertyName?: AllAssetPropertyNames) {
+    protected validatePrimitive(strict: boolean, input: {} | undefined |  null, propertyName?: AllAssetPropertyNames) {
         if (propertyName !== undefined) {
             throw new Error("The propertyName argument must be undefined for a primitive value.");
         }
@@ -48,16 +48,16 @@ export abstract class PrimitiveInputInfo extends InputInfo {
             return true;
         }
 
-        if ((value === undefined) || (value === null) || ((typeof value === "string") && (value.length === 0))) {
+        if ((input === undefined) || (input === null) || ((typeof input === "string") && (input.length === 0))) {
             return this.isRequired ? "Please fill out this field." : true;
         }
 
-        return this.validateContent(strict, value);
+        return this.validateContent(strict, input);
     }
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateContent(strict: boolean, value: {}): true | string {
+    protected validateContent(strict: boolean, input: {}): true | string {
         return true;
     }
 }

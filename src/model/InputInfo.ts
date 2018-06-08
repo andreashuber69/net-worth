@@ -11,8 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AllAssetPropertyNames } from "./AssetInterfaces";
+import { CompositeInput, Input, InputUtility } from "./Input";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
-import { CompositeValue, Value, ValueUtility } from "./Value";
 
 /**
  * Defines the base for all classes that provide input information for a primitive or composite value.
@@ -27,11 +27,11 @@ export abstract class InputInfo {
      * way, this method only ever validates a single primitive value.
      * @returns `true` if the property value is valid; otherwise a string describing why the value is invalid.
      */
-    public validate(strict: boolean, value: Value, propertyName?: AllAssetPropertyNames) {
-        if (ValueUtility.isComposite(value)) {
-            return this.validateComposite(strict, value, propertyName);
+    public validate(strict: boolean, input: Input, propertyName?: AllAssetPropertyNames) {
+        if (InputUtility.isComposite(input)) {
+            return this.validateComposite(strict, input, propertyName);
         } else {
-            return this.validatePrimitive(strict, value, propertyName);
+            return this.validatePrimitive(strict, input, propertyName);
         }
     }
 
@@ -46,13 +46,13 @@ export abstract class InputInfo {
 
     // tslint:disable-next-line:prefer-function-over-method
     protected validatePrimitive(
-        strict: boolean, value: {} | undefined | null, propertyName?: AllAssetPropertyNames): true | string {
+        strict: boolean, input: {} | undefined | null, propertyName?: AllAssetPropertyNames): true | string {
         return "A primitive value was provided when a composite one was expected.";
     }
 
     // tslint:disable-next-line:prefer-function-over-method
     protected validateComposite(
-        strict: boolean, value: CompositeValue, propertyName?: AllAssetPropertyNames): true | string {
+        strict: boolean, input: CompositeInput, propertyName?: AllAssetPropertyNames): true | string {
         return "A composite value was provided when a primitive one was expected.";
     }
 }

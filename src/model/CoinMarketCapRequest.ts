@@ -11,8 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IWebRequest } from "./IWebRequest";
-import { ParseHelper, RequiredParsedValue } from "./ParseHelper";
 import { QueryCache } from "./QueryCache";
+import { DefinedUnknown, Value } from "./Value";
 
 /** Represents a single coinmarketcap.com request. */
 export class CoinMarketCapRequest implements IWebRequest<number> {
@@ -33,11 +33,11 @@ export class CoinMarketCapRequest implements IWebRequest<number> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getPrice(response: RequiredParsedValue) {
-        if (ParseHelper.isArray(response) && (response.length === 1)) {
+    private static getPrice(response: DefinedUnknown) {
+        if (Value.isArray(response) && (response.length === 1)) {
             const value = response[0];
 
-            if (ParseHelper.hasStringProperty(value, "price_usd")) {
+            if (Value.hasStringProperty(value, "price_usd")) {
                 return Number.parseFloat(value.price_usd);
             }
         }

@@ -14,11 +14,11 @@ import { Asset, IModel } from "./Asset";
 import { AllAssetPropertyNames, IAllAssetProperties } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
+import { CompositeInput } from "./Input";
 import { InputInfo } from "./InputInfo";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { CompositeValue } from "./Value";
 
 interface IValidationResults extends IAuxProperties<true | string> {
     [key: string]: true | string;
@@ -78,19 +78,19 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
         return result;
     }
 
-    public validateAll(value: {}) {
+    public validateAll(input: {}) {
         this.includeRelations = true;
 
         try {
             const results: IValidationResults = {
-                description: this.validateComposite(true, value, "description"),
-                location: this.validateComposite(true, value, "location"),
+                description: this.validateComposite(true, input, "description"),
+                location: this.validateComposite(true, input, "location"),
                 // tslint:disable-next-line:object-literal-sort-keys
-                address: this.validateComposite(true, value, "address"),
-                weight: this.validateComposite(true, value, "weight"),
-                weightUnit: this.validateComposite(true, value, "weightUnit"),
-                fineness: this.validateComposite(true, value, "fineness"),
-                quantity: this.validateComposite(true, value, "quantity"),
+                address: this.validateComposite(true, input, "address"),
+                weight: this.validateComposite(true, input, "weight"),
+                weightUnit: this.validateComposite(true, input, "weightUnit"),
+                fineness: this.validateComposite(true, input, "fineness"),
+                quantity: this.validateComposite(true, input, "quantity"),
             };
 
             let message = "";
@@ -120,20 +120,20 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     }
 
     /** @internal */
-    protected validateComposite(strict: boolean, value: CompositeValue, propertyName?: AllAssetPropertyNames) {
+    protected validateComposite(strict: boolean, input: CompositeInput, propertyName?: AllAssetPropertyNames) {
         if (propertyName === undefined) {
             throw new Error("The propertyName argument cannot be undefined for a composite value.");
         }
 
-        const singleResult = this[propertyName].validate(strict, value[propertyName], undefined);
+        const singleResult = this[propertyName].validate(strict, input[propertyName], undefined);
 
         return (singleResult === true) && this.includeRelations ?
-            this.validateRelations(value, propertyName) : singleResult;
+            this.validateRelations(input, propertyName) : singleResult;
     }
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateRelations(value: CompositeValue, propertyName: AllAssetPropertyNames): true | string {
+    protected validateRelations(input: CompositeInput, propertyName: AllAssetPropertyNames): true | string {
         return true;
     }
 }

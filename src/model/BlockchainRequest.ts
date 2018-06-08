@@ -11,8 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IWebRequest } from "./IWebRequest";
-import { ParseHelper, RequiredParsedValue } from "./ParseHelper";
 import { QueryCache } from "./QueryCache";
+import { DefinedUnknown, Value } from "./Value";
 
 /** Represents the result returned by [[BlockchainRequest.execute]]. */
 export interface IBalance {
@@ -39,16 +39,15 @@ export class BlockchainRequest implements IWebRequest<IBalance> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getFinalBalance(response: RequiredParsedValue) {
+    private static getFinalBalance(response: DefinedUnknown) {
         const result = { finalBalance: Number.NaN, transactionCount: 0 };
 
-        if (ParseHelper.isObject(response)) {
+        if (Value.isObject(response)) {
             for (const address in response) {
                 if (response.hasOwnProperty(address)) {
                     const balance = response[address];
 
-                    if (ParseHelper.hasNumberProperty(balance, "final_balance") &&
-                        ParseHelper.hasNumberProperty(balance, "n_tx")) {
+                    if (Value.hasNumberProperty(balance, "final_balance") && Value.hasNumberProperty(balance, "n_tx")) {
                         result.transactionCount += balance.n_tx;
                         result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) +
                             balance.final_balance / 100000000;

@@ -13,9 +13,9 @@
 import { Prop } from "vue-property-decorator";
 import { AllAssetPropertyNames } from "../model/AssetInterfaces";
 import { IAuxProperties } from "../model/IAuxProperties";
+import { InputUtility } from "../model/Input";
 import { InputInfo } from "../model/InputInfo";
 import { PrimitiveInputInfo } from "../model/PrimitiveInputInfo";
-import { ValueUtility } from "../model/Value";
 import { ComponentBase } from "./ComponentBase";
 
 /** Defines the base for all controls that simplify common functionality like e.g. validation. */
@@ -45,12 +45,12 @@ export abstract class ControlBase<T extends PrimitiveInputInfo> extends Componen
     }
 
     public get propertyValue() {
-        return ValueUtility.isComposite(this.checkedValue) ?
+        return InputUtility.isComposite(this.checkedValue) ?
             this.checkedValue[this.checkedProperty] : this.checkedValue;
     }
 
     public set propertyValue(value: string) {
-        if (ValueUtility.isComposite(this.checkedValue)) {
+        if (InputUtility.isComposite(this.checkedValue)) {
             this.checkedValue[this.checkedProperty] = value;
         } else {
             this.checkedValue = value;

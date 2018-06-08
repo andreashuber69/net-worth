@@ -17,10 +17,10 @@ import { BtcWallet } from "./BtcWallet";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { IWebRequest } from "./IWebRequest";
-import { ParsedValue, ParseHelper } from "./ParseHelper";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
+import { Unknown, Value } from "./Value";
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
@@ -30,43 +30,43 @@ export class Model implements IModel {
     ];
 
     public static parse(json: string) {
-        let rawModel: ParsedValue;
+        let rawModel: Unknown;
 
         try {
-            rawModel = JSON.parse(json) as ParsedValue;
+            rawModel = JSON.parse(json) as Unknown;
         } catch (e) {
             return (e as Error).message;
         }
 
         const model = new Model();
 
-        if (!ParseHelper.isObject(rawModel)) {
-            return ParseHelper.getTypeMismatch(rawModel, {});
+        if (!Value.isObject(rawModel)) {
+            return Value.getTypeMismatch(rawModel, {});
         }
 
         const selectedCurrencyName = "selectedCurrency";
 
-        if (!ParseHelper.hasStringProperty(rawModel, selectedCurrencyName)) {
-            return ParseHelper.getPropertyTypeMismatch(selectedCurrencyName, rawModel, "");
+        if (!Value.hasStringProperty(rawModel, selectedCurrencyName)) {
+            return Value.getPropertyTypeMismatch(selectedCurrencyName, rawModel, "");
         }
 
         const selectedCurrency = rawModel.selectedCurrency;
 
         if (model.currencies.findIndex((currency) => currency === selectedCurrency) < 0) {
-            return ParseHelper.getUnknownValue(selectedCurrencyName, selectedCurrency);
+            return Value.getUnknownValue(selectedCurrencyName, selectedCurrency);
         }
 
         const bundlesName = "bundles";
 
-        if (!ParseHelper.hasArrayProperty(rawModel, bundlesName)) {
-            return ParseHelper.getPropertyTypeMismatch(bundlesName, rawModel, []);
+        if (!Value.hasArrayProperty(rawModel, bundlesName)) {
+            return Value.getPropertyTypeMismatch(bundlesName, rawModel, []);
         }
 
         model.selectedCurrency = selectedCurrency;
 
         for (const rawBundle of rawModel.bundles) {
-            if (!ParseHelper.isArray(rawBundle)) {
-                return ParseHelper.getTypeMismatch(rawBundle, []);
+            if (!Value.isArray(rawBundle)) {
+                return Value.getTypeMismatch(rawBundle, []);
             }
 
             const bundle = new AssetBundle();
@@ -176,21 +176,21 @@ export class Model implements IModel {
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
 
-    private static createAsset(model: IModel, raw: ParsedValue) {
-        if (!ParseHelper.isObject(raw)) {
-            return ParseHelper.getTypeMismatch(raw, {});
+    private static createAsset(model: IModel, raw: Unknown) {
+        if (!Value.isObject(raw)) {
+            return Value.getTypeMismatch(raw, {});
         }
 
         const typeName = "type";
 
-        if (!ParseHelper.hasStringProperty(raw, typeName)) {
-            return ParseHelper.getPropertyTypeMismatch(typeName, raw, "");
+        if (!Value.hasStringProperty(raw, typeName)) {
+            return Value.getPropertyTypeMismatch(typeName, raw, "");
         }
 
         const assetInfo = this.assetInfos.find((info) => info.type === raw.type);
 
         if (!assetInfo) {
-            return ParseHelper.getUnknownValue(typeName, raw.type);
+            return Value.getUnknownValue(typeName, raw.type);
         }
 
         switch (raw.type) {
