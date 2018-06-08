@@ -30,10 +30,10 @@ export class Model implements IModel {
     ];
 
     public static parse(json: string) {
-        let rawModel: Unknown;
+        let rawModel: Unknown | null | undefined;
 
         try {
-            rawModel = JSON.parse(json) as Unknown;
+            rawModel = JSON.parse(json) as Unknown | null | undefined;
         } catch (e) {
             return (e as Error).message;
         }
@@ -176,7 +176,7 @@ export class Model implements IModel {
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
 
-    private static createAsset(model: IModel, raw: Unknown) {
+    private static createAsset(model: IModel, raw: Unknown | null | undefined) {
         if (!Value.isObject(raw)) {
             return Value.getTypeMismatch(raw, {});
         }

@@ -12,7 +12,7 @@
 
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
-import { DefinedUnknown, Value } from "./Value";
+import { Unknown, Value } from "./Value";
 
 /** Represents a single coinmarketcap.com request. */
 export class CoinMarketCapRequest implements IWebRequest<number> {
@@ -33,7 +33,7 @@ export class CoinMarketCapRequest implements IWebRequest<number> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getPrice(response: DefinedUnknown) {
+    private static getPrice(response: Unknown | null) {
         if (Value.isArray(response) && (response.length === 1)) {
             const value = response[0];
 

@@ -12,7 +12,7 @@
 
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
-import { DefinedUnknown, Value } from "./Value";
+import { Unknown, Value } from "./Value";
 
 /** Represents the result returned by [[BlockchainRequest.execute]]. */
 export interface IBalance {
@@ -39,7 +39,7 @@ export class BlockchainRequest implements IWebRequest<IBalance> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getFinalBalance(response: DefinedUnknown) {
+    private static getFinalBalance(response: Unknown | null) {
         const result = { finalBalance: Number.NaN, transactionCount: 0 };
 
         if (Value.isObject(response)) {

@@ -11,10 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AllAssetPropertyNames } from "./AssetInterfaces";
-import { DefinedUnknown } from "./Value";
+import { Unknown } from "./Value";
 
-export type CompositeInput = { [K in AllAssetPropertyNames]?: DefinedUnknown };
-export type Input = CompositeInput | DefinedUnknown | undefined;
+export type CompositeInput = { [K in AllAssetPropertyNames]?: Unknown | null };
+export type Input = CompositeInput | Unknown | null | undefined;
 
 export class InputUtility {
     public static isComposite(input: Input): input is CompositeInput {

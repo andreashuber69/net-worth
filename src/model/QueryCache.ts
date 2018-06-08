@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { DefinedUnknown } from "./Value";
+import { Unknown } from "./Value";
 
 /** @internal */
 export class QueryCache {
@@ -28,11 +28,11 @@ export class QueryCache {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly cache = new Map<string, Promise<DefinedUnknown>>();
+    private static readonly cache = new Map<string, Promise<Unknown | null>>();
 
     private static async fetchImpl(query: string) {
         try {
-            return JSON.parse(await (await window.fetch(query)).text()) as DefinedUnknown;
+            return JSON.parse(await (await window.fetch(query)).text()) as Unknown | null;
         } catch {
             // It appears that after catch (e), e is sometimes undefined at this point, which is why we go with plain
             // catch.

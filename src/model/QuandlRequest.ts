@@ -12,7 +12,7 @@
 
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
-import { DefinedUnknown, Value } from "./Value";
+import { Unknown, Value } from "./Value";
 
 /** Represents a single quandl.com request. */
 export class QuandlRequest implements IWebRequest<number> {
@@ -38,7 +38,7 @@ export class QuandlRequest implements IWebRequest<number> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getPrice(response: DefinedUnknown) {
+    private static getPrice(response: Unknown | null) {
         if (Value.hasObjectProperty(response, "dataset") &&
             Value.hasArrayProperty(response.dataset, "data") && response.dataset.data.length >= 1) {
             const array = response.dataset.data[0];

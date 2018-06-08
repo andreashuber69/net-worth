@@ -10,24 +10,21 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-type DefinedPrimitiveUnknown = boolean | number | string | symbol | null;
+type Primitive = boolean | number | string | symbol;
 
 /**
- * Represents a defined unknown value, a value that can be of any type except `undefined`.
- * @description [[DefinedUnknown]] = {} | null would be a more sensible definition as any type is assignable to an empty
- * interface. However, it appears that tslint is currently unable to handle such a type definition correctly. More
- * precisely, the rule `strict-type-predicates` often reports false positives. With the current definition, there are
- * still some false positives but much fewer.
- */
-export type DefinedUnknown = DefinedPrimitiveUnknown | object;
-
-/**
- * Represents an unknown value.
+ * Represents a value of unknown type.
  * @description This is a safe alternative to the built-in type `any`. While `any` is perfect for expressing that a
  * value can be anything, `any` has the problem that the compiler silently accepts just about all operations involving
- * values of type `any`. This type aims at retaining the former quality while doing away with the latter.
+ * values of type `any`. This type aims at retaining the former quality while doing away with the latter. Unlike `any`,
+ * a value of this type cannot be `null` or `undefined`. Therefore, parameters or variables needing to include either
+ * (or both) can use an appropriate unit type, e.g. `Unknown | null | undefined`.
+ * [[Unknown]] = {} would be a more sensible definition as any type is assignable to an empty interface. However, it
+ * appears that tslint is currently unable to handle such a type definition correctly. More precisely, the rule
+ * `strict-type-predicates` often reports false positives. With the current definition, there are still some false
+ * positives but much fewer.
  */
-export type Unknown = DefinedUnknown | undefined;
+export type Unknown = Primitive | object;
 
 /**
  * Provides methods aimed at the type-safe analysis of values of unknown origin.
@@ -35,24 +32,26 @@ export type Unknown = DefinedUnknown | undefined;
  */
 export class Value {
     /** @internal */
-    public static isObject(value: Unknown): value is { [key: string]: Unknown } {
+    public static isObject(value: Unknown | null | undefined): value is { [key: string]: Unknown | null | undefined } {
         return value instanceof Object;
     }
 
     /** @internal */
-    public static isArray(value: Unknown): value is Unknown[] {
+    public static isArray(value: Unknown | null | undefined): value is Array<Unknown | null | undefined> {
         return Array.isArray(value);
     }
 
     /** @internal */
-    public static hasNumberProperty<T extends string>(value: Unknown, propertyName: T): value is { [K in T]: number } {
+    public static hasNumberProperty<T extends string>(
+        value: Unknown | null | undefined, propertyName: T): value is { [K in T]: number } {
         // False positive
         // tslint:disable-next-line:strict-type-predicates
         return this.hasProperty(value, propertyName) && (typeof value[propertyName] === "number");
     }
 
     /** @internal */
-    public static hasStringProperty<T extends string>(value: Unknown, propertyName: T): value is { [K in T]: string } {
+    public static hasStringProperty<T extends string>(
+        value: Unknown | null | undefined, propertyName: T): value is { [K in T]: string } {
         // False positive
         // tslint:disable-next-line:strict-type-predicates
         return this.hasProperty(value, propertyName) && (typeof value[propertyName] === "string");
@@ -60,22 +59,24 @@ export class Value {
 
     /** @internal */
     public static hasArrayProperty<T extends string>(
-        value: Unknown, propertyName: T): value is { [K in T]: Unknown[] } {
+        value: Unknown | null | undefined, propertyName: T): value is { [K in T]: Array<Unknown | null | undefined> } {
         return this.hasProperty(value, propertyName) && this.isArray(value[propertyName]);
     }
 
     /** @internal */
-    public static hasObjectProperty<T extends string>(value: Unknown, propertyName: T): value is { [K in T]: Unknown } {
+    public static hasObjectProperty<T extends string>(
+        value: Unknown | null | undefined, propertyName: T): value is { [K in T]: Unknown | null | undefined } {
         return this.hasProperty(value, propertyName) && this.isObject(value[propertyName]);
     }
 
     /** @internal */
-    public static getPropertyTypeMismatch<T>(propertyName: string, actual: { [key: string]: Unknown }, expected: T) {
+    public static getPropertyTypeMismatch<T>(
+        propertyName: string, actual: { [key: string]: Unknown | null | undefined }, expected: T) {
         return this.addPropertyName(propertyName, this.getTypeMismatch(actual[propertyName], expected));
     }
 
     /** @internal */
-    public static getTypeMismatch<T>(actual: Unknown, expected: T) {
+    public static getTypeMismatch<T>(actual: Unknown | null | undefined, expected: T) {
         const actualType = Value.getTypeName(actual);
         const expectedType = Value.getTypeName(expected);
 
@@ -90,7 +91,7 @@ export class Value {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static hasProperty<T extends string>(
-        value: Unknown, propertyName: T): value is { [K in T]: Unknown } {
+        value: Unknown | null | undefined, propertyName: T): value is { [K in T]: Unknown | null | undefined } {
         return this.isObject(value) && value.hasOwnProperty(propertyName);
     }
 
