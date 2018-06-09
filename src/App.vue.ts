@@ -42,13 +42,7 @@ export default class App extends Vue {
         const files = (event.target as any).files as FileList;
 
         if (files.length === 1) {
-            const result = Model.parse(await App.read(files[0]));
-
-            if (result instanceof Model) {
-                this.model = result;
-            } else {
-                alert(result);
-            }
+            this.parse(await App.read(files[0]));
         }
 
         // tslint:disable-next-line:no-unsafe-any
@@ -82,5 +76,15 @@ export default class App extends Vue {
             reader.onerror = (ev) => reject("Unable to read file.");
             reader.readAsText(blob);
         });
+    }
+
+    private parse(json: string) {
+        const result = Model.parse(json);
+
+        if (result instanceof Model) {
+            this.model = result;
+        } else {
+            alert(result);
+        }
     }
 }
