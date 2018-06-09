@@ -31,17 +31,22 @@ export type Unknown = Primitive | object;
  * @description This is primarily useful for picking apart values coming from `JSON.parse`.
  */
 export class Value {
-    /** @internal */
+    /**
+     * Returns whether the type of `value` is `Object`.
+     * @description This is only useful if calling code needs to iterate over the properties of `value`. Code that needs
+     * to establish whether `value` has a property with a given name and type should rather call [[hasNumberProperty]],
+     * [[hasStringProperty]], [[hasObjectProperty]] or [[hasArrayProperty]].
+     */
     public static isObject(value: Unknown | null | undefined): value is { [key: string]: Unknown | null | undefined } {
         return value instanceof Object;
     }
 
-    /** @internal */
+    /** Returns whether the type of `value` is `Array`. */
     public static isArray(value: Unknown | null | undefined): value is Array<Unknown | null | undefined> {
         return Array.isArray(value);
     }
 
-    /** @internal */
+    /** Returns whether `value` has an own property of type `number` with the name `propertyName`. */
     public static hasNumberProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: number } {
         // False positive
@@ -49,7 +54,7 @@ export class Value {
         return this.hasProperty(value, propertyName) && (typeof value[propertyName] === "number");
     }
 
-    /** @internal */
+    /** Returns whether `value` has an own property of type `string` with the name `propertyName`. */
     public static hasStringProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: string } {
         // False positive
@@ -57,13 +62,13 @@ export class Value {
         return this.hasProperty(value, propertyName) && (typeof value[propertyName] === "string");
     }
 
-    /** @internal */
+    /** Returns whether `value` has an own property of type `Object` with the name `propertyName`. */
     public static hasObjectProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: Unknown | null | undefined } {
         return this.hasProperty(value, propertyName) && this.isObject(value[propertyName]);
     }
 
-    /** @internal */
+    /** Returns whether `value` has an own property of type `Array` with the name `propertyName`. */
     public static hasArrayProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: Array<Unknown | null | undefined> } {
         return this.hasProperty(value, propertyName) && this.isArray(value[propertyName]);
