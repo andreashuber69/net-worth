@@ -70,9 +70,12 @@ export class Value {
     }
 
     /** @internal */
-    public static getPropertyTypeMismatch<T>(
-        propertyName: string, actual: { [key: string]: Unknown | null | undefined }, expected: T) {
-        return this.addPropertyName(propertyName, this.getTypeMismatch(actual[propertyName], expected));
+    public static getPropertyTypeMismatch<T>(propertyName: string, actual: Unknown | null | undefined, expected: T) {
+        if (this.isObject(actual)) {
+            return this.addPropertyName(propertyName, this.getTypeMismatch(actual[propertyName], expected));
+        } else {
+            return this.getTypeMismatch(actual, {});
+        }
     }
 
     /** @internal */

@@ -40,10 +40,6 @@ export class Model implements IModel {
 
         const model = new Model();
 
-        if (!Value.isObject(rawModel)) {
-            return Value.getTypeMismatch(rawModel, {});
-        }
-
         const selectedCurrencyName = "selectedCurrency";
 
         if (!Value.hasStringProperty(rawModel, selectedCurrencyName)) {
@@ -177,10 +173,6 @@ export class Model implements IModel {
     ]);
 
     private static createAsset(model: IModel, raw: Unknown | null | undefined) {
-        if (!Value.isObject(raw)) {
-            return Value.getTypeMismatch(raw, {});
-        }
-
         const typeName = "type";
 
         if (!Value.hasStringProperty(raw, typeName)) {
