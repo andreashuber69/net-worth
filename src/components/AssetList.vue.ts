@@ -78,6 +78,10 @@ export default class AssetList extends ComponentBase<Model> {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private get totalValue() {
+        if (this.checkedValue.assets.length === 0) {
+            return 0;
+        }
+
         return this.checkedValue.assets.reduce<number | undefined>(
             (s, a) => s === undefined ? a.totalValue : s + (a.totalValue === undefined ? 0 : a.totalValue), undefined);
     }

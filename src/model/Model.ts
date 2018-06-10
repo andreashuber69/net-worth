@@ -35,7 +35,7 @@ export class Model implements IModel {
      * the parse process failed.
      * @description This is typically called with a string that was returned by [[toJsonString]].
      * @param json The string to parse
-     * @param onChange The changed handler to pass to the [[Model]] constructor.
+     * @param onChanged The handler to pass to the [[Model]] constructor.
      */
     public static parse(json: string, onChanged: () => void) {
         let rawModel: Unknown | null;
