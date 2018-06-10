@@ -24,12 +24,20 @@ import { Unknown, Value } from "./Value";
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
+    /** Provides information objects for each of the supported asset types. */
     public static readonly assetInfos: AssetInputInfo[] = [
         new CryptoWalletInputInfo(BtcWallet.type, 8, BtcWallet),
         new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
     ];
 
-    public static parse(json: string) {
+    /**
+     * Returns a [[Model]] object that is equivalent to the passed JSON string or returns a string that describes why
+     * the parse process failed.
+     * @description This is typically called with a string that was returned by [[toJsonString]].
+     * @param json The string to parse
+     * @param onChange The changed handler to pass to the [[Model]] constructor.
+     */
+    public static parse(json: string, onChanged: () => void) {
         let rawModel: Unknown | null;
 
         try {
@@ -38,14 +46,13 @@ export class Model implements IModel {
             return (e as Error).message;
         }
 
-        const model = new Model();
-
         const selectedCurrencyName = "selectedCurrency";
 
         if (!Value.hasStringProperty(rawModel, selectedCurrencyName)) {
             return Value.getPropertyTypeMismatch(selectedCurrencyName, rawModel, "");
         }
 
+        const model = new Model(onChanged);
         const selectedCurrency = rawModel.selectedCurrency;
 
         if (model.currencies.findIndex((currency) => currency === selectedCurrency) < 0) {
@@ -78,7 +85,7 @@ export class Model implements IModel {
             }
 
             if (bundle.assets.length > 0) {
-                model.addAsset(bundle);
+                model.bundles.push(bundle);
             }
         }
 
@@ -106,26 +113,43 @@ export class Model implements IModel {
         return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<Asset>());
     }
 
-    /** @internal */
+    /**
+     * Provides the USD exchange rate of the currently selected currency (USDXXX, where XXX is the currently selected
+     * currency).
+     */
     public exchangeRate: number | undefined = 1;
 
-    /** @internal */
-    public addAsset(bundle: AssetBundle) {
-        this.bundles.push(bundle);
+    // tslint:disable-next-line:no-empty
+    public constructor(private readonly onChanged: () => void) {
     }
 
-    /** @internal */
+    /** Returns a JSON-formatted string representing the model. */
+    public toJsonString() {
+        return JSON.stringify(this, undefined, 2);
+    }
+
+    /** Adds `bundle` to the list of asset bundles. */
+    public addAsset(bundle: AssetBundle) {
+        this.bundles.push(bundle);
+        this.onChanged();
+    }
+
+    /** Deletes `asset`. */
     public deleteAsset(asset: Asset) {
         for (const bundle of this.bundles) {
             bundle.deleteAsset(asset);
         }
+
+        this.onChanged();
     }
 
-    /** @internal */
+    /** Replaces `oldAsset` with `newAsset`. */
     public replaceAsset(oldAsset: Asset, newAsset: Asset) {
         for (const bundle of this.bundles) {
             bundle.replaceAsset(oldAsset, newAsset);
         }
+
+        this.onChanged();
     }
 
     /** @internal */

@@ -19,7 +19,8 @@ import { Model } from "./model/Model";
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
     public isDrawerVisible = false;
-    public model = new Model();
+    public model = App.parse(
+        App.loadFromLocalStorage(), () => this.onModelChanged(), new Model(() => this.onModelChanged()));
 
     public onMenuIconClicked(event: MouseEvent) {
         this.isDrawerVisible = !this.isDrawerVisible;
@@ -33,16 +34,15 @@ export default class App extends Vue {
 
     public onSaveClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
-        const blob = new Blob([ JSON.stringify(this.model, undefined, 2) ], { type : "application/json" });
+        const blob = new Blob([ this.model.toJsonString() ], { type : "application/json" });
         App.write("MyAssets.json", blob);
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
     public async onFileInputChanged(event: Event) {
         const files = (event.target as any).files as FileList;
 
         if (files.length === 1) {
-            this.parse(await App.read(files[0]));
+            this.model = App.parse(await App.read(files[0]), () => this.onModelChanged(), this.model);
         }
 
         // tslint:disable-next-line:no-unsafe-any
@@ -50,6 +50,8 @@ export default class App extends Vue {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static readonly localStorageKey = "assets";
 
     private static write(filename: string, blob: Blob) {
         if (window.navigator.msSaveOrOpenBlob) {
@@ -78,13 +80,29 @@ export default class App extends Vue {
         });
     }
 
-    private parse(json: string) {
-        const result = Model.parse(json);
+    private static parse(json: string | null, onChanged: () => void, defaultModel: Model) {
+        const model = json ? Model.parse(json, onChanged) : undefined;
 
-        if (result instanceof Model) {
-            this.model = result;
-        } else {
-            alert(result);
+        if (model instanceof Model) {
+            this.saveToLocalStorage(model.toJsonString());
+
+            return model;
+        } else if (model) {
+            alert(model);
         }
+
+        return defaultModel;
+    }
+
+    private static saveToLocalStorage(json: string) {
+        window.localStorage.setItem(this.localStorageKey, json);
+    }
+
+    private static loadFromLocalStorage() {
+        return window.localStorage.getItem(this.localStorageKey);
+    }
+
+    private onModelChanged() {
+        App.saveToLocalStorage(this.model.toJsonString());
     }
 }
