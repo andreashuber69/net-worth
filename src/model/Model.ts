@@ -156,7 +156,6 @@ export class Model implements IModel {
     public toJSON() {
         return {
             selectedCurrency: this.selectedCurrency,
-            // tslint:disable-next-line:object-literal-sort-keys
             bundles: this.bundles.map((bundle) => bundle.toJSON()),
         };
     }

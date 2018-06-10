@@ -90,7 +90,6 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
             const results: IValidationResults = {
                 description: this.validateComposite(true, input, "description"),
                 location: this.validateComposite(true, input, "location"),
-                // tslint:disable-next-line:object-literal-sort-keys
                 address: this.validateComposite(true, input, "address"),
                 weight: this.validateComposite(true, input, "weight"),
                 weightUnit: this.validateComposite(true, input, "weightUnit"),
