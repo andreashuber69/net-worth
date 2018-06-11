@@ -14,7 +14,6 @@
 
 <template>
   <div>
-    <!-- https://github.com/vuetifyjs/vuetify/issues/3338 -->
     <AssetEditor :value="checkedValue" ref="editor"></AssetEditor>
     <v-data-table
       :items="checkedValue.assets" :pagination.sync="pagination" :loading="isLoading" hide-actions class="elevation-1">
