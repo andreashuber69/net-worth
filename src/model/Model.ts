@@ -16,6 +16,7 @@ import { AssetInputInfo } from "./AssetInputInfo";
 import { BtcWallet } from "./BtcWallet";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
+import { GoldAsset } from "./GoldAsset";
 import { IWebRequest } from "./IWebRequest";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
@@ -28,6 +29,7 @@ export class Model implements IModel {
     public static readonly assetInfos: AssetInputInfo[] = [
         new CryptoWalletInputInfo(BtcWallet.type, 8, BtcWallet),
         new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
+        new PreciousMetalAssetInputInfo(GoldAsset.type, GoldAsset),
     ];
 
     /**
@@ -213,6 +215,8 @@ export class Model implements IModel {
                 return this.createAssetImpl(assetInfo, model, raw, BtcWallet);
             case SilverAsset.type:
                 return this.createAssetImpl(assetInfo, model, raw, SilverAsset);
+            case GoldAsset.type:
+                return this.createAssetImpl(assetInfo, model, raw, GoldAsset);
             default:
                 return "Internal error.";
         }

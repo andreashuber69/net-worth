@@ -10,10 +10,21 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { BtcWallet } from "./BtcWallet";
-import { GoldAsset } from "./GoldAsset";
-import { SilverAsset } from "./SilverAsset";
+import { IModel } from "./Asset";
+import { IPreciousMetalAssetProperties, PreciousMetalAsset } from "./PreciousMetalAsset";
 
-export type CryptoWalletTypes = typeof BtcWallet.type;
-export type PreciousMetalAssetTypes = typeof SilverAsset.type | typeof GoldAsset.type;
-export type AssetTypes = CryptoWalletTypes | PreciousMetalAssetTypes;
+/** Represents an asset made of gold. */
+export class GoldAsset extends PreciousMetalAsset {
+    public static readonly type = "Gold";
+
+    public readonly type = GoldAsset.type;
+
+    /**
+     * Creates a new [[GoldAsset]] instance.
+     * @param parent The parent model to which this asset belongs.
+     * @param properties The precious metal asset properties.
+     */
+    public constructor(parent: IModel, properties: IPreciousMetalAssetProperties) {
+        super(parent, properties, "lbma/gold.json");
+    }
+}
