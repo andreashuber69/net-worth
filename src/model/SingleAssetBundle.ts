@@ -11,20 +11,31 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset } from "./Asset";
-import { ISerializedAsset } from "./AssetInterfaces";
+import { AssetBundle } from "./AssetBundle";
 
-/**
- * Defines the base of all classes that represent a bundle of assets.
- * @description This is most commonly used in conjunction with crypto currencies, where one address can hold a balance
- * of multiple currencies. For example, a BTC address could potentially hold balances of BTC, BCH, BTG, BCD and so on.
- */
-export abstract class AssetBundle {
-    /** Provides the bundled assets. */
-    public abstract get assets(): Asset[];
+/** Defines a bundle containing a single asset. */
+export class SingleAssetBundle extends AssetBundle {
+    public readonly assets: Asset[];
 
-    /** Deletes `asset` from [[assets]]. */
-    public abstract deleteAsset(asset: Asset): void;
+    /**
+     * Creates a new [[SingleAssetBundle]] instance.
+     * @param asset The asset to bundle.
+     */
+    public constructor(asset: Asset) {
+        super();
+        this.assets = [ asset ];
+    }
+
+    public deleteAsset(asset: Asset) {
+        const index = this.assets.indexOf(asset);
+
+        if (index >= 0) {
+            this.assets.splice(index, 1);
+        }
+    }
 
     /** @internal */
-    public abstract toJSON(): ISerializedAsset[];
+    public toJSON() {
+        return this.assets.map((asset) => asset.toJSON());
+    }
 }

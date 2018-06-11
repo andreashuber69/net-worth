@@ -22,6 +22,7 @@ import { IWebRequest } from "./IWebRequest";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
+import { SingleAssetBundle } from "./SingleAssetBundle";
 import { Unknown, Value } from "./Value";
 
 /** Represents the main model of the application. */
@@ -205,7 +206,7 @@ export class Model implements IModel {
 
     private static createBundle(
         parent: IModel, properties: IAllAssetProperties, ctor: { new (m: IModel, p: IAllAssetProperties): Asset }) {
-        return new AssetBundle(new ctor(parent, properties));
+        return new SingleAssetBundle(new ctor(parent, properties));
     }
 
     private static parseAsset(model: IModel, rawAsset: Unknown | null | undefined) {
