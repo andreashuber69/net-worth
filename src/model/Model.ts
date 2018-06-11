@@ -10,9 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IAssetProperties, IModel } from "./Asset";
+import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetInputInfo } from "./AssetInputInfo";
+import { IAllAssetProperties } from "./AssetInterfaces";
 import { BtcWallet } from "./BtcWallet";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
@@ -210,29 +211,17 @@ export class Model implements IModel {
             return Value.getUnknownValue(typeName, raw.type);
         }
 
-        switch (raw.type) {
-            case BtcWallet.type:
-                return this.createAssetImpl(assetInfo, model, raw, BtcWallet);
-            case SilverAsset.type:
-                return this.createAssetImpl(assetInfo, model, raw, SilverAsset);
-            case GoldAsset.type:
-                return this.createAssetImpl(assetInfo, model, raw, GoldAsset);
-            default:
-                return "Internal error.";
-        }
-    }
+        const validationResult = assetInfo.validateAll(raw);
 
-    private static createAssetImpl<T extends IAssetProperties, U extends Asset>(
-        info: AssetInputInfo, model: IModel, raw: Unknown, ctor: { new (parent: IModel, properties: T): U }) {
-        if (!this.hasProperties<T>(info, raw)) {
-            return info.validateAll(raw) as string;
+        if (!this.hasProperties(validationResult, raw)) {
+            return validationResult;
         }
 
-        return new ctor(model, raw);
+        return assetInfo.createAsset(model, raw);
     }
 
-    private static hasProperties<T extends IAssetProperties>(info: AssetInputInfo, raw: Unknown): raw is T {
-        return info.validateAll(raw) === true;
+    private static hasProperties(validationResult: true | string, raw: Unknown): raw is IAllAssetProperties {
+        return validationResult === true;
     }
 
     private readonly bundles = new Array<AssetBundle>();
