@@ -40,6 +40,10 @@ export default class AssetList extends ComponentBase<Model> {
         return this.pagination.descending ? "desc" : "asc";
     }
 
+    public get isLoading() {
+        return (this.totalValue === undefined);
+    }
+
     public get totalValueInteger() {
         return Format.integer(this.totalValue, 2);
     }

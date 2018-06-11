@@ -14,8 +14,10 @@
 
 <template>
   <div>
+    <!-- https://github.com/vuetifyjs/vuetify/issues/3338 -->
     <AssetEditor :value="checkedValue" ref="editor"></AssetEditor>
-    <v-data-table :items="checkedValue.assets" :pagination.sync="pagination" hide-actions class="elevation-1">
+    <v-data-table
+      :items="checkedValue.assets" :pagination.sync="pagination" :loading="isLoading" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
         <th :class="['text-xs-left column sortable', sortDirection, getActive('type')]" @click="changeSort('type')">
           Type <v-icon small>arrow_upward</v-icon>
@@ -41,6 +43,7 @@
         </th>
         <th>Actions</th>
       </template>
+      <v-progress-linear slot="progress" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props">
         <AssetListRow :value="props.item" @edit="onEdit" @delete="onDelete"></AssetListRow>
       </template>
