@@ -12,7 +12,6 @@
 
 import { Component } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
-import { AssetBundle } from "../model/AssetBundle";
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { Model } from "../model/Model";
 import { SelectInputInfo } from "../model/SelectInputInfo";
@@ -104,12 +103,12 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     private save() {
-        const newAsset = this.assetInfo.createAsset(this.checkedValue, new AssetProperties(this.data));
+        const newBundle = this.assetInfo.createBundle(this.checkedValue, new AssetProperties(this.data));
 
         if (this.editedAsset) {
-            this.checkedValue.replaceAsset(this.editedAsset, newAsset);
+            this.checkedValue.replaceBundle(this.editedAsset, newBundle);
         } else {
-            this.checkedValue.addAsset(new AssetBundle(newAsset));
+            this.checkedValue.addBundle(newBundle);
         }
     }
 

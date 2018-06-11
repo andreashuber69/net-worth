@@ -38,17 +38,6 @@ export class AssetBundle {
         }
     }
 
-    /** Deletes `oldAsset` from [[assets]] and then inserts `newAsset` in its place. */
-    public replaceAsset(oldAsset: Asset, newAsset: Asset) {
-        const index = this.assets.indexOf(oldAsset);
-
-        if (index >= 0) {
-            // Apparently, Vue cannot detect the obvious way of replacing (this.assets[index] = newAsset):
-            // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
-            this.assets.splice(index, 1, newAsset);
-        }
-    }
-
     /** @internal */
     public toJSON() {
         return this.assets.map((asset) => asset.toJSON());

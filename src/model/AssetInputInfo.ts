@@ -10,7 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { IModel } from "./Asset";
+import { AssetBundle } from "./AssetBundle";
 import { AllAssetPropertyNames, IAllAssetProperties } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
@@ -25,10 +26,7 @@ interface IValidationResults extends IAuxProperties<true | string> {
     [key: string]: true | string;
 }
 
-export interface IAssetConstructor {
-    new (parent: IModel, properties: IAllAssetProperties): Asset;
-}
-
+export type CreateBundle = (parent: IModel, properties: IAllAssetProperties) => AssetBundle;
 /**
  * Defines how the properties of a given asset type need to be input and validated and provides a method to create a
  * representation of the asset.
@@ -56,12 +54,12 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     public includeRelations = false;
 
     /** @internal */
-    public createAsset(parent: IModel, properties: IAllAssetProperties) {
-        if (!this.ctor) {
-            throw new Error("No constructor specified.");
+    public createBundle(parent: IModel, properties: IAllAssetProperties) {
+        if (!this.createBundleCallback) {
+            throw new Error("No createBundleCallback was specified.");
         }
 
-        return new this.ctor(parent, properties);
+        return this.createBundleCallback(parent, properties);
     }
 
     public get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
@@ -119,7 +117,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @internal */
-    protected constructor(private readonly ctor?: IAssetConstructor) {
+    protected constructor(private readonly createBundleCallback?: CreateBundle) {
         super();
     }
 

@@ -28,9 +28,9 @@ import { Unknown, Value } from "./Value";
 export class Model implements IModel {
     /** Provides information objects for each of the supported asset types. */
     public static readonly assetInfos: AssetInputInfo[] = [
-        new CryptoWalletInputInfo(BtcWallet.type, 8, BtcWallet),
-        new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
-        new PreciousMetalAssetInputInfo(GoldAsset.type, GoldAsset),
+        new CryptoWalletInputInfo(BtcWallet.type, 8, (m, p) => Model.createBundle(m, p, BtcWallet)),
+        new PreciousMetalAssetInputInfo(SilverAsset.type, (m, p) => Model.createBundle(m, p, SilverAsset)),
+        new PreciousMetalAssetInputInfo(GoldAsset.type, (m, p) => Model.createBundle(m, p, GoldAsset)),
     ];
 
     /**
@@ -75,19 +75,13 @@ export class Model implements IModel {
                 return Value.getTypeMismatch(rawBundle, []);
             }
 
-            const bundle = new AssetBundle();
-
             for (const rawAsset of rawBundle) {
-                const asset = Model.createAsset(model, rawAsset);
+                const bundle = Model.parseAsset(model, rawAsset);
 
-                if (!(asset instanceof Asset)) {
-                    return asset;
+                if (!(bundle instanceof AssetBundle)) {
+                    return bundle;
                 }
 
-                bundle.assets.push(asset);
-            }
-
-            if (bundle.assets.length > 0) {
                 model.bundles.push(bundle);
             }
         }
@@ -132,24 +126,35 @@ export class Model implements IModel {
     }
 
     /** Adds `bundle` to the list of asset bundles. */
-    public addAsset(bundle: AssetBundle) {
+    public addBundle(bundle: AssetBundle) {
         this.bundles.push(bundle);
         this.onChanged();
     }
 
     /** Deletes `asset`. */
     public deleteAsset(asset: Asset) {
-        for (const bundle of this.bundles) {
+        const index = this.bundles.findIndex((b) => b.assets.indexOf(asset) >= 0);
+
+        if (index >= 0) {
+            const bundle = this.bundles[index];
             bundle.deleteAsset(asset);
+
+            if (bundle.assets.length === 0) {
+                this.bundles.splice(index, 1);
+            }
         }
 
         this.onChanged();
     }
 
-    /** Replaces `oldAsset` with `newAsset`. */
-    public replaceAsset(oldAsset: Asset, newAsset: Asset) {
-        for (const bundle of this.bundles) {
-            bundle.replaceAsset(oldAsset, newAsset);
+    /** Replaces the bundle containing `oldAsset` with `newBundle`. */
+    public replaceBundle(oldAsset: Asset, newBundle: AssetBundle) {
+        const index = this.bundles.findIndex((b) => b.assets.indexOf(oldAsset) >= 0);
+
+        if (index >= 0) {
+            // Apparently, Vue cannot detect the obvious way of replacing (this.bundles[index] = newBundle):
+            // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
+            this.bundles.splice(index, 1, newBundle);
         }
 
         this.onChanged();
@@ -198,26 +203,31 @@ export class Model implements IModel {
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
 
-    private static createAsset(model: IModel, raw: Unknown | null | undefined) {
+    private static createBundle(
+        parent: IModel, properties: IAllAssetProperties, ctor: { new (m: IModel, p: IAllAssetProperties): Asset }) {
+        return new AssetBundle(new ctor(parent, properties));
+    }
+
+    private static parseAsset(model: IModel, rawAsset: Unknown | null | undefined) {
         const typeName = "type";
 
-        if (!Value.hasStringProperty(raw, typeName)) {
-            return Value.getPropertyTypeMismatch(typeName, raw, "");
+        if (!Value.hasStringProperty(rawAsset, typeName)) {
+            return Value.getPropertyTypeMismatch(typeName, rawAsset, "");
         }
 
-        const assetInfo = this.assetInfos.find((info) => info.type === raw.type);
+        const assetInfo = this.assetInfos.find((info) => info.type === rawAsset.type);
 
         if (!assetInfo) {
-            return Value.getUnknownValue(typeName, raw.type);
+            return Value.getUnknownValue(typeName, rawAsset.type);
         }
 
-        const validationResult = assetInfo.validateAll(raw);
+        const validationResult = assetInfo.validateAll(rawAsset);
 
-        if (!this.hasProperties(validationResult, raw)) {
+        if (!this.hasProperties(validationResult, rawAsset)) {
             return validationResult;
         }
 
-        return assetInfo.createAsset(model, raw);
+        return assetInfo.createBundle(model, rawAsset);
     }
 
     private static hasProperties(validationResult: true | string, raw: Unknown): raw is IAllAssetProperties {
