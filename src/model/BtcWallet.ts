@@ -40,10 +40,10 @@ export class BtcWallet extends CryptoWallet {
     }
 
     private async queryQuantity() {
-        if (this.locationHint) {
+        if (this.address) {
             // TODO: This is a crude test to distinguish between xpub and a normal address
-            if (this.locationHint.length <= 100) {
-                await this.add([ this.locationHint ]);
+            if (this.address.length <= 100) {
+                await this.add([ this.address ]);
             } else {
                 await BtcWallet.delay(1000);
                 // The following calls use a lot of CPU. By delaying first, we ensure that other queries can be sent,
@@ -71,7 +71,7 @@ export class BtcWallet extends CryptoWallet {
     }
 
     private getBatch(chain: number, offset: number) {
-        const node = HDNode.fromBase58(this.locationHint).derive(chain);
+        const node = HDNode.fromBase58(this.address ? this.address : "").derive(chain);
         const result = new Array<string>(20);
 
         for (let index = 0; index < result.length; ++index) {
