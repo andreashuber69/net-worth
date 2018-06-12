@@ -24,7 +24,7 @@ export class BtcWallet extends CryptoWallet {
     /** Creates a new [[BtcWallet]] instance.
      * @description If a non-empty string is passed for [[ICryptoProperties.address]], then an attempt is made to
      * retrieve the wallet balance, which is then added to whatever is passed for [[ICryptoProperties.quantity]]. It
-     * therefore usually only makes sense specify either address or quantity, not both.
+     * therefore usually only makes sense to specify either address or quantity, not both.
      * @param parent The parent model to which this asset belongs.
      * @param properties The crypto wallet properties.
      */

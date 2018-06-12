@@ -66,6 +66,9 @@
               <a href="https://blockchain.info" target="_blank" class="px-2">
                 <img src="./assets/blockchain.svg" height="12" alt="blockchain.info"/>
               </a>
+              <a href="https://etherscan.io" target="_blank" class="px-2">
+                <img src="./assets/etherscan.png" height="12" alt="etherscan.io"/>
+              </a>
               <a href="https://quandl.com" target="_blank" class="px-2">
                 <img src="./assets/quandl.svg" height="12" alt="quandl.com"/>
               </a>
