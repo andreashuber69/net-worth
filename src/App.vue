@@ -53,6 +53,32 @@
           <AssetList :value="model"/>
         </v-container>
       </v-content>
+      <v-footer app height="auto">
+        <v-container fill-height fluid>
+          <v-layout row>
+            <v-flex class="text-xs-right pr-2">
+              Data Providers
+            </v-flex>
+            <v-flex>
+              <a href="https://coinmarketcap.com" target="_blank" class="px-2">
+                <img src="./assets/coinmarketcap.svg" height="12" alt="coinmarketcap.com"/>
+              </a>
+              <a href="https://blockchain.info" target="_blank" class="px-2">
+                <img src="./assets/blockchain.svg" height="12" alt="blockchain.info"/>
+              </a>
+              <a href="https://quandl.com" target="_blank" class="px-2">
+                <img src="./assets/quandl.svg" height="12" alt="quandl.com"/>
+              </a>
+            </v-flex>
+            <v-spacer></v-spacer>
+            <v-flex>
+              <a href="https://github.com/andreashuber69/asset-manager" target="_blank" class="px-2">
+                GitHub
+              </a>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-footer>
     </v-app>
   </div>
 </template>
