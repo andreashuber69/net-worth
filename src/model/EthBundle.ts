@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { Asset } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { ICryptoWalletProperties } from "./CryptoWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
@@ -30,12 +30,11 @@ export class EthBundle extends AssetBundle {
 
     /**
      * Creates a new [[EthBundle]] instance.
-     * @param parent The parent model to which this asset belongs.
-     * @param properties The crypto wallet properties.
+     * @param wallet The ETH wallet to bundle
      */
-    public constructor(private readonly parent: IModel, private readonly properties: ICryptoWalletProperties) {
+    public constructor(wallet: EthWallet) {
         super();
-        this.assets.push(new EthWallet(this.parent, this.properties));
+        this.assets.push(wallet);
         this.addTokenWallets().catch((reason) => console.error(reason));
     }
 
@@ -78,8 +77,12 @@ export class EthBundle extends AssetBundle {
         return undefined;
     }
 
+    private get ethWallet() {
+        return this.assets[0] as EthWallet;
+    }
+
     private async addTokenWallets() {
-        if (!this.properties.address) {
+        if (!this.ethWallet.address) {
             return;
         }
 
@@ -99,7 +102,7 @@ export class EthBundle extends AssetBundle {
 
         for (const id in data) {
             if (data.hasOwnProperty(id)) {
-                await this.addTokenWallet(knownTokens, this.properties.address, data[id]);
+                await this.addTokenWallet(knownTokens, this.ethWallet.address, data[id]);
             }
         }
     }
@@ -127,9 +130,9 @@ export class EthBundle extends AssetBundle {
             address, knownToken.contractAddress, knownToken.decimals).execute();
 
         if (balance > 0) {
-            const newProperties = { ...this.properties, quantity: balance };
+            const newProperties = { ...this.ethWallet as ICryptoWalletProperties, quantity: balance };
             this.assets.push(
-                new Erc20TokenWallet(this.parent, newProperties, ticker.symbol, ticker.website_slug));
+                new Erc20TokenWallet(this.ethWallet.parent, newProperties, ticker.symbol, ticker.website_slug));
         }
 
         // Etherscan will answer at most 5 requests per second. This should push it well below that limit.

@@ -12,8 +12,10 @@
 
 import { HDNode } from "bitcoinjs-lib";
 import { IModel } from "./Asset";
+import { AssetBundle } from "./AssetBundle";
 import { BlockchainRequest } from "./BlockchainRequest";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
+import { SingleAssetBundle } from "./SingleAssetBundle";
 
 /** Represents a BTC wallet. */
 export class BtcWallet extends CryptoWallet {
@@ -31,6 +33,10 @@ export class BtcWallet extends CryptoWallet {
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
         super(parent, properties, "BTC", "bitcoin");
         this.queryQuantity().catch((reason) => console.error(reason));
+    }
+
+    public bundle(): AssetBundle {
+        return new SingleAssetBundle(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

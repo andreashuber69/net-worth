@@ -10,8 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
+import { Asset, IModel } from "./Asset";
 import { AllAssetPropertyNames, IAllAssetProperties } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
@@ -26,7 +25,10 @@ interface IValidationResults extends IAuxProperties<true | string> {
     [key: string]: true | string;
 }
 
-export type CreateBundle = (parent: IModel, properties: IAllAssetProperties) => AssetBundle;
+export interface IAssetConstructor {
+    new (m: IModel, p: IAllAssetProperties): Asset;
+}
+
 /**
  * Defines how the properties of a given asset type need to be input and validated and provides a method to create a
  * representation of the asset.
@@ -55,11 +57,11 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
 
     /** @internal */
     public createBundle(parent: IModel, properties: IAllAssetProperties) {
-        if (!this.createBundleCallback) {
-            throw new Error("No createBundleCallback was specified.");
+        if (!this.ctor) {
+            throw new Error("No ctor was specified.");
         }
 
-        return this.createBundleCallback(parent, properties);
+        return (new this.ctor(parent, properties)).bundle();
     }
 
     public get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
@@ -117,7 +119,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @internal */
-    protected constructor(private readonly createBundleCallback?: CreateBundle) {
+    protected constructor(private readonly ctor?: IAssetConstructor) {
         super();
     }
 

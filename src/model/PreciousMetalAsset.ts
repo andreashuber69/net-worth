@@ -11,7 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IAssetProperties, IModel } from "./Asset";
+import { AssetBundle } from "./AssetBundle";
 import { QuandlRequest } from "./QuandlRequest";
+import { SingleAssetBundle } from "./SingleAssetBundle";
 import { WeightUnit, WeightUnits } from "./WeightUnit";
 
 /** Contains the defining properties common to all precious metal assets. */
@@ -71,6 +73,10 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
             fineness: this.fineness,
             quantity: this.quantity,
         };
+    }
+
+    public bundle(): AssetBundle {
+        return new SingleAssetBundle(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

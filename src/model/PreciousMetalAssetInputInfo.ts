@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInputInfo, CreateBundle } from "./AssetInputInfo";
+import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
 import { PreciousMetalAssetTypes } from "./AssetTypes";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
@@ -35,7 +35,7 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     public readonly quantity = new TextInputInfo("Quantity", "The number of items.", true, true, 0);
 
     /** @internal */
-    public constructor(public readonly type: PreciousMetalAssetTypes, createBundle: CreateBundle) {
-        super(createBundle);
+    public constructor(public readonly type: PreciousMetalAssetTypes, ctor: IAssetConstructor) {
+        super(ctor);
     }
 }

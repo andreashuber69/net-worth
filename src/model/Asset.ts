@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { AssetBundle } from "./AssetBundle";
 import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 
@@ -78,6 +79,12 @@ export abstract class Asset {
 
     /** @internal */
     public abstract toJSON(): ISerializedAsset;
+
+    /** @internal */
+    // tslint:disable-next-line:prefer-function-over-method
+    public bundle(): AssetBundle {
+        throw new Error("Asset cannot be bundled.");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

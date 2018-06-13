@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInputInfo, CreateBundle } from "./AssetInputInfo";
+import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
 import { AllAssetPropertyNames } from "./AssetInterfaces";
 import { CryptoWalletTypes } from "./AssetTypes";
 import { CompositeInput } from "./Input";
@@ -35,8 +35,8 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly quantity: TextInputInfo;
 
     /** @internal */
-    public constructor(public readonly type: CryptoWalletTypes, quantityDecimals: number, createBundle: CreateBundle) {
-        super(createBundle);
+    public constructor(public readonly type: CryptoWalletTypes, quantityDecimals: number, ctor: IAssetConstructor) {
+        super(ctor);
         this.quantity = new TextInputInfo(
             "Quantity", "The amount in the wallet.", true, false, 0, undefined, Math.pow(10, -quantityDecimals));
     }

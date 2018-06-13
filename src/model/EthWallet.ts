@@ -11,10 +11,12 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
+import { AssetBundle } from "./AssetBundle";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
+import { EthBundle } from "./EthBundle";
 import { EtherscanEthBalanceRequest } from "./EtherscanEthBalanceRequest";
 
-/** Represents a ETH wallet. */
+/** Represents an ETH wallet. */
 export class EthWallet extends CryptoWallet {
     public static readonly type = "Ethereum";
 
@@ -31,6 +33,12 @@ export class EthWallet extends CryptoWallet {
         super(parent, properties, "ETH", "ethereum");
         this.queryQuantity().catch((reason) => console.error(reason));
     }
+
+    public bundle(): AssetBundle {
+        return new EthBundle(this);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private async queryQuantity() {
         if (this.address) {
