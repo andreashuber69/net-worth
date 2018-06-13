@@ -12,30 +12,33 @@
 
 import { IModel } from "./Asset";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
-import { EtherscanEthBalanceRequest } from "./EtherscanEthBalanceRequest";
+import { EtherscanTokenBalanceRequest } from "./EtherscanTokenBalanceRequest";
 
-/** Represents a ETH wallet. */
-export class EthWallet extends CryptoWallet {
-    public static readonly type = "Ethereum Wallet";
+/** Represents an ERC20 token wallet. */
+export class Erc20TokenWallet extends CryptoWallet {
+    public static readonly type = "ERC20 Token Wallet";
 
-    public readonly type = EthWallet.type;
+    public readonly type = Erc20TokenWallet.type;
 
-    /** Creates a new [[EthWallet]] instance.
-     * @description If a non-empty string is passed for [[ICryptoProperties.address]], then an attempt is made to
-     * retrieve the wallet balance, which is then added to whatever is passed for [[ICryptoProperties.quantity]]. It
-     * therefore usually only makes sense to specify either address or quantity, not both.
-     * @param parent The parent model to which this asset belongs.
-     * @param properties The crypto wallet properties.
-     */
-    public constructor(parent: IModel, properties: ICryptoWalletProperties) {
-        super(parent, properties, "ETH", 8, "ethereum");
+    /** @internal */
+    public constructor(
+        parent: IModel,
+        properties: ICryptoWalletProperties,
+        currencySymbol: string,
+        quantityDecimals: number,
+        coin: string,
+        private readonly contractAddress: string) {
+        super(parent, properties, currencySymbol, quantityDecimals, coin);
         this.queryQuantity().catch((reason) => console.error(reason));
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private async queryQuantity() {
         if (this.address) {
             this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
-                await new EtherscanEthBalanceRequest(this.address).execute();
+                await new EtherscanTokenBalanceRequest(
+                    this.address, this.contractAddress, this.quantityDecimals).execute();
         }
     }
 }

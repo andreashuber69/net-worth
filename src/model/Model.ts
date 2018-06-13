@@ -17,6 +17,7 @@ import { IAllAssetProperties } from "./AssetInterfaces";
 import { BtcWallet } from "./BtcWallet";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
+import { EthBundle } from "./EthBundle";
 import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
 import { IWebRequest } from "./IWebRequest";
@@ -31,7 +32,7 @@ export class Model implements IModel {
     /** Provides information objects for each of the supported asset types. */
     public static readonly assetInfos: AssetInputInfo[] = [
         new CryptoWalletInputInfo(BtcWallet.type, 8, (m, p) => Model.createBundle(m, p, BtcWallet)),
-        new CryptoWalletInputInfo(EthWallet.type, 18, (m, p) => Model.createBundle(m, p, EthWallet)),
+        new CryptoWalletInputInfo(EthWallet.type, 18, (m, p) => new EthBundle(m, p)),
         new PreciousMetalAssetInputInfo(SilverAsset.type, (m, p) => Model.createBundle(m, p, SilverAsset)),
         new PreciousMetalAssetInputInfo(GoldAsset.type, (m, p) => Model.createBundle(m, p, GoldAsset)),
     ];

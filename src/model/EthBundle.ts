@@ -10,29 +10,26 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset } from "./Asset";
+import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
+import { ICryptoWalletProperties } from "./CryptoWallet";
+import { Erc20TokenWallet } from "./Erc20TokenWallet";
+import { EthWallet } from "./EthWallet";
 import { QueryCache } from "./QueryCache";
 import { Value } from "./Value";
 
-interface ITokenInfo {
-    readonly contractAddress: string;
-    readonly decimals: number;
-    readonly cmcPath: string;
-    readonly price: number;
-}
-
 /** Defines an ETH bundle. */
 export class EthBundle extends AssetBundle {
-    public readonly assets: Asset[];
+    public readonly assets: Asset[] = [];
 
     /**
      * Creates a new [[EthBundle]] instance.
      * @param asset The asset to bundle.
      */
-    public constructor(private readonly address: string) {
+    public constructor(private readonly parent: IModel, private readonly properties: ICryptoWalletProperties) {
         super();
-        EthBundle.getTopTokens().catch((reason) => console.error(reason));
+        this.assets.push(new EthWallet(this.parent, this.properties));
+        this.addTokenWallets().catch((reason) => console.error(reason));
     }
 
     public deleteAsset(asset: Asset) {
@@ -50,21 +47,40 @@ export class EthBundle extends AssetBundle {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static async getTopTokens() {
-        const knownTokens = await this.getKnownTokens();
+    private static async getKnownTokens() {
+        const knownTokens = await QueryCache.fetch(
+            "https://raw.githubusercontent.com/kvhnuke/etherwallet/mercury/app/scripts/tokens/ethTokens.json");
+
+        if (Value.isArray(knownTokens)) {
+            const result = new Map<string, { contractAddress: string; decimals: number }>();
+
+            for (const token of knownTokens) {
+                if (Value.hasStringProperty(token, "address") && Value.hasStringProperty(token, "symbol") &&
+                    Value.hasNumberProperty(token, "decimal")) {
+                    result.set(token.symbol, { contractAddress: token.address, decimals: token.decimal });
+                }
+            }
+
+            return result;
+        }
+
+        return undefined;
+    }
+
+    private async addTokenWallets() {
+        const knownTokens = await EthBundle.getKnownTokens();
 
         if (!knownTokens) {
-            return undefined;
+            return;
         }
 
         const currencies = await QueryCache.fetch("https://api.coinmarketcap.com/v2/ticker/");
 
         if (!Value.hasObjectProperty(currencies, "data")) {
-            return undefined;
+            return;
         }
 
         const data = currencies.data;
-        const topTokens = new Map<string, ITokenInfo>();
 
         for (const id in data) {
             if (data.hasOwnProperty(id)) {
@@ -91,35 +107,14 @@ export class EthBundle extends AssetBundle {
                     continue;
                 }
 
-                topTokens.set(ticker.symbol, {
-                    contractAddress: knownToken.contractAddress,
-                    decimals: knownToken.decimals,
-                    cmcPath: ticker.website_slug,
-                    price: usdQuotes.price,
-                });
+                this.assets.push(new Erc20TokenWallet(
+                    this.parent,
+                    this.properties,
+                    ticker.symbol,
+                    knownToken.decimals,
+                    ticker.website_slug,
+                    knownToken.contractAddress));
             }
         }
-
-        return topTokens;
-    }
-
-    private static async getKnownTokens() {
-        const knownTokens = await QueryCache.fetch(
-            "https://raw.githubusercontent.com/kvhnuke/etherwallet/mercury/app/scripts/tokens/ethTokens.json");
-
-        if (Value.isArray(knownTokens)) {
-            const result = new Map<string, { contractAddress: string; decimals: number }>();
-
-            for (const token of knownTokens) {
-                if (Value.hasStringProperty(token, "address") && Value.hasStringProperty(token, "symbol") &&
-                    Value.hasNumberProperty(token, "decimal")) {
-                    result.set(token.symbol, { contractAddress: token.address, decimals: token.decimal });
-                }
-            }
-
-            return result;
-        }
-
-        return undefined;
     }
 }

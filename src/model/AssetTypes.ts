@@ -11,10 +11,11 @@
 // <http://www.gnu.org/licenses/>.
 
 import { BtcWallet } from "./BtcWallet";
+import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
 import { SilverAsset } from "./SilverAsset";
 
-export type CryptoWalletTypes = typeof BtcWallet.type | typeof EthWallet.type;
+export type CryptoWalletTypes = typeof BtcWallet.type | typeof EthWallet.type | typeof Erc20TokenWallet.type;
 export type PreciousMetalAssetTypes = typeof SilverAsset.type | typeof GoldAsset.type;
 export type AssetTypes = CryptoWalletTypes | PreciousMetalAssetTypes;
