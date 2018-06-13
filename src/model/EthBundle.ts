@@ -28,10 +28,7 @@ interface ITokenInfo {
 export class EthBundle extends AssetBundle {
     public readonly assets: Asset[] = [];
 
-    /**
-     * Creates a new [[EthBundle]] instance.
-     * @param wallet The ETH wallet to bundle
-     */
+    /** @internal */
     public constructor(wallet: EthWallet) {
         super();
         this.assets.push(wallet);

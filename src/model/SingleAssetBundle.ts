@@ -17,10 +17,7 @@ import { AssetBundle } from "./AssetBundle";
 export class SingleAssetBundle extends AssetBundle {
     public readonly assets: Asset[];
 
-    /**
-     * Creates a new [[SingleAssetBundle]] instance.
-     * @param asset The asset to bundle.
-     */
+    /** @internal */
     public constructor(asset: Asset) {
         super();
         this.assets = [ asset ];
