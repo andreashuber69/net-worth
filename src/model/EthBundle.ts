@@ -30,7 +30,8 @@ export class EthBundle extends AssetBundle {
 
     /**
      * Creates a new [[EthBundle]] instance.
-     * @param asset The asset to bundle.
+     * @param parent The parent model to which this asset belongs.
+     * @param properties The crypto wallet properties.
      */
     public constructor(private readonly parent: IModel, private readonly properties: ICryptoWalletProperties) {
         super();

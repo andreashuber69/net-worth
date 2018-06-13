@@ -19,6 +19,10 @@ export class Erc20TokenWallet extends CryptoWallet {
 
     public readonly type = Erc20TokenWallet.type;
 
+    public get isEditable() {
+        return false;
+    }
+
     /** @internal */
     public constructor(parent: IModel, properties: ICryptoWalletProperties, currencySymbol: string, coin: string) {
         super(parent, properties, currencySymbol, coin);

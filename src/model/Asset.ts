@@ -68,6 +68,11 @@ export abstract class Asset {
         return Asset.multiply(this.quantity, this.unitValue);
     }
 
+    /** Provides a value indicating whether the asset can be edited. */
+    public get isEditable() {
+        return true;
+    }
+
     /** @internal */
     public abstract get interface(): IAssetUnion;
 
