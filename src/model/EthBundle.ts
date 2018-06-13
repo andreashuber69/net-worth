@@ -14,6 +14,7 @@ import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { ICryptoWalletProperties } from "./CryptoWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
+import { EtherscanTokenBalanceRequest } from "./EtherscanTokenBalanceRequest";
 import { EthWallet } from "./EthWallet";
 import { QueryCache } from "./QueryCache";
 import { Value } from "./Value";
@@ -72,6 +73,10 @@ export class EthBundle extends AssetBundle {
     }
 
     private async addTokenWallets() {
+        if (!this.properties.address) {
+            return;
+        }
+
         const knownTokens = await EthBundle.getKnownTokens();
 
         if (!knownTokens) {
@@ -111,13 +116,14 @@ export class EthBundle extends AssetBundle {
                     continue;
                 }
 
-                this.assets.push(new Erc20TokenWallet(
-                    this.parent,
-                    this.properties,
-                    ticker.symbol,
-                    knownToken.decimals,
-                    ticker.website_slug,
-                    knownToken.contractAddress));
+                const balance = await new EtherscanTokenBalanceRequest(
+                    this.properties.address, knownToken.contractAddress, knownToken.decimals).execute();
+
+                if (balance > 0) {
+                    const newProperties = { ...this.properties, quantity: balance };
+                    this.assets.push(
+                        new Erc20TokenWallet(this.parent, newProperties, ticker.symbol, ticker.website_slug));
+                }
 
                 // Etherscan will answer at most 5 requests per second. This should push it well below that limit.
                 await EthBundle.delay(300);

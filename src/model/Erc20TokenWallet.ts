@@ -12,7 +12,6 @@
 
 import { IModel } from "./Asset";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
-import { EtherscanTokenBalanceRequest } from "./EtherscanTokenBalanceRequest";
 
 /** Represents an ERC20 token wallet. */
 export class Erc20TokenWallet extends CryptoWallet {
@@ -21,24 +20,7 @@ export class Erc20TokenWallet extends CryptoWallet {
     public readonly type = Erc20TokenWallet.type;
 
     /** @internal */
-    public constructor(
-        parent: IModel,
-        properties: ICryptoWalletProperties,
-        currencySymbol: string,
-        private readonly quantityDecimals: number,
-        coin: string,
-        private readonly contractAddress: string) {
+    public constructor(parent: IModel, properties: ICryptoWalletProperties, currencySymbol: string, coin: string) {
         super(parent, properties, currencySymbol, coin);
-        this.queryQuantity().catch((reason) => console.error(reason));
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private async queryQuantity() {
-        if (this.address) {
-            this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
-                await new EtherscanTokenBalanceRequest(
-                    this.address, this.contractAddress, this.quantityDecimals).execute();
-        }
     }
 }
