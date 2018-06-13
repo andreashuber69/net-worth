@@ -14,16 +14,16 @@ import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { Unknown, Value } from "./Value";
 
-/** Represents a single etherscan.io request. */
-export class EtherscanRequest implements IWebRequest<number> {
-    /** Creates a new [[EtherscanRequest]] instance.
+/** Represents a single etherscan.io request to get the ETH balance of an address. */
+export class EtherscanEthBalanceRequest implements IWebRequest<number> {
+    /** Creates a new [[EtherscanEthBalanceRequest]] instance.
      *  @param address The address to query the balance for.
      */
     public constructor(private readonly address: string) {
     }
 
     public async execute() {
-        return EtherscanRequest.getBalance(await QueryCache.fetch(
+        return EtherscanEthBalanceRequest.getBalance(await QueryCache.fetch(
             `https://api.etherscan.io/api?module=account&action=balance&address=${this.address}&tag=latest`));
     }
 

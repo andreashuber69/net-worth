@@ -12,7 +12,7 @@
 
 import { IModel } from "./Asset";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
-import { EtherscanRequest } from "./EtherscanRequest";
+import { EtherscanEthBalanceRequest } from "./EtherscanEthBalanceRequest";
 
 /** Represents a BTC wallet. */
 export class EthWallet extends CryptoWallet {
@@ -32,12 +32,10 @@ export class EthWallet extends CryptoWallet {
         this.queryQuantity().catch((reason) => console.error(reason));
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     private async queryQuantity() {
         if (this.address) {
-            this.quantity =
-                (this.quantity === undefined ? 0 : this.quantity) + await new EtherscanRequest(this.address).execute();
+            this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
+                await new EtherscanEthBalanceRequest(this.address).execute();
         }
     }
 }

@@ -63,8 +63,8 @@ export class Value {
     }
 
     /** Returns whether `value` has an own property of type `Object` with the name `propertyName`. */
-    public static hasObjectProperty<T extends string>(
-        value: Unknown | null | undefined, propertyName: T): value is { [K in T]: Unknown | null | undefined } {
+    public static hasObjectProperty<T extends string>(value: Unknown | null | undefined, propertyName: T):
+        value is { [K in T]: { [key: string]: Unknown | null | undefined } } {
         return this.hasProperty(value, propertyName) && this.isObject(value[propertyName]);
     }
 
