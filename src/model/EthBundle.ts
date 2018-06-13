@@ -17,7 +17,12 @@ import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { EtherscanTokenBalanceRequest } from "./EtherscanTokenBalanceRequest";
 import { EthWallet } from "./EthWallet";
 import { QueryCache } from "./QueryCache";
-import { Value } from "./Value";
+import { Unknown, Value } from "./Value";
+
+interface ITokenInfo {
+    readonly contractAddress: string;
+    readonly decimals: number;
+}
 
 /** Defines an ETH bundle. */
 export class EthBundle extends AssetBundle {
@@ -57,7 +62,7 @@ export class EthBundle extends AssetBundle {
             "https://raw.githubusercontent.com/kvhnuke/etherwallet/mercury/app/scripts/tokens/ethTokens.json");
 
         if (Value.isArray(knownTokens)) {
-            const result = new Map<string, { contractAddress: string; decimals: number }>();
+            const result = new Map<string, ITokenInfo>();
 
             for (const token of knownTokens) {
                 if (Value.hasStringProperty(token, "address") && Value.hasStringProperty(token, "symbol") &&
@@ -93,41 +98,40 @@ export class EthBundle extends AssetBundle {
 
         for (const id in data) {
             if (data.hasOwnProperty(id)) {
-                if (!Value.isObject(data[id])) {
-                    continue;
-                }
-
-                const ticker = data[id];
-
-                if (!Value.hasStringProperty(ticker, "symbol") || !Value.hasStringProperty(ticker, "website_slug") ||
-                    !Value.hasObjectProperty(ticker, "quotes") || !Value.hasObjectProperty(ticker.quotes, "USD")) {
-                    continue;
-                }
-
-                const knownToken = knownTokens.get(ticker.symbol);
-
-                if (!knownToken) {
-                    continue;
-                }
-
-                const usdQuotes = ticker.quotes.USD;
-
-                if (!Value.hasNumberProperty(usdQuotes, "price")) {
-                    continue;
-                }
-
-                const balance = await new EtherscanTokenBalanceRequest(
-                    this.properties.address, knownToken.contractAddress, knownToken.decimals).execute();
-
-                if (balance > 0) {
-                    const newProperties = { ...this.properties, quantity: balance };
-                    this.assets.push(
-                        new Erc20TokenWallet(this.parent, newProperties, ticker.symbol, ticker.website_slug));
-                }
-
-                // Etherscan will answer at most 5 requests per second. This should push it well below that limit.
-                await EthBundle.delay(300);
+                await this.addTokenWallet(knownTokens, this.properties.address, data[id]);
             }
         }
+    }
+
+    private async addTokenWallet(
+        knownTokens: Map<string, ITokenInfo>, address: string, ticker: Unknown | null | undefined) {
+        if (!Value.hasStringProperty(ticker, "symbol") || !Value.hasStringProperty(ticker, "website_slug") ||
+            !Value.hasObjectProperty(ticker, "quotes") || !Value.hasObjectProperty(ticker.quotes, "USD")) {
+            return;
+        }
+
+        const knownToken = knownTokens.get(ticker.symbol);
+
+        if (!knownToken) {
+            return;
+        }
+
+        const usdQuotes = ticker.quotes.USD;
+
+        if (!Value.hasNumberProperty(usdQuotes, "price")) {
+            return;
+        }
+
+        const balance = await new EtherscanTokenBalanceRequest(
+            address, knownToken.contractAddress, knownToken.decimals).execute();
+
+        if (balance > 0) {
+            const newProperties = { ...this.properties, quantity: balance };
+            this.assets.push(
+                new Erc20TokenWallet(this.parent, newProperties, ticker.symbol, ticker.website_slug));
+        }
+
+        // Etherscan will answer at most 5 requests per second. This should push it well below that limit.
+        await EthBundle.delay(300);
     }
 }
