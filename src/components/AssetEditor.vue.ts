@@ -103,12 +103,12 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     private save() {
-        const newBundle = this.assetInfo.createBundle(this.checkedValue, new AssetProperties(this.data));
+        const newAsset = this.assetInfo.createAsset(this.checkedValue, new AssetProperties(this.data));
 
         if (this.editedAsset) {
-            this.checkedValue.replaceBundle(this.editedAsset, newBundle);
+            this.checkedValue.replaceAsset(this.editedAsset, newAsset);
         } else {
-            this.checkedValue.addBundle(newBundle);
+            this.checkedValue.addAsset(newAsset);
         }
     }
 

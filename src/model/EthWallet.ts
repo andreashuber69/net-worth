@@ -63,7 +63,8 @@ export class EthWallet extends CryptoWallet {
             const index = this.assets.indexOf(asset);
 
             if (index >= 0) {
-                this.assets.splice(index, 1);
+                // TODO: This will not work correctly while we're still updating the tokens
+                this.assets.splice(index, index === 0 ? this.assets.length : 1);
             }
         }
 
