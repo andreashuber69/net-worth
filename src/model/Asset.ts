@@ -82,9 +82,9 @@ export abstract class Asset {
      * Creates a new [[Asset]] instance.
      * @param parent The parent model to which this asset belongs.
      * @param properties The asset properties.
-     * @param quantityDecimals The number of decimals to use to format the quantity.
+     * @param displayDecimals The number of decimals to use to format the quantity.
      */
-    protected constructor(parent: IModel, properties: IAssetProperties, public readonly quantityDecimals: number) {
+    protected constructor(parent: IModel, properties: IAssetProperties, public readonly displayDecimals: number) {
         this.parent = parent;
         this.description = properties.description;
         this.location = properties.location;

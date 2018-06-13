@@ -51,11 +51,11 @@ export default class AssetListRow extends ComponentBase<Asset> {
     }
 
     public get quantityInteger() {
-        return Format.integer(this.checkedValue.quantity, this.checkedValue.quantityDecimals);
+        return Format.integer(this.checkedValue.quantity, this.checkedValue.displayDecimals);
     }
 
     public get quantityFraction() {
-        return Format.fraction(this.checkedValue.quantity, this.checkedValue.quantityDecimals);
+        return Format.fraction(this.checkedValue.quantity, this.checkedValue.displayDecimals);
     }
 
     public get totalValueInteger() {

@@ -75,17 +75,11 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
      * @param parent The parent model to which this asset belongs.
      * @param properties The crypto wallet properties.
      * @param currencySymbol The crypto currency symbol, e.g. 'BTC', 'LTC'.
-     * @param quantityDecimals The number of decimals to use to format the quantity.
      * @param coin The coinmarketcap.com identifier of the currency.
      */
     protected constructor(
-        parent: IModel,
-        properties: ICryptoWalletProperties,
-        private readonly currencySymbol: string,
-        quantityDecimals: number,
-        coin: string,
-    ) {
-        super(parent, properties, quantityDecimals);
+        parent: IModel, properties: ICryptoWalletProperties, private readonly currencySymbol: string, coin: string) {
+        super(parent, properties, 6);
         this.address = properties.address;
         this.quantity = properties.quantity;
         this.queryUnitValue(coin).catch((reason) => console.error(reason));

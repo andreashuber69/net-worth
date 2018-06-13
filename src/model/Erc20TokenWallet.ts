@@ -25,10 +25,10 @@ export class Erc20TokenWallet extends CryptoWallet {
         parent: IModel,
         properties: ICryptoWalletProperties,
         currencySymbol: string,
-        quantityDecimals: number,
+        private readonly quantityDecimals: number,
         coin: string,
         private readonly contractAddress: string) {
-        super(parent, properties, currencySymbol, quantityDecimals, coin);
+        super(parent, properties, currencySymbol, coin);
         this.queryQuantity().catch((reason) => console.error(reason));
     }
 

@@ -28,7 +28,7 @@ export class EthWallet extends CryptoWallet {
      * @param properties The crypto wallet properties.
      */
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
-        super(parent, properties, "ETH", 8, "ethereum");
+        super(parent, properties, "ETH", "ethereum");
         this.queryQuantity().catch((reason) => console.error(reason));
     }
 
