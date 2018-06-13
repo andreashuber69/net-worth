@@ -17,7 +17,7 @@ import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 
 /** Represents a BTC wallet. */
 export class BtcWallet extends CryptoWallet {
-    public static readonly type = "Bitcoin Wallet";
+    public static readonly type = "Bitcoin";
 
     public readonly type = BtcWallet.type;
 

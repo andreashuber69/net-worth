@@ -16,7 +16,7 @@ import { EtherscanTokenBalanceRequest } from "./EtherscanTokenBalanceRequest";
 
 /** Represents an ERC20 token wallet. */
 export class Erc20TokenWallet extends CryptoWallet {
-    public static readonly type = "ERC20 Token Wallet";
+    public static readonly type = "ERC20 Token";
 
     public readonly type = Erc20TokenWallet.type;
 

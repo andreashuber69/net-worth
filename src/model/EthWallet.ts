@@ -16,7 +16,7 @@ import { EtherscanEthBalanceRequest } from "./EtherscanEthBalanceRequest";
 
 /** Represents a ETH wallet. */
 export class EthWallet extends CryptoWallet {
-    public static readonly type = "Ethereum Wallet";
+    public static readonly type = "Ethereum";
 
     public readonly type = EthWallet.type;
 
