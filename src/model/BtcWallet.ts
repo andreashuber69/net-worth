@@ -15,7 +15,7 @@ import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { BlockchainRequest } from "./BlockchainRequest";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
-import { SingleAssetBundle } from "./SingleAssetBundle";
+import { GenericAssetBundle } from "./GenericAssetBundle";
 
 /** Represents a BTC wallet. */
 export class BtcWallet extends CryptoWallet {
@@ -36,7 +36,7 @@ export class BtcWallet extends CryptoWallet {
     }
 
     public bundle(): AssetBundle {
-        return new SingleAssetBundle(this);
+        return new GenericAssetBundle(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -14,7 +14,7 @@ import { Asset } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 
 /** Defines a bundle containing a single asset. */
-export class SingleAssetBundle extends AssetBundle {
+export class GenericAssetBundle extends AssetBundle {
     public readonly assets: Asset[];
 
     /** @internal */
