@@ -53,9 +53,9 @@ export class EthWallet extends CryptoWallet {
         public readonly assets: Asset[] = [];
 
         /** @internal */
-        public constructor(wallet: EthWallet) {
+        public constructor(private readonly ethWallet: EthWallet) {
             super();
-            this.assets.push(wallet);
+            this.assets.push(ethWallet);
             this.addTokenWallets().catch((reason) => console.error(reason));
         }
 
@@ -63,14 +63,13 @@ export class EthWallet extends CryptoWallet {
             const index = this.assets.indexOf(asset);
 
             if (index >= 0) {
-                // TODO: This will not work correctly while we're still updating the tokens
                 this.assets.splice(index, index === 0 ? this.assets.length : 1);
             }
         }
 
         /** @internal */
         public toJSON() {
-            return [ this.assets[0].toJSON() ];
+            return [ this.ethWallet.toJSON() ];
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,10 +96,6 @@ export class EthWallet extends CryptoWallet {
             }
 
             return undefined;
-        }
-
-        private get ethWallet() {
-            return this.assets[0] as EthWallet;
         }
 
         private async addTokenWallets() {
