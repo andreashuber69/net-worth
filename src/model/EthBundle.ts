@@ -42,10 +42,14 @@ export class EthBundle extends AssetBundle {
 
     /** @internal */
     public toJSON() {
-        return this.assets.map((asset) => asset.toJSON());
+        return [ this.assets[0].toJSON() ];
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static delay(milliseconds: number) {
+        return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
+    }
 
     private static async getKnownTokens() {
         const knownTokens = await QueryCache.fetch(
@@ -114,6 +118,9 @@ export class EthBundle extends AssetBundle {
                     knownToken.decimals,
                     ticker.website_slug,
                     knownToken.contractAddress));
+
+                // Etherscan will answer at most 5 requests per second. This should push it well below that limit.
+                await EthBundle.delay(300);
             }
         }
     }
