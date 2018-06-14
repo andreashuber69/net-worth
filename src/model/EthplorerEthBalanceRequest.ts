@@ -35,6 +35,6 @@ export class EthplorerEthBalanceRequest implements IWebRequest<number> {
             return Number.NaN;
         }
 
-        return response.ETH.balance / 1E18;
+        return response.ETH.balance;
     }
 }
