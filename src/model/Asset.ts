@@ -13,6 +13,7 @@
 import { AssetBundle } from "./AssetBundle";
 import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
+import { Unknown } from "./Value";
 
 /** @internal */
 export interface IModel {
@@ -82,7 +83,7 @@ export abstract class Asset {
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    public bundle(): AssetBundle {
+    public bundle(bundle?: Unknown): AssetBundle {
         throw new Error("Asset cannot be bundled.");
     }
 

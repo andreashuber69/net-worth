@@ -58,7 +58,7 @@ export class Model implements IModel {
         }
 
         const model = new Model(onChanged);
-        const selectedCurrency = rawModel.selectedCurrency;
+        const selectedCurrency = rawModel[selectedCurrencyName];
 
         if (model.currencies.findIndex((currency) => currency === selectedCurrency) < 0) {
             return Value.getUnknownValue(selectedCurrencyName, selectedCurrency);
@@ -72,20 +72,21 @@ export class Model implements IModel {
 
         model.selectedCurrency = selectedCurrency;
 
+        const primaryAssetName = "primaryAsset";
+
         for (const rawBundle of rawModel.bundles) {
-            if (!Value.isArray(rawBundle)) {
-                return Value.getTypeMismatch(rawBundle, []);
+            if (!Value.hasObjectProperty(rawBundle, primaryAssetName)) {
+                return Value.getPropertyTypeMismatch(primaryAssetName, rawBundle, {});
             }
 
-            for (const rawAsset of rawBundle) {
-                const asset = Model.parseAsset(model, rawAsset);
+            const rawAsset = rawBundle[primaryAssetName];
+            const asset = Model.parseAsset(model, rawAsset);
 
-                if (!(asset instanceof Asset)) {
-                    return asset;
-                }
-
-                model.bundles.push(asset.bundle());
+            if (!(asset instanceof Asset)) {
+                return asset;
             }
+
+            model.bundles.push(asset.bundle(rawBundle));
         }
 
         return model;

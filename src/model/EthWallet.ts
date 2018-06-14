@@ -11,7 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
+import { AssetBundle, ISerializedBundle } from "./AssetBundle";
+import { ISerializedAsset } from "./AssetInterfaces";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { EtherscanEthBalanceRequest } from "./EtherscanEthBalanceRequest";
@@ -22,6 +23,10 @@ import { Unknown, Value } from "./Value";
 interface ITokenInfo {
     readonly contractAddress: string;
     readonly decimals: number;
+}
+
+interface ISerializedEthBundle extends ISerializedBundle {
+    [key: string]: ISerializedAsset | string[];
 }
 
 /** Represents an ETH wallet. */
@@ -42,8 +47,8 @@ export class EthWallet extends CryptoWallet {
         this.queryQuantity().catch((reason) => console.error(reason));
     }
 
-    public bundle(): AssetBundle {
-        return new EthWallet.EthBundle(this);
+    public bundle(bundle?: Unknown): AssetBundle {
+        return new EthWallet.EthBundle(this, bundle);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,9 +58,15 @@ export class EthWallet extends CryptoWallet {
         public readonly assets: Asset[] = [];
 
         /** @internal */
-        public constructor(private readonly ethWallet: EthWallet) {
+        public constructor(private readonly ethWallet: EthWallet, bundle?: Unknown) {
             super();
             this.assets.push(ethWallet);
+
+            if (Value.hasArrayProperty(bundle, NestedEthBundle.deletedAssetsName)) {
+                // tslint:disable-next-line:no-unbound-method
+                this.deletedAssets = bundle[NestedEthBundle.deletedAssetsName].filter(Value.isString);
+            }
+
             this.addTokenWallets().catch((reason) => console.error(reason));
         }
 
@@ -63,16 +74,25 @@ export class EthWallet extends CryptoWallet {
             const index = this.assets.indexOf(asset);
 
             if (index >= 0) {
+                this.deletedAssets.push(this.assets[index].unit);
                 this.assets.splice(index, index === 0 ? this.assets.length : 1);
             }
         }
 
         /** @internal */
-        public toJSON() {
-            return [ this.ethWallet.toJSON() ];
+        public toJSON(): ISerializedBundle {
+            const result: ISerializedEthBundle = {
+                primaryAsset: this.ethWallet.toJSON(),
+            };
+
+            result[NestedEthBundle.deletedAssetsName] = this.deletedAssets;
+
+            return result;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private static readonly deletedAssetsName = "deletedAssets";
 
         private static delay(milliseconds: number) {
             return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
@@ -97,6 +117,8 @@ export class EthWallet extends CryptoWallet {
 
             return undefined;
         }
+
+        private readonly deletedAssets: string[] = [];
 
         private async addTokenWallets() {
             if (!this.ethWallet.address) {
@@ -127,7 +149,8 @@ export class EthWallet extends CryptoWallet {
         private async addTokenWallet(
             knownTokens: Map<string, ITokenInfo>, address: string, ticker: Unknown | null | undefined) {
             if (!Value.hasStringProperty(ticker, "symbol") || !Value.hasStringProperty(ticker, "website_slug") ||
-                !Value.hasObjectProperty(ticker, "quotes") || !Value.hasObjectProperty(ticker.quotes, "USD")) {
+                !Value.hasObjectProperty(ticker, "quotes") || !Value.hasObjectProperty(ticker.quotes, "USD") ||
+                (this.deletedAssets.indexOf(ticker.symbol) >= 0)) {
                 return;
             }
 

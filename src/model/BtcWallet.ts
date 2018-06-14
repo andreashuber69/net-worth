@@ -16,6 +16,7 @@ import { AssetBundle } from "./AssetBundle";
 import { BlockchainRequest } from "./BlockchainRequest";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 import { GenericAssetBundle } from "./GenericAssetBundle";
+import { Unknown } from "./Value";
 
 /** Represents a BTC wallet. */
 export class BtcWallet extends CryptoWallet {
@@ -35,7 +36,7 @@ export class BtcWallet extends CryptoWallet {
         this.queryQuantity().catch((reason) => console.error(reason));
     }
 
-    public bundle(): AssetBundle {
+    public bundle(bundle?: Unknown): AssetBundle {
         return new GenericAssetBundle(this);
     }
 

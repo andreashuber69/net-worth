@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
+import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 
 /** Defines a bundle containing a single asset. */
 export class GenericAssetBundle extends AssetBundle {
@@ -32,7 +32,9 @@ export class GenericAssetBundle extends AssetBundle {
     }
 
     /** @internal */
-    public toJSON() {
-        return this.assets.map((asset) => asset.toJSON());
+    public toJSON(): ISerializedBundle {
+        return {
+            primaryAsset: this.assets[0],
+        };
     }
 }

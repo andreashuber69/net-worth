@@ -14,6 +14,7 @@ import { Asset, IAssetProperties, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { QuandlRequest } from "./QuandlRequest";
+import { Unknown } from "./Value";
 import { WeightUnit, WeightUnits } from "./WeightUnit";
 
 /** Contains the defining properties common to all precious metal assets. */
@@ -75,7 +76,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
         };
     }
 
-    public bundle(): AssetBundle {
+    public bundle(bundle?: Unknown): AssetBundle {
         return new GenericAssetBundle(this);
     }
 

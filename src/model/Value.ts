@@ -32,6 +32,22 @@ export type Unknown = Primitive | object;
  */
 export class Value {
     /**
+     * Returns whether the type of `value` is `number`.
+     * @description This method is typically used as follows: `array.filter(Value.isNumber)`.
+     */
+    public static isNumber(value: Unknown | null | undefined): value is number {
+        return typeof value === "number";
+    }
+
+    /**
+     * Returns whether the type of `value` is `string`.
+     * @description This method is typically used as follows: `array.filter(Value.isString)`.
+     */
+    public static isString(value: Unknown | null | undefined): value is string {
+        return typeof value === "string";
+    }
+
+    /**
      * Returns whether the type of `value` is `Object`.
      * @description This is only useful if calling code needs to iterate over the properties of `value`. Code that needs
      * to establish whether `value` has a property with a given name and type should rather call [[hasNumberProperty]],
@@ -51,7 +67,7 @@ export class Value {
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: number } {
         // False positive
         // tslint:disable-next-line:strict-type-predicates
-        return this.hasProperty(value, propertyName) && (typeof value[propertyName] === "number");
+        return this.hasProperty(value, propertyName) && this.isNumber(value[propertyName]);
     }
 
     /** Returns whether `value` has an own property of type `string` with the name `propertyName`. */
@@ -59,7 +75,7 @@ export class Value {
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: string } {
         // False positive
         // tslint:disable-next-line:strict-type-predicates
-        return this.hasProperty(value, propertyName) && (typeof value[propertyName] === "string");
+        return this.hasProperty(value, propertyName) && this.isString(value[propertyName]);
     }
 
     /** Returns whether `value` has an own property of type `Object` with the name `propertyName`. */
