@@ -15,15 +15,9 @@ import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { ISerializedAsset } from "./AssetInterfaces";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
-import { EtherscanEthBalanceRequest } from "./EtherscanEthBalanceRequest";
-import { EtherscanTokenBalanceRequest } from "./EtherscanTokenBalanceRequest";
+import { EthplorerEthBalanceRequest } from "./EthplorerEthBalanceRequest";
 import { QueryCache } from "./QueryCache";
 import { Unknown, Value } from "./Value";
-
-interface ITokenInfo {
-    readonly contractAddress: string;
-    readonly decimals: number;
-}
 
 interface ISerializedEthBundle extends ISerializedBundle {
     [key: string]: ISerializedAsset | string[];
@@ -94,30 +88,6 @@ export class EthWallet extends CryptoWallet {
 
         private static readonly deletedAssetsName = "deletedAssets";
 
-        private static delay(milliseconds: number) {
-            return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
-        }
-
-        private static async getKnownTokens() {
-            const knownTokens = await QueryCache.fetch(
-                "https://raw.githubusercontent.com/kvhnuke/etherwallet/mercury/app/scripts/tokens/ethTokens.json");
-
-            if (Value.isArray(knownTokens)) {
-                const result = new Map<string, ITokenInfo>();
-
-                for (const token of knownTokens) {
-                    if (Value.hasStringProperty(token, "address") && Value.hasStringProperty(token, "symbol") &&
-                        Value.hasNumberProperty(token, "decimal")) {
-                        result.set(token.symbol, { contractAddress: token.address, decimals: token.decimal });
-                    }
-                }
-
-                return result;
-            }
-
-            return undefined;
-        }
-
         private readonly deletedAssets: string[] = [];
 
         private async addTokenWallets() {
@@ -125,65 +95,55 @@ export class EthWallet extends CryptoWallet {
                 return;
             }
 
-            const knownTokens = await NestedEthBundle.getKnownTokens();
+            const balances = await QueryCache.fetch(
+                `https://api.ethplorer.io/getAddressInfo/${this.ethWallet.address}?apiKey=freekey`);
 
-            if (!knownTokens) {
+            if (!Value.hasArrayProperty(balances, "tokens")) {
                 return;
             }
 
-            const currencies = await QueryCache.fetch("https://api.coinmarketcap.com/v2/ticker/");
-
-            if (!Value.hasObjectProperty(currencies, "data")) {
-                return;
-            }
-
-            const data = currencies.data;
-
-            for (const id in data) {
-                if (data.hasOwnProperty(id)) {
-                    await this.addTokenWallet(knownTokens, this.ethWallet.address, data[id]);
-                }
+            for (const token of balances.tokens) {
+                await this.addTokenWallet(token);
             }
         }
 
-        private async addTokenWallet(
-            knownTokens: Map<string, ITokenInfo>, address: string, ticker: Unknown | null | undefined) {
-            if (!Value.hasStringProperty(ticker, "symbol") || !Value.hasStringProperty(ticker, "website_slug") ||
-                !Value.hasObjectProperty(ticker, "quotes") || !Value.hasObjectProperty(ticker.quotes, "USD") ||
-                (this.deletedAssets.indexOf(ticker.symbol) >= 0)) {
+        private async addTokenWallet(token: Unknown | null | undefined) {
+            if (!Value.hasObjectProperty(token, "tokenInfo") || !Value.hasNumberProperty(token, "balance")) {
                 return;
             }
 
-            const knownToken = knownTokens.get(ticker.symbol);
+            const info = token.tokenInfo;
 
-            if (!knownToken) {
+            if (!Value.hasStringProperty(info, "symbol") ||
+                (!Value.hasNumberProperty(info, "decimals") && !Value.hasStringProperty(info, "decimals"))) {
                 return;
             }
 
-            const usdQuotes = ticker.quotes.USD;
-
-            if (!Value.hasNumberProperty(usdQuotes, "price")) {
+            if (this.deletedAssets.indexOf(info.symbol) >= 0) {
                 return;
             }
 
-            const balance = await new EtherscanTokenBalanceRequest(
-                address, knownToken.contractAddress, knownToken.decimals).execute();
-
-            if (balance > 0) {
-                const newProperties = { ...this.ethWallet as ICryptoWalletProperties, quantity: balance };
-                this.assets.push(
-                    new Erc20TokenWallet(this.ethWallet.parent, newProperties, ticker.symbol, ticker.website_slug));
+            if (!Value.hasObjectProperty(info, "price") || !Value.hasStringProperty(info.price, "rate") ||
+                !Value.hasStringProperty(info.price, "currency") || (info.price.currency !== "USD")) {
+                return;
             }
 
-            // Etherscan will answer at most 5 requests per second. This should push it well below that limit.
-            await NestedEthBundle.delay(300);
+            if (token.balance > 0) {
+                const newProperties = {
+                    ...this.ethWallet as ICryptoWalletProperties,
+                    quantity: token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
+                };
+
+                this.assets.push(new Erc20TokenWallet(
+                    this.ethWallet.parent, newProperties, info.symbol, Number.parseFloat(info.price.rate)));
+            }
         }
     };
 
     private async queryQuantity() {
         if (this.address) {
             this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
-                await new EtherscanEthBalanceRequest(this.address).execute();
+                await new EthplorerEthBalanceRequest(this.address).execute();
         }
     }
 }

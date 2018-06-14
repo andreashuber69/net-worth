@@ -78,7 +78,7 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
      * @param coin The coinmarketcap.com identifier of the currency.
      */
     protected constructor(
-        parent: IModel, properties: ICryptoWalletProperties, private readonly currencySymbol: string, coin: string) {
+        parent: IModel, properties: ICryptoWalletProperties, private readonly currencySymbol: string, coin?: string) {
         super(parent, properties, 6);
         this.address = properties.address;
         this.quantity = properties.quantity;
@@ -87,7 +87,9 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private async queryUnitValue(coin: string) {
-        this.unitValueUsd = await new CoinMarketCapRequest(coin, false).execute();
+    private async queryUnitValue(coin?: string) {
+        if (coin) {
+            this.unitValueUsd = await new CoinMarketCapRequest(coin, false).execute();
+        }
     }
 }

@@ -14,31 +14,27 @@ import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { Unknown, Value } from "./Value";
 
-/** Represents a single etherscan.io request to get the token balance of an address. */
-export class EtherscanTokenBalanceRequest implements IWebRequest<number> {
-    /**
-     * Creates a new [[EtherscanTokenBalanceRequest]] instance.
-     * @param address The address to query the balance for.
-     * @param contractAddress The contract address of the token.
-     * @param decimals The number of decimal digits of the token.
+/** Represents a single ethplorer.io request to get the ETH balance of an address. */
+export class EthplorerEthBalanceRequest implements IWebRequest<number> {
+    /** Creates a new [[EthplorerEthBalanceRequest]] instance.
+     *  @param address The address to query the balance for.
      */
-    public constructor(
-        private readonly address: string, private readonly contractAddress: string, private readonly decimals: number) {
+    public constructor(private readonly address: string) {
     }
 
     public async execute() {
-        return this.getBalance(await QueryCache.fetch(
-            "https://api.etherscan.io/api?module=account&action=tokenbalance&" +
-                `contractaddress=${this.contractAddress}&address=${this.address}&tag=latest`));
+        return EthplorerEthBalanceRequest.getBalance(await QueryCache.fetch(
+            `https://api.ethplorer.io/getAddressInfo/${this.address}?` +
+            "token=0x0000000000000000000000000000000000000000&apiKey=freekey"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private getBalance(response: Unknown | null) {
-        if (!Value.hasStringProperty(response, "result")) {
+    private static getBalance(response: Unknown | null) {
+        if (!Value.hasObjectProperty(response, "ETH") || !Value.hasNumberProperty(response.ETH, "balance")) {
             return Number.NaN;
         }
 
-        return Number.parseFloat(response.result) / Math.pow(10, this.decimals);
+        return response.ETH.balance / 1E18;
     }
 }

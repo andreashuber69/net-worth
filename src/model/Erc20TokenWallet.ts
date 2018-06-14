@@ -24,7 +24,9 @@ export class Erc20TokenWallet extends CryptoWallet {
     }
 
     /** @internal */
-    public constructor(parent: IModel, properties: ICryptoWalletProperties, currencySymbol: string, coin: string) {
-        super(parent, properties, currencySymbol, coin);
+    public constructor(
+        parent: IModel, properties: ICryptoWalletProperties, currencySymbol: string, unitValueUsd: number) {
+        super(parent, properties, currencySymbol);
+        this.unitValueUsd = unitValueUsd;
     }
 }
