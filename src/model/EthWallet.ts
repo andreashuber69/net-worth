@@ -93,7 +93,7 @@ export class EthWallet extends CryptoWallet {
             }
 
             const balances = await QueryCache.fetch(
-                `https://api.ethplorer.io/getAddressInfo/${this.ethWallet.address}?apiKey=freekey`);
+                `https://api.ethplorer.io/getAddressInfo/${this.ethWallet.address}?apiKey=dvoio1769GSrYx63`);
 
             if (!Value.hasArrayProperty(balances, "tokens")) {
                 return;
@@ -149,7 +149,7 @@ export class EthWallet extends CryptoWallet {
         if (this.address) {
             const quantity = EthWallet.getQuantity(await QueryCache.fetch(
                 `https://api.ethplorer.io/getAddressInfo/${this.address}?` +
-                "token=0x0000000000000000000000000000000000000000&apiKey=freekey"));
+                "token=0x0000000000000000000000000000000000000000&apiKey=dvoio1769GSrYx63"));
             this.quantity = (this.quantity === undefined ? 0 : this.quantity) + quantity;
         }
     }
