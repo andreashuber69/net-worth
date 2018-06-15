@@ -16,7 +16,11 @@ import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
 import { SilverAsset } from "./SilverAsset";
 
-// TODO: We should differentiate between editable and non-editable types
-export type CryptoWalletTypes = typeof BtcWallet.type | typeof EthWallet.type | typeof Erc20TokenWallet.type;
-export type PreciousMetalAssetTypes = typeof SilverAsset.type | typeof GoldAsset.type;
+export type EditableCryptoWalletTypes = typeof BtcWallet.type | typeof EthWallet.type;
+type CryptoWalletTypes = EditableCryptoWalletTypes | typeof Erc20TokenWallet.type;
+
+export type EditablePreciousMetalAssetTypes = typeof SilverAsset.type | typeof GoldAsset.type;
+type PreciousMetalAssetTypes = EditablePreciousMetalAssetTypes;
+
+export type EditableAssetTypes = EditableCryptoWalletTypes | EditablePreciousMetalAssetTypes;
 export type AssetTypes = CryptoWalletTypes | PreciousMetalAssetTypes;

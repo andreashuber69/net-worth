@@ -12,7 +12,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { AllAssetPropertyNames, IAllAssetProperties } from "./AssetInterfaces";
-import { AssetTypes } from "./AssetTypes";
+import { EditableAssetTypes } from "./AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
 import { CompositeInput, InputUtility } from "./Input";
 import { InputInfo } from "./InputInfo";
@@ -34,7 +34,7 @@ export interface IAssetConstructor {
  * representation of the asset.
  */
 export abstract class AssetInputInfo extends InputInfo implements IAuxProperties<PrimitiveInputInfo> {
-    public abstract get type(): "" | AssetTypes;
+    public abstract get type(): "" | EditableAssetTypes;
 
     public abstract get description(): TextInputInfo;
     public abstract get location(): TextInputInfo;

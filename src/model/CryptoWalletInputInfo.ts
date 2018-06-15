@@ -12,7 +12,7 @@
 
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
 import { AllAssetPropertyNames } from "./AssetInterfaces";
-import { CryptoWalletTypes } from "./AssetTypes";
+import { EditableCryptoWalletTypes } from "./AssetTypes";
 import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
@@ -35,7 +35,8 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly quantity: TextInputInfo;
 
     /** @internal */
-    public constructor(public readonly type: CryptoWalletTypes, quantityDecimals: number, ctor: IAssetConstructor) {
+    public constructor(
+        public readonly type: EditableCryptoWalletTypes, quantityDecimals: number, ctor: IAssetConstructor) {
         super(ctor);
         this.quantity = new TextInputInfo(
             "Quantity", "The amount in the wallet.", true, false, 0, undefined, Math.pow(10, -quantityDecimals));
