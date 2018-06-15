@@ -15,7 +15,6 @@ import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { ISerializedAsset } from "./AssetInterfaces";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
-import { EthplorerEthBalanceRequest } from "./EthplorerEthBalanceRequest";
 import { QueryCache } from "./QueryCache";
 import { Unknown, Value } from "./Value";
 
@@ -138,10 +137,20 @@ export class EthWallet extends CryptoWallet {
         }
     };
 
+    private static getQuantity(response: Unknown | null) {
+        if (!Value.hasObjectProperty(response, "ETH") || !Value.hasNumberProperty(response.ETH, "balance")) {
+            return Number.NaN;
+        }
+
+        return response.ETH.balance;
+    }
+
     private async queryQuantity() {
         if (this.address) {
-            this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
-                await new EthplorerEthBalanceRequest(this.address).execute();
+            const quantity = EthWallet.getQuantity(await QueryCache.fetch(
+                `https://api.ethplorer.io/getAddressInfo/${this.address}?` +
+                "token=0x0000000000000000000000000000000000000000&apiKey=freekey"));
+            this.quantity = (this.quantity === undefined ? 0 : this.quantity) + quantity;
         }
     }
 }
