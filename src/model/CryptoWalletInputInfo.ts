@@ -21,14 +21,12 @@ import { TextInputInfo } from "./TextInputInfo";
  * Defines how the properties of a crypto currency wallet need to be input and validated and provides a method to create
  * a representation of the wallet.
  */
-export class CryptoWalletInputInfo extends AssetInputInfo {
+export abstract class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly description = new TextInputInfo(
         "Description", "The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.", true, true);
     public readonly location = new TextInputInfo(
         "Location", "The location of the wallet, e.g. 'Mobile Phone', 'Hardware Wallet', 'Safety Deposit Box'.",
         true, false);
-    public readonly address = new TextInputInfo(
-        "Address", "The public address of the wallet (single address or xpub).", true, false);
     public readonly weight = new TextInputInfo();
     public readonly weightUnit = new SelectInputInfo();
     public readonly fineness = new TextInputInfo();

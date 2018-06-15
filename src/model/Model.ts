@@ -15,9 +15,10 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { IAllAssetProperties } from "./AssetInterfaces";
 import { BtcWallet } from "./BtcWallet";
+import { BtcWalletInputInfo } from "./BtcWalletInputInfo";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
-import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { EthWallet } from "./EthWallet";
+import { EthWalletInputInfo } from "./EthWalletInputInfo";
 import { GoldAsset } from "./GoldAsset";
 import { IWebRequest } from "./IWebRequest";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
@@ -29,8 +30,8 @@ import { Unknown, Value } from "./Value";
 export class Model implements IModel {
     /** Provides information objects for each of the supported asset types. */
     public static readonly assetInfos: AssetInputInfo[] = [
-        new CryptoWalletInputInfo(BtcWallet.type, 8, BtcWallet),
-        new CryptoWalletInputInfo(EthWallet.type, 18, EthWallet),
+        new BtcWalletInputInfo(BtcWallet.type, BtcWallet),
+        new EthWalletInputInfo(EthWallet.type, EthWallet),
         new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
         new PreciousMetalAssetInputInfo(GoldAsset.type, GoldAsset),
     ];
