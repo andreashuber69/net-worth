@@ -25,7 +25,7 @@ export class Format {
     /** @internal */
     public static fraction(num: number | undefined, decimals: number) {
         if (num === undefined) {
-            return "Querying...";
+            return "";
         } else if (Number.isNaN(num)) {
             return "Error";
         } else {
