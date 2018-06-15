@@ -13,10 +13,17 @@
 import { HDNode } from "bitcoinjs-lib";
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { BlockchainRequest } from "./BlockchainRequest";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { Unknown } from "./Value";
+import { IWebRequest } from "./IWebRequest";
+import { QueryCache } from "./QueryCache";
+import { Unknown, Value } from "./Value";
+
+/** @internal */
+interface IBalance {
+    readonly finalBalance: number;
+    readonly transactionCount: number;
+}
 
 /** Represents a BTC wallet. */
 export class BtcWallet extends CryptoWallet {
@@ -25,9 +32,9 @@ export class BtcWallet extends CryptoWallet {
     public readonly type = BtcWallet.type;
 
     /** Creates a new [[BtcWallet]] instance.
-     * @description If a non-empty string is passed for [[ICryptoProperties.address]], then an attempt is made to
-     * retrieve the wallet balance, which is then added to whatever is passed for [[ICryptoProperties.quantity]]. It
-     * therefore usually only makes sense to specify either address or quantity, not both.
+     * @description If a non-empty string is passed for [[ICryptoWalletProperties.address]], then an attempt is made to
+     * retrieve the wallet balance, which is then added to whatever is passed for [[ICryptoWalletProperties.quantity]].
+     * It therefore usually only makes sense to specify either address or quantity, not both.
      * @param parent The parent model to which this asset belongs.
      * @param properties The crypto wallet properties.
      */
@@ -41,6 +48,43 @@ export class BtcWallet extends CryptoWallet {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // tslint:disable-next-line:variable-name max-classes-per-file
+    private static readonly BlockchainRequest = class NestedBlockchainRequest implements IWebRequest<IBalance> {
+        public constructor(addresses: string[]) {
+            this.addresses = addresses.join("|");
+        }
+
+        public async execute() {
+            return NestedBlockchainRequest.getFinalBalance(
+                await QueryCache.fetch(`https://blockchain.info/balance?active=${this.addresses}&cors=true`));
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private static getFinalBalance(response: Unknown | null) {
+            const result = { finalBalance: Number.NaN, transactionCount: 0 };
+
+            if (Value.isObject(response)) {
+                for (const address in response) {
+                    if (response.hasOwnProperty(address)) {
+                        const balance = response[address];
+
+                        if (Value.hasNumberProperty(balance, "final_balance") &&
+                            Value.hasNumberProperty(balance, "n_tx")) {
+                            result.transactionCount += balance.n_tx;
+                            result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) +
+                                balance.final_balance / 100000000;
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private readonly addresses: string;
+    };
 
     private static delay(milliseconds: number) {
         return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
@@ -62,7 +106,7 @@ export class BtcWallet extends CryptoWallet {
     }
 
     private async add(addresses: string[]) {
-        const result = await new BlockchainRequest(addresses).execute();
+        const result = await new BtcWallet.BlockchainRequest(addresses).execute();
         this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result.finalBalance;
 
         return result.transactionCount !== 0;

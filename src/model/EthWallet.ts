@@ -30,9 +30,9 @@ export class EthWallet extends CryptoWallet {
     public readonly type = EthWallet.type;
 
     /** Creates a new [[EthWallet]] instance.
-     * @description If a non-empty string is passed for [[ICryptoProperties.address]], then an attempt is made to
-     * retrieve the wallet balance, which is then added to whatever is passed for [[ICryptoProperties.quantity]]. It
-     * therefore usually only makes sense to specify either address or quantity, not both.
+     * @description If a non-empty string is passed for [[ICryptoWalletProperties.address]], then an attempt is made to
+     * retrieve the wallet balance, which is then added to whatever is passed for [[ICryptoWalletProperties.quantity]].
+     * It therefore usually only makes sense to specify either address or quantity, not both.
      * @param parent The parent model to which this asset belongs.
      * @param properties The crypto wallet properties.
      */
@@ -51,7 +51,6 @@ export class EthWallet extends CryptoWallet {
     private static readonly EthBundle = class NestedEthBundle extends AssetBundle {
         public readonly assets: Asset[] = [];
 
-        /** @internal */
         public constructor(private readonly ethWallet: EthWallet, bundle?: Unknown) {
             super();
             this.assets.push(ethWallet);
@@ -73,7 +72,6 @@ export class EthWallet extends CryptoWallet {
             }
         }
 
-        /** @internal */
         public toJSON(): ISerializedBundle {
             const result: ISerializedEthBundle = {
                 primaryAsset: this.ethWallet.toJSON(),
