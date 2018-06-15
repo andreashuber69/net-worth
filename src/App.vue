@@ -76,7 +76,7 @@
             <v-spacer></v-spacer>
             <v-flex>
               <a href="https://github.com/andreashuber69/asset-manager" target="_blank" class="px-2">
-                GitHub
+                Source Code
               </a>
             </v-flex>
           </v-layout>
