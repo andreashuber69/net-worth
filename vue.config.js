@@ -6,7 +6,7 @@ module.exports = {
     // Obviously, this needs to bet set accordingly before building for deployment. 
     baseUrl: process.env.WEBPACK_BASE_URL ? process.env.WEBPACK_BASE_URL : "/",
     configureWebpack: config => {
-        if (config.optimization && config.optimization.minimizer && config.optimization.minimizer) {
+        if (process.env.NODE_ENV === 'production') {
             config.optimization.minimizer = [
                 new UglifyJsPlugin({
                     test: /\.js(\?.*)?$/i,
