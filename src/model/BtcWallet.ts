@@ -86,49 +86,66 @@ export class BtcWallet extends CryptoWallet {
         private readonly addresses: string;
     };
 
-    private static delay(milliseconds: number) {
-        return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
-    }
+    // tslint:disable-next-line:variable-name max-classes-per-file
+    private static readonly QuantityRequest = class NestedQuantityRequest {
+        public constructor(private readonly address: string) {
+        }
 
-    private async queryQuantity() {
-        if (this.address) {
+        public async queryQuantity() {
             // TODO: This is a crude test to distinguish between xpub and a normal address
             if (this.address.length <= 100) {
                 await this.add([ this.address ]);
             } else {
-                await BtcWallet.delay(1000);
-                // The following calls use a lot of CPU. By delaying first, we ensure that other queries can be sent,
-                // their respective responses received and even rendered in the UI before the CPU is blocked.
+                await NestedQuantityRequest.delay(1000);
+                // The following calls use a lot of CPU. By delaying first, we ensure that other queries can be
+                // sent, their respective responses received and even rendered in the UI before the CPU is blocked.
                 await this.addChain(0);
                 await this.addChain(1);
             }
-        }
-    }
 
-    private async add(addresses: string[]) {
-        const result = await new BtcWallet.BlockchainRequest(addresses).execute();
-        this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result.finalBalance;
-
-        return result.transactionCount !== 0;
-    }
-
-    private async addChain(chain: number) {
-        let index = 0;
-        let batch: string[] | undefined;
-
-        // tslint:disable-next-line:no-empty
-        for (; await this.add(batch = this.getBatch(chain, index)); index += batch.length) {
-        }
-    }
-
-    private getBatch(chain: number, offset: number) {
-        const node = HDNode.fromBase58(this.address ? this.address : "").derive(chain);
-        const result = new Array<string>(20);
-
-        for (let index = 0; index < result.length; ++index) {
-            result[index] = node.derive(offset + index).getAddress();
+            return this.quantity;
         }
 
-        return result;
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private static delay(milliseconds: number) {
+            return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
+        }
+
+        private quantity = 0;
+
+        private async add(addresses: string[]) {
+            const result = await new BtcWallet.BlockchainRequest(addresses).execute();
+            this.quantity += result.finalBalance;
+
+            return result.transactionCount !== 0;
+        }
+
+        private async addChain(chain: number) {
+            let index = 0;
+            let batch: string[] | undefined;
+
+            // tslint:disable-next-line:no-empty
+            for (; await this.add(batch = this.getBatch(chain, index)); index += batch.length) {
+            }
+        }
+
+        private getBatch(chain: number, offset: number) {
+            const node = HDNode.fromBase58(this.address ? this.address : "").derive(chain);
+            const result = new Array<string>(20);
+
+            for (let index = 0; index < result.length; ++index) {
+                result[index] = node.derive(offset + index).getAddress();
+            }
+
+            return result;
+        }
+    };
+
+    private async queryQuantity() {
+        if (this.address) {
+            this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
+                await new BtcWallet.QuantityRequest(this.address).queryQuantity();
+        }
     }
 }
