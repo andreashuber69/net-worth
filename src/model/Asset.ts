@@ -37,7 +37,7 @@ export abstract class Asset {
     /** Provides the parent model to which this asset belongs. */
     public readonly parent: IModel;
 
-    /** Provides the type of asset, e.g. 'Silver, 'Gold', 'Bitcoin Wallet', 'Litecoin Wallet'. */
+    /** Provides the type of asset, e.g. 'Silver, 'Gold', 'Bitcoin', 'Litecoin'. */
     public abstract get type(): AssetTypes;
 
     /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */

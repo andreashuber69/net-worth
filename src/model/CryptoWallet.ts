@@ -20,7 +20,7 @@ export interface ICryptoWalletProperties extends IAssetProperties {
 }
 
 /** @internal */
-const superType = "Crypto Wallet";
+const superType = "Crypto Currency";
 
 /** @internal */
 export interface ICryptoWallet extends ICryptoWalletProperties {
