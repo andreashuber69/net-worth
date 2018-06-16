@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
-import { Unknown } from "./Value";
+import { Unknown, Value } from "./Value";
 
 /**
  * Provides input information for a property where a valid value either needs to be a number with certain constraints
@@ -40,24 +40,31 @@ export class TextInputInfo extends PrimitiveInputInfo {
      * - We want to use exactly the same rules to validate file content.
      */
     protected validateContent(strict: boolean, input: Unknown) {
-        if ((typeof input !== "string") && (typeof input !== "number")) {
-            return "Value must either be a number or a string.";
-        }
-
-        if (strict && ((typeof input === "number") !== this.isNumber)) {
-            return `The actual type '${typeof input}' does not match ` +
-                `the expected type '${this.isNumber ? "number" : "string"}'.`;
+        if (strict) {
+            if (this.isNumber) {
+                if (!Value.isNumber(input)) {
+                    return Value.getTypeMismatch(input, 0);
+                }
+            } else {
+                if (!Value.isString(input)) {
+                    return Value.getTypeMismatch(input, "");
+                }
+            }
+        } else {
+            if (!Value.isNumber(input) && !Value.isString(input)) {
+                return Value.getTypeMismatch(input, 0, "");
+            }
         }
 
         if (this.isNumber) {
-            const numericValue = typeof input === "number" ? input : Number.parseFloat(input);
+            const numericValue = Value.isNumber(input) ? input : Number.parseFloat(input);
 
             if ((this.min !== undefined) && (this.min - numericValue > Number.EPSILON)) {
-                return `Value must be greater than or equal to ${TextInputInfo.format(this.min)}.`;
+                return `The value must be greater than or equal to ${TextInputInfo.format(this.min)}.`;
             }
 
             if ((this.max !== undefined) && (numericValue - this.max > Number.EPSILON)) {
-                return `Value must be less than or equal to ${TextInputInfo.format(this.max)}.`;
+                return `The value must be less than or equal to ${TextInputInfo.format(this.max)}.`;
             }
 
             const bottom = this.min !== undefined ? this.min : 0;
@@ -72,7 +79,7 @@ export class TextInputInfo extends PrimitiveInputInfo {
                 const lowerText = TextInputInfo.format(lower, 4);
                 const upperText = TextInputInfo.format(upper, 5);
 
-                return `Please enter a valid value. The two nearest valid values are ${lowerText} and ${upperText}.`;
+                return `The value is invalid. The two nearest valid values are ${lowerText} and ${upperText}.`;
             }
         }
 

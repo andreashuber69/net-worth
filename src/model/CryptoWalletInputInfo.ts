@@ -16,6 +16,7 @@ import { EditableCryptoWalletTypes } from "./AssetTypes";
 import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
+import { Unknown } from "./Value";
 
 /**
  * Defines how the properties of a crypto currency wallet need to be input and validated and provides a method to create
@@ -43,10 +44,17 @@ export abstract class CryptoWalletInputInfo extends AssetInputInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected validateRelations(input: CompositeInput, propertyName: AllAssetPropertyNames) {
-        if (((propertyName === "address") || (propertyName === "quantity")) && (!input.address === !input.quantity)) {
-            return `Please fill out either the ${this.address.label} or the ${this.quantity.label}.`;
+        if (((propertyName === "address") || (propertyName === "quantity")) &&
+            (CryptoWalletInputInfo.isUndefined(input.address) === CryptoWalletInputInfo.isUndefined(input.quantity))) {
+            return `A value is required for either the ${this.address.label} or the ${this.quantity.label} (not both).`;
         }
 
         return super.validateRelations(input, propertyName);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static isUndefined(value: Unknown | null | undefined) {
+        return (value === undefined) || (value === null) || (value === "");
     }
 }

@@ -43,8 +43,12 @@ export class QuandlRequest implements IWebRequest<number> {
             Value.hasArrayProperty(response.dataset, "data") && response.dataset.data.length >= 1) {
             const array = response.dataset.data[0];
 
-            if (Value.isArray(array) && (array.length >= 2) && (typeof array[1] === "number")) {
-                return array[1] as number;
+            if (Value.isArray(array) && (array.length >= 2)) {
+                const result = array[1];
+
+                if (Value.isNumber(result)) {
+                    return result;
+                }
             }
         }
 

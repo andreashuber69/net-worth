@@ -91,7 +91,8 @@ export class Value {
     }
 
     /** @internal */
-    public static getPropertyTypeMismatch<T>(propertyName: string, actual: Unknown | null | undefined, expected: T) {
+    public static getPropertyTypeMismatch(
+        propertyName: string, actual: Unknown | null | undefined, ...expected: Array<Unknown | null | undefined>) {
         if (this.isObject(actual)) {
             return this.addPropertyName(propertyName, this.getTypeMismatch(actual[propertyName], expected));
         } else {
@@ -100,16 +101,18 @@ export class Value {
     }
 
     /** @internal */
-    public static getTypeMismatch<T>(actual: Unknown | null | undefined, expected: T) {
+    public static getTypeMismatch(
+        actual: Unknown | null | undefined, ...expected: Array<Unknown | null | undefined>) {
         const actualType = Value.getTypeName(actual);
-        const expectedType = Value.getTypeName(expected);
+        const expectedTypes = expected.reduce<string>(
+            (p, c) => p === "" ? this.getTypeName(c) : `${p} or ${this.getTypeName(c)}`, "");
 
-        return `The actual type ${actualType} does not match the expected type ${expectedType}.`;
+        return `The type of the value (${actualType}) does not match the expected type(s) ${expectedTypes}.`;
     }
 
     /** @internal */
     public static getUnknownValue(propertyName: string, value: string) {
-        return this.addPropertyName(propertyName, `Unknown value '${value}'.`);
+        return this.addPropertyName(propertyName, `The value '${value}' does not match any of the possible values.`);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

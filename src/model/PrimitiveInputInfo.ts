@@ -12,7 +12,7 @@
 
 import { AllAssetPropertyNames } from "./AssetInterfaces";
 import { InputInfo } from "./InputInfo";
-import { Unknown } from "./Value";
+import { Unknown, Value } from "./Value";
 
 /** Defines the base for all classes that provide input information for a primitive value. */
 export abstract class PrimitiveInputInfo extends InputInfo {
@@ -48,8 +48,8 @@ export abstract class PrimitiveInputInfo extends InputInfo {
             return true;
         }
 
-        if ((input === undefined) || (input === null) || ((typeof input === "string") && (input.length === 0))) {
-            return this.isRequired ? "Please fill out this field." : true;
+        if ((input === undefined) || (input === null) || (Value.isString(input) && (input.length === 0))) {
+            return this.isRequired ? "A value is required." : true;
         }
 
         return this.validateContent(strict, input);
