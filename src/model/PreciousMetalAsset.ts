@@ -13,6 +13,7 @@
 import { Asset, IAssetProperties, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { GenericAssetBundle } from "./GenericAssetBundle";
+import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { Unknown } from "./Value";
 import { WeightUnit, WeightUnits } from "./WeightUnit";
@@ -100,8 +101,11 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private static readonly unitFormatOptions = {
+        maximumFractionDigits: PreciousMetalAssetInputInfo.weightDigits, minimumFractionDigits: 0, useGrouping: true };
+
     private static getUnit(weight: number, unit: WeightUnit) {
-        return `${weight.toFixed(0)} ${WeightUnits.toString(unit)}`;
+        return `${weight.toLocaleString(undefined, this.unitFormatOptions)} ${WeightUnits.toString(unit)}`;
     }
 
     private readonly pureGramsPerUnit: number;

@@ -12,6 +12,7 @@
 
 import { Component } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
+import { PreciousMetalAssetInputInfo } from "../model/PreciousMetalAssetInputInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
@@ -29,17 +30,8 @@ export default class AssetListRow extends ComponentBase<Asset> {
     }
 
     public get finenessFraction() {
-        if (this.checkedValue.fineness === undefined) {
-            return "";
-        } else {
-            let fraction = (this.checkedValue.fineness % 1).toFixed(6).substr(1);
-
-            while (fraction.endsWith("0")) {
-                fraction = fraction.substr(0, fraction.length - 1);
-            }
-
-            return fraction;
-        }
+        return this.checkedValue.fineness === undefined ?
+            "" : this.checkedValue.fineness.toLocaleString(undefined, AssetListRow.finenessFormatOptions).substr(1);
     }
 
     public get unitValueInteger() {
@@ -79,4 +71,9 @@ export default class AssetListRow extends ComponentBase<Asset> {
             this.$emit("delete", this.checkedValue);
         }
     }
+
+    private static readonly finenessFormatOptions = {
+        maximumFractionDigits: PreciousMetalAssetInputInfo.finenessDigits,
+        minimumFractionDigits: 1,
+        useGrouping: true };
 }
