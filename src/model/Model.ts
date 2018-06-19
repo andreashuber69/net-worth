@@ -90,6 +90,10 @@ export class Model implements IModel {
             model.bundles.push(asset.bundle(rawBundle));
         }
 
+        for (const bundle of model.bundles) {
+            this.queryBundleData(bundle);
+        }
+
         return model;
     }
 
@@ -131,7 +135,9 @@ export class Model implements IModel {
 
     /** Adds `bundle` to the list of asset bundles. */
     public addAsset(asset: Asset) {
-        this.bundles.push(asset.bundle());
+        const bundle = asset.bundle();
+        Model.queryBundleData(bundle);
+        this.bundles.push(bundle);
         this.onChanged();
     }
 
@@ -156,9 +162,11 @@ export class Model implements IModel {
         const index = this.bundles.findIndex((b) => b.assets.indexOf(oldAsset) >= 0);
 
         if (index >= 0) {
+            const bundle = newAsset.bundle();
+            Model.queryBundleData(bundle);
             // Apparently, Vue cannot detect the obvious way of replacing (this.bundles[index] = newBundle):
             // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
-            this.bundles.splice(index, 1, newAsset.bundle());
+            this.bundles.splice(index, 1, bundle);
         }
 
         this.onChanged();
@@ -231,6 +239,10 @@ export class Model implements IModel {
 
     private static hasProperties(validationResult: true | string, raw: Unknown): raw is IAllAssetProperties {
         return validationResult === true;
+    }
+
+    private static queryBundleData(bundle: AssetBundle) {
+        bundle.queryData().catch((error) => console.log(error));
     }
 
     private readonly bundles = new Array<AssetBundle>();

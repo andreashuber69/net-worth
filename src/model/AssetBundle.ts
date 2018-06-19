@@ -38,5 +38,8 @@ export abstract class AssetBundle {
     public abstract deleteAsset(asset: Asset): void;
 
     /** @internal */
+    public abstract queryData(): Promise<void>;
+
+    /** @internal */
     public abstract toJSON(): ISerializedBundle;
 }

@@ -37,7 +37,6 @@ export class EthWallet extends CryptoWallet {
      */
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
         super(parent, properties, "ETH", "ethereum");
-        this.queryQuantity().catch((reason) => console.error(reason));
     }
 
     public bundle(bundle?: Unknown): AssetBundle {
@@ -58,8 +57,6 @@ export class EthWallet extends CryptoWallet {
                 // tslint:disable-next-line:no-unbound-method
                 this.deletedAssets = bundle[NestedEthBundle.deletedAssetsName].filter(Value.isString);
             }
-
-            this.addTokenWallets().catch((reason) => console.error(reason));
         }
 
         public deleteAsset(asset: Asset) {
@@ -68,6 +65,28 @@ export class EthWallet extends CryptoWallet {
             if (index >= 0) {
                 this.deletedAssets.push(this.assets[index].unit);
                 this.assets.splice(index, index === 0 ? this.assets.length : 1);
+            }
+        }
+
+        // tslint:disable-next-line:prefer-function-over-method
+        public async queryData() {
+            await this.ethWallet.queryData();
+
+            if (!this.ethWallet.address) {
+                return;
+            }
+
+            const balances = await QueryCache.fetch(
+                `https://api.ethplorer.io/getAddressInfo/${this.ethWallet.address}?apiKey=dvoio1769GSrYx63`);
+
+            this.ethWallet.addQuantity(balances);
+
+            if (!Value.hasArrayProperty(balances, "tokens")) {
+                return;
+            }
+
+            for (const token of balances.tokens) {
+                this.addTokenWallet(token);
             }
         }
 
@@ -87,24 +106,7 @@ export class EthWallet extends CryptoWallet {
 
         private readonly deletedAssets: string[] = [];
 
-        private async addTokenWallets() {
-            if (!this.ethWallet.address) {
-                return;
-            }
-
-            const balances = await QueryCache.fetch(
-                `https://api.ethplorer.io/getAddressInfo/${this.ethWallet.address}?apiKey=dvoio1769GSrYx63`);
-
-            if (!Value.hasArrayProperty(balances, "tokens")) {
-                return;
-            }
-
-            for (const token of balances.tokens) {
-                await this.addTokenWallet(token);
-            }
-        }
-
-        private async addTokenWallet(token: Unknown | null | undefined) {
+        private addTokenWallet(token: Unknown | null | undefined) {
             if (!Value.hasObjectProperty(token, "tokenInfo") || !Value.hasNumberProperty(token, "balance")) {
                 return;
             }
@@ -145,12 +147,8 @@ export class EthWallet extends CryptoWallet {
         return response.ETH.balance;
     }
 
-    private async queryQuantity() {
-        if (this.address) {
-            const quantity = EthWallet.getQuantity(await QueryCache.fetch(
-                `https://api.ethplorer.io/getAddressInfo/${this.address}?` +
-                "token=0x0000000000000000000000000000000000000000&apiKey=dvoio1769GSrYx63"));
-            this.quantity = (this.quantity === undefined ? 0 : this.quantity) + quantity;
-        }
+    private addQuantity(response: Unknown | null) {
+        const quantity = EthWallet.getQuantity(response);
+        this.quantity = (this.quantity === undefined ? 0 : this.quantity) + quantity;
     }
 }

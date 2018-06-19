@@ -40,11 +40,20 @@ export class BtcWallet extends CryptoWallet {
      */
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
         super(parent, properties, "BTC", "bitcoin");
-        this.queryQuantity().catch((reason) => console.error(reason));
     }
 
     public bundle(bundle?: Unknown): AssetBundle {
         return new GenericAssetBundle(this);
+    }
+
+    /** @internal */
+    public async queryData(): Promise<void> {
+        await super.queryData();
+
+        if (this.address) {
+            this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
+                await new BtcWallet.QuantityRequest(this.address).queryQuantity();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,11 +150,4 @@ export class BtcWallet extends CryptoWallet {
             return result;
         }
     };
-
-    private async queryQuantity() {
-        if (this.address) {
-            this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
-                await new BtcWallet.QuantityRequest(this.address).queryQuantity();
-        }
-    }
 }

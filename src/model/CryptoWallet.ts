@@ -58,6 +58,15 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     public readonly superType = CryptoWallet.superType;
 
     /** @internal */
+    public async queryData(): Promise<void> {
+        await super.queryData();
+
+        if (this.coin) {
+            this.unitValueUsd = await new CoinMarketCapRequest(this.coin, false).execute();
+        }
+    }
+
+    /** @internal */
     public toJSON() {
         return {
             type: this.type,
@@ -78,18 +87,10 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
      * @param coin The coinmarketcap.com identifier of the currency.
      */
     protected constructor(
-        parent: IModel, properties: ICryptoWalletProperties, private readonly currencySymbol: string, coin?: string) {
+        parent: IModel, properties: ICryptoWalletProperties,
+        private readonly currencySymbol: string, private readonly coin?: string) {
         super(parent, properties, 6);
         this.address = properties.address;
         this.quantity = properties.quantity;
-        this.queryUnitValue(coin).catch((reason) => console.error(reason));
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private async queryUnitValue(coin?: string) {
-        if (coin) {
-            this.unitValueUsd = await new CoinMarketCapRequest(coin, false).execute();
-        }
     }
 }

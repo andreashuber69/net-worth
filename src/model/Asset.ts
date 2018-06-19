@@ -76,6 +76,11 @@ export abstract class Asset {
     }
 
     /** @internal */
+    // tslint:disable-next-line:no-empty prefer-function-over-method
+    public async queryData(): Promise<void> {
+    }
+
+    /** @internal */
     public abstract get interface(): IAssetUnion;
 
     /** @internal */

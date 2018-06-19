@@ -31,7 +31,10 @@ export class GenericAssetBundle extends AssetBundle {
         }
     }
 
-    /** @internal */
+    public queryData() {
+        return this.assets[0].queryData();
+    }
+
     public toJSON(): ISerializedBundle {
         return {
             primaryAsset: this.assets[0],

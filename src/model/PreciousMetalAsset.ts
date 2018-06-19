@@ -81,6 +81,13 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
         return new GenericAssetBundle(this);
     }
 
+    /** @internal */
+    public async queryData(): Promise<void> {
+        await super.queryData();
+        this.unitValueUsd =
+            this.pureGramsPerUnit / WeightUnit.TroyOunce * await new QuandlRequest(this.quandlPath, false).execute();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -89,14 +96,14 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
      * @param properties The precious metal asset properties.
      * @param quandlPath The quandl asset path.
      */
-    protected constructor(parent: IModel, properties: IPreciousMetalAssetProperties, quandlPath: string) {
+    protected constructor(
+        parent: IModel, properties: IPreciousMetalAssetProperties, private readonly quandlPath: string) {
         super(parent, properties, 0);
         this.weight = properties.weight;
         this.weightUnit = properties.weightUnit;
         this.fineness = properties.fineness;
         this.quantity = properties.quantity !== undefined ? properties.quantity : Number.NaN;
         this.pureGramsPerUnit = this.weight * this.weightUnit * this.fineness;
-        this.queryUnitValue(quandlPath).catch((reason) => console.error(reason));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,9 +116,4 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     }
 
     private readonly pureGramsPerUnit: number;
-
-    private async queryUnitValue(quandlPath: string) {
-        this.unitValueUsd =
-            this.pureGramsPerUnit / WeightUnit.TroyOunce * await new QuandlRequest(quandlPath, false).execute();
-    }
 }
