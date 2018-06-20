@@ -12,6 +12,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
+// import { AssetGroup } from "./AssetGroup";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { IAllAssetProperties } from "./AssetInterfaces";
 import { BtcWallet } from "./BtcWallet";
@@ -116,6 +117,25 @@ export class Model implements IModel {
     /** Provides the assets to value. */
     public get assets() {
         return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<Asset>());
+        // const groups = new Map<string, Asset[]>();
+
+        // for (const bundle of this.bundles) {
+        //     for (const asset of bundle.assets) {
+        //         if (!groups.has(asset.type)) {
+        //             groups.set(asset.type, []);
+        //         }
+
+        //         (groups.get(asset.type) as Asset[]).push(asset);
+        //     }
+        // }
+
+        // const result: Asset[] = [];
+
+        // for (const key of groups.keys()) {
+        //     result.push(new AssetGroup(this, groups.get(key) as Asset[]));
+        // }
+
+        // return result;
     }
 
     /**

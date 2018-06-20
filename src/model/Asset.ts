@@ -41,13 +41,13 @@ export abstract class Asset {
     public readonly parent: IModel;
 
     /** Provides the type of asset, e.g. 'Silver, 'Gold', 'Bitcoin', 'Litecoin'. */
-    public abstract get type(): AssetTypes;
+    public abstract get type(): AssetTypes | "";
 
     /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
     public readonly description: string;
 
     /** Provides the location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
-    public readonly location: string;
+    public abstract get location(): string;
 
     /** Provides further information on the location. */
     public get locationHint() {
@@ -63,6 +63,9 @@ export abstract class Asset {
     /** Provides the asset quantity. */
     public abstract get quantity(): number | undefined;
 
+    /** Provides the number of decimals to format the quantity to. */
+    public abstract get displayDecimals(): number;
+
     /** @internal */
     public get unitValue() {
         return Asset.multiply(this.unitValueUsd, this.parent.exchangeRate);
@@ -71,6 +74,11 @@ export abstract class Asset {
     /** @internal */
     public get totalValue() {
         return Asset.multiply(this.quantity, this.unitValue);
+    }
+
+    /** Provides a value indicating whether the asset has any associated actions. */
+    public get hasActions() {
+        return true;
     }
 
     /** Provides a value indicating whether the asset can be edited. */
@@ -103,12 +111,10 @@ export abstract class Asset {
      * Creates a new [[Asset]] instance.
      * @param parent The parent model to which this asset belongs.
      * @param properties The asset properties.
-     * @param displayDecimals The number of decimals to use to format the quantity.
      */
-    protected constructor(parent: IModel, properties: IAssetProperties, public readonly displayDecimals: number) {
+    protected constructor(parent: IModel, properties: IAssetProperties) {
         this.parent = parent;
         this.description = properties.description;
-        this.location = properties.location;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

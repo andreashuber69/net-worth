@@ -68,7 +68,6 @@ export class EthWallet extends CryptoWallet {
             }
         }
 
-        // tslint:disable-next-line:prefer-function-over-method
         public async queryData() {
             await this.ethWallet.queryData();
 
