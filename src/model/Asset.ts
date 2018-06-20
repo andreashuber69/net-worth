@@ -34,6 +34,9 @@ export interface IAssetProperties {
 
 /** Defines the base of all classes that represent an asset. */
 export abstract class Asset {
+    /** Provides the unique key of the asset. */
+    public readonly key = Asset.nextKey++;
+
     /** Provides the parent model to which this asset belongs. */
     public readonly parent: IModel;
 
@@ -109,6 +112,8 @@ export abstract class Asset {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static nextKey = 0;
 
     private static multiply(factor1: number | undefined, factor2: number | undefined) {
         return (factor1 === undefined) || (factor2 === undefined) ? undefined : factor1 * factor2;
