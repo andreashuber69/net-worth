@@ -91,7 +91,7 @@ export class Model implements IModel {
             model.bundles.push(asset.bundle(rawBundle));
         }
 
-        this.queryBundleData(model.bundles);
+        model.queryBundleData(model.bundles);
 
         return model;
     }
@@ -114,26 +114,13 @@ export class Model implements IModel {
 
     /** Provides the assets to value. */
     public get assets() {
-        const groups = new Map<string, Asset[]>();
-
-        for (const bundle of this.bundles) {
-            for (const asset of bundle.assets) {
-                if (!groups.has(asset.type)) {
-                    groups.set(asset.type, []);
-                }
-
-                (groups.get(asset.type) as Asset[]).push(asset);
-            }
-        }
-
         const result: Asset[] = [];
 
-        for (const key of groups.keys()) {
-            const assets = groups.get(key) as Asset[];
-            result.push(new AssetGroup(this, assets));
+        for (const group of this.groups) {
+            result.push(group);
 
-            if (this.groupExpandedMap.get(key)) {
-                result.push(...assets);
+            if (group.isExpanded) {
+                result.push(...group.assets);
             }
         }
 
@@ -155,20 +142,10 @@ export class Model implements IModel {
         return JSON.stringify(this, undefined, 2);
     }
 
-    /** @internal */
-    // tslint:disable-next-line:no-empty prefer-function-over-method
-    public expand(group: AssetGroup) {
-        if (!this.groupExpandedMap.has(group.type)) {
-            this.groupExpandedMap.set(group.type, false);
-        }
-
-        this.groupExpandedMap.set(group.type, !this.groupExpandedMap.get(group.type));
-    }
-
     /** Adds `bundle` to the list of asset bundles. */
     public addAsset(asset: Asset) {
         const bundle = asset.bundle();
-        Model.queryBundleData([ bundle ]);
+        this.queryBundleData([ bundle ]);
         this.bundles.push(bundle);
         this.onChanged();
     }
@@ -195,7 +172,7 @@ export class Model implements IModel {
 
         if (index >= 0) {
             const bundle = newAsset.bundle();
-            Model.queryBundleData([ bundle ]);
+            this.queryBundleData([ bundle ]);
             // Apparently, Vue cannot detect the obvious way of replacing (this.bundles[index] = newBundle):
             // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
             this.bundles.splice(index, 1, bundle);
@@ -273,16 +250,59 @@ export class Model implements IModel {
         return validationResult === true;
     }
 
-    private static queryBundleData(bundles: AssetBundle[]) {
-        for (const bundle of bundles) {
-            bundle.queryData().catch((error) => console.log(error));
+    private readonly bundles = new Array<AssetBundle>();
+    private readonly groups = new Array<AssetGroup>();
+
+    private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
+
+    private queryBundleData(bundles: AssetBundle[]) {
+        this.queryBundleDataImpl(bundles).catch((error) => console.log(error));
+    }
+
+    private async queryBundleDataImpl(bundles: AssetBundle[]) {
+        await Promise.all(bundles.map((b) => b.queryData()));
+        const groupBy = (asset: Asset) => asset.type;
+        const newGroups = this.group(groupBy);
+
+        // Remove no longer existing groups
+        for (let index = 0; index < this.groups.length;) {
+            if (!newGroups.has(groupBy(this.groups[index]))) {
+                this.groups.splice(index, 1);
+            } else {
+                ++index;
+            }
+        }
+
+        // Update existing groups with new assets
+        for (const newGroup of newGroups) {
+            const existingGroup = this.groups.find((g) => groupBy(g) === newGroup[0]);
+
+            if (existingGroup === undefined) {
+                this.groups.push(new AssetGroup(this, newGroup[1]));
+            } else {
+                existingGroup.assets.splice(0, existingGroup.assets.length, ...newGroup[1]);
+            }
         }
     }
 
-    private readonly bundles = new Array<AssetBundle>();
-    private readonly groupExpandedMap = new Map<string, boolean>();
+    private group<T>(callback: (asset: Asset) => T) {
+        const result = new Map<T, Asset[]>();
 
-    private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
+        for (const bundle of this.bundles) {
+            for (const asset of bundle.assets) {
+                const groupName = callback(asset);
+                const groupAssets = result.get(groupName);
+
+                if (groupAssets === undefined) {
+                    result.set(groupName, [ asset ]);
+                } else {
+                    groupAssets.push(asset);
+                }
+            }
+        }
+
+        return result;
+    }
 
     private async onCurrencyChanged() {
         this.exchangeRate = undefined;

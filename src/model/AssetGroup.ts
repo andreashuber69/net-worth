@@ -14,6 +14,8 @@ import { Asset, IModel } from "./Asset";
 import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
 
 export class AssetGroup extends Asset {
+    public isExpanded = false;
+
     public get type() {
         return this.coalesce((a) => a.type) || "";
     }
@@ -51,7 +53,7 @@ export class AssetGroup extends Asset {
         throw new Error(`${AssetGroup.name} cannot be edited.`);
     }
 
-    public constructor(parent: IModel, private readonly assets: Asset[]) {
+    public constructor(parent: IModel, public readonly assets: Asset[]) {
         super(parent, { description: "", location: "", quantity: undefined });
     }
 
@@ -62,7 +64,7 @@ export class AssetGroup extends Asset {
 
     /** @internal */
     public expand() {
-        this.parent.expand(this);
+        this.isExpanded = !this.isExpanded;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

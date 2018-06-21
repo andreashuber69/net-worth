@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
-import { AssetGroup } from "./AssetGroup";
 import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 import { Unknown } from "./Value";
@@ -19,8 +18,6 @@ import { Unknown } from "./Value";
 /** @internal */
 export interface IModel {
     readonly exchangeRate: number | undefined;
-
-    expand(group: AssetGroup): void;
 }
 
 /** Defines the common editable properties of all assets. */
