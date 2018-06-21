@@ -41,6 +41,10 @@ export class AssetGroup extends Asset {
         return this.coalesce((a) => a.displayDecimals) || 0;
     }
 
+    public get unitValue() {
+        return this.coalesce((a) => a.unitValue);
+    }
+
     public get totalValue() {
         return this.assets.reduce<number | undefined>((s, a) => AssetGroup.add(s, a.totalValue), 0);
     }
