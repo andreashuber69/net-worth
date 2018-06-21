@@ -13,7 +13,7 @@
 -->
 
 <template>
-  <tr>
+  <tr @click="onRowClicked">
     <td>{{ checkedValue.type }}</td>
     <td class="hidden-xs-only">{{ checkedValue.description }}</td>
     <td class="hidden-md-and-down" :title="checkedValue.locationHint">{{ checkedValue.location }}</td>

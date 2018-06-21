@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
+import { AssetGroup } from "./AssetGroup";
 import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 import { Unknown } from "./Value";
@@ -18,6 +19,8 @@ import { Unknown } from "./Value";
 /** @internal */
 export interface IModel {
     readonly exchangeRate: number | undefined;
+
+    expand(group: AssetGroup): void;
 }
 
 /** Defines the common editable properties of all assets. */
@@ -101,6 +104,11 @@ export abstract class Asset {
     // tslint:disable-next-line:prefer-function-over-method
     public bundle(bundle?: Unknown): AssetBundle {
         throw new Error("Asset cannot be bundled.");
+    }
+
+    /** @internal */
+    // tslint:disable-next-line:no-empty prefer-function-over-method
+    public expand() {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

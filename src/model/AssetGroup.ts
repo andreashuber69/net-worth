@@ -60,6 +60,11 @@ export class AssetGroup extends Asset {
         throw new Error(`${AssetGroup.name} cannot be serialized.`);
     }
 
+    /** @internal */
+    public expand() {
+        this.parent.expand(this);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static add(addend1: number | undefined, addend2: number | undefined) {

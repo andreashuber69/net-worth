@@ -58,6 +58,11 @@ export default class AssetListRow extends ComponentBase<Asset> {
         return Format.fraction(this.checkedValue.totalValue, 2);
     }
 
+    /** Instructs the asset group to be expanded/collapsed. */
+    public onRowClicked(event: MouseEvent) {
+        this.checkedValue.expand();
+    }
+
     /** Instructs the parent UI element to open the asset editor dialog with the given asset. */
     public onEditClicked(event: MouseEvent) {
         // tslint:disable-next-line:no-unsafe-any

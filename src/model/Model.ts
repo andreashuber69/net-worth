@@ -12,7 +12,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-// import { AssetGroup } from "./AssetGroup";
+import { AssetGroup } from "./AssetGroup";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { IAllAssetProperties } from "./AssetInterfaces";
 import { BtcWallet } from "./BtcWallet";
@@ -116,26 +116,30 @@ export class Model implements IModel {
 
     /** Provides the assets to value. */
     public get assets() {
-        return this.bundles.reduce((result, bundle) => result.concat(bundle.assets), new Array<Asset>());
-        // const groups = new Map<string, Asset[]>();
+        const groups = new Map<string, Asset[]>();
 
-        // for (const bundle of this.bundles) {
-        //     for (const asset of bundle.assets) {
-        //         if (!groups.has(asset.type)) {
-        //             groups.set(asset.type, []);
-        //         }
+        for (const bundle of this.bundles) {
+            for (const asset of bundle.assets) {
+                if (!groups.has(asset.type)) {
+                    groups.set(asset.type, []);
+                }
 
-        //         (groups.get(asset.type) as Asset[]).push(asset);
-        //     }
-        // }
+                (groups.get(asset.type) as Asset[]).push(asset);
+            }
+        }
 
-        // const result: Asset[] = [];
+        const result: Asset[] = [];
 
-        // for (const key of groups.keys()) {
-        //     result.push(new AssetGroup(this, groups.get(key) as Asset[]));
-        // }
+        for (const key of groups.keys()) {
+            const assets = groups.get(key) as Asset[];
+            result.push(new AssetGroup(this, assets));
 
-        // return result;
+            if (this.groupExpandedMap.get(key)) {
+                result.push(...assets);
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -151,6 +155,16 @@ export class Model implements IModel {
     /** Returns a JSON-formatted string representing the model. */
     public toJsonString() {
         return JSON.stringify(this, undefined, 2);
+    }
+
+    /** @internal */
+    // tslint:disable-next-line:no-empty prefer-function-over-method
+    public expand(group: AssetGroup) {
+        if (!this.groupExpandedMap.has(group.type)) {
+            this.groupExpandedMap.set(group.type, false);
+        }
+
+        this.groupExpandedMap.set(group.type, !this.groupExpandedMap.get(group.type));
     }
 
     /** Adds `bundle` to the list of asset bundles. */
@@ -266,6 +280,7 @@ export class Model implements IModel {
     }
 
     private readonly bundles = new Array<AssetBundle>();
+    private readonly groupExpandedMap = new Map<string, boolean>();
 
     private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
 
