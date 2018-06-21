@@ -27,6 +27,9 @@ import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
 import { Unknown, Value } from "./Value";
 
+export type SortableProperties = "type" | "description" | "location" | "totalValue";
+export type SortBy = "" | SortableProperties;
+
 /** Represents the main model of the application. */
 export class Model implements IModel {
     /** Provides information objects for each of the supported asset types. */
@@ -181,6 +184,16 @@ export class Model implements IModel {
         this.onChanged();
     }
 
+    public sort(sortBy: SortBy, descending: boolean) {
+        if (sortBy !== "") {
+            this.groups.sort((a, b) => Model.compare(a, b, sortBy, descending));
+
+            for (const group of this.groups) {
+                group.assets.sort((a, b) => Model.compare(a, b, sortBy, descending));
+            }
+        }
+    }
+
     /** @internal */
     public toJSON() {
         return {
@@ -250,6 +263,27 @@ export class Model implements IModel {
         return validationResult === true;
     }
 
+    private static compare(left: Asset, right: Asset, sortBy: SortableProperties, descending: boolean) {
+        return (descending ? -1 : 1) * this.compareImpl(left, right, sortBy);
+    }
+
+    private static compareImpl(left: Asset, right: Asset, sortBy: SortableProperties) {
+        const leftProperty = left[sortBy];
+        const rightProperty = right[sortBy];
+
+        if (leftProperty === rightProperty) {
+            return 0;
+        } else if (leftProperty === undefined) {
+            return -1;
+        } else if (rightProperty === undefined) {
+            return 1;
+        } else if (leftProperty < rightProperty) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
     private readonly bundles = new Array<AssetBundle>();
     private readonly groups = new Array<AssetGroup>();
 
@@ -261,12 +295,12 @@ export class Model implements IModel {
 
     private async queryBundleDataImpl(bundles: AssetBundle[]) {
         await Promise.all(bundles.map((b) => b.queryData()));
-        const groupBy = (asset: Asset) => asset.type;
+        const groupBy = "type";
         const newGroups = this.group(groupBy);
 
         // Remove no longer existing groups
         for (let index = 0; index < this.groups.length;) {
-            if (!newGroups.has(groupBy(this.groups[index]))) {
+            if (!newGroups.has(this.groups[index][groupBy])) {
                 this.groups.splice(index, 1);
             } else {
                 ++index;
@@ -275,7 +309,7 @@ export class Model implements IModel {
 
         // Update existing groups with new assets
         for (const newGroup of newGroups) {
-            const existingGroup = this.groups.find((g) => groupBy(g) === newGroup[0]);
+            const existingGroup = this.groups.find((g) => g[groupBy] === newGroup[0]);
 
             if (existingGroup === undefined) {
                 this.groups.push(new AssetGroup(this, newGroup[1]));
@@ -285,12 +319,12 @@ export class Model implements IModel {
         }
     }
 
-    private group<T>(callback: (asset: Asset) => T) {
-        const result = new Map<T, Asset[]>();
+    private group(groupBy: "type") {
+        const result = new Map<string, Asset[]>();
 
         for (const bundle of this.bundles) {
             for (const asset of bundle.assets) {
-                const groupName = callback(asset);
+                const groupName = asset[groupBy];
                 const groupAssets = result.get(groupName);
 
                 if (groupAssets === undefined) {

@@ -12,14 +12,11 @@
 
 import { Component } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
-import { Model } from "../model/Model";
+import { Model, SortableProperties, SortBy } from "../model/Model";
 import AssetEditor from "./AssetEditor.vue";
 import AssetListRow from "./AssetListRow.vue";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
-
-type SortableProperties = "type" | "description" | "location" | "totalValue";
-type SortBy = "" | SortableProperties;
 
 interface IPagination {
     sortBy: SortBy;
@@ -69,6 +66,8 @@ export default class AssetList extends ComponentBase<Model> {
             this.pagination.sortBy = property;
             this.pagination.descending = false;
         }
+
+        this.checkedValue.sort(this.pagination.sortBy, this.pagination.descending);
     }
 
     public onEdit(asset: Asset) {
