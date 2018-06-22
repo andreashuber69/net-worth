@@ -115,6 +115,8 @@ export class Model implements IModel {
         this.onCurrencyChanged().catch((reason) => console.error(reason));
     }
 
+    public readonly groups = new Array<AssetGroup>();
+
     /** Provides the assets to value. */
     public get assets() {
         const result: Asset[] = [];
@@ -285,7 +287,6 @@ export class Model implements IModel {
     }
 
     private readonly bundles = new Array<AssetBundle>();
-    private readonly groups = new Array<AssetGroup>();
 
     private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
 
