@@ -14,7 +14,13 @@
 
 <template>
   <tr @click="onRowClicked">
-    <td>{{ checkedValue.type }}</td>
+    <td class="pr-0">
+      <div v-if="checkedValue.isExpandable">
+        <v-icon v-if="!checkedValue.isExpanded">expand_more</v-icon>
+        <v-icon v-if="checkedValue.isExpanded">expand_less</v-icon>
+      </div>
+    </td>
+    <td class="pl-0">{{ checkedValue.type }}</td>
     <td class="hidden-xs-only">{{ checkedValue.description }}</td>
     <td class="hidden-md-and-down" :title="checkedValue.locationHint">{{ checkedValue.location }}</td>
     <td class="hidden-sm-and-down">{{ checkedValue.unit }}</td>

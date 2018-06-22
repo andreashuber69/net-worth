@@ -40,6 +40,10 @@ export abstract class Asset {
     /** Provides the parent model to which this asset belongs. */
     public readonly parent: IModel;
 
+    public get isExpandable() {
+        return false;
+    }
+
     /** Provides the type of asset, e.g. 'Silver, 'Gold', 'Bitcoin', 'Litecoin'. */
     public abstract get type(): AssetTypes | "";
 

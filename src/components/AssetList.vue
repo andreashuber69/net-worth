@@ -19,7 +19,8 @@
       :items="checkedValue.assets" item-key="key" :pagination.sync="pagination" :loading="isLoading"
       :total-items="checkedValue.assets.length" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
-        <th :class="['text-xs-left column sortable', sortDirection, getActive('type')]" @click="changeSort('type')">
+        <th class="pr-0"></th>
+        <th :class="['text-xs-left column sortable pl-0', sortDirection, getActive('type')]" @click="changeSort('type')">
           Type <v-icon small>arrow_upward</v-icon>
         </th>
         <th
@@ -48,7 +49,8 @@
         <AssetListRow :value="props.item" @edit="onEdit" @delete="onDelete"></AssetListRow>
       </template>
       <template slot="footer">
-        <td class="total">Grand Total</td>
+        <td class="pr-0"></td>
+        <td class="total pl-0">Grand Total</td>
         <td class="hidden-xs-only"></td>
         <td class="hidden-md-and-down"></td>
         <td class="hidden-sm-and-down"></td>

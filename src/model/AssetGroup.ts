@@ -16,6 +16,10 @@ import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
 export class AssetGroup extends Asset {
     public isExpanded = false;
 
+    public get isExpandable() {
+        return true;
+    }
+
     public get type() {
         return this.coalesce((a) => a.type) || "";
     }
