@@ -12,7 +12,7 @@
 
 import { Component } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
-import { Model, SortableProperties, SortBy } from "../model/Model";
+import { Model, SortBy } from "../model/Model";
 import AssetEditor from "./AssetEditor.vue";
 import AssetListRow from "./AssetListRow.vue";
 import { ComponentBase } from "./ComponentBase";
@@ -30,7 +30,7 @@ interface IPagination {
 // tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
     /** Provides the information required for sorting and paginating the table. */
-    public pagination: IPagination = { sortBy: "", descending: false, rowsPerPage: -1 };
+    public pagination: IPagination = { sortBy: "type", descending: false, rowsPerPage: -1 };
 
     /** Provides the current sort direction. */
     public get sortDirection() {
@@ -50,20 +50,16 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     /** Gets the active status for the given property. */
-    public getActive(property: SortableProperties) {
-        return this.pagination.sortBy === property ? "active" : "";
+    public getActive(sortBy: SortBy) {
+        return this.pagination.sortBy === sortBy ? "active" : "";
     }
 
     /** Changes the sorting for the given property. */
-    public changeSort(property: SortableProperties) {
-        if (this.pagination.sortBy === property) {
-            if (this.pagination.descending) {
-                this.pagination.sortBy = "";
-            }
-
+    public changeSort(sortBy: SortBy) {
+        if (this.pagination.sortBy === sortBy) {
             this.pagination.descending = !this.pagination.descending;
         } else {
-            this.pagination.sortBy = property;
+            this.pagination.sortBy = sortBy;
             this.pagination.descending = false;
         }
 

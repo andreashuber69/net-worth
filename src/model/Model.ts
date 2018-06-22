@@ -27,8 +27,7 @@ import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
 import { Unknown, Value } from "./Value";
 
-export type SortableProperties = "type" | "description" | "location" | "totalValue";
-export type SortBy = "" | SortableProperties;
+export type SortBy = "type" | "description" | "location" | "totalValue";
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
@@ -187,12 +186,10 @@ export class Model implements IModel {
     }
 
     public sort(sortBy: SortBy, descending: boolean) {
-        if (sortBy !== "") {
-            this.groups.sort((a, b) => Model.compare(a, b, sortBy, descending));
+        this.groups.sort((a, b) => Model.compare(a, b, sortBy, descending));
 
-            for (const group of this.groups) {
-                group.assets.sort((a, b) => Model.compare(a, b, sortBy, descending));
-            }
+        for (const group of this.groups) {
+            group.assets.sort((a, b) => Model.compare(a, b, sortBy, descending));
         }
     }
 
@@ -265,11 +262,11 @@ export class Model implements IModel {
         return validationResult === true;
     }
 
-    private static compare(left: Asset, right: Asset, sortBy: SortableProperties, descending: boolean) {
+    private static compare(left: Asset, right: Asset, sortBy: SortBy, descending: boolean) {
         return (descending ? -1 : 1) * this.compareImpl(left, right, sortBy);
     }
 
-    private static compareImpl(left: Asset, right: Asset, sortBy: SortableProperties) {
+    private static compareImpl(left: Asset, right: Asset, sortBy: SortBy) {
         const leftProperty = left[sortBy];
         const rightProperty = right[sortBy];
 
