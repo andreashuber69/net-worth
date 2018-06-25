@@ -294,7 +294,7 @@ export class Model implements IModel {
     private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
 
     private queryBundlesData(bundles: AssetBundle[]) {
-        this.queryBundlesDataImpl(bundles).catch((error) => console.log(error));
+        this.queryBundlesDataImpl(bundles).catch((error) => console.error(error));
     }
 
     private async queryBundlesDataImpl(bundles: AssetBundle[]) {
@@ -311,8 +311,6 @@ export class Model implements IModel {
 
             if (index === delayId) {
                 this.update();
-            } else {
-                console.log(index);
             }
 
             promises.delete(index);
