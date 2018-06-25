@@ -14,7 +14,9 @@
 
 <template>
   <div>
-    <AssetEditor :value="checkedValue" ref="editor"></AssetEditor>
+    <v-layout row justify-center>
+      <AssetEditor :value="checkedValue" ref="editor"></AssetEditor>
+    </v-layout>
     <v-data-table
       :items="checkedValue.assets" item-key="key" :pagination.sync="pagination" :loading="isLoading"
       :total-items="checkedValue.assets.length" hide-actions class="elevation-1">
