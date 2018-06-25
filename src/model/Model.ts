@@ -167,6 +167,7 @@ export class Model implements IModel {
             }
         }
 
+        this.update();
         this.onChanged();
     }
 
