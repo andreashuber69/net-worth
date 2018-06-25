@@ -93,7 +93,7 @@ export class Model implements IModel {
             model.bundles.push(asset.bundle(rawBundle));
         }
 
-        model.queryBundlesData(model.bundles);
+        model.update(...model.bundles);
 
         return model;
     }
@@ -149,9 +149,9 @@ export class Model implements IModel {
     /** Adds `bundle` to the list of asset bundles. */
     public addAsset(asset: Asset) {
         const bundle = asset.bundle();
-        this.queryBundlesData([ bundle ]);
         this.bundles.push(bundle);
         this.onChanged();
+        this.update(bundle);
     }
 
     /** Deletes `asset`. */
@@ -165,10 +165,10 @@ export class Model implements IModel {
             if (bundle.assets.length === 0) {
                 this.bundles.splice(index, 1);
             }
-        }
 
-        this.update();
-        this.onChanged();
+            this.onChanged();
+            this.update();
+        }
     }
 
     /** Replaces the bundle containing `oldAsset` with `newBundle`. */
@@ -177,13 +177,12 @@ export class Model implements IModel {
 
         if (index >= 0) {
             const bundle = newAsset.bundle();
-            this.queryBundlesData([ bundle ]);
             // Apparently, Vue cannot detect the obvious way of replacing (this.bundles[index] = newBundle):
             // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
             this.bundles.splice(index, 1, bundle);
+            this.onChanged();
+            this.update(bundle);
         }
-
-        this.onChanged();
     }
 
     public sort(sortBy: SortBy, descending: boolean) {
@@ -294,13 +293,14 @@ export class Model implements IModel {
 
     private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
 
-    private queryBundlesData(bundles: AssetBundle[]) {
-        this.queryBundlesDataImpl(bundles).catch((error) => console.error(error));
+    private update(...newBundles: AssetBundle[]) {
+        this.updateImpl(newBundles).catch((error) => console.error(error));
     }
 
-    private async queryBundlesDataImpl(bundles: AssetBundle[]) {
+    private async updateImpl(newBundles: AssetBundle[]) {
+        this.updateGroups();
         const promises = new Map<number, Promise<number>>(
-            bundles.map<[number, Promise<number>]>((b, i) => [ i, Model.queryBundleData(b, i) ]));
+            newBundles.map<[number, Promise<number>]>((b, i) => [ i, Model.queryBundleData(b, i) ]));
         const delayId = Number.MAX_SAFE_INTEGER;
 
         while (promises.size > 0) {
@@ -311,14 +311,14 @@ export class Model implements IModel {
             const index = await Promise.race(promises.values());
 
             if (index === delayId) {
-                this.update();
+                this.updateGroups();
             }
 
             promises.delete(index);
         }
     }
 
-    private update() {
+    private updateGroups() {
         const groupBy = "type";
         const newGroups = this.group(groupBy);
 
