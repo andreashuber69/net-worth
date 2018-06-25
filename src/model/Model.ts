@@ -93,7 +93,7 @@ export class Model implements IModel {
             model.bundles.push(asset.bundle(rawBundle));
         }
 
-        model.queryBundleData(model.bundles);
+        model.queryBundlesData(model.bundles);
 
         return model;
     }
@@ -149,7 +149,7 @@ export class Model implements IModel {
     /** Adds `bundle` to the list of asset bundles. */
     public addAsset(asset: Asset) {
         const bundle = asset.bundle();
-        this.queryBundleData([ bundle ]);
+        this.queryBundlesData([ bundle ]);
         this.bundles.push(bundle);
         this.onChanged();
     }
@@ -176,7 +176,7 @@ export class Model implements IModel {
 
         if (index >= 0) {
             const bundle = newAsset.bundle();
-            this.queryBundleData([ bundle ]);
+            this.queryBundlesData([ bundle ]);
             // Apparently, Vue cannot detect the obvious way of replacing (this.bundles[index] = newBundle):
             // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
             this.bundles.splice(index, 1, bundle);
@@ -283,16 +283,43 @@ export class Model implements IModel {
         }
     }
 
+    private static async queryBundleData(bundle: AssetBundle, id: number) {
+        await bundle.queryData();
+
+        return id;
+    }
+
     private readonly bundles = new Array<AssetBundle>();
 
     private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
 
-    private queryBundleData(bundles: AssetBundle[]) {
-        this.queryBundleDataImpl(bundles).catch((error) => console.log(error));
+    private queryBundlesData(bundles: AssetBundle[]) {
+        this.queryBundlesDataImpl(bundles).catch((error) => console.log(error));
     }
 
-    private async queryBundleDataImpl(bundles: AssetBundle[]) {
-        await Promise.all(bundles.map((b) => b.queryData()));
+    private async queryBundlesDataImpl(bundles: AssetBundle[]) {
+        const promises = new Map<number, Promise<number>>(
+            bundles.map<[number, Promise<number>]>((b, i) => [ i, Model.queryBundleData(b, i) ]));
+        const delayId = Number.MAX_SAFE_INTEGER;
+
+        while (promises.size > 0) {
+            if (!promises.has(delayId)) {
+                promises.set(delayId, new Promise((resolve) => setTimeout(resolve, 1000, delayId)));
+            }
+
+            const index = await Promise.race(promises.values());
+
+            if (index === delayId) {
+                this.update();
+            } else {
+                console.log(index);
+            }
+
+            promises.delete(index);
+        }
+    }
+
+    private update() {
         const groupBy = "type";
         const newGroups = this.group(groupBy);
 
