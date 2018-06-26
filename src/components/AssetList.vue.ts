@@ -30,7 +30,7 @@ interface IPagination {
 // tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
     /** Provides the information required for sorting and paginating the table. */
-    public pagination: IPagination = { sortBy: "type", descending: false, rowsPerPage: -1 };
+    public pagination: IPagination = { sortBy: "totalValue", descending: true, rowsPerPage: -1 };
 
     /** Provides the current sort direction. */
     public get sortDirection() {

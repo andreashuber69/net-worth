@@ -51,8 +51,7 @@
         <AssetListRow :value="props.item" @edit="onEdit" @delete="onDelete"></AssetListRow>
       </template>
       <template slot="footer">
-        <td class="pr-0"></td>
-        <td class="total pl-0">Grand Total</td>
+        <td colspan="2" class="total">Grand Total</td>
         <td class="hidden-xs-only"></td>
         <td class="hidden-md-and-down"></td>
         <td class="hidden-sm-and-down"></td>
