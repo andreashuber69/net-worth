@@ -37,9 +37,12 @@
         </v-list>
       </v-navigation-drawer>
       <v-toolbar app>
-        <v-toolbar-side-icon @click.stop="onMenuIconClicked"></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click.stop="onMenuClicked"></v-toolbar-side-icon>
         <v-toolbar-title>Asset Manager</v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn icon title="Add new asset" @click.stop="onAddClicked">
+          <v-icon>add</v-icon>
+        </v-btn>
         <v-toolbar-items>
           <!--
             TODO: The following element should be centered vertically inside the toolbar, but somehow this does not seem
@@ -50,7 +53,7 @@
       </v-toolbar>
       <v-content>
         <v-container>
-          <AssetList :value="model"/>
+          <AssetList :value="model" ref="assetList"/>
         </v-container>
       </v-content>
       <v-footer app height="auto">

@@ -14,7 +14,6 @@
 
 <template>
   <v-dialog persistent v-model="isOpen" max-width="800px">
-    <v-btn slot="activator" color="primary" dark class="mb-2">New Asset</v-btn>
     <v-card>
       <v-card-title>
         <span class="headline">{{ title }}</span>

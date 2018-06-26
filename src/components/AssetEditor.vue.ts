@@ -71,6 +71,11 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     /** @internal */
+    public add() {
+        this.isOpen = true;
+    }
+
+    /** @internal */
     public edit(asset: Asset) {
         this.editedAsset = asset;
         this.assetInfo = Model.assetInfos.find((info) => info.type === asset.type) as AssetInputInfo;

@@ -66,6 +66,10 @@ export default class AssetList extends ComponentBase<Model> {
         this.checkedValue.sort(this.pagination.sortBy, this.pagination.descending);
     }
 
+    public onAdd() {
+        (this.getControl("editor") as AssetEditor).add();
+    }
+
     public onEdit(asset: Asset) {
         (this.getControl("editor") as AssetEditor).edit(asset);
     }

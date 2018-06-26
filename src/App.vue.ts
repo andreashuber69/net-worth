@@ -22,7 +22,7 @@ export default class App extends Vue {
     public model = App.parse(App.loadFromLocalStorage(), () => this.onModelChanged()) ||
         new Model(() => this.onModelChanged());
 
-    public onMenuIconClicked(event: MouseEvent) {
+    public onMenuClicked(event: MouseEvent) {
         this.isDrawerVisible = !this.isDrawerVisible;
     }
 
@@ -36,6 +36,10 @@ export default class App extends Vue {
         this.isDrawerVisible = false;
         const blob = new Blob([ this.model.toJsonString() ], { type : "application/json" });
         App.write("MyAssets.json", blob);
+    }
+
+    public onAddClicked(event: MouseEvent) {
+        (this.$refs.assetList as AssetList).onAdd();
     }
 
     public async onFileInputChanged(event: Event) {
