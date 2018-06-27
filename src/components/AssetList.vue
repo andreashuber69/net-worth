@@ -40,11 +40,11 @@
         <th colspan="2" class="hidden-sm-and-down">Unit Value<br>({{ checkedValue.selectedCurrency }})</th>
         <th colspan="2" class="hidden-sm-and-down">Quantity</th>
         <th
-          colspan="2" :class="['total column sortable', sortDirection, getActive('totalValue')]"
+          colspan="2" :class="['column sortable pr-0 total', sortDirection, getActive('totalValue')]"
           @click="changeSort('totalValue')">
           Total Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.selectedCurrency }})
         </th>
-        <th>Actions</th>
+        <th></th>
       </template>
       <v-progress-linear slot="progress" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props">
@@ -59,7 +59,7 @@
         <td colspan="2" class="hidden-sm-and-down"></td>
         <td colspan="2" class="hidden-sm-and-down"></td>
         <td class="text-xs-right pr-0 total">{{ totalValueInteger }}</td>
-        <td class="text-xs-left pl-0 total">{{ totalValueFraction }}</td>
+        <td class="text-xs-left px-0 total">{{ totalValueFraction }}</td>
         <td></td>
       </template>
     </v-data-table>

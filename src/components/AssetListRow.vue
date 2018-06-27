@@ -31,16 +31,21 @@
     <td class="hidden-sm-and-down text-xs-right pr-0">{{ quantityInteger }}</td>
     <td class="hidden-sm-and-down text-xs-left pl-0">{{ quantityFraction }}</td>
     <td class="total text-xs-right pr-0">{{ totalValueInteger }}</td>
-    <td class="total text-xs-left pl-0">{{ totalValueFraction }}</td>
-    <td class="justify-center layout px-0">
-      <div v-if="checkedValue.hasActions">
-        <v-btn :disabled="!checkedValue.isEditable" icon class="mx-0" @click="onEditClicked">
-          <v-icon color="teal">edit</v-icon>
+    <td class="total text-xs-left px-0">{{ totalValueFraction }}</td>
+    <td class="px-0">
+      <v-menu v-if="checkedValue.hasActions" class="pl-0">
+        <v-btn slot="activator" icon>
+          <v-icon>more_vert</v-icon>
         </v-btn>
-        <v-btn icon class="mx-0" @click="onDeleteClicked">
-          <v-icon color="pink">delete_forever</v-icon>
-        </v-btn>
-      </div>
+        <v-list>
+          <v-list-tile :disabled="!checkedValue.isEditable" @click="onEditClicked">
+            <v-list-tile-title>Edit</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="onDeleteClicked">
+            <v-list-tile-title>Delete</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
     </td>
   </tr>
 </template>
