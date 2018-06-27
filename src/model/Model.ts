@@ -74,7 +74,7 @@ export class Model implements IModel {
             return Value.getPropertyTypeMismatch(bundlesName, rawModel, []);
         }
 
-        model.selectedCurrency = selectedCurrency;
+        model.selectedCurrencyImpl = selectedCurrency;
 
         const primaryAssetName = "primaryAsset";
 
@@ -111,6 +111,7 @@ export class Model implements IModel {
     /** Provides the selected currency. */
     public set selectedCurrency(currency: string) {
         this.selectedCurrencyImpl = currency;
+        this.onChanged();
         this.onCurrencyChanged().catch((reason) => console.error(reason));
     }
 

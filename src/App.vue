@@ -43,7 +43,7 @@
         <v-btn icon title="Add new asset" @click.stop="onAddClicked">
           <v-icon>add</v-icon>
         </v-btn>
-        <v-menu max-height="300px">
+        <v-menu title="Change valuation currency" max-height="300px">
           <v-toolbar-title slot="activator">
             <span>{{ model.selectedCurrency }}</span>
             <v-icon>arrow_drop_down</v-icon>
