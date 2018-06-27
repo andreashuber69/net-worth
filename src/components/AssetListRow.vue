@@ -14,7 +14,7 @@
 
 <template>
   <tr @click="onRowClicked">
-    <td class="pr-0">
+    <td class="px-2">
       <div v-if="checkedValue.isExpandable">
         <v-icon v-if="!checkedValue.isExpanded">expand_more</v-icon>
         <v-icon v-if="checkedValue.isExpanded">expand_less</v-icon>
