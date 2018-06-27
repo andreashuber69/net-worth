@@ -77,10 +77,14 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     /** @internal */
     public edit(asset: Asset) {
-        this.editedAsset = asset;
-        this.assetInfo = Model.assetInfos.find((info) => info.type === asset.type) as AssetInputInfo;
-        this.data = new AssetEditorData(asset.interface);
-        this.isOpen = true;
+        const assetInfo = Model.assetInfos.find((info) => info.type === asset.type);
+
+        if (assetInfo !== undefined) {
+            this.editedAsset = asset;
+            this.assetInfo = assetInfo;
+            this.data = new AssetEditorData(asset.interface);
+            this.isOpen = true;
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
