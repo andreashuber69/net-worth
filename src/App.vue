@@ -43,13 +43,21 @@
         <v-btn icon title="Add new asset" @click.stop="onAddClicked">
           <v-icon>add</v-icon>
         </v-btn>
-        <v-toolbar-items>
-          <!--
-            TODO: The following element should be centered vertically inside the toolbar, but somehow this does not seem
-            to be possible...
-          -->
-          <v-select v-model="model.selectedCurrency" :items="model.currencies" single-line class="my-3"></v-select>
-        </v-toolbar-items>
+        <v-menu max-height="300px">
+          <v-toolbar-title slot="activator">
+            <span>{{ model.selectedCurrency }}</span>
+            <v-icon>arrow_drop_down</v-icon>
+          </v-toolbar-title>
+          <v-list>
+            <v-list-tile
+              v-for="currency in model.currencies" :key="currency" @click="model.selectedCurrency = currency">
+              <v-list-tile-title v-text="currency"></v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+        <div class="pr-1">
+          <!-- This is necessary so that the currency menu does not partly disappear behind the browser scroll bar. -->
+        </div>
       </v-toolbar>
       <v-content>
         <v-container>
