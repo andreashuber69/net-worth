@@ -29,6 +29,16 @@ import { Unknown, Value } from "./Value";
 
 export type SortBy = "type" | "description" | "location" | "totalValue";
 
+export interface ISort {
+    /** Provides the name of the property by which the asset list is currently sorted. */
+    readonly by: SortBy;
+
+    /** Provides a value indicating whether the sort order is descending. */
+    readonly descending: boolean;
+}
+
+export type GroupBy = "type";
+
 /** Represents the main model of the application. */
 export class Model implements IModel {
     /** Provides information objects for each of the supported asset types. */
@@ -138,6 +148,19 @@ export class Model implements IModel {
      */
     public exchangeRate: number | undefined = 1;
 
+    /** Provides the name of the property by which the asset list is currently grouped. */
+    public groupBy: GroupBy = "type";
+
+    /** Provides information on how to sort the asset list. */
+    public get sort() {
+        return this.sortImpl;
+    }
+
+    public set sort(sort: ISort) {
+        this.sortImpl = sort;
+        this.doSort();
+    }
+
     // tslint:disable-next-line:no-empty
     public constructor(private readonly onChanged: () => void) {
     }
@@ -183,14 +206,6 @@ export class Model implements IModel {
             this.bundles.splice(index, 1, bundle);
             this.onChanged();
             this.update(bundle);
-        }
-    }
-
-    public sort(sortBy: SortBy, descending: boolean) {
-        this.groups.sort((a, b) => Model.compare(a, b, sortBy, descending));
-
-        for (const group of this.groups) {
-            group.assets.sort((a, b) => Model.compare(a, b, sortBy, descending));
         }
     }
 
@@ -263,27 +278,6 @@ export class Model implements IModel {
         return validationResult === true;
     }
 
-    private static compare(left: Asset, right: Asset, sortBy: SortBy, descending: boolean) {
-        return (descending ? -1 : 1) * this.compareImpl(left, right, sortBy);
-    }
-
-    private static compareImpl(left: Asset, right: Asset, sortBy: SortBy) {
-        const leftProperty = left[sortBy];
-        const rightProperty = right[sortBy];
-
-        if (leftProperty === rightProperty) {
-            return 0;
-        } else if (leftProperty === undefined) {
-            return -1;
-        } else if (rightProperty === undefined) {
-            return 1;
-        } else if (leftProperty < rightProperty) {
-            return -1;
-        } else {
-            return 1;
-        }
-    }
-
     private static async queryBundleData(bundle: AssetBundle, id: number) {
         await bundle.queryData();
 
@@ -293,6 +287,8 @@ export class Model implements IModel {
     private readonly bundles = new Array<AssetBundle>();
 
     private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
+
+    private sortImpl: ISort = { by: "totalValue", descending: true };
 
     private update(...newBundles: AssetBundle[]) {
         this.updateImpl(newBundles).catch((error) => console.error(error));
@@ -320,12 +316,11 @@ export class Model implements IModel {
     }
 
     private updateGroups() {
-        const groupBy = "type";
-        const newGroups = this.group(groupBy);
+        const newGroups = this.group();
 
         // Remove no longer existing groups
         for (let index = 0; index < this.groups.length;) {
-            if (!newGroups.has(this.groups[index][groupBy])) {
+            if (!newGroups.has(this.groups[index][this.groupBy])) {
                 this.groups.splice(index, 1);
             } else {
                 ++index;
@@ -334,7 +329,7 @@ export class Model implements IModel {
 
         // Update existing groups with new assets
         for (const newGroup of newGroups) {
-            const existingGroup = this.groups.find((g) => g[groupBy] === newGroup[0]);
+            const existingGroup = this.groups.find((g) => g[this.groupBy] === newGroup[0]);
 
             if (existingGroup === undefined) {
                 this.groups.push(new AssetGroup(this, newGroup[1]));
@@ -342,14 +337,16 @@ export class Model implements IModel {
                 existingGroup.assets.splice(0, existingGroup.assets.length, ...newGroup[1]);
             }
         }
+
+        this.doSort();
     }
 
-    private group(groupBy: "type") {
+    private group() {
         const result = new Map<string, Asset[]>();
 
         for (const bundle of this.bundles) {
             for (const asset of bundle.assets) {
-                const groupName = asset[groupBy];
+                const groupName = asset[this.groupBy];
                 const groupAssets = result.get(groupName);
 
                 if (groupAssets === undefined) {
@@ -361,6 +358,35 @@ export class Model implements IModel {
         }
 
         return result;
+    }
+
+    private doSort() {
+        this.groups.sort((l, r) => this.compare(l, r));
+
+        for (const group of this.groups) {
+            group.assets.sort((l, r) => this.compare(l, r));
+        }
+    }
+
+    private compare(left: Asset, right: Asset) {
+        return (this.sort.descending ? -1 : 1) * this.compareImpl(left, right);
+    }
+
+    private compareImpl(left: Asset, right: Asset) {
+        const leftProperty = left[this.sort.by];
+        const rightProperty = right[this.sort.by];
+
+        if (leftProperty === rightProperty) {
+            return 0;
+        } else if (leftProperty === undefined) {
+            return -1;
+        } else if (rightProperty === undefined) {
+            return 1;
+        } else if (leftProperty < rightProperty) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 
     private async onCurrencyChanged() {

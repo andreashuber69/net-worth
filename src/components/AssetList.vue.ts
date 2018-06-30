@@ -30,11 +30,19 @@ interface IPagination {
 // tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
     /** Provides the information required for sorting and paginating the table. */
-    public pagination: IPagination = { sortBy: "totalValue", descending: true, rowsPerPage: -1 };
+    public get pagination(): IPagination {
+        return {
+            sortBy: this.checkedValue.sort.by, descending: this.checkedValue.sort.descending, rowsPerPage: -1,
+        };
+    }
+
+    public set pagination(pagination: IPagination) {
+        this.checkedValue.sort = { by: pagination.sortBy, descending: pagination.descending };
+    }
 
     /** Provides the current sort direction. */
     public get sortDirection() {
-        return this.pagination.descending ? "desc" : "asc";
+        return this.checkedValue.sort.descending ? "desc" : "asc";
     }
 
     public get isLoading() {
@@ -51,19 +59,14 @@ export default class AssetList extends ComponentBase<Model> {
 
     /** Gets the active status for the given property. */
     public getActive(sortBy: SortBy) {
-        return this.pagination.sortBy === sortBy ? "active" : "";
+        return this.checkedValue.sort.by === sortBy ? "active" : "";
     }
 
     /** Changes the sorting for the given property. */
     public changeSort(sortBy: SortBy) {
-        if (this.pagination.sortBy === sortBy) {
-            this.pagination.descending = !this.pagination.descending;
-        } else {
-            this.pagination.sortBy = sortBy;
-            this.pagination.descending = false;
-        }
-
-        this.checkedValue.sort(this.pagination.sortBy, this.pagination.descending);
+        const currentSort = this.checkedValue.sort;
+        this.checkedValue.sort = (currentSort.by === sortBy) ?
+            { by: currentSort.by, descending: !currentSort.descending } : { by: sortBy, descending: false };
     }
 
     public onAdd() {
