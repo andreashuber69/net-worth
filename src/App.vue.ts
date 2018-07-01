@@ -28,18 +28,7 @@ export default class App extends Vue {
 
     public onOpenClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
-        // tslint:disable-next-line:no-unsafe-any
-        (this.$refs.fileInput as HTMLInputElement).click();
-    }
-
-    public onSaveClicked(event: MouseEvent) {
-        this.isDrawerVisible = false;
-        const blob = new Blob([ this.model.toJsonString() ], { type : "application/json" });
-        App.write("MyAssets.json", blob);
-    }
-
-    public onAddClicked(event: MouseEvent) {
-        (this.$refs.assetList as AssetList).onAdd();
+        this.fileInput.click();
     }
 
     public async onFileInputChanged(event: Event) {
@@ -53,8 +42,18 @@ export default class App extends Vue {
             }
         }
 
+        this.fileInput.value = "";
+    }
+
+    public onSaveClicked(event: MouseEvent) {
+        this.isDrawerVisible = false;
+        const blob = new Blob([ this.model.toJsonString() ], { type : "application/json" });
+        App.write("MyAssets.json", blob);
+    }
+
+    public get assetList() {
         // tslint:disable-next-line:no-unsafe-any
-        (this.$refs.fileInput as HTMLInputElement).value = "";
+        return this.$refs.assetList as AssetList;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,6 +107,11 @@ export default class App extends Vue {
 
     private static loadFromLocalStorage() {
         return window.localStorage.getItem(this.localStorageKey);
+    }
+
+    private get fileInput() {
+        // tslint:disable-next-line:no-unsafe-any
+        return this.$refs.fileInput as HTMLInputElement;
     }
 
     private onModelChanged() {

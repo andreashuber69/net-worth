@@ -40,11 +40,11 @@
         <v-toolbar-side-icon @click.stop="onMenuClicked"></v-toolbar-side-icon>
         <v-toolbar-title>Asset Manager</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon title="Add new asset" @click.stop="onAddClicked">
+        <v-btn icon title="Add new asset" class="ml-1 mr-0" @click.stop="assetList.onAdd">
           <v-icon>add</v-icon>
         </v-btn>
         <v-menu title="Change valuation currency" max-height="300px">
-          <v-toolbar-title slot="activator">
+          <v-toolbar-title slot="activator" class="mx-3">
             <span>{{ model.selectedCurrency }}</span>
             <v-icon>arrow_drop_down</v-icon>
           </v-toolbar-title>
@@ -55,9 +55,6 @@
             </v-list-tile>
           </v-list>
         </v-menu>
-        <div class="pr-1">
-          <!-- This is necessary so that the currency menu does not partly disappear behind the browser scroll bar. -->
-        </div>
       </v-toolbar>
       <v-content>
         <v-container>

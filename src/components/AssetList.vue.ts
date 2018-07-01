@@ -70,11 +70,11 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public onAdd() {
-        (this.getControl("editor") as AssetEditor).add();
+        this.assetEditor.add();
     }
 
     public onEdit(asset: Asset) {
-        (this.getControl("editor") as AssetEditor).edit(asset);
+        this.assetEditor.edit(asset);
     }
 
     public onDelete(asset: Asset) {
@@ -86,5 +86,9 @@ export default class AssetList extends ComponentBase<Model> {
     private get totalValue() {
         return this.checkedValue.groups.reduce<number | undefined>(
             (s, a) => s === undefined ? undefined : (a.totalValue === undefined ? undefined : s + a.totalValue), 0);
+    }
+
+    private get assetEditor() {
+        return this.getControl("editor") as AssetEditor;
     }
 }
