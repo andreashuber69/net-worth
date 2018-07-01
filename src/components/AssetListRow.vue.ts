@@ -71,11 +71,11 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
     /** Instructs the parent UI element to delete the given asset from the list. */
     public onDeleteClicked(event: MouseEvent) {
-        if (confirm(`Are you sure you want to delete ${this.checkedValue.type}: ${this.checkedValue.description}`)) {
-            // tslint:disable-next-line:no-unsafe-any
-            this.$emit("delete", this.checkedValue);
-        }
+        // tslint:disable-next-line:no-unsafe-any
+        this.$emit("delete", this.checkedValue);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly finenessFormatOptions = {
         maximumFractionDigits: PreciousMetalAssetInputInfo.finenessDigits,
