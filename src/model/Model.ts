@@ -78,28 +78,21 @@ export class Model implements IModel {
             return Value.getUnknownValue(selectedCurrencyName, selectedCurrency);
         }
 
+        model.selectedCurrency = selectedCurrency;
         const bundlesName = "bundles";
 
         if (!Value.hasArrayProperty(rawModel, bundlesName)) {
             return Value.getPropertyTypeMismatch(bundlesName, rawModel, []);
         }
 
-        model.selectedCurrency = selectedCurrency;
-        const primaryAssetName = "primaryAsset";
-
         for (const rawBundle of rawModel.bundles) {
-            if (!Value.hasObjectProperty(rawBundle, primaryAssetName)) {
-                return Value.getPropertyTypeMismatch(primaryAssetName, rawBundle, {});
+            const bundle = Model.parseBundle(model, rawBundle);
+
+            if (!(bundle instanceof AssetBundle)) {
+                return bundle;
             }
 
-            const rawAsset = rawBundle[primaryAssetName];
-            const asset = Model.parseAsset(model, rawAsset);
-
-            if (!(asset instanceof Asset)) {
-                return asset;
-            }
-
-            model.bundles.push(asset.bundle(rawBundle));
+            model.bundles.push(bundle);
         }
 
         model.update(...model.bundles);
@@ -261,6 +254,22 @@ export class Model implements IModel {
         ["XAU", new QuandlRequest("lbma/gold.json", true)],
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
+
+    private static parseBundle(model: IModel, rawBundle: Unknown | null | undefined) {
+        const primaryAssetName = "primaryAsset";
+
+        if (!Value.hasObjectProperty(rawBundle, primaryAssetName)) {
+            return Value.getPropertyTypeMismatch(primaryAssetName, rawBundle, {});
+        }
+
+        const asset = this.parseAsset(model, rawBundle[primaryAssetName]);
+
+        if (!(asset instanceof Asset)) {
+            return asset;
+        }
+
+        return asset.bundle(rawBundle);
+    }
 
     private static parseAsset(model: IModel, rawAsset: Unknown | null | undefined) {
         const typeName = "type";
