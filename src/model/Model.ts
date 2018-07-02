@@ -26,6 +26,11 @@ import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
 import { Unknown, Value } from "./Value";
 
+interface ISerializedModel {
+    selectedCurrency: string;
+    bundles: ISerializedBundle[];
+}
+
 export type SortBy = "type" | "description" | "location" | "totalValue";
 
 export interface ISort {
@@ -209,18 +214,17 @@ export class Model implements IModel {
     }
 
     /** @internal */
-    public toJSON() {
-        const result: { [key: string]: string | ISerializedBundle[] } = {};
-        result[Model.selectedCurrencyName] = this.selectedCurrency;
-        result[Model.bundlesName] = this.bundles.map((bundle) => bundle.toJSON());
-
-        return result;
+    public toJSON(): ISerializedModel {
+        return {
+            selectedCurrency: this.selectedCurrency,
+            bundles: this.bundles.map((bundle) => bundle.toJSON()),
+        };
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly selectedCurrencyName = "selectedCurrency";
-    private static readonly bundlesName = "bundles";
+    private static readonly selectedCurrencyName = Model.getName<ISerializedModel>("selectedCurrency");
+    private static readonly bundlesName = Model.getName<ISerializedModel>("bundles");
 
     private static readonly currencyMap = new Map<string, IWebRequest<number>>([
         ["USD", new QuandlRequest("", false)],
@@ -254,6 +258,10 @@ export class Model implements IModel {
         ["XAU", new QuandlRequest("lbma/gold.json", true)],
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
+
+    private static getName<T>(key: keyof T) {
+        return key;
+    }
 
     private static async queryBundleData(bundle: AssetBundle, id: number) {
         await bundle.queryData();
