@@ -56,7 +56,7 @@ export class Model implements IModel {
      * @param json The string to parse
      * @param onChanged The handler to pass to the [[Model]] constructor.
      */
-    public static parse(json: string, onChanged: () => void) {
+    public static parse(json: string) {
         let rawModel: Unknown | null;
 
         try {
@@ -71,7 +71,7 @@ export class Model implements IModel {
             return Value.getPropertyTypeMismatch(selectedCurrencyName, rawModel, "");
         }
 
-        const model = new Model(onChanged);
+        const model = new Model();
         const selectedCurrency = rawModel[selectedCurrencyName];
 
         if (model.currencies.findIndex((currency) => currency === selectedCurrency) < 0) {
@@ -121,7 +121,7 @@ export class Model implements IModel {
     /** Provides the selected currency. */
     public set selectedCurrency(currency: string) {
         this.selectedCurrencyImpl = currency;
-        this.onChanged();
+        this.notifyChanged();
         this.onCurrencyChanged().catch((reason) => console.error(reason));
     }
 
@@ -173,9 +173,8 @@ export class Model implements IModel {
      */
     public exchangeRate: number | undefined = 1;
 
-    // tslint:disable-next-line:no-empty
-    public constructor(private readonly onChanged: () => void) {
-    }
+    /** Provides the method that is called when the model has changed. */
+    public onChanged: (() => void) | undefined = undefined;
 
     /** Returns a JSON-formatted string representing the model. */
     public toJsonString() {
@@ -186,7 +185,7 @@ export class Model implements IModel {
     public addAsset(asset: Asset) {
         const bundle = asset.bundle();
         this.bundles.push(bundle);
-        this.onChanged();
+        this.notifyChanged();
         this.update(bundle);
     }
 
@@ -202,7 +201,7 @@ export class Model implements IModel {
                 this.bundles.splice(index, 1);
             }
 
-            this.onChanged();
+            this.notifyChanged();
             this.update();
         }
     }
@@ -216,7 +215,7 @@ export class Model implements IModel {
             // Apparently, Vue cannot detect the obvious way of replacing (this.bundles[index] = newBundle):
             // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
             this.bundles.splice(index, 1, bundle);
-            this.onChanged();
+            this.notifyChanged();
             this.update(bundle);
         }
     }
@@ -407,5 +406,11 @@ export class Model implements IModel {
         this.exchangeRate = undefined;
         const request = Model.currencyMap.get(this.selectedCurrency) as IWebRequest<number>;
         this.exchangeRate = await request.execute();
+    }
+
+    private notifyChanged() {
+        if (this.onChanged) {
+            this.onChanged();
+        }
     }
 }

@@ -19,8 +19,13 @@ import { Model } from "./model/Model";
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
     public isDrawerVisible = false;
-    public model = App.parse(App.loadFromLocalStorage(), () => this.onModelChanged()) ||
-        new Model(() => this.onModelChanged());
+    public model: Model;
+
+    public constructor() {
+        super();
+        this.model = App.parse(App.loadFromLocalStorage()) || new Model();
+        this.model.onChanged = () => this.onModelChanged();
+    }
 
     public onMenuClicked(event: MouseEvent) {
         this.isDrawerVisible = !this.isDrawerVisible;
@@ -35,9 +40,10 @@ export default class App extends Vue {
         const files = (event.target as any).files as FileList;
 
         if (files.length === 1) {
-            const model = App.parse(await App.read(files[0]), () => this.onModelChanged());
+            const model = App.parse(await App.read(files[0]));
 
             if (model) {
+                model.onChanged = () => this.onModelChanged();
                 this.model = model;
             }
         }
@@ -103,8 +109,8 @@ export default class App extends Vue {
         });
     }
 
-    private static parse(json: string | null, onChanged: () => void) {
-        const model = json ? Model.parse(json, onChanged) : undefined;
+    private static parse(json: string | null) {
+        const model = json ? Model.parse(json) : undefined;
 
         if (model instanceof Model) {
             this.saveToLocalStorage(model.toJsonString());
