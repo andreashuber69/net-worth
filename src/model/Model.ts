@@ -65,24 +65,21 @@ export class Model implements IModel {
             return (e as Error).message;
         }
 
-        const selectedCurrencyName = "selectedCurrency";
-
-        if (!Value.hasStringProperty(rawModel, selectedCurrencyName)) {
-            return Value.getPropertyTypeMismatch(selectedCurrencyName, rawModel, "");
+        if (!Value.hasStringProperty(rawModel, Model.selectedCurrencyName)) {
+            return Value.getPropertyTypeMismatch(Model.selectedCurrencyName, rawModel, "");
         }
 
         const model = new Model();
-        const selectedCurrency = rawModel[selectedCurrencyName];
+        const selectedCurrency = rawModel[Model.selectedCurrencyName];
 
         if (model.currencies.findIndex((currency) => currency === selectedCurrency) < 0) {
-            return Value.getUnknownValue(selectedCurrencyName, selectedCurrency);
+            return Value.getUnknownValue(Model.selectedCurrencyName, selectedCurrency);
         }
 
         model.selectedCurrency = selectedCurrency;
-        const bundlesName = "bundles";
 
-        if (!Value.hasArrayProperty(rawModel, bundlesName)) {
-            return Value.getPropertyTypeMismatch(bundlesName, rawModel, []);
+        if (!Value.hasArrayProperty(rawModel, Model.bundlesName)) {
+            return Value.getPropertyTypeMismatch(Model.bundlesName, rawModel, []);
         }
 
         for (const rawBundle of rawModel.bundles) {
@@ -214,13 +211,18 @@ export class Model implements IModel {
 
     /** @internal */
     public toJSON() {
-        return {
-            selectedCurrency: this.selectedCurrency,
-            bundles: this.bundles.map((bundle) => bundle.toJSON()),
-        };
+        const result: { [key: string]: any } = {};
+        result[Model.selectedCurrencyName] = this.selectedCurrency;
+        result[Model.bundlesName] = this.bundles.map((bundle) => bundle.toJSON());
+
+        return result;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static readonly selectedCurrencyName = "selectedCurrency";
+    private static readonly bundlesName = "bundles";
+    private static readonly primaryAssetName = "primaryAsset";
 
     private static readonly currencyMap = new Map<string, IWebRequest<number>>([
         ["USD", new QuandlRequest("", false)],
@@ -256,13 +258,11 @@ export class Model implements IModel {
     ]);
 
     private static parseBundle(model: IModel, rawBundle: Unknown | null | undefined) {
-        const primaryAssetName = "primaryAsset";
-
-        if (!Value.hasObjectProperty(rawBundle, primaryAssetName)) {
-            return Value.getPropertyTypeMismatch(primaryAssetName, rawBundle, {});
+        if (!Value.hasObjectProperty(rawBundle, Model.primaryAssetName)) {
+            return Value.getPropertyTypeMismatch(Model.primaryAssetName, rawBundle, {});
         }
 
-        const asset = this.parseAsset(model, rawBundle[primaryAssetName]);
+        const asset = this.parseAsset(model, rawBundle[Model.primaryAssetName]);
 
         if (!(asset instanceof Asset)) {
             return asset;
