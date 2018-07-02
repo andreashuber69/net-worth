@@ -11,10 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
+import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { AssetGroup } from "./AssetGroup";
 import { AssetInputInfo } from "./AssetInputInfo";
-import { IAllAssetProperties } from "./AssetInterfaces";
 import { BtcWallet } from "./BtcWallet";
 import { BtcWalletInputInfo } from "./BtcWalletInputInfo";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
@@ -211,7 +210,7 @@ export class Model implements IModel {
 
     /** @internal */
     public toJSON() {
-        const result: { [key: string]: any } = {};
+        const result: { [key: string]: string | ISerializedBundle[] } = {};
         result[Model.selectedCurrencyName] = this.selectedCurrency;
         result[Model.bundlesName] = this.bundles.map((bundle) => bundle.toJSON());
 
