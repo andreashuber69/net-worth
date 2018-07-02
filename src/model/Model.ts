@@ -84,8 +84,7 @@ export class Model implements IModel {
             return Value.getPropertyTypeMismatch(bundlesName, rawModel, []);
         }
 
-        model.selectedCurrencyImpl = selectedCurrency;
-
+        model.selectedCurrency = selectedCurrency;
         const primaryAssetName = "primaryAsset";
 
         for (const rawBundle of rawModel.bundles) {
