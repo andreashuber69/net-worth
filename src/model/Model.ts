@@ -37,7 +37,7 @@ export interface ISort {
     readonly descending: boolean;
 }
 
-export type GroupBy = "type";
+export type GroupBy = "type" | "location";
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
@@ -125,6 +125,31 @@ export class Model implements IModel {
         this.onCurrencyChanged().catch((reason) => console.error(reason));
     }
 
+    /** Provides the property names by which the asset list can be grouped. */
+    public readonly groupBys: GroupBy[] = [ "type", "location" ];
+
+    /** Provides the name of the property by which the asset list is currently grouped. */
+    public get selectedGroupBy() {
+        return this.groupByImpl;
+    }
+
+    public set selectedGroupBy(groupBy: GroupBy) {
+        this.groupByImpl = groupBy;
+        this.groups.length = 0;
+        this.update();
+    }
+
+    /** Provides information on how to sort the asset list. */
+    public get sort() {
+        return this.sortImpl;
+    }
+
+    public set sort(sort: ISort) {
+        this.sortImpl = sort;
+        this.doSort();
+    }
+
+    /** Provides the asset groups. */
     public readonly groups = new Array<AssetGroup>();
 
     /** Provides the assets to value. */
@@ -147,19 +172,6 @@ export class Model implements IModel {
      * currency).
      */
     public exchangeRate: number | undefined = 1;
-
-    /** Provides the name of the property by which the asset list is currently grouped. */
-    public groupBy: GroupBy = "type";
-
-    /** Provides information on how to sort the asset list. */
-    public get sort() {
-        return this.sortImpl;
-    }
-
-    public set sort(sort: ISort) {
-        this.sortImpl = sort;
-        this.doSort();
-    }
 
     // tslint:disable-next-line:no-empty
     public constructor(private readonly onChanged: () => void) {
@@ -288,6 +300,8 @@ export class Model implements IModel {
 
     private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
 
+    private groupByImpl: GroupBy = "type";
+
     private sortImpl: ISort = { by: "totalValue", descending: true };
 
     private update(...newBundles: AssetBundle[]) {
@@ -320,7 +334,7 @@ export class Model implements IModel {
 
         // Remove no longer existing groups
         for (let index = 0; index < this.groups.length;) {
-            if (!newGroups.has(this.groups[index][this.groupBy])) {
+            if (!newGroups.has(this.groups[index][this.selectedGroupBy])) {
                 this.groups.splice(index, 1);
             } else {
                 ++index;
@@ -329,7 +343,7 @@ export class Model implements IModel {
 
         // Update existing groups with new assets
         for (const newGroup of newGroups) {
-            const existingGroup = this.groups.find((g) => g[this.groupBy] === newGroup[0]);
+            const existingGroup = this.groups.find((g) => g[this.selectedGroupBy] === newGroup[0]);
 
             if (existingGroup === undefined) {
                 this.groups.push(new AssetGroup(this, newGroup[1]));
@@ -346,7 +360,7 @@ export class Model implements IModel {
 
         for (const bundle of this.bundles) {
             for (const asset of bundle.assets) {
-                const groupName = asset[this.groupBy];
+                const groupName = asset[this.selectedGroupBy];
                 const groupAssets = result.get(groupName);
 
                 if (groupAssets === undefined) {

@@ -56,6 +56,22 @@ export default class App extends Vue {
         return this.$refs.assetList as AssetList;
     }
 
+    public get groupBys() {
+        return this.model.groupBys.map((g) => App.capitalize(g));
+    }
+
+    public get selectedGroupBy() {
+        return App.capitalize(this.model.selectedGroupBy);
+    }
+
+    public set selectedGroupBy(groupBy: string) {
+        const rawGroupBy = this.model.groupBys.find((g) => g === groupBy.toLowerCase());
+
+        if (rawGroupBy !== undefined) {
+            this.model.selectedGroupBy = rawGroupBy;
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly localStorageKey = "assets";
@@ -107,6 +123,10 @@ export default class App extends Vue {
 
     private static loadFromLocalStorage() {
         return window.localStorage.getItem(this.localStorageKey);
+    }
+
+    private static capitalize(str: string) {
+        return `${str[0].toUpperCase()}${str.substr(1)}`;
     }
 
     private get fileInput() {

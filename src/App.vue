@@ -43,8 +43,20 @@
         <v-btn icon title="Add new asset" class="ml-1 mr-0" @click.stop="assetList.onAdd">
           <v-icon>add</v-icon>
         </v-btn>
+        <v-menu title="Change grouping" max-height="300px">
+          <v-toolbar-title slot="activator" class="ml-2 mr-0">
+            <span>{{ selectedGroupBy }}</span>
+            <v-icon>arrow_drop_down</v-icon>
+          </v-toolbar-title>
+          <v-list>
+            <v-list-tile
+              v-for="groupBy in groupBys" :key="groupBy" @click="selectedGroupBy = groupBy">
+              <v-list-tile-title v-text="groupBy"></v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
         <v-menu title="Change valuation currency" max-height="300px">
-          <v-toolbar-title slot="activator" class="mx-3">
+          <v-toolbar-title slot="activator" class="ml-2 mr-3">
             <span>{{ model.selectedCurrency }}</span>
             <v-icon>arrow_drop_down</v-icon>
           </v-toolbar-title>
