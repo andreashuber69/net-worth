@@ -11,9 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
-import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
+import { IAllAssetProperties, IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
-import { Unknown } from "./Value";
+import { Model } from "./Model";
+import { Unknown, Value } from "./Value";
 
 /** @internal */
 export interface IModel {
@@ -34,6 +35,26 @@ export interface IAssetProperties {
 
 /** Defines the base of all classes that represent an asset. */
 export abstract class Asset {
+    public static parse(model: IModel, rawAsset: Unknown | null | undefined) {
+        if (!Value.hasStringProperty(rawAsset, Asset.typeName)) {
+            return Value.getPropertyTypeMismatch(Asset.typeName, rawAsset, "");
+        }
+
+        const assetInfo = Model.assetInfos.find((info) => info.type === rawAsset.type);
+
+        if (!assetInfo) {
+            return Value.getUnknownValue(Asset.typeName, rawAsset.type);
+        }
+
+        const validationResult = assetInfo.validateAll(rawAsset);
+
+        if (!this.hasProperties(validationResult, rawAsset)) {
+            return validationResult;
+        }
+
+        return assetInfo.createAsset(model, rawAsset);
+    }
+
     /** Provides the unique key of the asset. */
     public readonly key = Asset.nextKey++;
 
@@ -114,6 +135,7 @@ export abstract class Asset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    protected static readonly typeName = "type";
     protected unitValueUsd: number | undefined = undefined;
 
     /**
@@ -129,6 +151,10 @@ export abstract class Asset {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static nextKey = 0;
+
+    private static hasProperties(validationResult: true | string, raw: Unknown): raw is IAllAssetProperties {
+        return validationResult === true;
+    }
 
     private static multiply(factor1: number | undefined, factor2: number | undefined) {
         return (factor1 === undefined) || (factor2 === undefined) ? undefined : factor1 * factor2;

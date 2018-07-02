@@ -83,7 +83,7 @@ export class Model implements IModel {
         }
 
         for (const rawBundle of rawModel.bundles) {
-            const bundle = Model.parseBundle(model, rawBundle);
+            const bundle = AssetBundle.parse(model, rawBundle);
 
             if (!(bundle instanceof AssetBundle)) {
                 return bundle;
@@ -222,7 +222,6 @@ export class Model implements IModel {
 
     private static readonly selectedCurrencyName = "selectedCurrency";
     private static readonly bundlesName = "bundles";
-    private static readonly primaryAssetName = "primaryAsset";
 
     private static readonly currencyMap = new Map<string, IWebRequest<number>>([
         ["USD", new QuandlRequest("", false)],
@@ -256,46 +255,6 @@ export class Model implements IModel {
         ["XAU", new QuandlRequest("lbma/gold.json", true)],
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
-
-    private static parseBundle(model: IModel, rawBundle: Unknown | null | undefined) {
-        if (!Value.hasObjectProperty(rawBundle, Model.primaryAssetName)) {
-            return Value.getPropertyTypeMismatch(Model.primaryAssetName, rawBundle, {});
-        }
-
-        const asset = this.parseAsset(model, rawBundle[Model.primaryAssetName]);
-
-        if (!(asset instanceof Asset)) {
-            return asset;
-        }
-
-        return asset.bundle(rawBundle);
-    }
-
-    private static parseAsset(model: IModel, rawAsset: Unknown | null | undefined) {
-        const typeName = "type";
-
-        if (!Value.hasStringProperty(rawAsset, typeName)) {
-            return Value.getPropertyTypeMismatch(typeName, rawAsset, "");
-        }
-
-        const assetInfo = this.assetInfos.find((info) => info.type === rawAsset.type);
-
-        if (!assetInfo) {
-            return Value.getUnknownValue(typeName, rawAsset.type);
-        }
-
-        const validationResult = assetInfo.validateAll(rawAsset);
-
-        if (!this.hasProperties(validationResult, rawAsset)) {
-            return validationResult;
-        }
-
-        return assetInfo.createAsset(model, rawAsset);
-    }
-
-    private static hasProperties(validationResult: true | string, raw: Unknown): raw is IAllAssetProperties {
-        return validationResult === true;
-    }
 
     private static async queryBundleData(bundle: AssetBundle, id: number) {
         await bundle.queryData();
