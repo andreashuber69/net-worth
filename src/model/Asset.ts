@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
-import { IAllAssetProperties, IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
+import { IAllAssetProperties, IAssetUnion, ISerializedAsset, ISerializedObject } from "./AssetInterfaces";
 import { AssetTypes } from "./AssetTypes";
 import { Model } from "./Model";
 import { Unknown, Value } from "./Value";
@@ -38,6 +38,11 @@ export abstract class Asset {
     public static readonly typeName = Asset.getName("type");
     public static readonly descriptionName = Asset.getName("description");
     public static readonly locationName = Asset.getName("location");
+    public static readonly addressName = Asset.getName("address");
+    public static readonly weightName = Asset.getName("weight");
+    public static readonly weightUnitName = Asset.getName("weightUnit");
+    public static readonly finenessName = Asset.getName("fineness");
+    public static readonly quantityName = Asset.getName("quantity");
     public static readonly totalValueName = "totalValue";
 
     public static parse(model: IModel, rawAsset: Unknown | null | undefined) {
@@ -156,7 +161,7 @@ export abstract class Asset {
 
     private static nextKey = 0;
 
-    private static getName(name: keyof ISerializedAsset) {
+    private static getName<T extends keyof (ISerializedObject & IAllAssetProperties)>(name: T): T {
         return name;
     }
 

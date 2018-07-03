@@ -88,13 +88,13 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
 
         try {
             const results: IValidationResults = {
-                description: this.validateComposite(true, input, "description"),
-                location: this.validateComposite(true, input, "location"),
-                address: this.validateComposite(true, input, "address"),
-                weight: this.validateComposite(true, input, "weight"),
-                weightUnit: this.validateComposite(true, input, "weightUnit"),
-                fineness: this.validateComposite(true, input, "fineness"),
-                quantity: this.validateComposite(true, input, "quantity"),
+                description: this.validateComposite(true, input, Asset.descriptionName),
+                location: this.validateComposite(true, input, Asset.locationName),
+                address: this.validateComposite(true, input, Asset.addressName),
+                weight: this.validateComposite(true, input, Asset.weightName),
+                weightUnit: this.validateComposite(true, input, Asset.weightUnitName),
+                fineness: this.validateComposite(true, input, Asset.finenessName),
+                quantity: this.validateComposite(true, input, Asset.quantityName),
             };
 
             let message = "";
