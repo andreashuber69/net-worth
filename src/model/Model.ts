@@ -71,18 +71,15 @@ export class Model implements IModel {
             return (e as Error).message;
         }
 
-        if (!Value.hasStringProperty(rawModel, Model.selectedCurrencyName)) {
-            return Value.getPropertyTypeMismatch(Model.selectedCurrencyName, rawModel, "");
-        }
-
         const model = new Model();
-        const selectedCurrency = rawModel[Model.selectedCurrencyName];
 
-        if (model.currencies.findIndex((currency) => currency === selectedCurrency) < 0) {
-            return Value.getUnknownValue(Model.selectedCurrencyName, selectedCurrency);
+        if (Value.hasStringProperty(rawModel, Model.selectedCurrencyName)) {
+            const selectedCurrency = rawModel[Model.selectedCurrencyName];
+
+            if (model.currencies.findIndex((currency) => currency === selectedCurrency) >= 0) {
+                model.selectedCurrency = selectedCurrency;
+            }
         }
-
-        model.selectedCurrency = selectedCurrency;
 
         if (!Value.hasArrayProperty(rawModel, Model.bundlesName)) {
             return Value.getPropertyTypeMismatch(Model.bundlesName, rawModel, []);
