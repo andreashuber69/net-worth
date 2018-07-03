@@ -12,14 +12,13 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
-import { ISerializedAsset } from "./AssetInterfaces";
 import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { QueryCache } from "./QueryCache";
 import { Unknown, Value } from "./Value";
 
 interface ISerializedEthBundle extends ISerializedBundle {
-    [key: string]: ISerializedAsset | string[];
+    deletedAssets: string[];
 }
 
 /** Represents an ETH wallet. */
@@ -89,19 +88,20 @@ export class EthWallet extends CryptoWallet {
             }
         }
 
-        public toJSON(): ISerializedBundle {
-            const result: ISerializedEthBundle = {
+        public toJSON(): ISerializedEthBundle {
+            return {
                 primaryAsset: this.ethWallet.toJSON(),
+                deletedAssets: this.deletedAssets,
             };
-
-            result[NestedEthBundle.deletedAssetsName] = this.deletedAssets;
-
-            return result;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private static readonly deletedAssetsName = "deletedAssets";
+        private static readonly deletedAssetsName = NestedEthBundle.getName("deletedAssets");
+
+        private static getName(key: keyof ISerializedEthBundle) {
+            return key;
+        }
 
         private readonly deletedAssets: string[] = [];
 

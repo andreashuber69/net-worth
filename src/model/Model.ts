@@ -223,8 +223,8 @@ export class Model implements IModel {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly selectedCurrencyName = Model.getName<ISerializedModel>("selectedCurrency");
-    private static readonly bundlesName = Model.getName<ISerializedModel>("bundles");
+    private static readonly selectedCurrencyName = Model.getName("selectedCurrency");
+    private static readonly bundlesName = Model.getName("bundles");
 
     private static readonly currencyMap = new Map<string, IWebRequest<number>>([
         ["USD", new QuandlRequest("", false)],
@@ -259,7 +259,7 @@ export class Model implements IModel {
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
 
-    private static getName<T>(key: keyof T) {
+    private static getName(key: keyof ISerializedModel) {
         return key;
     }
 
