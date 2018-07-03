@@ -26,7 +26,8 @@ import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
 import { Unknown, Value } from "./Value";
 
-export type SortBy = "type" | "description" | "location" | "totalValue";
+export type SortBy =
+    typeof Asset.typeName | typeof Asset.descriptionName | typeof Asset.locationName | typeof Asset.totalValueName;
 
 export interface ISort {
     /** Provides the name of the property by which the asset list is currently sorted. */
@@ -36,8 +37,7 @@ export interface ISort {
     readonly descending: boolean;
 }
 
-// TODO: Ideally this should be defined by getting the type for the already existing array.
-export type GroupBy = "type" | "location";
+export type GroupBy = typeof Asset.typeName | typeof Asset.locationName;
 
 interface ISerializedModel {
     selectedCurrency: string;
@@ -135,7 +135,7 @@ export class Model implements IModel {
     }
 
     /** Provides the property names by which the asset list can be grouped. */
-    public readonly groupBys: GroupBy[] = [ "type", "location" ];
+    public readonly groupBys: GroupBy[] = [ Asset.typeName, Asset.locationName ];
 
     /** Provides the name of the property by which the asset list is currently grouped. */
     public get selectedGroupBy() {
@@ -294,11 +294,10 @@ export class Model implements IModel {
 
     private static isSortBy(sortBy: string): sortBy is SortBy {
         switch (sortBy) {
-            // TODO: Use constants rather than literals here
-            case "type":
-            case "description":
-            case "location":
-            case "totalValue":
+            case Asset.typeName:
+            case Asset.descriptionName:
+            case Asset.locationName:
+            case Asset.totalValueName:
                 return true;
             default:
                 return false;
@@ -315,9 +314,9 @@ export class Model implements IModel {
 
     private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
 
-    private groupByImpl: GroupBy = "type";
+    private groupByImpl: GroupBy = Asset.typeName;
 
-    private sortImpl: ISort = { by: "totalValue", descending: true };
+    private sortImpl: ISort = { by: Asset.totalValueName, descending: true };
 
     private isGroupBy(groupBy: string): groupBy is GroupBy {
         return this.groupBys.findIndex((g) => g === groupBy) >= 0;

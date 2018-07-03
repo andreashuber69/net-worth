@@ -35,6 +35,11 @@ export interface IAssetProperties {
 
 /** Defines the base of all classes that represent an asset. */
 export abstract class Asset {
+    public static readonly typeName = "type";
+    public static readonly descriptionName = "description";
+    public static readonly locationName = "location";
+    public static readonly totalValueName = "totalValue";
+
     public static parse(model: IModel, rawAsset: Unknown | null | undefined) {
         if (!Value.hasStringProperty(rawAsset, Asset.typeName)) {
             return Value.getPropertyTypeMismatch(Asset.typeName, rawAsset, "");
@@ -135,7 +140,6 @@ export abstract class Asset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected static readonly typeName = "type";
     protected unitValueUsd: number | undefined = undefined;
 
     /**
