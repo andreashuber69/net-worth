@@ -26,11 +26,6 @@ import { QuandlRequest } from "./QuandlRequest";
 import { SilverAsset } from "./SilverAsset";
 import { Unknown, Value } from "./Value";
 
-interface ISerializedModel {
-    selectedCurrency: string;
-    bundles: ISerializedBundle[];
-}
-
 export type SortBy = "type" | "description" | "location" | "totalValue";
 
 export interface ISort {
@@ -42,6 +37,13 @@ export interface ISort {
 }
 
 export type GroupBy = "type" | "location";
+
+interface ISerializedModel {
+    selectedCurrency: string;
+    selectedGroupBy: GroupBy;
+    sort: ISort;
+    bundles: ISerializedBundle[];
+}
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
@@ -217,6 +219,8 @@ export class Model implements IModel {
     public toJSON(): ISerializedModel {
         return {
             selectedCurrency: this.selectedCurrency,
+            selectedGroupBy: this.selectedGroupBy,
+            sort: this.sort,
             bundles: this.bundles.map((bundle) => bundle.toJSON()),
         };
     }
@@ -224,6 +228,8 @@ export class Model implements IModel {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly selectedCurrencyName = Model.getName("selectedCurrency");
+    private static readonly selectedGroupByName = Model.getName("selectedGroupBy");
+    private static readonly sortName = Model.getName("sort");
     private static readonly bundlesName = Model.getName("bundles");
 
     private static readonly currencyMap = new Map<string, IWebRequest<number>>([
