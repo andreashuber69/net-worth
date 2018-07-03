@@ -99,8 +99,8 @@ export class EthWallet extends CryptoWallet {
 
         private static readonly deletedAssetsName = NestedEthBundle.getName("deletedAssets");
 
-        private static getName(key: keyof ISerializedEthBundle) {
-            return key;
+        private static getName<T extends keyof ISerializedEthBundle>(name: T) {
+            return name;
         }
 
         private readonly deletedAssets: string[] = [];

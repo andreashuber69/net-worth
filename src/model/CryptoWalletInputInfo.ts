@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { Asset } from "./Asset";
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
 import { AllAssetPropertyNames } from "./AssetInterfaces";
 import { EditableCryptoWalletTypes } from "./AssetTypes";
@@ -44,7 +45,7 @@ export abstract class CryptoWalletInputInfo extends AssetInputInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected validateRelations(input: CompositeInput, propertyName: AllAssetPropertyNames) {
-        if (((propertyName === "address") || (propertyName === "quantity")) &&
+        if (((propertyName === Asset.addressName) || (propertyName === Asset.quantityName)) &&
             (CryptoWalletInputInfo.isUndefined(input.address) === CryptoWalletInputInfo.isUndefined(input.quantity))) {
             return `A value is required for either the ${this.address.label} or the ${this.quantity.label} (not both).`;
         }

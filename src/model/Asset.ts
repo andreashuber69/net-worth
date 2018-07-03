@@ -161,7 +161,7 @@ export abstract class Asset {
 
     private static nextKey = 0;
 
-    private static getName<T extends keyof (ISerializedObject & IAllAssetProperties)>(name: T): T {
+    private static getName<T extends keyof (ISerializedObject & IAllAssetProperties)>(name: T) {
         return name;
     }
 

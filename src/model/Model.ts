@@ -243,12 +243,12 @@ export class Model implements IModel {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly selectedCurrencyName = Model.getName<ISerializedModel>("selectedCurrency");
-    private static readonly selectedGroupByName = Model.getName<ISerializedModel>("selectedGroupBy");
-    private static readonly sortName = Model.getName<ISerializedModel>("sort");
-    private static readonly sortByName = Model.getName<ISort>("by");
-    private static readonly sortDescendingName = Model.getName<ISort>("descending");
-    private static readonly bundlesName = Model.getName<ISerializedModel>("bundles");
+    private static readonly selectedCurrencyName = Model.getModelName("selectedCurrency");
+    private static readonly selectedGroupByName = Model.getModelName("selectedGroupBy");
+    private static readonly sortName = Model.getModelName("sort");
+    private static readonly sortByName = Model.getSortName("by");
+    private static readonly sortDescendingName = Model.getSortName("descending");
+    private static readonly bundlesName = Model.getModelName("bundles");
 
     private static readonly currencyMap = new Map<string, IWebRequest<number>>([
         ["USD", new QuandlRequest("", false)],
@@ -283,8 +283,12 @@ export class Model implements IModel {
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
 
-    private static getName<T>(key: keyof T) {
-        return key;
+    private static getModelName<T extends keyof ISerializedModel>(name: T) {
+        return name;
+    }
+
+    private static getSortName<T extends keyof ISort>(name: T) {
+        return name;
     }
 
     private static isSort(sort: Unknown): sort is ISort {
