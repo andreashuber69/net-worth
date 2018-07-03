@@ -35,9 +35,9 @@ export interface IAssetProperties {
 
 /** Defines the base of all classes that represent an asset. */
 export abstract class Asset {
-    public static readonly typeName = "type";
-    public static readonly descriptionName = "description";
-    public static readonly locationName = "location";
+    public static readonly typeName = Asset.getName("type");
+    public static readonly descriptionName = Asset.getName("description");
+    public static readonly locationName = Asset.getName("location");
     public static readonly totalValueName = "totalValue";
 
     public static parse(model: IModel, rawAsset: Unknown | null | undefined) {
@@ -155,6 +155,10 @@ export abstract class Asset {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static nextKey = 0;
+
+    private static getName(name: keyof ISerializedAsset) {
+        return name;
+    }
 
     private static hasProperties(validationResult: true | string, raw: Unknown): raw is IAllAssetProperties {
         return validationResult === true;
