@@ -36,6 +36,7 @@ export interface ISort {
     readonly descending: boolean;
 }
 
+// TODO: Ideally this should be defined by getting the type for the already existing array.
 export type GroupBy = "type" | "location";
 
 interface ISerializedModel {
@@ -78,6 +79,22 @@ export class Model implements IModel {
 
             if (model.currencies.findIndex((currency) => currency === selectedCurrency) >= 0) {
                 model.selectedCurrency = selectedCurrency;
+            }
+        }
+
+        if (Value.hasStringProperty(rawModel, Model.selectedGroupByName)) {
+            const selectedGroupBy = rawModel[Model.selectedGroupByName];
+
+            if (model.isGroupBy(selectedGroupBy)) {
+                model.selectedGroupBy = selectedGroupBy;
+            }
+        }
+
+        if (Value.hasObjectProperty(rawModel, Model.sortName)) {
+            const sort = rawModel[Model.sortName];
+
+            if (Model.isSort(sort)) {
+                model.sort = sort;
             }
         }
 
@@ -129,6 +146,7 @@ export class Model implements IModel {
         this.groupByImpl = groupBy;
         this.groups.length = 0;
         this.update();
+        this.notifyChanged();
     }
 
     /** Provides information on how to sort the asset list. */
@@ -139,6 +157,7 @@ export class Model implements IModel {
     public set sort(sort: ISort) {
         this.sortImpl = sort;
         this.doSort();
+        this.notifyChanged();
     }
 
     /** Provides the asset groups. */
@@ -177,8 +196,8 @@ export class Model implements IModel {
     public addAsset(asset: Asset) {
         const bundle = asset.bundle();
         this.bundles.push(bundle);
-        this.notifyChanged();
         this.update(bundle);
+        this.notifyChanged();
     }
 
     /** Deletes `asset`. */
@@ -193,8 +212,8 @@ export class Model implements IModel {
                 this.bundles.splice(index, 1);
             }
 
-            this.notifyChanged();
             this.update();
+            this.notifyChanged();
         }
     }
 
@@ -207,8 +226,8 @@ export class Model implements IModel {
             // Apparently, Vue cannot detect the obvious way of replacing (this.bundles[index] = newBundle):
             // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
             this.bundles.splice(index, 1, bundle);
-            this.notifyChanged();
             this.update(bundle);
+            this.notifyChanged();
         }
     }
 
@@ -224,10 +243,12 @@ export class Model implements IModel {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly selectedCurrencyName = Model.getName("selectedCurrency");
-    private static readonly selectedGroupByName = Model.getName("selectedGroupBy");
-    private static readonly sortName = Model.getName("sort");
-    private static readonly bundlesName = Model.getName("bundles");
+    private static readonly selectedCurrencyName = Model.getName<ISerializedModel>("selectedCurrency");
+    private static readonly selectedGroupByName = Model.getName<ISerializedModel>("selectedGroupBy");
+    private static readonly sortName = Model.getName<ISerializedModel>("sort");
+    private static readonly sortByName = Model.getName<ISort>("by");
+    private static readonly sortDescendingName = Model.getName<ISort>("descending");
+    private static readonly bundlesName = Model.getName<ISerializedModel>("bundles");
 
     private static readonly currencyMap = new Map<string, IWebRequest<number>>([
         ["USD", new QuandlRequest("", false)],
@@ -262,8 +283,26 @@ export class Model implements IModel {
         ["BTC", new CoinMarketCapRequest("bitcoin", true)],
     ]);
 
-    private static getName(key: keyof ISerializedModel) {
+    private static getName<T>(key: keyof T) {
         return key;
+    }
+
+    private static isSort(sort: Unknown): sort is ISort {
+        return Value.hasStringProperty(sort, Model.sortByName) && this.isSortBy(sort.by) &&
+            Value.hasBooleanProperty(sort, Model.sortDescendingName);
+    }
+
+    private static isSortBy(sortBy: string): sortBy is SortBy {
+        switch (sortBy) {
+            // TODO: Use constants rather than literals here
+            case "type":
+            case "description":
+            case "location":
+            case "totalValue":
+                return true;
+            default:
+                return false;
+        }
     }
 
     private static async queryBundleData(bundle: AssetBundle, id: number) {
@@ -279,6 +318,10 @@ export class Model implements IModel {
     private groupByImpl: GroupBy = "type";
 
     private sortImpl: ISort = { by: "totalValue", descending: true };
+
+    private isGroupBy(groupBy: string): groupBy is GroupBy {
+        return this.groupBys.findIndex((g) => g === groupBy) >= 0;
+    }
 
     private update(...newBundles: AssetBundle[]) {
         this.updateImpl(newBundles).catch((error) => console.error(error));
