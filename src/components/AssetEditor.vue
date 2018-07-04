@@ -15,9 +15,7 @@
 <template>
   <v-dialog persistent v-model="isOpen" max-width="960px">
     <v-card>
-      <v-card-title>
-        <span class="headline">{{ title }}</span>
-      </v-card-title>
+      <v-card-title class="headline">{{ title }}</v-card-title>
       <v-card-text>
         <v-form ref="form">
           <v-container grid-list-md>
