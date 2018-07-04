@@ -35,15 +35,15 @@ export interface IAssetProperties {
 
 /** Defines the base of all classes that represent an asset. */
 export abstract class Asset {
-    public static readonly typeName = Asset.getName("type");
-    public static readonly descriptionName = Asset.getName("description");
-    public static readonly locationName = Asset.getName("location");
-    public static readonly addressName = Asset.getName("address");
-    public static readonly weightName = Asset.getName("weight");
-    public static readonly weightUnitName = Asset.getName("weightUnit");
-    public static readonly finenessName = Asset.getName("fineness");
-    public static readonly quantityName = Asset.getName("quantity");
-    public static readonly totalValueName = "totalValue";
+    public static readonly typeName = Asset.getPropertyName("type");
+    public static readonly descriptionName = Asset.getPropertyName("description");
+    public static readonly locationName = Asset.getPropertyName("location");
+    public static readonly addressName = Asset.getPropertyName("address");
+    public static readonly weightName = Asset.getPropertyName("weight");
+    public static readonly weightUnitName = Asset.getPropertyName("weightUnit");
+    public static readonly finenessName = Asset.getPropertyName("fineness");
+    public static readonly quantityName = Asset.getPropertyName("quantity");
+    public static readonly totalValueName = Asset.getCalculatedPropertyName("totalValue");
 
     public static parse(model: IModel, rawAsset: Unknown | null | undefined) {
         if (!Value.hasStringProperty(rawAsset, Asset.typeName)) {
@@ -161,7 +161,11 @@ export abstract class Asset {
 
     private static nextKey = 0;
 
-    private static getName<T extends keyof (ISerializedObject & IAllAssetProperties)>(name: T) {
+    private static getPropertyName<T extends keyof (ISerializedObject & IAllAssetProperties)>(name: T) {
+        return name;
+    }
+
+    private static getCalculatedPropertyName<T extends keyof Asset>(name: T) {
         return name;
     }
 
