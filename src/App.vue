@@ -75,18 +75,35 @@
       </v-content>
       <v-footer app dark color="primary" height="auto">
         <v-layout justify-center>
-          <v-btn href="https://coinmarketcap.com" target="_blank" flat round>
-            <img src="./assets/coinmarketcap.svg" height="12"/>
-          </v-btn>
-          <v-btn href="https://blockchain.info" target="_blank" flat round>
-            <img src="./assets/blockchain.svg" height="12"/>
-          </v-btn>
-          <v-btn href="https://ethplorer.io" target="_blank" flat round>
-            <img src="./assets/ethplorer.png" height="12"/>
-          </v-btn>
-          <v-btn href="https://quandl.com" target="_blank" flat round>
-            <img src="./assets/quandl.svg" height="12"/>
-          </v-btn>
+          <v-dialog persistent v-model="areDataProvidersVisible" width="500">
+            <v-btn slot="activator" flat round>Data Providers</v-btn>
+            <v-card>
+              <v-card-title class="headline">Data Providers</v-card-title>
+              <v-container fluid grid-list-lg>
+                <v-layout column justify-center>
+                  <v-flex justify-center xs12>
+                    Asset Manager would not work without the following data providers, which generously offer their service free of charge:
+                  </v-flex>
+                  <v-btn href="https://coinmarketcap.com" target="_blank" flat>
+                    <img src="./assets/coinmarketcap.svg" height="36"/>
+                  </v-btn>
+                  <v-btn href="https://blockchain.info" target="_blank" flat>
+                    <img src="./assets/blockchain.svg" height="36"/>
+                  </v-btn>
+                  <v-btn href="https://ethplorer.io" target="_blank" flat>
+                    <img src="./assets/ethplorer.png" height="36"/>
+                  </v-btn>
+                  <v-btn href="https://quandl.com" target="_blank" flat>
+                    <img src="./assets/quandl.svg" height="36"/>
+                  </v-btn>
+                </v-layout>
+              </v-container>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" @click="areDataProvidersVisible = false">Close</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
           <v-btn href="https://github.com/andreashuber69/asset-manager" target="_blank" flat round>Source Code</v-btn>
         </v-layout>
       </v-footer>

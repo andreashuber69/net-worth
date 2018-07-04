@@ -19,6 +19,7 @@ import { Model } from "./model/Model";
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
     public isDrawerVisible = false;
+    public areDataProvidersVisible = false;
     public model: Model;
 
     public constructor() {
