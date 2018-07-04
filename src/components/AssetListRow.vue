@@ -32,9 +32,9 @@
     <td class="hidden-sm-and-down text-xs-left pl-0">{{ quantityFraction }}</td>
     <td class="total text-xs-right pr-0">{{ totalValueInteger }}</td>
     <td class="total text-xs-left px-0">{{ totalValueFraction }}</td>
-    <td class="px-0">
-      <v-menu v-if="checkedValue.hasActions" class="pl-0">
-        <v-btn slot="activator" icon>
+    <td class="pl-0">
+      <v-menu v-if="checkedValue.hasActions">
+        <v-btn slot="activator" class="mx-0 px-0" icon>
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
