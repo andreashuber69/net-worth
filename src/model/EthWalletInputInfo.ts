@@ -20,7 +20,7 @@ import { TextInputInfo } from "./TextInputInfo";
  * representation of the wallet.
  */
 export class EthWalletInputInfo extends CryptoWalletInputInfo {
-    public readonly address = new TextInputInfo("Address", "The public address of the wallet.", true, false);
+    public readonly address = new TextInputInfo("Address", EthWalletInputInfo.hint, true, false);
 
     /**
      * @internal
@@ -31,4 +31,10 @@ export class EthWalletInputInfo extends CryptoWalletInputInfo {
     public constructor(type: EditableCryptoWalletTypes, ctor: IAssetConstructor) {
         super(type, 18, ctor);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static readonly hint =
+        "The wallets single public address (xpub is unsupported). " +
+        "<span style='color:red'>Will be sent to ethplorer.io to query ETH and token balances.</span>";
 }

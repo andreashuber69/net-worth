@@ -13,7 +13,7 @@
 -->
 
 <template>
-  <v-dialog persistent v-model="isOpen" max-width="800px">
+  <v-dialog persistent v-model="isOpen" max-width="960px">
     <v-card>
       <v-card-title>
         <span class="headline">{{ title }}</span>
@@ -35,7 +35,6 @@
         </v-form>
       </v-card-text>
       <v-card-actions>
-        <v-btn @click.native="onResetClicked">Reset</v-btn>
         <v-spacer></v-spacer>
         <v-btn @click.native="onCancelClicked">Cancel</v-btn>
         <v-btn color="primary" @click.native="onSaveClicked">Save</v-btn>

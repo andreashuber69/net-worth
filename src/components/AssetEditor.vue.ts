@@ -55,10 +55,6 @@ export default class AssetEditor extends ComponentBase<Model> {
     /** Provides the data currently displayed in the asset editor. */
     public data = new AssetEditorData();
 
-    public onResetClicked(event: MouseEvent) {
-        this.reset();
-    }
-
     public onSaveClicked(event: MouseEvent) {
         if (this.isValid()) {
             this.save();
@@ -92,14 +88,6 @@ export default class AssetEditor extends ComponentBase<Model> {
     // tslint:disable-next-line:no-null-keyword
     private editedAsset: Asset | null = null;
 
-    private reset() {
-        // TODO: Check whether the reset() call is even necessary.
-        // tslint:disable-next-line:no-unsafe-any
-        (this.getControl("form") as any).reset();
-        this.data = new AssetEditorData();
-        this.assetInfo = new NoAssetInputInfo();
-    }
-
     private isValid() {
         this.assetInfo.includeRelations = true;
 
@@ -122,7 +110,12 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     private close() {
-        this.reset();
+        // TODO: Check whether the reset() call is even necessary.
+        // tslint:disable-next-line:no-unsafe-any
+        (this.getControl("form") as any).reset();
+        this.data = new AssetEditorData();
+        this.assetInfo = new NoAssetInputInfo();
+
         // tslint:disable-next-line:no-null-keyword
         this.editedAsset = null;
         this.isOpen = false;

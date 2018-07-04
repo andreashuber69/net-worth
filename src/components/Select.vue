@@ -13,7 +13,7 @@
 -->
 
 <template>
-  <v-flex xs12 :sm6="!large" v-if="isPresent">
+  <v-flex xs12 sm12 :md6="!large" v-if="isPresent">
     <v-select :label="label" :hint="hint" v-model="propertyValue"
       :required="isRequired" :items="items" :rules="[validate]">
     </v-select>

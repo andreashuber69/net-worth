@@ -20,9 +20,7 @@ import { TextInputInfo } from "./TextInputInfo";
  * representation of the wallet.
  */
 export class BtcWalletInputInfo extends CryptoWalletInputInfo {
-    public readonly address = new TextInputInfo(
-        "Address", "The public address of the wallet, single address or xpub (ypubs are not yet supported).",
-        true, false);
+    public readonly address = new TextInputInfo("Address", BtcWalletInputInfo.hint, true, false);
 
     /**
      * @internal
@@ -33,4 +31,10 @@ export class BtcWalletInputInfo extends CryptoWalletInputInfo {
     public constructor(type: EditableCryptoWalletTypes, ctor: IAssetConstructor) {
         super(type, 8, ctor);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static readonly hint =
+        "The wallets public address, single or xpub (ypub is unsupported). " +
+        "<span style='color:red'>Will be sent to blockchain.info to query the balance.</span>";
 }
