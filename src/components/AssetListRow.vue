@@ -14,7 +14,7 @@
 
 <template>
   <tr @click="onRowClicked">
-    <td class="pl-3 pr-1">
+    <td class="pr-2">
       <div v-if="checkedValue.isExpandable">
         <v-icon v-if="!checkedValue.isExpanded">expand_more</v-icon>
         <v-icon v-if="checkedValue.isExpanded">expand_less</v-icon>
@@ -32,9 +32,9 @@
     <td class="hidden-sm-and-down text-xs-left pl-0">{{ quantityFraction }}</td>
     <td class="total text-xs-right pr-0">{{ totalValueInteger }}</td>
     <td class="total text-xs-left px-0">{{ totalValueFraction }}</td>
-    <td class="pl-0 pr-3">
+    <td class="pl-1">
       <v-menu v-if="checkedValue.hasActions">
-        <v-btn slot="activator" class="mx-0 px-0" icon>
+        <v-btn slot="activator" class="mx-0" icon>
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
