@@ -21,7 +21,7 @@
       :items="checkedValue.assets" item-key="key" :pagination.sync="pagination" :loading="isLoading" :headers-length="14"
       :total-items="checkedValue.assets.length" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
-        <th class="px-0"></th>
+        <th class="pr-0"></th>
         <th :class="['text-xs-left column sortable pl-0', sortDirection, getActive('type')]" @click="changeSort('type')">
           Type <v-icon small>arrow_upward</v-icon>
         </th>
@@ -44,7 +44,7 @@
           @click="changeSort('totalValue')">
           Total Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.selectedCurrency }})
         </th>
-        <th class="px-0"></th>
+        <th class="pl-0"></th>
       </template>
       <v-progress-linear slot="progress" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props">
@@ -60,7 +60,7 @@
         <td colspan="2" class="hidden-sm-and-down"></td>
         <td class="text-xs-right pr-0 total">{{ totalValueInteger }}</td>
         <td class="text-xs-left px-0 total">{{ totalValueFraction }}</td>
-        <td class="px-0"></td>
+        <td class="pl-0"></td>
       </template>
     </v-data-table>
   </div>
