@@ -36,7 +36,7 @@
           </v-list-tile>
         </v-list>
       </v-navigation-drawer>
-      <v-toolbar app>
+      <v-toolbar app dark color="primary">
         <v-toolbar-side-icon @click.stop="onMenuClicked"></v-toolbar-side-icon>
         <v-toolbar-title>Asset Manager</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -73,34 +73,22 @@
           <AssetList :value="model" ref="assetList"/>
         </v-container>
       </v-content>
-      <v-footer app height="auto">
-        <v-container fill-height fluid>
-          <v-layout row>
-            <v-flex class="text-xs-right pr-2">
-              Data Providers
-            </v-flex>
-            <v-flex>
-              <a href="https://coinmarketcap.com" target="_blank" class="px-2">
-                <img src="./assets/coinmarketcap.svg" height="12" alt="coinmarketcap.com"/>
-              </a>
-              <a href="https://blockchain.info" target="_blank" class="px-2">
-                <img src="./assets/blockchain.svg" height="12" alt="blockchain.info"/>
-              </a>
-              <a href="https://ethplorer.io" target="_blank" class="px-2">
-                <img src="./assets/ethplorer.png" height="12" alt="ethplorer.io"/>
-              </a>
-              <a href="https://quandl.com" target="_blank" class="px-2">
-                <img src="./assets/quandl.svg" height="12" alt="quandl.com"/>
-              </a>
-            </v-flex>
-            <v-spacer></v-spacer>
-            <v-flex>
-              <a href="https://github.com/andreashuber69/asset-manager" target="_blank" class="px-2">
-                Source Code
-              </a>
-            </v-flex>
-          </v-layout>
-        </v-container>
+      <v-footer app dark color="primary" height="auto">
+        <v-layout justify-center>
+          <v-btn href="https://coinmarketcap.com" target="_blank" flat round>
+            <img src="./assets/coinmarketcap.svg" height="12"/>
+          </v-btn>
+          <v-btn href="https://blockchain.info" target="_blank" flat round>
+            <img src="./assets/blockchain.svg" height="12"/>
+          </v-btn>
+          <v-btn href="https://ethplorer.io" target="_blank" flat round>
+            <img src="./assets/ethplorer.png" height="12"/>
+          </v-btn>
+          <v-btn href="https://quandl.com" target="_blank" flat round>
+            <img src="./assets/quandl.svg" height="12"/>
+          </v-btn>
+          <v-btn href="https://github.com/andreashuber69/asset-manager" target="_blank" flat round>Source Code</v-btn>
+        </v-layout>
       </v-footer>
     </v-app>
   </div>
