@@ -79,11 +79,12 @@
             <v-btn slot="activator" flat round>Data Providers</v-btn>
             <v-card>
               <v-card-title class="headline">Data Providers</v-card-title>
-              <v-container fluid grid-list-lg>
+              <v-container>
                 <v-layout column justify-center>
-                  <v-flex justify-center xs12>
-                    Asset Manager would not work without the following data providers, which generously offer their service free of charge:
-                  </v-flex>
+                  <p class="text-xs-center">
+                    Asset Manager would not work without the following data providers, which generously offer their
+                    services free of charge:
+                  </p>
                   <v-btn href="https://coinmarketcap.com" target="_blank" flat>
                     <img src="./assets/coinmarketcap.svg" height="36"/>
                   </v-btn>
