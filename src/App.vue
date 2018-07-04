@@ -70,7 +70,9 @@
       </v-toolbar>
       <v-content>
         <v-container>
-          <AssetList :value="model" ref="assetList"/>
+          <v-layout justify-center>
+            <AssetList :value="model" ref="assetList"/>
+          </v-layout>
         </v-container>
       </v-content>
       <v-footer app dark color="primary" height="auto">
