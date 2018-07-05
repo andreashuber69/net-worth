@@ -42,9 +42,11 @@ export abstract class Asset {
     public static readonly descriptionName = Asset.getPropertyName("description");
     public static readonly locationName = Asset.getPropertyName("location");
     public static readonly addressName = Asset.getPropertyName("address");
+    public static readonly unitName = Asset.getCalculatedPropertyName("unit");
     public static readonly weightName = Asset.getPropertyName("weight");
     public static readonly weightUnitName = Asset.getPropertyName("weightUnit");
     public static readonly finenessName = Asset.getPropertyName("fineness");
+    public static readonly unitValueName = Asset.getCalculatedPropertyName("unitValue");
     public static readonly quantityName = Asset.getPropertyName("quantity");
     public static readonly totalValueName = Asset.getCalculatedPropertyName("totalValue");
 
@@ -181,4 +183,5 @@ export abstract class Asset {
     }
 }
 
-export type AssetDisplayPropertyName = SerializedAssetPropertyName | typeof Asset.totalValueName;
+export type AssetDisplayPropertyName =
+    SerializedAssetPropertyName | typeof Asset.unitName | typeof Asset.unitValueName | typeof Asset.totalValueName;
