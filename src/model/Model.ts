@@ -40,6 +40,7 @@ export interface ISort {
 export type GroupBy = typeof Asset.typeName | typeof Asset.locationName;
 
 interface ISerializedModel {
+    version: number;
     selectedCurrency: string;
     selectedGroupBy: GroupBy;
     sort: ISort;
@@ -70,6 +71,16 @@ export class Model implements IModel {
             rawModel = JSON.parse(json) as Unknown | null;
         } catch (e) {
             return (e as Error).message;
+        }
+
+        if (!Value.hasNumberProperty(rawModel, Model.versionName)) {
+            return Value.getPropertyTypeMismatch(Model.versionName, rawModel, 0);
+        }
+
+        const version = rawModel[Model.versionName];
+
+        if (version !== 1) {
+            return Value.getUnknownValue(Model.versionName, version);
         }
 
         const model = new Model();
@@ -234,6 +245,7 @@ export class Model implements IModel {
     /** @internal */
     public toJSON(): ISerializedModel {
         return {
+            version: 1,
             selectedCurrency: this.selectedCurrency,
             selectedGroupBy: this.selectedGroupBy,
             sort: this.sort,
@@ -243,6 +255,7 @@ export class Model implements IModel {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private static readonly versionName = Model.getModelName("version");
     private static readonly selectedCurrencyName = Model.getModelName("selectedCurrency");
     private static readonly selectedGroupByName = Model.getModelName("selectedGroupBy");
     private static readonly sortName = Model.getModelName("sort");

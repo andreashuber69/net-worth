@@ -127,8 +127,11 @@ export class Value {
     }
 
     /** @internal */
-    public static getUnknownValue(propertyName: string, value: string) {
-        return this.addPropertyName(propertyName, `The value '${value}' does not match any of the possible values.`);
+    public static getUnknownValue(propertyName: string, value: Unknown | null | undefined) {
+        const displayValue = typeof value === "symbol" ? "symbol" : value;
+
+        return this.addPropertyName(
+            propertyName, `The value '${displayValue}' does not match any of the possible values.`);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
