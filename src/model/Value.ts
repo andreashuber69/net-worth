@@ -110,7 +110,7 @@ export class Value {
     public static getPropertyTypeMismatch(
         propertyName: string, actual: Unknown | null | undefined, ...expected: Array<Unknown | null | undefined>) {
         if (this.isObject(actual)) {
-            return this.addPropertyName(propertyName, this.getTypeMismatch(actual[propertyName], expected));
+            return this.addPropertyName(propertyName, this.getTypeMismatch(actual[propertyName], ...expected));
         } else {
             return this.getTypeMismatch(actual, {});
         }
