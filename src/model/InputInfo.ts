@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AllAssetPropertyNames } from "./AssetInterfaces";
+import { AssetPropertyName } from "./AssetInterfaces";
 import { CompositeInput, Input, InputUtility } from "./Input";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { Unknown } from "./Value";
@@ -28,7 +28,7 @@ export abstract class InputInfo {
      * way, this method only ever validates a single primitive value.
      * @returns `true` if the property value is valid; otherwise a string describing why the value is invalid.
      */
-    public validate(strict: boolean, input: Input, propertyName?: AllAssetPropertyNames) {
+    public validate(strict: boolean, input: Input, propertyName?: AssetPropertyName) {
         if (InputUtility.isComposite(input)) {
             return this.validateComposite(strict, input, propertyName);
         } else {
@@ -41,19 +41,19 @@ export abstract class InputInfo {
      * @description When implemented by [[PrimitiveInputInfo]], this method simply returns `this`.
      * @throws `Error` if `T` does not match the type implied by `propertyName`.
      */
-    public abstract get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T;
+    public abstract get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AssetPropertyName): T;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // tslint:disable-next-line:prefer-function-over-method
     protected validatePrimitive(
-        strict: boolean, input: Unknown | undefined | null, propertyName?: AllAssetPropertyNames): true | string {
+        strict: boolean, input: Unknown | undefined | null, propertyName?: AssetPropertyName): true | string {
         return "A primitive value was provided when a composite one was expected.";
     }
 
     // tslint:disable-next-line:prefer-function-over-method
     protected validateComposite(
-        strict: boolean, input: CompositeInput, propertyName?: AllAssetPropertyNames): true | string {
+        strict: boolean, input: CompositeInput, propertyName?: AssetPropertyName): true | string {
         return "A composite value was provided when a primitive one was expected.";
     }
 }

@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "./Asset";
-import { AllAssetPropertyNames, IAllAssetProperties } from "./AssetInterfaces";
+import { AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
 import { EditableAssetTypes } from "./AssetTypes";
 import { IAuxProperties } from "./IAuxProperties";
 import { CompositeInput, InputUtility } from "./Input";
@@ -26,7 +26,7 @@ interface IValidationResults extends IAuxProperties<true | string> {
 }
 
 export interface IAssetConstructor {
-    new (m: IModel, p: IAllAssetProperties): Asset;
+    new (m: IModel, p: IAssetIntersection): Asset;
 }
 
 /**
@@ -56,7 +56,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     public includeRelations = false;
 
     /** @internal */
-    public createAsset(parent: IModel, properties: IAllAssetProperties) {
+    public createAsset(parent: IModel, properties: IAssetIntersection) {
         if (!this.ctor) {
             throw new Error("No ctor was specified.");
         }
@@ -64,7 +64,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
         return new this.ctor(parent, properties);
     }
 
-    public get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
+    public get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AssetPropertyName): T {
         if (propertyName === undefined) {
             throw new Error("The propertyName argument cannot be undefined for a composite input.");
         }
@@ -124,7 +124,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     }
 
     /** @internal */
-    protected validateComposite(strict: boolean, input: CompositeInput, propertyName?: AllAssetPropertyNames) {
+    protected validateComposite(strict: boolean, input: CompositeInput, propertyName?: AssetPropertyName) {
         if (propertyName === undefined) {
             throw new Error("The propertyName argument cannot be undefined for a composite value.");
         }
@@ -137,7 +137,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateRelations(input: CompositeInput, propertyName: AllAssetPropertyNames): true | string {
+    protected validateRelations(input: CompositeInput, propertyName: AssetPropertyName): true | string {
         return true;
     }
 }

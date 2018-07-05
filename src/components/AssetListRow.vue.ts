@@ -11,10 +11,16 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component } from "vue-property-decorator";
-import { Asset } from "../model/Asset";
+import { Asset, AssetDisplayPropertyName } from "../model/Asset";
 import { PreciousMetalAssetInputInfo } from "../model/PreciousMetalAssetInputInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
+
+// tslint:disable-next-line:ban-types
+type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
+type Diff<T, U> = T extends U ? never : T;
+export type ColumnName =
+    AssetDisplayPropertyName | Diff<PropertyNames<AssetListRow>, PropertyNames<ComponentBase<Asset>>>;
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
@@ -77,8 +83,21 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // private static readonly finenessIntegerName = AssetListRow.getName("finenessInteger");
+    // private static readonly finenessFractionName = AssetListRow.getName("finenessFraction");
+    // private static readonly unitValueIntegerName = AssetListRow.getName("unitValueInteger");
+    // private static readonly unitValueFractionName = AssetListRow.getName("unitValueFraction");
+    // private static readonly quantityIntegerName = AssetListRow.getName("quantityInteger");
+    // private static readonly quantityFractionName = AssetListRow.getName("quantityFraction");
+    // private static readonly totalValueIntegerName = AssetListRow.getName("totalValueInteger");
+    // private static readonly totalValueFractionName = AssetListRow.getName("totalValueFraction");
+
     private static readonly finenessFormatOptions = {
         maximumFractionDigits: PreciousMetalAssetInputInfo.finenessDigits,
         minimumFractionDigits: 1,
         useGrouping: true };
+
+    // private static getName<T extends keyof AssetListRow>(name: T) {
+    //     return name;
+    // }
 }

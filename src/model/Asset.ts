@@ -11,7 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
-import { IAllAssetProperties, IAssetUnion, ISerializedAsset, ISerializedObject } from "./AssetInterfaces";
+import {
+    IAssetIntersection, IAssetUnion, ISerializedAsset, ISerializedObject, SerializedAssetPropertyName,
+} from "./AssetInterfaces";
+
 import { AssetTypes } from "./AssetTypes";
 import { Model } from "./Model";
 import { Unknown, Value } from "./Value";
@@ -161,7 +164,7 @@ export abstract class Asset {
 
     private static nextKey = 0;
 
-    private static getPropertyName<T extends keyof (ISerializedObject & IAllAssetProperties)>(name: T) {
+    private static getPropertyName<T extends keyof (ISerializedObject & IAssetIntersection)>(name: T) {
         return name;
     }
 
@@ -169,7 +172,7 @@ export abstract class Asset {
         return name;
     }
 
-    private static hasProperties(validationResult: true | string, raw: Unknown): raw is IAllAssetProperties {
+    private static hasProperties(validationResult: true | string, raw: Unknown): raw is IAssetIntersection {
         return validationResult === true;
     }
 
@@ -177,3 +180,5 @@ export abstract class Asset {
         return (factor1 === undefined) || (factor2 === undefined) ? undefined : factor1 * factor2;
     }
 }
+
+export type AssetDisplayPropertyName = SerializedAssetPropertyName | typeof Asset.totalValueName;

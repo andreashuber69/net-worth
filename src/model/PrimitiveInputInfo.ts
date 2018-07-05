@@ -10,13 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AllAssetPropertyNames } from "./AssetInterfaces";
+import { AssetPropertyName } from "./AssetInterfaces";
 import { InputInfo } from "./InputInfo";
 import { Unknown, Value } from "./Value";
 
 /** Defines the base for all classes that provide input information for a primitive value. */
 export abstract class PrimitiveInputInfo extends InputInfo {
-    public get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AllAssetPropertyNames): T {
+    public get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AssetPropertyName): T {
         if (propertyName !== undefined) {
             throw new Error("The propertyName argument must be undefined for a primitive input.");
         }
@@ -38,8 +38,7 @@ export abstract class PrimitiveInputInfo extends InputInfo {
     }
 
     /** @internal */
-    protected validatePrimitive(
-        strict: boolean, input: Unknown | undefined | null, propertyName?: AllAssetPropertyNames) {
+    protected validatePrimitive(strict: boolean, input: Unknown | undefined | null, propertyName?: AssetPropertyName) {
         if (propertyName !== undefined) {
             throw new Error("The propertyName argument must be undefined for a primitive value.");
         }

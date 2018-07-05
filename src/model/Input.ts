@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AllAssetPropertyNames } from "./AssetInterfaces";
+import { AssetPropertyName } from "./AssetInterfaces";
 import { Unknown } from "./Value";
 
-export type CompositeInput = { [K in AllAssetPropertyNames]?: Unknown | null };
+export type CompositeInput = { [K in AssetPropertyName]?: Unknown | null };
 export type Input = CompositeInput | Unknown | null | undefined;
 
 export class InputUtility {

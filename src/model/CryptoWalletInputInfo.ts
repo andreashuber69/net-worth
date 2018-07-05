@@ -12,7 +12,7 @@
 
 import { Asset } from "./Asset";
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
-import { AllAssetPropertyNames } from "./AssetInterfaces";
+import { AssetPropertyName } from "./AssetInterfaces";
 import { EditableCryptoWalletTypes } from "./AssetTypes";
 import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
@@ -44,7 +44,7 @@ export abstract class CryptoWalletInputInfo extends AssetInputInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected validateRelations(input: CompositeInput, propertyName: AllAssetPropertyNames) {
+    protected validateRelations(input: CompositeInput, propertyName: AssetPropertyName) {
         if (((propertyName === Asset.addressName) || (propertyName === Asset.quantityName)) &&
             (CryptoWalletInputInfo.isUndefined(input.address) === CryptoWalletInputInfo.isUndefined(input.quantity))) {
             return `A value is required for either the ${this.address.label} or the ${this.quantity.label} (not both).`;

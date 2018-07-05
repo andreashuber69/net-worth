@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AllAssetPropertyNames } from "./AssetInterfaces";
+import { AssetPropertyName } from "./AssetInterfaces";
 
 /** Defines an auxiliary property of type `T` for each of the properties of every asset. */
-export type IAuxProperties<T> = { [K in AllAssetPropertyNames]: T };
+export type IAuxProperties<T> = { [K in AssetPropertyName]: T };

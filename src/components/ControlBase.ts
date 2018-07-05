@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Prop } from "vue-property-decorator";
-import { AllAssetPropertyNames } from "../model/AssetInterfaces";
+import { AssetPropertyName } from "../model/AssetInterfaces";
 import { IAuxProperties } from "../model/IAuxProperties";
 import { InputUtility } from "../model/Input";
 import { InputInfo } from "../model/InputInfo";
@@ -80,6 +80,6 @@ export abstract class ControlBase<T extends PrimitiveInputInfo> extends Componen
             throw new Error("No property set!");
         }
 
-        return this.property as any as AllAssetPropertyNames;
+        return this.property as any as AssetPropertyName;
     }
 }
