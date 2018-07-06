@@ -227,4 +227,4 @@ export default class AssetListRow extends ComponentBase<Asset> {
 }
 
 export type ColumnName = AssetDisplayPropertyName | AssetListRowPropertyName |
-    typeof AssetListRow.expandName | typeof AssetListRow.grandTotalName | typeof AssetListRow.moreName;
+    typeof AssetListRow.expandName | typeof AssetListRow.moreName | typeof AssetListRow.grandTotalName;
