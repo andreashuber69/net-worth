@@ -10,8 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IAssetProperties, IModel } from "./Asset";
+import { Asset, IModel } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
+import { IAssetProperties } from "./IAssetProperties";
 
 /** Contains the defining properties common to all crypto currency wallets. */
 export interface ICryptoWalletProperties extends IAssetProperties {

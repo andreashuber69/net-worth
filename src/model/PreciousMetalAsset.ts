@@ -10,9 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IAssetProperties, IModel } from "./Asset";
+import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { GenericAssetBundle } from "./GenericAssetBundle";
+import { IAssetProperties } from "./IAssetProperties";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { Unknown } from "./Value";

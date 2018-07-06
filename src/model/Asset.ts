@@ -16,24 +16,13 @@ import {
 } from "./AssetInterfaces";
 
 import { AssetTypes } from "./AssetTypes";
+import { IAssetProperties } from "./IAssetProperties";
 import { Model } from "./Model";
 import { Unknown, Value } from "./Value";
 
 /** @internal */
 export interface IModel {
     readonly exchangeRate: number | undefined;
-}
-
-/** Defines the common editable properties of all assets. */
-export interface IAssetProperties {
-    /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
-    readonly description: string;
-
-    /** Provides the location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
-    readonly location: string;
-
-    /** Provides the asset quantity. */
-    readonly quantity?: number;
 }
 
 /** Defines the base of all classes that represent an asset. */
