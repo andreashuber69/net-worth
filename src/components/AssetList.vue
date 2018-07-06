@@ -31,10 +31,10 @@
         </th>
         <th :class="getHeaderClass('unit')">Unit</th>
         <th colspan="2" :class="getHeaderClass('fineness')">Fineness</th>
-        <th colspan="2" :class="getHeaderClass('unitValue')">Unit Value<br>({{ checkedValue.selectedCurrency }})</th>
+        <th colspan="2" :class="getHeaderClass('unitValue')">Unit Value<br>({{ checkedValue.currency }})</th>
         <th colspan="2" :class="getHeaderClass('quantity')">Quantity</th>
         <th colspan="2" :class="getHeaderClass('totalValue')" @click="changeSort('totalValue')">
-          Total Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.selectedCurrency }})
+          Total Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.currency }})
         </th>
         <th :class="getHeaderClass('more')"></th>
       </template>
@@ -43,7 +43,7 @@
         <AssetListRow :value="props.item" @edit="onEdit" @delete="onDelete"></AssetListRow>
       </template>
       <template slot="footer">
-        <td colspan="2" :class="getFooterClass('grandTotal')">Grand Total ({{ checkedValue.selectedCurrency }})</td>
+        <td colspan="2" :class="getFooterClass('grandTotal')">Grand Total ({{ checkedValue.currency }})</td>
         <td :class="getFooterClass('description')"></td>
         <td :class="getFooterClass('location')"></td>
         <td :class="getFooterClass('unit')"></td>

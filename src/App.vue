@@ -45,25 +45,25 @@
         </v-btn>
         <v-menu title="Change grouping" max-height="300px">
           <v-toolbar-title slot="activator" class="ml-2 mr-0">
-            <span>{{ selectedGroupBy }}</span>
+            <span>{{ groupBy }}</span>
             <v-icon>arrow_drop_down</v-icon>
           </v-toolbar-title>
           <v-list>
             <v-list-tile
-              v-for="groupBy in groupBys" :key="groupBy" @click="selectedGroupBy = groupBy">
-              <v-list-tile-title v-text="groupBy"></v-list-tile-title>
+              v-for="newGroupBy in groupBys" :key="newGroupBy" @click="groupBy = newGroupBy">
+              <v-list-tile-title v-text="newGroupBy"></v-list-tile-title>
             </v-list-tile>
           </v-list>
         </v-menu>
         <v-menu title="Change valuation currency" max-height="300px">
           <v-toolbar-title slot="activator" class="ml-2 mr-3">
-            <span>{{ model.selectedCurrency }}</span>
+            <span>{{ model.currency }}</span>
             <v-icon>arrow_drop_down</v-icon>
           </v-toolbar-title>
           <v-list>
             <v-list-tile
-              v-for="currency in model.currencies" :key="currency" @click="model.selectedCurrency = currency">
-              <v-list-tile-title v-text="currency"></v-list-tile-title>
+              v-for="newCurrency in model.currencies" :key="newCurrency" @click="model.currency = newCurrency">
+              <v-list-tile-title v-text="newCurrency"></v-list-tile-title>
             </v-list-tile>
           </v-list>
         </v-menu>

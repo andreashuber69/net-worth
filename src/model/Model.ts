@@ -32,8 +32,8 @@ export interface ISort {
 
 interface ISerializedModel {
     version: number;
-    selectedCurrency: string;
-    selectedGroupBy: GroupBy;
+    currency: string;
+    groupBy: GroupBy;
     sort: ISort;
     bundles: ISerializedBundle[];
 }
@@ -68,19 +68,19 @@ export class Model implements IModel {
 
         const model = new Model();
 
-        if (Value.hasStringProperty(rawModel, Model.selectedCurrencyName)) {
-            const selectedCurrency = rawModel[Model.selectedCurrencyName];
+        if (Value.hasStringProperty(rawModel, Model.currencyName)) {
+            const currency = rawModel[Model.currencyName];
 
-            if (model.currencies.findIndex((currency) => currency === selectedCurrency) >= 0) {
-                model.selectedCurrency = selectedCurrency;
+            if (model.currencies.findIndex((c) => c === currency) >= 0) {
+                model.currency = currency;
             }
         }
 
-        if (Value.hasStringProperty(rawModel, Model.selectedGroupByName)) {
-            const selectedGroupBy = rawModel[Model.selectedGroupByName];
+        if (Value.hasStringProperty(rawModel, Model.groupByName)) {
+            const groupBy = rawModel[Model.groupByName];
 
-            if (model.isGroupBy(selectedGroupBy)) {
-                model.selectedGroupBy = selectedGroupBy;
+            if (model.isGroupBy(groupBy)) {
+                model.groupBy = groupBy;
             }
         }
 
@@ -117,13 +117,13 @@ export class Model implements IModel {
     }
 
     /** Provides the selected currency. */
-    public get selectedCurrency() {
-        return this.selectedCurrencyImpl;
+    public get currency() {
+        return this.currencyImpl;
     }
 
     /** Provides the selected currency. */
-    public set selectedCurrency(currency: string) {
-        this.selectedCurrencyImpl = currency;
+    public set currency(currency: string) {
+        this.currencyImpl = currency;
         this.notifyChanged();
         this.onCurrencyChanged().catch((reason) => console.error(reason));
     }
@@ -132,11 +132,11 @@ export class Model implements IModel {
     public readonly groupBys: GroupBy[] = [ Asset.typeName, Asset.locationName ];
 
     /** Provides the name of the property by which the asset list is currently grouped. */
-    public get selectedGroupBy() {
+    public get groupBy() {
         return this.groupByImpl;
     }
 
-    public set selectedGroupBy(groupBy: GroupBy) {
+    public set groupBy(groupBy: GroupBy) {
         this.groupByImpl = groupBy;
         this.groups.length = 0;
         this.update();
@@ -229,8 +229,8 @@ export class Model implements IModel {
     public toJSON(): ISerializedModel {
         return {
             version: 1,
-            selectedCurrency: this.selectedCurrency,
-            selectedGroupBy: this.selectedGroupBy,
+            currency: this.currency,
+            groupBy: this.groupBy,
             sort: this.sort,
             bundles: this.bundles.map((bundle) => bundle.toJSON()),
         };
@@ -239,8 +239,8 @@ export class Model implements IModel {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly versionName = Model.getModelName("version");
-    private static readonly selectedCurrencyName = Model.getModelName("selectedCurrency");
-    private static readonly selectedGroupByName = Model.getModelName("selectedGroupBy");
+    private static readonly currencyName = Model.getModelName("currency");
+    private static readonly groupByName = Model.getModelName("groupBy");
     private static readonly sortName = Model.getModelName("sort");
     private static readonly sortByName = Model.getSortName("by");
     private static readonly sortDescendingName = Model.getSortName("descending");
@@ -312,7 +312,7 @@ export class Model implements IModel {
 
     private readonly bundles = new Array<AssetBundle>();
 
-    private selectedCurrencyImpl = Model.currencyMap.keys().next().value;
+    private currencyImpl = Model.currencyMap.keys().next().value;
 
     private groupByImpl: GroupBy = Asset.typeName;
 
@@ -352,7 +352,7 @@ export class Model implements IModel {
 
         // Remove no longer existing groups
         for (let index = 0; index < this.groups.length;) {
-            if (!newGroups.has(this.groups[index][this.selectedGroupBy])) {
+            if (!newGroups.has(this.groups[index][this.groupBy])) {
                 this.groups.splice(index, 1);
             } else {
                 ++index;
@@ -361,7 +361,7 @@ export class Model implements IModel {
 
         // Update existing groups with new assets
         for (const newGroup of newGroups) {
-            const existingGroup = this.groups.find((g) => g[this.selectedGroupBy] === newGroup[0]);
+            const existingGroup = this.groups.find((g) => g[this.groupBy] === newGroup[0]);
 
             if (existingGroup === undefined) {
                 this.groups.push(new AssetGroup(this, newGroup[1]));
@@ -378,7 +378,7 @@ export class Model implements IModel {
 
         for (const bundle of this.bundles) {
             for (const asset of bundle.assets) {
-                const groupName = asset[this.selectedGroupBy];
+                const groupName = asset[this.groupBy];
                 const groupAssets = result.get(groupName);
 
                 if (groupAssets === undefined) {
@@ -423,7 +423,7 @@ export class Model implements IModel {
 
     private async onCurrencyChanged() {
         this.exchangeRate = undefined;
-        const request = Model.currencyMap.get(this.selectedCurrency) as IWebRequest<number>;
+        const request = Model.currencyMap.get(this.currency) as IWebRequest<number>;
         this.exchangeRate = await request.execute();
     }
 

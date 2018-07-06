@@ -21,7 +21,7 @@ import { Unknown } from "./Value";
 
 /** @internal */
 export interface IModel {
-    readonly selectedGroupBy: GroupBy;
+    readonly groupBy: GroupBy;
     readonly exchangeRate: number | undefined;
 }
 

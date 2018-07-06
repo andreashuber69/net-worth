@@ -185,7 +185,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getClass(columnName: ColumnName) {
-        return AssetListRow.getClassImpl(columnName, this.checkedValue.parent.selectedGroupBy);
+        return AssetListRow.getClassImpl(columnName, this.checkedValue.parent.groupBy);
     }
 
     /** Instructs the asset group to be expanded/collapsed. */

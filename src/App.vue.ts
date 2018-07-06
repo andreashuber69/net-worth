@@ -67,15 +67,15 @@ export default class App extends Vue {
         return this.model.groupBys.map((g) => App.capitalize(g));
     }
 
-    public get selectedGroupBy() {
-        return App.capitalize(this.model.selectedGroupBy);
+    public get groupBy() {
+        return App.capitalize(this.model.groupBy);
     }
 
-    public set selectedGroupBy(groupBy: string) {
+    public set groupBy(groupBy: string) {
         const rawGroupBy = this.model.groupBys.find((g) => g === groupBy.toLowerCase());
 
         if (rawGroupBy !== undefined) {
-            this.model.selectedGroupBy = rawGroupBy;
+            this.model.groupBy = rawGroupBy;
         }
     }
 
