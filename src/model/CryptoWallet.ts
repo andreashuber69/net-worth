@@ -12,7 +12,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
-import { cryptoWalletSuperType, ICryptoWallet, ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { cryptoWalletSuperType, ICryptoWallet, ICryptoWalletProperties } from "./ICryptoWallet";
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends Asset implements ICryptoWallet {

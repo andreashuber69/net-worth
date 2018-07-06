@@ -14,7 +14,7 @@ import { Asset, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
 import { Unknown, Value } from "./Value";
 

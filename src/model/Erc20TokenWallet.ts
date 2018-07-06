@@ -12,7 +12,7 @@
 
 import { IModel } from "./Asset";
 import { CryptoWallet } from "./CryptoWallet";
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { ICryptoWalletProperties } from "./ICryptoWallet";
 
 /** Represents an ERC20 token wallet. */
 export class Erc20TokenWallet extends CryptoWallet {

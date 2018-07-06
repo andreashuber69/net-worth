@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWallet, ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { ICryptoWallet, ICryptoWalletProperties } from "./ICryptoWallet";
 import { IPreciousMetalAsset, IPreciousMetalAssetProperties } from "./PreciousMetalAsset";
 
 /** Combines the defining properties of all assets. */
