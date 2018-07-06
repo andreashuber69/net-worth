@@ -68,10 +68,10 @@ export default class AssetList extends ComponentBase<Model> {
 
         // Sortable columns
         switch (columnName) {
-            case "type":
-            case "description":
-            case "location":
-            case "totalValue":
+            case Asset.typeName:
+            case Asset.descriptionName:
+            case Asset.locationName:
+            case Asset.totalValueName:
                 const sort = this.checkedValue.sort;
                 result.push("column", "sortable", sort.descending ? "desc" : "asc");
 
