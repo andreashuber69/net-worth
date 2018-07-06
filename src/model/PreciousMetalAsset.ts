@@ -14,9 +14,7 @@
 import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import {
-    IPreciousMetalAsset, IPreciousMetalAssetProperties, preciousMetalSuperType,
-} from "./IPreciousMetalAssetProperties";
+import { IPreciousMetalAsset, IPreciousMetalAssetProperties, preciousMetalSuperType } from "./IPreciousMetalAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { Unknown } from "./Value";
