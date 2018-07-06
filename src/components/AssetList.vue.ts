@@ -40,11 +40,6 @@ export default class AssetList extends ComponentBase<Model> {
         this.checkedValue.sort = { by: pagination.sortBy, descending: pagination.descending };
     }
 
-    /** Provides the current sort direction. */
-    public get sortDirection() {
-        return this.checkedValue.sort.descending ? "desc" : "asc";
-    }
-
     public get isLoading() {
         return (this.totalValue === undefined);
     }
@@ -55,11 +50,6 @@ export default class AssetList extends ComponentBase<Model> {
 
     public get totalValueFraction() {
         return Format.fraction(this.totalValue, 2);
-    }
-
-    /** Gets the active status for the given property. */
-    public getActive(sortBy: SortBy) {
-        return this.checkedValue.sort.by === sortBy ? "active" : "";
     }
 
     // tslint:disable-next-line:prefer-function-over-method

@@ -22,26 +22,18 @@
       :total-items="checkedValue.assets.length" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
         <th class="pr-0"></th>
-        <th :class="['text-xs-left column sortable pl-0', sortDirection, getActive('type')]" @click="changeSort('type')">
-          Type <v-icon small>arrow_upward</v-icon>
-        </th>
-        <th
-          :class="['hidden-xs-only text-xs-left column sortable', sortDirection, getActive('description')]"
-          @click="changeSort('description')">
+        <th :class="getHeaderClass('type')" @click="changeSort('type')">Type <v-icon small>arrow_upward</v-icon></th>
+        <th :class="getHeaderClass('description')" @click="changeSort('description')">
           Description <v-icon small>arrow_upward</v-icon>
         </th>
-        <th
-          :class="['hidden-md-and-down text-xs-left column sortable', sortDirection, getActive('location')]"
-          @click="changeSort('location')">
+        <th :class="getHeaderClass('location')" @click="changeSort('location')">
           Location <v-icon small>arrow_upward</v-icon>
         </th>
-        <th class="hidden-sm-and-down text-xs-left">Unit</th>
-        <th colspan="2" class="hidden-md-and-down">Fineness</th>
-        <th colspan="2" class="hidden-sm-and-down">Unit Value<br>({{ checkedValue.selectedCurrency }})</th>
-        <th colspan="2" class="hidden-sm-and-down">Quantity</th>
-        <th
-          colspan="2" :class="['column sortable pr-0 total', sortDirection, getActive('totalValue')]"
-          @click="changeSort('totalValue')">
+        <th :class="getHeaderClass('unit')">Unit</th>
+        <th colspan="2" :class="getHeaderClass('fineness')">Fineness</th>
+        <th colspan="2" :class="getHeaderClass('unitValue')">Unit Value<br>({{ checkedValue.selectedCurrency }})</th>
+        <th colspan="2" :class="getHeaderClass('quantity')">Quantity</th>
+        <th colspan="2" :class="getHeaderClass('totalValue')" @click="changeSort('totalValue')">
           Total Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.selectedCurrency }})
         </th>
         <th class="pl-0"></th>
@@ -52,14 +44,14 @@
       </template>
       <template slot="footer">
         <td colspan="2" class="total">Grand Total ({{ checkedValue.selectedCurrency }})</td>
-        <td class="hidden-xs-only"></td>
-        <td class="hidden-md-and-down"></td>
-        <td class="hidden-sm-and-down"></td>
-        <td colspan="2" class="hidden-md-and-down"></td>
-        <td colspan="2" class="hidden-sm-and-down"></td>
-        <td colspan="2" class="hidden-sm-and-down"></td>
-        <td class="text-xs-right pr-0 total">{{ totalValueInteger }}</td>
-        <td class="text-xs-left px-0 total">{{ totalValueFraction }}</td>
+        <td :class="getFooterClass('description')"></td>
+        <td :class="getFooterClass('location')"></td>
+        <td :class="getFooterClass('unit')"></td>
+        <td colspan="2" :class="getFooterClass('fineness')"></td>
+        <td colspan="2" :class="getFooterClass('unitValue')"></td>
+        <td colspan="2" :class="getFooterClass('quantity')"></td>
+        <td :class="getFooterClass('totalValueInteger')">{{ totalValueInteger }}</td>
+        <td :class="getFooterClass('totalValueFraction')">{{ totalValueFraction }}</td>
         <td class="pl-0"></td>
       </template>
     </v-data-table>

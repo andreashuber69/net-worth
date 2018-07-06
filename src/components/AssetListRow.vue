@@ -20,18 +20,18 @@
         <v-icon v-if="checkedValue.isExpanded">expand_less</v-icon>
       </div>
     </td>
-    <td class="pl-0">{{ checkedValue.type }}</td>
-    <td class="hidden-xs-only">{{ checkedValue.description }}</td>
-    <td class="hidden-md-and-down" :title="checkedValue.locationHint">{{ checkedValue.location }}</td>
-    <td class="hidden-sm-and-down">{{ checkedValue.unit }}</td>
-    <td class="hidden-md-and-down text-xs-right pr-0">{{ finenessInteger }}</td>
-    <td class="hidden-md-and-down text-xs-left pl-0">{{ finenessFraction }}</td>
-    <td class="hidden-sm-and-down text-xs-right pr-0">{{ unitValueInteger }}</td>
-    <td class="hidden-sm-and-down text-xs-left pl-0">{{ unitValueFraction }}</td>
-    <td class="hidden-sm-and-down text-xs-right pr-0">{{ quantityInteger }}</td>
-    <td class="hidden-sm-and-down text-xs-left pl-0">{{ quantityFraction }}</td>
-    <td class="total text-xs-right pr-0">{{ totalValueInteger }}</td>
-    <td class="total text-xs-left px-0">{{ totalValueFraction }}</td>
+    <td :class="getClass('type')">{{ checkedValue.type }}</td>
+    <td :class="getClass('description')">{{ checkedValue.description }}</td>
+    <td :class="getClass('location')" :title="checkedValue.locationHint">{{ checkedValue.location }}</td>
+    <td :class="getClass('unit')">{{ checkedValue.unit }}</td>
+    <td :class="getClass('finenessInteger')">{{ finenessInteger }}</td>
+    <td :class="getClass('finenessFraction')">{{ finenessFraction }}</td>
+    <td :class="getClass('unitValueInteger')">{{ unitValueInteger }}</td>
+    <td :class="getClass('unitValueFraction')">{{ unitValueFraction }}</td>
+    <td :class="getClass('quantityInteger')">{{ quantityInteger }}</td>
+    <td :class="getClass('quantityFraction')">{{ quantityFraction }}</td>
+    <td :class="getClass('totalValueInteger')">{{ totalValueInteger }}</td>
+    <td :class="getClass('totalValueFraction')">{{ totalValueFraction }}</td>
     <td class="pl-1">
       <v-menu v-if="checkedValue.hasActions">
         <v-btn slot="activator" class="mx-0" icon>
