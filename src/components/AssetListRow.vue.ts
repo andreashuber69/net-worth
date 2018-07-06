@@ -73,27 +73,39 @@ export default class AssetListRow extends ComponentBase<Asset> {
             default:
         }
 
+        const columnPadding = 4;
+        const leftClass = `pl-${columnPadding}`;
+        const rightClass = `pr-${columnPadding}`;
+
         // Padding
         switch (columnName) {
             case Asset.typeName:
-                result.push("pl-0");
+                result.push("pl-0", rightClass);
+                break;
+            case Asset.descriptionName:
+            case Asset.locationName:
+            case Asset.unitName:
+            case Asset.finenessName:
+            case Asset.unitValueName:
+            case Asset.quantityName:
+                result.push(leftClass, rightClass);
+                break;
+            case Asset.totalValueName:
+                result.push(leftClass, "pr-0");
                 break;
             case this.finenessIntegerName:
             case this.unitValueIntegerName:
             case this.quantityIntegerName:
             case this.totalValueIntegerName:
-                result.push("pr-0");
+                result.push(leftClass, "pr-0");
                 break;
             case this.finenessFractionName:
             case this.unitValueFractionName:
             case this.quantityFractionName:
-                result.push("pl-0");
+                result.push("pl-0", rightClass);
                 break;
             case this.totalValueFractionName:
                 result.push("pl-0", "pr-0");
-                break;
-            case Asset.totalValueName:
-                result.push("pr-0");
                 break;
             default:
         }
