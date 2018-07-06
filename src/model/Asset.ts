@@ -11,14 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
-import { AssetInput } from "./AssetInput";
 import {
     IAssetIntersection, IAssetUnion, ISerializedAsset, ISerializedObject, SerializedAssetPropertyName,
 } from "./AssetInterfaces";
 
 import { AssetTypes } from "./AssetTypes";
 import { IAssetProperties } from "./IAssetProperties";
-import { Unknown, Value } from "./Value";
+import { Unknown } from "./Value";
 
 /** @internal */
 export interface IModel {
@@ -38,26 +37,6 @@ export abstract class Asset {
     public static readonly unitValueName = Asset.getCalculatedPropertyName("unitValue");
     public static readonly quantityName = Asset.getPropertyName("quantity");
     public static readonly totalValueName = Asset.getCalculatedPropertyName("totalValue");
-
-    public static parse(model: IModel, rawAsset: Unknown | null | undefined) {
-        if (!Value.hasStringProperty(rawAsset, Asset.typeName)) {
-            return Value.getPropertyTypeMismatch(Asset.typeName, rawAsset, "");
-        }
-
-        const assetInfo = AssetInput.infos.find((info) => info.type === rawAsset.type);
-
-        if (!assetInfo) {
-            return Value.getUnknownValue(Asset.typeName, rawAsset.type);
-        }
-
-        const validationResult = assetInfo.validateAll(rawAsset);
-
-        if (!this.hasProperties(validationResult, rawAsset)) {
-            return validationResult;
-        }
-
-        return assetInfo.createAsset(model, rawAsset);
-    }
 
     /** Provides the unique key of the asset. */
     public readonly key = Asset.nextKey++;
@@ -161,10 +140,6 @@ export abstract class Asset {
 
     private static getCalculatedPropertyName<T extends keyof Asset>(name: T) {
         return name;
-    }
-
-    private static hasProperties(validationResult: true | string, raw: Unknown): raw is IAssetIntersection {
-        return validationResult === true;
     }
 
     private static multiply(factor1: number | undefined, factor2: number | undefined) {

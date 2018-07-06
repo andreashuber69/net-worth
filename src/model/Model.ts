@@ -13,6 +13,7 @@
 import { Asset, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { AssetGroup } from "./AssetGroup";
+import { AssetInput } from "./AssetInput";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { IWebRequest } from "./IWebRequest";
 import { QuandlRequest } from "./QuandlRequest";
@@ -98,7 +99,7 @@ export class Model implements IModel {
         }
 
         for (const rawBundle of rawModel.bundles) {
-            const bundle = AssetBundle.parse(model, rawBundle);
+            const bundle = AssetInput.parseBundle(model, rawBundle);
 
             if (!(bundle instanceof AssetBundle)) {
                 return bundle;

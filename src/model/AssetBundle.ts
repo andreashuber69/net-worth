@@ -10,9 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { Asset } from "./Asset";
 import { ISerializedAsset } from "./AssetInterfaces";
-import { Unknown, Value } from "./Value";
 
 export interface ISerializedBundle {
     readonly primaryAsset: ISerializedAsset;
@@ -32,20 +31,7 @@ export interface ISerializedBundle {
  * subclasses where the associated addresses cannot currently have balances of more than one currency.
  */
 export abstract class AssetBundle {
-    /** @internal */
-    public static parse(model: IModel, rawBundle: Unknown | null | undefined) {
-        if (!Value.hasObjectProperty(rawBundle, AssetBundle.primaryAssetName)) {
-            return Value.getPropertyTypeMismatch(AssetBundle.primaryAssetName, rawBundle, {});
-        }
-
-        const asset = Asset.parse(model, rawBundle[AssetBundle.primaryAssetName]);
-
-        if (!(asset instanceof Asset)) {
-            return asset;
-        }
-
-        return asset.bundle(rawBundle);
-    }
+    public static readonly primaryAssetName = "primaryAsset";
 
     /** Provides the bundled assets (primary and secondary). */
     public abstract get assets(): Asset[];
@@ -58,8 +44,4 @@ export abstract class AssetBundle {
 
     /** @internal */
     public abstract toJSON(): ISerializedBundle;
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected static readonly primaryAssetName = "primaryAsset";
 }

@@ -10,7 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { Asset, IModel } from "./Asset";
+import { AssetBundle } from "./AssetBundle";
 import { AssetInputInfo } from "./AssetInputInfo";
+import { IAssetIntersection } from "./AssetInterfaces";
 import { BtcWallet } from "./BtcWallet";
 import { BtcWalletInputInfo } from "./BtcWalletInputInfo";
 import { EthWallet } from "./EthWallet";
@@ -18,6 +21,7 @@ import { EthWalletInputInfo } from "./EthWalletInputInfo";
 import { GoldAsset } from "./GoldAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
+import { Unknown, Value } from "./Value";
 
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
@@ -27,4 +31,45 @@ export class AssetInput {
         new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
         new PreciousMetalAssetInputInfo(GoldAsset.type, GoldAsset),
     ];
+
+    /** @internal */
+    public static parseBundle(model: IModel, rawBundle: Unknown | null | undefined) {
+        if (!Value.hasObjectProperty(rawBundle, AssetBundle.primaryAssetName)) {
+            return Value.getPropertyTypeMismatch(AssetBundle.primaryAssetName, rawBundle, {});
+        }
+
+        const asset = this.parseAsset(model, rawBundle[AssetBundle.primaryAssetName]);
+
+        if (!(asset instanceof Asset)) {
+            return asset;
+        }
+
+        return asset.bundle(rawBundle);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static parseAsset(model: IModel, rawAsset: Unknown | null | undefined) {
+        if (!Value.hasStringProperty(rawAsset, Asset.typeName)) {
+            return Value.getPropertyTypeMismatch(Asset.typeName, rawAsset, "");
+        }
+
+        const assetInfo = this.infos.find((info) => info.type === rawAsset.type);
+
+        if (!assetInfo) {
+            return Value.getUnknownValue(Asset.typeName, rawAsset.type);
+        }
+
+        const validationResult = assetInfo.validateAll(rawAsset);
+
+        if (!this.hasProperties(validationResult, rawAsset)) {
+            return validationResult;
+        }
+
+        return assetInfo.createAsset(model, rawAsset);
+    }
+
+    private static hasProperties(validationResult: true | string, raw: Unknown): raw is IAssetIntersection {
+        return validationResult === true;
+    }
 }
