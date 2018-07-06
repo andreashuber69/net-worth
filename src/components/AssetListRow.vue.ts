@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component } from "vue-property-decorator";
-import { Asset, AssetDisplayPropertyName } from "../model/Asset";
+import { Asset, AssetDisplayPropertyName, GroupBy } from "../model/Asset";
 import { PreciousMetalAssetInputInfo } from "../model/PreciousMetalAssetInputInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
@@ -40,7 +40,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
     public static readonly moreName = "more";
 
     /** @internal */
-    public static getClassImpl(columnName: ColumnName) {
+    public static getClassImpl(columnName: ColumnName, groupBy: GroupBy) {
         const result = new Array<string>();
 
         // Hiding
@@ -185,7 +185,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getClass(columnName: ColumnName) {
-        return AssetListRow.getClassImpl(columnName);
+        return AssetListRow.getClassImpl(columnName, this.checkedValue.parent.selectedGroupBy);
     }
 
     /** Instructs the asset group to be expanded/collapsed. */

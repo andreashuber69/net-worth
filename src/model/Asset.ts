@@ -21,6 +21,7 @@ import { Unknown } from "./Value";
 
 /** @internal */
 export interface IModel {
+    readonly selectedGroupBy: GroupBy;
     readonly exchangeRate: number | undefined;
 }
 
@@ -146,6 +147,8 @@ export abstract class Asset {
         return (factor1 === undefined) || (factor2 === undefined) ? undefined : factor1 * factor2;
     }
 }
+
+export type GroupBy = typeof Asset.typeName | typeof Asset.locationName;
 
 export type AssetDisplayPropertyName =
     SerializedAssetPropertyName | typeof Asset.unitName | typeof Asset.unitValueName | typeof Asset.totalValueName;

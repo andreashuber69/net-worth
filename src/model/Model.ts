@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { Asset, GroupBy, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { AssetGroup } from "./AssetGroup";
 import { AssetInput } from "./AssetInput";
@@ -29,8 +29,6 @@ export interface ISort {
     /** Provides a value indicating whether the sort order is descending. */
     readonly descending: boolean;
 }
-
-export type GroupBy = typeof Asset.typeName | typeof Asset.locationName;
 
 interface ISerializedModel {
     version: number;

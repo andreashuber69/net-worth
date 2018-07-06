@@ -54,7 +54,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getHeaderClass(columnName: ColumnName) {
-        const result = AssetListRow.getClassImpl(columnName);
+        const result = AssetListRow.getClassImpl(columnName, this.checkedValue.selectedGroupBy);
 
         // Sortable columns
         switch (columnName) {
@@ -78,7 +78,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getFooterClass(columnName: ColumnName) {
-        return AssetListRow.getClassImpl(columnName);
+        return AssetListRow.getClassImpl(columnName, this.checkedValue.selectedGroupBy);
     }
 
     /** Changes the sorting for the given property. */
