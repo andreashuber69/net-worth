@@ -13,17 +13,9 @@
 import { Asset, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { AssetGroup } from "./AssetGroup";
-import { AssetInputInfo } from "./AssetInputInfo";
-import { BtcWallet } from "./BtcWallet";
-import { BtcWalletInputInfo } from "./BtcWalletInputInfo";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
-import { EthWallet } from "./EthWallet";
-import { EthWalletInputInfo } from "./EthWalletInputInfo";
-import { GoldAsset } from "./GoldAsset";
 import { IWebRequest } from "./IWebRequest";
-import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
-import { SilverAsset } from "./SilverAsset";
 import { Unknown, Value } from "./Value";
 
 export type SortBy =
@@ -49,14 +41,6 @@ interface ISerializedModel {
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
-    /** Provides information objects for each of the supported asset types. */
-    public static readonly assetInfos: AssetInputInfo[] = [
-        new BtcWalletInputInfo(BtcWallet.type, BtcWallet),
-        new EthWalletInputInfo(EthWallet.type, EthWallet),
-        new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
-        new PreciousMetalAssetInputInfo(GoldAsset.type, GoldAsset),
-    ];
-
     /**
      * Returns a [[Model]] object that is equivalent to the passed JSON string or returns a string that describes why
      * the parse process failed.

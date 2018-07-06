@@ -11,13 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
+import { AssetInput } from "./AssetInput";
 import {
     IAssetIntersection, IAssetUnion, ISerializedAsset, ISerializedObject, SerializedAssetPropertyName,
 } from "./AssetInterfaces";
 
 import { AssetTypes } from "./AssetTypes";
 import { IAssetProperties } from "./IAssetProperties";
-import { Model } from "./Model";
 import { Unknown, Value } from "./Value";
 
 /** @internal */
@@ -44,7 +44,7 @@ export abstract class Asset {
             return Value.getPropertyTypeMismatch(Asset.typeName, rawAsset, "");
         }
 
-        const assetInfo = Model.assetInfos.find((info) => info.type === rawAsset.type);
+        const assetInfo = AssetInput.infos.find((info) => info.type === rawAsset.type);
 
         if (!assetInfo) {
             return Value.getUnknownValue(Asset.typeName, rawAsset.type);

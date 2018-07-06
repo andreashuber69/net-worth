@@ -12,6 +12,7 @@
 
 import { Component } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
+import { AssetInput } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { Model } from "../model/Model";
 import { SelectInputInfo } from "../model/SelectInputInfo";
@@ -37,7 +38,7 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     /** Provides the asset type input information. */
     public get typeInputInfo() {
-        return new SelectInputInfo("Type", "", true, true, Model.assetInfos.map((info) => info.type));
+        return new SelectInputInfo("Type", "", true, true, AssetInput.infos.map((info) => info.type));
     }
 
     /** Provides the currently selected asset type. */
@@ -46,7 +47,7 @@ export default class AssetEditor extends ComponentBase<Model> {
     }
 
     public set type(value: string) {
-        this.assetInfo = Model.assetInfos.find((info) => info.type === value) as AssetInputInfo;
+        this.assetInfo = AssetInput.infos.find((info) => info.type === value) as AssetInputInfo;
     }
 
     /** Provides information about the currently selected asset type. */
@@ -73,7 +74,7 @@ export default class AssetEditor extends ComponentBase<Model> {
 
     /** @internal */
     public edit(asset: Asset) {
-        const assetInfo = Model.assetInfos.find((info) => info.type === asset.type);
+        const assetInfo = AssetInput.infos.find((info) => info.type === asset.type);
 
         if (assetInfo !== undefined) {
             this.editedAsset = asset;
