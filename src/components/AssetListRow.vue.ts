@@ -45,10 +45,10 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
         // Hiding
         switch (columnName) {
-            case Asset.descriptionName:
+            case Asset.locationName:
                 result.push("hidden-xs-only");
                 break;
-            case Asset.locationName:
+            case Asset.descriptionName:
             case Asset.finenessName:
             case this.finenessIntegerName:
             case this.finenessFractionName:
