@@ -1,3 +1,4 @@
+
 // Copyright (C) 2018 Andreas Huber Dönni
 //
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
@@ -13,37 +14,18 @@
 import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IAssetProperties } from "./IAssetProperties";
+import {
+    IPreciousMetalAsset, IPreciousMetalAssetProperties, preciousMetalSuperType,
+} from "./IPreciousMetalAssetProperties";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { Unknown } from "./Value";
 import { WeightUnit, WeightUnits } from "./WeightUnit";
 
-/** Contains the defining properties common to all precious metal assets. */
-export interface IPreciousMetalAssetProperties extends IAssetProperties {
-    /** Provides the weight of a single item, expressed in `weightUnit`. */
-    readonly weight: number;
-
-    /** Provides the unit used for `weight`, e.g. [[TroyOunce]]. */
-    readonly weightUnit: WeightUnit;
-
-    /** Provides the fineness, e.g. 0.999. */
-    readonly fineness: number;
-}
-
-/** @internal */
-const superType = "Precious Metal";
-
-/** @internal */
-export interface IPreciousMetalAsset extends IPreciousMetalAssetProperties {
-    /** @internal */
-    readonly superType: typeof superType;
-}
-
 /** Defines the base of all classes that represent a precious metal asset. */
 export abstract class PreciousMetalAsset extends Asset implements IPreciousMetalAsset {
     /** @internal */
-    public static readonly superType = superType;
+    public static readonly superType = preciousMetalSuperType;
 
     public readonly location: string;
 

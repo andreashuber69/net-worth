@@ -11,7 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { IPreciousMetalAssetProperties, PreciousMetalAsset } from "./PreciousMetalAsset";
+import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
+import { PreciousMetalAsset } from "./PreciousMetalAsset";
 
 /** Represents an asset made of gold. */
 export class GoldAsset extends PreciousMetalAsset {

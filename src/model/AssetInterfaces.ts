@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { ICryptoWallet, ICryptoWalletProperties } from "./ICryptoWallet";
-import { IPreciousMetalAsset, IPreciousMetalAssetProperties } from "./PreciousMetalAsset";
+import { IPreciousMetalAsset, IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 
 /** Combines the defining properties of all assets. */
 export type IAssetIntersection = ICryptoWalletProperties & IPreciousMetalAssetProperties;
