@@ -14,7 +14,7 @@ import { Component } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
 import { Model, SortBy } from "../model/Model";
 import AssetEditor from "./AssetEditor.vue";
-import AssetListRow from "./AssetListRow.vue";
+import AssetListRow, { ColumnName } from "./AssetListRow.vue";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
@@ -60,6 +60,35 @@ export default class AssetList extends ComponentBase<Model> {
     /** Gets the active status for the given property. */
     public getActive(sortBy: SortBy) {
         return this.checkedValue.sort.by === sortBy ? "active" : "";
+    }
+
+    // tslint:disable-next-line:prefer-function-over-method
+    public getHeaderClass(columnName: ColumnName) {
+        const result = AssetListRow.getClassImpl(columnName);
+
+        // Sortable columns
+        switch (columnName) {
+            case "type":
+            case "description":
+            case "location":
+            case "totalValue":
+                const sort = this.checkedValue.sort;
+                result.push("column", "sortable", sort.descending ? "desc" : "asc");
+
+                if (sort.by === columnName) {
+                    result.push("active");
+                }
+
+                break;
+            default:
+        }
+
+        return result;
+    }
+
+    // tslint:disable-next-line:prefer-function-over-method
+    public getFooterClass(columnName: ColumnName) {
+        return AssetListRow.getClassImpl(columnName);
     }
 
     /** Changes the sorting for the given property. */

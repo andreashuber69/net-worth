@@ -16,12 +16,6 @@ import { PreciousMetalAssetInputInfo } from "../model/PreciousMetalAssetInputInf
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
-// tslint:disable-next-line:ban-types
-type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
-type Diff<T, U> = T extends U ? never : T;
-export type ColumnName =
-    AssetDisplayPropertyName | Diff<PropertyNames<AssetListRow>, PropertyNames<ComponentBase<Asset>>>;
-
 // tslint:disable-next-line:no-unsafe-any
 @Component
 /**
@@ -31,6 +25,96 @@ export type ColumnName =
  */
 // tslint:disable-next-line:no-default-export
 export default class AssetListRow extends ComponentBase<Asset> {
+    /** @internal */
+    public static getClassImpl(columnName: ColumnName) {
+        const result = new Array<string>();
+
+        // Hiding
+        switch (columnName) {
+            case Asset.descriptionName:
+                result.push("hidden-xs-only");
+                break;
+            case Asset.locationName:
+            case Asset.finenessName:
+            case this.finenessIntegerName:
+            case this.finenessFractionName:
+                result.push("hidden-md-and-down");
+                break;
+            case Asset.unitName:
+            case Asset.unitValueName:
+            case this.unitValueIntegerName:
+            case this.unitValueFractionName:
+            case Asset.quantityName:
+            case this.quantityIntegerName:
+            case this.quantityFractionName:
+                result.push("hidden-sm-and-down");
+                break;
+            default:
+        }
+
+        // Alignment
+        switch (columnName) {
+            case Asset.typeName:
+            case Asset.descriptionName:
+            case Asset.locationName:
+            case Asset.unitName:
+            case this.finenessFractionName:
+            case this.unitValueFractionName:
+            case this.quantityFractionName:
+            case this.totalValueFractionName:
+                result.push("text-xs-left");
+                break;
+            case this.finenessIntegerName:
+            case this.unitValueIntegerName:
+            case this.quantityIntegerName:
+            case this.totalValueIntegerName:
+                result.push("text-xs-right");
+                break;
+            default:
+        }
+
+        // Padding
+        switch (columnName) {
+            case Asset.typeName:
+                result.push("pl-0");
+                break;
+            case this.finenessIntegerName:
+            case this.unitValueIntegerName:
+            case this.quantityIntegerName:
+            case this.totalValueIntegerName:
+                result.push("pr-0");
+                break;
+            case this.finenessFractionName:
+            case this.unitValueFractionName:
+            case this.quantityFractionName:
+                result.push("pl-0");
+                break;
+            case this.totalValueFractionName:
+                result.push("pl-0", "pr-0");
+                break;
+            case Asset.totalValueName:
+                result.push("pr-0");
+                break;
+            default:
+        }
+
+        // Total
+        switch (columnName) {
+            case Asset.totalValueName:
+            case this.totalValueIntegerName:
+            case this.totalValueFractionName:
+                result.push("total");
+                break;
+            default:
+        }
+
+        if (result.length === 0) {
+            throw new Error("Unknown column");
+        }
+
+        return result;
+    }
+
     public get finenessInteger() {
         return this.checkedValue.fineness === undefined ? "" : Math.trunc(this.checkedValue.fineness);
     }
@@ -64,6 +148,11 @@ export default class AssetListRow extends ComponentBase<Asset> {
         return Format.fraction(this.checkedValue.totalValue, 2);
     }
 
+    // tslint:disable-next-line:prefer-function-over-method
+    public getClass(columnName: ColumnName) {
+        return AssetListRow.getClassImpl(columnName);
+    }
+
     /** Instructs the asset group to be expanded/collapsed. */
     public onRowClicked(event: MouseEvent) {
         this.checkedValue.expand();
@@ -83,21 +172,27 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // private static readonly finenessIntegerName = AssetListRow.getName("finenessInteger");
-    // private static readonly finenessFractionName = AssetListRow.getName("finenessFraction");
-    // private static readonly unitValueIntegerName = AssetListRow.getName("unitValueInteger");
-    // private static readonly unitValueFractionName = AssetListRow.getName("unitValueFraction");
-    // private static readonly quantityIntegerName = AssetListRow.getName("quantityInteger");
-    // private static readonly quantityFractionName = AssetListRow.getName("quantityFraction");
-    // private static readonly totalValueIntegerName = AssetListRow.getName("totalValueInteger");
-    // private static readonly totalValueFractionName = AssetListRow.getName("totalValueFraction");
+    private static readonly finenessIntegerName = AssetListRow.getName("finenessInteger");
+    private static readonly finenessFractionName = AssetListRow.getName("finenessFraction");
+    private static readonly unitValueIntegerName = AssetListRow.getName("unitValueInteger");
+    private static readonly unitValueFractionName = AssetListRow.getName("unitValueFraction");
+    private static readonly quantityIntegerName = AssetListRow.getName("quantityInteger");
+    private static readonly quantityFractionName = AssetListRow.getName("quantityFraction");
+    private static readonly totalValueIntegerName = AssetListRow.getName("totalValueInteger");
+    private static readonly totalValueFractionName = AssetListRow.getName("totalValueFraction");
 
     private static readonly finenessFormatOptions = {
         maximumFractionDigits: PreciousMetalAssetInputInfo.finenessDigits,
         minimumFractionDigits: 1,
         useGrouping: true };
 
-    // private static getName<T extends keyof AssetListRow>(name: T) {
-    //     return name;
-    // }
+    private static getName<T extends keyof AssetListRow>(name: T) {
+        return name;
+    }
 }
+
+// tslint:disable-next-line:ban-types
+type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
+type Diff<T, U> = T extends U ? never : T;
+export type ColumnName =
+    AssetDisplayPropertyName | Diff<PropertyNames<AssetListRow>, PropertyNames<ComponentBase<Asset>>>;
