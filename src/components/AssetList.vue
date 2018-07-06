@@ -21,7 +21,7 @@
       :items="checkedValue.assets" item-key="key" :pagination.sync="pagination" :loading="isLoading" :headers-length="14"
       :total-items="checkedValue.assets.length" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
-        <th class="pr-0"></th>
+        <th :class="getHeaderClass('expand')"></th>
         <th :class="getHeaderClass('type')" @click="changeSort('type')">Type <v-icon small>arrow_upward</v-icon></th>
         <th :class="getHeaderClass('description')" @click="changeSort('description')">
           Description <v-icon small>arrow_upward</v-icon>
@@ -36,14 +36,14 @@
         <th colspan="2" :class="getHeaderClass('totalValue')" @click="changeSort('totalValue')">
           Total Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.selectedCurrency }})
         </th>
-        <th class="pl-0"></th>
+        <th :class="getHeaderClass('more')"></th>
       </template>
       <v-progress-linear slot="progress" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props">
         <AssetListRow :value="props.item" @edit="onEdit" @delete="onDelete"></AssetListRow>
       </template>
       <template slot="footer">
-        <td colspan="2" class="total">Grand Total ({{ checkedValue.selectedCurrency }})</td>
+        <td colspan="2" :class="getFooterClass('grandTotal')">Grand Total ({{ checkedValue.selectedCurrency }})</td>
         <td :class="getFooterClass('description')"></td>
         <td :class="getFooterClass('location')"></td>
         <td :class="getFooterClass('unit')"></td>
@@ -52,7 +52,7 @@
         <td colspan="2" :class="getFooterClass('quantity')"></td>
         <td :class="getFooterClass('totalValueInteger')">{{ totalValueInteger }}</td>
         <td :class="getFooterClass('totalValueFraction')">{{ totalValueFraction }}</td>
-        <td class="pl-0"></td>
+        <td :class="getFooterClass('more')"></td>
       </template>
     </v-data-table>
   </div>

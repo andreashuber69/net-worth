@@ -16,6 +16,11 @@ import { PreciousMetalAssetInputInfo } from "../model/PreciousMetalAssetInputInf
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
+// tslint:disable-next-line:ban-types
+type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
+type Diff<T, U> = T extends U ? never : T;
+type AssetListRowPropertyName = Diff<PropertyNames<AssetListRow>, PropertyNames<ComponentBase<Asset>>>;
+
 // tslint:disable-next-line:no-unsafe-any
 @Component
 /**
@@ -25,6 +30,15 @@ import { Format } from "./Format";
  */
 // tslint:disable-next-line:no-default-export
 export default class AssetListRow extends ComponentBase<Asset> {
+    /** @internal */
+    public static readonly expandName = "expand";
+
+    /** @internal */
+    public static readonly grandTotalName = "grandTotal";
+
+    /** @internal */
+    public static readonly moreName = "more";
+
     /** @internal */
     public static getClassImpl(columnName: ColumnName) {
         const result = new Array<string>();
@@ -62,6 +76,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
             case this.unitValueFractionName:
             case this.quantityFractionName:
             case this.totalValueFractionName:
+            case this.grandTotalName:
                 result.push("text-xs-left");
                 break;
             case this.finenessIntegerName:
@@ -79,6 +94,9 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
         // Padding
         switch (columnName) {
+            case this.expandName:
+                result.push(leftClass, "pr-2");
+                break;
             case Asset.typeName:
                 result.push("pl-0", rightClass);
                 break;
@@ -88,6 +106,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
             case Asset.finenessName:
             case Asset.unitValueName:
             case Asset.quantityName:
+            case this.grandTotalName:
                 result.push(leftClass, rightClass);
                 break;
             case Asset.totalValueName:
@@ -107,6 +126,9 @@ export default class AssetListRow extends ComponentBase<Asset> {
             case this.totalValueFractionName:
                 result.push("pl-0", "pr-0");
                 break;
+            case this.moreName:
+                result.push("pl-1", rightClass);
+                break;
             default:
         }
 
@@ -115,6 +137,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
             case Asset.totalValueName:
             case this.totalValueIntegerName:
             case this.totalValueFractionName:
+            case this.grandTotalName:
                 result.push("total");
                 break;
             default:
@@ -203,8 +226,5 @@ export default class AssetListRow extends ComponentBase<Asset> {
     }
 }
 
-// tslint:disable-next-line:ban-types
-type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
-type Diff<T, U> = T extends U ? never : T;
-export type ColumnName =
-    AssetDisplayPropertyName | Diff<PropertyNames<AssetListRow>, PropertyNames<ComponentBase<Asset>>>;
+export type ColumnName = AssetDisplayPropertyName | AssetListRowPropertyName |
+    typeof AssetListRow.expandName | typeof AssetListRow.grandTotalName | typeof AssetListRow.moreName;
