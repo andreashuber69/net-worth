@@ -10,16 +10,16 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { BtcWallet } from "./BtcWallet";
-import { Erc20TokenWallet } from "./Erc20TokenWallet";
-import { EthWallet } from "./EthWallet";
-import { GoldAsset } from "./GoldAsset";
-import { SilverAsset } from "./SilverAsset";
+export const btcWalletType = "Bitcoin";
+export const ethWalletType = "Ethereum";
+export const erc20TokenWalletType = "ERC20 Token";
+export const silverAssetType = "Silver";
+export const goldAssetType = "Gold";
 
-export type EditableCryptoWalletTypes = typeof BtcWallet.type | typeof EthWallet.type;
-type CryptoWalletTypes = EditableCryptoWalletTypes | typeof Erc20TokenWallet.type;
+export type EditableCryptoWalletTypes = typeof btcWalletType | typeof ethWalletType;
+type CryptoWalletTypes = EditableCryptoWalletTypes | typeof erc20TokenWalletType;
 
-export type EditablePreciousMetalAssetTypes = typeof SilverAsset.type | typeof GoldAsset.type;
+export type EditablePreciousMetalAssetTypes = typeof silverAssetType | typeof goldAssetType;
 type PreciousMetalAssetTypes = EditablePreciousMetalAssetTypes;
 
 export type EditableAssetTypes = EditableCryptoWalletTypes | EditablePreciousMetalAssetTypes;

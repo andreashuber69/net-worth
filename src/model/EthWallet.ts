@@ -12,6 +12,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
+import { ethWalletType } from "./AssetTypes";
 import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
@@ -24,7 +25,7 @@ interface ISerializedEthBundle extends ISerializedBundle {
 
 /** Represents an ETH wallet. */
 export class EthWallet extends CryptoWallet {
-    public static readonly type = "Ethereum";
+    public static readonly type = ethWalletType;
 
     public readonly type = EthWallet.type;
 
