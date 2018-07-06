@@ -12,27 +12,12 @@
 
 import { Asset, IModel } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
-import { IAssetProperties } from "./IAssetProperties";
-
-/** Contains the defining properties common to all crypto currency wallets. */
-export interface ICryptoWalletProperties extends IAssetProperties {
-    /** Provides the public address. */
-    readonly address?: string;
-}
-
-/** @internal */
-const superType = "Crypto Currency";
-
-/** @internal */
-export interface ICryptoWallet extends ICryptoWalletProperties {
-    /** @internal */
-    readonly superType: typeof superType;
-}
+import { cryptoWalletSuperType, ICryptoWallet, ICryptoWalletProperties } from "./ICryptoWalletProperties";
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     /** @internal */
-    public static readonly superType = superType;
+    public static readonly superType = cryptoWalletSuperType;
 
     public readonly address?: string;
 

@@ -13,8 +13,9 @@
 import { HDNode } from "bitcoinjs-lib";
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { CryptoWallet, ICryptoWalletProperties } from "./CryptoWallet";
+import { CryptoWallet } from "./CryptoWallet";
 import { GenericAssetBundle } from "./GenericAssetBundle";
+import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { Unknown, Value } from "./Value";

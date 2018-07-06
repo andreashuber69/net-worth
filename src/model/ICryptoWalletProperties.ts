@@ -10,24 +10,18 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
-import { CryptoWallet } from "./CryptoWallet";
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { IAssetProperties } from "./IAssetProperties";
 
-/** Represents an ERC20 token wallet. */
-export class Erc20TokenWallet extends CryptoWallet {
-    public static readonly type = "ERC20 Token";
+/** Contains the defining properties common to all crypto currency wallets. */
+export interface ICryptoWalletProperties extends IAssetProperties {
+    /** Provides the public address. */
+    readonly address?: string;
+}
 
-    public readonly type = Erc20TokenWallet.type;
+export const cryptoWalletSuperType = "Crypto Currency";
 
-    public get isEditable() {
-        return false;
-    }
-
+/** @internal */
+export interface ICryptoWallet extends ICryptoWalletProperties {
     /** @internal */
-    public constructor(
-        parent: IModel, properties: ICryptoWalletProperties, currencySymbol: string, unitValueUsd: number) {
-        super(parent, properties, currencySymbol);
-        this.unitValueUsd = unitValueUsd;
-    }
+    readonly superType: typeof cryptoWalletSuperType;
 }
