@@ -40,10 +40,11 @@
       </template>
       <v-progress-linear slot="progress" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props">
-        <AssetListRow :value="props.item" @edit="onEdit" @delete="onDelete"></AssetListRow>
+        <AssetListRow :value="props.item" :visibleColumnCount="optionalColumnCount" @edit="onEdit" @delete="onDelete">
+        </AssetListRow>
       </template>
       <template slot="footer">
-        <td colspan="2" :class="getFooterClass('grandTotal')">Grand Total ({{ checkedValue.currency }})</td>
+        <td colspan="2" :class="getFooterClass('grandTotalLabel')">Grand Total</td>
         <td :class="getFooterClass('description')"></td>
         <td :class="getFooterClass('location')"></td>
         <td :class="getFooterClass('unit')"></td>

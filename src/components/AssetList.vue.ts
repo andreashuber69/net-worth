@@ -52,9 +52,14 @@ export default class AssetList extends ComponentBase<Model> {
         return Format.fraction(this.totalValue, 2);
     }
 
+    /** Provides a value indicating how many optional columns are currently visible. */
+    public get optionalColumnCount() {
+        return this.optionalColumnCountImpl;
+    }
+
     // tslint:disable-next-line:prefer-function-over-method
     public getHeaderClass(columnName: ColumnName) {
-        const result = AssetListRow.getClassImpl(columnName, this.checkedValue.groupBy);
+        const result = AssetListRow.getClassImpl(columnName, this.checkedValue.groupBy, this.optionalColumnCount);
 
         // Sortable columns
         switch (columnName) {
@@ -78,7 +83,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getFooterClass(columnName: ColumnName) {
-        return AssetListRow.getClassImpl(columnName, this.checkedValue.groupBy);
+        return AssetListRow.getClassImpl(columnName, this.checkedValue.groupBy, this.optionalColumnCount);
     }
 
     /** Changes the sorting for the given property. */
@@ -100,7 +105,22 @@ export default class AssetList extends ComponentBase<Model> {
         this.checkedValue.deleteAsset(asset);
     }
 
+    public mounted() {
+        this.timer = setInterval(() => this.onIntervalElapsed(), 100);
+    }
+
+    public beforeDestroy() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private optionalColumnCountImpl = AssetListRow.maxOptionalColumnCount;
+
+    private timer?: NodeJS.Timer;
+    private previousOffset: number = Number.NaN;
 
     private get totalValue() {
         return this.checkedValue.groups.reduce<number | undefined>(
@@ -109,5 +129,23 @@ export default class AssetList extends ComponentBase<Model> {
 
     private get assetEditor() {
         return this.getControl("editor") as AssetEditor;
+    }
+
+    private onIntervalElapsed() {
+        // tslint:disable-next-line:no-unsafe-any
+        if (this.previousOffset === this.$el.offsetLeft) {
+            // tslint:disable-next-line:no-unsafe-any
+            if ((this.optionalColumnCountImpl > 0) && (this.$el.offsetLeft < 0)) {
+                --this.optionalColumnCountImpl;
+            } else if ((this.optionalColumnCountImpl < AssetListRow.maxOptionalColumnCount) &&
+                // tslint:disable-next-line:no-unsafe-any
+                (this.$el.offsetLeft * 2 > this.$el.offsetWidth /
+                    (AssetListRow.requiredColumnCount + this.optionalColumnCountImpl) * 3)) {
+                ++this.optionalColumnCountImpl;
+            }
+        }
+
+        // tslint:disable-next-line:no-unsafe-any
+        this.previousOffset = this.$el.offsetLeft;
     }
 }
