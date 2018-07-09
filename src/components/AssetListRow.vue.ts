@@ -59,13 +59,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
         const result = new Array<string>();
 
         // Hiding
-        const allColumns = this.allColumns.get(groupBy);
-
-        if (!allColumns) {
-            throw new Error("Unknown groupBy!");
-        }
-
-        if (allColumns.indexOf(columnName) >= this.allColumnCounts[optionalColumnCount]) {
+        if (this.isHidden(columnName, groupBy, optionalColumnCount)) {
             result.push("hidden-sm-and-up", "hidden-xs-only");
         }
 
@@ -103,8 +97,11 @@ export default class AssetListRow extends ComponentBase<Asset> {
             case Asset.typeName:
                 result.push("pl-0", rightClass);
                 break;
-            case Asset.descriptionName:
             case Asset.locationName:
+                result.push(
+                    this.isHidden(Asset.typeName, groupBy, optionalColumnCount) ? "pl-0" : leftClass, rightClass);
+                break;
+            case Asset.descriptionName:
             case Asset.unitName:
             case Asset.finenessName:
             case Asset.unitValueName:
@@ -253,6 +250,16 @@ export default class AssetListRow extends ComponentBase<Asset> {
         }
 
         return result;
+    }
+
+    private static isHidden(columnName: ColumnName, groupBy: GroupBy, optionalColumnCount: number) {
+        const allColumns = this.allColumns.get(groupBy);
+
+        if (!allColumns) {
+            throw new Error("Unknown groupBy!");
+        }
+
+        return allColumns.indexOf(columnName) >= this.allColumnCounts[optionalColumnCount];
     }
 
     private static getName<T extends keyof AssetListRow>(name: T) {
