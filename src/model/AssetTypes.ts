@@ -16,11 +16,11 @@ export const erc20TokenWalletType = "ERC20 Token";
 export const silverAssetType = "Silver";
 export const goldAssetType = "Gold";
 
-export type EditableCryptoWalletTypes = typeof btcWalletType | typeof ethWalletType;
-type CryptoWalletTypes = EditableCryptoWalletTypes | typeof erc20TokenWalletType;
+export type EditableCryptoWalletType = typeof btcWalletType | typeof ethWalletType;
+type CryptoWalletType = EditableCryptoWalletType | typeof erc20TokenWalletType;
 
-export type EditablePreciousMetalAssetTypes = typeof silverAssetType | typeof goldAssetType;
-type PreciousMetalAssetTypes = EditablePreciousMetalAssetTypes;
+export type EditablePreciousMetalAssetType = typeof silverAssetType | typeof goldAssetType;
+type PreciousMetalAssetType = EditablePreciousMetalAssetType;
 
-export type EditableAssetTypes = EditableCryptoWalletTypes | EditablePreciousMetalAssetTypes;
-export type AssetTypes = CryptoWalletTypes | PreciousMetalAssetTypes;
+export type EditableAssetType = EditableCryptoWalletType | EditablePreciousMetalAssetType;
+export type AssetType = CryptoWalletType | PreciousMetalAssetType;

@@ -15,7 +15,7 @@ import {
     IAssetIntersection, IAssetUnion, ISerializedAsset, ISerializedObject, SerializedAssetPropertyName,
 } from "./AssetInterfaces";
 
-import { AssetTypes } from "./AssetTypes";
+import { AssetType } from "./AssetTypes";
 import { IAssetProperties } from "./IAssetProperties";
 import { Unknown } from "./Value";
 
@@ -50,7 +50,7 @@ export abstract class Asset {
     }
 
     /** Provides the type of asset, e.g. 'Silver, 'Gold', 'Bitcoin', 'Litecoin'. */
-    public abstract get type(): AssetTypes | "";
+    public abstract get type(): AssetType | "";
 
     /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
     public readonly description: string;

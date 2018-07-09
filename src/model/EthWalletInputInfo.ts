@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAssetConstructor } from "./AssetInputInfo";
-import { EditableCryptoWalletTypes } from "./AssetTypes";
+import { EditableCryptoWalletType } from "./AssetTypes";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 
@@ -28,7 +28,7 @@ export class EthWalletInputInfo extends CryptoWalletInputInfo {
      * pass a constructor function from a constructor. The compiled code consistently fails with a runtime error stating
      * that the constructor function is unknown.
      */
-    public constructor(type: EditableCryptoWalletTypes, ctor: IAssetConstructor) {
+    public constructor(type: EditableCryptoWalletType, ctor: IAssetConstructor) {
         super(type, 18, ctor);
     }
 
