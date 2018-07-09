@@ -57,6 +57,10 @@ export default class AssetList extends ComponentBase<Model> {
         return this.optionalColumnCountImpl;
     }
 
+    public get grandTotalLabelColumnCount() {
+        return AssetListRow.getRawColumnCount(this.optionalColumnCount) - 3;
+    }
+
     // tslint:disable-next-line:prefer-function-over-method
     public getHeaderClass(columnName: ColumnName) {
         const result = AssetListRow.getClassImpl(columnName, this.checkedValue.groupBy, this.optionalColumnCount);

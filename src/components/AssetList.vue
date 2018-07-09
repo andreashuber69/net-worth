@@ -44,13 +44,7 @@
         </AssetListRow>
       </template>
       <template slot="footer">
-        <td colspan="2" :class="getFooterClass('grandTotalLabel')">Grand Total</td>
-        <td :class="getFooterClass('description')"></td>
-        <td :class="getFooterClass('location')"></td>
-        <td :class="getFooterClass('unit')"></td>
-        <td colspan="2" :class="getFooterClass('fineness')"></td>
-        <td colspan="2" :class="getFooterClass('unitValue')"></td>
-        <td colspan="2" :class="getFooterClass('quantity')"></td>
+        <td :colspan="grandTotalLabelColumnCount" :class="getFooterClass('grandTotalLabel')">Grand Total</td>
         <td :class="getFooterClass('totalValueInteger')">{{ totalValueInteger }}</td>
         <td :class="getFooterClass('totalValueFraction')">{{ totalValueFraction }}</td>
         <td :class="getFooterClass('more')"></td>

@@ -37,7 +37,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
     /** Provides the maximum number of optional columns that can be displayed. */
     public static get maxOptionalColumnCount() {
-        return AssetListRow.columnNameLengths.length - 1;
+        return this.allColumnCounts.length - 1;
     }
 
     /** @internal */
@@ -50,17 +50,22 @@ export default class AssetListRow extends ComponentBase<Asset> {
     public static readonly grandTotalLabelName = "grandTotalLabel";
 
     /** @internal */
+    public static getRawColumnCount(optionalColumnCount: number) {
+        return this.rawColumnCounts[optionalColumnCount];
+    }
+
+    /** @internal */
     public static getClassImpl(columnName: ColumnName, groupBy: GroupBy, optionalColumnCount: number) {
         const result = new Array<string>();
 
         // Hiding
-        const allColumns = AssetListRow.allColumns.get(groupBy);
+        const allColumns = this.allColumns.get(groupBy);
 
         if (!allColumns) {
             throw new Error("Unknown groupBy!");
         }
 
-        if (allColumns.indexOf(columnName) >= this.columnNameLengths[optionalColumnCount]) {
+        if (allColumns.indexOf(columnName) >= this.allColumnCounts[optionalColumnCount]) {
             result.push("hidden-sm-and-up", "hidden-xs-only");
         }
 
@@ -228,7 +233,8 @@ export default class AssetListRow extends ComponentBase<Asset> {
         [Asset.locationName, AssetListRow.getColumns(Asset.locationName)],
     ]);
 
-    private static readonly columnNameLengths = [7, 8, 9, 12, 15, 16, 19];
+    private static readonly allColumnCounts = [7, 8, 9, 12, 15, 16, 19];
+    private static readonly rawColumnCounts = [5, 6, 7, 9, 11, 12, 14];
 
     private static getColumns(groupBy: GroupBy) {
         const result: ColumnName[] = [
