@@ -57,4 +57,8 @@
 .total {
   font-weight: bold;
 }
+
+td {
+    white-space: nowrap;
+}
 </style>
