@@ -153,9 +153,8 @@ export default class AssetListRow extends ComponentBase<Asset> {
         return result;
     }
 
-    // TODO: This should be a number
     @Prop()
-    public visibleColumnCount: undefined;
+    public visibleColumnCount?: number;
 
     public get finenessInteger() {
         return this.checkedValue.fineness === undefined ? "" : Math.trunc(this.checkedValue.fineness).toString();
@@ -261,11 +260,11 @@ export default class AssetListRow extends ComponentBase<Asset> {
     }
 
     private get checkedOptionalColumnCount() {
-        if (this.visibleColumnCount as any === undefined) {
+        if (this.visibleColumnCount === undefined) {
             throw new Error("No optional column count set!");
         }
 
-        return this.visibleColumnCount as any as number;
+        return this.visibleColumnCount;
     }
 }
 
