@@ -24,7 +24,7 @@ export abstract class ControlBase<T extends PrimitiveInputInfo> extends Componen
     public info?: InputInfo;
 
     @Prop()
-    // property should be declared as having the type AllAssetPropertyNames but doing so triggers the following issue:
+    // property should be declared as having the type AssetPropertyName but doing so triggers the following issue:
     // https://github.com/kaorun343/vue-property-decorator/issues/69
     public property: undefined;
 
