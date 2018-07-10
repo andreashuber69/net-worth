@@ -84,7 +84,7 @@
               <v-container>
                 <v-layout column justify-center>
                   <p class="text-xs-center">
-                    Asset Manager would not work without the following data providers, which generously offer their
+                    Asset Manager would not work without the following data providers, who generously offer their
                     services free of charge:
                   </p>
                   <v-btn href="https://coinmarketcap.com" target="_blank" flat>
@@ -92,6 +92,9 @@
                   </v-btn>
                   <v-btn href="https://blockchain.info" target="_blank" flat>
                     <img src="./assets/blockchain.svg" height="36"/>
+                  </v-btn>
+                  <v-btn href="https://blockcypher.com" target="_blank" flat>
+                    <img src="./assets/blockcypher.svg" height="36"/>
                   </v-btn>
                   <v-btn href="https://ethplorer.io" target="_blank" flat>
                     <img src="./assets/ethplorer.png" height="36"/>
