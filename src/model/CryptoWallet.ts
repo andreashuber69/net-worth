@@ -51,8 +51,8 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     public async queryData(): Promise<void> {
         await super.queryData();
 
-        if (this.coin) {
-            this.unitValueUsd = await new CoinMarketCapRequest(this.coin, false).execute();
+        if (this.slug) {
+            this.unitValueUsd = await new CoinMarketCapRequest(this.slug, false).execute();
         }
     }
 
@@ -74,11 +74,11 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
      * @param parent The parent model to which this asset belongs.
      * @param properties The crypto wallet properties.
      * @param currencySymbol The crypto currency symbol, e.g. 'BTC', 'LTC'.
-     * @param coin The coinmarketcap.com identifier of the currency.
+     * @param slug The coinmarketcap.com identifier (aka "website_slug") of the currency.
      */
     protected constructor(
         parent: IModel, properties: ICryptoWalletProperties,
-        private readonly currencySymbol: string, private readonly coin?: string) {
+        private readonly currencySymbol: string, private readonly slug?: string) {
         super(parent, properties);
         this.location = properties.location;
         this.address = properties.address;

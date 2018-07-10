@@ -16,7 +16,7 @@ import { Unknown, Value } from "./Value";
 
 /** Represents a single blockcypher.com request. */
 export class BlockcypherRequest implements IWebRequest<number> {
-    public constructor(private readonly coin: "ltc" | "dash" | "doge", private readonly address: string) {
+    public constructor(private readonly coin: string, private readonly address: string) {
     }
 
     public async execute() {

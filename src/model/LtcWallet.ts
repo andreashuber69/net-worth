@@ -11,16 +11,12 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
 import { ltcWalletType } from "./AssetTypes";
-import { BlockcypherRequest } from "./BlockcypherRequest";
-import { CryptoWallet } from "./CryptoWallet";
-import { GenericAssetBundle } from "./GenericAssetBundle";
+import { BlockcypherWallet } from "./BlockcypherWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
-import { Unknown } from "./Value";
 
 /** Represents a LTC wallet. */
-export class LtcWallet extends CryptoWallet {
+export class LtcWallet extends BlockcypherWallet {
     public static readonly type = ltcWalletType;
 
     public readonly type = LtcWallet.type;
@@ -34,19 +30,5 @@ export class LtcWallet extends CryptoWallet {
      */
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
         super(parent, properties, "LTC", "litecoin");
-    }
-
-    public bundle(bundle?: Unknown): AssetBundle {
-        return new GenericAssetBundle(this);
-    }
-
-    /** @internal */
-    public async queryData(): Promise<void> {
-        await super.queryData();
-
-        if (this.address) {
-            this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
-                await new BlockcypherRequest("ltc", this.address).execute();
-        }
     }
 }
