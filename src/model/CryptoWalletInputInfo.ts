@@ -23,7 +23,7 @@ import { Unknown } from "./Value";
  * Defines how the properties of a crypto currency wallet need to be input and validated and provides a method to create
  * a representation of the wallet.
  */
-export abstract class CryptoWalletInputInfo extends AssetInputInfo {
+export class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly description = new TextInputInfo(
         "Description", "The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.", true, true);
     public readonly location = new TextInputInfo(

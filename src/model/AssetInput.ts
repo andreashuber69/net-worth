@@ -15,22 +15,32 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { IAssetIntersection } from "./AssetInterfaces";
 import { BtcWallet } from "./BtcWallet";
-import { BtcWalletInputInfo } from "./BtcWalletInputInfo";
+import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { EthWallet } from "./EthWallet";
-import { EthWalletInputInfo } from "./EthWalletInputInfo";
 import { GoldAsset } from "./GoldAsset";
 import { LtcWallet } from "./LtcWallet";
-import { LtcWalletInputInfo } from "./LtcWalletInputInfo";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
 import { Unknown, Value } from "./Value";
 
+const btcHint =
+    "The wallets public address, single or xpub (ypub is not supported). " +
+    "<span style='color:red'>Will be sent to blockchain.info to query the balance.</span>";
+
+const ltcHint =
+    "The wallets single public address (neither Mtub nor Ltub are supported). " +
+    "<span style='color:red'>Will be sent to blockcypher.com to query the balance.</span>";
+
+const ethHint =
+    "The wallets single public address (xpub is not supported). " +
+    "<span style='color:red'>Will be sent to ethplorer.io to query ETH and token balances.</span>";
+
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
     public static readonly infos: AssetInputInfo[] = [
-        new BtcWalletInputInfo(BtcWallet.type, BtcWallet),
-        new LtcWalletInputInfo(LtcWallet.type, LtcWallet),
-        new EthWalletInputInfo(EthWallet.type, EthWallet),
+        new CryptoWalletInputInfo(BtcWallet.type, btcHint, 8, BtcWallet),
+        new CryptoWalletInputInfo(LtcWallet.type, ltcHint, 8, LtcWallet),
+        new CryptoWalletInputInfo(EthWallet.type, ethHint, 18, EthWallet),
         new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
         new PreciousMetalAssetInputInfo(GoldAsset.type, GoldAsset),
     ];
