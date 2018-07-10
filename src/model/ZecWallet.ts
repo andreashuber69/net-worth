@@ -12,7 +12,7 @@
 
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { zcashWalletType } from "./AssetTypes";
+import { zecWalletType } from "./AssetTypes";
 import { CryptoWallet } from "./CryptoWallet";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
@@ -20,11 +20,11 @@ import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { Unknown, Value } from "./Value";
 
-/** Represents a Zcash wallet. */
-export class ZcashWallet extends CryptoWallet {
-    public static readonly type = zcashWalletType;
+/** Represents a ZEC wallet. */
+export class ZecWallet extends CryptoWallet {
+    public static readonly type = zecWalletType;
 
-    public readonly type = ZcashWallet.type;
+    public readonly type = ZecWallet.type;
 
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
         super(parent, properties, "ZEC", "zcash");
@@ -40,7 +40,7 @@ export class ZcashWallet extends CryptoWallet {
 
         if (this.address) {
             this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
-                await new ZcashWallet.SoChainRequest(this.address).execute();
+                await new ZecWallet.SoChainRequest(this.address).execute();
         }
     }
 
