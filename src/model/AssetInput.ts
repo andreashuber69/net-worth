@@ -23,6 +23,7 @@ import { LtcWallet } from "./LtcWallet";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
 import { Unknown, Value } from "./Value";
+import { ZcashWallet } from "./ZcashWallet";
 
 const btcHint =
     "The wallets public address, single or xpub (ypub is not supported). " +
@@ -40,6 +41,10 @@ const ethHint =
     "The wallets single public address (xpub is not supported). " +
     "<span style='color:red'>Will be sent to ethplorer.io to query ETH and token balances.</span>";
 
+const zcashHint =
+    "The wallets single public address (xpub is not supported). " +
+    "<span style='color:red'>Will be sent to chain.so to query the balance.</span>";
+
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
     public static readonly infos: AssetInputInfo[] = [
@@ -47,6 +52,7 @@ export class AssetInput {
         new CryptoWalletInputInfo(LtcWallet.type, ltcHint, 8, LtcWallet),
         new CryptoWalletInputInfo(DashWallet.type, dashHint, 8, DashWallet),
         new CryptoWalletInputInfo(EthWallet.type, ethHint, 18, EthWallet),
+        new CryptoWalletInputInfo(ZcashWallet.type, zcashHint, 8, ZcashWallet),
         new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
         new PreciousMetalAssetInputInfo(GoldAsset.type, GoldAsset),
     ];
