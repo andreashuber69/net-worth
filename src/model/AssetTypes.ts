@@ -13,6 +13,7 @@
 export const btcWalletType = "Bitcoin";
 export const ltcWalletType = "Litecoin";
 export const dashWalletType = "Dash";
+export const etcWalletType = "Ethereum Classic";
 export const ethWalletType = "Ethereum";
 export const erc20TokenWalletType = "ERC20 Token";
 export const zecWalletType = "Zcash";
@@ -20,7 +21,8 @@ export const silverAssetType = "Silver";
 export const goldAssetType = "Gold";
 
 export type EditableCryptoWalletType =
-    typeof btcWalletType | typeof ltcWalletType | typeof dashWalletType | typeof ethWalletType | typeof zecWalletType;
+    typeof btcWalletType | typeof ltcWalletType | typeof dashWalletType |
+    typeof etcWalletType | typeof ethWalletType | typeof zecWalletType;
 type CryptoWalletType = EditableCryptoWalletType | typeof erc20TokenWalletType;
 
 export type EditablePreciousMetalAssetType = typeof silverAssetType | typeof goldAssetType;

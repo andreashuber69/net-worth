@@ -15,7 +15,7 @@ import { ltcWalletType } from "./AssetTypes";
 import { BlockcypherWallet } from "./BlockcypherWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 
-/** Represents a LTC wallet. */
+/** Represents an LTC wallet. */
 export class LtcWallet extends BlockcypherWallet {
     public static readonly type = ltcWalletType;
 
