@@ -11,12 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 export const btcWalletType = "Bitcoin";
+export const ltcWalletType = "Litecoin";
 export const ethWalletType = "Ethereum";
 export const erc20TokenWalletType = "ERC20 Token";
 export const silverAssetType = "Silver";
 export const goldAssetType = "Gold";
 
-export type EditableCryptoWalletType = typeof btcWalletType | typeof ethWalletType;
+export type EditableCryptoWalletType = typeof btcWalletType | typeof ltcWalletType | typeof ethWalletType;
 type CryptoWalletType = EditableCryptoWalletType | typeof erc20TokenWalletType;
 
 export type EditablePreciousMetalAssetType = typeof silverAssetType | typeof goldAssetType;

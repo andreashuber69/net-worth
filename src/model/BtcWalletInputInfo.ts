@@ -35,6 +35,6 @@ export class BtcWalletInputInfo extends CryptoWalletInputInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly hint =
-        "The wallets public address, single or xpub (ypub is unsupported). " +
+        "The wallets public address, single or xpub (ypub is not supported). " +
         "<span style='color:red'>Will be sent to blockchain.info to query the balance.</span>";
 }

@@ -16,11 +16,11 @@ import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 
 /**
- * Defines how the properties of an ETH wallet need to be input and validated and provides a method to create a
+ * Defines how the properties of an LTC wallet need to be input and validated and provides a method to create a
  * representation of the wallet.
  */
-export class EthWalletInputInfo extends CryptoWalletInputInfo {
-    public readonly address = new TextInputInfo("Address", EthWalletInputInfo.hint, true, false);
+export class LtcWalletInputInfo extends CryptoWalletInputInfo {
+    public readonly address = new TextInputInfo("Address", LtcWalletInputInfo.hint, true, false);
 
     /**
      * @internal
@@ -29,12 +29,12 @@ export class EthWalletInputInfo extends CryptoWalletInputInfo {
      * that the constructor function is unknown.
      */
     public constructor(type: EditableCryptoWalletType, ctor: IAssetConstructor) {
-        super(type, 18, ctor);
+        super(type, 8, ctor);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly hint =
-        "The wallets single public address (xpub is not supported). " +
-        "<span style='color:red'>Will be sent to ethplorer.io to query ETH and token balances.</span>";
+        "The wallets single public address (neither Mtub nor Ltub are supported). " +
+        "<span style='color:red'>Will be sent to blockcypher.com to query the balance.</span>";
 }

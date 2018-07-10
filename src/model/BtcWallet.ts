@@ -85,7 +85,7 @@ export class BtcWallet extends CryptoWallet {
                             Value.hasNumberProperty(balance, "n_tx")) {
                             result.transactionCount += balance.n_tx;
                             result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) +
-                                balance.final_balance / 100000000;
+                                balance.final_balance / 1E8;
                         }
                     }
                 }

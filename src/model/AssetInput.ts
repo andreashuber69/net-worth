@@ -19,6 +19,8 @@ import { BtcWalletInputInfo } from "./BtcWalletInputInfo";
 import { EthWallet } from "./EthWallet";
 import { EthWalletInputInfo } from "./EthWalletInputInfo";
 import { GoldAsset } from "./GoldAsset";
+import { LtcWallet } from "./LtcWallet";
+import { LtcWalletInputInfo } from "./LtcWalletInputInfo";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
 import { Unknown, Value } from "./Value";
@@ -27,6 +29,7 @@ export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
     public static readonly infos: AssetInputInfo[] = [
         new BtcWalletInputInfo(BtcWallet.type, BtcWallet),
+        new LtcWalletInputInfo(LtcWallet.type, LtcWallet),
         new EthWalletInputInfo(EthWallet.type, EthWallet),
         new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
         new PreciousMetalAssetInputInfo(GoldAsset.type, GoldAsset),
