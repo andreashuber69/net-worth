@@ -99,6 +99,9 @@
                   <v-btn href="https://ethplorer.io" target="_blank" flat>
                     <img src="./assets/ethplorer.png" height="36"/>
                   </v-btn>
+                  <v-btn href="https://chain.so" target="_blank" flat>
+                    <img src="./assets/sochain.png" height="36"/>
+                  </v-btn>
                   <v-btn href="https://quandl.com" target="_blank" flat>
                     <img src="./assets/quandl.svg" height="36"/>
                   </v-btn>
