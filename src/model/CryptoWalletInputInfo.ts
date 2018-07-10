@@ -29,6 +29,8 @@ export abstract class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly location = new TextInputInfo(
         "Location", "The location of the wallet, e.g. 'Mobile Phone', 'Hardware Wallet', 'Safety Deposit Box'.",
         true, false);
+    public readonly address: TextInputInfo;
+
     public readonly weight = new TextInputInfo();
     public readonly weightUnit = new SelectInputInfo();
     public readonly fineness = new TextInputInfo();
@@ -36,8 +38,10 @@ export abstract class CryptoWalletInputInfo extends AssetInputInfo {
 
     /** @internal */
     public constructor(
-        public readonly type: EditableCryptoWalletType, quantityDecimals: number, ctor: IAssetConstructor) {
+        public readonly type: EditableCryptoWalletType,
+        addressHint: string, quantityDecimals: number, ctor: IAssetConstructor) {
         super(ctor);
+        this.address = new TextInputInfo("Address", addressHint, true, false);
         this.quantity = new TextInputInfo(
             "Quantity", "The amount in the wallet.", true, false, 0, undefined, Math.pow(10, -quantityDecimals));
     }

@@ -13,15 +13,12 @@
 import { IAssetConstructor } from "./AssetInputInfo";
 import { EditableCryptoWalletType } from "./AssetTypes";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
-import { TextInputInfo } from "./TextInputInfo";
 
 /**
  * Defines how the properties of an LTC wallet need to be input and validated and provides a method to create a
  * representation of the wallet.
  */
 export class LtcWalletInputInfo extends CryptoWalletInputInfo {
-    public readonly address = new TextInputInfo("Address", LtcWalletInputInfo.hint, true, false);
-
     /**
      * @internal
      * @description Neither `type` nor `ctor` need to be parameters here, but somehow it does not seem to be possible to
@@ -29,7 +26,7 @@ export class LtcWalletInputInfo extends CryptoWalletInputInfo {
      * that the constructor function is unknown.
      */
     public constructor(type: EditableCryptoWalletType, ctor: IAssetConstructor) {
-        super(type, 8, ctor);
+        super(type, LtcWalletInputInfo.hint, 8, ctor);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
