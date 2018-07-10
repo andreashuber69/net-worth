@@ -15,6 +15,7 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { IAssetIntersection } from "./AssetInterfaces";
 import { BtcWallet } from "./BtcWallet";
+import { BtgWallet } from "./BtgWallet";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { DashWallet } from "./DashWallet";
 import { EtcWallet } from "./EtcWallet";
@@ -34,10 +35,6 @@ const ltcHint =
     "The wallets single public address (neither Mtub nor Ltub are supported). " +
     "<span style='color:red'>Will be sent to blockcypher.com to query the balance.</span>";
 
-const dashHint =
-    "The wallets single public address (drkp is not supported). " +
-    "<span style='color:red'>Will be sent to blockcypher.com to query the balance.</span>";
-
 const etcHint =
     "The wallets single public address (xpub is not supported). " +
     "<span style='color:red'>Will be sent to gastracker.io to query the balance.</span>";
@@ -46,6 +43,14 @@ const ethHint =
     "The wallets single public address (xpub is not supported). " +
     "<span style='color:red'>Will be sent to ethplorer.io to query ETH and token balances.</span>";
 
+const btgHint =
+    "The wallets single public address (ypub is not supported). " +
+    "<span style='color:red'>Will be sent to btgexp.com to query the balance.</span>";
+
+const dashHint =
+    "The wallets single public address (drkp is not supported). " +
+    "<span style='color:red'>Will be sent to blockcypher.com to query the balance.</span>";
+
 const zecHint =
     "The wallets single public address (xpub is not supported). " +
     "<span style='color:red'>Will be sent to chain.so to query the balance.</span>";
@@ -53,14 +58,15 @@ const zecHint =
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
     public static readonly infos: AssetInputInfo[] = [
-        new CryptoWalletInputInfo(BtcWallet.type, btcHint, 8, BtcWallet),
-        new CryptoWalletInputInfo(LtcWallet.type, ltcHint, 8, LtcWallet),
-        new CryptoWalletInputInfo(DashWallet.type, dashHint, 8, DashWallet),
-        new CryptoWalletInputInfo(EtcWallet.type, etcHint, 18, EtcWallet),
-        new CryptoWalletInputInfo(EthWallet.type, ethHint, 18, EthWallet),
-        new CryptoWalletInputInfo(ZecWallet.type, zecHint, 8, ZecWallet),
         new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
         new PreciousMetalAssetInputInfo(GoldAsset.type, GoldAsset),
+        new CryptoWalletInputInfo(BtcWallet.type, btcHint, 8, BtcWallet),
+        new CryptoWalletInputInfo(LtcWallet.type, ltcHint, 8, LtcWallet),
+        new CryptoWalletInputInfo(EtcWallet.type, etcHint, 18, EtcWallet),
+        new CryptoWalletInputInfo(EthWallet.type, ethHint, 18, EthWallet),
+        new CryptoWalletInputInfo(BtgWallet.type, btgHint, 8, BtgWallet),
+        new CryptoWalletInputInfo(DashWallet.type, dashHint, 8, DashWallet),
+        new CryptoWalletInputInfo(ZecWallet.type, zecHint, 8, ZecWallet),
     ];
 
     /** @internal */

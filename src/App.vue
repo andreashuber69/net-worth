@@ -77,7 +77,7 @@
       </v-content>
       <v-footer app dark color="primary" height="auto">
         <v-layout justify-center>
-          <v-dialog persistent v-model="areDataProvidersVisible" width="500">
+          <v-dialog persistent v-model="areDataProvidersVisible" width="400">
             <v-btn slot="activator" flat round>Data Providers</v-btn>
             <v-card>
               <v-card-title class="headline">Data Providers</v-card-title>
@@ -102,6 +102,9 @@
                   </v-btn>
                   <v-btn href="https://ethplorer.io" target="_blank" flat>
                     <img src="./assets/ethplorer.png" height="36"/>
+                  </v-btn>
+                  <v-btn href="https://btgexp.com" target="_blank" flat>
+                    <img src="./assets/btgexp.jpg" height="36"/>
                   </v-btn>
                   <v-btn href="https://chain.so" target="_blank" flat>
                     <img src="./assets/sochain.png" height="36"/>
