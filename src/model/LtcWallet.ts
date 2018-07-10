@@ -13,12 +13,11 @@
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { ltcWalletType } from "./AssetTypes";
+import { BlockcypherRequest } from "./BlockcypherRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
-import { IWebRequest } from "./IWebRequest";
-import { QueryCache } from "./QueryCache";
-import { Unknown, Value } from "./Value";
+import { Unknown } from "./Value";
 
 /** Represents a LTC wallet. */
 export class LtcWallet extends CryptoWallet {
@@ -47,30 +46,7 @@ export class LtcWallet extends CryptoWallet {
 
         if (this.address) {
             this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
-                await new LtcWallet.BlockcypherRequest(this.address).execute();
+                await new BlockcypherRequest("ltc", this.address).execute();
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // tslint:disable-next-line:variable-name max-classes-per-file
-    private static readonly BlockcypherRequest = class NestedBlockcypherRequest implements IWebRequest<number> {
-        public constructor(private readonly address: string) {
-        }
-
-        public async execute() {
-            return NestedBlockcypherRequest.getBalance(
-                await QueryCache.fetch(`https://api.blockcypher.com/v1/ltc/main/addrs/${this.address}/balance`));
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        private static getBalance(response: Unknown | null) {
-            if (Value.hasNumberProperty(response, "balance")) {
-                return response.balance / 1E8;
-            }
-
-            return Number.NaN;
-        }
-    };
 }
