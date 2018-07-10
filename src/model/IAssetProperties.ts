@@ -18,4 +18,6 @@ export interface IAssetProperties {
     readonly location: string;
     /** Provides the asset quantity. */
     readonly quantity?: number;
+    /** Provides the asset notes. */
+    readonly notes: string;
 }

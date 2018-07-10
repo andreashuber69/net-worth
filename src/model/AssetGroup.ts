@@ -62,7 +62,7 @@ export class AssetGroup extends Asset {
     }
 
     public constructor(parent: IModel, public readonly assets: Asset[]) {
-        super(parent, { description: "", location: "", quantity: undefined });
+        super(parent, { description: "", location: "", quantity: undefined, notes: "" });
     }
 
     // tslint:disable-next-line:prefer-function-over-method

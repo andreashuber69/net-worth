@@ -37,6 +37,7 @@ export abstract class Asset {
     public static readonly finenessName = Asset.getPropertyName("fineness");
     public static readonly unitValueName = Asset.getCalculatedPropertyName("unitValue");
     public static readonly quantityName = Asset.getPropertyName("quantity");
+    public static readonly notesName = Asset.getPropertyName("notes");
     public static readonly totalValueName = Asset.getCalculatedPropertyName("totalValue");
 
     /** Provides the unique key of the asset. */
@@ -71,6 +72,9 @@ export abstract class Asset {
 
     /** Provides the asset quantity. */
     public abstract get quantity(): number | undefined;
+
+    /** Provides the asset notes. */
+    public readonly notes: string;
 
     /** Provides the number of decimals to format the quantity to. */
     public abstract get displayDecimals(): number;
@@ -129,6 +133,7 @@ export abstract class Asset {
     protected constructor(parent: IModel, properties: IAssetProperties) {
         this.parent = parent;
         this.description = properties.description;
+        this.notes = properties.notes;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

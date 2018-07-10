@@ -28,6 +28,7 @@ export class NoAssetInputInfo extends AssetInputInfo {
     public readonly weightUnit = new SelectInputInfo();
     public readonly fineness = new TextInputInfo();
     public readonly quantity = new TextInputInfo();
+    public readonly notes = new TextInputInfo();
 
     /** @internal */
     public constructor() {

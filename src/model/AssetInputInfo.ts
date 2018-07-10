@@ -43,6 +43,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     public abstract get weightUnit(): SelectInputInfo;
     public abstract get fineness(): TextInputInfo;
     public abstract get quantity(): TextInputInfo;
+    public readonly notes = new TextInputInfo("Notes", "Additional notes for the asset.", true, false);
 
     /**
      * @internal
@@ -95,6 +96,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
                 weightUnit: this.validateComposite(true, input, Asset.weightUnitName),
                 fineness: this.validateComposite(true, input, Asset.finenessName),
                 quantity: this.validateComposite(true, input, Asset.quantityName),
+                notes: this.validateComposite(true, input, Asset.notesName),
             };
 
             let message = "";

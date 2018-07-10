@@ -24,6 +24,7 @@ export class AssetEditorData implements IAuxProperties<string> {
     public weightUnit: string;
     public fineness: string;
     public quantity: string;
+    public notes: string;
 
     /** @internal */
     public constructor(asset?: IAssetUnion) {
@@ -44,6 +45,8 @@ export class AssetEditorData implements IAuxProperties<string> {
                 this.fineness = "";
                 this.quantity = this.address ? "" : AssetEditorData.getQuantity(asset);
             }
+
+            this.notes = asset.notes;
         } else {
             this.description = "";
             this.location = "";
@@ -52,6 +55,7 @@ export class AssetEditorData implements IAuxProperties<string> {
             this.weightUnit = "";
             this.fineness = "";
             this.quantity  = "";
+            this.notes = "";
         }
     }
 

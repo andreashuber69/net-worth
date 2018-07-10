@@ -21,10 +21,11 @@ import { AssetProperties } from "./AssetProperties";
 import { ComponentBase } from "./ComponentBase";
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
 import Select from "./Select.vue";
+import TextArea from "./TextArea.vue";
 import TextField from "./TextField.vue";
 
 // tslint:disable-next-line:no-unsafe-any
-@Component({ components: { Select, TextField } })
+@Component({ components: { Select, TextArea, TextField } })
 /** Implements the dialog used to edit assets. */
 // tslint:disable-next-line:no-default-export
 export default class AssetEditor extends ComponentBase<Model> {
