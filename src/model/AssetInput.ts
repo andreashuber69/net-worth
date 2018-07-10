@@ -16,6 +16,7 @@ import { AssetInputInfo } from "./AssetInputInfo";
 import { IAssetIntersection } from "./AssetInterfaces";
 import { BtcWallet } from "./BtcWallet";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
+import { DashWallet } from "./DashWallet";
 import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
 import { LtcWallet } from "./LtcWallet";
@@ -31,6 +32,10 @@ const ltcHint =
     "The wallets single public address (neither Mtub nor Ltub are supported). " +
     "<span style='color:red'>Will be sent to blockcypher.com to query the balance.</span>";
 
+const dashHint =
+    "The wallets single public address (drkp is not supported). " +
+    "<span style='color:red'>Will be sent to blockcypher.com to query the balance.</span>";
+
 const ethHint =
     "The wallets single public address (xpub is not supported). " +
     "<span style='color:red'>Will be sent to ethplorer.io to query ETH and token balances.</span>";
@@ -40,6 +45,7 @@ export class AssetInput {
     public static readonly infos: AssetInputInfo[] = [
         new CryptoWalletInputInfo(BtcWallet.type, btcHint, 8, BtcWallet),
         new CryptoWalletInputInfo(LtcWallet.type, ltcHint, 8, LtcWallet),
+        new CryptoWalletInputInfo(DashWallet.type, dashHint, 8, DashWallet),
         new CryptoWalletInputInfo(EthWallet.type, ethHint, 18, EthWallet),
         new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
         new PreciousMetalAssetInputInfo(GoldAsset.type, GoldAsset),
