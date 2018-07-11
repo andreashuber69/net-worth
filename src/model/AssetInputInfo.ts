@@ -43,7 +43,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     public abstract get weightUnit(): SelectInputInfo;
     public abstract get fineness(): TextInputInfo;
     public abstract get quantity(): TextInputInfo;
-    public readonly notes = new TextInputInfo("Notes", "Additional notes for the asset.", true, false);
+    public readonly notes = new TextInputInfo("Notes", "Additional asset information.", true, false);
 
     /**
      * @internal

@@ -21,7 +21,7 @@
       </div>
     </td>
     <td :class="getClass('type')">{{ checkedValue.type }}</td>
-    <td :class="getClass('description')">{{ checkedValue.description }}</td>
+    <td :class="getClass('description')" :title="checkedValue.notes">{{ checkedValue.description }}</td>
     <td :class="getClass('location')" :title="checkedValue.locationHint">{{ checkedValue.location }}</td>
     <td :class="getClass('unit')">{{ checkedValue.unit }}</td>
     <td :class="getClass('finenessInteger')">{{ finenessInteger }}</td>
