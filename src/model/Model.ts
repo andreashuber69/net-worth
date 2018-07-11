@@ -20,7 +20,8 @@ import { QuandlRequest } from "./QuandlRequest";
 import { Unknown, Value } from "./Value";
 
 export type SortBy =
-    typeof Asset.typeName | typeof Asset.descriptionName | typeof Asset.locationName | typeof Asset.totalValueName;
+    typeof Asset.typeName | typeof Asset.descriptionName | typeof Asset.locationName |
+    typeof Asset.unitValueName | typeof Asset.totalValueName;
 
 export interface ISort {
     /** Provides the name of the property by which the asset list is currently sorted. */

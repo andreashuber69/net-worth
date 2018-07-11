@@ -31,7 +31,9 @@
         </th>
         <th :class="getHeaderClass('unit')">Unit</th>
         <th colspan="2" :class="getHeaderClass('fineness')">Fineness</th>
-        <th colspan="2" :class="getHeaderClass('unitValue')">Unit Value<br>({{ checkedValue.currency }})</th>
+        <th colspan="2" :class="getHeaderClass('unitValue')" @click="changeSort('unitValue')">
+          Unit Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.currency }})
+        </th>
         <th colspan="2" :class="getHeaderClass('quantity')">Quantity</th>
         <th colspan="2" :class="getHeaderClass('totalValue')" @click="changeSort('totalValue')">
           Total Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.currency }})
