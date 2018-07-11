@@ -47,8 +47,6 @@ export class AssetProperties implements IAssetIntersection {
     }
 
     public get notes() {
-        // TODO: Empty strings should not be serialized and parsing should account for the fact that we use empty
-        // strings in memory.
         return this.data.notes;
     }
 

@@ -46,7 +46,7 @@ export class AssetEditorData implements IAuxProperties<string> {
                 this.quantity = this.address ? "" : AssetEditorData.getQuantity(asset);
             }
 
-            this.notes = asset.notes;
+            this.notes = asset.notes || "";
         } else {
             this.description = "";
             this.location = "";

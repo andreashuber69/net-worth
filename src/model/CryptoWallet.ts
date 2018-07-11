@@ -64,7 +64,7 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
             location: this.location || undefined,
             address: this.address || undefined,
             quantity: this.address ? undefined : this.quantity,
-            notes: this.notes,
+            notes: this.notes || undefined,
         };
     }
 

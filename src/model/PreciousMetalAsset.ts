@@ -59,7 +59,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
             weightUnit: this.weightUnit,
             fineness: this.fineness,
             quantity: this.quantity,
-            notes: this.notes,
+            notes: this.notes || undefined,
         };
     }
 

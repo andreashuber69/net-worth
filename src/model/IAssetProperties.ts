@@ -10,7 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-/** Defines the common editable properties of all assets. */
+/**
+ * Defines the common editable properties of all assets.
+ * @description This interface (as well as its extending interfaces) defines the properties as they need to be provided
+ * by the user as well as by the serialized form. Properties that are defined optional here are also optional in the UI
+ * and during parsing. [[IAssetProperties.quantity]] is a special case since it is optional for crypto wallets but
+ * required for precious metal assets.
+ */
 export interface IAssetProperties {
     /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
     readonly description: string;
@@ -19,5 +25,5 @@ export interface IAssetProperties {
     /** Provides the asset quantity. */
     readonly quantity?: number;
     /** Provides the asset notes. */
-    readonly notes: string;
+    readonly notes?: string;
 }

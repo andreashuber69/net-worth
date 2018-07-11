@@ -133,7 +133,7 @@ export abstract class Asset {
     protected constructor(parent: IModel, properties: IAssetProperties) {
         this.parent = parent;
         this.description = properties.description;
-        this.notes = properties.notes;
+        this.notes = properties.notes || "";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
