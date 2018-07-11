@@ -16,7 +16,6 @@ import {
 } from "./AssetInterfaces";
 
 import { AssetType } from "./AssetTypes";
-import { IAssetProperties } from "./IAssetProperties";
 import { Unknown } from "./Value";
 
 /** @internal */
@@ -54,7 +53,7 @@ export abstract class Asset {
     public abstract get type(): AssetType | "";
 
     /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
-    public readonly description: string;
+    public abstract get description(): string;
 
     /** Provides the location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
     public abstract get location(): string;
@@ -73,11 +72,11 @@ export abstract class Asset {
     /** Provides the asset quantity. */
     public abstract get quantity(): number | undefined;
 
-    /** Provides the asset notes. */
-    public readonly notes: string;
-
     /** Provides the number of decimals to format the quantity to. */
     public abstract get displayDecimals(): number;
+
+    /** Provides the asset notes. */
+    public abstract get notes(): string;
 
     /** @internal */
     public get unitValue() {
@@ -128,12 +127,9 @@ export abstract class Asset {
     /**
      * Creates a new [[Asset]] instance.
      * @param parent The parent model to which this asset belongs.
-     * @param properties The asset properties.
      */
-    protected constructor(parent: IModel, properties: IAssetProperties) {
+    protected constructor(parent: IModel) {
         this.parent = parent;
-        this.description = properties.description;
-        this.notes = properties.notes || "";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -19,6 +19,8 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     /** @internal */
     public static readonly superType = cryptoWalletSuperType;
 
+    public readonly description: string;
+
     public readonly address: string;
 
     public readonly location: string;
@@ -38,6 +40,8 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     public quantity: number | undefined;
 
     public readonly displayDecimals = 6;
+
+    public readonly notes: string;
 
     /** @internal */
     public get interface() {
@@ -80,9 +84,11 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     protected constructor(
         parent: IModel, properties: ICryptoWalletProperties,
         private readonly currencySymbol: string, private readonly slug?: string) {
-        super(parent, properties);
+        super(parent);
+        this.description = properties.description;
         this.location = properties.location || "";
         this.address = properties.address || "";
         this.quantity = properties.quantity;
+        this.notes = properties.notes || "";
     }
 }

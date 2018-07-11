@@ -24,6 +24,10 @@ export class AssetGroup extends Asset {
         return this.coalesce((a) => a.type) || "";
     }
 
+    public get description() {
+        return this.coalesce((a) => a.description) || "";
+    }
+
     public get location() {
         return this.coalesce((a) => a.location) || "";
     }
@@ -45,6 +49,10 @@ export class AssetGroup extends Asset {
         return this.coalesce((a) => a.displayDecimals) || 0;
     }
 
+    public get notes() {
+        return this.assets.reduce((s, a) => `${s}${a.notes}\n`, "");
+    }
+
     public get unitValue() {
         return this.coalesce((a) => a.unitValue);
     }
@@ -62,7 +70,7 @@ export class AssetGroup extends Asset {
     }
 
     public constructor(parent: IModel, public readonly assets: Asset[]) {
-        super(parent, { description: "", location: "", quantity: undefined, notes: "" });
+        super(parent);
     }
 
     // tslint:disable-next-line:prefer-function-over-method

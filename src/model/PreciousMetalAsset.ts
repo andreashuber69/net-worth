@@ -25,6 +25,8 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     /** @internal */
     public static readonly superType = preciousMetalSuperType;
 
+    public readonly description: string;
+
     public readonly location: string;
 
     public readonly weight: number;
@@ -40,6 +42,8 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     public readonly quantity: number;
 
     public readonly displayDecimals = 0;
+
+    public readonly notes: string;
 
     /** @internal */
     public get interface() {
@@ -84,12 +88,14 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
      */
     protected constructor(
         parent: IModel, properties: IPreciousMetalAssetProperties, private readonly quandlPath: string) {
-        super(parent, properties);
+        super(parent);
+        this.description = properties.description;
         this.location = properties.location || "";
         this.weight = properties.weight;
         this.weightUnit = properties.weightUnit;
         this.fineness = properties.fineness;
         this.quantity = properties.quantity !== undefined ? properties.quantity : Number.NaN;
+        this.notes = properties.notes || "";
         this.pureGramsPerUnit = this.weight * this.weightUnit * this.fineness;
     }
 
