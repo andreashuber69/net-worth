@@ -27,7 +27,7 @@ export class AssetProperties implements IAssetIntersection {
     }
 
     public get address() {
-        return this.data.address ? this.data.address : undefined;
+        return this.data.address || undefined;
     }
 
     public get weight() {

@@ -54,7 +54,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
         return {
             type: this.type,
             description: this.description,
-            location: this.location,
+            location: this.location || undefined,
             weight: this.weight,
             weightUnit: this.weightUnit,
             fineness: this.fineness,
@@ -85,7 +85,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     protected constructor(
         parent: IModel, properties: IPreciousMetalAssetProperties, private readonly quandlPath: string) {
         super(parent, properties);
-        this.location = properties.location;
+        this.location = properties.location || "";
         this.weight = properties.weight;
         this.weightUnit = properties.weightUnit;
         this.fineness = properties.fineness;

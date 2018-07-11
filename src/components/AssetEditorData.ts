@@ -30,7 +30,7 @@ export class AssetEditorData implements IAuxProperties<string> {
     public constructor(asset?: IAssetUnion) {
         if (asset) {
             this.description = asset.description;
-            this.location = asset.location;
+            this.location = asset.location || "";
 
             if (asset.superType === PreciousMetalAsset.superType) {
                 this.address = "";
@@ -39,7 +39,7 @@ export class AssetEditorData implements IAuxProperties<string> {
                 this.fineness = asset.fineness.toString();
                 this.quantity = AssetEditorData.getQuantity(asset);
             } else {
-                this.address = asset.address ? asset.address : "";
+                this.address = asset.address || "";
                 this.weight = "";
                 this.weightUnit = "";
                 this.fineness = "";

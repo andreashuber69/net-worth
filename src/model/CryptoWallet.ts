@@ -19,12 +19,12 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     /** @internal */
     public static readonly superType = cryptoWalletSuperType;
 
-    public readonly address?: string;
+    public readonly address: string;
 
     public readonly location: string;
 
     public get locationHint() {
-        return this.address ? this.address : "";
+        return this.address;
     }
 
     public get unit() {
@@ -61,8 +61,8 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
         return {
             type: this.type,
             description: this.description,
-            location: this.location,
-            address: this.address ? this.address : undefined,
+            location: this.location || undefined,
+            address: this.address || undefined,
             quantity: this.address ? undefined : this.quantity,
             notes: this.notes,
         };
@@ -81,8 +81,8 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
         parent: IModel, properties: ICryptoWalletProperties,
         private readonly currencySymbol: string, private readonly slug?: string) {
         super(parent, properties);
-        this.location = properties.location;
-        this.address = properties.address;
+        this.location = properties.location || "";
+        this.address = properties.address || "";
         this.quantity = properties.quantity;
     }
 }

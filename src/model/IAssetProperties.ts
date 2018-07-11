@@ -15,7 +15,7 @@ export interface IAssetProperties {
     /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
     readonly description: string;
     /** Provides the location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
-    readonly location: string;
+    readonly location?: string;
     /** Provides the asset quantity. */
     readonly quantity?: number;
     /** Provides the asset notes. */

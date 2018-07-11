@@ -142,7 +142,7 @@ export class BtcWallet extends CryptoWallet {
         }
 
         private getBatch(chain: number, offset: number) {
-            const node = HDNode.fromBase58(this.address ? this.address : "").derive(chain);
+            const node = HDNode.fromBase58(this.address).derive(chain);
             const result = new Array<string>(20);
 
             for (let index = 0; index < result.length; ++index) {
