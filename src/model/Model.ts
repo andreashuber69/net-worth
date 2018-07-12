@@ -179,6 +179,12 @@ export class Model implements IModel {
      */
     public exchangeRate: number | undefined = 1;
 
+    /** Provides the sum of all asset total values. */
+    public get grandTotalValue() {
+        return this.groups.reduce<number | undefined>(
+            (s, a) => s === undefined ? undefined : (a.totalValue === undefined ? undefined : s + a.totalValue), 0);
+    }
+
     /** Provides the method that is called when the model has changed. */
     public onChanged: (() => void) | undefined = undefined;
 

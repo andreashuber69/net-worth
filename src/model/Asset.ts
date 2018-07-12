@@ -22,6 +22,7 @@ import { Unknown } from "./Value";
 export interface IModel {
     readonly groupBy: GroupBy;
     readonly exchangeRate: number | undefined;
+    readonly grandTotalValue: number | undefined;
 }
 
 /** Defines the base of all classes that represent an asset. */

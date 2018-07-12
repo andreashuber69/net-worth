@@ -41,15 +41,15 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public get isLoading() {
-        return (this.totalValue === undefined);
+        return (this.checkedValue.grandTotalValue === undefined);
     }
 
     public get totalValueInteger() {
-        return Format.integer(this.totalValue, 2);
+        return Format.integer(this.checkedValue.grandTotalValue, 2);
     }
 
     public get totalValueFraction() {
-        return Format.fraction(this.totalValue, 2);
+        return Format.fraction(this.checkedValue.grandTotalValue, 2);
     }
 
     /** Provides a value indicating how many optional columns are currently visible. */
@@ -126,11 +126,6 @@ export default class AssetList extends ComponentBase<Model> {
 
     private timer?: NodeJS.Timer;
     private previousOffset: number = Number.NaN;
-
-    private get totalValue() {
-        return this.checkedValue.groups.reduce<number | undefined>(
-            (s, a) => s === undefined ? undefined : (a.totalValue === undefined ? undefined : s + a.totalValue), 0);
-    }
 
     private get assetEditor() {
         return this.getControl("editor") as AssetEditor;
