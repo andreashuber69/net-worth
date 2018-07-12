@@ -251,26 +251,26 @@ export default class AssetListRow extends ComponentBase<Asset> {
     /**
      * From the full list of columns (full, integer and fraction) returned by `getColumns`, contains the number of
      * currently visible columns with the index being the number of currently visible optional full columns. For
-     * example, if no optional full columns are currently visible (i.e. index = 0), the first 10 columns of whatever
+     * example, if no optional full columns are currently visible (i.e. index = 0), the first 7 columns of whatever
      * is returned by `getColumns` will be shown. Note that said list contains real table columns
      * as well as "virtual" columns. Examples of real table columns are "totalValueInteger" and "unit" while
      * "totalValue" and "fineness" are virtual columns.
      */
-    private static readonly allColumnCounts = [ 10, 11, 12, 15, 18, 19, 22 ];
+    private static readonly allColumnCounts = [ 7, 10, 11, 12, 15, 18, 19, 22 ];
 
     /**
      * Contains the number of real table columns shown with the index being the number of currently visible optional
      * full columns.
      */
-    private static readonly rawColumnCounts = [ 7, 8, 9, 11, 13, 14, 16 ];
+    private static readonly rawColumnCounts = [ 5, 7, 8, 9, 11, 13, 14, 16 ];
 
     private static getColumns(groupBy: GroupBy) {
         const result: ColumnName[] = [
-            AssetListRow.expandName,
-            Asset.totalValueName, AssetListRow.totalValueIntegerName, AssetListRow.totalValueFractionName,
+            AssetListRow.expandName, Asset.typeName,
             Asset.percentName, AssetListRow.percentIntegerName, AssetListRow.percentFractionName,
             AssetListRow.moreName, AssetListRow.grandTotalLabelName,
-            Asset.typeName, Asset.locationName, Asset.unitName,
+            Asset.totalValueName, AssetListRow.totalValueIntegerName, AssetListRow.totalValueFractionName,
+            Asset.locationName, Asset.unitName,
             Asset.quantityName, AssetListRow.quantityIntegerName, AssetListRow.quantityFractionName,
             Asset.unitValueName, AssetListRow.unitValueIntegerName, AssetListRow.unitValueFractionName,
             Asset.descriptionName,
@@ -278,7 +278,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
         ];
 
         if (groupBy === Asset.locationName) {
-            result[9] = Asset.locationName;
+            result[1] = Asset.locationName;
             result[10] = Asset.typeName;
         }
 

@@ -58,7 +58,16 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public get grandTotalLabelColumnCount() {
-        return AssetListRow.getRawColumnCount(this.optionalColumnCount) - AssetListRow.getRawColumnCount(0) + 2;
+        // This is the minimal column span for the grand total label.
+        let result = 2;
+
+        if (this.optionalColumnCount >= 1) {
+            // We need to add to the minimum the number of columns that are added *after* the total value column has
+            // appeared.
+            result += (AssetListRow.getRawColumnCount(this.optionalColumnCount) - AssetListRow.getRawColumnCount(1));
+        }
+
+        return result;
     }
 
     // tslint:disable-next-line:prefer-function-over-method
