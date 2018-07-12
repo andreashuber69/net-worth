@@ -88,7 +88,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
             default:
         }
 
-        const columnPadding = 4;
+        const columnPadding = 3;
         const leftClass = `pl-${columnPadding}`;
         const rightClass = `pr-${columnPadding}`;
 
