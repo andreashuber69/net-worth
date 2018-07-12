@@ -112,6 +112,19 @@ export class Model implements IModel {
         return model;
     }
 
+    public static isSortBy(sortBy: string | undefined): sortBy is SortBy {
+        switch (sortBy) {
+            case Asset.typeName:
+            case Asset.descriptionName:
+            case Asset.locationName:
+            case Asset.unitValueName:
+            case Asset.totalValueName:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     /** Provides the available currencies to value the assets in. */
     public get currencies() {
         return Array.from(Model.currencyMap.keys());
@@ -297,18 +310,6 @@ export class Model implements IModel {
     private static isSort(sort: Unknown): sort is ISort {
         return Value.hasStringProperty(sort, Model.sortByName) && this.isSortBy(sort.by) &&
             Value.hasBooleanProperty(sort, Model.sortDescendingName);
-    }
-
-    private static isSortBy(sortBy: string): sortBy is SortBy {
-        switch (sortBy) {
-            case Asset.typeName:
-            case Asset.descriptionName:
-            case Asset.locationName:
-            case Asset.totalValueName:
-                return true;
-            default:
-                return false;
-        }
     }
 
     private static async queryBundleData(bundle: AssetBundle, id: number) {

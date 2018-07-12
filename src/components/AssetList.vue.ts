@@ -66,21 +66,13 @@ export default class AssetList extends ComponentBase<Model> {
         const result = AssetListRow.getClassImpl(columnName, this.checkedValue.groupBy, this.optionalColumnCount);
 
         // Sortable columns
-        switch (columnName) {
-            case Asset.typeName:
-            case Asset.descriptionName:
-            case Asset.locationName:
-            case Asset.unitValueName:
-            case Asset.totalValueName:
-                const sort = this.checkedValue.sort;
-                result.push("column", "sortable", sort.descending ? "desc" : "asc");
+        if (Model.isSortBy(columnName)) {
+            const sort = this.checkedValue.sort;
+            result.push("column", "sortable", sort.descending ? "desc" : "asc");
 
-                if (sort.by === columnName) {
-                    result.push("active");
-                }
-
-                break;
-            default:
+            if (sort.by === columnName) {
+                result.push("active");
+            }
         }
 
         return result;
