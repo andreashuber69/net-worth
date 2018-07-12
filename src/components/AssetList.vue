@@ -38,6 +38,7 @@
         <th colspan="2" :class="getHeaderClass('totalValue')" @click="changeSort('totalValue')">
           Total Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.currency }})
         </th>
+        <th colspan="2" :class="getHeaderClass('percent')">%</th>
         <th :class="getHeaderClass('more')"></th>
       </template>
       <v-progress-linear slot="progress" indeterminate></v-progress-linear>
@@ -47,8 +48,10 @@
       </template>
       <template slot="footer">
         <td :colspan="grandTotalLabelColumnCount" :class="getFooterClass('grandTotalLabel')">Grand Total</td>
-        <td :class="getFooterClass('totalValueInteger')">{{ totalValueInteger }}</td>
-        <td :class="getFooterClass('totalValueFraction')">{{ totalValueFraction }}</td>
+        <td :class="getFooterClass('totalValueInteger')">{{ grandTotalValueInteger }}</td>
+        <td :class="getFooterClass('totalValueFraction')">{{ grandTotalValueFraction }}</td>
+        <td :class="getFooterClass('percentInteger')">100</td>
+        <td :class="getFooterClass('percentFraction')">.0</td>
         <td :class="getFooterClass('more')"></td>
       </template>
     </v-data-table>

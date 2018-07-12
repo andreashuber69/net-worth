@@ -39,6 +39,7 @@ export abstract class Asset {
     public static readonly quantityName = Asset.getPropertyName("quantity");
     public static readonly notesName = Asset.getPropertyName("notes");
     public static readonly totalValueName = Asset.getCalculatedPropertyName("totalValue");
+    public static readonly percentName = Asset.getCalculatedPropertyName("percent");
 
     /** Provides the unique key of the asset. */
     public readonly key = Asset.nextKey++;
@@ -87,6 +88,12 @@ export abstract class Asset {
     /** @internal */
     public get totalValue() {
         return Asset.multiply(this.quantity, this.unitValue);
+    }
+
+    /** @internal */
+    public get percent() {
+        return (this.totalValue === undefined) || (this.parent.grandTotalValue === undefined) ?
+            undefined : this.totalValue / this.parent.grandTotalValue * 100;
     }
 
     /** Provides a value indicating whether the asset has any associated actions. */
@@ -152,5 +159,5 @@ export abstract class Asset {
 
 export type GroupBy = typeof Asset.typeName | typeof Asset.locationName;
 
-export type AssetDisplayPropertyName =
-    SerializedAssetPropertyName | typeof Asset.unitName | typeof Asset.unitValueName | typeof Asset.totalValueName;
+export type AssetDisplayPropertyName = SerializedAssetPropertyName |
+    typeof Asset.unitName | typeof Asset.unitValueName | typeof Asset.totalValueName | typeof Asset.percentName;

@@ -32,7 +32,7 @@ type AssetListRowPropertyName = Diff<PropertyNames<AssetListRow>, PropertyNames<
 export default class AssetListRow extends ComponentBase<Asset> {
     /** Gets the number of required columns. */
     public static get requiredColumnCount() {
-        return 2;
+        return 3;
     }
 
     /** Provides the maximum number of optional columns that can be displayed. */
@@ -60,6 +60,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
         // Hiding
         if (this.isHidden(columnName, groupBy, optionalColumnCount)) {
+            // TODO: Can't this be done with one class?
             result.push("hidden-sm-and-up", "hidden-xs-only");
         }
 
@@ -73,6 +74,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
             case this.unitValueFractionName:
             case this.quantityFractionName:
             case this.totalValueFractionName:
+            case this.percentFractionName:
             case this.grandTotalLabelName:
                 result.push("text-xs-left");
                 break;
@@ -80,6 +82,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
             case this.unitValueIntegerName:
             case this.quantityIntegerName:
             case this.totalValueIntegerName:
+            case this.percentIntegerName:
                 result.push("text-xs-right");
                 break;
             default:
@@ -106,24 +109,27 @@ export default class AssetListRow extends ComponentBase<Asset> {
             case Asset.finenessName:
             case Asset.unitValueName:
             case Asset.quantityName:
+            case Asset.totalValueName:
             case this.grandTotalLabelName:
                 result.push(leftClass, rightClass);
                 break;
-            case Asset.totalValueName:
+            case Asset.percentName:
                 result.push(leftClass, "pr-0");
                 break;
             case this.finenessIntegerName:
             case this.unitValueIntegerName:
             case this.quantityIntegerName:
             case this.totalValueIntegerName:
+            case this.percentIntegerName:
                 result.push(leftClass, "pr-0");
                 break;
             case this.finenessFractionName:
             case this.unitValueFractionName:
             case this.quantityFractionName:
+            case this.totalValueFractionName:
                 result.push("pl-0", rightClass);
                 break;
-            case this.totalValueFractionName:
+            case this.percentFractionName:
                 result.push("pl-0", "pr-0");
                 break;
             case this.moreName:
@@ -137,6 +143,9 @@ export default class AssetListRow extends ComponentBase<Asset> {
             case Asset.totalValueName:
             case this.totalValueIntegerName:
             case this.totalValueFractionName:
+            case Asset.percentName:
+            case this.percentIntegerName:
+            case this.percentFractionName:
             case this.grandTotalLabelName:
                 result.push("total");
                 break;
@@ -144,7 +153,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
         }
 
         if (result.length === 0) {
-            throw new Error("Unknown column");
+            throw new Error(`Unknown column: ${columnName}`);
         }
 
         return result;
@@ -186,6 +195,14 @@ export default class AssetListRow extends ComponentBase<Asset> {
         return Format.fraction(this.checkedValue.totalValue, 2);
     }
 
+    public get percentInteger() {
+        return Format.integer(this.checkedValue.percent, 1);
+    }
+
+    public get percentFraction() {
+        return Format.fraction(this.checkedValue.percent, 1);
+    }
+
     // tslint:disable-next-line:prefer-function-over-method
     public getClass(columnName: ColumnName) {
         return AssetListRow.getClassImpl(columnName, this.checkedValue.parent.groupBy, this.checkedOptionalColumnCount);
@@ -218,6 +235,8 @@ export default class AssetListRow extends ComponentBase<Asset> {
     private static readonly quantityFractionName = AssetListRow.getName("quantityFraction");
     private static readonly totalValueIntegerName = AssetListRow.getName("totalValueInteger");
     private static readonly totalValueFractionName = AssetListRow.getName("totalValueFraction");
+    private static readonly percentIntegerName = AssetListRow.getName("percentInteger");
+    private static readonly percentFractionName = AssetListRow.getName("percentFraction");
 
     private static readonly finenessFormatOptions = {
         maximumFractionDigits: PreciousMetalAssetInputInfo.finenessDigits,
@@ -229,13 +248,27 @@ export default class AssetListRow extends ComponentBase<Asset> {
         [Asset.locationName, AssetListRow.getColumns(Asset.locationName)],
     ]);
 
-    private static readonly allColumnCounts = [7, 8, 9, 12, 15, 16, 19];
-    private static readonly rawColumnCounts = [5, 6, 7, 9, 11, 12, 14];
+    /**
+     * From the full list of columns (full, integer and fraction) returned by `getColumns`, contains the number of
+     * currently visible columns with the index being the number of currently visible optional full columns. For
+     * example, if no optional full columns are currently visible (i.e. index = 0), the first 10 columns of whatever
+     * is returned by `getColumns` will be shown. Note that said list contains real table columns
+     * as well as "virtual" columns. Examples of real table columns are "totalValueInteger" and "unit" while
+     * "totalValue" and "fineness" are virtual columns.
+     */
+    private static readonly allColumnCounts = [ 10, 11, 12, 15, 18, 19, 22 ];
+
+    /**
+     * Contains the number of real table columns shown with the index being the number of currently visible optional
+     * full columns.
+     */
+    private static readonly rawColumnCounts = [ 7, 8, 9, 11, 13, 14, 16 ];
 
     private static getColumns(groupBy: GroupBy) {
         const result: ColumnName[] = [
             AssetListRow.expandName,
             Asset.totalValueName, AssetListRow.totalValueIntegerName, AssetListRow.totalValueFractionName,
+            Asset.percentName, AssetListRow.percentIntegerName, AssetListRow.percentFractionName,
             AssetListRow.moreName, AssetListRow.grandTotalLabelName,
             Asset.typeName, Asset.locationName, Asset.unitName,
             Asset.quantityName, AssetListRow.quantityIntegerName, AssetListRow.quantityFractionName,
@@ -245,8 +278,8 @@ export default class AssetListRow extends ComponentBase<Asset> {
         ];
 
         if (groupBy === Asset.locationName) {
-            result[6] = Asset.locationName;
-            result[7] = Asset.typeName;
+            result[9] = Asset.locationName;
+            result[10] = Asset.typeName;
         }
 
         return result;

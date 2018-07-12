@@ -44,11 +44,11 @@ export default class AssetList extends ComponentBase<Model> {
         return (this.checkedValue.grandTotalValue === undefined);
     }
 
-    public get totalValueInteger() {
+    public get grandTotalValueInteger() {
         return Format.integer(this.checkedValue.grandTotalValue, 2);
     }
 
-    public get totalValueFraction() {
+    public get grandTotalValueFraction() {
         return Format.fraction(this.checkedValue.grandTotalValue, 2);
     }
 
@@ -58,7 +58,7 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public get grandTotalLabelColumnCount() {
-        return AssetListRow.getRawColumnCount(this.optionalColumnCount) - 3;
+        return AssetListRow.getRawColumnCount(this.optionalColumnCount) - AssetListRow.getRawColumnCount(0) + 2;
     }
 
     // tslint:disable-next-line:prefer-function-over-method

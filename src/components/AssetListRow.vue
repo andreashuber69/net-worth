@@ -32,6 +32,8 @@
     <td :class="getClass('quantityFraction')">{{ quantityFraction }}</td>
     <td :class="getClass('totalValueInteger')">{{ totalValueInteger }}</td>
     <td :class="getClass('totalValueFraction')">{{ totalValueFraction }}</td>
+    <td :class="getClass('percentInteger')">{{ percentInteger }}</td>
+    <td :class="getClass('percentFraction')">{{ percentFraction }}</td>
     <td :class="getClass('more')">
       <v-menu v-if="checkedValue.hasActions">
         <v-btn slot="activator" class="mx-0" icon>
