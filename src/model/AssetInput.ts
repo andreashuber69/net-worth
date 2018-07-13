@@ -23,6 +23,7 @@ import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
 import { LtcWallet } from "./LtcWallet";
 import { PalladiumAsset } from "./PalladiumAsset";
+import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
 import { Unknown, Value } from "./Value";
@@ -61,6 +62,7 @@ export class AssetInput {
     public static readonly infos: AssetInputInfo[] = [
         new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
         new PreciousMetalAssetInputInfo(PalladiumAsset.type, PalladiumAsset),
+        new PreciousMetalAssetInputInfo(PlatinumAsset.type, PlatinumAsset),
         new PreciousMetalAssetInputInfo(GoldAsset.type, GoldAsset),
         new CryptoWalletInputInfo(BtcWallet.type, btcHint, 8, BtcWallet),
         new CryptoWalletInputInfo(LtcWallet.type, ltcHint, 8, LtcWallet),

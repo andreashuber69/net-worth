@@ -11,22 +11,22 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { palladiumAssetType } from "./AssetTypes";
+import { platinumAssetType } from "./AssetTypes";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 
-/** Represents an asset made of palladium. */
-export class PalladiumAsset extends PreciousMetalAsset {
-    public static readonly type = palladiumAssetType;
+/** Represents an asset made of platinum. */
+export class PlatinumAsset extends PreciousMetalAsset {
+    public static readonly type = platinumAssetType;
 
-    public readonly type = PalladiumAsset.type;
+    public readonly type = PlatinumAsset.type;
 
     /**
-     * Creates a new [[PalladiumAsset]] instance.
+     * Creates a new [[PlatinumAsset]] instance.
      * @param parent The parent model to which this asset belongs.
      * @param properties The precious metal asset properties.
      */
     public constructor(parent: IModel, properties: IPreciousMetalAssetProperties) {
-        super(parent, properties, "lppm/pall.json");
+        super(parent, properties, "lppm/plat.json");
     }
 }

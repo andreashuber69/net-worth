@@ -12,7 +12,9 @@
 
 export const silverAssetType = "Silver";
 export const palladiumAssetType = "Palladium";
+export const platinumAssetType = "Platinum";
 export const goldAssetType = "Gold";
+
 export const btcWalletType = "Bitcoin";
 export const ltcWalletType = "Litecoin";
 export const etcWalletType = "Ethereum Classic";
@@ -22,7 +24,8 @@ export const btgWalletType = "Bitcoin Gold";
 export const dashWalletType = "Dash";
 export const zecWalletType = "Zcash";
 
-export type EditablePreciousMetalAssetType = typeof silverAssetType | typeof palladiumAssetType | typeof goldAssetType;
+export type EditablePreciousMetalAssetType =
+    typeof silverAssetType | typeof palladiumAssetType | typeof platinumAssetType | typeof goldAssetType;
 type PreciousMetalAssetType = EditablePreciousMetalAssetType;
 
 export type EditableCryptoWalletType =
