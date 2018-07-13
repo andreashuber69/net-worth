@@ -145,6 +145,11 @@ export class Model implements IModel {
     /** Provides the property names by which the asset list can be grouped. */
     public readonly groupBys: GroupBy[] = [ Asset.typeName, Asset.locationName ];
 
+    /** Provides the labels for the properties by which the asset list can be grouped. */
+    public get groupByLabels() {
+        return this.groupBys.map((g) => Model.capitalize(g));
+    }
+
     /** Provides the name of the property by which the asset list is currently grouped. */
     public get groupBy() {
         return this.groupByImpl;
@@ -155,6 +160,24 @@ export class Model implements IModel {
         this.groups.length = 0;
         this.update();
         this.notifyChanged();
+    }
+
+    /** Provides the label for the property by which the asset list is currently grouped. */
+    public get groupByLabel() {
+        return Model.capitalize(this.groupBy);
+    }
+
+    /** Provides the property names by which the asset list is currently *not* grouped. */
+    public get otherGroupBys() {
+        const result = Array.from(this.groupBys);
+        result.splice(result.indexOf(this.groupBy), 1);
+
+        return result;
+    }
+
+    /** Provides the labels for the properties by which the asset list is currently *not* grouped. */
+    public get otherGroupByLabels() {
+        return this.otherGroupBys.map((g) => Model.capitalize(g));
     }
 
     /** Provides information on how to sort the asset list. */
@@ -310,6 +333,10 @@ export class Model implements IModel {
     private static isSort(sort: Unknown): sort is ISort {
         return Value.hasStringProperty(sort, Model.sortByName) && this.isSortBy(sort.by) &&
             Value.hasBooleanProperty(sort, Model.sortDescendingName);
+    }
+
+    private static capitalize(str: string) {
+        return `${str[0].toUpperCase()}${str.substr(1)}`;
     }
 
     private static async queryBundleData(bundle: AssetBundle, id: number) {

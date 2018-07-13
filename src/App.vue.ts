@@ -64,11 +64,11 @@ export default class App extends Vue {
     }
 
     public get groupBys() {
-        return this.model.groupBys.map((g) => App.capitalize(g));
+        return this.model.groupByLabels;
     }
 
     public get groupBy() {
-        return App.capitalize(this.model.groupBy);
+        return this.model.groupByLabel;
     }
 
     public set groupBy(groupBy: string) {
@@ -130,10 +130,6 @@ export default class App extends Vue {
 
     private static loadFromLocalStorage() {
         return window.localStorage.getItem(this.localStorageKey);
-    }
-
-    private static capitalize(str: string) {
-        return `${str[0].toUpperCase()}${str.substr(1)}`;
     }
 
     private get fileInput() {
