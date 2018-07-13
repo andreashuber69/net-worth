@@ -23,11 +23,11 @@
       <template slot="headers" slot-scope="props">
         <th :class="getHeaderClass('expand')"></th>
         <th :class="getHeaderClass('type')" @click="changeSort('type')">Type <v-icon small>arrow_upward</v-icon></th>
-        <th :class="getHeaderClass('description')" @click="changeSort('description')">
-          Description <v-icon small>arrow_upward</v-icon>
-        </th>
         <th :class="getHeaderClass('location')" @click="changeSort('location')">
           Location <v-icon small>arrow_upward</v-icon>
+        </th>
+        <th :class="getHeaderClass('description')" @click="changeSort('description')">
+          Description <v-icon small>arrow_upward</v-icon>
         </th>
         <th :class="getHeaderClass('unit')">Unit</th>
         <th colspan="2" :class="getHeaderClass('fineness')">Fineness</th>
