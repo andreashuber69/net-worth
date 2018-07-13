@@ -18,7 +18,7 @@
       <AssetEditor :value="checkedValue" ref="editor"></AssetEditor>
     </v-layout>
     <v-data-table
-      :items="checkedValue.assets" item-key="key" :pagination.sync="pagination" :loading="isLoading" :headers-length="14"
+      :items="checkedValue.assets" item-key="key" :pagination.sync="pagination" :loading="isLoading" :headers-length="16"
       :total-items="checkedValue.assets.length" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
         <th :class="getHeaderClass('expand')"></th>
