@@ -97,8 +97,7 @@
                     <img src="./assets/blockcypher.svg" height="36"/>
                   </v-btn>
                   <v-btn href="https://gastracker.io" target="_blank" flat>
-                    <img src="./assets/gastracker.png" height="36"/>
-                    <span>Gastracker.io</span>
+                    <img src="./assets/gastracker.png" height="36"/>&nbsp;Gastracker.io
                   </v-btn>
                   <v-btn href="https://ethplorer.io" target="_blank" flat>
                     <img src="./assets/ethplorer.png" height="36"/>
