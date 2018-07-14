@@ -55,7 +55,8 @@ export default class AssetListRow extends ComponentBase<Asset> {
     }
 
     /** @internal */
-    public static getClassImpl(columnName: ColumnName, groupBy: GroupBy, optionalColumnCount: number) {
+    public static getClassImpl(
+        columnName: ColumnName, groupBy: GroupBy, otherGroupBys: GroupBy[], optionalColumnCount: number) {
         const result = new Array<string>();
 
         // Hiding
@@ -97,13 +98,10 @@ export default class AssetListRow extends ComponentBase<Asset> {
             case this.expandName:
                 result.push(leftClass, "pr-2");
                 break;
-            case Asset.typeName:
+            case groupBy:
                 result.push("pl-0", rightClass);
                 break;
-            case Asset.locationName:
-                result.push(
-                    this.isHidden(Asset.typeName, groupBy, optionalColumnCount) ? "pl-0" : leftClass, rightClass);
-                break;
+            case otherGroupBys[0]:
             case Asset.descriptionName:
             case Asset.unitName:
             case Asset.finenessName:
@@ -162,6 +160,30 @@ export default class AssetListRow extends ComponentBase<Asset> {
     @Prop()
     public visibleColumnCount?: number;
 
+    public get groupBy() {
+        return this.checkedValue.parent.groupBy;
+    }
+
+    public get groupByContent() {
+        return this.checkedValue[this.groupBy];
+    }
+
+    public get groupByHint() {
+        return this.getHint(this.groupBy);
+    }
+
+    public get otherGroupBys() {
+        return this.checkedValue.parent.otherGroupBys;
+    }
+
+    public get otherGroupByContents() {
+        return this.otherGroupBys.map((g) => this.checkedValue[g]);
+    }
+
+    public get otherGroupByHints() {
+        return this.otherGroupBys.map((g) => this.getHint(g));
+    }
+
     public get finenessInteger() {
         return this.checkedValue.fineness === undefined ? "" : Math.trunc(this.checkedValue.fineness).toString();
     }
@@ -205,7 +227,9 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getClass(columnName: ColumnName) {
-        return AssetListRow.getClassImpl(columnName, this.checkedValue.parent.groupBy, this.checkedOptionalColumnCount);
+        return AssetListRow.getClassImpl(
+            columnName, this.checkedValue.parent.groupBy,
+            this.checkedValue.parent.otherGroupBys, this.checkedOptionalColumnCount);
     }
 
     /** Instructs the asset group to be expanded/collapsed. */
@@ -297,6 +321,17 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
     private static getName<T extends keyof AssetListRow>(name: T) {
         return name;
+    }
+
+    private getHint(groupBy: GroupBy) {
+        switch (groupBy) {
+            case "type":
+                return "";
+            case "location":
+                return this.checkedValue.locationHint;
+            default:
+                throw new Error("Unknown groupBy!");
+        }
     }
 
     private get checkedOptionalColumnCount() {
