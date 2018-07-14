@@ -38,7 +38,7 @@
       </v-navigation-drawer>
       <v-toolbar app dark color="primary">
         <v-toolbar-side-icon @click.stop="onMenuClicked"></v-toolbar-side-icon>
-        <v-toolbar-title>Asset Manager</v-toolbar-title>
+        <v-toolbar-title><v-icon>account_balance_wallet</v-icon>&nbsp;&nbsp;Asset Manager</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon title="Add new asset" class="ml-1 mr-0" @click.stop="assetList.onAdd">
           <v-icon>add</v-icon>
