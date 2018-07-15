@@ -18,6 +18,7 @@ import { Model } from "./model/Model";
 @Component({ components: { AssetList } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
+    public readonly fileExtension = App.fileExtension;
     public isDrawerVisible = false;
     public areDataProvidersVisible = false;
     public model: Model;
@@ -56,7 +57,7 @@ export default class App extends Vue {
     public onSaveClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
         const blob = new Blob([ this.model.toJsonString() ], { type : "application/json" });
-        App.write(`${this.model.name}.json`, blob);
+        App.write(`${this.model.name}${this.fileExtension}`, blob);
     }
 
     public get assetList() {
@@ -82,6 +83,7 @@ export default class App extends Vue {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private static readonly fileExtension = ".json";
     private static readonly assetsKey = "assets";
 
     private static write(filename: string, blob: Blob) {
@@ -116,9 +118,8 @@ export default class App extends Vue {
 
         if (model instanceof Model) {
             if (fileName) {
-                const extension = ".json";
-                const name = fileName.endsWith(extension) ?
-                    fileName.substring(0, fileName.length - extension.length) : fileName;
+                const name = fileName.endsWith(this.fileExtension) ?
+                    fileName.substring(0, fileName.length - this.fileExtension.length) : fileName;
 
                 if (name.length > 0) {
                     model.name = name;
