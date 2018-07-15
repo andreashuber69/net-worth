@@ -24,7 +24,7 @@ cp -R dist/* $WORK_DIR
 echo "Commit and push..."
 pushd $WORK_DIR
 git add -A
-git commit -m "Publish current version."
+git commit -m "Publish current version"
 git push
 popd
 rm -rf $WORK_DIR
