@@ -33,6 +33,7 @@ export interface ISort {
 
 interface ISerializedModel {
     version: number;
+    name: string;
     currency: string;
     groupBy: GroupBy;
     sort: ISort;
@@ -68,6 +69,14 @@ export class Model implements IModel {
         }
 
         const model = new Model();
+
+        if (Value.hasStringProperty(rawModel, Model.nameName)) {
+            const name = rawModel[Model.nameName];
+
+            if (name.length > 0) {
+                model.name = name;
+            }
+        }
 
         if (Value.hasStringProperty(rawModel, Model.currencyName)) {
             const currency = rawModel[Model.currencyName];
@@ -124,6 +133,8 @@ export class Model implements IModel {
                 return false;
         }
     }
+
+    public name = "MyAssets";
 
     /** Provides the available currencies to value the assets in. */
     public get currencies() {
@@ -272,6 +283,7 @@ export class Model implements IModel {
     public toJSON(): ISerializedModel {
         return {
             version: 1,
+            name: this.name,
             currency: this.currency,
             groupBy: this.groupBy,
             sort: this.sort,
@@ -282,6 +294,7 @@ export class Model implements IModel {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly versionName = Model.getModelName("version");
+    private static readonly nameName = Model.getModelName("name");
     private static readonly currencyName = Model.getModelName("currency");
     private static readonly groupByName = Model.getModelName("groupBy");
     private static readonly sortName = Model.getModelName("sort");

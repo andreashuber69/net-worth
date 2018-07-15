@@ -20,18 +20,11 @@ import { Model } from "./model/Model";
 export default class App extends Vue {
     public isDrawerVisible = false;
     public areDataProvidersVisible = false;
-    public fileName = "MyAssets.json";
     public model: Model;
 
     public constructor() {
         super();
-        const loaded = App.loadFromLocalStorage();
-
-        if (loaded.fileName) {
-            this.fileName = loaded.fileName;
-        }
-
-        this.model = App.parse(this.fileName, loaded.json) || new Model();
+        this.model = App.parse(undefined, App.loadFromLocalStorage()) || new Model();
         this.model.onChanged = () => this.onModelChanged();
     }
 
@@ -49,8 +42,7 @@ export default class App extends Vue {
 
         if (files.length === 1) {
             const file = files[0];
-            this.fileName = file.name;
-            const model = App.parse(this.fileName, await App.read(file));
+            const model = App.parse(file.name, await App.read(file));
 
             if (model) {
                 model.onChanged = () => this.onModelChanged();
@@ -64,7 +56,7 @@ export default class App extends Vue {
     public onSaveClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
         const blob = new Blob([ this.model.toJsonString() ], { type : "application/json" });
-        App.write(this.fileName, blob);
+        App.write(`${this.model.name}.json`, blob);
     }
 
     public get assetList() {
@@ -90,7 +82,6 @@ export default class App extends Vue {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly assetsFileNameKey = "assetsFileName";
     private static readonly assetsKey = "assets";
 
     private static write(filename: string, blob: Blob) {
@@ -120,11 +111,21 @@ export default class App extends Vue {
         });
     }
 
-    private static parse(fileName: string, json: string | null) {
+    private static parse(fileName: string | undefined, json: string | null) {
         const model = json ? Model.parse(json) : undefined;
 
         if (model instanceof Model) {
-            this.saveToLocalStorage(fileName, model.toJsonString());
+            if (fileName) {
+                const extension = ".json";
+                const name = fileName.endsWith(extension) ?
+                    fileName.substring(0, fileName.length - extension.length) : fileName;
+
+                if (name.length > 0) {
+                    model.name = name;
+                }
+            }
+
+            this.saveToLocalStorage(model.toJsonString());
 
             return model;
         } else if (model) {
@@ -134,16 +135,12 @@ export default class App extends Vue {
         return undefined;
     }
 
-    private static saveToLocalStorage(fileName: string, json: string) {
-        window.localStorage.setItem(this.assetsFileNameKey, fileName);
+    private static saveToLocalStorage(json: string) {
         window.localStorage.setItem(this.assetsKey, json);
     }
 
     private static loadFromLocalStorage() {
-        return {
-            fileName: window.localStorage.getItem(this.assetsFileNameKey),
-            json: window.localStorage.getItem(this.assetsKey),
-        };
+        return window.localStorage.getItem(this.assetsKey);
     }
 
     private get fileInput() {
@@ -152,6 +149,6 @@ export default class App extends Vue {
     }
 
     private onModelChanged() {
-        App.saveToLocalStorage(this.fileName, this.model.toJsonString());
+        App.saveToLocalStorage(this.model.toJsonString());
     }
 }
