@@ -42,6 +42,8 @@ interface ISerializedModel {
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
+    public static readonly fileExtension = ".assets.json";
+
     /**
      * Returns a [[Model]] object that is equivalent to the passed JSON string or returns a string that describes why
      * the parse process failed.
@@ -134,7 +136,17 @@ export class Model implements IModel {
         }
     }
 
-    public name = "MyAssets";
+    /** Provides the name of the asset collection. */
+    public name = "New";
+    public readonly fileExtension = Model.fileExtension;
+
+    public get fileName() {
+        return `${this.name}${this.fileExtension}`;
+    }
+
+    public get title() {
+        return `${this.name} - Asset Manager`;
+    }
 
     /** Provides the available currencies to value the assets in. */
     public get currencies() {

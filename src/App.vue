@@ -24,7 +24,7 @@
             <v-list-tile-content>
               <v-list-tile-title>Open...</v-list-tile-title>
               <input
-                ref="fileInput" type="file" :accept="fileExtension" style="display:none" @change="onFileInputChanged">
+                ref="fileInput" type="file" :accept="model.fileExtension" style="display:none" @change="onFileInputChanged">
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile @click="onSaveClicked">
@@ -39,7 +39,7 @@
       </v-navigation-drawer>
       <v-toolbar app dark color="primary">
         <v-toolbar-side-icon @click.stop="onMenuClicked"></v-toolbar-side-icon>
-        <v-toolbar-title><v-icon>account_balance_wallet</v-icon>&nbsp;&nbsp;Asset Manager</v-toolbar-title>
+        <v-toolbar-title class="hidden-xs-only"><v-icon>account_balance_wallet</v-icon>&nbsp;&nbsp;{{ model.title }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon title="Add new asset" class="ml-1 mr-0" @click.stop="assetList.onAdd">
           <v-icon>add</v-icon>
