@@ -121,15 +121,25 @@ export class BtcWallet extends CryptoWallet {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        private static batchLength = 2;
+
         private static delay(milliseconds: number) {
             return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
         }
 
         private static getBatch(node: HDNode, offset: number) {
-            const result = new Array<string>(20);
+            const result = new Array<string>(this.batchLength);
+            const start = Date.now();
 
             for (let index = 0; index < result.length; ++index) {
                 result[index] = node.derive(offset + index).getAddress();
+            }
+
+            if ((Date.now() - start < 500) && (this.batchLength < 16)) {
+                // This is an attempt at making address derivation more bearable on browsers with lousy script execution
+                // speed, e.g. Edge. Of course, this doesn't make the overall process faster, but it avoids blocking the
+                // thread for longer than a second.
+                this.batchLength *= 2;
             }
 
             return result;
