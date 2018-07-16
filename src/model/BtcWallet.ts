@@ -108,10 +108,12 @@ export class BtcWallet extends CryptoWallet {
                 await this.add([ this.address ]);
             } else {
                 await NestedQuantityRequest.delay(1000);
+                const parent = HDNode.fromBase58(this.address);
+
                 // The following calls use a lot of CPU. By delaying first, we ensure that other queries can be
                 // sent, their respective responses received and even rendered in the UI before the CPU is blocked.
-                await this.addChain(0);
-                await this.addChain(1);
+                await this.addChain(parent.derive(0));
+                await this.addChain(parent.derive(1));
             }
 
             return this.quantity;
@@ -123,6 +125,16 @@ export class BtcWallet extends CryptoWallet {
             return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
         }
 
+        private static getBatch(node: HDNode, offset: number) {
+            const result = new Array<string>(20);
+
+            for (let index = 0; index < result.length; ++index) {
+                result[index] = node.derive(offset + index).getAddress();
+            }
+
+            return result;
+        }
+
         private quantity = 0;
 
         private async add(addresses: string[]) {
@@ -132,24 +144,13 @@ export class BtcWallet extends CryptoWallet {
             return result.transactionCount !== 0;
         }
 
-        private async addChain(chain: number) {
+        private async addChain(node: HDNode) {
             let index = 0;
             let batch: string[] | undefined;
 
             // tslint:disable-next-line:no-empty
-            for (; await this.add(batch = this.getBatch(chain, index)); index += batch.length) {
+            for (; await this.add(batch = NestedQuantityRequest.getBatch(node, index)); index += batch.length) {
             }
-        }
-
-        private getBatch(chain: number, offset: number) {
-            const node = HDNode.fromBase58(this.address).derive(chain);
-            const result = new Array<string>(20);
-
-            for (let index = 0; index < result.length; ++index) {
-                result[index] = node.derive(offset + index).getAddress();
-            }
-
-            return result;
         }
     };
 }
