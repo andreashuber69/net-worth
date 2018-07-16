@@ -42,9 +42,16 @@ export default class App extends Vue {
 
         if (files.length === 1) {
             const file = files[0];
-            const model = App.parse(file.name, await App.read(file));
+            const model = App.parse(await App.read(file));
 
             if (model) {
+                const name = file.name.endsWith(model.fileExtension) ?
+                    file.name.substring(0, file.name.length - model.fileExtension.length) : file.name;
+
+                if (name.length > 0) {
+                    model.name = name;
+                }
+
                 this.model = this.initModel(model);
             }
         }
@@ -121,7 +128,7 @@ export default class App extends Vue {
             if (localStorageKey === this.emptyModelLocalStorageKey) {
                 window.sessionStorage.removeItem(this.sessionStorageKey);
             } else {
-                const model = App.parse(undefined, window.localStorage.getItem(localStorageKey));
+                const model = App.parse(window.localStorage.getItem(localStorageKey));
 
                 if (model) {
                     window.sessionStorage.removeItem(this.sessionStorageKey);
@@ -144,19 +151,10 @@ export default class App extends Vue {
         });
     }
 
-    private static parse(fileName: string | undefined, json: string | null) {
+    private static parse(json: string | null) {
         const model = json ? Model.parse(json) : undefined;
 
         if (model instanceof Model) {
-            if (fileName) {
-                const name = fileName.endsWith(model.fileExtension) ?
-                    fileName.substring(0, fileName.length - model.fileExtension.length) : fileName;
-
-                if (name.length > 0) {
-                    model.name = name;
-                }
-            }
-
             return model;
         } else if (model) {
             alert(model);
