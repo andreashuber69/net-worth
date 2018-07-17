@@ -121,6 +121,7 @@ export class BtcWallet extends CryptoWallet {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        private static readonly minUnusedAddressesToCheck = 20;
         private static batchLength = 2;
 
         private static delay(milliseconds: number) {
@@ -151,15 +152,21 @@ export class BtcWallet extends CryptoWallet {
             const result = await new BtcWallet.BlockchainRequest(addresses).execute();
             this.quantity += result.finalBalance;
 
-            return result.transactionCount !== 0;
+            return result;
         }
 
         private async addChain(node: HDNode) {
-            let index = 0;
             let batch: string[] | undefined;
+            let unusedAddressesToCheck = NestedQuantityRequest.minUnusedAddressesToCheck;
 
-            // tslint:disable-next-line:no-empty
-            for (; await this.add(batch = NestedQuantityRequest.getBatch(node, index)); index += batch.length) {
+            for (let index = 0; unusedAddressesToCheck > 0; index += batch.length) {
+                batch = NestedQuantityRequest.getBatch(node, index);
+
+                if ((await this.add(batch)).transactionCount === 0) {
+                    unusedAddressesToCheck -= batch.length;
+                } else {
+                    unusedAddressesToCheck = NestedQuantityRequest.minUnusedAddressesToCheck;
+                }
             }
         }
     };
