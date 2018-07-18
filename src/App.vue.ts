@@ -12,10 +12,11 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import AssetList from "./components/AssetList.vue";
+import SaveAsDialog from "./components/SaveAsDialog.vue";
 import { Model } from "./model/Model";
 
 // tslint:disable-next-line:no-unsafe-any
-@Component({ components: { AssetList } })
+@Component({ components: { AssetList, SaveAsDialog } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
     public isDrawerVisible = false;
@@ -61,13 +62,27 @@ export default class App extends Vue {
 
     public onSaveClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
-        const blob = new Blob([ this.model.toJsonString() ], { type : "application/json" });
-        App.write(this.model.fileName, blob);
+        this.write();
+    }
+
+    public async onSaveAsClicked(event: MouseEvent) {
+        this.isDrawerVisible = false;
+        const newName = await this.saveAsDialog.showDialog(this.model.name);
+
+        if (newName !== undefined) {
+            this.model.name = newName;
+            this.write();
+        }
     }
 
     public get assetList() {
         // tslint:disable-next-line:no-unsafe-any
         return this.$refs.assetList as AssetList;
+    }
+
+    public get saveAsDialog() {
+        // tslint:disable-next-line:no-unsafe-any
+        return this.$refs.saveAsDialog as SaveAsDialog;
     }
 
     public get groupBys() {
@@ -163,24 +178,6 @@ export default class App extends Vue {
         return undefined;
     }
 
-    private static write(filename: string, blob: Blob) {
-        if (window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveBlob(blob, filename);
-        } else {
-            const elem = window.document.createElement("a");
-
-            // We should call window.URL.revokeObjectURL as soon as the user has either successfully downloaded the
-            // file or cancelled the download, but there seems to be no reliable way to detect these events. According
-            // to the docs the objects will be garbage collected anyway when the user closes the tab or navigates away.
-            // Given the currently small size of these downloads, not calling revokeObjectURL is probably good enough.
-            elem.href = window.URL.createObjectURL(blob);
-            elem.download = filename;
-            document.body.appendChild(elem);
-            elem.click();
-            document.body.removeChild(elem);
-        }
-    }
-
     private static getLocalStorageKey() {
         const key = window.sessionStorage.getItem(this.sessionStorageKey);
 
@@ -252,6 +249,26 @@ export default class App extends Vue {
     private get fileInput() {
         // tslint:disable-next-line:no-unsafe-any
         return this.$refs.fileInput as HTMLInputElement;
+    }
+
+    private write() {
+        const blob = new Blob([ this.model.toJsonString() ], { type : "application/json" });
+
+        if (window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveBlob(blob, this.model.fileName);
+        } else {
+            const elem = window.document.createElement("a");
+
+            // We should call window.URL.revokeObjectURL as soon as the user has either successfully downloaded the
+            // file or cancelled the download, but there seems to be no reliable way to detect these events. According
+            // to the docs the objects will be garbage collected anyway when the user closes the tab or navigates away.
+            // Given the currently small size of these downloads, not calling revokeObjectURL is probably good enough.
+            elem.href = window.URL.createObjectURL(blob);
+            elem.download = this.model.fileName;
+            document.body.appendChild(elem);
+            elem.click();
+            document.body.removeChild(elem);
+        }
     }
 
     private initModel(model: Model) {

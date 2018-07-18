@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 import { TextInputInfo } from "../model/TextInputInfo";
 import { ControlBase } from "./ControlBase";
 
@@ -19,6 +19,9 @@ import { ControlBase } from "./ControlBase";
 /** Implements a text field control that simplifies common functionality like e.g. validation. */
 // tslint:disable-next-line:no-default-export
 export default class TextField extends ControlBase<TextInputInfo> {
+    @Prop()
+    public large?: boolean;
+
     public get type() {
         return this.primitiveInputInfo.type;
     }

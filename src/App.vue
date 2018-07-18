@@ -32,7 +32,15 @@
               <v-icon>save</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>Save...</v-list-tile-title>
+              <v-list-tile-title>Save</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile @click="onSaveAsClicked">
+            <v-list-tile-action>
+              <v-icon>save</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Save As...</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -72,6 +80,7 @@
       <v-content>
         <v-container>
           <v-layout justify-center>
+            <SaveAsDialog ref="saveAsDialog"/>
             <AssetList :value="model" ref="assetList"/>
           </v-layout>
         </v-container>

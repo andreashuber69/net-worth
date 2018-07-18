@@ -13,14 +13,28 @@
 -->
 
 <template>
-  <v-flex xs12 sm12 :md6="!large" v-if="isPresent">
-    <v-text-field :label="label" :hint="hint" v-model="propertyValue"
-      :required="isRequired" :type="type" :min="min" :max="max" :step="step" :rules="[validate]">
-    </v-text-field>
-  </v-flex>
+  <v-dialog persistent v-model="isOpen" max-width="400px">
+    <v-card>
+      <v-card-title class="headline">Save As</v-card-title>
+      <v-card-text>
+        <v-form ref="form" @submit="e => e.preventDefault()">
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <TextField large :info="nameInfo" v-model="name"></TextField>
+            </v-layout>
+          </v-container>
+        </v-form>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn @click.native="onCancelClicked">Cancel</v-btn>
+        <v-btn color="primary" @click.native="onSaveClicked">Save</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
-<script src="./TextField.vue.ts" lang="ts">
+<script src="./SaveAsDialog.vue.ts" lang="ts">
 </script>
 
 <style scoped>
