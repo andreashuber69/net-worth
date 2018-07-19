@@ -60,9 +60,13 @@ export default class App extends Vue {
         this.fileInput.value = "";
     }
 
-    public onSaveClicked(event: MouseEvent) {
-        this.isDrawerVisible = false;
-        this.write();
+    public async onSaveClicked(event: MouseEvent) {
+        if (this.model.wasSavedToFile) {
+            this.isDrawerVisible = false;
+            this.write();
+        } else {
+            await this.onSaveAsClicked(event);
+        }
     }
 
     public async onSaveAsClicked(event: MouseEvent) {
@@ -71,6 +75,7 @@ export default class App extends Vue {
 
         if (newName !== undefined) {
             this.model.name = newName;
+            this.model.wasSavedToFile = true;
             this.write();
         }
     }

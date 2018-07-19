@@ -34,6 +34,7 @@ export interface ISort {
 interface ISerializedModel {
     version: number;
     name: string;
+    wasSavedToFile: boolean;
     currency: string;
     groupBy: GroupBy;
     sort: ISort;
@@ -42,8 +43,6 @@ interface ISerializedModel {
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
-    public static readonly fileExtension = ".assets.json";
-
     /**
      * Returns a [[Model]] object that is equivalent to the passed JSON string or returns a string that describes why
      * the parse process failed.
@@ -78,6 +77,10 @@ export class Model implements IModel {
             if (name.length > 0) {
                 model.name = name;
             }
+        }
+
+        if (Value.hasBooleanProperty(rawModel, Model.wasSavedToFileName)) {
+            model.wasSavedToFile = rawModel[Model.wasSavedToFileName];
         }
 
         if (Value.hasStringProperty(rawModel, Model.currencyName)) {
@@ -137,12 +140,16 @@ export class Model implements IModel {
     }
 
     /** Provides the name of the asset collection. */
-    public name = "New";
-    public readonly fileExtension = Model.fileExtension;
+    public name = "Unnamed";
+
+    /** Provides the file extension. */
+    public readonly fileExtension = ".assets";
 
     public get fileName() {
         return `${this.name}${this.fileExtension}`;
     }
+
+    public wasSavedToFile = false;
 
     public get title() {
         return `${this.name} - Asset Manager`;
@@ -296,6 +303,7 @@ export class Model implements IModel {
         return {
             version: 1,
             name: this.name,
+            wasSavedToFile: this.wasSavedToFile,
             currency: this.currency,
             groupBy: this.groupBy,
             sort: this.sort,
@@ -307,6 +315,7 @@ export class Model implements IModel {
 
     private static readonly versionName = Model.getModelName("version");
     private static readonly nameName = Model.getModelName("name");
+    private static readonly wasSavedToFileName = Model.getModelName("wasSavedToFile");
     private static readonly currencyName = Model.getModelName("currency");
     private static readonly groupByName = Model.getModelName("groupBy");
     private static readonly sortName = Model.getModelName("sort");
