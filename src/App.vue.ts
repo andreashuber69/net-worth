@@ -19,6 +19,10 @@ import { Model } from "./model/Model";
 @Component({ components: { AssetList, SaveAsDialog } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
+    public static readonly newParameter = "?new";
+    public static readonly emptyModelLocalStorageKey = "0";
+    public static readonly sessionStorageKey = "localStorageKey";
+
     public isDrawerVisible = false;
     public areDataProvidersVisible = false;
     public model: Model;
@@ -31,6 +35,12 @@ export default class App extends Vue {
 
     public onMenuClicked(event: MouseEvent) {
         this.isDrawerVisible = !this.isDrawerVisible;
+    }
+
+    // tslint:disable-next-line:prefer-function-over-method
+    public onNewClicked(event: MouseEvent) {
+        this.isDrawerVisible = false;
+        window.open(`${window.location.href}${App.newParameter}`);
     }
 
     public onOpenClicked(event: MouseEvent) {
@@ -107,9 +117,6 @@ export default class App extends Vue {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static readonly sessionStorageKey = "localStorageKey";
-    private static readonly emptyModelLocalStorageKey = "0";
 
     private static loadFromLocalStorage() {
         // Apparently, there's no reliable way to prevent the user from closing a browser window that contains unsaved

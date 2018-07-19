@@ -18,10 +18,17 @@ import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import App from "./App.vue";
 
-// tslint:disable:no-unsafe-any
-Vue.config.productionTip = false;
-Vue.use(Vuetify);
+const currentUrl = window.location.href;
 
-new Vue({
-  render: (h) => h(App),
-}).$mount("#app");
+if (currentUrl.endsWith(App.newParameter)) {
+    window.sessionStorage.setItem(App.sessionStorageKey, App.emptyModelLocalStorageKey);
+    window.location.replace(currentUrl.substr(0, currentUrl.length - App.newParameter.length));
+} else {
+    // tslint:disable:no-unsafe-any
+    Vue.config.productionTip = false;
+    Vue.use(Vuetify);
+
+    new Vue({
+      render: (h) => h(App),
+    }).$mount("#app");
+}
