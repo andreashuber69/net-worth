@@ -15,7 +15,7 @@
 <template>
   <div>
     <v-layout row justify-center>
-      <AssetEditor :value="checkedValue" ref="editor"></AssetEditor>
+      <AssetEditor ref="editor"></AssetEditor>
     </v-layout>
     <v-data-table
       :items="checkedValue.assets" item-key="key" :pagination.sync="pagination" :loading="isLoading" :headers-length="16"

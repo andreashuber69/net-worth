@@ -10,15 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component } from "vue-property-decorator";
-import { Asset } from "../model/Asset";
+import { Component, Vue } from "vue-property-decorator";
+import { Asset, IModel } from "../model/Asset";
 import { AssetInput } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
-import { Model } from "../model/Model";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetProperties } from "./AssetProperties";
-import { ComponentBase } from "./ComponentBase";
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
 import Select from "./Select.vue";
 import TextArea from "./TextArea.vue";
@@ -27,14 +25,14 @@ import TextField from "./TextField.vue";
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { Select, TextArea, TextField } })
 /** Implements the dialog used to edit assets. */
-// tslint:disable-next-line:no-default-export
-export default class AssetEditor extends ComponentBase<Model> {
+// tslint:disable-next-line:no-default-export no-unsafe-any
+export default class AssetEditor extends Vue {
     /** Provides a value indicating whether the asset editor is currently open. */
     public isOpen = false;
 
     /** Provides the title of the asset editor. */
     public get title() {
-        return this.editedAsset ? "Edit Asset" : "New Asset";
+        return this.isExistingAsset ? "Edit Asset" : "New Asset";
     }
 
     /** Provides the asset type input information. */
@@ -58,68 +56,59 @@ export default class AssetEditor extends ComponentBase<Model> {
     public data = new AssetEditorData();
 
     public onSaveClicked(event: MouseEvent) {
-        if (this.isValid()) {
-            this.save();
-            this.close();
+        if (this.parent && this.isValid()) {
+            this.close(this.assetInfo.createAsset(this.parent, new AssetProperties(this.data)));
         }
     }
 
     public onCancelClicked(event: MouseEvent) {
-        this.close();
+        this.close(undefined);
     }
 
     /** @internal */
-    public add() {
+    public showDialog(parent: IModel, asset?: Asset) {
+        this.parent = parent;
+        this.isExistingAsset = !!asset;
+        this.assetInfo = AssetEditor.getAssetInfo(asset) || new NoAssetInputInfo();
+        this.data = new AssetEditorData(asset ? asset.interface : undefined);
         this.isOpen = true;
-    }
 
-    /** @internal */
-    public edit(asset: Asset) {
-        const assetInfo = AssetInput.infos.find((info) => info.type === asset.type);
-
-        if (assetInfo !== undefined) {
-            this.editedAsset = asset;
-            this.assetInfo = assetInfo;
-            this.data = new AssetEditorData(asset.interface);
-            this.isOpen = true;
-        }
+        return new Promise<Asset | undefined>((resolve) => this.resolve = resolve);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // tslint:disable-next-line:no-null-keyword
-    private editedAsset: Asset | null = null;
+    private static getAssetInfo(asset: Asset | undefined) {
+        return asset ? AssetInput.infos.find((info) => info.type === asset.type) : undefined;
+    }
+
+    private parent?: IModel;
+    private isExistingAsset = false;
+    private resolve?: (value: Asset | undefined) => void;
 
     private isValid() {
         this.assetInfo.includeRelations = true;
 
         try {
             // tslint:disable-next-line:no-unsafe-any
-            return (this.getControl("form") as any).validate();
+            return (this.$refs.form as any).validate();
         } finally {
             this.assetInfo.includeRelations = false;
         }
     }
 
-    private save() {
-        const newAsset = this.assetInfo.createAsset(this.checkedValue, new AssetProperties(this.data));
-
-        if (this.editedAsset) {
-            this.checkedValue.replaceAsset(this.editedAsset, newAsset);
-        } else {
-            this.checkedValue.addAsset(newAsset);
-        }
-    }
-
-    private close() {
-        // TODO: Check whether the reset() call is even necessary.
+    private close(asset: Asset | undefined) {
+        // This is necessary so that the Type field does not initially show an error next time we add a new asset.
         // tslint:disable-next-line:no-unsafe-any
-        (this.getControl("form") as any).reset();
-        this.data = new AssetEditorData();
+        (this.$refs.form as any).reset();
+        // The following line ensures that the property is changed even if we happen to edit the same asset
+        // again. Said change is necessary so that the vue.js change detection is triggered after clearing all fields
+        // with the reset call above.
         this.assetInfo = new NoAssetInputInfo();
-
-        // tslint:disable-next-line:no-null-keyword
-        this.editedAsset = null;
         this.isOpen = false;
+
+        if (this.resolve) {
+            this.resolve(asset);
+        }
     }
 }

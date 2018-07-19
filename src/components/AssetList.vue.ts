@@ -101,12 +101,20 @@ export default class AssetList extends ComponentBase<Model> {
             { by: currentSort.by, descending: !currentSort.descending } : { by: sortBy, descending: false };
     }
 
-    public onAdd() {
-        this.assetEditor.add();
+    public async onAdd() {
+        const newAsset = await this.assetEditor.showDialog(this.checkedValue);
+
+        if (newAsset) {
+            this.checkedValue.addAsset(newAsset);
+        }
     }
 
-    public onEdit(asset: Asset) {
-        this.assetEditor.edit(asset);
+    public async onEdit(asset: Asset) {
+        const changedAsset = await this.assetEditor.showDialog(this.checkedValue, asset);
+
+        if (changedAsset) {
+            this.checkedValue.replaceAsset(asset, changedAsset);
+        }
     }
 
     public onDelete(asset: Asset) {
