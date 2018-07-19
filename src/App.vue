@@ -80,7 +80,8 @@
           <v-list>
             <v-list-tile
               v-for="newCurrency in model.currencies" :key="newCurrency" @click="model.currency = newCurrency">
-              <v-list-tile-title v-text="newCurrency"></v-list-tile-title>
+              <!-- Without the explicit width, the dropdown ends up being too narrow for most currencies on Firefox. -->
+              <v-list-tile-title v-text="newCurrency" style="width:50px"></v-list-tile-title>
             </v-list-tile>
           </v-list>
         </v-menu>
