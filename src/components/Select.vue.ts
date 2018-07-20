@@ -11,14 +11,14 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Prop } from "vue-property-decorator";
-import { SelectInputInfo } from "../model/SelectInputInfo";
+import { SelectInputInfo, SelectInputInfoBase } from "../model/SelectInputInfo";
 import { ControlBase } from "./ControlBase";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
 /** Implements a select control that simplifies common functionality like e.g. validation. */
 // tslint:disable-next-line:no-default-export
-export default class Select extends ControlBase<SelectInputInfo> {
+export default class Select extends ControlBase<SelectInputInfoBase> {
     @Prop()
     public large?: boolean;
 
@@ -36,7 +36,7 @@ export default class Select extends ControlBase<SelectInputInfo> {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected get primitiveInputInfo(): SelectInputInfo {
+    protected get primitiveInputInfo(): SelectInputInfoBase {
         return this.checkedInfo.get(SelectInputInfo, this.property);
     }
 }

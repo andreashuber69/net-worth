@@ -12,59 +12,9 @@
 
 /** Enumerates the weight units supported by the application. */
 export enum WeightUnit {
-    Gram = 1,
-    Kilogram = 1000,
-    Grain = 0.06479891, // https://en.wikipedia.org/wiki/Grain_(unit)
-    TroyOunce = Grain * 480, // https://en.wikipedia.org/wiki/Ounce
-    AvdpOunce = Grain * 437.5, // https://en.wikipedia.org/wiki/Ounce
-}
-
-/** @internal */
-export class WeightUnits {
-    /** @internal */
-    public static toString(unit: WeightUnit) {
-        switch (unit) {
-            case WeightUnit.Gram:
-                return "g";
-            case WeightUnit.Kilogram:
-                return "kg";
-            case WeightUnit.Grain:
-                return "gr";
-            case WeightUnit.TroyOunce:
-                return "t oz";
-            case WeightUnit.AvdpOunce:
-                return "oz";
-            default:
-                throw new Error("Unknown WeightUnit!");
-        }
-    }
-
-    /** @internal */
-    public static toWeightUnit(str: string) {
-        const result = this.unitMap.get(str);
-
-        if (!result) {
-            throw new Error("Unknown WeightUnit string!");
-        }
-
-        return result;
-    }
-
-    /** @internal */
-    public static getAllStrings() {
-        return this.unitMap.keys();
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static readonly unitMap = new Map<string, WeightUnit>(WeightUnits.getMapEntries());
-
-    private static * getMapEntries(): IterableIterator<[string, WeightUnit]> {
-        for (const weightUnitProperty in WeightUnit) {
-            if (Number.parseFloat(weightUnitProperty)) {
-                const weightUnit = Number.parseFloat(weightUnitProperty) as WeightUnit;
-                yield [ WeightUnits.toString(weightUnit), weightUnit ];
-            }
-        }
-    }
+    "g" = 1,
+    "kg" = 1000,
+    "gr" = 0.06479891, // https://en.wikipedia.org/wiki/Grain_(unit)
+    "t oz" = gr * 480, // https://en.wikipedia.org/wiki/Ounce
+    "oz" = gr * 437.5, // https://en.wikipedia.org/wiki/Ounce
 }

@@ -57,8 +57,10 @@ export default class SaveAsDialog extends Vue {
     private close(value: string | undefined) {
         this.isOpen = false;
 
-        if (this.resolve) {
-            this.resolve(value);
+        if (!this.resolve) {
+            throw new Error("No resolve callback set!");
         }
+
+        this.resolve(value);
     }
 }

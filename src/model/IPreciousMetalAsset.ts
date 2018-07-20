@@ -17,7 +17,7 @@ import { WeightUnit } from "./WeightUnit";
 export interface IPreciousMetalAssetProperties extends IAssetProperties {
     /** Provides the weight of a single item, expressed in `weightUnit`. */
     readonly weight: number;
-    /** Provides the unit used for `weight`, e.g. [[TroyOunce]]. */
+    /** Provides the unit used for `weight`, e.g. [[kg]]. */
     readonly weightUnit: WeightUnit;
     /** Provides the fineness, e.g. 0.999. */
     readonly fineness: number;

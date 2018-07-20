@@ -57,6 +57,22 @@ const zecHint =
     "The wallets single public address (xpub is not supported). " +
     "<span style='color:red'>Will be sent to chain.so to query the balance.</span>";
 
+// TODO: Eliminate duplication with type constants
+export enum AssetTypeEnum {
+    "Silver",
+    "Palladium",
+    "Platinum",
+    "Gold",
+    "Bitcoin",
+    "Litecoin",
+    "Ethereum Classic",
+    "Ethereum",
+    "ERC20 Token",
+    "Bitcoin Gold",
+    "Dash",
+    "Zcash",
+}
+
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
     public static readonly infos: AssetInputInfo[] = [

@@ -12,7 +12,7 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import { Asset, IModel } from "../model/Asset";
-import { AssetInput } from "../model/AssetInput";
+import { AssetInput, AssetTypeEnum } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { AssetEditorData } from "./AssetEditorData";
@@ -37,7 +37,7 @@ export default class AssetEditor extends Vue {
 
     /** Provides the asset type input information. */
     public get typeInputInfo() {
-        return new SelectInputInfo("Type", "", true, true, AssetInput.infos.map((info) => info.type));
+        return new SelectInputInfo("Type", "", true, true, AssetTypeEnum);
     }
 
     /** Provides the currently selected asset type. */
@@ -56,7 +56,11 @@ export default class AssetEditor extends Vue {
     public data = new AssetEditorData();
 
     public onSaveClicked(event: MouseEvent) {
-        if (this.parent && this.isValid()) {
+        if (!this.parent) {
+            throw new Error("No parent set!");
+        }
+
+        if (this.isValid()) {
             this.close(this.assetInfo.createAsset(this.parent, new AssetProperties(this.data)));
         }
     }
@@ -107,8 +111,10 @@ export default class AssetEditor extends Vue {
         this.assetInfo = new NoAssetInputInfo();
         this.isOpen = false;
 
-        if (this.resolve) {
-            this.resolve(asset);
+        if (!this.resolve) {
+            throw new Error("No resolve callback set!");
         }
+
+        this.resolve(asset);
     }
 }

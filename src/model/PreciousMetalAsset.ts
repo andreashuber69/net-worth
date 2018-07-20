@@ -18,7 +18,7 @@ import { IPreciousMetalAsset, IPreciousMetalAssetProperties, preciousMetalSuperT
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { Unknown } from "./Value";
-import { WeightUnit, WeightUnits } from "./WeightUnit";
+import { WeightUnit } from "./WeightUnit";
 
 /** Defines the base of all classes that represent a precious metal asset. */
 export abstract class PreciousMetalAsset extends Asset implements IPreciousMetalAsset {
@@ -75,7 +75,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     public async queryData(): Promise<void> {
         await super.queryData();
         this.unitValueUsd =
-            this.pureGramsPerUnit / WeightUnit.TroyOunce * await new QuandlRequest(this.quandlPath, false).execute();
+            this.pureGramsPerUnit / WeightUnit["t oz"] * await new QuandlRequest(this.quandlPath, false).execute();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +105,7 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
         maximumFractionDigits: PreciousMetalAssetInputInfo.weightDigits, minimumFractionDigits: 0, useGrouping: true };
 
     private static getUnit(weight: number, unit: WeightUnit) {
-        return `${weight.toLocaleString(undefined, this.unitFormatOptions)} ${WeightUnits.toString(unit)}`;
+        return `${weight.toLocaleString(undefined, this.unitFormatOptions)} ${WeightUnit[unit]}`;
     }
 
     private readonly pureGramsPerUnit: number;

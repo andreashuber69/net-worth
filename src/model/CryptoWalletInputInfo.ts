@@ -18,6 +18,7 @@ import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Value";
+import { WeightUnit } from "./WeightUnit";
 
 /**
  * Defines how the properties of a crypto currency wallet need to be input and validated and provides a method to create
@@ -32,7 +33,7 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly address: TextInputInfo;
 
     public readonly weight = new TextInputInfo();
-    public readonly weightUnit = new SelectInputInfo();
+    public readonly weightUnit = new SelectInputInfo<typeof WeightUnit>();
     public readonly fineness = new TextInputInfo();
     public readonly quantity: TextInputInfo;
 

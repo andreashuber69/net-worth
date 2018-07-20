@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAssetIntersection } from "../model/AssetInterfaces";
-import { WeightUnits } from "../model/WeightUnit";
+import { WeightUnit } from "../model/WeightUnit";
 import { AssetEditorData } from "./AssetEditorData";
 
 /**
@@ -35,7 +35,11 @@ export class AssetProperties implements IAssetIntersection {
     }
 
     public get weightUnit() {
-        return WeightUnits.toWeightUnit(this.data.weightUnit);
+        if (this.data.weightUnit === "") {
+            throw new Error("Unexpected weightUnit!");
+        }
+
+        return WeightUnit[this.data.weightUnit];
     }
 
     public get fineness() {

@@ -13,7 +13,7 @@
 import { IAssetUnion } from "../model/AssetInterfaces";
 import { IAuxProperties } from "../model/IAuxProperties";
 import { PreciousMetalAsset } from "../model/PreciousMetalAsset";
-import { WeightUnits } from "../model/WeightUnit";
+import { WeightUnit } from "../model/WeightUnit";
 
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements IAuxProperties<string> {
@@ -21,7 +21,7 @@ export class AssetEditorData implements IAuxProperties<string> {
     public location: string;
     public address: string;
     public weight: string;
-    public weightUnit: string;
+    public weightUnit: keyof typeof WeightUnit | "";
     public fineness: string;
     public quantity: string;
     public notes: string;
@@ -35,7 +35,7 @@ export class AssetEditorData implements IAuxProperties<string> {
             if (asset.superType === PreciousMetalAsset.superType) {
                 this.address = "";
                 this.weight = asset.weight.toString();
-                this.weightUnit = WeightUnits.toString(asset.weightUnit);
+                this.weightUnit = WeightUnit[asset.weightUnit] as keyof typeof WeightUnit;
                 this.fineness = asset.fineness.toString();
                 this.quantity = AssetEditorData.getQuantity(asset);
             } else {

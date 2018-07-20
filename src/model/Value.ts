@@ -128,10 +128,12 @@ export class Value {
 
     /** @internal */
     public static getUnknownPropertyValue(propertyName: string, value: Unknown | null | undefined) {
-        const displayValue = typeof value === "symbol" ? "symbol" : value;
+        return this.addPropertyName(propertyName, this.getUnknownValue(value));
+    }
 
-        return this.addPropertyName(
-            propertyName, `The value '${displayValue}' does not match any of the possible values.`);
+    /** @internal */
+    public static getUnknownValue(value: Unknown | null | undefined) {
+        return `The value '${typeof value === "symbol" ? "symbol" : value}' does not match any of the possible values.`;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

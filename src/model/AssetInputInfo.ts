@@ -20,6 +20,7 @@ import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Unknown, Value } from "./Value";
+import { WeightUnit } from "./WeightUnit";
 
 interface IValidationResults extends IAuxProperties<true | string> {
     [key: string]: true | string;
@@ -40,7 +41,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     public abstract get location(): TextInputInfo;
     public abstract get address(): TextInputInfo;
     public abstract get weight(): TextInputInfo;
-    public abstract get weightUnit(): SelectInputInfo;
+    public abstract get weightUnit(): SelectInputInfo<typeof WeightUnit>;
     public abstract get fineness(): TextInputInfo;
     public abstract get quantity(): TextInputInfo;
     public readonly notes = new TextInputInfo("Notes", "Additional asset information.", true, false);

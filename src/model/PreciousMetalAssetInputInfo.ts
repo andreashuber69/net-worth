@@ -14,7 +14,7 @@ import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
 import { EditablePreciousMetalAssetType } from "./AssetTypes";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { WeightUnits } from "./WeightUnit";
+import { WeightUnit } from "./WeightUnit";
 
 /**
  * Defines how the properties of a precious metal asset need to be input and validated and provides a method to create a
@@ -33,7 +33,7 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
         "Weight", "The weight of a single item, expressed in Unit.", true, true,
         PreciousMetalAssetInputInfo.weightStep, undefined, PreciousMetalAssetInputInfo.weightStep);
     public readonly weightUnit = new SelectInputInfo(
-        "Unit", "The unit Weight is expressed in.", true, true, Array.from(WeightUnits.getAllStrings()));
+        "Unit", "The unit Weight is expressed in.", true, true, WeightUnit);
     public readonly fineness = new TextInputInfo(
         "Fineness", "The precious metal fineness.", true, true,
         0.5, 1 - PreciousMetalAssetInputInfo.finenessStep, PreciousMetalAssetInputInfo.finenessStep);
