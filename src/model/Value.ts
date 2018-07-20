@@ -127,7 +127,7 @@ export class Value {
     }
 
     /** @internal */
-    public static getUnknownValue(propertyName: string, value: Unknown | null | undefined) {
+    public static getUnknownPropertyValue(propertyName: string, value: Unknown | null | undefined) {
         const displayValue = typeof value === "symbol" ? "symbol" : value;
 
         return this.addPropertyName(

@@ -98,7 +98,7 @@ export class AssetInput {
         const assetInfo = this.infos.find((info) => info.type === rawAsset.type);
 
         if (!assetInfo) {
-            return Value.getUnknownValue(Asset.typeName, rawAsset.type);
+            return Value.getUnknownPropertyValue(Asset.typeName, rawAsset.type);
         }
 
         const validationResult = assetInfo.validateAll(rawAsset);

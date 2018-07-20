@@ -66,7 +66,7 @@ export class Model implements IModel {
         const version = rawModel[Model.versionName];
 
         if (version !== 1) {
-            return Value.getUnknownValue(Model.versionName, version);
+            return Value.getUnknownPropertyValue(Model.versionName, version);
         }
 
         const model = new Model();
