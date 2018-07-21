@@ -87,7 +87,10 @@
           </v-list>
         </v-menu>
       </v-toolbar>
-      <v-content>
+      <v-content :style="{
+        'background-image': `url(${require('./assets/background.png')})`,
+        'background-repeat': 'repeat'
+      }">
         <v-container>
           <v-layout justify-center>
             <SaveAsDialog ref="saveAsDialog"/>
