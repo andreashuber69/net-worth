@@ -22,9 +22,7 @@ import { Unknown, Value } from "./Value";
 
 /** Represents a ZEC wallet. */
 export class ZecWallet extends CryptoWallet {
-    public static readonly type = AssetType.Zec;
-
-    public readonly type = ZecWallet.type;
+    public readonly type = AssetType.Zec;
 
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
         super(parent, properties, "ZEC", "zcash");

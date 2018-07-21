@@ -17,9 +17,7 @@ import { PreciousMetalAsset } from "./PreciousMetalAsset";
 
 /** Represents an asset made of gold. */
 export class GoldAsset extends PreciousMetalAsset {
-    public static readonly type = AssetType.Au;
-
-    public readonly type = GoldAsset.type;
+    public readonly type = AssetType.Au;
 
     /**
      * Creates a new [[GoldAsset]] instance.

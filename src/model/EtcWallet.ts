@@ -22,9 +22,7 @@ import { Unknown, Value } from "./Value";
 
 /** Represents an ETC wallet. */
 export class EtcWallet extends CryptoWallet {
-    public static readonly type = AssetType.Etc;
-
-    public readonly type = EtcWallet.type;
+    public readonly type = AssetType.Etc;
 
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
         super(parent, properties, "ETC", "ethereum-classic");

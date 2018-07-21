@@ -22,9 +22,7 @@ import { Unknown, Value } from "./Value";
 
 /** Represents a BTG wallet. */
 export class BtgWallet extends CryptoWallet {
-    public static readonly type = AssetType.Btg;
-
-    public readonly type = BtgWallet.type;
+    public readonly type = AssetType.Btg;
 
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
         super(parent, properties, "BTG", "bitcoin-gold");

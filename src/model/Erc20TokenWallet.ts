@@ -17,9 +17,7 @@ import { ICryptoWalletProperties } from "./ICryptoWallet";
 
 /** Represents an ERC20 token wallet. */
 export class Erc20TokenWallet extends CryptoWallet {
-    public static readonly type = AssetType.Erc20;
-
-    public readonly type = Erc20TokenWallet.type;
+    public readonly type = AssetType.Erc20;
 
     public get isEditable() {
         return false;

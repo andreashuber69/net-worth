@@ -29,9 +29,7 @@ interface IBalance {
 
 /** Represents a BTC wallet. */
 export class BtcWallet extends CryptoWallet {
-    public static readonly type = AssetType.Btc;
-
-    public readonly type = BtcWallet.type;
+    public readonly type = AssetType.Btc;
 
     /** Creates a new [[BtcWallet]] instance.
      * @description If a non-empty string is passed for [[ICryptoWalletProperties.address]], then an attempt is made to

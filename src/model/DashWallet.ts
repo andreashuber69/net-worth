@@ -17,9 +17,7 @@ import { ICryptoWalletProperties } from "./ICryptoWallet";
 
 /** Represents a DASH wallet. */
 export class DashWallet extends BlockcypherWallet {
-    public static readonly type = AssetType.Dash;
-
-    public readonly type = DashWallet.type;
+    public readonly type = AssetType.Dash;
 
     /** Creates a new [[DashWallet]] instance.
      * @description If a non-empty string is passed for [[ICryptoWalletProperties.address]], then an attempt is made to

@@ -17,9 +17,7 @@ import { ICryptoWalletProperties } from "./ICryptoWallet";
 
 /** Represents an LTC wallet. */
 export class LtcWallet extends BlockcypherWallet {
-    public static readonly type = AssetType.Ltc;
-
-    public readonly type = LtcWallet.type;
+    public readonly type = AssetType.Ltc;
 
     /** Creates a new [[LtcWallet]] instance.
      * @description If a non-empty string is passed for [[ICryptoWalletProperties.address]], then an attempt is made to

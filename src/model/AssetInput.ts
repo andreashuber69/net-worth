@@ -14,6 +14,7 @@ import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { IAssetIntersection } from "./AssetInterfaces";
+import { AssetType } from "./AssetTypes";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
@@ -76,17 +77,17 @@ export enum AssetTypeEnum {
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
     public static readonly infos: AssetInputInfo[] = [
-        new PreciousMetalAssetInputInfo(SilverAsset.type, SilverAsset),
-        new PreciousMetalAssetInputInfo(PalladiumAsset.type, PalladiumAsset),
-        new PreciousMetalAssetInputInfo(PlatinumAsset.type, PlatinumAsset),
-        new PreciousMetalAssetInputInfo(GoldAsset.type, GoldAsset),
-        new CryptoWalletInputInfo(BtcWallet.type, btcHint, 8, BtcWallet),
-        new CryptoWalletInputInfo(LtcWallet.type, ltcHint, 8, LtcWallet),
-        new CryptoWalletInputInfo(EtcWallet.type, etcHint, 18, EtcWallet),
-        new CryptoWalletInputInfo(EthWallet.type, ethHint, 18, EthWallet),
-        new CryptoWalletInputInfo(BtgWallet.type, btgHint, 8, BtgWallet),
-        new CryptoWalletInputInfo(DashWallet.type, dashHint, 8, DashWallet),
-        new CryptoWalletInputInfo(ZecWallet.type, zecHint, 8, ZecWallet),
+        new PreciousMetalAssetInputInfo(AssetType.Ag, SilverAsset),
+        new PreciousMetalAssetInputInfo(AssetType.Pd, PalladiumAsset),
+        new PreciousMetalAssetInputInfo(AssetType.Pt, PlatinumAsset),
+        new PreciousMetalAssetInputInfo(AssetType.Au, GoldAsset),
+        new CryptoWalletInputInfo(AssetType.Btc, btcHint, 8, BtcWallet),
+        new CryptoWalletInputInfo(AssetType.Ltc, ltcHint, 8, LtcWallet),
+        new CryptoWalletInputInfo(AssetType.Etc, etcHint, 18, EtcWallet),
+        new CryptoWalletInputInfo(AssetType.Eth, ethHint, 18, EthWallet),
+        new CryptoWalletInputInfo(AssetType.Btg, btgHint, 8, BtgWallet),
+        new CryptoWalletInputInfo(AssetType.Dash, dashHint, 8, DashWallet),
+        new CryptoWalletInputInfo(AssetType.Zec, zecHint, 8, ZecWallet),
     ];
 
     /** @internal */

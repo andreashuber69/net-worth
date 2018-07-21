@@ -25,9 +25,7 @@ interface ISerializedEthBundle extends ISerializedBundle {
 
 /** Represents an ETH wallet. */
 export class EthWallet extends CryptoWallet {
-    public static readonly type = AssetType.Eth;
-
-    public readonly type = EthWallet.type;
+    public readonly type = AssetType.Eth;
 
     /** Creates a new [[EthWallet]] instance.
      * @description If a non-empty string is passed for [[ICryptoWalletProperties.address]], then an attempt is made to
