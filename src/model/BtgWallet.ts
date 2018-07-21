@@ -12,7 +12,7 @@
 
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { btgWalletType } from "./AssetTypes";
+import { AssetType } from "./AssetTypes";
 import { CryptoWallet } from "./CryptoWallet";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
@@ -22,7 +22,7 @@ import { Unknown, Value } from "./Value";
 
 /** Represents a BTG wallet. */
 export class BtgWallet extends CryptoWallet {
-    public static readonly type = btgWalletType;
+    public static readonly type = AssetType.Btg;
 
     public readonly type = BtgWallet.type;
 

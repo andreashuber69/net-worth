@@ -53,7 +53,7 @@ export abstract class Asset {
     }
 
     /** Provides the type of asset, e.g. 'Silver, 'Gold', 'Bitcoin', 'Litecoin'. */
-    public abstract get type(): AssetType | "";
+    public abstract get type(): AssetType;
 
     /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
     public abstract get description(): string;

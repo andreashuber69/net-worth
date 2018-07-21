@@ -11,13 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { silverAssetType } from "./AssetTypes";
+import { AssetType } from "./AssetTypes";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 
 /** Represents an asset made of silver. */
 export class SilverAsset extends PreciousMetalAsset {
-    public static readonly type = silverAssetType;
+    public static readonly type = AssetType.Ag;
 
     public readonly type = SilverAsset.type;
 

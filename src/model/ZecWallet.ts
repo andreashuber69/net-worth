@@ -12,7 +12,7 @@
 
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { zecWalletType } from "./AssetTypes";
+import { AssetType } from "./AssetTypes";
 import { CryptoWallet } from "./CryptoWallet";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
@@ -22,7 +22,7 @@ import { Unknown, Value } from "./Value";
 
 /** Represents a ZEC wallet. */
 export class ZecWallet extends CryptoWallet {
-    public static readonly type = zecWalletType;
+    public static readonly type = AssetType.Zec;
 
     public readonly type = ZecWallet.type;
 

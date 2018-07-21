@@ -10,28 +10,25 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-export const silverAssetType = "Silver";
-export const palladiumAssetType = "Palladium";
-export const platinumAssetType = "Platinum";
-export const goldAssetType = "Gold";
+export enum AssetType {
+    None = "",
+    Ag = "Silver",
+    Pd = "Palladium",
+    Pt = "Platinum",
+    Au = "Gold",
+    Btc = "Bitcoin",
+    Ltc = "Litecoin",
+    Etc = "Ethereum Classic",
+    Eth = "Ethereum",
+    Erc20 = "ERC20 Token",
+    Btg = "Bitcoin Gold",
+    Dash = "Dash",
+    Zec = "Zcash",
+}
 
-export const btcWalletType = "Bitcoin";
-export const ltcWalletType = "Litecoin";
-export const etcWalletType = "Ethereum Classic";
-export const ethWalletType = "Ethereum";
-export const erc20TokenWalletType = "ERC20 Token";
-export const btgWalletType = "Bitcoin Gold";
-export const dashWalletType = "Dash";
-export const zecWalletType = "Zcash";
-
-export type EditablePreciousMetalAssetType =
-    typeof silverAssetType | typeof palladiumAssetType | typeof platinumAssetType | typeof goldAssetType;
-type PreciousMetalAssetType = EditablePreciousMetalAssetType;
+export type EditablePreciousMetalAssetType = AssetType.Ag | AssetType.Pd | AssetType.Pt | AssetType.Au;
 
 export type EditableCryptoWalletType =
-    typeof btcWalletType | typeof ltcWalletType | typeof etcWalletType |
-    typeof ethWalletType | typeof btgWalletType | typeof dashWalletType | typeof zecWalletType;
-type CryptoWalletType = EditableCryptoWalletType | typeof erc20TokenWalletType;
+    AssetType.Btc | AssetType.Ltc | AssetType.Etc | AssetType.Eth | AssetType.Btg | AssetType.Dash | AssetType.Zec;
 
-export type EditableAssetType = EditableCryptoWalletType | EditablePreciousMetalAssetType;
-export type AssetType = CryptoWalletType | PreciousMetalAssetType;
+export type EditableAssetType = AssetType.None | EditablePreciousMetalAssetType | EditableCryptoWalletType;

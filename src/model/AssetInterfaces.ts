@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { AssetType } from "./AssetTypes";
 import { ICryptoWallet, ICryptoWalletProperties } from "./ICryptoWallet";
 import { IPreciousMetalAsset, IPreciousMetalAssetProperties } from "./IPreciousMetalAsset";
 
@@ -23,7 +24,8 @@ export type IAssetUnion = ICryptoWallet | IPreciousMetalAsset;
 
 /** @internal */
 export interface ISerializedObject {
-    readonly type: string;
+    // TODO: This should be constrained
+    readonly type: AssetType;
 }
 
 /** @internal */

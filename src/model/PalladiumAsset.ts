@@ -11,13 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { palladiumAssetType } from "./AssetTypes";
+import { AssetType } from "./AssetTypes";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 
 /** Represents an asset made of palladium. */
 export class PalladiumAsset extends PreciousMetalAsset {
-    public static readonly type = palladiumAssetType;
+    public static readonly type = AssetType.Pd;
 
     public readonly type = PalladiumAsset.type;
 

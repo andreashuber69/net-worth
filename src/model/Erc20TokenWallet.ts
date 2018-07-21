@@ -11,13 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { erc20TokenWalletType } from "./AssetTypes";
+import { AssetType } from "./AssetTypes";
 import { CryptoWallet } from "./CryptoWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 
 /** Represents an ERC20 token wallet. */
 export class Erc20TokenWallet extends CryptoWallet {
-    public static readonly type = erc20TokenWalletType;
+    public static readonly type = AssetType.Erc20;
 
     public readonly type = Erc20TokenWallet.type;
 

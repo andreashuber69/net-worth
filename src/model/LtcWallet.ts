@@ -11,13 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { ltcWalletType } from "./AssetTypes";
+import { AssetType } from "./AssetTypes";
 import { BlockcypherWallet } from "./BlockcypherWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 
 /** Represents an LTC wallet. */
 export class LtcWallet extends BlockcypherWallet {
-    public static readonly type = ltcWalletType;
+    public static readonly type = AssetType.Ltc;
 
     public readonly type = LtcWallet.type;
 

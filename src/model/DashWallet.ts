@@ -11,13 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { dashWalletType } from "./AssetTypes";
+import { AssetType } from "./AssetTypes";
 import { BlockcypherWallet } from "./BlockcypherWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 
 /** Represents a DASH wallet. */
 export class DashWallet extends BlockcypherWallet {
-    public static readonly type = dashWalletType;
+    public static readonly type = AssetType.Dash;
 
     public readonly type = DashWallet.type;
 

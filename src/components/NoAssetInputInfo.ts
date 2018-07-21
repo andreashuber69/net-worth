@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInputInfo } from "../model/AssetInputInfo";
+import { AssetType } from "../model/AssetTypes";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { TextInputInfo } from "../model/TextInputInfo";
 import { WeightUnit } from "../model/WeightUnit";
@@ -21,7 +22,7 @@ import { WeightUnit } from "../model/WeightUnit";
  * asset type has been selected yet.
  */
 export class NoAssetInputInfo extends AssetInputInfo {
-    public readonly type = "";
+    public readonly type = AssetType.None;
     public readonly description = new TextInputInfo();
     public readonly location = new TextInputInfo();
     public readonly address = new TextInputInfo();
