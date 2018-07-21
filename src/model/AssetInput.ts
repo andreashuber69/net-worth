@@ -68,7 +68,6 @@ export enum AssetTypeEnum {
     "Litecoin",
     "Ethereum Classic",
     "Ethereum",
-    "ERC20 Token",
     "Bitcoin Gold",
     "Dash",
     "Zcash",
