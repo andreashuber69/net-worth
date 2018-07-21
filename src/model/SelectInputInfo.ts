@@ -16,10 +16,10 @@ import { Unknown, Value } from "./Value";
 type Enum<E> = Record<keyof E, number> & { [key: number]: string };
 
 export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
+    public abstract get items(): string[];
+
     /** @internal */
-    protected constructor(
-        // TODO: Eliminate items
-        label = "", hint = "", isPresent = false, isRequired = false, public readonly items: string[]) {
+    protected constructor(label = "", hint = "", isPresent = false, isRequired = false) {
         super(label, hint, isPresent, isRequired);
     }
 }
@@ -30,10 +30,13 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     /** @internal */
     public constructor(
         label = "", hint = "", isPresent = false, isRequired = false, private readonly enumType?: T) {
-        super(
-            label, hint, isPresent, isRequired,
+        super(label, hint, isPresent, isRequired);
+    }
+
+    public get items() {
+        return this.enumType ?
             // tslint:disable-next-line:no-unsafe-any
-            enumType ? (Object as any).values(enumType).filter((v: any) => typeof v === "string") as string[] : []);
+            (Object as any).values(this.enumType).filter((v: any) => typeof v === "string") as string[] : [];
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
