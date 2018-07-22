@@ -18,11 +18,12 @@ import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import App from "./App.vue";
 
-const currentUrl = window.location.href;
+const currentUrl = new URL(window.location.href);
+const localStorageKey = currentUrl.searchParams.get(App.sessionStorageKey);
 
-if (currentUrl.endsWith(App.newParameter)) {
-    window.sessionStorage.setItem(App.sessionStorageKey, App.emptyModelLocalStorageKey);
-    window.location.replace(currentUrl.substr(0, currentUrl.length - App.newParameter.length));
+if (localStorageKey) {
+    window.sessionStorage.setItem(App.sessionStorageKey, localStorageKey);
+    window.location.replace(currentUrl.origin);
 } else {
     // tslint:disable:no-unsafe-any
     Vue.config.productionTip = false;

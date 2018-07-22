@@ -19,7 +19,6 @@ import { Model } from "./model/Model";
 @Component({ components: { AssetList, SaveAsDialog } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
-    public static readonly newParameter = "?new";
     public static readonly emptyModelLocalStorageKey = "0";
     public static readonly sessionStorageKey = "localStorageKey";
 
@@ -40,7 +39,7 @@ export default class App extends Vue {
     // tslint:disable-next-line:prefer-function-over-method
     public onNewClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
-        window.open(`${window.location.href}${App.newParameter}`);
+        window.open(`${window.location.origin}?${App.sessionStorageKey}=${App.emptyModelLocalStorageKey}`);
     }
 
     public onOpenClicked(event: MouseEvent) {
