@@ -232,7 +232,7 @@ export default class App extends Vue {
             }
         }
 
-        window.sessionStorage.setItem(this.sessionStorageKey, key);
+        return key;
     }
 
     private static trySaveToLocalStorage(json: string) {
@@ -295,7 +295,7 @@ export default class App extends Vue {
     }
 
     private onBeforeUnload(ev: BeforeUnloadEvent) {
-        App.saveToLocalStorage(this.model);
+        window.sessionStorage.setItem(App.sessionStorageKey, App.saveToLocalStorage(this.model));
     }
 
     private onModelChanged() {
