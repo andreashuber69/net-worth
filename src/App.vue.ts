@@ -19,9 +19,6 @@ import { Model } from "./model/Model";
 @Component({ components: { AssetList, SaveAsDialog } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
-    public static readonly emptyModelLocalStorageKey = "0";
-    public static readonly sessionStorageKey = "localStorageKey";
-
     public isDrawerVisible = false;
     public areDataProvidersVisible = false;
     public model: Model;
@@ -39,7 +36,7 @@ export default class App extends Vue {
     // tslint:disable-next-line:prefer-function-over-method
     public onNewClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
-        window.open(`${window.location.origin}?${App.sessionStorageKey}=${App.emptyModelLocalStorageKey}`);
+        App.openNewWindow(App.emptyModelLocalStorageKey);
     }
 
     public onOpenClicked(event: MouseEvent) {
@@ -62,7 +59,11 @@ export default class App extends Vue {
                     model.name = name;
                 }
 
-                this.model = this.initModel(model);
+                if (this.model.hasUnsavedChanges) {
+                    App.openNewWindow(App.saveToLocalStorage(model));
+                } else {
+                    this.model = this.initModel(model);
+                }
             }
         }
 
@@ -117,6 +118,9 @@ export default class App extends Vue {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private static readonly emptyModelLocalStorageKey = "0";
+    private static readonly sessionStorageKey = "localStorageKey";
+
     private static loadFromLocalStorage() {
         // Apparently, there's no reliable way to prevent the user from closing a browser window that contains unsaved
         // changes. Both Chromium and Firefox currently refuse to show a confirmation dialog that is opened in a
@@ -170,6 +174,10 @@ export default class App extends Vue {
         }
 
         return undefined;
+    }
+
+    private static openNewWindow(localStorageKey: string) {
+        window.open(`${window.location.origin}?${this.sessionStorageKey}=${localStorageKey}`);
     }
 
     private static read(blob: Blob) {

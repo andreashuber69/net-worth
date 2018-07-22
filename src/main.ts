@@ -19,10 +19,21 @@ import "vuetify/dist/vuetify.min.css";
 import App from "./App.vue";
 
 const currentUrl = new URL(window.location.href);
-const localStorageKey = currentUrl.searchParams.get(App.sessionStorageKey);
+let hasParams = false;
 
-if (localStorageKey) {
-    window.sessionStorage.setItem(App.sessionStorageKey, localStorageKey);
+// tslint:disable-next-line:no-unsafe-any
+for (const key of (currentUrl.searchParams as any).keys()) {
+    // tslint:disable-next-line:no-unsafe-any
+    const value = currentUrl.searchParams.get(key);
+
+    if (value) {
+        // tslint:disable-next-line:no-unsafe-any
+        window.sessionStorage.setItem(key, value);
+        hasParams = true;
+    }
+}
+
+if (hasParams) {
     window.location.replace(currentUrl.origin);
 } else {
     // tslint:disable:no-unsafe-any
