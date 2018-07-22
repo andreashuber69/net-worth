@@ -12,8 +12,9 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import { Asset, IModel } from "../model/Asset";
-import { AssetInput, AssetTypeEnum } from "../model/AssetInput";
+import { AssetInput } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
+import { RealAssetType } from "../model/AssetTypes";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetProperties } from "./AssetProperties";
@@ -37,7 +38,7 @@ export default class AssetEditor extends Vue {
 
     /** Provides the asset type input information. */
     public get typeInputInfo() {
-        return new SelectInputInfo("Type", "", true, true, AssetTypeEnum);
+        return new SelectInputInfo("Type", "", true, true, RealAssetType);
     }
 
     /** Provides the currently selected asset type. */
