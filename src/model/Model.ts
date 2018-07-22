@@ -35,6 +35,7 @@ interface ISerializedModel {
     version: number;
     name: string;
     wasSavedToFile: boolean;
+    hasUnsavedChanges: boolean;
     currency: string;
     groupBy: GroupBy;
     sort: ISort;
@@ -48,7 +49,6 @@ export class Model implements IModel {
      * the parse process failed.
      * @description This is typically called with a string that was returned by [[toJsonString]].
      * @param json The string to parse
-     * @param onChanged The handler to pass to the [[Model]] constructor.
      */
     public static parse(json: string) {
         let rawModel: Unknown | null;
@@ -81,6 +81,10 @@ export class Model implements IModel {
 
         if (Value.hasBooleanProperty(rawModel, Model.wasSavedToFileName)) {
             model.wasSavedToFile = rawModel[Model.wasSavedToFileName];
+        }
+
+        if (Value.hasBooleanProperty(rawModel, Model.hasUnsavedChangesName)) {
+            model.hasUnsavedChanges = rawModel[Model.hasUnsavedChangesName];
         }
 
         if (Value.hasStringProperty(rawModel, Model.currencyName)) {
@@ -151,8 +155,22 @@ export class Model implements IModel {
 
     public wasSavedToFile = false;
 
+    public get hasUnsavedChanges() {
+        return this.hasUnsavedChangesImpl;
+    }
+
+    public set hasUnsavedChanges(value: boolean) {
+        if (value !== this.hasUnsavedChangesImpl) {
+            this.hasUnsavedChangesImpl = value;
+
+            if (this.onChanged) {
+                this.onChanged();
+            }
+        }
+    }
+
     public get title() {
-        return `${this.name} - Asset Manager`;
+        return `${this.name}${this.hasUnsavedChanges ? " (Modified)" : ""} - Asset Manager`;
     }
 
     /** Provides the available currencies to value the assets in. */
@@ -168,7 +186,6 @@ export class Model implements IModel {
     /** Provides the selected currency. */
     public set currency(currency: string) {
         this.currencyImpl = currency;
-        this.notifyChanged();
         this.onCurrencyChanged().catch((reason) => console.error(reason));
     }
 
@@ -189,7 +206,6 @@ export class Model implements IModel {
         this.groupByImpl = groupBy;
         this.groups.length = 0;
         this.update();
-        this.notifyChanged();
     }
 
     /** Provides the label for the property by which the asset list is currently grouped. */
@@ -218,7 +234,6 @@ export class Model implements IModel {
     public set sort(sort: ISort) {
         this.sortImpl = sort;
         this.doSort();
-        this.notifyChanged();
     }
 
     /** Provides the asset groups. */
@@ -304,6 +319,7 @@ export class Model implements IModel {
             version: 1,
             name: this.name,
             wasSavedToFile: this.wasSavedToFile,
+            hasUnsavedChanges: this.hasUnsavedChanges,
             currency: this.currency,
             groupBy: this.groupBy,
             sort: this.sort,
@@ -316,6 +332,7 @@ export class Model implements IModel {
     private static readonly versionName = Model.getModelName("version");
     private static readonly nameName = Model.getModelName("name");
     private static readonly wasSavedToFileName = Model.getModelName("wasSavedToFile");
+    private static readonly hasUnsavedChangesName = Model.getModelName("hasUnsavedChanges");
     private static readonly currencyName = Model.getModelName("currency");
     private static readonly groupByName = Model.getModelName("groupBy");
     private static readonly sortName = Model.getModelName("sort");
@@ -386,6 +403,8 @@ export class Model implements IModel {
     private groupByImpl: GroupBy = Asset.typeName;
 
     private sortImpl: ISort = { by: Asset.totalValueName, descending: true };
+
+    private hasUnsavedChangesImpl = false;
 
     private isGroupBy(groupBy: string): groupBy is GroupBy {
         return this.groupBys.findIndex((g) => g === groupBy) >= 0;
@@ -497,6 +516,8 @@ export class Model implements IModel {
     }
 
     private notifyChanged() {
+        this.hasUnsavedChangesImpl = true;
+
         if (this.onChanged) {
             this.onChanged();
         }

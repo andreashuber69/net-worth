@@ -161,7 +161,11 @@ export default class App extends Vue {
                     window.sessionStorage.removeItem(this.sessionStorageKey);
                     window.localStorage.removeItem(localStorageKey);
 
-                    return model;
+                    if (model.hasUnsavedChanges ||
+                        // tslint:disable-next-line:deprecation
+                        (window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD)) {
+                        return model;
+                    }
                 }
             }
         }
@@ -264,6 +268,7 @@ export default class App extends Vue {
     }
 
     private write() {
+        this.model.hasUnsavedChanges = false;
         const blob = new Blob([ this.model.toJsonString() ], { type : "application/json" });
 
         if (window.navigator.msSaveOrOpenBlob) {
@@ -294,8 +299,7 @@ export default class App extends Vue {
         App.saveToLocalStorage(this.model);
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
     private onModelChanged() {
-        // App.saveToLocalStorage(this.model.toJsonString());
+        document.title = this.model.title;
     }
 }
