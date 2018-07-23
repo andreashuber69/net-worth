@@ -249,12 +249,8 @@ export default class App extends Vue {
     }
 
     private static removeAllItems(storage: Storage) {
-        for (let i = 0; i < storage.length; ++i) {
-            const key = storage.key(i);
-
-            if (key) {
-                storage.removeItem(key);
-            }
+        while (storage.length > 0) {
+            storage.removeItem(storage.key(0) || "");
         }
     }
 
