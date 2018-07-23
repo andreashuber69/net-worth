@@ -180,7 +180,7 @@ export default class App extends Vue {
     }
 
     private static openNewWindow(localStorageKey: string, forceLoadFromLocalStorage: boolean) {
-        const urlFirstPart = `${window.location.origin}?${this.sessionLocalStorageKey}=${localStorageKey}`;
+        const urlFirstPart = `${window.location.href}?${this.sessionLocalStorageKey}=${localStorageKey}`;
         const url = `${urlFirstPart}&${this.sessionForceLoadFromLocalStorageKey}=${forceLoadFromLocalStorage}`;
         window.open(url);
     }

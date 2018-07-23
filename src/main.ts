@@ -34,7 +34,7 @@ for (const key of (currentUrl.searchParams as any).keys()) {
 }
 
 if (hasParams) {
-    window.location.replace(currentUrl.origin);
+    window.location.replace(window.location.href.split("?")[0]);
 } else {
     // tslint:disable:no-unsafe-any
     Vue.config.productionTip = false;
