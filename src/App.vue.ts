@@ -152,13 +152,13 @@ export default class App extends Vue {
         // time the user navigates to the Asset Manager in the same number of tabs/windows. This is nicely complemented
         // by the fact that many browsers have an option to automatically reload all previously open tabs when the
         // browser is started.
-        const localStorageKey = App.getLocalStorageKey();
+        const localStorageKey = this.getLocalStorageKey();
 
         if (localStorageKey) {
             if (localStorageKey === this.emptyModelLocalStorageKey) {
                 window.sessionStorage.removeItem(this.sessionStorageKey);
             } else {
-                const model = App.parse(window.localStorage.getItem(localStorageKey));
+                const model = this.parse(window.localStorage.getItem(localStorageKey));
 
                 if (model) {
                     window.sessionStorage.removeItem(this.sessionStorageKey);
