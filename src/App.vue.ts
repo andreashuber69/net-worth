@@ -25,7 +25,7 @@ export default class App extends Vue {
 
     public constructor() {
         super();
-        this.model = this.initModel(App.loadFromLocalStorage() || new Model());
+        this.model = this.initModel(App.loadFromLocalStorage());
         window.addEventListener("beforeunload", (ev) => this.onBeforeUnload(ev));
     }
 
@@ -176,7 +176,7 @@ export default class App extends Vue {
             }
         }
 
-        return undefined;
+        return new Model();
     }
 
     private static openNewWindow(localStorageKey: string, forceLoadFromLocalStorage: boolean) {
