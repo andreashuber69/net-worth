@@ -36,7 +36,7 @@ export default class App extends Vue {
     // tslint:disable-next-line:prefer-function-over-method
     public onNewClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
-        App.openNewWindow(App.emptyModelLocalStorageKey);
+        App.openNewWindow(App.emptyModelLocalStorageKey, false);
     }
 
     public onOpenClicked(event: MouseEvent) {
@@ -60,7 +60,7 @@ export default class App extends Vue {
                 }
 
                 if (this.model.hasUnsavedChanges) {
-                    App.openNewWindow(App.saveToLocalStorage(model));
+                    App.openNewWindow(App.saveToLocalStorage(model), true);
                 } else {
                     this.model = this.initModel(model);
                 }
@@ -119,7 +119,8 @@ export default class App extends Vue {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly emptyModelLocalStorageKey = "0";
-    private static readonly sessionStorageKey = "localStorageKey";
+    private static readonly sessionLocalStorageKey = "localStorageKey";
+    private static readonly sessionForceLoadFromLocalStorageKey = "forceLoadFromLocalStorage";
 
     private static loadFromLocalStorage() {
         // Apparently, there's no reliable way to prevent the user from closing a browser window that contains unsaved
@@ -156,15 +157,17 @@ export default class App extends Vue {
 
         if (localStorageKey) {
             if (localStorageKey === this.emptyModelLocalStorageKey) {
-                window.sessionStorage.removeItem(this.sessionStorageKey);
+                this.removeAllItems(window.sessionStorage);
             } else {
                 const model = this.parse(window.localStorage.getItem(localStorageKey));
 
                 if (model) {
-                    window.sessionStorage.removeItem(this.sessionStorageKey);
+                    const forceLoadFromLocalStorage =
+                        window.sessionStorage.getItem(this.sessionForceLoadFromLocalStorageKey) === true.toString();
+                    this.removeAllItems(window.sessionStorage);
                     window.localStorage.removeItem(localStorageKey);
 
-                    if (model.hasUnsavedChanges ||
+                    if (forceLoadFromLocalStorage || model.hasUnsavedChanges ||
                         // tslint:disable-next-line:deprecation
                         (window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD)) {
                         return model;
@@ -176,8 +179,10 @@ export default class App extends Vue {
         return undefined;
     }
 
-    private static openNewWindow(localStorageKey: string) {
-        window.open(`${window.location.origin}?${this.sessionStorageKey}=${localStorageKey}`);
+    private static openNewWindow(localStorageKey: string, forceLoadFromLocalStorage: boolean) {
+        const urlFirstPart = `${window.location.origin}?${this.sessionLocalStorageKey}=${localStorageKey}`;
+        const url = `${urlFirstPart}&${this.sessionForceLoadFromLocalStorageKey}=${forceLoadFromLocalStorage}`;
+        window.open(url);
     }
 
     private static read(blob: Blob) {
@@ -201,8 +206,22 @@ export default class App extends Vue {
         return undefined;
     }
 
+    private static saveToLocalStorage(model: Model) {
+        let key: string | undefined = this.emptyModelLocalStorageKey;
+
+        if (model.groups.length > 0) {
+            const json = model.toJsonString();
+
+            // tslint:disable-next-line:no-empty
+            while (!(key = this.trySaveToLocalStorage(json))) {
+            }
+        }
+
+        return key;
+    }
+
     private static getLocalStorageKey() {
-        const key = window.sessionStorage.getItem(this.sessionStorageKey);
+        const key = window.sessionStorage.getItem(this.sessionLocalStorageKey);
 
         if (key) {
             return key;
@@ -229,18 +248,14 @@ export default class App extends Vue {
         return keys.reduce((m, c) => (c > m) ? c : m, Number.NEGATIVE_INFINITY).toString();
     }
 
-    private static saveToLocalStorage(model: Model) {
-        let key: string | undefined = this.emptyModelLocalStorageKey;
+    private static removeAllItems(storage: Storage) {
+        for (let i = 0; i < storage.length; ++i) {
+            const key = storage.key(i);
 
-        if (model.groups.length > 0) {
-            const json = model.toJsonString();
-
-            // tslint:disable-next-line:no-empty
-            while (!(key = this.trySaveToLocalStorage(json))) {
+            if (key) {
+                storage.removeItem(key);
             }
         }
-
-        return key;
     }
 
     private static trySaveToLocalStorage(json: string) {
@@ -303,7 +318,7 @@ export default class App extends Vue {
     }
 
     private onBeforeUnload(ev: BeforeUnloadEvent) {
-        window.sessionStorage.setItem(App.sessionStorageKey, App.saveToLocalStorage(this.model));
+        window.sessionStorage.setItem(App.sessionLocalStorageKey, App.saveToLocalStorage(this.model));
     }
 
     private onModelChanged() {
