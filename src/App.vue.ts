@@ -153,25 +153,39 @@ export default class App extends Vue {
         // time the user navigates to the Asset Manager in the same number of tabs/windows. This is nicely complemented
         // by the fact that many browsers have an option to automatically reload all previously open tabs when the
         // browser is started.
-        const localStorageKey = this.getLocalStorageKey();
+        const localStorageKey = window.sessionStorage.getItem(this.sessionLocalStorageKey);
 
         if (localStorageKey) {
-            if (localStorageKey === this.emptyModelLocalStorageKey) {
-                this.removeAllItems(window.sessionStorage);
-            } else {
-                const model = this.parse(window.localStorage.getItem(localStorageKey));
+            // Existing session
+            if ((localStorageKey !== this.emptyModelLocalStorageKey) &&
+                // tslint:disable-next-line:deprecation
+                ((window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD) ||
+                (window.sessionStorage.getItem(this.sessionForceLoadFromLocalStorageKey) === true.toString()))) {
+                return this.loadModel(localStorageKey);
+            }
+        } else {
+            // New session
+            const oldKeys = new Array<number>();
 
-                if (model) {
-                    const forceLoadFromLocalStorage =
-                        window.sessionStorage.getItem(this.sessionForceLoadFromLocalStorageKey) === true.toString();
-                    this.removeAllItems(window.sessionStorage);
-                    window.localStorage.removeItem(localStorageKey);
+            for (let index = 0; index < window.localStorage.length; ++index) {
+                const oldKey = window.localStorage.key(index);
 
-                    if (forceLoadFromLocalStorage || model.hasUnsavedChanges ||
-                        // tslint:disable-next-line:deprecation
-                        (window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD)) {
-                        return model;
+                if (oldKey) {
+                    const oldKeyNumber = Number.parseInt(oldKey);
+
+                    if (oldKeyNumber) {
+                        oldKeys.push(oldKeyNumber);
                     }
+                }
+            }
+
+            oldKeys.sort((l, r) => l < r ? 1 : -1);
+
+            for (const oldKey of oldKeys) {
+                const model = this.loadModel(oldKey.toString());
+
+                if (model.hasUnsavedChanges) {
+                    return model;
                 }
             }
         }
@@ -220,38 +234,20 @@ export default class App extends Vue {
         return key;
     }
 
-    private static getLocalStorageKey() {
-        const key = window.sessionStorage.getItem(this.sessionLocalStorageKey);
+    private static loadModel(localStorageKey: string) {
+        const result = this.parse(window.localStorage.getItem(localStorageKey));
 
-        if (key) {
-            return key;
-        }
-
-        const keys = new Array<number>();
-
-        for (let index = 0; index < window.localStorage.length; ++index) {
-            const localStorageKey = window.localStorage.key(index);
-
-            if (localStorageKey) {
-                const localStorageKeyNumber = Number.parseInt(localStorageKey);
-
-                if (localStorageKeyNumber) {
-                    keys.push(localStorageKeyNumber);
-                }
+        if (result) {
+            while (window.sessionStorage.length > 0) {
+                window.sessionStorage.removeItem(window.sessionStorage.key(0) || "");
             }
+
+            window.localStorage.removeItem(localStorageKey);
+
+            return result;
         }
 
-        if (keys.length === 0) {
-            return undefined;
-        }
-
-        return keys.reduce((m, c) => (c > m) ? c : m, Number.NEGATIVE_INFINITY).toString();
-    }
-
-    private static removeAllItems(storage: Storage) {
-        while (storage.length > 0) {
-            storage.removeItem(storage.key(0) || "");
-        }
+        return new Model();
     }
 
     private static trySaveToLocalStorage(json: string) {
