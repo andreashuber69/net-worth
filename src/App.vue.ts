@@ -161,10 +161,15 @@ export default class App extends Vue {
                 // tslint:disable-next-line:deprecation
                 ((window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD) ||
                 (window.sessionStorage.getItem(this.sessionForceLoadFromLocalStorageKey) === true.toString()))) {
+                // Session storage can only be non-empty because the user either reloaded the page or because Open...
+                // or New was clicked. Both call openNewWindow, which opens a new window with parameters attached to the
+                // URL. Code in main.ts transfers any URL parameters into session storage and then uses
+                // window.location.replace to reload without the parameters.
                 return this.loadModel(localStorageKey);
             }
         } else {
             // New session
+            // Put all old keys into the following array.
             const oldKeys = new Array<number>();
 
             for (let index = 0; index < window.localStorage.length; ++index) {
@@ -179,12 +184,17 @@ export default class App extends Vue {
                 }
             }
 
+            // Sort the array in descending direction, so that the modified model that was last saved will be loaded.
             oldKeys.sort((l, r) => l < r ? 1 : -1);
 
             for (const oldKey of oldKeys) {
                 const model = this.loadModel(oldKey.toString());
 
                 if (model.hasUnsavedChanges) {
+                    // The main goal of this whole mechanism is to prevent data loss, which is why, in a new session, we
+                    // only ever load models that have unsaved changes. Models that have been written into a file but
+                    // were nevertheless later saved to local storage as part of the browser being closed do not need to
+                    // be considered here.
                     return model;
                 }
             }
