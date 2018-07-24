@@ -34,6 +34,14 @@ if (!Browser.isCompatible) {
                     Asset Manager should also work on recent incarnations of proprietary browsers like Chrome, Opera,
                     Safari, Edge and probably others.
                 </p>
+                <p>appCodeName: ${window.navigator.appCodeName}</p>
+                <p>appName: ${window.navigator.appName}</p>
+                <p>appVersion: ${window.navigator.appVersion}</p>
+                <p>platform: ${window.navigator.platform}</p>
+                <p>product: ${window.navigator.product}</p>
+                <p>productSub: ${window.navigator.productSub}</p>
+                <p>vendor: ${window.navigator.vendor}</p>
+                <p>vendorSub: ${window.navigator.vendorSub}</p>
                 <p>(${window.navigator.userAgent})</p>
             </div>
         `;
