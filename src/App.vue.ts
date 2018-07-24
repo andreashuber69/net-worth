@@ -19,6 +19,10 @@ import { Model } from "./model/Model";
 @Component({ components: { AssetList, SaveAsDialog } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
+    public static get sessionStorageKeys() {
+        return  [ this.sessionLocalStorageKey, this.sessionForceLoadFromLocalStorageKey ];
+    }
+
     public isDrawerVisible = false;
     public areDataProvidersVisible = false;
     public model: Model;

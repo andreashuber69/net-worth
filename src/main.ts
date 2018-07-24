@@ -50,13 +50,10 @@ if (!Browser.isCompatible) {
     const currentUrl = new URL(window.location.href);
     let hasParams = false;
 
-    // tslint:disable-next-line:no-unsafe-any
-    for (const key of (currentUrl.searchParams as any).keys()) {
-        // tslint:disable-next-line:no-unsafe-any
+    for (const key of App.sessionStorageKeys) {
         const value = currentUrl.searchParams.get(key);
 
         if (value) {
-            // tslint:disable-next-line:no-unsafe-any
             window.sessionStorage.setItem(key, value);
             hasParams = true;
         }
