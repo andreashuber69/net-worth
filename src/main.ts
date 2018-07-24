@@ -47,20 +47,19 @@ if (!Browser.isCompatible) {
         `;
     }
 } else {
-    const currentUrl = new URL(window.location.href);
-    let hasParams = false;
+    const urlComponents = window.location.href.split("?");
+    const parameters = urlComponents.length === 2 ? urlComponents[1].split("&") : [];
 
-    for (const key of App.sessionStorageKeys) {
-        const value = currentUrl.searchParams.get(key);
+    for (const parameter of parameters) {
+        const nameValuePair = parameter.split("=");
 
-        if (value) {
-            window.sessionStorage.setItem(key, value);
-            hasParams = true;
+        if (nameValuePair.length === 2) {
+            window.sessionStorage.setItem(nameValuePair[0], nameValuePair[1]);
         }
     }
 
-    if (hasParams) {
-        window.location.replace(window.location.href.split("?")[0]);
+    if (parameters.length > 0) {
+        window.location.replace(urlComponents[0]);
     } else {
         // tslint:disable:no-unsafe-any
         Vue.config.productionTip = false;
