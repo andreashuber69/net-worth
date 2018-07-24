@@ -17,14 +17,17 @@ export class Browser {
         // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
         // tslint:disable-next-line:no-unsafe-any
         const isSafari = /constructor/i.test((window as any).HTMLElement) ||
-            // tslint:disable-next-line:only-arrow-functions no-string-literal no-unsafe-any
-            (function(p) { return p.toString() === "[object SafariRemoteNotification]"; })(!(window as any)["safari"] ||
-            // tslint:disable-next-line:no-unsafe-any
-            ((typeof safari !== "undefined") && safari.pushNotification));
+            // tslint:disable-next-line:no-string-literal no-unsafe-any
+            this.isSafari(!(window as any)["safari"] || ((typeof safari !== "undefined") && safari.pushNotification));
 
         // tslint:disable-next-line:binary-expression-operand-order no-unsafe-any
         const isIE = /*@cc_on!@*/false || !!(document as any).documentMode;
 
         return !isSafari && !isIE;
+    }
+
+    private static isSafari(value: any) {
+        // tslint:disable-next-line:no-unsafe-any
+        return value.toString() === "[object SafariRemoteNotification]";
     }
 }
