@@ -34,9 +34,17 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     }
 
     public get items() {
-        return this.enumType ?
-            // tslint:disable-next-line:no-unsafe-any
-            (Object as any).values(this.enumType).filter((v: any) => typeof v === "string") as string[] : [];
+        const result = new Array<string>();
+
+        if (this.enumType) {
+            for (const value in this.enumType) {
+                if (Number.isNaN(Number.parseFloat(value))) {
+                    result.push(value);
+                }
+            }
+        }
+
+        return result;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
