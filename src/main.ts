@@ -12,7 +12,10 @@
 
 import { Browser } from "./Browser";
 
-if (!Browser.isCompatible) {
+if (Browser.isCompatible) {
+    // tslint:disable-next-line:no-require-imports no-var-requires
+    require("./app");
+} else {
     const appElement = document.getElementById("app");
 
     if (appElement) {
@@ -27,19 +30,15 @@ if (!Browser.isCompatible) {
                     Asset Manager should also work on recent incarnations of proprietary browsers like Chrome, Opera,
                     Safari, Edge and probably others.
                 </p>
-                <p>appCodeName: ${window.navigator.appCodeName}</p>
-                <p>appName: ${window.navigator.appName}</p>
-                <p>appVersion: ${window.navigator.appVersion}</p>
-                <p>platform: ${window.navigator.platform}</p>
-                <p>product: ${window.navigator.product}</p>
-                <p>productSub: ${window.navigator.productSub}</p>
-                <p>vendor: ${window.navigator.vendor}</p>
-                <p>vendorSub: ${window.navigator.vendorSub}</p>
-                <p>(${window.navigator.userAgent})</p>
+                <p>userAgent: ${window.navigator.userAgent}</p>
+                <p>isOpera: ${Browser.isOpera}</p>
+                <p>isFirefox: ${Browser.isFirefox}</p>
+                <p>isSafari: ${Browser.isSafari}</p>
+                <p>isIE: ${Browser.isIE}</p>
+                <p>isEdge: ${Browser.isEdge}</p>
+                <p>isChrome: ${Browser.isChrome}</p>
+                <p>isBlink: ${Browser.isBlink}</p>
             </div>
         `;
     }
-} else {
-    // tslint:disable-next-line:no-require-imports no-var-requires
-    require("./app");
 }
