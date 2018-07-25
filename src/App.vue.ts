@@ -12,11 +12,12 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import AssetList from "./components/AssetList.vue";
+import DataProvidersDialog from "./components/DataProvidersDialog.vue";
 import SaveAsDialog from "./components/SaveAsDialog.vue";
 import { Model } from "./model/Model";
 
 // tslint:disable-next-line:no-unsafe-any
-@Component({ components: { AssetList, SaveAsDialog } })
+@Component({ components: { AssetList, DataProvidersDialog, SaveAsDialog } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
     public static get sessionStorageKeys() {
@@ -24,7 +25,6 @@ export default class App extends Vue {
     }
 
     public isDrawerVisible = false;
-    public areDataProvidersVisible = false;
     public model: Model;
 
     public constructor() {
