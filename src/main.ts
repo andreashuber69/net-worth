@@ -10,13 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-// tslint:disable-next-line:no-import-side-effect no-implicit-dependencies no-submodule-imports
-import "material-design-icons-iconfont/dist/material-design-icons.css";
-import Vue from "vue";
-import Vuetify from "vuetify";
-// tslint:disable-next-line:no-import-side-effect no-implicit-dependencies no-submodule-imports
-import "vuetify/dist/vuetify.min.css";
-import App from "./App.vue";
 import { Browser } from "./Browser";
 
 if (!Browser.isCompatible) {
@@ -47,26 +40,6 @@ if (!Browser.isCompatible) {
         `;
     }
 } else {
-    const urlComponents = window.location.href.split("?");
-    const parameters = urlComponents.length === 2 ? urlComponents[1].split("&") : [];
-
-    for (const parameter of parameters) {
-        const nameValuePair = parameter.split("=");
-
-        if (nameValuePair.length === 2) {
-            window.sessionStorage.setItem(nameValuePair[0], nameValuePair[1]);
-        }
-    }
-
-    if (parameters.length > 0) {
-        window.location.replace(urlComponents[0]);
-    } else {
-        // tslint:disable:no-unsafe-any
-        Vue.config.productionTip = false;
-        Vue.use(Vuetify);
-
-        new Vue({
-          render: (h) => h(App),
-        }).$mount("#app");
-    }
+    // tslint:disable-next-line:no-require-imports no-var-requires
+    require("./app");
 }
