@@ -16,7 +16,7 @@ declare var safari: any;
 
 export class Browser {
     public static get isCompatible() {
-        if (this.isFirefox && (this.getVersion(" Firefox/") >= 27)) {
+        if (this.isFirefox && (this.getVersion(" Firefox/") >= 47)) {
             return true;
         }
 
@@ -77,6 +77,6 @@ export class Browser {
         const userAgent = window.navigator.userAgent;
         const versionIndex = userAgent.indexOf(versionPrefix);
 
-        return versionIndex >= 0 ? Number.parseInt(userAgent.substr(versionIndex + versionPrefix.length)) : Number.NaN;
+        return versionIndex >= 0 ? parseInt(userAgent.substr(versionIndex + versionPrefix.length), 10) : Number.NaN;
     }
 }
