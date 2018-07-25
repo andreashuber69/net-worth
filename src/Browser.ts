@@ -16,6 +16,10 @@ declare var safari: any;
 
 export class Browser {
     public static get isCompatible() {
+        // The following detection is accurate for desktop browsers only. For many mobile browsers, especially the ones
+        // based on Chromium, this method will return true no matter what version of browser it runs on. For now, this
+        // might be "good enough", as users tend to update their phones much more often than their desktop computers. A
+        // phone therefore has a higher probability to come with a suitable browser.
         if (this.isFirefox && (this.getVersion(" Firefox/") < 47)) {
             return false;
         }
@@ -38,6 +42,7 @@ export class Browser {
     }
 
     // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+
     // Opera 8.0+
     public static readonly isOpera =
         // tslint:disable-next-line:no-unsafe-any
@@ -68,6 +73,8 @@ export class Browser {
 
     // Blink engine detection
     public static readonly isBlink = (Browser.isChrome || Browser.isOpera) && !!(window as any).CSS;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getVersion(versionPrefix: string) {
         const userAgent = window.navigator.userAgent;
