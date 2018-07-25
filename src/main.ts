@@ -30,6 +30,9 @@ if (Browser.isCompatible) {
                     Asset Manager should also work on recent incarnations of proprietary browsers like Chrome, Opera,
                     Safari, Edge and probably others.
                 </p>
+                <p></p>
+                <p></p>
+                <p></p>
                 <p>userAgent: ${window.navigator.userAgent}</p>
                 <p>isOpera: ${Browser.isOpera}</p>
                 <p>isFirefox: ${Browser.isFirefox}</p>
