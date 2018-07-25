@@ -16,29 +16,25 @@ declare var safari: any;
 
 export class Browser {
     public static get isCompatible() {
-        if (this.isFirefox && (this.getVersion(" Firefox/") >= 47)) {
-            return true;
+        if (this.isFirefox && (this.getVersion(" Firefox/") < 47)) {
+            return false;
         }
 
-        if (this.isSafari && (this.getVersion(" Version/") >= 10)) {
-            return true;
+        if (this.isSafari && (this.getVersion(" Safari/") < 603)) {
+            return false;
         }
 
         if (this.isIE) {
             return false;
         }
 
-        if (this.isEdge) {
-            return true;
-        }
-
         // Blink is true for Chrome, Chromium and other Chromium-based browsers like Opera and Yandex, all of which have
         // a Chrome version in their userAgent string
-        if (this.isBlink && (this.getVersion(" Chrome/") >= 54)) {
-            return true;
+        if (this.isBlink && (this.getVersion(" Chrome/") < 54)) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
