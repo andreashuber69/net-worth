@@ -16,7 +16,29 @@ declare var safari: any;
 
 export class Browser {
     public static get isCompatible() {
-        return this.isBlink;
+        if (this.isFirefox && (this.getVersion(" Firefox/") >= 27)) {
+            return true;
+        }
+
+        if (this.isSafari && (this.getVersion(" Version/") >= 10)) {
+            return true;
+        }
+
+        if (this.isIE) {
+            return false;
+        }
+
+        if (this.isEdge) {
+            return true;
+        }
+
+        // Blink is true for Chrome, Chromium and other Chromium-based browsers like Opera and Yandex, all of which have
+        // a Chrome version in their userAgent string
+        if (this.isBlink && (this.getVersion(" Chrome/") >= 54)) {
+            return true;
+        }
+
+        return false;
     }
 
     // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
@@ -51,4 +73,10 @@ export class Browser {
     // Blink engine detection
     public static readonly isBlink = (Browser.isChrome || Browser.isOpera) && !!(window as any).CSS;
 
+    private static getVersion(versionPrefix: string) {
+        const userAgent = window.navigator.userAgent;
+        const versionIndex = userAgent.indexOf(versionPrefix);
+
+        return versionIndex >= 0 ? Number.parseInt(userAgent.substr(versionIndex + versionPrefix.length)) : Number.NaN;
+    }
 }
