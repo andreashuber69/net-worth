@@ -26,7 +26,7 @@ export default class SaveAsDialog extends Vue {
     public isOpen = false;
 
     /** Provides the name input information. */
-    public readonly nameInfo = new TextInputInfo("Type", "The name of the file.", true, true);
+    public readonly nameInfo = new TextInputInfo("Name", "The name of the file.", true, true);
 
     public onSaveClicked(event: MouseEvent) {
         if (this.isValid()) {
