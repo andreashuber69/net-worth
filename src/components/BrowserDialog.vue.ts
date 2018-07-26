@@ -14,14 +14,14 @@ import { Component, Vue } from "vue-property-decorator";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
-/** Implements the dialog informing the user about open-source browser alternatives. */
+/** Implements the dialog informing the user about untested browsers. */
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class BrowserDialog extends Vue {
     /** Provides a value indicating whether the dialog is currently open. */
     public isOpen = !this.dontShowDialog;
 
     public get dontShowDialog() {
-        return !BrowserDialog.isProprietaryBrowser ||
+        return !BrowserDialog.isUntestedBrowser ||
             window.localStorage.getItem(BrowserDialog.dontShowBrowserDialogName) === true.toString();
     }
 
@@ -33,7 +33,7 @@ export default class BrowserDialog extends Vue {
 
     private static readonly dontShowBrowserDialogName = "dontShowBrowserDialog";
 
-    private static get isProprietaryBrowser() {
+    private static get isUntestedBrowser() {
         const userAgent = window.navigator.userAgent.toLowerCase();
         const testedBrowsers = [ "chromium", "firefox" ];
 

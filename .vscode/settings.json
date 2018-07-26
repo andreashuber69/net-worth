@@ -15,12 +15,17 @@
         "html",
         "markdown",
         "plaintext",
-        "typescript"
+        "typescript",
+        "vue"
     ],
     "cSpell.words": [
         "Andreas",
         "Blockchain",
+        "colspan",
         "Dönni",
+        "dropdown",
+        "nbsp",
+        "nowrap",
         "Quandl"
     ],
     "git.confirmSync": false,

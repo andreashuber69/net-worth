@@ -18,12 +18,11 @@
       <v-card-title class="headline">Untested Browser</v-card-title>
       <v-card-text>
         <p>
-          Asset Manager is regularily tested mostly on <strong>Chromium</strong> and <strong>Firefox</strong>. While it
-          should work on most other recently released browsers, it is more likely that browser-specific bugs are
-          present.
+          Asset Manager is regularly tested mostly on <strong>Chromium</strong> and <strong>Firefox</strong>. While it
+          should work on other recently released browsers, it is more likely that browser-specific bugs are present.
         </p>
         <p>
-          Most other popular browsers are proprietary software. That is, at least some of the behavior of your browser
+          Most other popular browsers are proprietary software. That is, at least part of the behavior of your browser
           is probably determined by source code that is not publicly available. Because the makers of proprietary
           software tend to focus on flashy user interfaces and other features suitable to increase the market share of
           their product, sound software design and user data privacy often take a back seat. They usually get away with
@@ -31,8 +30,8 @@
         </p>
         <p>
           <strong>
-            TL;DR Please consider using Asset Manager on Chromium or Firefox and refrain from using services that sync
-            your browser data accross devices.
+            TL;DR To maximize your privacy, please consider using Asset Manager on Chromium or Firefox and refrain from
+            using services that sync your browser data across devices.
           </strong>
         </p>
         <v-checkbox v-model="dontShowDialog" label="Don't show this again"></v-checkbox>
