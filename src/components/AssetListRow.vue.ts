@@ -225,7 +225,6 @@ export default class AssetListRow extends ComponentBase<Asset> {
         return Format.fraction(this.checkedValue.percent, 1);
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
     public getClass(columnName: ColumnName) {
         return AssetListRow.getClassImpl(
             columnName, this.checkedValue.parent.groupBy,
@@ -240,7 +239,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
     /** Instructs the parent UI element to open the asset editor dialog with the given asset. */
     public onEditClicked(event: MouseEvent) {
         // tslint:disable-next-line:no-unsafe-any
-        this.$emit("edit", this.checkedValue);
+        this.$emit("edit", this.checkedValue.editableAsset);
     }
 
     /** Instructs the parent UI element to delete the given asset from the list. */

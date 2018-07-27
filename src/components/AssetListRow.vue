@@ -40,7 +40,7 @@
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
-          <v-list-tile :disabled="!checkedValue.isEditable" @click="onEditClicked">
+          <v-list-tile @click="onEditClicked">
             <v-list-tile-title>Edit</v-list-tile-title>
           </v-list-tile>
           <v-list-tile @click="onDeleteClicked">

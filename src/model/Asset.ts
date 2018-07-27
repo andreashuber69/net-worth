@@ -102,9 +102,9 @@ export abstract class Asset {
         return true;
     }
 
-    /** Provides a value indicating whether the asset can be edited. */
-    public get isEditable() {
-        return true;
+    /** Provides the associated asset that can be edited. */
+    public get editableAsset(): Asset {
+        return this;
     }
 
     /** @internal */

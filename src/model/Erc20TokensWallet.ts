@@ -131,7 +131,8 @@ export class Erc20TokensWallet extends CryptoWallet {
                 };
 
                 this.assets.push(new Erc20TokenWallet(
-                    this.erc20Wallet.parent, newProperties, info.symbol, Number.parseFloat(info.price.rate)));
+                    this.erc20Wallet.parent, this.erc20Wallet,
+                    newProperties, info.symbol, Number.parseFloat(info.price.rate)));
             }
         }
     };

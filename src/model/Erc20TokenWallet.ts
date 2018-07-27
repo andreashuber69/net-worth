@@ -13,19 +13,20 @@
 import { IModel } from "./Asset";
 import { AssetType } from "./AssetTypes";
 import { CryptoWallet } from "./CryptoWallet";
+import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 
 /** Represents a wallet for a single ERC20 token. */
 export class Erc20TokenWallet extends CryptoWallet {
     public readonly type = AssetType.Erc20;
 
-    public get isEditable() {
-        return false;
+    public get editableAsset() {
+        return this.editable;
     }
-
     /** @internal */
     public constructor(
-        parent: IModel, properties: ICryptoWalletProperties, currencySymbol: string, unitValueUsd: number) {
+        parent: IModel, private readonly editable: Erc20TokensWallet,
+        properties: ICryptoWalletProperties, currencySymbol: string, unitValueUsd: number) {
         super(parent, properties, currencySymbol);
         this.unitValueUsd = unitValueUsd;
     }
