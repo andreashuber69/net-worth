@@ -239,7 +239,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
     /** Instructs the parent UI element to open the asset editor dialog with the given asset. */
     public onEditClicked(event: MouseEvent) {
         // tslint:disable-next-line:no-unsafe-any
-        this.$emit("edit", this.checkedValue.editableAsset);
+        this.$emit("edit", this.checkedValue);
     }
 
     /** Instructs the parent UI element to delete the given asset from the list. */

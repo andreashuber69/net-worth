@@ -23,6 +23,7 @@ export class Erc20TokenWallet extends CryptoWallet {
     public get editableAsset() {
         return this.editable;
     }
+
     /** @internal */
     public constructor(
         parent: IModel, private readonly editable: Erc20TokensWallet,
