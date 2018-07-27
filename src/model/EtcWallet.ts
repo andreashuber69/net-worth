@@ -13,15 +13,15 @@
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetType } from "./AssetTypes";
-import { CryptoWallet } from "./CryptoWallet";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
+import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown, Value } from "./Value";
 
 /** Represents an ETC wallet. */
-export class EtcWallet extends CryptoWallet {
+export class EtcWallet extends RealCryptoWallet {
     public readonly type = AssetType.Etc;
 
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {

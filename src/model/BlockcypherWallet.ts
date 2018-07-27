@@ -13,13 +13,13 @@
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { BlockcypherRequest } from "./BlockcypherRequest";
-import { CryptoWallet } from "./CryptoWallet";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
+import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Value";
 
 /** Represents a wallet the balance of which is requested from blockcypher.com. */
-export abstract class BlockcypherWallet extends CryptoWallet {
+export abstract class BlockcypherWallet extends RealCryptoWallet {
     public bundle(bundle?: Unknown): AssetBundle {
         return new GenericAssetBundle(this);
     }

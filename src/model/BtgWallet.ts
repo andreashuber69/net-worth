@@ -13,15 +13,15 @@
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetType } from "./AssetTypes";
-import { CryptoWallet } from "./CryptoWallet";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
+import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown, Value } from "./Value";
 
 /** Represents a BTG wallet. */
-export class BtgWallet extends CryptoWallet {
+export class BtgWallet extends RealCryptoWallet {
     public readonly type = AssetType.Btg;
 
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {

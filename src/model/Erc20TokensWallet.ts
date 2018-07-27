@@ -13,10 +13,10 @@
 import { Asset, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { AssetType } from "./AssetTypes";
-import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
+import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown, Value } from "./Value";
 
 interface ISerializedErc20TokensBundle extends ISerializedBundle {
@@ -24,7 +24,7 @@ interface ISerializedErc20TokensBundle extends ISerializedBundle {
 }
 
 /** Represents a wallet for ERC20 tokens. */
-export class Erc20TokensWallet extends CryptoWallet {
+export class Erc20TokensWallet extends RealCryptoWallet {
     public readonly type = AssetType.Erc20;
 
     /** Creates a new [[Erc20TokensWallet]] instance.
@@ -75,8 +75,6 @@ export class Erc20TokensWallet extends CryptoWallet {
             const balances = await QueryCache.fetch(
                 `https://api.ethplorer.io/getAddressInfo/${this.erc20Wallet.address}?apiKey=dvoio1769GSrYx63`);
 
-            this.erc20Wallet.addQuantity(balances);
-
             if (!Value.hasArrayProperty(balances, "tokens")) {
                 return;
             }
@@ -125,28 +123,11 @@ export class Erc20TokensWallet extends CryptoWallet {
             }
 
             if (token.balance > 0) {
-                const newProperties = {
-                    ...this.erc20Wallet as ICryptoWalletProperties,
-                    quantity: token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
-                };
-
                 this.assets.push(new Erc20TokenWallet(
-                    this.erc20Wallet.parent, this.erc20Wallet,
-                    newProperties, info.symbol, Number.parseFloat(info.price.rate)));
+                    this.erc20Wallet, info.symbol,
+                    token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
+                    Number.parseFloat(info.price.rate)));
             }
         }
     };
-
-    private static getQuantity(response: Unknown | null) {
-        if (!Value.hasObjectProperty(response, "ETH") || !Value.hasNumberProperty(response.ETH, "balance")) {
-            return Number.NaN;
-        }
-
-        return response.ETH.balance;
-    }
-
-    private addQuantity(response: Unknown | null) {
-        const quantity = Erc20TokensWallet.getQuantity(response);
-        this.quantity = (this.quantity === undefined ? 0 : this.quantity) + quantity;
-    }
 }

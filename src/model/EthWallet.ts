@@ -13,14 +13,14 @@
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetType } from "./AssetTypes";
-import { CryptoWallet } from "./CryptoWallet";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
+import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown, Value } from "./Value";
 
 /** Represents an ETH wallet. */
-export class EthWallet extends CryptoWallet {
+export class EthWallet extends RealCryptoWallet {
     public readonly type = AssetType.Eth;
 
     /** Creates a new [[EthWallet]] instance.

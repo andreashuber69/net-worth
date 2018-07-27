@@ -14,11 +14,11 @@ import { HDNode } from "bitcoinjs-lib";
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetType } from "./AssetTypes";
-import { CryptoWallet } from "./CryptoWallet";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
+import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown, Value } from "./Value";
 
 /** @internal */
@@ -28,7 +28,7 @@ interface IBalance {
 }
 
 /** Represents a BTC wallet. */
-export class BtcWallet extends CryptoWallet {
+export class BtcWallet extends RealCryptoWallet {
     public readonly type = AssetType.Btc;
 
     /** Creates a new [[BtcWallet]] instance.

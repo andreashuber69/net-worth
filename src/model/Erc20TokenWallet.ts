@@ -10,25 +10,50 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
-import { AssetType } from "./AssetTypes";
+import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
 import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
-import { ICryptoWalletProperties } from "./ICryptoWallet";
 
 /** Represents a wallet for a single ERC20 token. */
 export class Erc20TokenWallet extends CryptoWallet {
-    public readonly type = AssetType.Erc20;
+    public get type() {
+        return this.editable.type;
+    }
+
+    public get description() {
+        return this.editable.description;
+    }
+
+    public get location() {
+        return this.editable.location;
+    }
+
+    public get address() {
+        return this.editable.address;
+    }
+
+    public get notes() {
+        return this.editable.notes;
+    }
 
     public get editableAsset() {
         return this.editable;
     }
 
+    public get interface(): IAssetUnion {
+        throw new Error("Can't get non-real wallet interface.");
+    }
+
     /** @internal */
     public constructor(
-        parent: IModel, private readonly editable: Erc20TokensWallet,
-        properties: ICryptoWalletProperties, currencySymbol: string, unitValueUsd: number) {
-        super(parent, properties, currencySymbol);
+        private readonly editable: Erc20TokensWallet, currencySymbol: string, quantity: number, unitValueUsd: number) {
+        super(editable.parent, currencySymbol);
+        this.quantity = quantity;
         this.unitValueUsd = unitValueUsd;
+    }
+
+    // tslint:disable-next-line:prefer-function-over-method
+    public toJSON(): ISerializedAsset {
+        throw new Error("Can't serialize non-real wallet");
     }
 }
