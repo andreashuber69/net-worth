@@ -19,6 +19,7 @@ import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { DashWallet } from "./DashWallet";
+import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { EtcWallet } from "./EtcWallet";
 import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
@@ -44,7 +45,11 @@ const etcHint =
 
 const ethHint =
     "The wallets single public address (xpub is not supported). " +
-    "<span style='color:red'>Will be sent to ethplorer.io to query ETH and token balances.</span>";
+    "<span style='color:red'>Will be sent to ethplorer.io to query the ETH balance.</span>";
+
+const erc20Hint =
+    "The wallets single public address (xpub is not supported). " +
+    "<span style='color:red'>Will be sent to ethplorer.io to query ERC20 token balances.</span>";
 
 const btgHint =
     "The wallets single public address (ypub is not supported). " +
@@ -68,6 +73,7 @@ export class AssetInput {
         new CryptoWalletInputInfo(AssetType.Btc, btcHint, 8, BtcWallet),
         new CryptoWalletInputInfo(AssetType.Ltc, ltcHint, 8, LtcWallet),
         new CryptoWalletInputInfo(AssetType.Etc, etcHint, 18, EtcWallet),
+        new CryptoWalletInputInfo(AssetType.Erc20, erc20Hint, 18, Erc20TokensWallet),
         new CryptoWalletInputInfo(AssetType.Eth, ethHint, 18, EthWallet),
         new CryptoWalletInputInfo(AssetType.Btg, btgHint, 8, BtgWallet),
         new CryptoWalletInputInfo(AssetType.Dash, dashHint, 8, DashWallet),

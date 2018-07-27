@@ -43,6 +43,7 @@ export enum RealAssetType {
     "Litecoin",
     "Ethereum Classic",
     "Ethereum",
+    "ERC20 Token",
     "Bitcoin Gold",
     "Dash",
     "Zcash",
@@ -51,6 +52,7 @@ export enum RealAssetType {
 export type EditablePreciousMetalAssetType = AssetType.Ag | AssetType.Pd | AssetType.Pt | AssetType.Au;
 
 export type EditableCryptoWalletType =
-    AssetType.Btc | AssetType.Ltc | AssetType.Etc | AssetType.Eth | AssetType.Btg | AssetType.Dash | AssetType.Zec;
+    AssetType.Btc | AssetType.Ltc | AssetType.Etc |
+    AssetType.Eth | AssetType.Erc20 | AssetType.Btg | AssetType.Dash | AssetType.Zec;
 
 export type EditableAssetType = AssetType.None | EditablePreciousMetalAssetType | EditableCryptoWalletType;

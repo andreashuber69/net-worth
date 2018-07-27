@@ -15,7 +15,7 @@ import { AssetType } from "./AssetTypes";
 import { CryptoWallet } from "./CryptoWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 
-/** Represents an ERC20 token wallet. */
+/** Represents a wallet for a single ERC20 token. */
 export class Erc20TokenWallet extends CryptoWallet {
     public readonly type = AssetType.Erc20;
 
