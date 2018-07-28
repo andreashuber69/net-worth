@@ -18,15 +18,15 @@
       <v-card-title class="headline">Untested Browser</v-card-title>
       <v-card-text>
         <p>
-          Asset Manager is regularly tested mostly on <strong>Chromium</strong> and <strong>Firefox</strong>. While it
-          should work on other recently released browsers, it is more likely that browser-specific bugs are present.
+          Asset Manager is regularly tested on <strong>Chromium</strong> and <strong>Firefox</strong> only. While it
+          should work on your browser, there's the possibility of browser-specific bugs.
         </p>
         <p>
-          Most other popular browsers are proprietary software. That is, at least part of the behavior of your browser
-          is probably determined by source code that is not publicly available. Because the makers of proprietary
-          software tend to focus on flashy user interfaces and other features suitable to increase the market share of
-          their product, sound software design and user data privacy often take a back seat. They usually get away with
-          that practice because the behavior of their software cannot be independently verified.
+          I would recommend to use Chromium or Firefox because most other popular browsers are proprietary software.
+          That is, at least part of the behavior of your browser is probably determined by source code that is not
+          publicly available. Because the makers of proprietary software tend to focus on features suitable to increase
+          the market share of their product, sound software design and user data privacy often take a back seat. They
+          usually get away with that practice because the behavior of their software cannot be independently verified.
         </p>
         <p>
           <strong>
