@@ -73,7 +73,7 @@ export class AssetInput {
         new CryptoWalletInputInfo(AssetType.Btc, BtcWallet, btcHint, 8),
         new CryptoWalletInputInfo(AssetType.Ltc, LtcWallet, ltcHint, 8),
         new CryptoWalletInputInfo(AssetType.Etc, EtcWallet, etcHint, 18),
-        new CryptoWalletInputInfo(AssetType.Erc20, Erc20TokensWallet, erc20Hint, 18),
+        new CryptoWalletInputInfo(AssetType.Erc20, Erc20TokensWallet, erc20Hint),
         new CryptoWalletInputInfo(AssetType.Eth, EthWallet, ethHint, 18),
         new CryptoWalletInputInfo(AssetType.Btg, BtgWallet, btgHint, 8),
         new CryptoWalletInputInfo(AssetType.Dash, DashWallet, dashHint, 8),

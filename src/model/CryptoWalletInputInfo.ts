@@ -40,17 +40,17 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
     /** @internal */
     public constructor(
         public readonly type: EditableCryptoWalletType, ctor: IAssetConstructor,
-        addressHint: string, quantityDecimals: number) {
+        addressHint: string, quantityDecimals?: number) {
         super(ctor);
-        this.address = new TextInputInfo("Address", addressHint, true, false);
-        this.quantity = new TextInputInfo(
-            "Quantity", "The amount in the wallet.", true, false, 0, undefined, Math.pow(10, -quantityDecimals));
+        this.address = new TextInputInfo("Address", addressHint, true, !quantityDecimals);
+        this.quantity = CryptoWalletInputInfo.getQuantityInputInfo(quantityDecimals);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected validateRelations(input: CompositeInput, propertyName: AssetPropertyName) {
-        if (((propertyName === Asset.addressName) || (propertyName === Asset.quantityName)) &&
+        if (!this.address.isRequired &&
+            ((propertyName === Asset.addressName) || (propertyName === Asset.quantityName)) &&
             (CryptoWalletInputInfo.isUndefined(input.address) === CryptoWalletInputInfo.isUndefined(input.quantity))) {
             return `A value is required for either the ${this.address.label} or the ${this.quantity.label} (not both).`;
         }
@@ -59,6 +59,15 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static getQuantityInputInfo(quantityDecimals: number | undefined) {
+        if (quantityDecimals) {
+            return new TextInputInfo(
+                "Quantity", "The amount in the wallet.", true, false, 0, undefined, Math.pow(10, -quantityDecimals));
+        } else {
+            return new TextInputInfo();
+        }
+    }
 
     private static isUndefined(value: Unknown | null | undefined) {
         return (value === undefined) || (value === null) || (value === "");
