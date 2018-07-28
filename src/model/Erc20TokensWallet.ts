@@ -77,7 +77,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
         /** @internal */
         public constructor(
             private readonly editable: Erc20TokensWallet,
-            currencySymbol: string, quantity: number, unitValueUsd: number) {
+            currencySymbol: string, quantity: number, unitValueUsd: number | undefined) {
             super(editable.parent, currencySymbol);
             this.quantity = quantity;
             this.unitValueUsd = unitValueUsd;
@@ -145,6 +145,15 @@ export class Erc20TokensWallet extends RealCryptoWallet {
             return name;
         }
 
+        private static getPrice(info: Unknown) {
+            if (!Value.hasObjectProperty(info, "price") || !Value.hasStringProperty(info.price, "rate") ||
+                !Value.hasStringProperty(info.price, "currency") || (info.price.currency !== "USD")) {
+                return 0;
+            } else {
+                return Number.parseFloat(info.price.rate);
+            }
+        }
+
         private readonly deletedAssets: string[] = [];
 
         private addTokenWallet(token: Unknown | null | undefined) {
@@ -163,16 +172,11 @@ export class Erc20TokensWallet extends RealCryptoWallet {
                 return;
             }
 
-            if (!Value.hasObjectProperty(info, "price") || !Value.hasStringProperty(info.price, "rate") ||
-                !Value.hasStringProperty(info.price, "currency") || (info.price.currency !== "USD")) {
-                return;
-            }
-
             if (token.balance > 0) {
                 this.assets.push(new Erc20TokensWallet.TokenWallet(
                     this.erc20Wallet, info.symbol,
                     token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
-                    Number.parseFloat(info.price.rate)));
+                    NestedBundle.getPrice(info)));
             }
         }
     };
