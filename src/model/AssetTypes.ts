@@ -49,10 +49,8 @@ export enum RealAssetType {
     "Zcash",
 }
 
-export type EditablePreciousMetalAssetType = AssetType.Ag | AssetType.Pd | AssetType.Pt | AssetType.Au;
+export type PreciousMetalAssetType = AssetType.Ag | AssetType.Pd | AssetType.Pt | AssetType.Au;
 
-export type EditableCryptoWalletType =
+export type CryptoWalletType =
     AssetType.Btc | AssetType.Ltc | AssetType.Etc |
     AssetType.Eth | AssetType.Erc20 | AssetType.Btg | AssetType.Dash | AssetType.Zec;
-
-export type EditableAssetType = AssetType.None | EditablePreciousMetalAssetType | EditableCryptoWalletType;

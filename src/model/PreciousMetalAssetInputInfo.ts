@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
-import { EditablePreciousMetalAssetType } from "./AssetTypes";
+import { PreciousMetalAssetType } from "./AssetTypes";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { WeightUnit } from "./WeightUnit";
@@ -40,7 +40,7 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     public readonly quantity = new TextInputInfo("Quantity", "The number of items.", true, true, 0);
 
     /** @internal */
-    public constructor(public readonly type: EditablePreciousMetalAssetType, ctor: IAssetConstructor) {
+    public constructor(public readonly type: PreciousMetalAssetType, ctor: IAssetConstructor) {
         super(ctor);
     }
 
