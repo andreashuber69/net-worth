@@ -61,6 +61,6 @@
 }
 
 td {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 </style>
