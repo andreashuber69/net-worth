@@ -61,7 +61,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
      * @param slug The coinmarketcap.com identifier (aka "website_slug") of the currency.
      */
     protected constructor(
-        parent: IModel, properties: ICryptoWalletProperties, currencySymbol: string, private readonly slug?: string) {
+        parent: IModel, properties: ICryptoWalletProperties, currencySymbol = "", private readonly slug?: string) {
         super(parent, currencySymbol);
         this.description = properties.description;
         this.location = properties.location || "";
