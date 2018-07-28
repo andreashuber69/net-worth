@@ -107,7 +107,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
 
             if (index >= 0) {
                 this.deletedAssets.push(this.assets[index].unit);
-                this.assets.splice(index, index === 0 ? this.assets.length : 1);
+                this.assets.splice(index, 1);
             }
         }
 
