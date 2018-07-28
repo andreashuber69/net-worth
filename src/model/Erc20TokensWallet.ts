@@ -38,21 +38,21 @@ export class Erc20TokensWallet extends RealCryptoWallet {
     }
 
     public bundle(bundle?: Unknown): AssetBundle {
-        return new Erc20TokensWallet.Erc20Bundle(this, bundle);
+        return new Erc20TokensWallet.Bundle(this, bundle);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // tslint:disable-next-line:max-classes-per-file variable-name
-    private static readonly Erc20Bundle = class NestedErc20Bundle extends AssetBundle {
+    private static readonly Bundle = class NestedBundle extends AssetBundle {
         public readonly assets: Asset[] = [];
 
         public constructor(private readonly erc20Wallet: Erc20TokensWallet, bundle?: Unknown) {
             super();
 
-            if (Value.hasArrayProperty(bundle, NestedErc20Bundle.deletedAssetsName)) {
+            if (Value.hasArrayProperty(bundle, NestedBundle.deletedAssetsName)) {
                 // tslint:disable-next-line:no-unbound-method
-                this.deletedAssets = bundle[NestedErc20Bundle.deletedAssetsName].filter(Value.isString);
+                this.deletedAssets = bundle[NestedBundle.deletedAssetsName].filter(Value.isString);
             }
         }
 
@@ -93,7 +93,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private static readonly deletedAssetsName = NestedErc20Bundle.getName("deletedAssets");
+        private static readonly deletedAssetsName = NestedBundle.getName("deletedAssets");
 
         private static getName<T extends keyof ISerializedErc20TokensBundle>(name: T) {
             return name;
