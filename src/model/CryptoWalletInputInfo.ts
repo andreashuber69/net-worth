@@ -39,8 +39,8 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
 
     /** @internal */
     public constructor(
-        public readonly type: EditableCryptoWalletType,
-        addressHint: string, quantityDecimals: number, ctor: IAssetConstructor) {
+        public readonly type: EditableCryptoWalletType, ctor: IAssetConstructor,
+        addressHint: string, quantityDecimals: number) {
         super(ctor);
         this.address = new TextInputInfo("Address", addressHint, true, false);
         this.quantity = new TextInputInfo(

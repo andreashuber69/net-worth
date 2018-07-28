@@ -70,14 +70,14 @@ export class AssetInput {
         new PreciousMetalAssetInputInfo(AssetType.Pd, PalladiumAsset),
         new PreciousMetalAssetInputInfo(AssetType.Pt, PlatinumAsset),
         new PreciousMetalAssetInputInfo(AssetType.Au, GoldAsset),
-        new CryptoWalletInputInfo(AssetType.Btc, btcHint, 8, BtcWallet),
-        new CryptoWalletInputInfo(AssetType.Ltc, ltcHint, 8, LtcWallet),
-        new CryptoWalletInputInfo(AssetType.Etc, etcHint, 18, EtcWallet),
-        new CryptoWalletInputInfo(AssetType.Erc20, erc20Hint, 18, Erc20TokensWallet),
-        new CryptoWalletInputInfo(AssetType.Eth, ethHint, 18, EthWallet),
-        new CryptoWalletInputInfo(AssetType.Btg, btgHint, 8, BtgWallet),
-        new CryptoWalletInputInfo(AssetType.Dash, dashHint, 8, DashWallet),
-        new CryptoWalletInputInfo(AssetType.Zec, zecHint, 8, ZecWallet),
+        new CryptoWalletInputInfo(AssetType.Btc, BtcWallet, btcHint, 8),
+        new CryptoWalletInputInfo(AssetType.Ltc, LtcWallet, ltcHint, 8),
+        new CryptoWalletInputInfo(AssetType.Etc, EtcWallet, etcHint, 18),
+        new CryptoWalletInputInfo(AssetType.Erc20, Erc20TokensWallet, erc20Hint, 18),
+        new CryptoWalletInputInfo(AssetType.Eth, EthWallet, ethHint, 18),
+        new CryptoWalletInputInfo(AssetType.Btg, BtgWallet, btgHint, 8),
+        new CryptoWalletInputInfo(AssetType.Dash, DashWallet, dashHint, 8),
+        new CryptoWalletInputInfo(AssetType.Zec, ZecWallet, zecHint, 8),
     ];
 
     /** @internal */
