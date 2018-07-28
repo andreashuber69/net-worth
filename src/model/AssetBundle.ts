@@ -20,15 +20,15 @@ export interface ISerializedBundle {
 /**
  * Defines the base of all classes that represent a bundle of assets.
  * @description Asset bundles are primarily useful in conjunction with crypto currencies, where one address can hold a
- * balance of multiple currencies. For example, a BTC address could potentially hold balances of BTC, BCH, BTG, BCD and
- * so on. A bundle of assets is always defined by a primary asset, the details of which are then used to retrieve
- * information about secondary assets. For example, in the case of Ethereum, a [[EthWallet]] object is the primary asset
- * and [[Erc20TokenWallet]] objects are the secondary assets. When the former is instantiated with an address and then
- * put into a bundle by calling [[EthWallet.bundle]], [[Erc20TokenWallet]] objects are automatically added to [[assets]]
- * for each of the ERC20 tokens with a non-zero balance and a listing on coinmarketcap.com.
- * Since every asset must reside in a bundle, there is also the class GenericAssetBundle, which never holds secondary
- * assets besides the primary one. This is used for all [[PreciousMetalAsset]] subclasses and [[CryptoWallet]]
- * subclasses where the associated addresses cannot currently have balances of more than one currency.
+ * balance of multiple currencies. For example, an ETH address can hold balances of hundreds of ERC20 tokens. A bundle
+ * of assets is always defined by a primary asset, the details of which are then used to retrieve information about
+ * secondary assets. For example, in the case of ERC20 tokens, a [[Erc20TokensWallet]] object is the primary asset
+ * and the nested `TokenWallet` objects are the secondary assets. When the former is instantiated with an address and
+ * then put into a bundle by calling [[Erc20TokensWallet.bundle]], `TokenWallet` objects are automatically added to
+ * [[assets]] for each of the ERC20 tokens.
+ * Since every asset must reside in a bundle, there is also the class [[GenericAssetBundle]], which never holds
+ * secondary assets besides the primary one. This is used for all [[PreciousMetalAsset]] subclasses and other
+ * [[CryptoWallet]] subclasses.
  */
 export abstract class AssetBundle {
     public static readonly primaryAssetName = "primaryAsset";
