@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-type Enum<E> = Record<keyof E, number> & { [key: number]: string };
+export type Enum<E> = Record<keyof E, number> & { [key: number]: string };
 
 export class EnumInfo {
     public static getMemberNames<T extends Enum<T>>(enumType: T) {

@@ -10,10 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { Enum, EnumInfo } from "./EnumInfo";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { Unknown, Value } from "./Value";
-
-type Enum<E> = Record<keyof E, number> & { [key: number]: string };
 
 export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
     public abstract get items(): string[];
@@ -34,17 +33,7 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     }
 
     public get items() {
-        const result = new Array<string>();
-
-        if (this.enumType) {
-            for (const value in this.enumType) {
-                if (Number.isNaN(Number.parseFloat(value))) {
-                    result.push(value);
-                }
-            }
-        }
-
-        return result;
+        return this.enumType ? EnumInfo.getMemberNames(this.enumType) as string[] : [];
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
