@@ -13,8 +13,8 @@
 import { Currency } from "./Currency";
 import { IAssetProperties } from "./IAssetProperties";
 
-/** Contains the defining properties common to all generic assets. */
-export interface IGenericAssetProperties extends IAssetProperties {
+/** Contains the defining properties of a miscellaneous asset. */
+export interface IMiscAssetProperties extends IAssetProperties {
     /** Provides the value of a single item, expressed in `valueCurrency`. */
     readonly value: number;
     /** Provides the currency used for `value`, e.g. [[Currency.USD]]. */
@@ -22,10 +22,10 @@ export interface IGenericAssetProperties extends IAssetProperties {
 }
 
 /** @internal */
-export const genericSuperType = "Generic Asset";
+export const miscSuperType = "Miscellaneous Asset";
 
 /** @internal */
-export interface IGenericAsset extends IGenericAssetProperties {
+export interface IMiscAsset extends IMiscAssetProperties {
     /** @internal */
-    readonly superType: typeof genericSuperType;
+    readonly superType: typeof miscSuperType;
 }

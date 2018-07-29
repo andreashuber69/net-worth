@@ -18,23 +18,23 @@ import { TextInputInfo } from "./TextInputInfo";
 import { WeightUnit } from "./WeightUnit";
 
 /**
- * Defines how the properties of a generic asset need to be input and validated and provides a method to create a
+ * Defines how the properties of a miscellaneous asset need to be input and validated and provides a method to create a
  * representation of the asset.
  */
-export class GenericAssetInputInfo extends AssetInputInfo {
+export class MiscAssetInputInfo extends AssetInputInfo {
     public static readonly valueDigits = 2;
-    public readonly type = AssetType.Generic;
+    public readonly type = AssetType.Misc;
     public readonly description = new TextInputInfo(
-        "Description", "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
+        "Description", "The nature of the items, e.g. 'Cash', 'Vacation House'.", true, true);
     public readonly location = new TextInputInfo(
-        "Location", "The location, e.g. 'Safe', 'Safety Deposit Box'.", true, false);
+        "Location", "The location, e.g. 'Safe', 'Redford'.", true, false);
     public readonly address = new TextInputInfo();
     public readonly weight = new TextInputInfo();
     public readonly weightUnit = new SelectInputInfo<typeof WeightUnit>();
     public readonly fineness = new TextInputInfo();
     public readonly value = new TextInputInfo(
         "Value", "The value of a single item, expressed in Currency.", true, true,
-        GenericAssetInputInfo.valueStep, undefined, GenericAssetInputInfo.valueStep);
+        MiscAssetInputInfo.valueStep, undefined, MiscAssetInputInfo.valueStep);
     public readonly valueCurrency = new SelectInputInfo(
         "Currency", "The currency Value is expressed in.", true, true, Currency, true);
     public readonly quantity = new TextInputInfo("Quantity", "The number of items.", true, true, 0);
@@ -46,5 +46,5 @@ export class GenericAssetInputInfo extends AssetInputInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly valueStep = Math.pow(10, -GenericAssetInputInfo.valueDigits);
+    private static readonly valueStep = Math.pow(10, -MiscAssetInputInfo.valueDigits);
 }

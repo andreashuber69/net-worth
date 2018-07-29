@@ -12,16 +12,16 @@
 
 import { AssetType } from "./AssetTypes";
 import { ICryptoWallet, ICryptoWalletProperties } from "./ICryptoWallet";
-import { IGenericAsset, IGenericAssetProperties } from "./IGenericAsset";
+import { IMiscAsset, IMiscAssetProperties } from "./IMiscAsset";
 import { IPreciousMetalAsset, IPreciousMetalAssetProperties } from "./IPreciousMetalAsset";
 
 /** Combines the defining properties of all assets. */
-export type IAssetIntersection = IPreciousMetalAssetProperties & ICryptoWalletProperties & IGenericAssetProperties;
+export type IAssetIntersection = IPreciousMetalAssetProperties & ICryptoWalletProperties & IMiscAssetProperties;
 
 export type AssetPropertyName = keyof IAssetIntersection;
 
 /** @internal */
-export type IAssetUnion = IPreciousMetalAsset | ICryptoWallet | IGenericAsset;
+export type IAssetUnion = IPreciousMetalAsset | ICryptoWallet | IMiscAsset;
 
 /** @internal */
 export interface ISerializedObject {
@@ -34,4 +34,4 @@ export type SerializedAssetPropertyName = keyof (ISerializedObject & IAssetInter
 
 /** @internal */
 export type ISerializedAsset =
-    ISerializedObject & (IPreciousMetalAssetProperties | ICryptoWalletProperties | IGenericAssetProperties);
+    ISerializedObject & (IPreciousMetalAssetProperties | ICryptoWalletProperties | IMiscAssetProperties);

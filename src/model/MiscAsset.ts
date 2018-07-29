@@ -17,23 +17,23 @@ import { AssetType } from "./AssetTypes";
 import { Currency } from "./Currency";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { GenericAssetInputInfo } from "./GenericAssetInputInfo";
-import { genericSuperType, IGenericAsset, IGenericAssetProperties } from "./IGenericAsset";
+import { IMiscAsset, IMiscAssetProperties, miscSuperType } from "./IMiscAsset";
+import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { Unknown } from "./Value";
 
-/** Defines the base of all classes that represent a generic asset. */
-export class GenericAsset extends Asset implements IGenericAsset {
+/** Represents a miscellaneous asset. */
+export class MiscAsset extends Asset implements IMiscAsset {
     /** @internal */
-    public static readonly superType = genericSuperType;
+    public static readonly superType = miscSuperType;
 
-    public readonly type = AssetType.Generic;
+    public readonly type = AssetType.Misc;
 
     public readonly description: string;
 
     public readonly location: string;
 
     public get unit() {
-        return GenericAsset.getUnit(this.value, Currency[this.valueCurrency]);
+        return MiscAsset.getUnit(this.value, Currency[this.valueCurrency]);
     }
 
     public get fineness() {
@@ -56,14 +56,14 @@ export class GenericAsset extends Asset implements IGenericAsset {
     }
 
     /** @internal */
-    public readonly superType = GenericAsset.superType;
+    public readonly superType = MiscAsset.superType;
 
     /**
-     * Creates a new [[GenericAsset]] instance.
+     * Creates a new [[MiscAsset]] instance.
      * @param parent The parent model to which this asset belongs.
-     * @param properties The generic asset properties.
+     * @param properties The miscellaneous asset properties.
      */
-    public constructor(parent: IModel, properties: IGenericAssetProperties) {
+    public constructor(parent: IModel, properties: IMiscAssetProperties) {
         super(parent);
         this.description = properties.description;
         this.location = properties.location || "";
@@ -100,8 +100,8 @@ export class GenericAsset extends Asset implements IGenericAsset {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly unitFormatOptions = {
-        maximumFractionDigits: GenericAssetInputInfo.valueDigits,
-        minimumFractionDigits: GenericAssetInputInfo.valueDigits,
+        maximumFractionDigits: MiscAssetInputInfo.valueDigits,
+        minimumFractionDigits: MiscAssetInputInfo.valueDigits,
         useGrouping: true };
 
     private static getUnit(value: number, valueCurrency: Currency) {

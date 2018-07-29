@@ -22,10 +22,10 @@ import { DashWallet } from "./DashWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { EtcWallet } from "./EtcWallet";
 import { EthWallet } from "./EthWallet";
-import { GenericAsset } from "./GenericAsset";
-import { GenericAssetInputInfo } from "./GenericAssetInputInfo";
 import { GoldAsset } from "./GoldAsset";
 import { LtcWallet } from "./LtcWallet";
+import { MiscAsset } from "./MiscAsset";
+import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
@@ -80,7 +80,7 @@ export class AssetInput {
         new CryptoWalletInputInfo(AssetType.Btg, BtgWallet, btgHint, 8),
         new CryptoWalletInputInfo(AssetType.Dash, DashWallet, dashHint, 8),
         new CryptoWalletInputInfo(AssetType.Zec, ZecWallet, zecHint, 8),
-        new GenericAssetInputInfo(GenericAsset),
+        new MiscAssetInputInfo(MiscAsset),
     ];
 
     /** @internal */
