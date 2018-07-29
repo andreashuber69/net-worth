@@ -25,6 +25,7 @@ export enum AssetType {
     Btg = "Bitcoin Gold",
     Dash = "Dash",
     Zec = "Zcash",
+    Generic = "Generic",
 }
 
 /**
@@ -47,6 +48,7 @@ export enum RealAssetType {
     "Bitcoin Gold",
     "Dash",
     "Zcash",
+    "Generic",
 }
 
 export type PreciousMetalAssetType = AssetType.Ag | AssetType.Pd | AssetType.Pt | AssetType.Au;

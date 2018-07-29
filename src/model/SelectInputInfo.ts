@@ -28,7 +28,8 @@ export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
 export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     /** @internal */
     public constructor(
-        label = "", hint = "", isPresent = false, isRequired = false, private readonly enumType?: T) {
+        label = "", hint = "", isPresent = false, isRequired = false, private readonly enumType?: T,
+        private readonly acceptStringsOnly = false) {
         super(label, hint, isPresent, isRequired);
     }
 
@@ -40,7 +41,7 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
 
     protected validateContent(strict: boolean, input: Unknown) {
         if (this.enumType) {
-            if (!(input in this.enumType)) {
+            if (!(input in this.enumType) || (this.acceptStringsOnly && (typeof input !== "string"))) {
                 return Value.getUnknownValue(input);
             }
         }

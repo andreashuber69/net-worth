@@ -11,6 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAssetUnion } from "../model/AssetInterfaces";
+import { CryptoWallet } from "../model/CryptoWallet";
+import { Currency } from "../model/Currency";
 import { IAuxProperties } from "../model/IAuxProperties";
 import { PreciousMetalAsset } from "../model/PreciousMetalAsset";
 import { WeightUnit } from "../model/WeightUnit";
@@ -23,6 +25,8 @@ export class AssetEditorData implements IAuxProperties<string> {
     public weight: string;
     public weightUnit: keyof typeof WeightUnit | "";
     public fineness: string;
+    public value: string;
+    public valueCurrency: keyof typeof Currency | "";
     public quantity: string;
     public notes: string;
 
@@ -37,13 +41,25 @@ export class AssetEditorData implements IAuxProperties<string> {
                 this.weight = asset.weight.toString();
                 this.weightUnit = WeightUnit[asset.weightUnit] as keyof typeof WeightUnit;
                 this.fineness = asset.fineness.toString();
+                this.value = "";
+                this.valueCurrency = "";
                 this.quantity = AssetEditorData.getQuantity(asset);
-            } else {
+            } else if (asset.superType === CryptoWallet.superType) {
                 this.address = asset.address || "";
                 this.weight = "";
                 this.weightUnit = "";
                 this.fineness = "";
+                this.value = "";
+                this.valueCurrency = "";
                 this.quantity = this.address ? "" : AssetEditorData.getQuantity(asset);
+            } else {
+                this.address = "";
+                this.weight = "";
+                this.weightUnit = "";
+                this.fineness = "";
+                this.value = asset.value.toString();
+                this.valueCurrency = asset.valueCurrency;
+                this.quantity = AssetEditorData.getQuantity(asset);
             }
 
             this.notes = asset.notes || "";
@@ -54,6 +70,8 @@ export class AssetEditorData implements IAuxProperties<string> {
             this.weight = "";
             this.weightUnit = "";
             this.fineness = "";
+            this.value = "";
+            this.valueCurrency = "";
             this.quantity  = "";
             this.notes = "";
         }

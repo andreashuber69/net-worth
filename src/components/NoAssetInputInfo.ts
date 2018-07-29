@@ -12,6 +12,7 @@
 
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { AssetType } from "../model/AssetTypes";
+import { Currency } from "../model/Currency";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { TextInputInfo } from "../model/TextInputInfo";
 import { WeightUnit } from "../model/WeightUnit";
@@ -29,6 +30,8 @@ export class NoAssetInputInfo extends AssetInputInfo {
     public readonly weight = new TextInputInfo();
     public readonly weightUnit = new SelectInputInfo<typeof WeightUnit>();
     public readonly fineness = new TextInputInfo();
+    public readonly value = new TextInputInfo();
+    public readonly valueCurrency = new SelectInputInfo<typeof Currency>();
     public readonly quantity = new TextInputInfo();
     public readonly notes = new TextInputInfo();
 

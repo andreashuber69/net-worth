@@ -46,6 +46,18 @@ export class AssetProperties implements IAssetIntersection {
         return Number.parseFloat(this.data.fineness);
     }
 
+    public get value() {
+        return Number.parseFloat(this.data.value);
+    }
+
+    public get valueCurrency() {
+        if (this.data.valueCurrency === "") {
+            throw new Error("Unexpected currency!");
+        }
+
+        return this.data.valueCurrency;
+    }
+
     public get quantity() {
         return this.data.quantity ? Number.parseFloat(this.data.quantity) : undefined;
     }

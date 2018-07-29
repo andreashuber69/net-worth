@@ -13,6 +13,7 @@
 import { Asset, IModel } from "./Asset";
 import { AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
 import { AssetType } from "./AssetTypes";
+import { Currency } from "./Currency";
 import { IAuxProperties } from "./IAuxProperties";
 import { CompositeInput, InputUtility } from "./Input";
 import { InputInfo } from "./InputInfo";
@@ -40,6 +41,8 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     public abstract get description(): TextInputInfo;
     public abstract get location(): TextInputInfo;
     public abstract get address(): TextInputInfo;
+    public abstract get value(): TextInputInfo;
+    public abstract get valueCurrency(): SelectInputInfo<typeof Currency>;
     public abstract get weight(): TextInputInfo;
     public abstract get weightUnit(): SelectInputInfo<typeof WeightUnit>;
     public abstract get fineness(): TextInputInfo;
@@ -96,6 +99,8 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
                 weight: this.validateComposite(true, input, Asset.weightName),
                 weightUnit: this.validateComposite(true, input, Asset.weightUnitName),
                 fineness: this.validateComposite(true, input, Asset.finenessName),
+                value: this.validateComposite(true, input, Asset.valueName),
+                valueCurrency: this.validateComposite(true, input, Asset.valueCurrencyName),
                 quantity: this.validateComposite(true, input, Asset.quantityName),
                 notes: this.validateComposite(true, input, Asset.notesName),
             };

@@ -11,44 +11,40 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
-import { PreciousMetalAssetType } from "./AssetTypes";
+import { AssetType } from "./AssetTypes";
 import { Currency } from "./Currency";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { WeightUnit } from "./WeightUnit";
 
 /**
- * Defines how the properties of a precious metal asset need to be input and validated and provides a method to create a
+ * Defines how the properties of a generic asset need to be input and validated and provides a method to create a
  * representation of the asset.
  */
-export class PreciousMetalAssetInputInfo extends AssetInputInfo {
-    public static readonly weightDigits = 3;
-    public static readonly finenessDigits = 6;
-
+export class GenericAssetInputInfo extends AssetInputInfo {
+    public static readonly valueDigits = 2;
+    public readonly type = AssetType.Generic;
     public readonly description = new TextInputInfo(
         "Description", "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
     public readonly location = new TextInputInfo(
         "Location", "The location, e.g. 'Safe', 'Safety Deposit Box'.", true, false);
     public readonly address = new TextInputInfo();
-    public readonly weight = new TextInputInfo(
-        "Weight", "The weight of a single item, expressed in Unit.", true, true,
-        PreciousMetalAssetInputInfo.weightStep, undefined, PreciousMetalAssetInputInfo.weightStep);
-    public readonly weightUnit = new SelectInputInfo(
-        "Unit", "The unit Weight is expressed in.", true, true, WeightUnit);
-    public readonly fineness = new TextInputInfo(
-        "Fineness", "The precious metal fineness.", true, true,
-        0.5, 1 - PreciousMetalAssetInputInfo.finenessStep, PreciousMetalAssetInputInfo.finenessStep);
-    public readonly value = new TextInputInfo();
-    public readonly valueCurrency = new SelectInputInfo<typeof Currency>();
+    public readonly weight = new TextInputInfo();
+    public readonly weightUnit = new SelectInputInfo<typeof WeightUnit>();
+    public readonly fineness = new TextInputInfo();
+    public readonly value = new TextInputInfo(
+        "Value", "The value of a single item, expressed in Currency.", true, true,
+        GenericAssetInputInfo.valueStep, undefined, GenericAssetInputInfo.valueStep);
+    public readonly valueCurrency = new SelectInputInfo(
+        "Currency", "The currency Value is expressed in.", true, true, Currency, true);
     public readonly quantity = new TextInputInfo("Quantity", "The number of items.", true, true, 0);
 
     /** @internal */
-    public constructor(public readonly type: PreciousMetalAssetType, ctor: IAssetConstructor) {
+    public constructor(ctor: IAssetConstructor) {
         super(ctor);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly weightStep = Math.pow(10, -PreciousMetalAssetInputInfo.weightDigits);
-    private static readonly finenessStep = Math.pow(10, -PreciousMetalAssetInputInfo.finenessDigits);
+    private static readonly valueStep = Math.pow(10, -GenericAssetInputInfo.valueDigits);
 }

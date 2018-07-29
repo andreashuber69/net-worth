@@ -27,6 +27,8 @@
               <TextField :info="assetInfo" property="weight" v-model="data"></TextField>
               <Select :info="assetInfo" property="weightUnit" v-model="data"></Select>
               <TextField :info="assetInfo" property="fineness" v-model="data"></TextField>
+              <TextField :info="assetInfo" property="value" v-model="data"></TextField>
+              <Select :info="assetInfo" property="valueCurrency" v-model="data"></Select>
               <TextField :info="assetInfo" property="quantity" v-model="data"></TextField>
               <TextArea :info="assetInfo" property="notes" v-model="data"></TextArea>
             </v-layout>

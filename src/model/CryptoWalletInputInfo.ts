@@ -14,6 +14,7 @@ import { Asset } from "./Asset";
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
 import { AssetPropertyName } from "./AssetInterfaces";
 import { CryptoWalletType } from "./AssetTypes";
+import { Currency } from "./Currency";
 import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
@@ -35,6 +36,8 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly weight = new TextInputInfo();
     public readonly weightUnit = new SelectInputInfo<typeof WeightUnit>();
     public readonly fineness = new TextInputInfo();
+    public readonly value = new TextInputInfo();
+    public readonly valueCurrency = new SelectInputInfo<typeof Currency>();
     public readonly quantity: TextInputInfo;
 
     /** @internal */

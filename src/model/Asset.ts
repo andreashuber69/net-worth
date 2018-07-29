@@ -36,6 +36,8 @@ export abstract class Asset {
     public static readonly weightName = Asset.getPropertyName("weight");
     public static readonly weightUnitName = Asset.getPropertyName("weightUnit");
     public static readonly finenessName = Asset.getPropertyName("fineness");
+    public static readonly valueName = Asset.getPropertyName("value");
+    public static readonly valueCurrencyName = Asset.getPropertyName("valueCurrency");
     public static readonly unitValueName = Asset.getCalculatedPropertyName("unitValue");
     public static readonly quantityName = Asset.getPropertyName("quantity");
     public static readonly notesName = Asset.getPropertyName("notes");
