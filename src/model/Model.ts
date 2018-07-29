@@ -14,9 +14,9 @@ import { Asset, GroupBy, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { AssetGroup } from "./AssetGroup";
 import { AssetInput } from "./AssetInput";
-import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
-import { IWebRequest } from "./IWebRequest";
-import { QuandlRequest } from "./QuandlRequest";
+import { Currency } from "./Currency";
+import { EnumInfo } from "./EnumInfo";
+import { ExchangeRate } from "./ExchangeRate";
 import { Unknown, Value } from "./Value";
 
 export type SortBy =
@@ -90,8 +90,8 @@ export class Model implements IModel {
         if (Value.hasStringProperty(rawModel, Model.currencyName)) {
             const currency = rawModel[Model.currencyName];
 
-            if (model.currencies.findIndex((c) => c === currency) >= 0) {
-                model.currency = currency;
+            if (currency in Currency) {
+                model.currency = currency as keyof typeof Currency;
             }
         }
 
@@ -175,7 +175,7 @@ export class Model implements IModel {
 
     /** Provides the available currencies to value the assets in. */
     public get currencies() {
-        return Array.from(Model.currencyMap.keys());
+        return EnumInfo.getMemberNames(Currency);
     }
 
     /** Provides the selected currency. */
@@ -184,7 +184,7 @@ export class Model implements IModel {
     }
 
     /** Provides the selected currency. */
-    public set currency(currency: string) {
+    public set currency(currency: keyof typeof Currency) {
         this.currencyImpl = currency;
         this.onCurrencyChanged().catch((reason) => console.error(reason));
     }
@@ -340,39 +340,6 @@ export class Model implements IModel {
     private static readonly sortDescendingName = Model.getSortName("descending");
     private static readonly bundlesName = Model.getModelName("bundles");
 
-    private static readonly currencyMap = new Map<string, IWebRequest<number>>([
-        ["USD", new QuandlRequest("", false)],
-        ["AUD", new QuandlRequest("boe/xudladd.json", false)],
-        ["CAD", new QuandlRequest("boe/xudlcdd.json", false)],
-        ["CNY", new QuandlRequest("boe/xudlbk73.json", false)],
-        ["CHF", new QuandlRequest("boe/xudlsfd.json", false)],
-        ["CZK", new QuandlRequest("boe/xudlbk27.json", false)],
-        ["DKK", new QuandlRequest("boe/xudldkd.json", false)],
-        ["GBP", new QuandlRequest("boe/xudlgbd.json", false)],
-        ["HKD", new QuandlRequest("boe/xudlhdd.json", false)],
-        ["HUF", new QuandlRequest("boe/xudlbk35.json", false)],
-        ["INR", new QuandlRequest("boe/xudlbk64.json", false)],
-        ["JPY", new QuandlRequest("boe/xudljyd.json", false)],
-        ["KRW", new QuandlRequest("boe/xudlbk74.json", false)],
-        ["LTL", new QuandlRequest("boe/xudlbk38.json", false)],
-        ["MYR", new QuandlRequest("boe/xudlbk66.json", false)],
-        ["NIS", new QuandlRequest("boe/xudlbk65.json", false)],
-        ["NOK", new QuandlRequest("boe/xudlnkd.json", false)],
-        ["NZD", new QuandlRequest("boe/xudlndd.json", false)],
-        ["PLN", new QuandlRequest("boe/xudlbk49.json", false)],
-        ["RUB", new QuandlRequest("boe/xudlbk69.json", false)],
-        ["SAR", new QuandlRequest("boe/xudlsrd.json", false)],
-        ["SEK", new QuandlRequest("boe/xudlskd.json", false)],
-        ["SGD", new QuandlRequest("boe/xudlsgd.json", false)],
-        ["THB", new QuandlRequest("boe/xudlbk72.json", false)],
-        ["TRY", new QuandlRequest("boe/xudlbk75.json", false)],
-        ["TWD", new QuandlRequest("boe/xudltwd.json", false)],
-        ["ZAR", new QuandlRequest("boe/xudlzrd.json", false)],
-        ["XAG", new QuandlRequest("lbma/silver.json", true)],
-        ["XAU", new QuandlRequest("lbma/gold.json", true)],
-        ["BTC", new CoinMarketCapRequest("bitcoin", true)],
-    ]);
-
     private static getModelName<T extends keyof ISerializedModel>(name: T) {
         return name;
     }
@@ -398,7 +365,7 @@ export class Model implements IModel {
 
     private readonly bundles = new Array<AssetBundle>();
 
-    private currencyImpl = Model.currencyMap.keys().next().value;
+    private currencyImpl = this.currencies[0];
 
     private groupByImpl: GroupBy = Asset.typeName;
 
@@ -511,8 +478,7 @@ export class Model implements IModel {
 
     private async onCurrencyChanged() {
         this.exchangeRate = undefined;
-        const request = Model.currencyMap.get(this.currency) as IWebRequest<number>;
-        this.exchangeRate = await request.execute();
+        this.exchangeRate = await ExchangeRate.get(Currency[this.currency]);
     }
 
     private notifyChanged() {
