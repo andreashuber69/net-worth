@@ -34,7 +34,7 @@ export class MiscAssetInputInfo extends AssetInputInfo {
     public readonly fineness = new TextInputInfo();
     public readonly value = new TextInputInfo(
         "Value", "The value of a single item, expressed in Currency.", true, true,
-        MiscAssetInputInfo.valueStep, undefined, MiscAssetInputInfo.valueStep);
+        0, undefined, MiscAssetInputInfo.valueStep);
     public readonly valueCurrency = new SelectInputInfo(
         "Currency", "The currency Value is expressed in.", true, true, Currency, true);
     public readonly quantity = new TextInputInfo("Quantity", "The number of items.", true, true, 0);
