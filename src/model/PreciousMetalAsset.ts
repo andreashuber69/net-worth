@@ -13,6 +13,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
+import { AssetType } from "./AssetTypes";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IPreciousMetalAsset, IPreciousMetalAssetProperties, preciousMetalSuperType } from "./IPreciousMetalAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
@@ -24,6 +25,8 @@ import { WeightUnit } from "./WeightUnit";
 export abstract class PreciousMetalAsset extends Asset implements IPreciousMetalAsset {
     /** @internal */
     public static readonly superType = preciousMetalSuperType;
+
+    public abstract get type(): keyof typeof AssetType;
 
     public readonly description: string;
 

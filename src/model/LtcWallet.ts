@@ -11,13 +11,12 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { AssetType } from "./AssetTypes";
 import { BlockcypherWallet } from "./BlockcypherWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 
 /** Represents an LTC wallet. */
 export class LtcWallet extends BlockcypherWallet {
-    public readonly type = AssetType.Ltc;
+    public readonly type = "Litecoin";
 
     /** Creates a new [[LtcWallet]] instance.
      * @description If a non-empty string is passed for [[ICryptoWalletProperties.address]], then an attempt is made to

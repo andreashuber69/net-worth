@@ -11,13 +11,12 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { AssetType } from "./AssetTypes";
 import { BlockcypherWallet } from "./BlockcypherWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 
 /** Represents a DASH wallet. */
 export class DashWallet extends BlockcypherWallet {
-    public readonly type = AssetType.Dash;
+    public readonly type = "Dash";
 
     /** Creates a new [[DashWallet]] instance.
      * @description If a non-empty string is passed for [[ICryptoWalletProperties.address]], then an attempt is made to

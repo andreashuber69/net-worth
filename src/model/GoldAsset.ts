@@ -11,13 +11,12 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { AssetType } from "./AssetTypes";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 
 /** Represents an asset made of gold. */
 export class GoldAsset extends PreciousMetalAsset {
-    public readonly type = AssetType.Au;
+    public readonly type = "Gold";
 
     /**
      * Creates a new [[GoldAsset]] instance.

@@ -11,12 +11,15 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "./Asset";
+import { AssetType } from "./AssetTypes";
 import { cryptoWalletSuperType, ICryptoWallet } from "./ICryptoWallet";
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     /** @internal */
     public static readonly superType = cryptoWalletSuperType;
+
+    public abstract get type(): keyof typeof AssetType;
 
     public get locationHint() {
         return this.address;

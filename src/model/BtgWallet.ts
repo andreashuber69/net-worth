@@ -12,7 +12,6 @@
 
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { AssetType } from "./AssetTypes";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
@@ -22,7 +21,7 @@ import { Unknown, Value } from "./Value";
 
 /** Represents a BTG wallet. */
 export class BtgWallet extends RealCryptoWallet {
-    public readonly type = AssetType.Btg;
+    public readonly type = "Bitcoin Gold";
 
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
         super(parent, properties, "BTG", "bitcoin-gold");

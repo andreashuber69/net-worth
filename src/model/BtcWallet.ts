@@ -13,7 +13,6 @@
 import { HDNode } from "bitcoinjs-lib";
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { AssetType } from "./AssetTypes";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
@@ -29,7 +28,7 @@ interface IBalance {
 
 /** Represents a BTC wallet. */
 export class BtcWallet extends RealCryptoWallet {
-    public readonly type = AssetType.Btc;
+    public readonly type = "Bitcoin";
 
     /** Creates a new [[BtcWallet]] instance.
      * @description If a non-empty string is passed for [[ICryptoWalletProperties.address]], then an attempt is made to

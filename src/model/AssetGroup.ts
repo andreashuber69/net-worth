@@ -12,7 +12,6 @@
 
 import { Asset, IModel } from "./Asset";
 import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
-import { AssetType } from "./AssetTypes";
 
 export class AssetGroup extends Asset {
     public isExpanded = false;
@@ -22,7 +21,7 @@ export class AssetGroup extends Asset {
     }
 
     public get type() {
-        return this.coalesce((a) => a.type) || AssetType.None;
+        return this.coalesce((a) => a.type) || "";
     }
 
     public get description() {

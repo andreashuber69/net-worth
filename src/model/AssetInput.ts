@@ -14,7 +14,6 @@ import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { IAssetIntersection } from "./AssetInterfaces";
-import { AssetType } from "./AssetTypes";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
@@ -68,18 +67,18 @@ const zecHint =
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
     public static readonly infos: AssetInputInfo[] = [
-        new PreciousMetalAssetInputInfo(AssetType.Ag, SilverAsset),
-        new PreciousMetalAssetInputInfo(AssetType.Pd, PalladiumAsset),
-        new PreciousMetalAssetInputInfo(AssetType.Pt, PlatinumAsset),
-        new PreciousMetalAssetInputInfo(AssetType.Au, GoldAsset),
-        new CryptoWalletInputInfo(AssetType.Btc, BtcWallet, btcHint, 8),
-        new CryptoWalletInputInfo(AssetType.Ltc, LtcWallet, ltcHint, 8),
-        new CryptoWalletInputInfo(AssetType.Etc, EtcWallet, etcHint, 18),
-        new CryptoWalletInputInfo(AssetType.Erc20, Erc20TokensWallet, erc20Hint),
-        new CryptoWalletInputInfo(AssetType.Eth, EthWallet, ethHint, 18),
-        new CryptoWalletInputInfo(AssetType.Btg, BtgWallet, btgHint, 8),
-        new CryptoWalletInputInfo(AssetType.Dash, DashWallet, dashHint, 8),
-        new CryptoWalletInputInfo(AssetType.Zec, ZecWallet, zecHint, 8),
+        new PreciousMetalAssetInputInfo("Silver", SilverAsset),
+        new PreciousMetalAssetInputInfo("Palladium", PalladiumAsset),
+        new PreciousMetalAssetInputInfo("Platinum", PlatinumAsset),
+        new PreciousMetalAssetInputInfo("Gold", GoldAsset),
+        new CryptoWalletInputInfo("Bitcoin", BtcWallet, btcHint, 8),
+        new CryptoWalletInputInfo("Litecoin", LtcWallet, ltcHint, 8),
+        new CryptoWalletInputInfo("Ethereum Classic", EtcWallet, etcHint, 18),
+        new CryptoWalletInputInfo("ERC20 Tokens", Erc20TokensWallet, erc20Hint),
+        new CryptoWalletInputInfo("Ethereum", EthWallet, ethHint, 18),
+        new CryptoWalletInputInfo("Bitcoin Gold", BtgWallet, btgHint, 8),
+        new CryptoWalletInputInfo("Dash", DashWallet, dashHint, 8),
+        new CryptoWalletInputInfo("Zcash", ZecWallet, zecHint, 8),
         new MiscAssetInputInfo(MiscAsset),
     ];
 

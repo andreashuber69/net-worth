@@ -25,8 +25,7 @@ export type IAssetUnion = IPreciousMetalAsset | ICryptoWallet | IMiscAsset;
 
 /** @internal */
 export interface ISerializedObject {
-    // TODO: This should be constrained
-    readonly type: AssetType;
+    readonly type: keyof typeof AssetType;
 }
 
 /** @internal */

@@ -26,7 +26,7 @@ export class MiscAsset extends Asset implements IMiscAsset {
     /** @internal */
     public static readonly superType = miscSuperType;
 
-    public readonly type = AssetType.Misc;
+    public readonly type: keyof typeof AssetType = "Misc";
 
     public readonly description: string;
 

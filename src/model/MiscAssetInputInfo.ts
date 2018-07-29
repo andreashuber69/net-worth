@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
-import { AssetType } from "./AssetTypes";
 import { Currency } from "./Currency";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
@@ -23,7 +22,7 @@ import { WeightUnit } from "./WeightUnit";
  */
 export class MiscAssetInputInfo extends AssetInputInfo {
     public static readonly valueDigits = 2;
-    public readonly type = AssetType.Misc;
+    public readonly type = "Misc";
     public readonly description = new TextInputInfo(
         "Description", "The nature of the items, e.g. 'Cash', 'Vacation House'.", true, true);
     public readonly location = new TextInputInfo(

@@ -26,7 +26,7 @@ interface ISerializedErc20TokensBundle extends ISerializedBundle {
 
 /** Represents a wallet for ERC20 tokens. */
 export class Erc20TokensWallet extends RealCryptoWallet {
-    public readonly type = AssetType.Erc20;
+    public readonly type: keyof typeof AssetType = "ERC20 Tokens";
 
     /** Creates a new [[Erc20TokensWallet]] instance.
      * @description This wallet requires an [[ICryptoWalletProperties.address]] and ignores
@@ -71,7 +71,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
         }
 
         public get interface(): IAssetUnion {
-            throw new Error("Can't get non-real wallet interface.");
+            throw new Error(`${NestedTokenWallet.name} cannot be edited.`);
         }
 
         /** @internal */
@@ -85,7 +85,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
 
         // tslint:disable-next-line:prefer-function-over-method
         public toJSON(): ISerializedAsset {
-            throw new Error("Can't serialize non-real wallet");
+            throw new Error(`${NestedTokenWallet.name} cannot be serialized.`);
         }
     };
 

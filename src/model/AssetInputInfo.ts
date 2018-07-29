@@ -36,7 +36,7 @@ export interface IAssetConstructor {
  * representation of the asset.
  */
 export abstract class AssetInputInfo extends InputInfo implements IAuxProperties<PrimitiveInputInfo> {
-    public abstract get type(): AssetType;
+    public abstract get type(): keyof typeof AssetType | "";
 
     public abstract get description(): TextInputInfo;
     public abstract get location(): TextInputInfo;

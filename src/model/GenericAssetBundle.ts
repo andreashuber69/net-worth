@@ -10,20 +10,22 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
+import { CryptoWallet } from "./CryptoWallet";
+import { MiscAsset } from "./MiscAsset";
+import { PreciousMetalAsset } from "./PreciousMetalAsset";
 
 /** Defines a bundle containing a single asset. */
 export class GenericAssetBundle extends AssetBundle {
-    public readonly assets: Asset[];
+    public readonly assets: Array<CryptoWallet | PreciousMetalAsset | MiscAsset>;
 
     /** @internal */
-    public constructor(asset: Asset) {
+    public constructor(asset: CryptoWallet | PreciousMetalAsset | MiscAsset) {
         super();
         this.assets = [ asset ];
     }
 
-    public deleteAsset(asset: Asset) {
+    public deleteAsset(asset: CryptoWallet | PreciousMetalAsset | MiscAsset) {
         const index = this.assets.indexOf(asset);
 
         if (index >= 0) {

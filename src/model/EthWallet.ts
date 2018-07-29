@@ -12,7 +12,6 @@
 
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { AssetType } from "./AssetTypes";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
@@ -21,7 +20,7 @@ import { Unknown, Value } from "./Value";
 
 /** Represents an ETH wallet. */
 export class EthWallet extends RealCryptoWallet {
-    public readonly type = AssetType.Eth;
+    public readonly type = "Ethereum";
 
     /** Creates a new [[EthWallet]] instance.
      * @description If a non-empty string is passed for [[ICryptoWalletProperties.address]], then an attempt is made to
