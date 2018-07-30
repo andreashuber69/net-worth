@@ -20,24 +20,27 @@ only very rarely test the application in other browsers.
 
 ![Screenshot](screenshot.png)
 
-In the top toolbar on the left you'll find a menu with the usual suspects **New**, **Open...**, **Save** and
-**Save As...**. On the right, you'll find a button to add a new asset and controls to change the asset grouping and the
-valuation currency. Anything else is done in the table. Clicking on a row representing an asset group will
-expand/collapse the group. Individual assets can be edited and deleted with the menu on the right. Some columns can be
-sorted by clicking on their headers.
+In the top toolbar on the left there's a menu with the usual suspects **New**, **Open...**, **Save** and **Save As...**.
+On the right, you'll find a button to add a new asset and controls to change the asset grouping and the valuation
+currency. Anything else is done in the table. Clicking on a row representing an asset group will expand/collapse the
+group. Individual assets can be edited and deleted with the menu on the right. Some columns can be sorted by clicking on
+their headers.
 
 ## Privacy
 
 - **Data Storage**: The data you enter into Asset Manager is only ever stored locally in your browser and can be saved
   to a file on your hard drive. Browser data sync services should not be used, as anything these can synchronize they
   can potentially also leak.
-- **Queries**: In general, Asset Manager only makes queries about precious metal prices and currency exchange rates
+- **Queries**: In general, the application only makes queries about precious metal prices and currency exchange rates
   (quandl.com) plus crypto currency prices (coinmarketcap.com). For crypto currencies, you have the option to also track
-   your balance. Doing so requires sending your public address to an online service like e.g. blockchain.info.
+   your balance. If you choose to do so, the application will also send your public address to an online service like
+   e.g. blockchain.info.
 - **Encryption**: All queries are always encrypted (https), but it should be noted that the owners of the respective
   services will of course have access to the contents of your query (which can be attributed to you via your IP
   address). If you have concerns about that, you should use a reputable VPN provider or even TOR.
-- **Open Source**: The application source code and the full change history is available at
-  <https://github.com/andreashuber69/asset-manager>. Map files are deployed with the production code, so you can also
-  review the code with the browser developer tools while your browser is directed to
-  <https://andreashuber69.github.io/asset-manager>.
+
+## Source Code
+
+The source code and full change history is available at <https://github.com/andreashuber69/asset-manager>. Map files are
+deployed with the production code, so you can also review the code with the browser developer tools while your browser
+is directed to <https://andreashuber69.github.io/asset-manager>.
