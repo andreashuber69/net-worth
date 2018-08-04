@@ -26,7 +26,7 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     public static readonly finenessDigits = 6;
 
     public readonly description = new TextInputInfo(
-        "Description", "The shape of the items, e.g. 'Coins', 'Bars'.", true, true);
+        "Description", "Describes the items, e.g. 'Coins', 'Bars'.", true, true);
     public readonly location = new TextInputInfo(
         "Location", "The location, e.g. 'Safe', 'Safety Deposit Box'.", true, false);
     public readonly address = new TextInputInfo();

@@ -27,10 +27,9 @@ import { WeightUnit } from "./WeightUnit";
  */
 export class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly description = new TextInputInfo(
-        "Description", "The purpose of the wallet, e.g. 'Spending', 'Savings', 'Cold Storage'.", true, true);
+        "Description", "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.", true, true);
     public readonly location = new TextInputInfo(
-        "Location", "The location of the wallet, e.g. 'Mobile Phone', 'Hardware Wallet', 'Safety Deposit Box'.",
-        true, false);
+        "Location", "The location of the wallet, e.g. 'My Mobile', 'Home', 'Safety Deposit Box'.", true, false);
     public readonly address: TextInputInfo;
 
     public readonly weight = new TextInputInfo();
