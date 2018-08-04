@@ -102,7 +102,7 @@
       <v-footer app dark color="primary" height="auto">
         <v-layout justify-center>
           <DataProvidersDialog/>
-          <v-btn href="https://github.com/andreashuber69/asset-manager/blob/master/README.md" target="_blank" flat round>About</v-btn>
+          <v-btn href="https://github.com/andreashuber69/net-worth/blob/master/README.md" target="_blank" flat round>About</v-btn>
         </v-layout>
       </v-footer>
     </v-app>

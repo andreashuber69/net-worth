@@ -304,7 +304,7 @@ export default class App extends Vue {
         // least some users and doesn't seem to work on some browsers anyway (e.g. Firefox). Our only remaining option
         // is to therefore save to local storage.
         // Obviously, just saving to local storage under one key (e.g. "assets") only works reliably if the user
-        // confines herself to not ever work with Asset Manager in more than one browser window. Since we seem to have
+        // confines herself to not ever work with Net Worth in more than one browser window. Since we seem to have
         // no way of preventing or detecting use in multiple browser windows, the storage mechanism must ideally satisfy
         // the following requirements:
         // 1. No committed but as of yet unsaved change in any browser window is ever lost if the user closes a tab,
@@ -313,16 +313,16 @@ export default class App extends Vue {
         // It appears that both requirements can be satisfied with the following mechanism:
         // - Data is always saved to local storage in a "beforeunload" handler under a monotonously increasing key,
         //   which is then also stored through window.sessionStorage.
-        // - When the Asset Manager page loads, session storage is first checked for a saved key. If one exists, data
+        // - When the Net Worth page loads, session storage is first checked for a saved key. If one exists, data
         //   under said key is then loaded from local storage. This ensures that the same data is always displayed
         //   before and after a page reload. If session storage does not contain a key, data under the largest key is
         //   loaded from local storage.
         // - Successfully loaded data is always *deleted* from local storage immediately. This ensures that navigating
-        //   to Asset Manager in additional browser windows will never load the same data in more than one browser
+        //   to Net Worth in additional browser windows will never load the same data in more than one browser
         //   window.
-        // The above should ensure that Asset Manager can be used much like a normal desktop application. Even if the
+        // The above should ensure that Net Worth can be used much like a normal desktop application. Even if the
         // application is used in multiple tabs when the browser is closed, data in said tabs will be reloaded next
-        // time the user navigates to the Asset Manager in the same number of tabs/windows. This is nicely complemented
+        // time the user navigates to the Net Worth in the same number of tabs/windows. This is nicely complemented
         // by the fact that many browsers have an option to automatically reload all previously open tabs when the
         // browser is started.
         // Unfortunately, the beforeunload handler doesn't seem to ever be called on Android when the user closes the

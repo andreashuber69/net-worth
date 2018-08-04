@@ -21,13 +21,13 @@ if (Browser.isCompatible) {
     if (appElement) {
         appElement.innerHTML = `
             <div style="font-size:large">
-                <p><strong>Asset Manager doesn't work on this browser.</strong></p>
+                <p><strong>Net Worth doesn't work on this browser.</strong></p>
                 <p>
-                    It is recommended to use Asset Manager from within a recent version of an
+                    It is recommended to use Net Worth from within a recent version of an
                     <strong>open-source</strong> browser like <strong>Chromium</strong> or <strong>Firefox</strong>.
                 </p>
                 <p>
-                    Asset Manager should also work on recent incarnations of proprietary browsers like Chrome, Opera,
+                    Net Worth should also work on recent incarnations of proprietary browsers like Chrome, Opera,
                     Safari, Edge and probably others.
                 </p>
                 <p>&nbsp;</p>

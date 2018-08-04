@@ -13,7 +13,7 @@ if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
 fi
 
 echo "Clone gh-pages and delete all files..."
-git clone -q --branch gh-pages "https://github.com/andreashuber69/asset-manager.git" "$WORK_DIR"
+git clone -q --branch gh-pages "https://github.com/andreashuber69/net-worth.git" "$WORK_DIR"
 pushd $WORK_DIR
 git rm -rf *
 popd

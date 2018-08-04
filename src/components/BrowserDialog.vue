@@ -18,7 +18,7 @@
       <v-card-title class="headline">Untested Browser</v-card-title>
       <v-card-text>
         <p>
-          Asset Manager is regularly tested on <strong>Chromium</strong> and <strong>Firefox</strong> only. While it
+          Net Worth is regularly tested on <strong>Chromium</strong> and <strong>Firefox</strong> only. While it
           should work on your browser, there's the possibility of browser-specific bugs.
         </p>
         <p>
@@ -30,7 +30,7 @@
         </p>
         <p>
           <strong>
-            TL;DR To maximize your privacy, please consider using Asset Manager on Chromium or Firefox and refrain from
+            TL;DR To maximize your privacy, please consider using Net Worth on Chromium or Firefox and refrain from
             using services that sync your browser data across devices.
           </strong>
         </p>

@@ -170,7 +170,7 @@ export class Model implements IModel {
     }
 
     public get title() {
-        return `${this.name}${this.hasUnsavedChanges ? " (Modified)" : ""} - Asset Manager`;
+        return `${this.name}${this.hasUnsavedChanges ? " (Modified)" : ""} - Net Worth`;
     }
 
     /** Provides the available currencies to value the assets in. */

@@ -1,11 +1,11 @@
-# Asset Manager
+# Net Worth
 
 ## Introduction
 
 If you primarily store your wealth in "unconventional" assets like precious metals and crypto currencies, it seems there
 are almost no tools that would help you get an overview of your current financial situation.
 
-Asset Manager aims to change that. In a nutshell, the application presents your precious metal and crypto currency
+Net Worth aims to change that. In a nutshell, the application presents your precious metal and crypto currency
 holdings in a groupable and sortable table, which allows you to quickly see how your net worth is spread among the
 different asset types and locations.
 
@@ -13,11 +13,11 @@ different asset types and locations.
 
 ### Getting Started
 
-Asset Manager runs in your internet browser but works and feels much like a conventional desktop application. There are
+Net Worth runs in your internet browser but works and feels much like a conventional desktop application. There are
 no logins, no passwords and your data is only ever stored locally on your computer.
 
 While the application should work in most recent internet browsers, for privacy reasons it is recommended to
-install either **Chromium** or **Firefox** and point it to <https://andreashuber69.github.io/asset-manager>. Note that I
+install either **Chromium** or **Firefox** and point it to <https://andreashuber69.github.io/net-worth>. Note that I
 only rarely test the application on other browsers.
 
 ![Screenshot](screenshot.png)
@@ -32,7 +32,7 @@ and deleted with the triple-dot menu at the end of each row. Some columns can be
 
 ### Privacy
 
-- **Data Storage**: The data you enter into Asset Manager is only ever stored locally in your browser and can be saved
+- **Data Storage**: The data you enter into Net Worth is only ever stored locally in your browser and can be saved
   to a file on your hard drive. Browser data sync services should not be used, as anything these can synchronize they
   can potentially also leak.
 - **Queries**: In general, the application only makes queries about precious metal prices and currency exchange rates
@@ -46,11 +46,11 @@ and deleted with the triple-dot menu at the end of each row. Some columns can be
 ## Known Issues / Feedback
 
 I'd love to hear your thoughts! Please use the
-[GitHub Issue Tracker](https://github.com/andreashuber69/asset-manager/issues) to see the known issues, ask your
+[GitHub Issue Tracker](https://github.com/andreashuber69/net-worth/issues) to see the known issues, ask your
 questions, report problems or suggest improvements. Thank you!
 
 ## Source Code
 
-The source code and full change history is available at <https://github.com/andreashuber69/asset-manager>. Map files are
+The source code and full change history is available at <https://github.com/andreashuber69/net-worth>. Map files are
 deployed with the production code, so you can also review the code with the browser developer tools while your browser
-is directed to <https://andreashuber69.github.io/asset-manager>.
+is directed to <https://andreashuber69.github.io/net-worth>.

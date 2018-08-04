@@ -1,5 +1,5 @@
 {
-  "name": "asset-manager",
+  "name": "net-worth",
   "version": "0.1.0",
   "author": "Andreas Huber Dönni",
   "license": "GPL-3.0-or-later",
@@ -8,7 +8,7 @@
     "lint": "tslint --project tsconfig.json --config tslint.json --format verbose",
     "serve-development": "vue-cli-service serve --mode development",
     "serve-production": "vue-cli-service serve --mode production",
-    "build": "cross-env WEBPACK_BASE_URL=/asset-manager vue-cli-service build",
+    "build": "cross-env WEBPACK_BASE_URL=/net-worth vue-cli-service build",
     "build-doc": "typedoc --excludePrivate --out ./doc"
   },
   "dependencies": {
