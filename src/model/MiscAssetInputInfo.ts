@@ -32,8 +32,9 @@ export class MiscAssetInputInfo extends AssetInputInfo {
     public readonly weightUnit = new SelectInputInfo<typeof WeightUnit>();
     public readonly fineness = new TextInputInfo();
     public readonly value = new TextInputInfo(
-        "Value", "The value of a single item, expressed in Currency.", true, true,
-        0, undefined, MiscAssetInputInfo.valueStep);
+        "Value",
+        "The value of a single item, expressed in Currency. A liability can be expressed with a negative number",
+        true, true, undefined, undefined, MiscAssetInputInfo.valueStep);
     public readonly valueCurrency = new SelectInputInfo(
         "Currency", "The currency Value is expressed in.", true, true, Currency, true);
     public readonly quantity = new TextInputInfo("Quantity", "The number of items.", true, true, 0);

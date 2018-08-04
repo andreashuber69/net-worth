@@ -9,6 +9,19 @@ Net Worth aims to change that. In a nutshell, the application presents your prec
 holdings in a groupable and sortable table, which allows you to quickly see how your net worth is spread among the
 different asset types and locations.
 
+## Features
+
+- Supported precious metals: Silver, Palladium, Platinum, Gold
+- Supported weight units: gram (g), kilogram (kg), grain (gr), troy ounce (t oz), avdp ounce (oz)
+- Supported crypto currencies: Bitcoin, Litecoin, Ethereum Classic, ERC20 Tokens, Ethereum, Bitcoin Gold, Dash, Zcash.
+  Others will be implemented depending on demand.
+- Assets can be grouped according to asset type or location.
+- Assets other than precious metals and cryptos can be added as (manually valued) Misc assets.
+- Liabilities can be added as negatively valued Misc assets.
+- Supported valuation currencies: 27 fiat currencies plus silver ounces (XAG), gold ounces (XAU) and Bitcoin (BTC)
+- Intuitive, flexible user interface that auto-adapts to almost any screen size.
+- No installation, works on almost any platform, including mobile phones and Raspberry Pis.
+
 ## Usage
 
 ### Getting Started
@@ -17,8 +30,7 @@ Net Worth runs in your internet browser but works and feels much like a conventi
 no logins, no passwords and your data is only ever stored locally on your computer.
 
 While the application should work in most recent internet browsers, for privacy reasons it is recommended to
-install either **Chromium** or **Firefox** and point it to <https://andreashuber69.github.io/net-worth>. Note that I
-only rarely test the application on other browsers.
+install either **Chromium** or **Firefox** and point it to <https://andreashuber69.github.io/net-worth>.
 
 ![Screenshot](screenshot.png)
 
@@ -40,7 +52,7 @@ and deleted with the triple-dot menu at the end of each row. Some columns can be
    your balance. If you choose to do so, the application will also send your public address to an online service like
    e.g. blockchain.info.
 - **Encryption**: All queries are always encrypted (https), but of course the owners of the respective services will
-  have access to the contents of your query (which can be attributed to you via your IP address). If you have concerns
+  have access to the contents of the queries (which can be attributed to you via your IP address). If you have concerns
   about that, you should use a reputable VPN provider or even TOR.
 
 ## Known Issues / Feedback
