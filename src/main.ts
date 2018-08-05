@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { Application } from "./Application";
 import { Browser } from "./Browser";
 
 if (Browser.isCompatible) {
@@ -21,18 +22,19 @@ if (Browser.isCompatible) {
     if (appElement) {
         appElement.innerHTML = `
             <div style="font-size:large">
-                <p><strong>Net Worth doesn't work on this browser.</strong></p>
+                <p><strong>${Application.title} doesn't work on this browser.</strong></p>
                 <p>
-                    It is recommended to use Net Worth from within a recent version of an
+                    It is recommended to use ${Application.title} from within a recent version of an
                     <strong>open-source</strong> browser like <strong>Chromium</strong> or <strong>Firefox</strong>.
                 </p>
                 <p>
-                    Net Worth should also work on recent incarnations of proprietary browsers like Chrome, Opera,
-                    Safari, Edge and probably others.
+                    ${Application.title} should also work on recent incarnations of proprietary browsers like Chrome,
+                    Opera, Safari, Edge and probably others.
                 </p>
                 <p>&nbsp;</p>
                 <p>&nbsp;</p>
                 <p>&nbsp;</p>
+                <p><strong>${Application.title} ${Application.version}</strong></p>
                 <p>userAgent: ${window.navigator.userAgent}</p>
                 <p>isOpera: ${Browser.isOpera}</p>
                 <p>isFirefox: ${Browser.isFirefox}</p>

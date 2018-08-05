@@ -20,8 +20,8 @@
       <v-container>
         <v-layout column justify-center>
           <p class="text-xs-center">
-            Net Worth would not work without the following data providers, who generously offer their services free of
-            charge:
+            {{ applicationTitle }} would not work without the following data providers, who generously offer their
+            services free of charge:
           </p>
           <v-btn href="https://coinmarketcap.com" target="_blank" flat>
             <img src="../assets/coinmarketcap.svg" height="36"/>

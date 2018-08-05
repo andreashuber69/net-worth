@@ -10,16 +10,15 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component, Prop, Vue } from "vue-property-decorator";
+// tslint:disable-next-line:no-require-imports no-var-requires
+const packageJson = require("../package.json") as { name: string; version: string };
 
-// tslint:disable-next-line:no-unsafe-any
-@Component
-/** Implements the dialog showing the data providers. */
-// tslint:disable-next-line:no-default-export no-unsafe-any
-export default class DataProvidersDialog extends Vue {
-    @Prop()
-    public applicationTitle?: string;
+export class Application {
+    public static get title() {
+        return packageJson.name.split("-").map((c) => `${c[0].toUpperCase()}${c.substr(1)}`).join(" ");
+    }
 
-    /** Provides a value indicating whether the dialog is currently open. */
-    public isOpen = false;
+    public static get version() {
+        return packageJson.version;
+    }
 }

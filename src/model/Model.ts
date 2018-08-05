@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { Application } from "../Application";
 import { Asset, GroupBy, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { AssetGroup } from "./AssetGroup";
@@ -18,8 +19,6 @@ import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
 import { Unknown, Value } from "./Value";
-// tslint:disable-next-line:no-require-imports no-var-requires
-const packageJson = require("../../package.json") as { name: string; version: string };
 
 export type SortBy =
     typeof Asset.typeName | typeof Asset.descriptionName | typeof Asset.locationName |
@@ -171,12 +170,12 @@ export class Model implements IModel {
         }
     }
 
-    public get applicationName() {
-        return packageJson.name.split("-").map((c) => Model.capitalize(c)).join(" ");
+    public get applicationTitle() {
+        return Application.title;
     }
 
     public get title() {
-        return `${this.name}${this.hasUnsavedChanges ? " (Modified)" : ""} - ${this.applicationName}`;
+        return `${this.name}${this.hasUnsavedChanges ? " (Modified)" : ""} - ${Application.title}`;
     }
 
     /** Provides the available currencies to value the assets in. */

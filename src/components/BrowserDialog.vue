@@ -18,8 +18,8 @@
       <v-card-title class="headline">Untested Browser</v-card-title>
       <v-card-text>
         <p>
-          Net Worth is regularly tested on <strong>Chromium</strong> and <strong>Firefox</strong> only. While it
-          should work on your browser, there's the possibility of browser-specific bugs.
+          {{ applicationTitle }} is regularly tested on <strong>Chromium</strong> and <strong>Firefox</strong> only.
+          While it should work on your browser, there's the possibility of browser-specific bugs.
         </p>
         <p>
           I would recommend to use Chromium or Firefox because most other popular browsers are proprietary software.
@@ -30,8 +30,8 @@
         </p>
         <p>
           <strong>
-            TL;DR To maximize your privacy, please consider using Net Worth on Chromium or Firefox and refrain from
-            using services that sync your browser data across devices.
+            TL;DR To maximize your privacy, please consider using {{ applicationTitle }} on Chromium or Firefox and
+            refrain from using services that sync your browser data across devices.
           </strong>
         </p>
         <v-checkbox v-model="dontShowDialog" label="Don't show this again"></v-checkbox>

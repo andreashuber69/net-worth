@@ -93,7 +93,7 @@
       }">
         <v-container>
           <v-layout justify-center>
-            <BrowserDialog/>
+            <BrowserDialog :applicationTitle="model.applicationTitle"/>
             <SaveAsDialog ref="saveAsDialog"/>
             <AssetList :value="model" ref="assetList"/>
           </v-layout>
@@ -101,7 +101,7 @@
       </v-content>
       <v-footer app dark color="primary" height="auto">
         <v-layout justify-center>
-          <DataProvidersDialog/>
+          <DataProvidersDialog :applicationTitle="model.applicationTitle"/>
           <v-btn href="https://github.com/andreashuber69/net-worth/blob/master/README.md" target="_blank" flat round>About</v-btn>
         </v-layout>
       </v-footer>
