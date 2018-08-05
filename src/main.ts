@@ -21,7 +21,7 @@ if (Browser.isCompatible) {
 
     if (appElement) {
         appElement.innerHTML = `
-            <div style="font-size:large">
+            <div style="padding: 20px; font-size:large">
                 <p><strong>${Application.title} doesn't work on this browser.</strong></p>
                 <p>
                     It is recommended to use ${Application.title} from within a recent version of an
@@ -31,7 +31,6 @@ if (Browser.isCompatible) {
                     ${Application.title} should also work on recent incarnations of proprietary browsers like Chrome,
                     Opera, Safari, Edge and probably others.
                 </p>
-                <p>&nbsp;</p>
                 <p>&nbsp;</p>
                 <p>&nbsp;</p>
                 <p><strong>${Application.title} ${Application.version}</strong></p>
