@@ -11,11 +11,15 @@
 // <http://www.gnu.org/licenses/>.
 
 // tslint:disable-next-line:no-require-imports no-var-requires
-const packageJson = require("../package.json") as { name: string; version: string };
+const packageJson = require("../../package.json") as { name: string; version: string };
 
 export class Application {
+    public static get packageName() {
+        return packageJson.name;
+    }
+
     public static get title() {
-        return packageJson.name.split("-").map((c) => `${c[0].toUpperCase()}${c.substr(1)}`).join(" ");
+        return this.packageName.split("-").map((c) => `${c[0].toUpperCase()}${c.substr(1)}`).join(" ");
     }
 
     public static get version() {

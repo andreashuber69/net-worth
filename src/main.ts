@@ -10,8 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Application } from "./Application";
 import { Browser } from "./Browser";
+import { Application } from "./model/Application";
 
 if (Browser.isCompatible) {
     // tslint:disable-next-line:no-require-imports no-var-requires

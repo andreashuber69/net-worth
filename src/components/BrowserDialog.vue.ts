@@ -10,15 +10,17 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
+import { Application } from "../model/Application";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
 /** Implements the dialog informing the user about untested browsers. */
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class BrowserDialog extends Vue {
-    @Prop()
-    public applicationTitle?: string;
+    public get applicationTitle() {
+        return Application.title;
+    }
 
     /** Provides a value indicating whether the dialog is currently open. */
     public isOpen = !this.dontShowDialog;

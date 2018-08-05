@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Application } from "../Application";
+import { Application } from "./Application";
 import { Asset, GroupBy, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { AssetGroup } from "./AssetGroup";
@@ -168,10 +168,6 @@ export class Model implements IModel {
                 this.onChanged();
             }
         }
-    }
-
-    public get applicationTitle() {
-        return Application.title;
     }
 
     public get title() {
