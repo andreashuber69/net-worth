@@ -171,10 +171,12 @@ export class Model implements IModel {
         }
     }
 
-    public get title() {
-        const appName = packageJson.name.split("-").map((c) => Model.capitalize(c)).join(" ");
+    public get applicationName() {
+        return packageJson.name.split("-").map((c) => Model.capitalize(c)).join(" ");
+    }
 
-        return `${this.name}${this.hasUnsavedChanges ? " (Modified)" : ""} - ${appName}`;
+    public get title() {
+        return `${this.name}${this.hasUnsavedChanges ? " (Modified)" : ""} - ${this.applicationName}`;
     }
 
     /** Provides the available currencies to value the assets in. */
