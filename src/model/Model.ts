@@ -18,6 +18,8 @@ import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
 import { Unknown, Value } from "./Value";
+// tslint:disable-next-line:no-require-imports no-var-requires
+const packageJson = require("../../package.json") as { name: string; version: string };
 
 export type SortBy =
     typeof Asset.typeName | typeof Asset.descriptionName | typeof Asset.locationName |
@@ -170,7 +172,9 @@ export class Model implements IModel {
     }
 
     public get title() {
-        return `${this.name}${this.hasUnsavedChanges ? " (Modified)" : ""} - Net Worth`;
+        const appName = packageJson.name.split("-").map((c) => Model.capitalize(c)).join(" ");
+
+        return `${this.name}${this.hasUnsavedChanges ? " (Modified)" : ""} - ${appName}`;
     }
 
     /** Provides the available currencies to value the assets in. */

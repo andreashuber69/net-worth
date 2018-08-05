@@ -11,15 +11,16 @@ different asset types and locations.
 
 ## Features
 
-- Supported precious metals: Silver, Palladium, Platinum, Gold
-- Supported weight units: gram (g), kilogram (kg), grain (gr), troy ounce (t oz), avdp ounce (oz)
-- Supported crypto currencies: Bitcoin, Litecoin, Ethereum Classic, ERC20 Tokens, Ethereum, Bitcoin Gold, Dash, Zcash.
+- Supported precious metals: **Silver**, **Palladium**, **Platinum**, **Gold**
+- Supported crypto currencies: **Bitcoin**, **Litecoin**, **Ethereum Classic**, **ERC20 Tokens**, **Ethereum**,
+  **Bitcoin Gold**, **Dash**, **Zcash**.
   Others will be implemented depending on demand.
 - Assets can be grouped according to asset type or location.
 - Assets other than precious metals and cryptos can be added as (manually valued) Misc assets.
 - Liabilities can be added as negatively valued Misc assets.
 - Supported valuation currencies: 27 fiat currencies plus silver ounces (XAG), gold ounces (XAU) and Bitcoin (BTC)
 - Intuitive, flexible user interface that auto-adapts to almost any screen size.
+- Free, open-source, no ads
 - No installation, works on almost any platform, including mobile phones and Raspberry Pis.
 
 ## Usage
