@@ -19,6 +19,8 @@ git rm -rf *
 popd
 
 echo "Build and copy ./dist contents to the working directory..."
+npm version patch
+git push
 rm -rf dist
 npm run build
 cp -R dist/* $WORK_DIR
