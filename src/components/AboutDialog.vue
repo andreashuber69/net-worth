@@ -19,11 +19,13 @@
       <v-container>
         <v-layout column>
           <p class="text-xs-center">Copyright &copy; 2018 Andreas Huber Dönni</p>
-          <v-btn href="https://github.com/andreashuber69/net-worth/blob/master/LICENSE" target="_blank">License</v-btn>
-          <v-btn href="https://github.com/andreashuber69/net-worth/blob/master/README.md" target="_blank">
+          <v-btn :href="`https://github.com/andreashuber69/${packageName}/blob/master/LICENSE`" target="_blank">
+            License
+          </v-btn>
+          <v-btn :href="`https://github.com/andreashuber69/${packageName}/blob/master/README.md`" target="_blank">
             Documentation
           </v-btn>
-          <v-btn href="https://github.com/andreashuber69/net-worth/issues" target="_blank">Issues</v-btn>
+          <v-btn :href="`https://github.com/andreashuber69/${packageName}/issues`" target="_blank">Issues</v-btn>
           <p></p>
           <p class="text-xs-center">
             This application would not work without the following data providers, who generously offer their
