@@ -19,7 +19,7 @@ git rm -rf *
 popd
 
 echo "Build and copy ./dist contents to the working directory..."
-npm version patch
+VERSION=`npm version patch`
 git push
 rm -rf dist
 npm run build
@@ -28,7 +28,7 @@ cp -R dist/* $WORK_DIR
 echo "Commit and push..."
 pushd $WORK_DIR
 git add -A
-git commit -m "Publish current version"
+git commit -m "$VERSION"
 git push
 popd
 rm -rf $WORK_DIR
