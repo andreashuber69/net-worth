@@ -52,6 +52,14 @@
               <v-list-tile-title>Save As...</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
+          <v-list-tile @click="onAboutClicked">
+            <v-list-tile-action>
+              <v-icon>help</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>About</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
         </v-list>
       </v-navigation-drawer>
       <v-toolbar app dark color="primary">
@@ -94,8 +102,9 @@
         <v-container>
           <v-layout justify-center>
             <BrowserDialog/>
-            <SaveAsDialog ref="saveAsDialog"/>
             <AssetList :value="model" ref="assetList"/>
+            <SaveAsDialog ref="saveAsDialog"/>
+            <AboutDialog ref="aboutDialog"/>
           </v-layout>
         </v-container>
       </v-content>

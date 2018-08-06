@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Vue } from "vue-property-decorator";
+import AboutDialog from "./components/AboutDialog.vue";
 import AssetList from "./components/AssetList.vue";
 import BrowserDialog from "./components/BrowserDialog.vue";
 import DataProvidersDialog from "./components/DataProvidersDialog.vue";
@@ -18,7 +19,7 @@ import SaveAsDialog from "./components/SaveAsDialog.vue";
 import { Model } from "./model/Model";
 
 // tslint:disable-next-line:no-unsafe-any
-@Component({ components: { AssetList, BrowserDialog, DataProvidersDialog, SaveAsDialog } })
+@Component({ components: { AboutDialog, AssetList, BrowserDialog, DataProvidersDialog, SaveAsDialog } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
     public static get sessionStorageKeys() {
@@ -95,6 +96,11 @@ export default class App extends Vue {
         }
     }
 
+    public onAboutClicked(event: MouseEvent) {
+        this.isDrawerVisible = false;
+        this.aboutDialog.showDialog();
+    }
+
     public get assetList() {
         // tslint:disable-next-line:no-unsafe-any
         return this.$refs.assetList as AssetList;
@@ -103,6 +109,11 @@ export default class App extends Vue {
     public get saveAsDialog() {
         // tslint:disable-next-line:no-unsafe-any
         return this.$refs.saveAsDialog as SaveAsDialog;
+    }
+
+    public get aboutDialog() {
+        // tslint:disable-next-line:no-unsafe-any
+        return this.$refs.aboutDialog as AboutDialog;
     }
 
     public get groupBys() {
