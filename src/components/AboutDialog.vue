@@ -17,8 +17,42 @@
     <v-card>
       <v-card-title class="headline">{{ title }}</v-card-title>
       <v-container>
-        <v-layout column justify-center>
+        <v-layout column>
+          <p class="text-xs-center">Copyright &copy; 2018 Andreas Huber Dönni</p>
+          <v-btn href="https://github.com/andreashuber69/net-worth/blob/master/LICENSE" target="_blank">License</v-btn>
+          <v-btn href="https://github.com/andreashuber69/net-worth/blob/master/README.md" target="_blank">
+            Documentation
+          </v-btn>
+          <v-btn href="https://github.com/andreashuber69/net-worth/issues" target="_blank">Issues</v-btn>
           <p></p>
+          <p class="text-xs-center">
+            This application would not work without the following data providers, who generously offer their
+            services free of charge:
+          </p>
+          <v-btn href="https://coinmarketcap.com" target="_blank" flat>
+            <img src="../assets/coinmarketcap.svg" height="36"/>
+          </v-btn>
+          <v-btn href="https://blockchain.info" target="_blank" flat>
+            <img src="../assets/blockchain.svg" height="36"/>
+          </v-btn>
+          <v-btn href="https://blockcypher.com" target="_blank" flat>
+            <img src="../assets/blockcypher.svg" height="36"/>
+          </v-btn>
+          <v-btn href="https://gastracker.io" target="_blank" flat>
+            <img src="../assets/gastracker.png" height="36"/>&nbsp;Gastracker.io
+          </v-btn>
+          <v-btn href="https://ethplorer.io" target="_blank" flat>
+            <img src="../assets/ethplorer.png" height="36"/>
+          </v-btn>
+          <v-btn href="https://btgexp.com" target="_blank" flat>
+            <img src="../assets/btgexp.jpg" height="36"/>
+          </v-btn>
+          <v-btn href="https://chain.so" target="_blank" flat>
+            <img src="../assets/sochain.png" height="36"/>
+          </v-btn>
+          <v-btn href="https://quandl.com" target="_blank" flat>
+            <img src="../assets/quandl.svg" height="36"/>
+          </v-btn>
         </v-layout>
       </v-container>
       <v-card-actions>

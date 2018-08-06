@@ -14,12 +14,11 @@ import { Component, Vue } from "vue-property-decorator";
 import AboutDialog from "./components/AboutDialog.vue";
 import AssetList from "./components/AssetList.vue";
 import BrowserDialog from "./components/BrowserDialog.vue";
-import DataProvidersDialog from "./components/DataProvidersDialog.vue";
 import SaveAsDialog from "./components/SaveAsDialog.vue";
 import { Model } from "./model/Model";
 
 // tslint:disable-next-line:no-unsafe-any
-@Component({ components: { AboutDialog, AssetList, BrowserDialog, DataProvidersDialog, SaveAsDialog } })
+@Component({ components: { AboutDialog, AssetList, BrowserDialog, SaveAsDialog } })
 // tslint:disable-next-line:no-default-export no-unsafe-any
 export default class App extends Vue {
     public static get sessionStorageKeys() {
