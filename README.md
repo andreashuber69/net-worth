@@ -35,7 +35,8 @@ install either **Chromium** or **Firefox** and point it to <https://andreashuber
 
 ![Screenshot](screenshot.png)
 
-In the top toolbar on the left there's a menu with the usual suspects **New**, **Open...**, **Save** and **Save As...**.
+In the toolbar on the left there's a menu with the usual suspects **New**, **Open...**, **Save**, **Save As...** and
+**About**.
 On the right, you'll find a button to add a new asset and controls to change the asset grouping and the valuation
 currency.
 
@@ -48,19 +49,18 @@ and deleted with the triple-dot menu at the end of each row. Some columns can be
 - **Data Storage**: The data you enter into Net Worth is only ever stored locally in your browser and can be saved
   to a file on your hard drive. Browser data sync services should not be used, as anything these can synchronize they
   can potentially also leak.
-- **Queries**: In general, the application only makes queries about precious metal prices and currency exchange rates
-  (quandl.com) plus crypto currency prices (coinmarketcap.com). For crypto currencies, you have the option to also track
-   your balance. If you choose to do so, the application will also send your public address to an online service like
-   e.g. blockchain.info.
+- **Queries**: The application makes queries about precious metal prices and currency exchange rates (quandl.com) plus
+  crypto currency prices (coinmarketcap.com). For crypto currencies, you have the option to also track your balance. If
+  you choose to do so, the application will also send your public address to an online service like e.g.
+  [blockchain.info](https://blockchain.info).
 - **Encryption**: All queries are always encrypted (https), but of course the owners of the respective services will
   have access to the contents of the queries (which can be attributed to you via your IP address). If you have concerns
   about that, you should use a reputable VPN provider or even TOR.
 
 ## Known Issues / Feedback
 
-I'd love to hear your thoughts! Please use the
-[GitHub Issue Tracker](https://github.com/andreashuber69/net-worth/issues) to see the known issues, ask your
-questions, report problems or suggest improvements. Thank you!
+Please use the [GitHub Issue Tracker](https://github.com/andreashuber69/net-worth/issues) to see the known issues, ask
+your questions, report problems or suggest improvements. Thank you!
 
 ## Source Code
 
