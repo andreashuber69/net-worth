@@ -161,7 +161,7 @@ export default class App extends Vue {
                 const oldKey = window.localStorage.key(index);
 
                 if (oldKey) {
-                    const oldKeyNumber = Number.parseInt(oldKey);
+                    const oldKeyNumber = Number.parseInt(oldKey, 10);
 
                     if (oldKeyNumber) {
                         oldKeys.push(oldKeyNumber);

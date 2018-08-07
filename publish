@@ -19,7 +19,7 @@ git rm -rf *
 popd
 
 echo "Build and copy ./dist contents to the working directory..."
-VERSION=`npm version patch -m "Publish %s"`
+VERSION=`npm version patch -m "Publish v%s"`
 git push
 git push --tags
 rm -rf dist
