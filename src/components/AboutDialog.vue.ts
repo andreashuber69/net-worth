@@ -22,7 +22,7 @@ export default class AboutDialog extends Vue {
     public isOpen = false;
 
     public get title() {
-        return `${Application.title} ${Application.version}`;
+        return `${Application.title} v${Application.version}`;
     }
 
     public get packageName() {
