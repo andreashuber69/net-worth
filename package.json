@@ -9,7 +9,9 @@
     "serve-development": "vue-cli-service serve --mode development",
     "serve-production": "vue-cli-service serve --mode production",
     "build": "cross-env WEBPACK_BASE_URL=/net-worth vue-cli-service build",
-    "build-doc": "typedoc --excludePrivate --out ./doc"
+    "build-doc": "typedoc --excludePrivate --out ./doc",
+    "pretest": "npm run lint",
+    "test": "npm run build"
   },
   "dependencies": {
     "bitcoinjs-lib": "^3.3.2",
