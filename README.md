@@ -1,4 +1,5 @@
 # Net Worth
+[![Version](https://img.shields.io/github/release/andreashuber69/net-worth.svg)](https://github.com/andreashuber69/net-worth/releases/latest)
 
 ## Introduction
 
