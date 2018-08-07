@@ -1,0 +1,7 @@
+language: node_js
+nodejs:
+  - node
+
+branches:
+  only:
+  - /^v\d+\.\d+\.\d+$/
