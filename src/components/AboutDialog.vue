@@ -13,48 +13,90 @@
 -->
 
 <template>
-  <v-dialog persistent v-model="isOpen" width="400">
+  <v-dialog persistent v-model="isOpen" width="960px">
     <v-card>
       <v-card-title class="headline">{{ title }}</v-card-title>
-      <v-container>
-        <v-layout column>
-          <p class="text-xs-center">Copyright &copy; 2018 Andreas Huber Dönni</p>
-          <v-btn :href="`https://github.com/andreashuber69/${packageName}/blob/master/LICENSE`" target="_blank">
-            License
-          </v-btn>
-          <v-btn :href="`https://github.com/andreashuber69/${packageName}/blob/master/README.md`" target="_blank">
-            Documentation
-          </v-btn>
-          <v-btn :href="`https://github.com/andreashuber69/${packageName}/issues`" target="_blank">Issues</v-btn>
-          <p></p>
-          <p class="text-xs-center">
-            This application would not work without the following data providers, who generously offer their
-            services free of charge:
-          </p>
-          <v-btn href="https://coinmarketcap.com" target="_blank" flat>
-            <img src="../assets/coinmarketcap.svg" height="36"/>
-          </v-btn>
-          <v-btn href="https://blockchain.info" target="_blank" flat>
-            <img src="../assets/blockchain.svg" height="36"/>
-          </v-btn>
-          <v-btn href="https://blockcypher.com" target="_blank" flat>
-            <img src="../assets/blockcypher.svg" height="36"/>
-          </v-btn>
-          <v-btn href="https://gastracker.io" target="_blank" flat>
-            <img src="../assets/gastracker.png" height="36"/>&nbsp;Gastracker.io
-          </v-btn>
-          <v-btn href="https://ethplorer.io" target="_blank" flat>
-            <img src="../assets/ethplorer.png" height="36"/>
-          </v-btn>
-          <v-btn href="https://btgexp.com" target="_blank" flat>
-            <img src="../assets/btgexp.jpg" height="36"/>
-          </v-btn>
-          <v-btn href="https://chain.so" target="_blank" flat>
-            <img src="../assets/sochain.png" height="36"/>
-          </v-btn>
-          <v-btn href="https://quandl.com" target="_blank" flat>
-            <img src="../assets/quandl.svg" height="36"/>
-          </v-btn>
+      <v-container grid-list-md text-xs-center>
+        <v-layout row wrap>
+          <v-flex xs12>
+            <v-card flat>
+              <v-card-text class="subheading px-0">Copyright &copy; 2018 Andreas Huber Dönni</v-card-text>
+            </v-card>
+          </v-flex> 
+          <v-flex xs12 sm4>
+            <v-btn
+              :href="`https://github.com/andreashuber69/${packageName}/blob/master/LICENSE`" target="_blank"
+              color="primary" class="ma-0 d-block" flat>
+              License
+            </v-btn>
+          </v-flex> 
+          <v-flex xs12 sm4>
+            <v-btn
+              :href="`https://github.com/andreashuber69/${packageName}/blob/master/README.md`" target="_blank"
+              color="primary" class="ma-0 d-block" flat>
+              Documentation
+            </v-btn>
+          </v-flex> 
+          <v-flex xs12 sm4>
+            <v-btn
+              :href="`https://github.com/andreashuber69/${packageName}/issues`" target="_blank"
+              color="primary" class="ma-0 d-block" flat>
+              Issues
+            </v-btn>
+          </v-flex> 
+          <v-flex xs12>
+            <v-card flat>
+              <v-card-text class="subheading px-0">
+                This application would not work without the following data providers, who generously offer their
+                services free of charge:
+              </v-card-text>
+            </v-card>
+          </v-flex>
+          <v-flex xs12 sm6 md4>
+            <v-btn class="ma-0 d-block" href="https://coinmarketcap.com" target="_blank" flat>
+              <img src="../assets/coinmarketcap.svg" height="36"/>
+            </v-btn>
+          </v-flex>
+          <v-flex xs12 sm6 md4>
+            <v-btn class="ma-0 d-block" href="https://blockchain.info" target="_blank" flat>
+              <img src="../assets/blockchain.svg" height="36"/>
+            </v-btn>
+          </v-flex>
+          <v-flex xs12 sm6 md4>
+            <v-btn class="ma-0 d-block" href="https://blockcypher.com" target="_blank" flat>
+              <img src="../assets/blockcypher.svg" height="36"/>
+            </v-btn>
+          </v-flex>
+          <v-flex xs12 sm6 md4>
+            <v-btn class="ma-0 d-block" href="https://gastracker.io" target="_blank" flat>
+              <img src="../assets/gastracker.png" height="36"/>&nbsp;Gastracker.io
+            </v-btn>
+          </v-flex>
+          <v-flex xs12 sm6 md4>
+            <v-btn class="ma-0 d-block" href="https://ethplorer.io" target="_blank" flat>
+              <img src="../assets/ethplorer.png" height="36"/>
+            </v-btn>
+          </v-flex>
+          <v-flex xs12 sm6 md4>
+            <v-btn class="ma-0 d-block" href="https://btgexp.com" target="_blank" flat>
+              <img src="../assets/btgexp.jpg" height="36"/>
+            </v-btn>
+          </v-flex>
+          <v-flex xs12 sm6 md4>
+            <v-btn class="ma-0 d-block" href="https://chain.so" target="_blank" flat>
+              <img src="../assets/sochain.png" height="36"/>
+            </v-btn>
+          </v-flex>
+          <v-flex xs12 sm6 md4>
+            <v-btn class="ma-0 d-block" href="https://quandl.com" target="_blank" flat>
+              <img src="../assets/quandl.svg" height="36"/>
+            </v-btn>
+          </v-flex>
+          <v-flex xs12>
+            <v-card flat>
+              <v-card-text class="caption px-0">{{ userAgent }}</v-card-text>
+            </v-card>
+          </v-flex>
         </v-layout>
       </v-container>
       <v-card-actions>

@@ -29,6 +29,10 @@ export default class AboutDialog extends Vue {
         return Application.packageName;
     }
 
+    public get userAgent() {
+        return window.navigator.userAgent;
+    }
+
     public showDialog() {
         this.isOpen = true;
     }

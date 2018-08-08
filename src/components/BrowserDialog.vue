@@ -13,7 +13,7 @@
 -->
 
 <template>
-  <v-dialog persistent v-model="isOpen" width="600">
+  <v-dialog persistent v-model="isOpen" width="600px">
     <v-card>
       <v-card-title class="headline">Untested Browser</v-card-title>
       <v-card-text>
