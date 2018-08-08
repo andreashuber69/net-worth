@@ -1,7 +1,9 @@
 # Net Worth
 [![License](https://img.shields.io/github/license/andreashuber69/net-worth.svg)](https://github.com/andreashuber69/net-worth/blob/master/LICENSE)
 [![Version](https://img.shields.io/github/release/andreashuber69/net-worth.svg)](https://github.com/andreashuber69/net-worth/releases/latest)
+[![Date](https://img.shields.io/github/release-date/andreashuber69/net-worth.svg)](https://github.com/andreashuber69/net-worth/releases/latest)
 [![Build](https://img.shields.io/travis/andreashuber69/net-worth.svg)](https://travis-ci.org/andreashuber69/net-worth)
+[![Issues](https://img.shields.io/github/issues-raw/andreashuber69/net-worth.svg)](https://github.com/andreashuber69/net-worth/issues)
 
 ## Introduction
 
