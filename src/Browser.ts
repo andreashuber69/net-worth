@@ -24,7 +24,7 @@ export class Browser {
             return false;
         }
 
-        if (this.isSafari && (this.getVersion(" Safari/") < 603)) {
+        if (this.isSafari && (this.getVersion(" Version/") < 10)) {
             return false;
         }
 
