@@ -3,12 +3,12 @@
   "name": "Net Worth",
   "icons": [
     {
-      "src": "<%= webpackConfig.output.publicPath %>icon-192x192.png",
+      "src": "./icon-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "<%= webpackConfig.output.publicPath %>icon-512x512.png",
+      "src": "./icon-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
