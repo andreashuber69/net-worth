@@ -1,0 +1,21 @@
+{
+  "short_name": "Net Worth",
+  "name": "Net Worth",
+  "icons": [
+    {
+      "src": "../src/assets/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "../src/assets/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/net-worth",
+  "background_color": "#25272A",
+  "display": "standalone",
+  "scope": "/net-worth/",
+  "theme_color": "#1976d2"
+}
