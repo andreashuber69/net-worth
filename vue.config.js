@@ -1,4 +1,5 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OfflinePlugin = require("offline-plugin");
 
 module.exports = {
     // baseUrl needs to be set differently depending on whether we build for actual deployment (e.g. on github gh-pages)
@@ -62,5 +63,8 @@ module.exports = {
                 })                
             ];
         }
+    },
+    chainWebpack: config => {
+        config.plugin("offline-plugin").use(OfflinePlugin);
     }
 }

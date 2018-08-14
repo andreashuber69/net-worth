@@ -16,6 +16,7 @@
   "dependencies": {
     "bitcoinjs-lib": "^3.3.2",
     "material-design-icons-iconfont": "^3.0.3",
+    "offline-plugin": "^5.0.5",
     "vue": "^2.5.17",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^6.1.0",

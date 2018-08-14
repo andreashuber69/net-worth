@@ -13,6 +13,8 @@
 
 // tslint:disable-next-line:no-import-side-effect no-implicit-dependencies no-submodule-imports
 import "material-design-icons-iconfont/dist/material-design-icons.css";
+// tslint:disable-next-line:no-submodule-imports
+import * as OfflinePluginRuntime from "offline-plugin/runtime";
 import Vue from "vue";
 import Vuetify from "vuetify";
 // tslint:disable-next-line:no-import-side-effect no-implicit-dependencies no-submodule-imports
@@ -33,6 +35,7 @@ for (const parameter of parameters) {
 if (parameters.length > 0) {
     window.location.replace(urlComponents[0]);
 } else {
+    OfflinePluginRuntime.install();
     // tslint:disable:no-unsafe-any
     Vue.config.productionTip = false;
     Vue.use(Vuetify);
