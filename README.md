@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100"src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/public/favicon.svg">
+  <img width="100" src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/public/favicon.svg">
 </p>
 
 <p align="center">
@@ -21,8 +21,6 @@
 </p>
 
 <h1 align="center">Net Worth</h1>
-
----
 
 If you primarily store your wealth in "unconventional" assets like precious metals and crypto currencies, it seems there
 are almost no tools that would help you get an overview of your current financial situation.
