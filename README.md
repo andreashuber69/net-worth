@@ -1,7 +1,6 @@
 <p align="center">
-  <img width="100" src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/public/favicon.svg">
+  <img width="100" src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/public/icon-192x192.png">
 </p>
-
 <p align="center">
   <a href="https://github.com/andreashuber69/net-worth/releases/latest">
     <img src="https://img.shields.io/github/release/andreashuber69/net-worth.svg" alt="Version">
