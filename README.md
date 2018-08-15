@@ -1,11 +1,28 @@
-# Net Worth
-[![License](https://img.shields.io/github/license/andreashuber69/net-worth.svg)](https://github.com/andreashuber69/net-worth/blob/master/LICENSE)
-[![Version](https://img.shields.io/github/release/andreashuber69/net-worth.svg)](https://github.com/andreashuber69/net-worth/releases/latest)
-[![Date](https://img.shields.io/github/release-date/andreashuber69/net-worth.svg)](https://github.com/andreashuber69/net-worth/releases/latest)
-[![Build](https://img.shields.io/travis/andreashuber69/net-worth.svg)](https://travis-ci.org/andreashuber69/net-worth)
-[![Issues](https://img.shields.io/github/issues-raw/andreashuber69/net-worth.svg)](https://github.com/andreashuber69/net-worth/issues)
+<p align="center">
+  <img width="100"src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/public/favicon.svg">
+</p>
 
-## Introduction
+<p align="center">
+  <a href="https://github.com/andreashuber69/net-worth/releases/latest">
+    <img src="https://img.shields.io/github/release/andreashuber69/net-worth.svg" alt="Version">
+  </a>
+  <a href="https://github.com/andreashuber69/net-worth/releases/latest">
+    <img src="https://img.shields.io/github/release-date/andreashuber69/net-worth.svg" alt="Release Date">
+  </a>
+  <a href="https://travis-ci.org/andreashuber69/net-worth">
+    <img src="https://img.shields.io/travis/andreashuber69/net-worth.svg" alt="Build">
+  </a>
+  <a href="https://github.com/andreashuber69/net-worth/issues">
+    <img src="https://img.shields.io/github/issues-raw/andreashuber69/net-worth.svg" alt="Issues">
+  </a>
+  <a href="https://github.com/andreashuber69/net-worth/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/andreashuber69/net-worth.svg" alt="License">
+  </a>
+</p>
+
+<h1 align="center">Net Worth</h1>
+
+---
 
 If you primarily store your wealth in "unconventional" assets like precious metals and crypto currencies, it seems there
 are almost no tools that would help you get an overview of your current financial situation.
