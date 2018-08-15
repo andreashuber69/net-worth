@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100" src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/public/icon-192x192.png">
+  <img width="128" src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/public/icon.svg?sanitize=true">
 </p>
 <p align="center">
   <a href="https://github.com/andreashuber69/net-worth/releases/latest">
