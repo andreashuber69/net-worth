@@ -16,6 +16,5 @@
   "start_url": "/net-worth",
   "background_color": "#25272A",
   "display": "standalone",
-  "scope": "/net-worth/",
   "theme_color": "#1976d2"
 }
