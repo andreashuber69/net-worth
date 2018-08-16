@@ -65,10 +65,6 @@ module.exports = {
         }
     },
     chainWebpack: config => {
-        config.plugin("offline-plugin").use(OfflinePlugin, [{
-            caches: {
-                main: [ ":rest:" ],
-            }
-        }]);
+        config.plugin("offline-plugin").use(OfflinePlugin);
     }
 }
