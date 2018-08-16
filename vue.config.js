@@ -65,6 +65,25 @@ module.exports = {
         }
     },
     chainWebpack: config => {
-        config.plugin("offline-plugin").use(OfflinePlugin);
+        config.plugin("offline-plugin").use(OfflinePlugin, [{
+            safeToUseOptionalCaches: true,
+            caches: {
+                main: [
+                    "index.html",
+                    "*.png",
+                    "*.ico",
+                    "js/*.js",
+                    "css/*.css",
+                    "fonts/*.woff",
+                    "fonts/*.woff2",
+                    "img/*.jpg",
+                    "img/*.png",
+                    "img/*.svg",
+                ],
+                optional: [
+                    ':rest:'
+                ]
+            }
+        }]);
     }
 }
