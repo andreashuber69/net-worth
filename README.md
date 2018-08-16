@@ -30,20 +30,6 @@ Net Worth aims to change that. In a nutshell, the application presents your prec
 holdings in a groupable and sortable table, which allows you to quickly see how your net worth is spread among the
 different asset types and locations.
 
-## Features
-
-- Supported precious metals: **Silver**, **Palladium**, **Platinum**, **Gold**
-- Supported crypto currencies: **Bitcoin**, **Litecoin**, **Ethereum Classic**, **ERC20 Tokens**, **Ethereum**,
-  **Bitcoin Gold**, **Dash**, **Zcash**.
-  Others will be implemented depending on demand.
-- Assets can be grouped according to asset type or location.
-- Assets other than precious metals and cryptos can be added as (manually valued) Misc assets.
-- Liabilities can be added as negatively valued Misc assets.
-- Supported valuation currencies: 27 fiat currencies plus silver ounces (XAG), gold ounces (XAU) and Bitcoin (BTC)
-- Intuitive, flexible user interface that auto-adapts to almost any screen size.
-- Free, open-source, no ads
-- No installation, works on almost any platform, including mobile phones and Raspberry Pis.
-
 ## Usage
 
 ### Getting Started
@@ -77,6 +63,20 @@ and deleted with the triple-dot menu at the end of each row. Some columns can be
 - **Encryption**: All queries are always encrypted (https), but of course the owners of the respective services will
   have access to the contents of the queries (which can be attributed to you via your IP address). If you have concerns
   about that, you should use a reputable VPN provider or even TOR.
+
+## Features
+
+- Supported precious metals: **Silver**, **Palladium**, **Platinum**, **Gold**
+- Supported crypto currencies: **Bitcoin**, **Litecoin**, **Ethereum Classic**, **ERC20 Tokens**, **Ethereum**,
+  **Bitcoin Gold**, **Dash**, **Zcash**.
+  Others will be implemented depending on demand.
+- Assets can be grouped according to asset type or location.
+- Assets other than precious metals and cryptos can be added as (manually valued) Misc assets.
+- Liabilities can be added as negatively valued Misc assets.
+- Supported valuation currencies: 27 fiat currencies plus silver ounces (XAG), gold ounces (XAU) and Bitcoin (BTC)
+- Intuitive, flexible user interface that auto-adapts to almost any screen size.
+- Free, open-source, no ads
+- No installation, works on almost any platform, including mobile phones and Raspberry Pis.
 
 ## Known Issues / Feedback
 
