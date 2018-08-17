@@ -154,20 +154,7 @@ export default class App extends Vue {
             }
         } else {
             // New session
-            // Put all old keys into the following array.
-            const oldKeys = new Array<number>();
-
-            for (let index = 0; index < window.localStorage.length; ++index) {
-                const oldKey = window.localStorage.key(index);
-
-                if (oldKey) {
-                    const oldKeyNumber = Number.parseInt(oldKey, 10);
-
-                    if (oldKeyNumber) {
-                        oldKeys.push(oldKeyNumber);
-                    }
-                }
-            }
+            const oldKeys = App.getOldKeys();
 
             // Sort the array in descending direction, so that the modified model that was last saved will be loaded.
             oldKeys.sort((l, r) => l < r ? 1 : -1);
@@ -269,6 +256,25 @@ export default class App extends Vue {
         // There's still a low probability that two browser tabs arrive at the same key at the same time and an
         // overwrite happens. Verifying the written should reduce this further.
         return window.localStorage.getItem(uniqueKey) === json ? uniqueKey : undefined;
+    }
+
+    private static getOldKeys() {
+        // Put all old keys into the following array.
+        const result = new Array<number>();
+
+        for (let index = 0; index < window.localStorage.length; ++index) {
+            const oldKey = window.localStorage.key(index);
+
+            if (oldKey) {
+                const oldKeyNumber = Number.parseInt(oldKey, 10);
+
+                if (oldKeyNumber) {
+                    result.push(oldKeyNumber);
+                }
+            }
+        }
+
+        return result;
     }
 
     private get fileInput() {
