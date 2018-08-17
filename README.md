@@ -17,7 +17,7 @@
     <img src="https://img.shields.io/github/issues-raw/andreashuber69/net-worth.svg" alt="Issues">
   </a>
   <a href="https://codebeat.co/projects/github-com-andreashuber69-net-worth-master">
-    <img src="https://codebeat.co/badges/e155be2c-a11b-4c3a-af8d-e0a6c1ed113f" alt="Code Quality">
+    <img src="https://codebeat.co/badges/1a2c6713-5e60-40d9-b569-0df30f7033a3" alt="Code Quality">
   </a>
   <a href="https://github.com/andreashuber69/net-worth/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/andreashuber69/net-worth.svg" alt="License">
