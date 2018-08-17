@@ -16,6 +16,9 @@
   <a href="https://github.com/andreashuber69/net-worth/issues">
     <img src="https://img.shields.io/github/issues-raw/andreashuber69/net-worth.svg" alt="Issues">
   </a>
+  <a href="https://codebeat.co/projects/github-com-andreashuber69-net-worth-master">
+    <img src="https://codebeat.co/badges/e155be2c-a11b-4c3a-af8d-e0a6c1ed113f" alt="Code Quality">
+  </a>
   <a href="https://github.com/andreashuber69/net-worth/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/andreashuber69/net-worth.svg" alt="License">
   </a>
@@ -23,12 +26,12 @@
 
 <h1 align="center">Net Worth</h1>
 
-If you primarily store your wealth in "unconventional" assets like precious metals and crypto currencies, it seems there
-are almost no tools that would help you get an overview of your current financial situation.
+If you primarily store your wealth in "unconventional" assets like precious metals and crypto currencies, it seems
+difficult to get an overview over your current financial situation.
 
-Net Worth aims to change that. In a nutshell, the application presents your precious metal and crypto currency
-holdings in a groupable and sortable table, which allows you to quickly see how your net worth is spread among the
-different asset types and locations.
+Net Worth aims to make this a little easier. In a nutshell, the application presents your precious metal and crypto
+currency holdings in a groupable and sortable table, which allows you to quickly see how your net worth is spread among
+the different asset types and locations.
 
 ## Usage
 
