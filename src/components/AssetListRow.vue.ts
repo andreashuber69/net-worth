@@ -13,13 +13,14 @@
 import { Component, Prop } from "vue-property-decorator";
 import { Asset, AssetDisplayPropertyName, GroupBy } from "../model/Asset";
 import { PreciousMetalAssetInputInfo } from "../model/PreciousMetalAssetInputInfo";
+import { ColumnInfo } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
 // tslint:disable-next-line:ban-types
 type PropertyNames<T> = { [K in keyof T]: T[K] extends string ? K : never }[keyof T];
 type Diff<T, U> = T extends U ? never : T;
-type AssetListRowPropertyName = Diff<PropertyNames<AssetListRow>, PropertyNames<ComponentBase<Asset>>>;
+export type AssetListRowPropertyName = Diff<PropertyNames<AssetListRow>, PropertyNames<ComponentBase<Asset>>>;
 
 // tslint:disable-next-line:no-unsafe-any
 @Component
@@ -33,46 +34,6 @@ export default class AssetListRow extends ComponentBase<Asset> {
     /** Gets the number of required columns. */
     public static get requiredColumnCount() {
         return 3;
-    }
-
-    /** Provides the maximum number of optional columns that can be displayed. */
-    public static get maxOptionalColumnCount() {
-        return this.allColumnCounts.length - 1;
-    }
-
-    /** @internal */
-    public static readonly expandName = "expand";
-
-    /** @internal */
-    public static readonly moreName = "more";
-
-    /** @internal */
-    public static readonly grandTotalLabelName = "grandTotalLabel";
-
-    /** @internal */
-    public static getRawColumnCount(optionalColumnCount: number) {
-        return this.rawColumnCounts[optionalColumnCount];
-    }
-
-    /** @internal */
-    public static getClassImpl(
-        columnName: ColumnName, groupBy: GroupBy, otherGroupBys: GroupBy[], optionalColumnCount: number) {
-        const result = new Array<string>();
-
-        if (this.isHidden(columnName, groupBy, optionalColumnCount)) {
-            // TODO: Can't this be done with one class?
-            result.push("hidden-sm-and-up", "hidden-xs-only");
-        }
-
-        AssetListRow.addAlignment(result, columnName);
-        AssetListRow.addPadding(result, columnName, groupBy, otherGroupBys);
-        AssetListRow.addTotal(result, columnName);
-
-        if (result.length === 0) {
-            throw new Error(`Unknown column: ${columnName}`);
-        }
-
-        return result;
     }
 
     @Prop()
@@ -144,7 +105,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
     }
 
     public getClass(columnName: ColumnName) {
-        return AssetListRow.getClassImpl(
+        return ColumnInfo.getClass(
             columnName, this.checkedValue.parent.groupBy,
             this.checkedValue.parent.otherGroupBys, this.checkedOptionalColumnCount);
     }
@@ -168,166 +129,10 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly finenessIntegerName = AssetListRow.getName("finenessInteger");
-    private static readonly finenessFractionName = AssetListRow.getName("finenessFraction");
-    private static readonly unitValueIntegerName = AssetListRow.getName("unitValueInteger");
-    private static readonly unitValueFractionName = AssetListRow.getName("unitValueFraction");
-    private static readonly quantityIntegerName = AssetListRow.getName("quantityInteger");
-    private static readonly quantityFractionName = AssetListRow.getName("quantityFraction");
-    private static readonly totalValueIntegerName = AssetListRow.getName("totalValueInteger");
-    private static readonly totalValueFractionName = AssetListRow.getName("totalValueFraction");
-    private static readonly percentIntegerName = AssetListRow.getName("percentInteger");
-    private static readonly percentFractionName = AssetListRow.getName("percentFraction");
-
     private static readonly finenessFormatOptions = {
         maximumFractionDigits: PreciousMetalAssetInputInfo.finenessDigits,
         minimumFractionDigits: 1,
         useGrouping: true };
-
-    private static readonly allColumns = new Map<GroupBy, ColumnName[]>([
-        [Asset.typeName, AssetListRow.getColumns(Asset.typeName)],
-        [Asset.locationName, AssetListRow.getColumns(Asset.locationName)],
-    ]);
-
-    /**
-     * From the full list of columns (full, integer and fraction) returned by `getColumns`, contains the number of
-     * currently visible columns with the index being the number of currently visible optional full columns. For
-     * example, if no optional full columns are currently visible (i.e. index = 0), the first 7 columns of whatever
-     * is returned by `getColumns` will be shown. Note that said list contains real table columns
-     * as well as "virtual" columns. Examples of real table columns are "totalValueInteger" and "unit" while
-     * "totalValue" and "fineness" are virtual columns.
-     */
-    private static readonly allColumnCounts = [ 7, 10, 11, 12, 15, 18, 19, 22 ];
-
-    /**
-     * Contains the number of real table columns shown with the index being the number of currently visible optional
-     * full columns.
-     */
-    private static readonly rawColumnCounts = [ 5, 7, 8, 9, 11, 13, 14, 16 ];
-
-    private static addPadding(
-        result: string[], columnName: string | undefined, groupBy: string, otherGroupBys: GroupBy[]) {
-        const columnPadding = 3;
-        const leftClass = `pl-${columnPadding}`;
-        const rightClass = `pr-${columnPadding}`;
-
-        switch (columnName) {
-            case this.expandName:
-                result.push(leftClass, "pr-2");
-                break;
-            case groupBy:
-                result.push("pl-0", rightClass);
-                break;
-            case otherGroupBys[0]:
-            case Asset.descriptionName:
-            case Asset.unitName:
-            case Asset.finenessName:
-            case Asset.unitValueName:
-            case Asset.quantityName:
-            case Asset.totalValueName:
-            case this.grandTotalLabelName:
-                result.push(leftClass, rightClass);
-                break;
-            case Asset.percentName:
-                result.push(leftClass, "pr-0");
-                break;
-            case this.finenessIntegerName:
-            case this.unitValueIntegerName:
-            case this.quantityIntegerName:
-            case this.totalValueIntegerName:
-            case this.percentIntegerName:
-                result.push(leftClass, "pr-0");
-                break;
-            case this.finenessFractionName:
-            case this.unitValueFractionName:
-            case this.quantityFractionName:
-            case this.totalValueFractionName:
-                result.push("pl-0", rightClass);
-                break;
-            case this.percentFractionName:
-                result.push("pl-0", "pr-0");
-                break;
-            case this.moreName:
-                result.push("pl-1", rightClass);
-                break;
-            default:
-        }
-    }
-
-    private static addAlignment(result: string[], columnName: string | undefined) {
-        switch (columnName) {
-            case Asset.typeName:
-            case Asset.descriptionName:
-            case Asset.locationName:
-            case Asset.unitName:
-            case this.finenessFractionName:
-            case this.unitValueFractionName:
-            case this.quantityFractionName:
-            case this.totalValueFractionName:
-            case this.percentFractionName:
-            case this.grandTotalLabelName:
-                result.push("text-xs-left");
-                break;
-            case this.finenessIntegerName:
-            case this.unitValueIntegerName:
-            case this.quantityIntegerName:
-            case this.totalValueIntegerName:
-            case this.percentIntegerName:
-                result.push("text-xs-right");
-                break;
-            default:
-        }
-    }
-
-    private static addTotal(result: string[], columnName: string | undefined) {
-        switch (columnName) {
-            case Asset.totalValueName:
-            case this.totalValueIntegerName:
-            case this.totalValueFractionName:
-            case Asset.percentName:
-            case this.percentIntegerName:
-            case this.percentFractionName:
-            case this.grandTotalLabelName:
-                result.push("total");
-                break;
-            default:
-        }
-    }
-
-    private static getColumns(groupBy: GroupBy) {
-        const result: ColumnName[] = [
-            AssetListRow.expandName, Asset.typeName,
-            Asset.percentName, AssetListRow.percentIntegerName, AssetListRow.percentFractionName,
-            AssetListRow.moreName, AssetListRow.grandTotalLabelName,
-            Asset.totalValueName, AssetListRow.totalValueIntegerName, AssetListRow.totalValueFractionName,
-            Asset.locationName, Asset.unitName,
-            Asset.quantityName, AssetListRow.quantityIntegerName, AssetListRow.quantityFractionName,
-            Asset.unitValueName, AssetListRow.unitValueIntegerName, AssetListRow.unitValueFractionName,
-            Asset.descriptionName,
-            Asset.finenessName, AssetListRow.finenessIntegerName, AssetListRow.finenessFractionName,
-        ];
-
-        if (groupBy === Asset.locationName) {
-            result[1] = Asset.locationName;
-            result[10] = Asset.typeName;
-        }
-
-        return result;
-    }
-
-    private static isHidden(columnName: ColumnName, groupBy: GroupBy, optionalColumnCount: number) {
-        const allColumns = this.allColumns.get(groupBy);
-
-        if (!allColumns) {
-            throw new Error("Unknown groupBy!");
-        }
-
-        return allColumns.indexOf(columnName) >= this.allColumnCounts[optionalColumnCount];
-    }
-
-    private static getName<T extends keyof AssetListRow>(name: T) {
-        return name;
-    }
 
     private getHint(groupBy: GroupBy) {
         switch (groupBy) {
@@ -350,4 +155,4 @@ export default class AssetListRow extends ComponentBase<Asset> {
 }
 
 export type ColumnName = AssetDisplayPropertyName | AssetListRowPropertyName |
-    typeof AssetListRow.expandName | typeof AssetListRow.moreName | typeof AssetListRow.grandTotalLabelName;
+    typeof ColumnInfo.expandName | typeof ColumnInfo.moreName | typeof ColumnInfo.grandTotalLabelName;

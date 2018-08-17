@@ -15,6 +15,7 @@ import { Asset } from "../model/Asset";
 import { Model, SortBy } from "../model/Model";
 import AssetEditor from "./AssetEditor.vue";
 import AssetListRow, { ColumnName } from "./AssetListRow.vue";
+import { ColumnInfo } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
@@ -64,7 +65,7 @@ export default class AssetList extends ComponentBase<Model> {
         if (this.optionalColumnCount >= 1) {
             // We need to add to the minimum the number of columns that are added *after* the total value column has
             // appeared.
-            result += (AssetListRow.getRawColumnCount(this.optionalColumnCount) - AssetListRow.getRawColumnCount(1));
+            result += (ColumnInfo.getRawCount(this.optionalColumnCount) - ColumnInfo.getRawCount(1));
         }
 
         return result;
@@ -72,7 +73,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getHeaderClass(columnName: ColumnName) {
-        const result = AssetListRow.getClassImpl(
+        const result = ColumnInfo.getClass(
             columnName, this.checkedValue.groupBy, this.checkedValue.otherGroupBys, this.optionalColumnCount);
 
         // Sortable columns
@@ -90,7 +91,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getFooterClass(columnName: ColumnName) {
-        return AssetListRow.getClassImpl(
+        return ColumnInfo.getClass(
             columnName, this.checkedValue.groupBy, this.checkedValue.otherGroupBys, this.optionalColumnCount);
     }
 
@@ -133,7 +134,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private optionalColumnCountImpl = AssetListRow.maxOptionalColumnCount;
+    private optionalColumnCountImpl = ColumnInfo.maxOptionalCount;
 
     private timer?: NodeJS.Timer;
     private previousOffset: number = Number.NaN;
@@ -148,7 +149,7 @@ export default class AssetList extends ComponentBase<Model> {
             // tslint:disable-next-line:no-unsafe-any
             if ((this.optionalColumnCountImpl > 0) && (this.$el.offsetLeft < 0)) {
                 --this.optionalColumnCountImpl;
-            } else if ((this.optionalColumnCountImpl < AssetListRow.maxOptionalColumnCount) &&
+            } else if ((this.optionalColumnCountImpl < ColumnInfo.maxOptionalCount) &&
                 // tslint:disable-next-line:no-unsafe-any
                 (this.$el.offsetLeft * 2 > this.$el.offsetWidth /
                     (AssetListRow.requiredColumnCount + this.optionalColumnCountImpl) * 3)) {
