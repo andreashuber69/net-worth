@@ -59,96 +59,14 @@ export default class AssetListRow extends ComponentBase<Asset> {
         columnName: ColumnName, groupBy: GroupBy, otherGroupBys: GroupBy[], optionalColumnCount: number) {
         const result = new Array<string>();
 
-        // Hiding
         if (this.isHidden(columnName, groupBy, optionalColumnCount)) {
             // TODO: Can't this be done with one class?
             result.push("hidden-sm-and-up", "hidden-xs-only");
         }
 
-        // Alignment
-        switch (columnName) {
-            case Asset.typeName:
-            case Asset.descriptionName:
-            case Asset.locationName:
-            case Asset.unitName:
-            case this.finenessFractionName:
-            case this.unitValueFractionName:
-            case this.quantityFractionName:
-            case this.totalValueFractionName:
-            case this.percentFractionName:
-            case this.grandTotalLabelName:
-                result.push("text-xs-left");
-                break;
-            case this.finenessIntegerName:
-            case this.unitValueIntegerName:
-            case this.quantityIntegerName:
-            case this.totalValueIntegerName:
-            case this.percentIntegerName:
-                result.push("text-xs-right");
-                break;
-            default:
-        }
-
-        const columnPadding = 3;
-        const leftClass = `pl-${columnPadding}`;
-        const rightClass = `pr-${columnPadding}`;
-
-        // Padding
-        switch (columnName) {
-            case this.expandName:
-                result.push(leftClass, "pr-2");
-                break;
-            case groupBy:
-                result.push("pl-0", rightClass);
-                break;
-            case otherGroupBys[0]:
-            case Asset.descriptionName:
-            case Asset.unitName:
-            case Asset.finenessName:
-            case Asset.unitValueName:
-            case Asset.quantityName:
-            case Asset.totalValueName:
-            case this.grandTotalLabelName:
-                result.push(leftClass, rightClass);
-                break;
-            case Asset.percentName:
-                result.push(leftClass, "pr-0");
-                break;
-            case this.finenessIntegerName:
-            case this.unitValueIntegerName:
-            case this.quantityIntegerName:
-            case this.totalValueIntegerName:
-            case this.percentIntegerName:
-                result.push(leftClass, "pr-0");
-                break;
-            case this.finenessFractionName:
-            case this.unitValueFractionName:
-            case this.quantityFractionName:
-            case this.totalValueFractionName:
-                result.push("pl-0", rightClass);
-                break;
-            case this.percentFractionName:
-                result.push("pl-0", "pr-0");
-                break;
-            case this.moreName:
-                result.push("pl-1", rightClass);
-                break;
-            default:
-        }
-
-        // Total
-        switch (columnName) {
-            case Asset.totalValueName:
-            case this.totalValueIntegerName:
-            case this.totalValueFractionName:
-            case Asset.percentName:
-            case this.percentIntegerName:
-            case this.percentFractionName:
-            case this.grandTotalLabelName:
-                result.push("total");
-                break;
-            default:
-        }
+        AssetListRow.addAlignment(result, columnName);
+        AssetListRow.addPadding(result, columnName, groupBy, otherGroupBys);
+        AssetListRow.addTotal(result, columnName);
 
         if (result.length === 0) {
             throw new Error(`Unknown column: ${columnName}`);
@@ -286,6 +204,95 @@ export default class AssetListRow extends ComponentBase<Asset> {
      * full columns.
      */
     private static readonly rawColumnCounts = [ 5, 7, 8, 9, 11, 13, 14, 16 ];
+
+    private static addPadding(
+        result: string[], columnName: string | undefined, groupBy: string, otherGroupBys: GroupBy[]) {
+        const columnPadding = 3;
+        const leftClass = `pl-${columnPadding}`;
+        const rightClass = `pr-${columnPadding}`;
+
+        switch (columnName) {
+            case this.expandName:
+                result.push(leftClass, "pr-2");
+                break;
+            case groupBy:
+                result.push("pl-0", rightClass);
+                break;
+            case otherGroupBys[0]:
+            case Asset.descriptionName:
+            case Asset.unitName:
+            case Asset.finenessName:
+            case Asset.unitValueName:
+            case Asset.quantityName:
+            case Asset.totalValueName:
+            case this.grandTotalLabelName:
+                result.push(leftClass, rightClass);
+                break;
+            case Asset.percentName:
+                result.push(leftClass, "pr-0");
+                break;
+            case this.finenessIntegerName:
+            case this.unitValueIntegerName:
+            case this.quantityIntegerName:
+            case this.totalValueIntegerName:
+            case this.percentIntegerName:
+                result.push(leftClass, "pr-0");
+                break;
+            case this.finenessFractionName:
+            case this.unitValueFractionName:
+            case this.quantityFractionName:
+            case this.totalValueFractionName:
+                result.push("pl-0", rightClass);
+                break;
+            case this.percentFractionName:
+                result.push("pl-0", "pr-0");
+                break;
+            case this.moreName:
+                result.push("pl-1", rightClass);
+                break;
+            default:
+        }
+    }
+
+    private static addAlignment(result: string[], columnName: string | undefined) {
+        switch (columnName) {
+            case Asset.typeName:
+            case Asset.descriptionName:
+            case Asset.locationName:
+            case Asset.unitName:
+            case this.finenessFractionName:
+            case this.unitValueFractionName:
+            case this.quantityFractionName:
+            case this.totalValueFractionName:
+            case this.percentFractionName:
+            case this.grandTotalLabelName:
+                result.push("text-xs-left");
+                break;
+            case this.finenessIntegerName:
+            case this.unitValueIntegerName:
+            case this.quantityIntegerName:
+            case this.totalValueIntegerName:
+            case this.percentIntegerName:
+                result.push("text-xs-right");
+                break;
+            default:
+        }
+    }
+
+    private static addTotal(result: string[], columnName: string | undefined) {
+        switch (columnName) {
+            case Asset.totalValueName:
+            case this.totalValueIntegerName:
+            case this.totalValueFractionName:
+            case Asset.percentName:
+            case this.percentIntegerName:
+            case this.percentFractionName:
+            case this.grandTotalLabelName:
+                result.push("total");
+                break;
+            default:
+        }
+    }
 
     private static getColumns(groupBy: GroupBy) {
         const result: ColumnName[] = [
