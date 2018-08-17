@@ -31,14 +31,10 @@ export class ZecWallet extends RealCryptoWallet {
         return new GenericAssetBundle(this);
     }
 
-    /** @internal */
-    public async queryData(): Promise<void> {
-        await super.queryData();
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        if (this.address) {
-            this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
-                await new ZecWallet.SoChainRequest(this.address).execute();
-        }
+    protected queryQuantity() {
+        return new ZecWallet.SoChainRequest(this.address).execute();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

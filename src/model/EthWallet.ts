@@ -37,14 +37,11 @@ export class EthWallet extends RealCryptoWallet {
         return new GenericAssetBundle(this);
     }
 
-    public async queryData() {
-        await super.queryData();
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        if (this.address) {
-            const response = await QueryCache.fetch(
-                `https://api.ethplorer.io/getAddressInfo/${this.address}?apiKey=dvoio1769GSrYx63`);
-            this.quantity = (this.quantity === undefined ? 0 : this.quantity) + EthWallet.getQuantity(response);
-        }
+    protected async queryQuantity() {
+        return EthWallet.getQuantity(
+            await QueryCache.fetch(`https://api.ethplorer.io/getAddressInfo/${this.address}?apiKey=dvoio1769GSrYx63`));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

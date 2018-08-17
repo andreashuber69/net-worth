@@ -37,6 +37,14 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         if (this.slug) {
             this.unitValueUsd = await new CoinMarketCapRequest(this.slug, false).execute();
         }
+
+        if (this.address) {
+            const quantityToAdd = await this.queryQuantity();
+
+            if (quantityToAdd) {
+                this.quantity = (this.quantity === undefined ? 0 : this.quantity) + quantityToAdd;
+            }
+        }
     }
 
     /** @internal */
@@ -68,5 +76,10 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         this.address = properties.address || "";
         this.quantity = properties.quantity;
         this.notes = properties.notes || "";
+    }
+
+    // tslint:disable-next-line:prefer-function-over-method
+    protected queryQuantity(): Promise<number | undefined> {
+        return Promise.resolve(undefined);
     }
 }

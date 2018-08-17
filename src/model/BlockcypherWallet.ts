@@ -24,19 +24,13 @@ export abstract class BlockcypherWallet extends RealCryptoWallet {
         return new GenericAssetBundle(this);
     }
 
-    /** @internal */
-    public async queryData(): Promise<void> {
-        await super.queryData();
-
-        if (this.address) {
-            this.quantity = (this.quantity === undefined ? 0 : this.quantity) +
-                await new BlockcypherRequest(this.unit.toLowerCase(), this.address).execute();
-        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected constructor(parent: IModel, properties: ICryptoWalletProperties, currencySymbol: string, slug: string) {
         super(parent, properties, currencySymbol, slug);
+    }
+
+    protected queryQuantity() {
+        return new BlockcypherRequest(this.unit.toLowerCase(), this.address).execute();
     }
 }
