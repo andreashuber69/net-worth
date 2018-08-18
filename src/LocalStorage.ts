@@ -174,13 +174,10 @@ export class LocalStorage {
 
         for (let index = 0; index < window.localStorage.length; ++index) {
             const oldKey = window.localStorage.key(index);
+            let oldKeyNumber: number | undefined;
 
-            if (oldKey) {
-                const oldKeyNumber = Number.parseInt(oldKey, 10);
-
-                if (oldKeyNumber) {
-                    result.push(oldKeyNumber);
-                }
+            if (oldKey && (oldKeyNumber = Number.parseInt(oldKey, 10))) {
+                result.push(oldKeyNumber);
             }
         }
 
