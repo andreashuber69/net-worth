@@ -49,7 +49,6 @@ export default class App extends Vue {
 
     public async onFileInputChanged(event: Event) {
         const files = (event.target as any).files as FileList;
-        this.fileInput.value = "";
 
         if (files.length !== 1) {
             return;
@@ -72,6 +71,8 @@ export default class App extends Vue {
                 this.model = this.initModel(model);
             }
         }
+
+        this.fileInput.value = "";
     }
 
     public async onSaveClicked(event: MouseEvent) {
