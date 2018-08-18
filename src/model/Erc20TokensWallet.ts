@@ -163,16 +163,9 @@ export class Erc20TokensWallet extends RealCryptoWallet {
 
             const info = token.tokenInfo;
 
-            if (!Value.hasStringProperty(info, "symbol") ||
-                (!Value.hasNumberProperty(info, "decimals") && !Value.hasStringProperty(info, "decimals"))) {
-                return;
-            }
-
-            if (this.deletedAssets.indexOf(info.symbol) >= 0) {
-                return;
-            }
-
-            if (token.balance > 0) {
+            if (Value.hasStringProperty(info, "symbol") &&
+                (Value.hasNumberProperty(info, "decimals") || Value.hasStringProperty(info, "decimals")) &&
+                (this.deletedAssets.indexOf(info.symbol) < 0) && (token.balance > 0)) {
                 this.assets.push(new Erc20TokensWallet.TokenWallet(
                     this.erc20Wallet, info.symbol,
                     token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
