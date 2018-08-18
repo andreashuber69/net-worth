@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Model } from "./model/Model";
+import { Parser } from "./Parser";
 
 export class LocalStorage {
     public static load() {
@@ -100,20 +101,8 @@ export class LocalStorage {
     private static readonly sessionLocalStorageKey = "localStorageKey";
     private static readonly sessionForceLoadFromLocalStorageKey = "forceLoadFromLocalStorage";
 
-    private static parse(json: string | null) {
-        const model = json ? Model.parse(json) : undefined;
-
-        if (model instanceof Model) {
-            return model;
-        } else if (model) {
-            alert(model);
-        }
-
-        return undefined;
-    }
-
     private static loadModel(localStorageKey: string) {
-        const result = this.parse(window.localStorage.getItem(localStorageKey));
+        const result = Parser.parse(window.localStorage.getItem(localStorageKey));
 
         if (result) {
             while (window.sessionStorage.length > 0) {

@@ -17,6 +17,7 @@ import BrowserDialog from "./components/BrowserDialog.vue";
 import SaveAsDialog from "./components/SaveAsDialog.vue";
 import { LocalStorage } from "./LocalStorage";
 import { Model } from "./model/Model";
+import { Parser } from "./Parser";
 
 // tslint:disable-next-line:no-unsafe-any
 @Component({ components: { AboutDialog, AssetList, BrowserDialog, SaveAsDialog } })
@@ -51,7 +52,7 @@ export default class App extends Vue {
 
         if (files.length === 1) {
             const file = files[0];
-            const model = App.parse(await App.read(file));
+            const model = Parser.parse(await App.read(file));
 
             if (model) {
                 const name = file.name.endsWith(model.fileExtension) ?
@@ -137,18 +138,6 @@ export default class App extends Vue {
             reader.onerror = (ev) => reject("Unable to read file.");
             reader.readAsText(blob);
         });
-    }
-
-    private static parse(json: string | null) {
-        const model = json ? Model.parse(json) : undefined;
-
-        if (model instanceof Model) {
-            return model;
-        } else if (model) {
-            alert(model);
-        }
-
-        return undefined;
     }
 
     private get fileInput() {
