@@ -38,7 +38,7 @@ export default class App extends Vue {
     // tslint:disable-next-line:prefer-function-over-method
     public onNewClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
-        App.openNewWindow(LocalStorage.emptyModelLocalStorageKey, false);
+        App.openNewWindow(undefined);
     }
 
     public onOpenClicked(event: MouseEvent) {
@@ -62,7 +62,7 @@ export default class App extends Vue {
                 }
 
                 if (this.model.hasUnsavedChanges) {
-                    App.openNewWindow(LocalStorage.save(model), true);
+                    App.openNewWindow(model);
                 } else {
                     this.model = this.initModel(model);
                 }
@@ -130,9 +130,10 @@ export default class App extends Vue {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static openNewWindow(localStorageKey: string, forceLoadFromLocalStorage: boolean) {
+    private static openNewWindow(model: Model | undefined) {
+        const localStorageKey = model ? LocalStorage.save(model) : LocalStorage.emptyModelLocalStorageKey;
         const urlFirstPart = `${window.location.href}?${LocalStorage.sessionLocalStorageKey}=${localStorageKey}`;
-        const url = `${urlFirstPart}&${LocalStorage.sessionForceLoadFromLocalStorageKey}=${forceLoadFromLocalStorage}`;
+        const url = `${urlFirstPart}&${LocalStorage.sessionForceLoadFromLocalStorageKey}=${!!model}`;
         window.open(url);
     }
 
