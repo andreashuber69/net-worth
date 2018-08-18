@@ -25,22 +25,30 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     public static readonly weightDigits = 3;
     public static readonly finenessDigits = 6;
 
-    public readonly description = new TextInputInfo(
-        "Description", "Describes the items, e.g. 'Coins', 'Bars'.", true, true);
-    public readonly location = new TextInputInfo(
-        "Location", "The location, e.g. 'Safe', 'Safety Deposit Box'.", true, false);
+    public readonly description = new TextInputInfo({
+        label: "Description", hint: "Describes the items, e.g. 'Coins', 'Bars'.", isPresent: true, isRequired: true,
+    });
+    public readonly location = new TextInputInfo({
+        label: "Location", hint: "The location, e.g. 'Safe', 'Safety Deposit Box'.", isPresent: true, isRequired: false,
+    });
     public readonly address = new TextInputInfo();
-    public readonly weight = new TextInputInfo(
-        "Weight", "The weight of a single item, expressed in Unit.", true, true,
-        PreciousMetalAssetInputInfo.weightStep, undefined, PreciousMetalAssetInputInfo.weightStep);
-    public readonly weightUnit = new SelectInputInfo(
-        "Unit", "The unit Weight is expressed in.", true, true, WeightUnit);
-    public readonly fineness = new TextInputInfo(
-        "Fineness", "The precious metal fineness.", true, true,
-        0.5, 1 - PreciousMetalAssetInputInfo.finenessStep, PreciousMetalAssetInputInfo.finenessStep);
+    public readonly weight = new TextInputInfo({
+        label: "Weight", hint: "The weight of a single item, expressed in Unit.", isPresent: true, isRequired: true,
+        min: PreciousMetalAssetInputInfo.weightStep, max: undefined, step: PreciousMetalAssetInputInfo.weightStep,
+    });
+    public readonly weightUnit = new SelectInputInfo({
+        label: "Unit", hint: "The unit Weight is expressed in.", isPresent: true, isRequired: true,
+        enumType: WeightUnit, acceptStringsOnly: false,
+    });
+    public readonly fineness = new TextInputInfo({
+        label: "Fineness", hint: "The precious metal fineness.", isPresent: true, isRequired: true,
+        min: 0.5, max: 1 - PreciousMetalAssetInputInfo.finenessStep, step: PreciousMetalAssetInputInfo.finenessStep,
+    });
     public readonly value = new TextInputInfo();
     public readonly valueCurrency = new SelectInputInfo<typeof Currency>();
-    public readonly quantity = new TextInputInfo("Quantity", "The number of items.", true, true, 0);
+    public readonly quantity = new TextInputInfo({
+        label: "Quantity", hint: "The number of items.", isPresent: true, isRequired: true, min: 0,
+    });
 
     /** @internal */
     public constructor(public readonly type: PreciousMetalAssetType, ctor: IAssetConstructor) {

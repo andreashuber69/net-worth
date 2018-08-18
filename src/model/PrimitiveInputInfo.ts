@@ -14,8 +14,20 @@ import { AssetPropertyName } from "./AssetInterfaces";
 import { InputInfo } from "./InputInfo";
 import { Unknown, Value } from "./Value";
 
+export interface IPrimitiveInputInfo {
+    readonly label: string;
+    readonly hint: string;
+    readonly isPresent: boolean;
+    readonly isRequired: boolean;
+}
+
 /** Defines the base for all classes that provide input information for a primitive value. */
-export abstract class PrimitiveInputInfo extends InputInfo {
+export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitiveInputInfo {
+    public readonly label: string;
+    public readonly hint: string;
+    public readonly isPresent: boolean;
+    public readonly isRequired: boolean;
+
     public get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AssetPropertyName): T {
         if (propertyName !== undefined) {
             throw new Error("The propertyName argument must be undefined for a primitive input.");
@@ -31,10 +43,9 @@ export abstract class PrimitiveInputInfo extends InputInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @internal */
-    protected constructor(
-        public readonly label: string, public readonly hint: string,
-        public readonly isPresent: boolean, public readonly isRequired: boolean) {
+    protected constructor(info: IPrimitiveInputInfo) {
         super();
+        ({ label: this.label, hint: this.hint, isPresent: this.isPresent, isRequired: this.isRequired } = info);
     }
 
     /** @internal */

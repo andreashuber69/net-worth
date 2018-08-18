@@ -38,7 +38,9 @@ export default class AssetEditor extends Vue {
 
     /** Provides the asset type input information. */
     public get typeInputInfo() {
-        return new SelectInputInfo("Type", "", true, true, AssetType);
+        return new SelectInputInfo({
+            label: "Type", hint: "", isPresent: true, isRequired: true, enumType: AssetType, acceptStringsOnly: false,
+        });
     }
 
     /** Provides the currently selected asset type. */

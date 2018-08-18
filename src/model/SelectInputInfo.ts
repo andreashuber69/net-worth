@@ -11,26 +11,31 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Enum, EnumInfo } from "./EnumInfo";
-import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
+import { IPrimitiveInputInfo, PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { Unknown, Value } from "./Value";
 
 export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
     public abstract get items(): string[];
 
     /** @internal */
-    protected constructor(label = "", hint = "", isPresent = false, isRequired = false) {
-        super(label, hint, isPresent, isRequired);
+    protected constructor(info: IPrimitiveInputInfo) {
+        super(info);
     }
+}
+
+export interface ISelectInputInfo<T extends Enum<T>> extends IPrimitiveInputInfo {
+    readonly enumType?: T;
+    readonly acceptStringsOnly: boolean;
 }
 
 /** Provides input information for a property where a valid value needs to be equal to one of a given list of values. */
 // tslint:disable-next-line:max-classes-per-file
 export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     /** @internal */
-    public constructor(
-        label = "", hint = "", isPresent = false, isRequired = false, private readonly enumType?: T,
-        private readonly acceptStringsOnly = false) {
-        super(label, hint, isPresent, isRequired);
+    public constructor(info: ISelectInputInfo<T> =
+        { label: "", hint: "", isPresent: false, isRequired: false, acceptStringsOnly: false }) {
+        super(info);
+        ({ enumType: this.enumType, acceptStringsOnly: this.acceptStringsOnly } = info);
     }
 
     public get items() {
@@ -48,4 +53,9 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
 
         return super.validateContent(strict, input);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private readonly enumType?: T;
+    private readonly acceptStringsOnly: boolean;
 }

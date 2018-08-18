@@ -26,10 +26,14 @@ import { WeightUnit } from "./WeightUnit";
  * a representation of the wallet.
  */
 export class CryptoWalletInputInfo extends AssetInputInfo {
-    public readonly description = new TextInputInfo(
-        "Description", "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.", true, true);
-    public readonly location = new TextInputInfo(
-        "Location", "The location of the wallet, e.g. 'My Mobile', 'Home', 'Safety Deposit Box'.", true, false);
+    public readonly description = new TextInputInfo({
+        label: "Description", hint: "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.",
+        isPresent: true, isRequired: true,
+    });
+    public readonly location = new TextInputInfo({
+        label: "Location", hint: "The location of the wallet, e.g. 'My Mobile', 'Home', 'Safety Deposit Box'.",
+        isPresent: true, isRequired: false,
+    });
     public readonly address: TextInputInfo;
 
     public readonly weight = new TextInputInfo();
@@ -44,7 +48,9 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
         public readonly type: CryptoWalletType, ctor: IAssetConstructor,
         addressHint: string, quantityDecimals?: number) {
         super(ctor);
-        this.address = new TextInputInfo("Address", addressHint, true, !quantityDecimals);
+        this.address = new TextInputInfo({
+            label: "Address", hint: addressHint, isPresent: true, isRequired: !quantityDecimals,
+        });
         this.quantity = CryptoWalletInputInfo.getQuantityInputInfo(quantityDecimals);
     }
 
@@ -64,8 +70,10 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
 
     private static getQuantityInputInfo(quantityDecimals: number | undefined) {
         if (quantityDecimals) {
-            return new TextInputInfo(
-                "Quantity", "The amount in the wallet.", true, false, 0, undefined, Math.pow(10, -quantityDecimals));
+            return new TextInputInfo({
+                label: "Quantity", hint: "The amount in the wallet.", isPresent: true, isRequired: false,
+                min: 0, max: undefined, step: Math.pow(10, -quantityDecimals),
+            });
         } else {
             return new TextInputInfo();
         }
