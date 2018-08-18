@@ -13,10 +13,6 @@
 import { Model } from "./model/Model";
 
 export class LocalStorage {
-    public static readonly emptyModelLocalStorageKey = "0";
-    public static readonly sessionLocalStorageKey = "localStorageKey";
-    public static readonly sessionForceLoadFromLocalStorageKey = "forceLoadFromLocalStorage";
-
     public static load() {
         const localStorageKey = window.sessionStorage.getItem(this.sessionLocalStorageKey);
 
@@ -56,27 +52,53 @@ export class LocalStorage {
     }
 
     public static save(model: Model) {
-        let key: string | undefined = this.emptyModelLocalStorageKey;
-
-        if (model.groups.length > 0) {
-            const json = model.toJsonString();
-
-            // tslint:disable-next-line:no-empty
-            while (!(key = this.trySaveToLocalStorage(json))) {
-            }
-        }
-
-        return key;
+        // Apparently, there's no reliable way to prevent the user from closing a browser window that contains unsaved
+        // changes. Both Chromium and Firefox currently refuse to show a confirmation dialog that is opened in a
+        // "beforeunload" handler and the documentation for the event warns that this could be the case. Therefore, the
+        // only way to prevent the loss of unsaved data is to save our data either continuously or in the "beforeunload"
+        // handler. We could either save through window.localStorage or download to the users hard drive (via the same
+        // mechanism as when the user invokes the "Save..." menu entry). However, the latter is bound to surprise at
+        // least some users and doesn't seem to work on some browsers anyway (e.g. Firefox). Our only remaining option
+        // is to therefore save to local storage.
+        // Obviously, just saving to local storage under one key (e.g. "assets") only works reliably if the user
+        // confines herself to not ever work with the application in more than one browser window. Since we seem to have
+        // no way of preventing or detecting use in multiple browser windows, the storage mechanism must ideally satisfy
+        // the following requirements:
+        // 1. No committed but as of yet unsaved change in any browser window is ever lost if the user closes a tab,
+        //    closes the whole browser or reloads the page at any time.
+        // 2. It must be trivial to regain access to unsaved changes.
+        // It appears that both requirements can be satisfied with the following mechanism:
+        // - Data is always saved to local storage in a "beforeunload" handler under a monotonously increasing key,
+        //   which is then also stored through window.sessionStorage.
+        // - When the page loads, session storage is first checked for a saved key. If one exists, data under said key
+        //   is then loaded from local storage. This ensures that the same data is always displayed
+        //   before and after a page reload. If session storage does not contain a key, data under the largest key is
+        //   loaded from local storage.
+        // - Successfully loaded data is always *deleted* from local storage immediately. This ensures that navigating
+        //   to the application in additional browser windows will never load the same data in more than one browser
+        //   window.
+        // The above should ensure that the application can be used much like a normal desktop application. Even if the
+        // application is used in multiple tabs when the browser is closed, data in said tabs will be reloaded next
+        // time the user navigates to the application in the same number of tabs/windows. This is nicely complemented
+        // by the fact that many browsers have an option to automatically reload all previously open tabs when the
+        // browser is started.
+        // Unfortunately, the beforeunload handler doesn't seem to ever be called on Android when the user closes the
+        // browser, neither on Chrome, Firefox nor Edge. Luckily, at least reload works.
+        window.sessionStorage.setItem(this.sessionLocalStorageKey, this.saveImpl(model));
     }
 
     public static openNewWindow(model: Model | undefined) {
-        const localStorageKey = model ? this.save(model) : this.emptyModelLocalStorageKey;
+        const localStorageKey = model ? this.saveImpl(model) : this.emptyModelLocalStorageKey;
         const urlFirstPart = `${window.location.href}?${this.sessionLocalStorageKey}=${localStorageKey}`;
         const url = `${urlFirstPart}&${this.sessionForceLoadFromLocalStorageKey}=${!!model}`;
         window.open(url);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static readonly emptyModelLocalStorageKey = "0";
+    private static readonly sessionLocalStorageKey = "localStorageKey";
+    private static readonly sessionForceLoadFromLocalStorageKey = "forceLoadFromLocalStorage";
 
     private static parse(json: string | null) {
         const model = json ? Model.parse(json) : undefined;
@@ -104,6 +126,20 @@ export class LocalStorage {
         }
 
         return new Model();
+    }
+
+    private static saveImpl(model: Model) {
+        let key: string | undefined = this.emptyModelLocalStorageKey;
+
+        if (model.groups.length > 0) {
+            const json = model.toJsonString();
+
+            // tslint:disable-next-line:no-empty
+            while (!(key = this.trySaveToLocalStorage(json))) {
+            }
+        }
+
+        return key;
     }
 
     private static trySaveToLocalStorage(json: string) {
