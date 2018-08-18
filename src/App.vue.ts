@@ -49,28 +49,29 @@ export default class App extends Vue {
 
     public async onFileInputChanged(event: Event) {
         const files = (event.target as any).files as FileList;
+        this.fileInput.value = "";
 
-        if (files.length === 1) {
-            const file = files[0];
-            const model = Parser.parse(await App.read(file));
-
-            if (model) {
-                const name = file.name.endsWith(model.fileExtension) ?
-                    file.name.substring(0, file.name.length - model.fileExtension.length) : file.name;
-
-                if (name.length > 0) {
-                    model.name = name;
-                }
-
-                if (this.model.hasUnsavedChanges) {
-                    LocalStorage.openNewWindow(model);
-                } else {
-                    this.model = this.initModel(model);
-                }
-            }
+        if (files.length !== 1) {
+            return;
         }
 
-        this.fileInput.value = "";
+        const file = files[0];
+        const model = Parser.parse(await App.read(file));
+
+        if (model) {
+            const name = file.name.endsWith(model.fileExtension) ?
+                file.name.substring(0, file.name.length - model.fileExtension.length) : file.name;
+
+            if (name.length > 0) {
+                model.name = name;
+            }
+
+            if (this.model.hasUnsavedChanges) {
+                LocalStorage.openNewWindow(model);
+            } else {
+                this.model = this.initModel(model);
+            }
+        }
     }
 
     public async onSaveClicked(event: MouseEvent) {
