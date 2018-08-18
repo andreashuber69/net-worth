@@ -24,7 +24,7 @@ export class EtcWallet extends RealCryptoWallet {
     public readonly type = "Ethereum Classic";
 
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
-        super(parent, properties, "ETC", "ethereum-classic");
+        super(parent, { ...properties, currencySymbol: "ETC", slug: "ethereum-classic" });
     }
 
     public bundle(bundle?: Unknown): AssetBundle {

@@ -30,7 +30,7 @@ export class EthWallet extends RealCryptoWallet {
      * @param properties The crypto wallet properties.
      */
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
-        super(parent, properties, "ETH", "ethereum");
+        super(parent, { ...properties, currencySymbol: "ETH", slug: "ethereum" });
     }
 
     public bundle(bundle?: Unknown): AssetBundle {

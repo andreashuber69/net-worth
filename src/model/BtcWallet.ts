@@ -38,7 +38,7 @@ export class BtcWallet extends RealCryptoWallet {
      * @param properties The crypto wallet properties.
      */
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
-        super(parent, properties, "BTC", "bitcoin");
+        super(parent, { ...properties, currencySymbol: "BTC", slug: "bitcoin" });
     }
 
     public bundle(bundle?: Unknown): AssetBundle {

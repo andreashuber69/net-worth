@@ -24,7 +24,7 @@ export class ZecWallet extends RealCryptoWallet {
     public readonly type = "Zcash";
 
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
-        super(parent, properties, "ZEC", "zcash");
+        super(parent, { ...properties, currencySymbol: "ZEC", slug: "zcash" });
     }
 
     public bundle(bundle?: Unknown): AssetBundle {

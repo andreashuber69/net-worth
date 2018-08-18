@@ -15,6 +15,14 @@ import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 
+export interface IRealCryptoWalletProperties extends ICryptoWalletProperties {
+    /** The crypto currency symbol, e.g. 'BTC', 'LTC'. */
+    readonly currencySymbol: string;
+
+    /** The coinmarketcap.com identifier (aka "website_slug") of the currency. */
+    readonly slug?: string;
+}
+
 /** Defines the base of all classes that represent a real crypto currency wallet. */
 export abstract class RealCryptoWallet extends CryptoWallet {
     public readonly description: string;
@@ -65,21 +73,23 @@ export abstract class RealCryptoWallet extends CryptoWallet {
      * Creates a new [[CryptoWallet]] instance.
      * @param parent The parent model to which this asset belongs.
      * @param properties The crypto wallet properties.
-     * @param currencySymbol The crypto currency symbol, e.g. 'BTC', 'LTC'.
-     * @param slug The coinmarketcap.com identifier (aka "website_slug") of the currency.
      */
-    protected constructor(
-        parent: IModel, properties: ICryptoWalletProperties, currencySymbol = "", private readonly slug?: string) {
-        super(parent, currencySymbol);
+    protected constructor(parent: IModel, properties: IRealCryptoWalletProperties) {
+        super(parent, properties.currencySymbol);
         this.description = properties.description;
         this.location = properties.location || "";
         this.address = properties.address || "";
         this.quantity = properties.quantity;
         this.notes = properties.notes || "";
+        this.slug = properties.slug;
     }
 
     // tslint:disable-next-line:prefer-function-over-method
     protected queryQuantity(): Promise<number | undefined> {
         return Promise.resolve(undefined);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private readonly slug?: string;
 }

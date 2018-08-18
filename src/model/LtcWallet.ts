@@ -26,6 +26,6 @@ export class LtcWallet extends BlockcypherWallet {
      * @param properties The crypto wallet properties.
      */
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
-        super(parent, properties, "LTC", "litecoin");
+        super(parent, { ...properties, currencySymbol: "LTC", slug: "litecoin" });
     }
 }

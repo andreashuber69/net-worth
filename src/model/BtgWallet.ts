@@ -24,7 +24,7 @@ export class BtgWallet extends RealCryptoWallet {
     public readonly type = "Bitcoin Gold";
 
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
-        super(parent, properties, "BTG", "bitcoin-gold");
+        super(parent, { ...properties, currencySymbol: "BTG", slug: "bitcoin-gold" });
     }
 
     public bundle(bundle?: Unknown): AssetBundle {

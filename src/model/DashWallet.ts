@@ -26,6 +26,6 @@ export class DashWallet extends BlockcypherWallet {
      * @param properties The crypto wallet properties.
      */
     public constructor(parent: IModel, properties: ICryptoWalletProperties) {
-        super(parent, properties, "DASH", "dash");
+        super(parent, { ...properties, currencySymbol: "DASH", slug: "dash" });
     }
 }
