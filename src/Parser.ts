@@ -11,10 +11,11 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Model } from "./model/Model";
+import { ModelParser } from "./model/ModelParser";
 
 export class Parser {
     public static parse(json: string | null) {
-        const model = json ? Model.parse(json) : undefined;
+        const model = json ? ModelParser.parse(json) : undefined;
 
         if (model instanceof Model) {
             return model;

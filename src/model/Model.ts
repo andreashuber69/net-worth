@@ -14,11 +14,9 @@ import { Application } from "./Application";
 import { Asset, GroupBy, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { AssetGroup } from "./AssetGroup";
-import { AssetInput } from "./AssetInput";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
-import { Unknown, Value } from "./Value";
 
 export type SortBy =
     typeof Asset.typeName | typeof Asset.descriptionName | typeof Asset.locationName |
@@ -32,7 +30,7 @@ export interface ISort {
     readonly descending: boolean;
 }
 
-interface ISerializedModel {
+export interface ISerializedModel {
     version: number;
     name: string;
     wasSavedToFile: boolean;
@@ -45,91 +43,8 @@ interface ISerializedModel {
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
-    /**
-     * Returns a [[Model]] object that is equivalent to the passed JSON string or returns a string that describes why
-     * the parse process failed.
-     * @description This is typically called with a string that was returned by [[toJsonString]].
-     * @param json The string to parse
-     */
-    public static parse(json: string) {
-        let rawModel: Unknown | null;
-
-        try {
-            rawModel = JSON.parse(json) as Unknown | null;
-        } catch (e) {
-            return (e as Error).message;
-        }
-
-        if (!Value.hasNumberProperty(rawModel, Model.versionName)) {
-            return Value.getPropertyTypeMismatch(Model.versionName, rawModel, 0);
-        }
-
-        const version = rawModel[Model.versionName];
-
-        if (version !== 1) {
-            return Value.getUnknownPropertyValue(Model.versionName, version);
-        }
-
-        const model = new Model();
-
-        if (Value.hasStringProperty(rawModel, Model.nameName)) {
-            const name = rawModel[Model.nameName];
-
-            if (name.length > 0) {
-                model.name = name;
-            }
-        }
-
-        if (Value.hasBooleanProperty(rawModel, Model.wasSavedToFileName)) {
-            model.wasSavedToFile = rawModel[Model.wasSavedToFileName];
-        }
-
-        if (Value.hasBooleanProperty(rawModel, Model.hasUnsavedChangesName)) {
-            model.hasUnsavedChanges = rawModel[Model.hasUnsavedChangesName];
-        }
-
-        if (Value.hasStringProperty(rawModel, Model.currencyName)) {
-            const currency = rawModel[Model.currencyName];
-
-            if (currency in Currency) {
-                model.currency = currency as keyof typeof Currency;
-            }
-        }
-
-        if (Value.hasStringProperty(rawModel, Model.groupByName)) {
-            const groupBy = rawModel[Model.groupByName];
-
-            if (model.isGroupBy(groupBy)) {
-                model.groupBy = groupBy;
-            }
-        }
-
-        if (Value.hasObjectProperty(rawModel, Model.sortName)) {
-            const sort = rawModel[Model.sortName];
-
-            if (Model.isSort(sort)) {
-                model.sort = sort;
-            }
-        }
-
-        if (!Value.hasArrayProperty(rawModel, Model.bundlesName)) {
-            return Value.getPropertyTypeMismatch(Model.bundlesName, rawModel, []);
-        }
-
-        for (const rawBundle of rawModel.bundles) {
-            const bundle = AssetInput.parseBundle(model, rawBundle);
-
-            if (!(bundle instanceof AssetBundle)) {
-                return bundle;
-            }
-
-            model.bundles.push(bundle);
-        }
-
-        model.update(...model.bundles);
-
-        return model;
-    }
+    /** Provides the property names by which the asset list can be grouped. */
+    public static readonly groupBys: GroupBy[] = [ Asset.typeName, Asset.locationName ];
 
     public static isSortBy(sortBy: string | undefined): sortBy is SortBy {
         switch (sortBy) {
@@ -143,6 +58,9 @@ export class Model implements IModel {
                 return false;
         }
     }
+
+    /** @internal */
+    public readonly bundles = new Array<AssetBundle>();
 
     /** Provides the name of the asset collection. */
     public name = "Unnamed";
@@ -191,7 +109,7 @@ export class Model implements IModel {
     }
 
     /** Provides the property names by which the asset list can be grouped. */
-    public readonly groupBys: GroupBy[] = [ Asset.typeName, Asset.locationName ];
+    public readonly groupBys = Model.groupBys;
 
     /** Provides the labels for the properties by which the asset list can be grouped. */
     public get groupByLabels() {
@@ -328,31 +246,12 @@ export class Model implements IModel {
         };
     }
 
+    /** @internal */
+    public update(...newBundles: AssetBundle[]) {
+        this.updateImpl(newBundles).catch((error) => console.error(error));
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static readonly versionName = Model.getModelName("version");
-    private static readonly nameName = Model.getModelName("name");
-    private static readonly wasSavedToFileName = Model.getModelName("wasSavedToFile");
-    private static readonly hasUnsavedChangesName = Model.getModelName("hasUnsavedChanges");
-    private static readonly currencyName = Model.getModelName("currency");
-    private static readonly groupByName = Model.getModelName("groupBy");
-    private static readonly sortName = Model.getModelName("sort");
-    private static readonly sortByName = Model.getSortName("by");
-    private static readonly sortDescendingName = Model.getSortName("descending");
-    private static readonly bundlesName = Model.getModelName("bundles");
-
-    private static getModelName<T extends keyof ISerializedModel>(name: T) {
-        return name;
-    }
-
-    private static getSortName<T extends keyof ISort>(name: T) {
-        return name;
-    }
-
-    private static isSort(sort: Unknown): sort is ISort {
-        return Value.hasStringProperty(sort, Model.sortByName) && this.isSortBy(sort.by) &&
-            Value.hasBooleanProperty(sort, Model.sortDescendingName);
-    }
 
     private static capitalize(str: string) {
         return `${str[0].toUpperCase()}${str.substr(1)}`;
@@ -364,8 +263,6 @@ export class Model implements IModel {
         return id;
     }
 
-    private readonly bundles = new Array<AssetBundle>();
-
     private currencyImpl = this.currencies[0];
 
     private groupByImpl: GroupBy = Asset.typeName;
@@ -373,14 +270,6 @@ export class Model implements IModel {
     private sortImpl: ISort = { by: Asset.totalValueName, descending: true };
 
     private hasUnsavedChangesImpl = false;
-
-    private isGroupBy(groupBy: string): groupBy is GroupBy {
-        return this.groupBys.findIndex((g) => g === groupBy) >= 0;
-    }
-
-    private update(...newBundles: AssetBundle[]) {
-        this.updateImpl(newBundles).catch((error) => console.error(error));
-    }
 
     private async updateImpl(newBundles: AssetBundle[]) {
         this.updateGroups();
