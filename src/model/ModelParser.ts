@@ -44,25 +44,14 @@ export class ModelParser {
         }
 
         const model = new Model();
-        this.parseOptional(rawModel, model);
+        this.parseOptionalProperties(rawModel, model);
+        this.parseOptionalViewProperties(rawModel, model);
 
         if (!Value.hasArrayProperty(rawModel, this.bundlesName)) {
             return Value.getPropertyTypeMismatch(this.bundlesName, rawModel, []);
         }
 
-        for (const rawBundle of rawModel.bundles) {
-            const bundle = AssetInput.parseBundle(model, rawBundle);
-
-            if (!(bundle instanceof AssetBundle)) {
-                return bundle;
-            }
-
-            model.bundles.push(bundle);
-        }
-
-        model.update(...model.bundles);
-
-        return model;
+        return this.parseBundles(rawModel.bundles, model);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,7 +67,7 @@ export class ModelParser {
     private static readonly sortDescendingName = ModelParser.getSortName("descending");
     private static readonly bundlesName = ModelParser.getModelName("bundles");
 
-    private static parseOptional(rawModel: Unknown | null, model: Model) {
+    private static parseOptionalProperties(rawModel: Unknown, model: Model) {
         if (Value.hasStringProperty(rawModel, this.nameName)) {
             const name = rawModel[this.nameName];
 
@@ -94,7 +83,9 @@ export class ModelParser {
         if (Value.hasBooleanProperty(rawModel, this.hasUnsavedChangesName)) {
             model.hasUnsavedChanges = rawModel[this.hasUnsavedChangesName];
         }
+    }
 
+    private static parseOptionalViewProperties(rawModel: Unknown, model: Model) {
         if (Value.hasStringProperty(rawModel, this.currencyName)) {
             const currency = rawModel[this.currencyName];
 
@@ -118,6 +109,22 @@ export class ModelParser {
                 model.sort = sort;
             }
         }
+    }
+
+    private static parseBundles(rawBundles: Array<Unknown | null | undefined>, model: Model) {
+        for (const rawBundle of rawBundles) {
+            const bundle = AssetInput.parseBundle(model, rawBundle);
+
+            if (!(bundle instanceof AssetBundle)) {
+                return bundle;
+            }
+
+            model.bundles.push(bundle);
+        }
+
+        model.update(...model.bundles);
+
+        return model;
     }
 
     private static getModelName<T extends keyof ISerializedModel>(name: T) {
