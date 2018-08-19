@@ -11,19 +11,19 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Enum, EnumInfo } from "./EnumInfo";
-import { IPrimitiveInputInfo, PrimitiveInputInfo } from "./PrimitiveInputInfo";
+import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { Unknown, Value } from "./Value";
 
 export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
     public abstract get items(): string[];
 
     /** @internal */
-    protected constructor(info: IPrimitiveInputInfo) {
+    protected constructor(info: IPrimitiveInputInfoProperties) {
         super(info);
     }
 }
 
-export interface ISelectInputInfo<T extends Enum<T>> extends IPrimitiveInputInfo {
+export interface ISelectInputInfoParameters<T extends Enum<T>> extends IPrimitiveInputInfoProperties {
     readonly enumType?: T;
     readonly acceptStringsOnly: boolean;
 }
@@ -32,7 +32,7 @@ export interface ISelectInputInfo<T extends Enum<T>> extends IPrimitiveInputInfo
 // tslint:disable-next-line:max-classes-per-file
 export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     /** @internal */
-    public constructor(info: ISelectInputInfo<T> =
+    public constructor(info: ISelectInputInfoParameters<T> =
         { label: "", hint: "", isPresent: false, isRequired: false, acceptStringsOnly: false }) {
         super(info);
         ({ enumType: this.enumType, acceptStringsOnly: this.acceptStringsOnly } = info);

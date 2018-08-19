@@ -15,7 +15,7 @@ import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 
-export interface IRealCryptoWalletProperties extends ICryptoWalletProperties {
+export interface IRealCryptoWalletParameters extends ICryptoWalletProperties {
     /** The crypto currency symbol, e.g. 'BTC', 'LTC'. */
     readonly currencySymbol: string;
 
@@ -74,7 +74,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
      * @param parent The parent model to which this asset belongs.
      * @param properties The crypto wallet properties.
      */
-    protected constructor(parent: IModel, properties: IRealCryptoWalletProperties) {
+    protected constructor(parent: IModel, properties: IRealCryptoWalletParameters) {
         super(parent, properties.currencySymbol);
         this.description = properties.description;
         this.location = properties.location || "";

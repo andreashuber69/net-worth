@@ -14,7 +14,7 @@ import { AssetPropertyName } from "./AssetInterfaces";
 import { InputInfo } from "./InputInfo";
 import { Unknown, Value } from "./Value";
 
-export interface IPrimitiveInputInfo {
+export interface IPrimitiveInputInfoProperties {
     readonly label: string;
     readonly hint: string;
     readonly isPresent: boolean;
@@ -22,7 +22,7 @@ export interface IPrimitiveInputInfo {
 }
 
 /** Defines the base for all classes that provide input information for a primitive value. */
-export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitiveInputInfo {
+export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitiveInputInfoProperties {
     public readonly label: string;
     public readonly hint: string;
     public readonly isPresent: boolean;
@@ -43,7 +43,7 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @internal */
-    protected constructor(info: IPrimitiveInputInfo) {
+    protected constructor(info: IPrimitiveInputInfoProperties) {
         super();
         ({ label: this.label, hint: this.hint, isPresent: this.isPresent, isRequired: this.isRequired } = info);
     }

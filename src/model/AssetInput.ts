@@ -71,14 +71,15 @@ export class AssetInput {
         new PreciousMetalAssetInputInfo("Palladium", PalladiumAsset),
         new PreciousMetalAssetInputInfo("Platinum", PlatinumAsset),
         new PreciousMetalAssetInputInfo("Gold", GoldAsset),
-        new CryptoWalletInputInfo("Bitcoin", BtcWallet, btcHint, 8),
-        new CryptoWalletInputInfo("Litecoin", LtcWallet, ltcHint, 8),
-        new CryptoWalletInputInfo("Ethereum Classic", EtcWallet, etcHint, 18),
-        new CryptoWalletInputInfo("ERC20 Tokens", Erc20TokensWallet, erc20Hint),
-        new CryptoWalletInputInfo("Ethereum", EthWallet, ethHint, 18),
-        new CryptoWalletInputInfo("Bitcoin Gold", BtgWallet, btgHint, 8),
-        new CryptoWalletInputInfo("Dash", DashWallet, dashHint, 8),
-        new CryptoWalletInputInfo("Zcash", ZecWallet, zecHint, 8),
+        new CryptoWalletInputInfo({ type: "Bitcoin", ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
+        new CryptoWalletInputInfo({ type: "Litecoin", ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
+        new CryptoWalletInputInfo(
+            { type: "Ethereum Classic", ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
+        new CryptoWalletInputInfo({ type: "ERC20 Tokens", ctor: Erc20TokensWallet, addressHint: erc20Hint }),
+        new CryptoWalletInputInfo({ type: "Ethereum", ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
+        new CryptoWalletInputInfo({ type: "Bitcoin Gold", ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
+        new CryptoWalletInputInfo({ type: "Dash", ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
+        new CryptoWalletInputInfo({ type: "Zcash", ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
         new MiscAssetInputInfo(MiscAsset),
     ];
 

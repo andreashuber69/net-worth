@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IPrimitiveInputInfo, PrimitiveInputInfo } from "./PrimitiveInputInfo";
+import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { Unknown, Value } from "./Value";
 
-export interface ITextInputInfo extends IPrimitiveInputInfo {
+export interface ITextInputInfoProperties extends IPrimitiveInputInfoProperties {
     readonly min?: number;
     readonly max?: number;
     readonly step?: number;
@@ -23,13 +23,13 @@ export interface ITextInputInfo extends IPrimitiveInputInfo {
  * Provides input information for a property where a valid value either needs to be a number with certain constraints
  * (minimum, maximum, step) or text.
  */
-export class TextInputInfo extends PrimitiveInputInfo {
+export class TextInputInfo extends PrimitiveInputInfo implements ITextInputInfoProperties {
     public readonly min?: number;
     public readonly max?: number;
     public readonly step?: number;
 
     /** @internal */
-    public constructor(info: ITextInputInfo = { label: "", hint: "", isPresent: false, isRequired: false }) {
+    public constructor(info: ITextInputInfoProperties = { label: "", hint: "", isPresent: false, isRequired: false }) {
         super(info);
         ({ min: this.min, max: this.max, step: this.step } = info);
     }

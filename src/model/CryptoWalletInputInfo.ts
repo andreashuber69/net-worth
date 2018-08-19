@@ -21,11 +21,19 @@ import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Value";
 import { WeightUnit } from "./WeightUnit";
 
+export interface ICryptoWalletInputInfoParameters {
+    readonly type: CryptoWalletType;
+    readonly ctor: IAssetConstructor;
+    readonly addressHint: string;
+    readonly quantityDecimals?: number;
+}
+
 /**
  * Defines how the properties of a crypto currency wallet need to be input and validated and provides a method to create
  * a representation of the wallet.
  */
 export class CryptoWalletInputInfo extends AssetInputInfo {
+    public readonly type: CryptoWalletType;
     public readonly description = new TextInputInfo({
         label: "Description", hint: "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.",
         isPresent: true, isRequired: true,
@@ -44,14 +52,15 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly quantity: TextInputInfo;
 
     /** @internal */
-    public constructor(
-        public readonly type: CryptoWalletType, ctor: IAssetConstructor,
-        addressHint: string, quantityDecimals?: number) {
-        super(ctor);
+    public constructor(info: ICryptoWalletInputInfoParameters) {
+        super(info.ctor);
+        this.type = info.type;
+
         this.address = new TextInputInfo({
-            label: "Address", hint: addressHint, isPresent: true, isRequired: !quantityDecimals,
+            label: "Address", hint: info.addressHint, isPresent: true, isRequired: !info.quantityDecimals,
         });
-        this.quantity = CryptoWalletInputInfo.getQuantityInputInfo(quantityDecimals);
+
+        this.quantity = CryptoWalletInputInfo.getQuantityInputInfo(info.quantityDecimals);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

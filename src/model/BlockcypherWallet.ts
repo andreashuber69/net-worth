@@ -14,7 +14,7 @@ import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { BlockcypherRequest } from "./BlockcypherRequest";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IRealCryptoWalletProperties, RealCryptoWallet } from "./RealCryptoWallet";
+import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Value";
 
 /** Represents a wallet the balance of which is requested from blockcypher.com. */
@@ -25,7 +25,7 @@ export abstract class BlockcypherWallet extends RealCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected constructor(parent: IModel, properties: IRealCryptoWalletProperties) {
+    protected constructor(parent: IModel, properties: IRealCryptoWalletParameters) {
         super(parent, properties);
     }
 
