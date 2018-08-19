@@ -52,15 +52,15 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly quantity: TextInputInfo;
 
     /** @internal */
-    public constructor(info: ICryptoWalletInputInfoParameters) {
-        super(info.ctor);
-        this.type = info.type;
+    public constructor(params: ICryptoWalletInputInfoParameters) {
+        super(params.ctor);
+        this.type = params.type;
 
         this.address = new TextInputInfo({
-            label: "Address", hint: info.addressHint, isPresent: true, isRequired: !info.quantityDecimals,
+            label: "Address", hint: params.addressHint, isPresent: true, isRequired: !params.quantityDecimals,
         });
 
-        this.quantity = CryptoWalletInputInfo.getQuantityInputInfo(info.quantityDecimals);
+        this.quantity = CryptoWalletInputInfo.getQuantityInputInfo(params.quantityDecimals);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

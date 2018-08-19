@@ -31,9 +31,9 @@ export class TextInputInfo extends PrimitiveInputInfo implements ITextInputInfoP
     public readonly step?: number;
 
     /** @internal */
-    public constructor(info: ITextInputInfoProperties = { label: "", hint: "", isPresent: false, isRequired: false }) {
-        super(info);
-        ({ min: this.min, max: this.max, step: this.step } = info);
+    public constructor(props: ITextInputInfoProperties = { label: "", hint: "", isPresent: false, isRequired: false }) {
+        super(props);
+        ({ min: this.min, max: this.max, step: this.step } = props);
     }
 
     public get type() {

@@ -25,6 +25,13 @@ interface ISerializedErc20TokensBundle extends ISerializedBundle {
     deletedAssets: string[];
 }
 
+interface ITokenWalletParameters {
+    readonly editable: Erc20TokensWallet;
+    readonly currencySymbol: string;
+    readonly quantity: number;
+    readonly unitValueUsd: number | undefined;
+}
+
 /** Represents a wallet for ERC20 tokens. */
 export class Erc20TokensWallet extends RealCryptoWallet {
     public readonly type: keyof typeof AssetType = "ERC20 Tokens";
@@ -76,18 +83,21 @@ export class Erc20TokensWallet extends RealCryptoWallet {
         }
 
         /** @internal */
-        public constructor(
-            private readonly editable: Erc20TokensWallet,
-            currencySymbol: string, quantity: number, unitValueUsd: number | undefined) {
-            super(editable.parent, currencySymbol);
-            this.quantity = quantity;
-            this.unitValueUsd = unitValueUsd;
+        public constructor(params: ITokenWalletParameters) {
+            super(params.editable.parent, params.currencySymbol);
+            this.editable = params.editable;
+            this.quantity = params.quantity;
+            this.unitValueUsd = params.unitValueUsd;
         }
 
         // tslint:disable-next-line:prefer-function-over-method
         public toJSON(): ISerializedAsset {
             throw new Error(`${NestedTokenWallet.name} cannot be serialized.`);
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private readonly editable: Erc20TokensWallet;
     };
 
     // tslint:disable-next-line:max-classes-per-file variable-name
@@ -157,21 +167,27 @@ export class Erc20TokensWallet extends RealCryptoWallet {
 
         private readonly deletedAssets: string[] = [];
 
+        // The high abc is probably a result of the many conditions paired with short-circuit logic in the second if
+        // statement. Breaking this up would not improve readability.
+        // codebeat:disable[ABC]
         private addTokenWallet(token: Unknown | null | undefined) {
-            if (!Value.hasObjectProperty(token, "tokenInfo") || !Value.hasNumberProperty(token, "balance")) {
+            if (!Value.hasObjectProperty(token, "tokenInfo")) {
                 return;
             }
 
             const info = token.tokenInfo;
 
-            if (Value.hasStringProperty(info, "symbol") &&
+            if (Value.hasStringProperty(info, "symbol") && Value.hasNumberProperty(token, "balance") &&
                 (Value.hasNumberProperty(info, "decimals") || Value.hasStringProperty(info, "decimals")) &&
                 (this.deletedAssets.indexOf(info.symbol) < 0) && (token.balance > 0)) {
-                this.assets.push(new Erc20TokensWallet.TokenWallet(
-                    this.erc20Wallet, info.symbol,
-                    token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
-                    NestedBundle.getPrice(info)));
+                this.assets.push(new Erc20TokensWallet.TokenWallet({
+                    editable: this.erc20Wallet,
+                    currencySymbol: info.symbol,
+                    quantity: token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
+                    unitValueUsd: NestedBundle.getPrice(info),
+                }));
             }
         }
+        // codebeat:enable[ABC]
     };
 }

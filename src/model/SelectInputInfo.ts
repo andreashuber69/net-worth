@@ -20,8 +20,8 @@ export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
     public abstract get items(): string[];
 
     /** @internal */
-    protected constructor(info: IPrimitiveInputInfoProperties) {
-        super(info);
+    protected constructor(props: IPrimitiveInputInfoProperties) {
+        super(props);
     }
 }
 
@@ -34,10 +34,10 @@ export interface ISelectInputInfoParameters<T extends Enum<T>> extends IPrimitiv
 // tslint:disable-next-line:max-classes-per-file
 export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     /** @internal */
-    public constructor(info: ISelectInputInfoParameters<T> =
+    public constructor(params: ISelectInputInfoParameters<T> =
         { label: "", hint: "", isPresent: false, isRequired: false, acceptStringsOnly: false }) {
-        super(info);
-        ({ enumType: this.enumType, acceptStringsOnly: this.acceptStringsOnly } = info);
+        super(params);
+        ({ enumType: this.enumType, acceptStringsOnly: this.acceptStringsOnly } = params);
     }
 
     public get items() {

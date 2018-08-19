@@ -44,9 +44,9 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @internal */
-    protected constructor(info: IPrimitiveInputInfoProperties) {
+    protected constructor(props: IPrimitiveInputInfoProperties) {
         super();
-        ({ label: this.label, hint: this.hint, isPresent: this.isPresent, isRequired: this.isRequired } = info);
+        ({ label: this.label, hint: this.hint, isPresent: this.isPresent, isRequired: this.isRequired } = props);
     }
 
     /** @internal */
