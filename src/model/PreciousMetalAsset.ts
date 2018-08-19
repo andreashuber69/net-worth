@@ -18,7 +18,7 @@ import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IPreciousMetalAsset, IPreciousMetalAssetProperties, preciousMetalSuperType } from "./IPreciousMetalAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
-import { Unknown } from "./Value";
+import { Unknown } from "./Unknown";
 import { WeightUnit } from "./WeightUnit";
 
 /** Defines the base of all classes that represent a precious metal asset. */

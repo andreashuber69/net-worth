@@ -19,7 +19,7 @@ import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IMiscAsset, IMiscAssetProperties, miscSuperType } from "./IMiscAsset";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
-import { Unknown } from "./Value";
+import { Unknown } from "./Unknown";
 
 /** Represents a miscellaneous asset. */
 export class MiscAsset extends Asset implements IMiscAsset {

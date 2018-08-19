@@ -18,7 +18,8 @@ import { CryptoWallet } from "./CryptoWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";
-import { Unknown, Value } from "./Value";
+import { Unknown } from "./Unknown";
+import { Value } from "./Value";
 
 interface ISerializedErc20TokensBundle extends ISerializedBundle {
     deletedAssets: string[];

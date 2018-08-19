@@ -11,7 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
-import { Unknown, Value } from "./Value";
+import { Unknown } from "./Unknown";
+import { Value } from "./Value";
 
 export interface ITextInputInfoProperties extends IPrimitiveInputInfoProperties {
     readonly min?: number;

@@ -17,7 +17,8 @@ import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";
-import { Unknown, Value } from "./Value";
+import { Unknown } from "./Unknown";
+import { Value } from "./Value";
 
 /** Represents a BTG wallet. */
 export class BtgWallet extends RealCryptoWallet {

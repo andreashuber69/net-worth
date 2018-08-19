@@ -29,7 +29,8 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
-import { Unknown, Value } from "./Value";
+import { Unknown } from "./Unknown";
+import { Value } from "./Value";
 import { ZecWallet } from "./ZecWallet";
 
 const btcHint =

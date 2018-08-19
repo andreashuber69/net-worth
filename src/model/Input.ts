@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetPropertyName } from "./AssetInterfaces";
-import { Unknown } from "./Value";
+import { Unknown } from "./Unknown";
 
 export type CompositeInput = { [K in AssetPropertyName]?: Unknown | null };
 export type Input = CompositeInput | Unknown | null | undefined;

@@ -18,7 +18,7 @@ import { Currency } from "./Currency";
 import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { Unknown } from "./Value";
+import { Unknown } from "./Unknown";
 import { WeightUnit } from "./WeightUnit";
 
 export interface ICryptoWalletInputInfoParameters {

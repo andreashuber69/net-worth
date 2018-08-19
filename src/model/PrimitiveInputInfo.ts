@@ -12,7 +12,8 @@
 
 import { AssetPropertyName } from "./AssetInterfaces";
 import { InputInfo } from "./InputInfo";
-import { Unknown, Value } from "./Value";
+import { Unknown } from "./Unknown";
+import { Value } from "./Value";
 
 export interface IPrimitiveInputInfoProperties {
     readonly label: string;

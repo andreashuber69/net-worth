@@ -12,7 +12,8 @@
 
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
-import { Unknown, Value } from "./Value";
+import { Unknown } from "./Unknown";
+import { Value } from "./Value";
 
 /** Represents a single quandl.com request. */
 export class QuandlRequest implements IWebRequest<number> {

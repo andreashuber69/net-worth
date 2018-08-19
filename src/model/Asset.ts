@@ -16,7 +16,7 @@ import {
 } from "./AssetInterfaces";
 
 import { AssetType } from "./AssetTypes";
-import { Unknown } from "./Value";
+import { Unknown } from "./Unknown";
 
 /** @internal */
 export interface IModel {

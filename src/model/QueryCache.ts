@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Unknown } from "./Value";
+import { Unknown } from "./Unknown";
 
 /** @internal */
 export class QueryCache {

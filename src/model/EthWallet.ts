@@ -16,7 +16,8 @@ import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";
-import { Unknown, Value } from "./Value";
+import { Unknown } from "./Unknown";
+import { Value } from "./Value";
 
 /** Represents an ETH wallet. */
 export class EthWallet extends RealCryptoWallet {
@@ -40,8 +41,10 @@ export class EthWallet extends RealCryptoWallet {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected async queryQuantity() {
-        return EthWallet.getQuantity(
-            await QueryCache.fetch(`https://api.ethplorer.io/getAddressInfo/${this.address}?apiKey=dvoio1769GSrYx63`));
+        const response =
+            await QueryCache.fetch(`https://api.ethplorer.io/getAddressInfo/${this.address}?apiKey=dvoio1769GSrYx63`);
+
+        return EthWallet.getQuantity(response);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

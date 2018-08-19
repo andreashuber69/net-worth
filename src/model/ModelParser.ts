@@ -15,7 +15,8 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetInput } from "./AssetInput";
 import { Currency } from "./Currency";
 import { ISerializedModel, ISort, Model } from "./Model";
-import { Unknown, Value } from "./Value";
+import { Unknown } from "./Unknown";
+import { Value } from "./Value";
 
 export class ModelParser {
     /**

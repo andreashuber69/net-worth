@@ -15,7 +15,7 @@ import { AssetBundle } from "./AssetBundle";
 import { BlockcypherRequest } from "./BlockcypherRequest";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
-import { Unknown } from "./Value";
+import { Unknown } from "./Unknown";
 
 /** Represents a wallet the balance of which is requested from blockcypher.com. */
 export abstract class BlockcypherWallet extends RealCryptoWallet {
