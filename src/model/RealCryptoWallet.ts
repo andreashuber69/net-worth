@@ -49,7 +49,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         if (this.address) {
             const quantityToAdd = await this.queryQuantity();
 
-            if (quantityToAdd) {
+            if (quantityToAdd !== undefined) {
                 this.quantity = (this.quantity === undefined ? 0 : this.quantity) + quantityToAdd;
             }
         }
