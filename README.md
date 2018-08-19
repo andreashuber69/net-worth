@@ -91,3 +91,30 @@ your questions, report problems or suggest improvements. Thank you!
 The source code and full change history is available at <https://github.com/andreashuber69/net-worth>. Map files are
 deployed with the production code, so you can also review the code with the browser developer tools while your browser
 is directed to <https://andreashuber69.github.io/net-worth>.
+
+## Rationale
+
+Net Worth was created because no other freely available site/tool seemed to support both precious metals and crypto
+currencies and I was fed up with maintaining an increasingly complex set of Excel sheets.
+
+Net Worth is a so-called Progressive Web Application (PWA). PWAs can be used exactly like conventional web applications
+but at the same time are automatically cached locally such that they still load in seconds if the network is slow or even
+down. On an increasing number of browsers, especially on mobile platforms, PWAs can now also be added to the home screen
+such that they look and feel much like a locally installed app.
+
+The PWA model was chosen due to the following advantages over conventional desktop applications:
+
+- PWAs work on most popular platforms/browsers.
+- No installation is required, just surf to <https://andreashuber69.github.io/net-worth> and let your browser handle the
+  rest.
+- Distribution is straight-forward.
+
+Of course, there are also some (minor) disadvantages:
+
+- It is impossible to overwrite a local file from within a browser without user involvement. The **Save** menu item
+  will therefore always create a new file rather than overwrite the originally loaded one. Since browsers typically
+  store files in a special Download folder, the user usually needs to manually copy the newly saved file over the one
+  she loaded. For an application like Net Worth this should not result in too much of an inconvenience, because files
+  are typically changed rarely.
+- If a web site attempts to open a new browser window, pop-up blockers sometimes get in the way. Most browsers allow the
+  user to authorize exceptions.
