@@ -40,7 +40,7 @@ export class ColumnInfo {
 
         this.addHidden(result, columnName, groupBy, optionalColumnCount);
         this.addAlignment(result, columnName);
-        this.addPadding(result, columnName, groupBy, otherGroupBys);
+        result.push(...this.getPadding(columnName, groupBy, otherGroupBys));
         this.addTotal(result, columnName);
 
         if (result.length === 0) {
@@ -122,19 +122,18 @@ export class ColumnInfo {
         }
     }
 
-    private static addPadding(
-        result: string[], columnName: string | undefined, groupBy: string, otherGroupBys: GroupBy[]) {
+    // Obviously the metrics could be improved by breaking the method into multiple parts but doing so would make the
+    // code less readable.
+    private static getPadding(columnName: string | undefined, groupBy: string, otherGroupBys: GroupBy[]) {
         const columnPadding = 3;
         const leftClass = `pl-${columnPadding}`;
         const rightClass = `pr-${columnPadding}`;
 
         switch (columnName) {
             case this.expandName:
-                result.push(leftClass, "pr-2");
-                break;
+                return [ leftClass, "pr-2" ];
             case groupBy:
-                result.push("pl-0", rightClass);
-                break;
+                return [ "pl-0", rightClass ];
             case otherGroupBys[0]:
             case Asset.descriptionName:
             case Asset.unitName:
@@ -143,29 +142,25 @@ export class ColumnInfo {
             case Asset.quantityName:
             case Asset.totalValueName:
             case this.grandTotalLabelName:
-                result.push(leftClass, rightClass);
-                break;
+                return [ leftClass, rightClass ];
             case Asset.percentName:
             case this.finenessIntegerName:
             case this.unitValueIntegerName:
             case this.quantityIntegerName:
             case this.totalValueIntegerName:
             case this.percentIntegerName:
-                result.push(leftClass, "pr-0");
-                break;
+                return [ leftClass, "pr-0" ];
             case this.finenessFractionName:
             case this.unitValueFractionName:
             case this.quantityFractionName:
             case this.totalValueFractionName:
-                result.push("pl-0", rightClass);
-                break;
+                return [ "pl-0", rightClass ];
             case this.percentFractionName:
-                result.push("pl-0", "pr-0");
-                break;
+                return [ "pl-0", "pr-0" ];
             case this.moreName:
-                result.push("pl-1", rightClass);
-                break;
+                return [ "pl-1", rightClass ];
             default:
+                return [];
         }
     }
 
