@@ -75,18 +75,21 @@ export class BtcWallet extends RealCryptoWallet {
 
             for (const address in response) {
                 if (response.hasOwnProperty(address)) {
-                    const balance = response[address];
-
-                    if (Value.hasNumberProperty(balance, "final_balance") &&
-                        Value.hasNumberProperty(balance, "n_tx")) {
-                        result.transactionCount += balance.n_tx;
-                        result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) +
-                            balance.final_balance / 1E8;
-                    }
+                    this.addBalance(response[address], result);
                 }
             }
 
             return result;
+        }
+
+        private static addBalance(
+            balance: Unknown | null | undefined, result: { finalBalance: number; transactionCount: number }) {
+            if (Value.hasNumberProperty(balance, "final_balance") &&
+                Value.hasNumberProperty(balance, "n_tx")) {
+                result.transactionCount += balance.n_tx;
+                result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) +
+                    balance.final_balance / 1E8;
+            }
         }
 
         private readonly addresses: string;
