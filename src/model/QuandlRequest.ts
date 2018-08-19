@@ -39,16 +39,18 @@ export class QuandlRequest implements IWebRequest<number> {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getPrice(response: Unknown | null) {
-        if (Value.hasObjectProperty(response, "dataset") &&
-            Value.hasArrayProperty(response.dataset, "data") && response.dataset.data.length >= 1) {
-            const array = response.dataset.data[0];
+        if (!Value.hasObjectProperty(response, "dataset") ||
+            !Value.hasArrayProperty(response.dataset, "data") || response.dataset.data.length < 1) {
+            return Number.NaN;
+        }
 
-            if (Value.isArray(array) && (array.length >= 2)) {
-                const result = array[1];
+        const array = response.dataset.data[0];
 
-                if (Value.isNumber(result)) {
-                    return result;
-                }
+        if (Value.isArray(array) && (array.length >= 2)) {
+            const result = array[1];
+
+            if (Value.isNumber(result)) {
+                return result;
             }
         }
 
