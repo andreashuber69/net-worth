@@ -65,6 +65,31 @@ export class TextInputInfo extends PrimitiveInputInfo implements ITextInputInfoP
             }
         }
 
+        const valueResult = this.validateValue(input);
+
+        if (valueResult !== true) {
+            return valueResult;
+        }
+
+        return super.validateContent(strict, input);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static format(value: number, epsilonFactor: number = 1) {
+        return value.toLocaleString(
+            undefined, { maximumFractionDigits: Math.floor(-Math.log10(this.getMaxError(value, epsilonFactor))) });
+    }
+
+    private static getMaxError(value: number, epsilonFactor: number = 1) {
+        return Math.max(Math.abs(value) * epsilonFactor, 1) * Number.EPSILON;
+    }
+
+    private get isNumber() {
+        return (this.min !== undefined) || (this.max !== undefined) || (this.step !== undefined);
+    }
+
+    private validateValue(input: string | number) {
         if (this.isNumber) {
             const numericValue = Value.isNumber(input) ? input : Number.parseFloat(input);
 
@@ -92,21 +117,6 @@ export class TextInputInfo extends PrimitiveInputInfo implements ITextInputInfoP
             }
         }
 
-        return super.validateContent(strict, input);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private get isNumber() {
-        return (this.min !== undefined) || (this.max !== undefined) || (this.step !== undefined);
-    }
-
-    private static format(value: number, epsilonFactor: number = 1) {
-        return value.toLocaleString(
-            undefined, { maximumFractionDigits: Math.floor(-Math.log10(this.getMaxError(value, epsilonFactor))) });
-    }
-
-    private static getMaxError(value: number, epsilonFactor: number = 1) {
-        return Math.max(Math.abs(value) * epsilonFactor, 1) * Number.EPSILON;
+        return true;
     }
 }
