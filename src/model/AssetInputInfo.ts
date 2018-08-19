@@ -22,7 +22,6 @@ import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Unknown";
-import { Value } from "./Value";
 import { WeightUnit } from "./WeightUnit";
 
 interface IValidationResults extends IAuxProperties<true | string> {
