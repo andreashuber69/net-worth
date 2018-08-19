@@ -50,6 +50,9 @@ export class TextInputInfo extends PrimitiveInputInfo implements ITextInputInfoP
      *   non-English locale would get mixed languages in the UI.
      * - We want to use exactly the same rules to validate file content.
      */
+    // Breaking this one up is harder than it might look, because the validateValue call depends on the type
+    // discrimination above it.
+    // codebeat:disable[ABC,BLOCK_NESTING]
     protected validateContent(strict: boolean, input: Unknown) {
         if (strict) {
             if (this.isNumber) {
@@ -75,6 +78,7 @@ export class TextInputInfo extends PrimitiveInputInfo implements ITextInputInfoP
 
         return super.validateContent(strict, input);
     }
+    // codebeat:enable[ABC,BLOCK_NESTING]
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
