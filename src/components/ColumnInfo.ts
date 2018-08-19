@@ -36,12 +36,12 @@ export class ColumnInfo {
     /** @internal */
     public static getClass(
         columnName: ColumnName, groupBy: GroupBy, otherGroupBys: GroupBy[], optionalColumnCount: number) {
-        const result = new Array<string>();
-
-        this.addHidden(result, columnName, groupBy, optionalColumnCount);
-        this.addAlignment(result, columnName);
-        result.push(...this.getPadding(columnName, groupBy, otherGroupBys));
-        this.addTotal(result, columnName);
+        const result = new Array<string>(
+            ...this.getHidden(columnName, groupBy, optionalColumnCount),
+            ...this.getAlignment(columnName),
+            ...this.getPadding(columnName, groupBy, otherGroupBys),
+            ...this.getTotal(columnName),
+        );
 
         if (result.length === 0) {
             throw new Error(`Unknown column: ${columnName}`);
@@ -109,7 +109,7 @@ export class ColumnInfo {
         return result;
     }
 
-    private static addHidden(result: string[], columnName: ColumnName, groupBy: GroupBy, optionalColumnCount: number) {
+    private static getHidden(columnName: ColumnName, groupBy: GroupBy, optionalColumnCount: number) {
         const allColumns = this.allColumns.get(groupBy);
 
         if (!allColumns) {
@@ -118,8 +118,10 @@ export class ColumnInfo {
 
         if (allColumns.indexOf(columnName) >= this.allColumnCounts[optionalColumnCount]) {
             // TODO: Can't this be done with one class?
-            result.push("hidden-sm-and-up", "hidden-xs-only");
+            return [ "hidden-sm-and-up", "hidden-xs-only" ];
         }
+
+        return [];
     }
 
     // Obviously the metrics could be improved by breaking the method into multiple parts but doing so would make the
@@ -166,7 +168,10 @@ export class ColumnInfo {
     }
     // codebeat:enable[ABC,CYCLO,LOC]
 
-    private static addAlignment(result: string[], columnName: string | undefined) {
+    // Obviously the metrics could be improved by breaking the method into multiple parts but doing so would make the
+    // code less readable.
+    // codebeat:disable[ABC,CYCLO]
+    private static getAlignment(columnName: string | undefined) {
         switch (columnName) {
             case Asset.typeName:
             case Asset.descriptionName:
@@ -178,20 +183,20 @@ export class ColumnInfo {
             case this.totalValueFractionName:
             case this.percentFractionName:
             case this.grandTotalLabelName:
-                result.push("text-xs-left");
-                break;
+                return [ "text-xs-left" ];
             case this.finenessIntegerName:
             case this.unitValueIntegerName:
             case this.quantityIntegerName:
             case this.totalValueIntegerName:
             case this.percentIntegerName:
-                result.push("text-xs-right");
-                break;
+                return [ "text-xs-right" ];
             default:
+                return [];
         }
     }
+    // codebeat:enable[ABC,CYCLO]
 
-    private static addTotal(result: string[], columnName: string | undefined) {
+    private static getTotal(columnName: string | undefined) {
         switch (columnName) {
             case Asset.totalValueName:
             case this.totalValueIntegerName:
@@ -200,9 +205,9 @@ export class ColumnInfo {
             case this.percentIntegerName:
             case this.percentFractionName:
             case this.grandTotalLabelName:
-                result.push("total");
-                break;
+                return [ "total" ];
             default:
+                return [];
         }
     }
 }
