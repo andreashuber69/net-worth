@@ -26,6 +26,7 @@ import { LtcWallet } from "./LtcWallet";
 import { MiscAsset } from "./MiscAsset";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { PalladiumAsset } from "./PalladiumAsset";
+import { ParseError } from "./ParseError";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
@@ -87,7 +88,7 @@ export class AssetInput {
     /** @internal */
     public static parseBundle(model: IModel, rawBundle: Unknown | null | undefined) {
         if (!Value.hasObjectProperty(rawBundle, AssetBundle.primaryAssetName)) {
-            return Value.getPropertyTypeMismatch(AssetBundle.primaryAssetName, rawBundle, {});
+            return ParseError.getPropertyTypeMismatch(AssetBundle.primaryAssetName, rawBundle, {});
         }
 
         const asset = this.parseAsset(model, rawBundle[AssetBundle.primaryAssetName]);
@@ -103,13 +104,13 @@ export class AssetInput {
 
     private static parseAsset(model: IModel, rawAsset: Unknown | null | undefined) {
         if (!Value.hasStringProperty(rawAsset, Asset.typeName)) {
-            return Value.getPropertyTypeMismatch(Asset.typeName, rawAsset, "");
+            return ParseError.getPropertyTypeMismatch(Asset.typeName, rawAsset, "");
         }
 
         const assetInfo = this.infos.find((info) => info.type === rawAsset.type);
 
         if (!assetInfo) {
-            return Value.getUnknownPropertyValue(Asset.typeName, rawAsset.type);
+            return ParseError.getUnknownPropertyValue(Asset.typeName, rawAsset.type);
         }
 
         const validationResult = assetInfo.validateAll(rawAsset);

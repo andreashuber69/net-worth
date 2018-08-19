@@ -17,6 +17,7 @@ import { Currency } from "./Currency";
 import { IAuxProperties } from "./IAuxProperties";
 import { CompositeInput, InputUtility } from "./Input";
 import { InputInfo } from "./InputInfo";
+import { ParseError } from "./ParseError";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
@@ -89,7 +90,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
 
     public validateAll(input: Unknown) {
         if (!InputUtility.isComposite(input)) {
-            return Value.getTypeMismatch(input, {});
+            return ParseError.getTypeMismatch(input, {});
         }
 
         this.includeRelations = true;

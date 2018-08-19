@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Enum, EnumInfo } from "./EnumInfo";
+import { ParseError } from "./ParseError";
 import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
@@ -48,7 +49,7 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     protected validateContent(strict: boolean, input: Unknown) {
         if (this.enumType) {
             if (!(input in this.enumType) || (this.acceptStringsOnly && (typeof input !== "string"))) {
-                return Value.getUnknownValue(input);
+                return ParseError.getUnknownValue(input);
             }
         }
 

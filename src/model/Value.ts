@@ -92,54 +92,10 @@ export class Value {
         return this.hasProperty(value, propertyName) && this.isArray(value[propertyName]);
     }
 
-    /** @internal */
-    public static getPropertyTypeMismatch(
-        propertyName: string, actual: Unknown | null | undefined, ...expected: Array<Unknown | null | undefined>) {
-        if (this.isObject(actual)) {
-            return this.addPropertyName(propertyName, this.getTypeMismatch(actual[propertyName], ...expected));
-        } else {
-            return this.getTypeMismatch(actual, {});
-        }
-    }
-
-    /** @internal */
-    public static getTypeMismatch(
-        actual: Unknown | null | undefined, ...expected: Array<Unknown | null | undefined>) {
-        const actualType = Value.getTypeName(actual);
-        const expectedTypes = expected.reduce<string>(
-            (p, c) => p === "" ? this.getTypeName(c) : `${p} or ${this.getTypeName(c)}`, "");
-
-        return `The type of the value (${actualType}) does not match the expected type(s) ${expectedTypes}.`;
-    }
-
-    /** @internal */
-    public static getUnknownPropertyValue(propertyName: string, value: Unknown | null | undefined) {
-        return this.addPropertyName(propertyName, this.getUnknownValue(value));
-    }
-
-    /** @internal */
-    public static getUnknownValue(value: Unknown | null | undefined) {
-        return `The value '${typeof value === "symbol" ? "symbol" : value}' does not match any of the possible values.`;
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static hasProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: Unknown | null | undefined } {
         return this.isObject(value) && value.hasOwnProperty(propertyName);
-    }
-
-    private static addPropertyName(propertyName: string, rest: string) {
-        return `'${propertyName}': ${rest}`;
-    }
-
-    private static getTypeName(value: any) {
-        if (value === null) {
-            return "null";
-        }
-
-        const type = typeof value;
-
-        return type === "object" ? (Array.isArray(value) ? "Array" : "Object") : type;
     }
 }

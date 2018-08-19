@@ -15,6 +15,7 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetInput } from "./AssetInput";
 import { Currency } from "./Currency";
 import { ISerializedModel, ISort, Model } from "./Model";
+import { ParseError } from "./ParseError";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
 
@@ -35,13 +36,13 @@ export class ModelParser {
         }
 
         if (!Value.hasNumberProperty(rawModel, this.versionName)) {
-            return Value.getPropertyTypeMismatch(this.versionName, rawModel, 0);
+            return ParseError.getPropertyTypeMismatch(this.versionName, rawModel, 0);
         }
 
         const version = rawModel[this.versionName];
 
         if (version !== 1) {
-            return Value.getUnknownPropertyValue(this.versionName, version);
+            return ParseError.getUnknownPropertyValue(this.versionName, version);
         }
 
         const model = new Model();
@@ -49,7 +50,7 @@ export class ModelParser {
         this.parseOptionalViewProperties(rawModel, model);
 
         if (!Value.hasArrayProperty(rawModel, this.bundlesName)) {
-            return Value.getPropertyTypeMismatch(this.bundlesName, rawModel, []);
+            return ParseError.getPropertyTypeMismatch(this.bundlesName, rawModel, []);
         }
 
         return this.parseBundles(rawModel.bundles, model);

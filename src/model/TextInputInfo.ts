@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { ParseError } from "./ParseError";
 import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
@@ -53,16 +54,16 @@ export class TextInputInfo extends PrimitiveInputInfo implements ITextInputInfoP
         if (strict) {
             if (this.isNumber) {
                 if (!Value.isNumber(input)) {
-                    return Value.getTypeMismatch(input, 0);
+                    return ParseError.getTypeMismatch(input, 0);
                 }
             } else {
                 if (!Value.isString(input)) {
-                    return Value.getTypeMismatch(input, "");
+                    return ParseError.getTypeMismatch(input, "");
                 }
             }
         } else {
             if (!Value.isNumber(input) && !Value.isString(input)) {
-                return Value.getTypeMismatch(input, 0, "");
+                return ParseError.getTypeMismatch(input, 0, "");
             }
         }
 
