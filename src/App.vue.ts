@@ -48,31 +48,11 @@ export default class App extends Vue {
     }
 
     public async onFileInputChanged(event: Event) {
-        const files = (event.target as any).files as FileList;
-
-        if (files.length !== 1) {
-            return;
+        try {
+            await this.onFileInputChangedImpl((event.target as any).files as FileList);
+        } finally {
+            this.fileInput.value = "";
         }
-
-        const file = files[0];
-        const model = Parser.parse(await App.read(file));
-
-        if (model) {
-            const name = file.name.endsWith(model.fileExtension) ?
-                file.name.substring(0, file.name.length - model.fileExtension.length) : file.name;
-
-            if (name.length > 0) {
-                model.name = name;
-            }
-
-            if (this.model.hasUnsavedChanges) {
-                LocalStorage.openNewWindow(model);
-            } else {
-                this.model = this.initModel(model);
-            }
-        }
-
-        this.fileInput.value = "";
     }
 
     public async onSaveClicked(event: MouseEvent) {
@@ -145,6 +125,32 @@ export default class App extends Vue {
     private get fileInput() {
         // tslint:disable-next-line:no-unsafe-any
         return this.$refs.fileInput as HTMLInputElement;
+    }
+
+    private async onFileInputChangedImpl(files: FileList) {
+        if (files.length !== 1) {
+            return;
+        }
+
+        const file = files[0];
+        const model = Parser.parse(await App.read(file));
+
+        if (!model) {
+            return;
+        }
+
+        const name = file.name.endsWith(model.fileExtension) ?
+            file.name.substring(0, file.name.length - model.fileExtension.length) : file.name;
+
+        if (name.length > 0) {
+            model.name = name;
+        }
+
+        if (this.model.hasUnsavedChanges) {
+            LocalStorage.openNewWindow(model);
+        } else {
+            this.model = this.initModel(model);
+        }
     }
 
     private write() {
