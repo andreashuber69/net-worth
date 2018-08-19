@@ -124,6 +124,7 @@ export class ColumnInfo {
 
     // Obviously the metrics could be improved by breaking the method into multiple parts but doing so would make the
     // code less readable.
+    // codebeat:disable[abc,cyclo,loc]
     private static getPadding(columnName: string | undefined, groupBy: string, otherGroupBys: GroupBy[]) {
         const columnPadding = 3;
         const leftClass = `pl-${columnPadding}`;
@@ -163,6 +164,7 @@ export class ColumnInfo {
                 return [];
         }
     }
+    // codebeat:enable[abc,cyclo,loc]
 
     private static addAlignment(result: string[], columnName: string | undefined) {
         switch (columnName) {
