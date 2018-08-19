@@ -146,8 +146,6 @@ export class ColumnInfo {
                 result.push(leftClass, rightClass);
                 break;
             case Asset.percentName:
-                result.push(leftClass, "pr-0");
-                break;
             case this.finenessIntegerName:
             case this.unitValueIntegerName:
             case this.quantityIntegerName:
