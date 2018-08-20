@@ -33,8 +33,8 @@ export class AssetEditorData implements IAuxProperties<string> {
 
     /** @internal */
     public constructor(asset?: IAssetUnion) {
-        this.description = asset ? asset.description : "";
-        this.location = (asset && asset.location) || "";
+        this.description = AssetEditorData.getDescription(asset);
+        this.location = AssetEditorData.getLocation(asset);
         this.address = AssetEditorData.getAddress(asset);
         this.weight = AssetEditorData.getWeight(asset);
         this.weightUnit = AssetEditorData.getWeightUnit(asset);
@@ -42,10 +42,18 @@ export class AssetEditorData implements IAuxProperties<string> {
         this.value = AssetEditorData.getValue(asset);
         this.valueCurrency = AssetEditorData.getValueCurrency(asset);
         this.quantity = AssetEditorData.getQuantity(asset);
-        this.notes = (asset && asset.notes) || "";
+        this.notes = AssetEditorData.getNotes(asset);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static getDescription(asset?: IAssetUnion) {
+        return asset ? asset.description : "";
+    }
+
+    private static getLocation(asset?: IAssetUnion) {
+        return (asset && asset.location) || "";
+    }
 
     private static getAddress(asset?: IAssetUnion) {
         return (asset && (asset.superType === CryptoWallet.superType) && asset.address) || "";
@@ -79,5 +87,9 @@ export class AssetEditorData implements IAuxProperties<string> {
         } else {
             return "";
         }
+    }
+
+    private static getNotes(asset?: IAssetUnion) {
+        return (asset && asset.notes) || "";
     }
 }
