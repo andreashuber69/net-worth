@@ -96,31 +96,37 @@ export class TextInputInfo extends PrimitiveInputInfo implements ITextInputInfoP
     }
 
     private validateValue(input: string | number) {
-        if (this.isNumber) {
-            const numericValue = Value.isNumber(input) ? input : Number.parseFloat(input);
+        if (!this.isNumber) {
+            return true;
+        }
 
-            if ((this.min !== undefined) && (this.min - numericValue > Number.EPSILON)) {
-                return `The value must be greater than or equal to ${TextInputInfo.format(this.min)}.`;
-            }
+        const numericValue = Value.isNumber(input) ? input : Number.parseFloat(input);
 
-            if ((this.max !== undefined) && (numericValue - this.max > Number.EPSILON)) {
-                return `The value must be less than or equal to ${TextInputInfo.format(this.max)}.`;
-            }
+        if ((this.min !== undefined) && (this.min - numericValue > Number.EPSILON)) {
+            return `The value must be greater than or equal to ${TextInputInfo.format(this.min)}.`;
+        }
 
-            const bottom = this.min !== undefined ? this.min : 0;
-            const step = this.step !== undefined ? this.step : 1;
-            const lower = Math.floor((numericValue - bottom) / step) * step + bottom;
-            const upper = lower + step;
-            // The calculations for the conditions below each involve at most 6 operations, each of which might produce
-            // a result that could be wrong by at most Number.EPSILON.
-            const maxError = TextInputInfo.getMaxError(upper, 6);
+        if ((this.max !== undefined) && (numericValue - this.max > Number.EPSILON)) {
+            return `The value must be less than or equal to ${TextInputInfo.format(this.max)}.`;
+        }
 
-            if ((numericValue - lower > maxError) && (upper - numericValue > maxError)) {
-                const lowerText = TextInputInfo.format(lower, 4);
-                const upperText = TextInputInfo.format(upper, 5);
+        return this.validateStep(numericValue);
+    }
 
-                return `The value is invalid. The two nearest valid values are ${lowerText} and ${upperText}.`;
-            }
+    private validateStep(numericValue: number) {
+        const bottom = this.min !== undefined ? this.min : 0;
+        const step = this.step !== undefined ? this.step : 1;
+        const lower = Math.floor((numericValue - bottom) / step) * step + bottom;
+        const upper = lower + step;
+        // The calculations for the conditions below each involve at most 6 operations, each of which might produce
+        // a result that could be wrong by at most Number.EPSILON.
+        const maxError = TextInputInfo.getMaxError(upper, 6);
+
+        if ((numericValue - lower > maxError) && (upper - numericValue > maxError)) {
+            const lowerText = TextInputInfo.format(lower, 4);
+            const upperText = TextInputInfo.format(upper, 5);
+
+            return `The value is invalid. The two nearest valid values are ${lowerText} and ${upperText}.`;
         }
 
         return true;
