@@ -13,6 +13,9 @@
 import { Asset, IModel } from "./Asset";
 import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
 
+// This could easily be fixed by overriding abstract methods in two extending classes, but doing so seems strange at
+// best. Most method implementations are trivial, so their number shouldn't matter that much.
+// codebeat:disable[TOO_MANY_FUNCTIONS]
 export class AssetGroup extends Asset {
     public isExpanded = false;
 
@@ -95,13 +98,12 @@ export class AssetGroup extends Asset {
         for (let index = 0; index < this.assets.length; ++index) {
             if (index === 0) {
                 previous = getProperty(this.assets[index]);
-            } else {
-                if (getProperty(this.assets[index]) !== previous) {
-                    return undefined;
-                }
+            } else if (getProperty(this.assets[index]) !== previous) {
+                return undefined;
             }
         }
 
         return previous;
     }
 }
+// codebeat:enable[TOO_MANY_FUNCTIONS]
