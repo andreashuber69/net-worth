@@ -32,6 +32,9 @@ export class AssetEditorData implements IAuxProperties<string> {
     public notes: string;
 
     /** @internal */
+    // The high ABC is due to the number of properties that need to be assigned. Breaking this up would not improve
+    // readability.
+    // codebeat:disable[ABC]
     public constructor(asset?: IAssetUnion) {
         this.description = AssetEditorData.getDescription(asset);
         this.location = AssetEditorData.getLocation(asset);
@@ -44,6 +47,7 @@ export class AssetEditorData implements IAuxProperties<string> {
         this.quantity = AssetEditorData.getQuantity(asset);
         this.notes = AssetEditorData.getNotes(asset);
     }
+    // codebeat:enable[ABC]
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
