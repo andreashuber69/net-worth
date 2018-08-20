@@ -33,63 +33,51 @@ export class AssetEditorData implements IAuxProperties<string> {
 
     /** @internal */
     public constructor(asset?: IAssetUnion) {
-        if (asset) {
-            this.description = asset.description;
-            this.location = asset.location || "";
-            this.address = AssetEditorData.getAddress(asset);
-            this.weight = AssetEditorData.getWeight(asset);
-            this.weightUnit = AssetEditorData.getWeightUnit(asset);
-            this.fineness = AssetEditorData.getFineness(asset);
-            this.value = AssetEditorData.getValue(asset);
-            this.valueCurrency = AssetEditorData.getValueCurrency(asset);
-            this.quantity = AssetEditorData.getQuantity(asset);
-            this.notes = asset.notes || "";
-        } else {
-            this.description = "";
-            this.location = "";
-            this.address = "";
-            this.weight = "";
-            this.weightUnit = "";
-            this.fineness = "";
-            this.value = "";
-            this.valueCurrency = "";
-            this.quantity  = "";
-            this.notes = "";
-        }
+        this.description = asset ? asset.description : "";
+        this.location = asset ? asset.location || "" : "";
+        this.address = AssetEditorData.getAddress(asset);
+        this.weight = AssetEditorData.getWeight(asset);
+        this.weightUnit = AssetEditorData.getWeightUnit(asset);
+        this.fineness = AssetEditorData.getFineness(asset);
+        this.value = AssetEditorData.getValue(asset);
+        this.valueCurrency = AssetEditorData.getValueCurrency(asset);
+        this.quantity = AssetEditorData.getQuantity(asset);
+        this.notes = asset ? asset.notes || "" : "";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getAddress(asset: IAssetUnion) {
-        return asset.superType === CryptoWallet.superType ? asset.address || "" : "";
+    private static getAddress(asset?: IAssetUnion) {
+        return asset && (asset.superType === CryptoWallet.superType) ? asset.address || "" : "";
     }
 
-    private static getWeight(asset: IAssetUnion) {
-        return asset.superType === PreciousMetalAsset.superType ? asset.weight.toString() : "";
+    private static getWeight(asset?: IAssetUnion) {
+        return asset && (asset.superType === PreciousMetalAsset.superType) ? asset.weight.toString() : "";
     }
 
-    private static getWeightUnit(asset: IAssetUnion) {
-        return asset.superType === PreciousMetalAsset.superType ?
+    private static getWeightUnit(asset?: IAssetUnion) {
+        return asset && (asset.superType === PreciousMetalAsset.superType) ?
             WeightUnit[asset.weightUnit] as keyof typeof WeightUnit : "";
     }
 
-    private static getFineness(asset: IAssetUnion) {
-        return asset.superType === PreciousMetalAsset.superType ? asset.fineness.toString() : "";
+    private static getFineness(asset?: IAssetUnion) {
+        return asset && (asset.superType === PreciousMetalAsset.superType) ? asset.fineness.toString() : "";
     }
 
-    private static getValue(asset: IAssetUnion) {
-        return asset.superType === MiscAsset.superType ? asset.value.toString() : "";
+    private static getValue(asset?: IAssetUnion) {
+        return asset && (asset.superType === MiscAsset.superType) ? asset.value.toString() : "";
     }
 
-    private static getValueCurrency(asset: IAssetUnion) {
-        return asset.superType === MiscAsset.superType ? asset.valueCurrency : "";
+    private static getValueCurrency(asset?: IAssetUnion) {
+        return asset && (asset.superType === MiscAsset.superType) ? asset.valueCurrency : "";
     }
 
-    private static getQuantity(asset: IAssetUnion) {
-        if ((asset.superType === CryptoWallet.superType) && asset.address) {
-            return "";
+    private static getQuantity(asset?: IAssetUnion) {
+        if (asset && ((asset.superType !== CryptoWallet.superType) || !asset.address) &&
+            (asset.quantity !== undefined)) {
+            return asset.quantity.toString();
         } else {
-            return asset.quantity !== undefined ? asset.quantity.toString() : "";
+            return "";
         }
     }
 }
