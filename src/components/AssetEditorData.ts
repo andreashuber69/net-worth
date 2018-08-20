@@ -34,7 +34,7 @@ export class AssetEditorData implements IAuxProperties<string> {
     /** @internal */
     public constructor(asset?: IAssetUnion) {
         this.description = asset ? asset.description : "";
-        this.location = asset ? asset.location || "" : "";
+        this.location = (asset && asset.location) || "";
         this.address = AssetEditorData.getAddress(asset);
         this.weight = AssetEditorData.getWeight(asset);
         this.weightUnit = AssetEditorData.getWeightUnit(asset);
@@ -42,13 +42,13 @@ export class AssetEditorData implements IAuxProperties<string> {
         this.value = AssetEditorData.getValue(asset);
         this.valueCurrency = AssetEditorData.getValueCurrency(asset);
         this.quantity = AssetEditorData.getQuantity(asset);
-        this.notes = asset ? asset.notes || "" : "";
+        this.notes = (asset && asset.notes) || "";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getAddress(asset?: IAssetUnion) {
-        return asset && (asset.superType === CryptoWallet.superType) ? asset.address || "" : "";
+        return (asset && (asset.superType === CryptoWallet.superType) && asset.address) || "";
     }
 
     private static getWeight(asset?: IAssetUnion) {
