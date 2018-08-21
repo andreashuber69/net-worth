@@ -12,8 +12,8 @@
 // <http://www.gnu.org/licenses/>.
 
 // tslint:disable-next-line:no-import-side-effect no-implicit-dependencies no-submodule-imports
-import "material-design-icons-iconfont/dist/material-design-icons.css";
-// tslint:disable-next-line:no-submodule-imports
+import "./assets/material-icons.css";
+// tslint:disable-next-line:no-submodule-imports ordered-imports
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
 import Vue from "vue";
 import Vuetify from "vuetify";
