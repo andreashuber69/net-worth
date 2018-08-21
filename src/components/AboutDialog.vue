@@ -79,7 +79,7 @@
           </v-flex>
           <v-flex xs12 sm6 md4>
             <v-btn class="ma-0 d-block" href="https://btgexp.com" target="_blank" flat>
-              <img src="../assets/btgexp.jpg" height="36"/>
+              <img src="../assets/btgexp.png" height="36"/>
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>
