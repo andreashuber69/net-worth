@@ -43,7 +43,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
      * @param props The crypto wallet properties.
      */
     public constructor(parent: IModel, props: ICryptoWalletProperties) {
-        super(parent, { ...props, currencySymbol: "" });
+        super(parent, RealCryptoWallet.getProperties(props, ""));
     }
 
     public bundle(bundle?: Unknown): AssetBundle {

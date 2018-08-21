@@ -13,6 +13,7 @@
 import { IModel } from "./Asset";
 import { BlockcypherWallet } from "./BlockcypherWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
+import { RealCryptoWallet } from "./RealCryptoWallet";
 
 /** Represents a DASH wallet. */
 export class DashWallet extends BlockcypherWallet {
@@ -26,6 +27,6 @@ export class DashWallet extends BlockcypherWallet {
      * @param props The crypto wallet properties.
      */
     public constructor(parent: IModel, props: ICryptoWalletProperties) {
-        super(parent, { ...props, currencySymbol: "DASH", slug: "dash" });
+        super(parent, RealCryptoWallet.getProperties(props, "DASH", "dash"));
     }
 }

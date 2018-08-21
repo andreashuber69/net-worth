@@ -69,6 +69,24 @@ export abstract class RealCryptoWallet extends CryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // TODO: This is a hack to work around the fact that the spread operator does not call property getters:
+    // https://github.com/Microsoft/TypeScript/issues/26547
+    protected static getProperties(
+        props: ICryptoWalletProperties, currencySymbol: string, slug?: string): IRealCryptoWalletParameters {
+        const cs = currencySymbol;
+        const s = slug;
+
+        return {
+            description: props.description,
+            location: props.location,
+            address: props.address,
+            quantity: props.quantity,
+            notes: props.notes,
+            currencySymbol: cs,
+            slug: s,
+        };
+    }
+
     /**
      * Creates a new [[CryptoWallet]] instance.
      * @param parent The parent model to which this asset belongs.

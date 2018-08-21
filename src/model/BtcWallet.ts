@@ -39,7 +39,7 @@ export class BtcWallet extends RealCryptoWallet {
      * @param props The crypto wallet properties.
      */
     public constructor(parent: IModel, props: ICryptoWalletProperties) {
-        super(parent, { ...props, currencySymbol: "BTC", slug: "bitcoin" });
+        super(parent, RealCryptoWallet.getProperties(props, "BTC", "bitcoin"));
     }
 
     public bundle(bundle?: Unknown): AssetBundle {
