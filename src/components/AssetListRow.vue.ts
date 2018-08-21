@@ -22,6 +22,10 @@ type PropertyNames<T> = { [K in keyof T]: T[K] extends string ? K : never }[keyo
 type Diff<T, U> = T extends U ? never : T;
 export type AssetListRowPropertyName = Diff<PropertyNames<AssetListRow>, PropertyNames<ComponentBase<Asset>>>;
 
+// This could easily be fixed by adding methods in two extending classes, but doing so seems strange at best. Most
+// methods are trivial, so their number shouldn't matter that much.
+// codebeat:disable[TOO_MANY_FUNCTIONS]
+
 // tslint:disable-next-line:no-unsafe-any
 @Component
 /**
@@ -29,10 +33,7 @@ export type AssetListRowPropertyName = Diff<PropertyNames<AssetListRow>, Propert
  * @description Most of the members split asset properties into the integral and fractional parts. This is necessary
  * so that the UI can justify the values on the decimal point.
  */
-// This could easily be fixed by adding methods in two extending classes, but doing so seems strange at best. Most
-// methods are trivial, so their number shouldn't matter that much.
-// tslint:disable:no-default-export
-// codebeat:disable[TOO_MANY_FUNCTIONS]
+// tslint:disable-next-line:no-default-export
 export default class AssetListRow extends ComponentBase<Asset> {
     /** Gets the number of required columns. */
     public static get requiredColumnCount() {
