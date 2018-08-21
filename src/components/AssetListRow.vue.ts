@@ -29,6 +29,9 @@ export type AssetListRowPropertyName = Diff<PropertyNames<AssetListRow>, Propert
  * @description Most of the members split asset properties into the integral and fractional parts. This is necessary
  * so that the UI can justify the values on the decimal point.
  */
+// This could easily be fixed by adding methods in two extending classes, but doing so seems strange at best. Most
+// methods are trivial, so their number shouldn't matter that much.
+// codebeat:disable[TOO_MANY_FUNCTIONS]
 // tslint:disable-next-line:no-default-export
 export default class AssetListRow extends ComponentBase<Asset> {
     /** Gets the number of required columns. */
@@ -153,6 +156,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
         return this.visibleColumnCount;
     }
 }
+// codebeat:enable[TOO_MANY_FUNCTIONS]
 
 export type ColumnName = AssetDisplayPropertyName | AssetListRowPropertyName |
     typeof ColumnInfo.expandName | typeof ColumnInfo.moreName | typeof ColumnInfo.grandTotalLabelName;
