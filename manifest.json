@@ -1,20 +1,20 @@
 {
-  "short_name": "Net Worth",
-  "name": "Net Worth",
-  "icons": [
-    {
-      "src": "./icon-192x192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "./icon-512x512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": "./",
-  "background_color": "#25272A",
-  "display": "standalone",
-  "theme_color": "#1976d2"
+    "short_name": "Net Worth",
+    "name": "Net Worth",
+    "icons": [
+        {
+            "src": "./icon-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "./icon-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "./",
+    "background_color": "#25272A",
+    "theme_color": "#1976d2",
+    "display": "standalone"
 }
