@@ -66,7 +66,7 @@
         <v-toolbar-side-icon @click.stop="onMenuClicked"></v-toolbar-side-icon>
         <v-toolbar-title class="hidden-xs-only"><v-icon>account_balance_wallet</v-icon>&nbsp;&nbsp;{{ model.title }}</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon title="Add new asset" class="ml-1 mr-0" @click.stop="assetList.onAdd">
+        <v-btn icon title="Add new asset" class="ml-1 mr-0" @click.stop="$refs.assetList.onAdd">
           <v-icon>add</v-icon>
         </v-btn>
         <v-menu title="Change grouping" max-height="300px">

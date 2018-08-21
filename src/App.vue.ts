@@ -28,7 +28,7 @@ export default class App extends Vue {
 
     public constructor() {
         super();
-        this.model = this.initModel(LocalStorage.load());
+        this.model = App.initModel(LocalStorage.load());
         window.addEventListener("beforeunload", (ev) => this.onBeforeUnload(ev));
     }
 
@@ -66,7 +66,8 @@ export default class App extends Vue {
 
     public async onSaveAsClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
-        const newName = await this.saveAsDialog.showDialog(this.model.name);
+        // tslint:disable-next-line:no-unsafe-any
+        const newName = await (this.$refs.saveAsDialog as SaveAsDialog).showDialog(this.model.name);
 
         if (newName !== undefined) {
             this.model.name = newName;
@@ -77,22 +78,8 @@ export default class App extends Vue {
 
     public onAboutClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
-        this.aboutDialog.showDialog();
-    }
-
-    public get assetList() {
         // tslint:disable-next-line:no-unsafe-any
-        return this.$refs.assetList as AssetList;
-    }
-
-    public get saveAsDialog() {
-        // tslint:disable-next-line:no-unsafe-any
-        return this.$refs.saveAsDialog as SaveAsDialog;
-    }
-
-    public get aboutDialog() {
-        // tslint:disable-next-line:no-unsafe-any
-        return this.$refs.aboutDialog as AboutDialog;
+        (this.$refs.aboutDialog as AboutDialog).showDialog();
     }
 
     public get groupBys() {
@@ -122,6 +109,13 @@ export default class App extends Vue {
         });
     }
 
+    private static initModel(model: Model) {
+        model.onChanged = () => document.title = model.title;
+        document.title = model.title;
+
+        return model;
+    }
+
     private get fileInput() {
         // tslint:disable-next-line:no-unsafe-any
         return this.$refs.fileInput as HTMLInputElement;
@@ -149,7 +143,7 @@ export default class App extends Vue {
         if (this.model.hasUnsavedChanges) {
             LocalStorage.openNewWindow(model);
         } else {
-            this.model = this.initModel(model);
+            this.model = App.initModel(model);
         }
     }
 
@@ -174,18 +168,7 @@ export default class App extends Vue {
         }
     }
 
-    private initModel(model: Model) {
-        model.onChanged = () => this.onModelChanged();
-        document.title = model.title;
-
-        return model;
-    }
-
     private onBeforeUnload(ev: BeforeUnloadEvent) {
         LocalStorage.save(this.model);
-    }
-
-    private onModelChanged() {
-        document.title = this.model.title;
     }
 }
