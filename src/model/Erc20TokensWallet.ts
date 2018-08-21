@@ -12,9 +12,8 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
-import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
 import { AssetType } from "./AssetTypes";
-import { CryptoWallet } from "./CryptoWallet";
+import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";
@@ -23,13 +22,6 @@ import { Value } from "./Value";
 
 interface ISerializedErc20TokensBundle extends ISerializedBundle {
     deletedAssets: string[];
-}
-
-interface ITokenWalletParameters {
-    readonly editable: Erc20TokensWallet;
-    readonly currencySymbol: string;
-    readonly quantity: number;
-    readonly unitValueUsd: number | undefined;
 }
 
 /** Represents a wallet for ERC20 tokens. */
@@ -51,54 +43,6 @@ export class Erc20TokensWallet extends RealCryptoWallet {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // tslint:disable-next-line:max-classes-per-file variable-name
-    private static readonly TokenWallet = class NestedTokenWallet extends CryptoWallet {
-        public get type() {
-            return this.editable.type;
-        }
-
-        public get description() {
-            return this.editable.description;
-        }
-
-        public get location() {
-            return this.editable.location;
-        }
-
-        public get address() {
-            return this.editable.address;
-        }
-
-        public get notes() {
-            return this.editable.notes;
-        }
-
-        public get editableAsset() {
-            return this.editable;
-        }
-
-        public get interface(): IAssetUnion {
-            throw new Error(`${NestedTokenWallet.name} cannot be edited.`);
-        }
-
-        /** @internal */
-        public constructor(params: ITokenWalletParameters) {
-            super(params.editable.parent, params.currencySymbol);
-            this.editable = params.editable;
-            this.quantity = params.quantity;
-            this.unitValueUsd = params.unitValueUsd;
-        }
-
-        // tslint:disable-next-line:prefer-function-over-method
-        public toJSON(): ISerializedAsset {
-            throw new Error(`${NestedTokenWallet.name} cannot be serialized.`);
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        private readonly editable: Erc20TokensWallet;
-    };
 
     // tslint:disable-next-line:max-classes-per-file variable-name
     private static readonly Bundle = class NestedBundle extends AssetBundle {
@@ -180,7 +124,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
             if (Value.hasStringProperty(info, "symbol") && Value.hasNumberProperty(token, "balance") &&
                 (Value.hasNumberProperty(info, "decimals") || Value.hasStringProperty(info, "decimals")) &&
                 (this.deletedAssets.indexOf(info.symbol) < 0) && (token.balance > 0)) {
-                this.assets.push(new Erc20TokensWallet.TokenWallet({
+                this.assets.push(new Erc20TokenWallet({
                     editable: this.erc20Wallet,
                     currencySymbol: info.symbol,
                     quantity: token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
