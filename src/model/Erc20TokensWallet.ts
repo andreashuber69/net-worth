@@ -40,10 +40,10 @@ export class Erc20TokensWallet extends RealCryptoWallet {
      * @description This wallet requires an [[ICryptoWalletProperties.address]] and ignores
      * [[ICryptoWalletProperties.quantity]].
      * @param parent The parent model to which this asset belongs.
-     * @param properties The crypto wallet properties.
+     * @param props The crypto wallet properties.
      */
-    public constructor(parent: IModel, properties: ICryptoWalletProperties) {
-        super(parent, { ...properties, currencySymbol: "" });
+    public constructor(parent: IModel, props: ICryptoWalletProperties) {
+        super(parent, { ...props, currencySymbol: "" });
     }
 
     public bundle(bundle?: Unknown): AssetBundle {
