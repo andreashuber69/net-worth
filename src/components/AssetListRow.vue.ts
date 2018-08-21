@@ -31,8 +31,8 @@ export type AssetListRowPropertyName = Diff<PropertyNames<AssetListRow>, Propert
  */
 // This could easily be fixed by adding methods in two extending classes, but doing so seems strange at best. Most
 // methods are trivial, so their number shouldn't matter that much.
+// tslint:disable:no-default-export
 // codebeat:disable[TOO_MANY_FUNCTIONS]
-// tslint:disable-next-line:no-default-export
 export default class AssetListRow extends ComponentBase<Asset> {
     /** Gets the number of required columns. */
     public static get requiredColumnCount() {
