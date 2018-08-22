@@ -49,8 +49,8 @@
         </AssetListRow>
       </template>
       <div class="text-xs-center" slot="no-data">
-        No assets, yet. Add new ones with the <strong>+</strong> button in the top right corner or load existing ones
-        with <strong>Open...</strong> in the top left menu.
+        No assets, yet. Add new ones with the <strong>+</strong> button (top right) or load existing assets with
+        <strong>Open...</strong> in the menu (top left).
       </div>
       <template slot="footer">
         <td :colspan="grandTotalLabelColumnCount" :class="getFooterClass('grandTotalLabel')">Grand Total</td>
