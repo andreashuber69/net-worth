@@ -48,6 +48,10 @@
         <AssetListRow :value="props.item" :visibleColumnCount="optionalColumnCount" @edit="onEdit" @delete="onDelete">
         </AssetListRow>
       </template>
+      <div class="text-xs-center" slot="no-data">
+        No assets, yet. Add new ones with the <strong>+</strong> button in the top right corner or load existing ones
+        with <strong>Open...</strong> in the top left menu.
+      </div>
       <template slot="footer">
         <td :colspan="grandTotalLabelColumnCount" :class="getFooterClass('grandTotalLabel')">Grand Total</td>
         <td :class="getFooterClass('totalValueInteger')">{{ grandTotalValueInteger }}</td>
