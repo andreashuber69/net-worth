@@ -76,11 +76,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getHeaderClass(columnName: ColumnName) {
-        const result = ColumnInfo.getClass(
-            columnName,
-            this.checkedValue.order.groupBy,
-            this.checkedValue.order.otherGroupBys,
-            this.optionalColumnCount);
+        const result = ColumnInfo.getClass(columnName, this.checkedValue.order, this.optionalColumnCount);
 
         // Sortable columns
         if (OrderInfo.isSortBy(columnName)) {
@@ -97,11 +93,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getFooterClass(columnName: ColumnName) {
-        return ColumnInfo.getClass(
-            columnName,
-            this.checkedValue.order.groupBy,
-            this.checkedValue.order.otherGroupBys,
-            this.optionalColumnCount);
+        return ColumnInfo.getClass(columnName, this.checkedValue.order, this.optionalColumnCount);
     }
 
     /** Changes the sorting for the given property. */
