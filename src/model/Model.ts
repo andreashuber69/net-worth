@@ -11,16 +11,12 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Application } from "./Application";
-import { Asset, GroupBy, IModel } from "./Asset";
+import { Asset, GroupBy, IModel, SortBy } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { AssetGroup } from "./AssetGroup";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
-
-export type SortBy =
-    typeof Asset.typeName | typeof Asset.descriptionName | typeof Asset.locationName |
-    typeof Asset.unitValueName | typeof Asset.totalValueName;
 
 export interface ISort {
     /** Provides the name of the property by which the asset list is currently sorted. */

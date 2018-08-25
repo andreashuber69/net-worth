@@ -160,6 +160,10 @@ export abstract class Asset {
     }
 }
 
+export type SortBy =
+    typeof Asset.typeName | typeof Asset.descriptionName | typeof Asset.locationName |
+    typeof Asset.unitValueName | typeof Asset.totalValueName;
+
 export type GroupBy = typeof Asset.typeName | typeof Asset.locationName;
 
 export type AssetDisplayPropertyName = SerializedAssetPropertyName |

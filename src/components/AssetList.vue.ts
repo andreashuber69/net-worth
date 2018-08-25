@@ -11,8 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component } from "vue-property-decorator";
-import { Asset } from "../model/Asset";
-import { Model, SortBy } from "../model/Model";
+import { Asset, SortBy } from "../model/Asset";
+import { Model } from "../model/Model";
 import AssetEditor from "./AssetEditor.vue";
 import AssetListRow, { ColumnName } from "./AssetListRow.vue";
 import { ColumnInfo } from "./ColumnInfo";
