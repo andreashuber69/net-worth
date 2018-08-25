@@ -293,7 +293,7 @@ export class Model implements IModel {
     }
 
     private updateGroups() {
-        const newGroups = this.group();
+        const newGroups = this.getGroups();
 
         // Remove no longer existing groups
         for (let index = 0; index < this.groups.length;) {
@@ -318,7 +318,7 @@ export class Model implements IModel {
         this.doSort();
     }
 
-    private group() {
+    private getGroups() {
         const result = new Map<string, Asset[]>();
 
         for (const bundle of this.bundles) {

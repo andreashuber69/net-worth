@@ -29,7 +29,7 @@
 
 <h1 align="center">Net Worth</h1>
 
-If you primarily store your wealth in "unconventional" assets like precious metals and crypto currencies, it seems
+If you primarily store your wealth in 'unconventional' assets like precious metals and crypto currencies, it seems
 difficult to get an overview of your current financial situation.
 
 Net Worth aims to make this a little easier. In a nutshell, the application presents your precious metal and crypto
