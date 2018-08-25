@@ -83,18 +83,18 @@ export default class App extends Vue {
     }
 
     public get groupBys() {
-        return this.model.groupByLabels;
+        return this.model.order.groupByLabels;
     }
 
     public get groupBy() {
-        return this.model.groupByLabel;
+        return this.model.order.groupByLabel;
     }
 
     public set groupBy(groupBy: string) {
-        const rawGroupBy = this.model.groupBys.find((g) => g === groupBy.toLowerCase());
+        const rawGroupBy = this.model.order.groupBys.find((g) => g === groupBy.toLowerCase());
 
         if (rawGroupBy !== undefined) {
-            this.model.groupBy = rawGroupBy;
+            this.model.order.groupBy = rawGroupBy;
         }
     }
 

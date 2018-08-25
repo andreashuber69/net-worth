@@ -15,6 +15,7 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetInput } from "./AssetInput";
 import { Currency } from "./Currency";
 import { ISerializedModel, ISort, Model } from "./Model";
+import { OrderInfo } from "./OrderInfo";
 import { ParseError } from "./ParseError";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
@@ -100,7 +101,7 @@ export class ModelParser {
             const groupBy = rawModel[this.groupByName];
 
             if (this.isGroupBy(groupBy)) {
-                model.groupBy = groupBy;
+                model.order.groupBy = groupBy;
             }
         }
 
@@ -108,7 +109,7 @@ export class ModelParser {
             const sort = rawModel[this.sortName];
 
             if (this.isSort(sort)) {
-                model.sort = sort;
+                model.order.sort = sort;
             }
         }
     }
@@ -138,11 +139,11 @@ export class ModelParser {
     }
 
     private static isSort(sort: Unknown): sort is ISort {
-        return Value.hasStringProperty(sort, this.sortByName) && Model.isSortBy(sort.by) &&
+        return Value.hasStringProperty(sort, this.sortByName) && OrderInfo.isSortBy(sort.by) &&
             Value.hasBooleanProperty(sort, this.sortDescendingName);
     }
 
     private static isGroupBy(groupBy: string): groupBy is GroupBy {
-        return Model.groupBys.findIndex((g) => g === groupBy) >= 0;
+        return OrderInfo.groupBys.findIndex((g) => g === groupBy) >= 0;
     }
 }

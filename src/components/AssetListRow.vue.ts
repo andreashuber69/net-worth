@@ -44,7 +44,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
     public visibleColumnCount?: number;
 
     public get groupBy() {
-        return this.checkedValue.parent.groupBy;
+        return this.checkedValue.parent.order.groupBy;
     }
 
     public get groupByContent() {
@@ -56,7 +56,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
     }
 
     public get otherGroupBys() {
-        return this.checkedValue.parent.otherGroupBys;
+        return this.checkedValue.parent.order.otherGroupBys;
     }
 
     public get otherGroupByContents() {
@@ -110,8 +110,8 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
     public getClass(columnName: ColumnName) {
         return ColumnInfo.getClass(
-            columnName, this.checkedValue.parent.groupBy,
-            this.checkedValue.parent.otherGroupBys, this.checkedOptionalColumnCount);
+            columnName, this.checkedValue.parent.order.groupBy,
+            this.checkedValue.parent.order.otherGroupBys, this.checkedOptionalColumnCount);
     }
 
     /** Instructs the asset group to be expanded/collapsed. */

@@ -16,12 +16,12 @@ import {
 } from "./AssetInterfaces";
 
 import { AssetType } from "./AssetTypes";
+import { IOrderInfo } from "./OrderInfo";
 import { Unknown } from "./Unknown";
 
 /** @internal */
 export interface IModel {
-    readonly groupBy: GroupBy;
-    readonly otherGroupBys: GroupBy[];
+    readonly order: IOrderInfo;
     readonly exchangeRate: number | undefined;
     readonly grandTotalValue: number | undefined;
 }
