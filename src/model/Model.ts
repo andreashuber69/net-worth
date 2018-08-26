@@ -17,7 +17,7 @@ import { AssetGroup } from "./AssetGroup";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
-import { IOrderable, OrderInfo } from "./OrderInfo";
+import { IOrderable, Ordering } from "./Ordering";
 
 export interface ISort {
     /** Provides the name of the property by which the asset list is currently sorted. */
@@ -96,7 +96,7 @@ export class Model implements IModel, IOrderable {
         this.onCurrencyChanged();
     }
 
-    public readonly order: OrderInfo;
+    public readonly ordering: Ordering;
 
     public get isEmpty() {
         return this.groups.length === 0;
@@ -138,7 +138,7 @@ export class Model implements IModel, IOrderable {
         this.hasUnsavedChangesImpl = (params && params.hasUnsavedChanges) || false;
         this.currencyImpl = (params && params.currency) || this.currencies[0];
         this.onCurrencyChanged();
-        this.order = new OrderInfo(this, params && params.groupBy, params && params.sort);
+        this.ordering = new Ordering(this, params && params.groupBy, params && params.sort);
         this.bundles = (params && params.createBundles.map((c) => c(this))) || [];
         this.update(...this.bundles);
     }
@@ -195,8 +195,8 @@ export class Model implements IModel, IOrderable {
             wasSavedToFile: this.wasSavedToFile,
             hasUnsavedChanges: this.hasUnsavedChanges,
             currency: this.currency,
-            groupBy: this.order.groupBy,
-            sort: this.order.sort,
+            groupBy: this.ordering.groupBy,
+            sort: this.ordering.sort,
             bundles: this.bundles.map((bundle) => bundle.toJSON()),
         };
     }
@@ -258,7 +258,7 @@ export class Model implements IModel, IOrderable {
 
         // Remove no longer existing groups
         for (let index = 0; index < this.groups.length;) {
-            if (!newGroups.has(this.groups[index][this.order.groupBy])) {
+            if (!newGroups.has(this.groups[index][this.ordering.groupBy])) {
                 this.groups.splice(index, 1);
             } else {
                 ++index;
@@ -267,7 +267,7 @@ export class Model implements IModel, IOrderable {
 
         // Update existing groups with new assets
         for (const newGroup of newGroups) {
-            const existingGroup = this.groups.find((g) => g[this.order.groupBy] === newGroup[0]);
+            const existingGroup = this.groups.find((g) => g[this.ordering.groupBy] === newGroup[0]);
 
             if (existingGroup === undefined) {
                 this.groups.push(new AssetGroup(this, newGroup[1]));
@@ -284,7 +284,7 @@ export class Model implements IModel, IOrderable {
 
         for (const bundle of this.bundles) {
             for (const asset of bundle.assets) {
-                const groupName = asset[this.order.groupBy];
+                const groupName = asset[this.ordering.groupBy];
                 const groupAssets = result.get(groupName);
 
                 if (groupAssets === undefined) {
@@ -307,12 +307,12 @@ export class Model implements IModel, IOrderable {
     }
 
     private compare(left: Asset, right: Asset) {
-        return (this.order.sort.descending ? -1 : 1) * this.compareImpl(left, right);
+        return (this.ordering.sort.descending ? -1 : 1) * this.compareImpl(left, right);
     }
 
     private compareImpl(left: Asset, right: Asset) {
-        const leftProperty = left[this.order.sort.by];
-        const rightProperty = right[this.order.sort.by];
+        const leftProperty = left[this.ordering.sort.by];
+        const rightProperty = right[this.ordering.sort.by];
 
         if (leftProperty === rightProperty) {
             return 0;

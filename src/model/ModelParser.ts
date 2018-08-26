@@ -15,7 +15,7 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetInput } from "./AssetInput";
 import { Currency } from "./Currency";
 import { IModelParameters, ISerializedModel, ISort, Model } from "./Model";
-import { OrderInfo } from "./OrderInfo";
+import { Ordering } from "./Ordering";
 import { ParseError } from "./ParseError";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
@@ -147,11 +147,11 @@ export class ModelParser {
     }
 
     private static isSort(sort: Unknown): sort is ISort {
-        return Value.hasStringProperty(sort, this.sortByName) && OrderInfo.isSortBy(sort.by) &&
+        return Value.hasStringProperty(sort, this.sortByName) && Ordering.isSortBy(sort.by) &&
             Value.hasBooleanProperty(sort, this.sortDescendingName);
     }
 
     private static isGroupBy(groupBy: string): groupBy is GroupBy {
-        return OrderInfo.groupBys.findIndex((g) => g === groupBy) >= 0;
+        return Ordering.groupBys.findIndex((g) => g === groupBy) >= 0;
     }
 }

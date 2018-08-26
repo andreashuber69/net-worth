@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, GroupBy } from "../model/Asset";
-import { IOrderInfo } from "../model/OrderInfo";
+import { IOrdering } from "../model/Ordering";
 import { AssetListRowPropertyName, ColumnName } from "./AssetListRow.vue";
 
 export class ColumnInfo {
@@ -35,11 +35,11 @@ export class ColumnInfo {
     }
 
     /** @internal */
-    public static getClass(columnName: ColumnName, order: IOrderInfo, optionalColumnCount: number) {
+    public static getClass(columnName: ColumnName, ordering: IOrdering, optionalColumnCount: number) {
         const result = new Array<string>(
-            ...this.getHidden(columnName, order.groupBy, optionalColumnCount),
+            ...this.getHidden(columnName, ordering.groupBy, optionalColumnCount),
             ...this.getAlignment(columnName),
-            ...this.getPadding(columnName, order.groupBy, order.otherGroupBys),
+            ...this.getPadding(columnName, ordering.groupBy, ordering.otherGroupBys),
             ...this.getTotal(columnName),
         );
 

@@ -13,7 +13,7 @@
 import { Component } from "vue-property-decorator";
 import { Asset, SortBy } from "../model/Asset";
 import { Model } from "../model/Model";
-import { OrderInfo } from "../model/OrderInfo";
+import { Ordering } from "../model/Ordering";
 import AssetEditor from "./AssetEditor.vue";
 import AssetListRow, { ColumnName } from "./AssetListRow.vue";
 import { ColumnInfo } from "./ColumnInfo";
@@ -34,14 +34,14 @@ export default class AssetList extends ComponentBase<Model> {
     /** Provides the information required for sorting and paginating the table. */
     public get pagination(): IPagination {
         return {
-            sortBy: this.checkedValue.order.sort.by,
-            descending: this.checkedValue.order.sort.descending,
+            sortBy: this.checkedValue.ordering.sort.by,
+            descending: this.checkedValue.ordering.sort.descending,
             rowsPerPage: -1,
         };
     }
 
     public set pagination(pagination: IPagination) {
-        this.checkedValue.order.sort = { by: pagination.sortBy, descending: pagination.descending };
+        this.checkedValue.ordering.sort = { by: pagination.sortBy, descending: pagination.descending };
     }
 
     public get isLoading() {
@@ -76,11 +76,11 @@ export default class AssetList extends ComponentBase<Model> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getHeaderClass(columnName: ColumnName) {
-        const result = ColumnInfo.getClass(columnName, this.checkedValue.order, this.optionalColumnCount);
+        const result = ColumnInfo.getClass(columnName, this.checkedValue.ordering, this.optionalColumnCount);
 
         // Sortable columns
-        if (OrderInfo.isSortBy(columnName)) {
-            const sort = this.checkedValue.order.sort;
+        if (Ordering.isSortBy(columnName)) {
+            const sort = this.checkedValue.ordering.sort;
             result.push("column", "sortable", sort.descending ? "desc" : "asc");
 
             if (sort.by === columnName) {
@@ -93,13 +93,13 @@ export default class AssetList extends ComponentBase<Model> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getFooterClass(columnName: ColumnName) {
-        return ColumnInfo.getClass(columnName, this.checkedValue.order, this.optionalColumnCount);
+        return ColumnInfo.getClass(columnName, this.checkedValue.ordering, this.optionalColumnCount);
     }
 
     /** Changes the sorting for the given property. */
     public changeSort(sortBy: SortBy) {
-        const currentSort = this.checkedValue.order.sort;
-        this.checkedValue.order.sort = (currentSort.by === sortBy) ?
+        const currentSort = this.checkedValue.ordering.sort;
+        this.checkedValue.ordering.sort = (currentSort.by === sortBy) ?
             { by: currentSort.by, descending: !currentSort.descending } : { by: sortBy, descending: false };
     }
 

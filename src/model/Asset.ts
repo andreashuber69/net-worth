@@ -16,12 +16,12 @@ import {
 } from "./AssetInterfaces";
 
 import { AssetType } from "./AssetTypes";
-import { IOrderInfo } from "./OrderInfo";
+import { IOrdering } from "./Ordering";
 import { Unknown } from "./Unknown";
 
 /** @internal */
 export interface IModel {
-    readonly order: IOrderInfo;
+    readonly ordering: IOrdering;
     readonly exchangeRate: number | undefined;
     readonly grandTotalValue: number | undefined;
 }

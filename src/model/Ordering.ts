@@ -25,13 +25,13 @@ export interface IOrderable {
     onSortChanged(): void;
 }
 
-export interface IOrderInfo {
+export interface IOrdering {
     readonly groupBy: GroupBy;
     readonly otherGroupBys: GroupBy[];
 }
 
 /** Provides information how assets are ordered (grouped and sorted) in the main model of the application. */
-export class OrderInfo implements IOrderInfo {
+export class Ordering implements IOrdering {
     /** Provides the property names by which the asset list can be grouped. */
     public static readonly groupBys: GroupBy[] = [ Asset.typeName, Asset.locationName ];
 
@@ -49,11 +49,11 @@ export class OrderInfo implements IOrderInfo {
     }
 
     /** Provides the property names by which the asset list can be grouped. */
-    public readonly groupBys = OrderInfo.groupBys;
+    public readonly groupBys = Ordering.groupBys;
 
     /** Provides the labels for the properties by which the asset list can be grouped. */
     public get groupByLabels() {
-        return this.groupBys.map((g) => OrderInfo.capitalize(g));
+        return this.groupBys.map((g) => Ordering.capitalize(g));
     }
 
     /** Provides the name of the property by which the asset list is currently grouped. */
@@ -68,7 +68,7 @@ export class OrderInfo implements IOrderInfo {
 
     /** Provides the label for the property by which the asset list is currently grouped. */
     public get groupByLabel() {
-        return OrderInfo.capitalize(this.groupBy);
+        return Ordering.capitalize(this.groupBy);
     }
 
     /** Provides the property names by which the asset list is currently *not* grouped. */
@@ -81,7 +81,7 @@ export class OrderInfo implements IOrderInfo {
 
     /** Provides the labels for the properties by which the asset list is currently *not* grouped. */
     public get otherGroupByLabels() {
-        return this.otherGroupBys.map((g) => OrderInfo.capitalize(g));
+        return this.otherGroupBys.map((g) => Ordering.capitalize(g));
     }
 
     /** Provides information on how to sort the asset list. */

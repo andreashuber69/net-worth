@@ -22,13 +22,13 @@
       :total-items="checkedValue.assets.length" hide-actions class="elevation-1">
       <template slot="headers" slot-scope="props">
         <th :class="getHeaderClass('expand')"></th>
-        <th :class="getHeaderClass(checkedValue.order.groupBy)" @click="changeSort(checkedValue.order.groupBy)">
-          {{ checkedValue.order.groupByLabel }} <v-icon small>arrow_upward</v-icon>
+        <th :class="getHeaderClass(checkedValue.ordering.groupBy)" @click="changeSort(checkedValue.ordering.groupBy)">
+          {{ checkedValue.ordering.groupByLabel }} <v-icon small>arrow_upward</v-icon>
         </th>
         <th
-          :class="getHeaderClass(checkedValue.order.otherGroupBys[0])"
-          @click="changeSort(checkedValue.order.otherGroupBys[0])">
-          {{ checkedValue.order.otherGroupByLabels[0] }} <v-icon small>arrow_upward</v-icon>
+          :class="getHeaderClass(checkedValue.ordering.otherGroupBys[0])"
+          @click="changeSort(checkedValue.ordering.otherGroupBys[0])">
+          {{ checkedValue.ordering.otherGroupByLabels[0] }} <v-icon small>arrow_upward</v-icon>
         </th>
         <th :class="getHeaderClass('description')" @click="changeSort('description')">
           Description <v-icon small>arrow_upward</v-icon>
