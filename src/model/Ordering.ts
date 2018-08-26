@@ -20,9 +20,13 @@ export interface ISort {
     readonly descending: boolean;
 }
 
-export interface IOrderable {
-    onGroupChanged(): void;
-    onSortChanged(): void;
+interface IOrderingParameters {
+    // tslint:disable-next-line:prefer-method-signature
+    readonly onGroupChanged: () => void;
+    // tslint:disable-next-line:prefer-method-signature
+    readonly onSortChanged: () => void;
+    readonly groupBy?: GroupBy;
+    readonly sort?: ISort;
 }
 
 export interface IOrdering {
@@ -63,7 +67,7 @@ export class Ordering implements IOrdering {
 
     public set groupBy(groupBy: GroupBy) {
         this.groupByImpl = groupBy;
-        this.orderable.onGroupChanged();
+        this.onGroupChanged();
     }
 
     /** Provides the label for the property by which the asset list is currently grouped. */
@@ -91,12 +95,14 @@ export class Ordering implements IOrdering {
 
     public set sort(sort: ISort) {
         this.sortImpl = sort;
-        this.orderable.onSortChanged();
+        this.onSortChanged();
     }
 
-    public constructor(private readonly orderable: IOrderable, groupBy: GroupBy | undefined, sort: ISort | undefined) {
-        this.groupByImpl = groupBy || Asset.typeName;
-        this.sortImpl = sort || { by: Asset.totalValueName, descending: true };
+    public constructor(params: IOrderingParameters) {
+        this.onGroupChanged = params.onGroupChanged;
+        this.onSortChanged = params.onSortChanged;
+        this.groupByImpl = params.groupBy || Asset.typeName;
+        this.sortImpl = params.sort || { by: Asset.totalValueName, descending: true };
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,6 +111,10 @@ export class Ordering implements IOrdering {
         return `${str[0].toUpperCase()}${str.substr(1)}`;
     }
 
+    // tslint:disable-next-line:prefer-method-signature
+    private readonly onGroupChanged: () => void;
+    // tslint:disable-next-line:prefer-method-signature
+    private readonly onSortChanged: () => void;
     private groupByImpl: GroupBy;
     private sortImpl: ISort;
 }

@@ -17,15 +17,7 @@ import { AssetGroup } from "./AssetGroup";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
-import { IOrderable, Ordering } from "./Ordering";
-
-export interface ISort {
-    /** Provides the name of the property by which the asset list is currently sorted. */
-    readonly by: SortBy;
-
-    /** Provides a value indicating whether the sort order is descending. */
-    readonly descending: boolean;
-}
+import { ISort, Ordering } from "./Ordering";
 
 export interface IModelParameters {
     readonly name?: string;
@@ -49,7 +41,7 @@ export interface ISerializedModel {
 }
 
 /** Represents the main model of the application. */
-export class Model implements IModel, IOrderable {
+export class Model implements IModel {
     /** Provides the name of the asset collection. */
     public name: string;
 
@@ -138,7 +130,11 @@ export class Model implements IModel, IOrderable {
         this.hasUnsavedChangesImpl = (params && params.hasUnsavedChanges) || false;
         this.currencyImpl = (params && params.currency) || this.currencies[0];
         this.onCurrencyChanged();
-        this.ordering = new Ordering(this, params && params.groupBy, params && params.sort);
+        this.ordering = new Ordering({
+            onGroupChanged: () => this.onGroupChanged(),
+            onSortChanged: () => this.doSort(),
+            groupBy: params && params.groupBy,
+            sort: params && params.sort });
         this.bundles = (params && params.createBundles.map((c) => c(this))) || [];
         this.update(...this.bundles);
     }
@@ -199,17 +195,6 @@ export class Model implements IModel, IOrderable {
             sort: this.ordering.sort,
             bundles: this.bundles.map((bundle) => bundle.toJSON()),
         };
-    }
-
-    /** @internal */
-    public onGroupChanged() {
-        this.groups.length = 0;
-        this.update();
-    }
-
-    /** @internal */
-    public onSortChanged() {
-        this.doSort();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -329,6 +314,11 @@ export class Model implements IModel, IOrderable {
 
     private onCurrencyChanged() {
         this.onCurrencyChangedImpl().catch((reason) => console.error(reason));
+    }
+
+    private onGroupChanged() {
+        this.groups.length = 0;
+        this.update();
     }
 
     private async onCurrencyChangedImpl() {
