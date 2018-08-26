@@ -88,6 +88,8 @@ export class Model implements IModel {
         this.onCurrencyChanged();
     }
 
+    public readonly groupingImpl: GroupingImpl;
+
     public get ordering() {
         return this.groupingImpl.ordering;
     }
@@ -133,7 +135,7 @@ export class Model implements IModel {
         this.currencyImpl = (params && params.currency) || this.currencies[0];
         this.onCurrencyChanged();
         this.groupingImpl = new GroupingImpl({
-            model: this,
+            parent: this,
             bundles: (params && params.createBundles.map((c) => c(this))) || [],
             groupBy: params && params.groupBy,
             sort: params && params.sort,
@@ -145,42 +147,11 @@ export class Model implements IModel {
         return JSON.stringify(this, undefined, 2);
     }
 
-    /** Adds `bundle` to the list of asset bundles. */
-    public addAsset(asset: Asset) {
-        const bundle = asset.bundle();
-        this.groupingImpl.bundles.push(bundle);
-        this.groupingImpl.update(bundle);
-        this.notifyChanged();
-    }
+    public notifyChanged() {
+        this.hasUnsavedChangesImpl = true;
 
-    /** Deletes `asset`. */
-    public deleteAsset(asset: Asset) {
-        const index = this.groupingImpl.bundles.findIndex((b) => b.assets.indexOf(asset) >= 0);
-
-        if (index >= 0) {
-            const bundle = this.groupingImpl.bundles[index];
-            bundle.deleteAsset(asset);
-
-            if (bundle.assets.length === 0) {
-                this.groupingImpl.bundles.splice(index, 1);
-            }
-
-            this.groupingImpl.update();
-            this.notifyChanged();
-        }
-    }
-
-    /** Replaces the bundle containing `oldAsset` with a bundle containing `newAsset`. */
-    public replaceAsset(oldAsset: Asset, newAsset: Asset) {
-        const index = this.groupingImpl.bundles.findIndex((b) => b.assets.indexOf(oldAsset) >= 0);
-
-        if (index >= 0) {
-            const bundle = newAsset.bundle();
-            // Apparently, Vue cannot detect the obvious way of replacing (this.bundles[index] = bundle):
-            // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
-            this.groupingImpl.bundles.splice(index, 1, bundle);
-            this.groupingImpl.update(bundle);
-            this.notifyChanged();
+        if (this.onChanged) {
+            this.onChanged();
         }
     }
 
@@ -200,8 +171,6 @@ export class Model implements IModel {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private readonly groupingImpl: GroupingImpl;
-
     private hasUnsavedChangesImpl: boolean;
 
     private currencyImpl: keyof typeof Currency;
@@ -213,13 +182,5 @@ export class Model implements IModel {
     private async onCurrencyChangedImpl() {
         this.exchangeRate = undefined;
         this.exchangeRate = await ExchangeRate.get(Currency[this.currency]);
-    }
-
-    private notifyChanged() {
-        this.hasUnsavedChangesImpl = true;
-
-        if (this.onChanged) {
-            this.onChanged();
-        }
     }
 }

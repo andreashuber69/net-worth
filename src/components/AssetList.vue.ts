@@ -107,7 +107,7 @@ export default class AssetList extends ComponentBase<Model> {
         const newAsset = await this.assetEditor.showDialog(this.checkedValue);
 
         if (newAsset) {
-            this.checkedValue.addAsset(newAsset);
+            this.checkedValue.groupingImpl.addAsset(newAsset);
         }
     }
 
@@ -115,12 +115,12 @@ export default class AssetList extends ComponentBase<Model> {
         const changedAsset = await this.assetEditor.showDialog(this.checkedValue, asset);
 
         if (changedAsset) {
-            this.checkedValue.replaceAsset(asset, changedAsset);
+            this.checkedValue.groupingImpl.replaceAsset(asset, changedAsset);
         }
     }
 
     public onDelete(asset: Asset) {
-        this.checkedValue.deleteAsset(asset);
+        this.checkedValue.groupingImpl.deleteAsset(asset);
     }
 
     public mounted() {

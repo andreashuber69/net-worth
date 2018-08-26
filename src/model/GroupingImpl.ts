@@ -15,8 +15,12 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetGroup } from "./AssetGroup";
 import { ISort, Ordering } from "./Ordering";
 
+interface IParent extends IModel {
+    notifyChanged(): void;
+}
+
 interface IBundleParameters {
-    model: IModel;
+    parent: IParent;
     bundles: AssetBundle[];
     groupBy: GroupBy | undefined;
     sort: ISort | undefined;
@@ -35,13 +39,48 @@ export class GroupingImpl {
             sort: params.sort,
         });
 
-        this.model = params.model;
+        this.parent = params.parent;
         this.bundles = params.bundles;
         this.update(...this.bundles);
     }
 
-    public update(...newBundles: AssetBundle[]) {
-        this.updateImpl(newBundles).catch((error) => console.error(error));
+    /** Adds `bundle` to the list of asset bundles. */
+    public addAsset(asset: Asset) {
+        const bundle = asset.bundle();
+        this.bundles.push(bundle);
+        this.update(bundle);
+        this.parent.notifyChanged();
+    }
+
+    /** Deletes `asset`. */
+    public deleteAsset(asset: Asset) {
+        const index = this.bundles.findIndex((b) => b.assets.indexOf(asset) >= 0);
+
+        if (index >= 0) {
+            const bundle = this.bundles[index];
+            bundle.deleteAsset(asset);
+
+            if (bundle.assets.length === 0) {
+                this.bundles.splice(index, 1);
+            }
+
+            this.update();
+            this.parent.notifyChanged();
+        }
+    }
+
+    /** Replaces the bundle containing `oldAsset` with a bundle containing `newAsset`. */
+    public replaceAsset(oldAsset: Asset, newAsset: Asset) {
+        const index = this.bundles.findIndex((b) => b.assets.indexOf(oldAsset) >= 0);
+
+        if (index >= 0) {
+            const bundle = newAsset.bundle();
+            // Apparently, Vue cannot detect the obvious way of replacing (this.bundles[index] = bundle):
+            // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
+            this.bundles.splice(index, 1, bundle);
+            this.update(bundle);
+            this.parent.notifyChanged();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,7 +91,7 @@ export class GroupingImpl {
         return id;
     }
 
-    private readonly model: IModel;
+    private readonly parent: IParent;
 
     private onGroupChanged() {
         this.groups.length = 0;
@@ -65,6 +104,10 @@ export class GroupingImpl {
         for (const group of this.groups) {
             group.assets.sort((l, r) => this.compare(l, r));
         }
+    }
+
+    private update(...newBundles: AssetBundle[]) {
+        this.updateImpl(newBundles).catch((error) => console.error(error));
     }
 
     private async updateImpl(newBundles: AssetBundle[]) {
@@ -105,7 +148,7 @@ export class GroupingImpl {
             const existingGroup = this.groups.find((g) => g[this.ordering.groupBy] === newGroup[0]);
 
             if (existingGroup === undefined) {
-                this.groups.push(new AssetGroup(this.model, newGroup[1]));
+                this.groups.push(new AssetGroup(this.parent, newGroup[1]));
             } else {
                 existingGroup.assets.splice(0, existingGroup.assets.length, ...newGroup[1]);
             }
