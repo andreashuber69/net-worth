@@ -86,23 +86,13 @@ export class AssetInput {
     ];
 
     /** @internal */
-    public static parseBundle(model: IModel, rawBundle: Unknown | null | undefined) {
+    public static parseBundle(rawBundle: Unknown | null | undefined) {
         if (!Value.hasObjectProperty(rawBundle, AssetBundle.primaryAssetName)) {
             return ParseError.getPropertyTypeMismatch(AssetBundle.primaryAssetName, rawBundle, {});
         }
 
-        const asset = this.parseAsset(model, rawBundle[AssetBundle.primaryAssetName]);
+        const rawAsset = rawBundle[AssetBundle.primaryAssetName];
 
-        if (!(asset instanceof Asset)) {
-            return asset;
-        }
-
-        return asset.bundle(rawBundle);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static parseAsset(model: IModel, rawAsset: Unknown | null | undefined) {
         if (!Value.hasStringProperty(rawAsset, Asset.typeName)) {
             return ParseError.getPropertyTypeMismatch(Asset.typeName, rawAsset, "");
         }
@@ -119,8 +109,10 @@ export class AssetInput {
             return validationResult;
         }
 
-        return assetInfo.createAsset(model, rawAsset);
+        return (model: IModel) => assetInfo.createAsset(model, rawAsset).bundle(rawBundle);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static hasProperties(validationResult: true | string, raw: Unknown): raw is IAssetIntersection {
         return validationResult === true;

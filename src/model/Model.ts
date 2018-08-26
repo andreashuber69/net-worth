@@ -27,24 +27,31 @@ export interface ISort {
     readonly descending: boolean;
 }
 
+export interface IModelParameters {
+    readonly name?: string;
+    readonly wasSavedToFile?: boolean;
+    readonly hasUnsavedChanges?: boolean;
+    readonly currency?: keyof typeof Currency;
+    readonly groupBy?: GroupBy;
+    readonly sort?: ISort;
+    readonly createBundles: Array<(model: IModel) => AssetBundle>;
+}
+
 export interface ISerializedModel {
-    version: number;
-    name: string;
-    wasSavedToFile: boolean;
-    hasUnsavedChanges: boolean;
-    currency: string;
-    groupBy: GroupBy;
-    sort: ISort;
-    bundles: ISerializedBundle[];
+    readonly version: number;
+    readonly name: string;
+    readonly wasSavedToFile: boolean;
+    readonly hasUnsavedChanges: boolean;
+    readonly currency: string;
+    readonly groupBy: GroupBy;
+    readonly sort: ISort;
+    readonly bundles: ISerializedBundle[];
 }
 
 /** Represents the main model of the application. */
 export class Model implements IModel, IOrderable {
-    /** @internal */
-    public readonly bundles = new Array<AssetBundle>();
-
     /** Provides the name of the asset collection. */
-    public name = "Unnamed";
+    public name: string;
 
     /** Provides the file extension. */
     public readonly fileExtension = ".assets";
@@ -53,7 +60,7 @@ export class Model implements IModel, IOrderable {
         return `${this.name}${this.fileExtension}`;
     }
 
-    public wasSavedToFile = false;
+    public wasSavedToFile: boolean;
 
     public get hasUnsavedChanges() {
         return this.hasUnsavedChangesImpl;
@@ -86,10 +93,10 @@ export class Model implements IModel, IOrderable {
     /** Provides the selected currency. */
     public set currency(currency: keyof typeof Currency) {
         this.currencyImpl = currency;
-        this.onCurrencyChanged().catch((reason) => console.error(reason));
+        this.onCurrencyChanged();
     }
 
-    public readonly order = new OrderInfo(this);
+    public readonly order: OrderInfo;
 
     /** Provides the asset groups. */
     public readonly groups = new Array<AssetGroup>();
@@ -123,6 +130,17 @@ export class Model implements IModel, IOrderable {
 
     /** Provides the method that is called when the model has changed. */
     public onChanged: (() => void) | undefined = undefined;
+
+    public constructor(params?: IModelParameters) {
+        this.name = (params && params.name) || "Unnamed";
+        this.wasSavedToFile = (params && params.wasSavedToFile) || false;
+        this.hasUnsavedChangesImpl = (params && params.hasUnsavedChanges) || false;
+        this.currencyImpl = (params && params.currency) || this.currencies[0];
+        this.onCurrencyChanged();
+        this.order = new OrderInfo(this, params && params.groupBy, params && params.sort);
+        this.bundles = (params && params.createBundles.map((c) => c(this))) || [];
+        this.update(...this.bundles);
+    }
 
     /** Returns a JSON-formatted string representing the model. */
     public toJsonString() {
@@ -183,11 +201,6 @@ export class Model implements IModel, IOrderable {
     }
 
     /** @internal */
-    public update(...newBundles: AssetBundle[]) {
-        this.updateImpl(newBundles).catch((error) => console.error(error));
-    }
-
-    /** @internal */
     public onGroupChanged() {
         this.groups.length = 0;
         this.update();
@@ -206,9 +219,15 @@ export class Model implements IModel, IOrderable {
         return id;
     }
 
-    private currencyImpl = this.currencies[0];
+    private readonly bundles: AssetBundle[];
 
-    private hasUnsavedChangesImpl = false;
+    private hasUnsavedChangesImpl: boolean;
+
+    private currencyImpl: keyof typeof Currency;
+
+    private update(...newBundles: AssetBundle[]) {
+        this.updateImpl(newBundles).catch((error) => console.error(error));
+    }
 
     private async updateImpl(newBundles: AssetBundle[]) {
         this.updateGroups();
@@ -305,7 +324,11 @@ export class Model implements IModel, IOrderable {
         }
     }
 
-    private async onCurrencyChanged() {
+    private onCurrencyChanged() {
+        this.onCurrencyChangedImpl().catch((reason) => console.error(reason));
+    }
+
+    private async onCurrencyChangedImpl() {
         this.exchangeRate = undefined;
         this.exchangeRate = await ExchangeRate.get(Currency[this.currency]);
     }

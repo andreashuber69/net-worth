@@ -10,11 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { GroupBy } from "./Asset";
+import { GroupBy, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetInput } from "./AssetInput";
 import { Currency } from "./Currency";
-import { ISerializedModel, ISort, Model } from "./Model";
+import { IModelParameters, ISerializedModel, ISort, Model } from "./Model";
 import { OrderInfo } from "./OrderInfo";
 import { ParseError } from "./ParseError";
 import { Unknown } from "./Unknown";
@@ -46,15 +46,7 @@ export class ModelParser {
             return ParseError.getUnknownPropertyValue(this.versionName, version);
         }
 
-        const model = new Model();
-        this.parseOptionalProperties(rawModel, model);
-        this.parseOptionalViewProperties(rawModel, model);
-
-        if (!Value.hasArrayProperty(rawModel, this.bundlesName)) {
-            return ParseError.getPropertyTypeMismatch(this.bundlesName, rawModel, []);
-        }
-
-        return this.parseBundles(rawModel.bundles, model);
+        return this.parseBundles(rawModel);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,30 +62,68 @@ export class ModelParser {
     private static readonly sortDescendingName = ModelParser.getSortName("descending");
     private static readonly bundlesName = ModelParser.getModelName("bundles");
 
-    private static parseOptionalProperties(rawModel: Unknown, model: Model) {
+    private static getModelName<T extends keyof ISerializedModel>(name: T) {
+        return name;
+    }
+
+    private static getSortName<T extends keyof ISort>(name: T) {
+        return name;
+    }
+
+    private static parseBundles(rawModel: Unknown) {
+        if (!Value.hasArrayProperty(rawModel, this.bundlesName)) {
+            return ParseError.getPropertyTypeMismatch(this.bundlesName, rawModel, []);
+        }
+
+        const params: IModelParameters = {
+            ...this.parseOptionalProperties(rawModel),
+            ...this.parseOptionalViewProperties(rawModel),
+            createBundles: new Array<(model: IModel) => AssetBundle>(),
+        };
+
+        for (const rawBundle of rawModel.bundles) {
+            const createBundle = AssetInput.parseBundle(rawBundle);
+
+            if (!(createBundle instanceof Function)) {
+                return createBundle;
+            }
+
+            params.createBundles.push(createBundle);
+        }
+
+        return new Model(params);
+    }
+
+    private static parseOptionalProperties(rawModel: Unknown) {
+        const result: { name?: string; wasSavedToFile?: boolean; hasUnsavedChanges?: boolean } = {};
+
         if (Value.hasStringProperty(rawModel, this.nameName)) {
             const name = rawModel[this.nameName];
 
             if (name.length > 0) {
-                model.name = name;
+                result.name = name;
             }
         }
 
         if (Value.hasBooleanProperty(rawModel, this.wasSavedToFileName)) {
-            model.wasSavedToFile = rawModel[this.wasSavedToFileName];
+            result.wasSavedToFile = rawModel[this.wasSavedToFileName];
         }
 
         if (Value.hasBooleanProperty(rawModel, this.hasUnsavedChangesName)) {
-            model.hasUnsavedChanges = rawModel[this.hasUnsavedChangesName];
+            result.hasUnsavedChanges = rawModel[this.hasUnsavedChangesName];
         }
+
+        return result;
     }
 
-    private static parseOptionalViewProperties(rawModel: Unknown, model: Model) {
+    private static parseOptionalViewProperties(rawModel: Unknown) {
+        const result: { currency?: keyof typeof Currency; groupBy?: GroupBy; sort?: ISort } = {};
+
         if (Value.hasStringProperty(rawModel, this.currencyName)) {
             const currency = rawModel[this.currencyName];
 
             if (currency in Currency) {
-                model.currency = currency as keyof typeof Currency;
+                result.currency = currency as keyof typeof Currency;
             }
         }
 
@@ -101,7 +131,7 @@ export class ModelParser {
             const groupBy = rawModel[this.groupByName];
 
             if (this.isGroupBy(groupBy)) {
-                model.order.groupBy = groupBy;
+                result.groupBy = groupBy;
             }
         }
 
@@ -109,33 +139,11 @@ export class ModelParser {
             const sort = rawModel[this.sortName];
 
             if (this.isSort(sort)) {
-                model.order.sort = sort;
+                result.sort = sort;
             }
         }
-    }
 
-    private static parseBundles(rawBundles: Array<Unknown | null | undefined>, model: Model) {
-        for (const rawBundle of rawBundles) {
-            const bundle = AssetInput.parseBundle(model, rawBundle);
-
-            if (!(bundle instanceof AssetBundle)) {
-                return bundle;
-            }
-
-            model.bundles.push(bundle);
-        }
-
-        model.update(...model.bundles);
-
-        return model;
-    }
-
-    private static getModelName<T extends keyof ISerializedModel>(name: T) {
-        return name;
-    }
-
-    private static getSortName<T extends keyof ISort>(name: T) {
-        return name;
+        return result;
     }
 
     private static isSort(sort: Unknown): sort is ISort {

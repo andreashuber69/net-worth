@@ -94,7 +94,9 @@ export class OrderInfo implements IOrderInfo {
         this.orderable.onSortChanged();
     }
 
-    public constructor(private readonly orderable: IOrderable) {
+    public constructor(private readonly orderable: IOrderable, groupBy: GroupBy | undefined, sort: ISort | undefined) {
+        this.groupByImpl = groupBy || Asset.typeName;
+        this.sortImpl = sort || { by: Asset.totalValueName, descending: true };
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +105,6 @@ export class OrderInfo implements IOrderInfo {
         return `${str[0].toUpperCase()}${str.substr(1)}`;
     }
 
-    private groupByImpl: GroupBy = Asset.typeName;
-
-    private sortImpl: ISort = { by: Asset.totalValueName, descending: true };
+    private groupByImpl: GroupBy;
+    private sortImpl: ISort;
 }
