@@ -11,13 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Application } from "./Application";
-import { Asset, GroupBy, IModel, SortBy } from "./Asset";
+import { Asset, GroupBy, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
-import { AssetGroup } from "./AssetGroup";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
-import { ISort, Ordering } from "./Ordering";
+import { GroupingImpl } from "./GroupingImpl";
+import { ISort } from "./Ordering";
 
 export interface IModelParameters {
     readonly name?: string;
@@ -88,17 +88,19 @@ export class Model implements IModel {
         this.onCurrencyChanged();
     }
 
-    public readonly ordering: Ordering;
+    public get ordering() {
+        return this.groupingImpl.ordering;
+    }
 
     public get isEmpty() {
-        return this.groups.length === 0;
+        return this.groupingImpl.groups.length === 0;
     }
 
     /** Provides the assets to value. */
     public get assets() {
         const result: Asset[] = [];
 
-        for (const group of this.groups) {
+        for (const group of this.groupingImpl.groups) {
             result.push(group);
 
             if (group.isExpanded) {
@@ -117,7 +119,7 @@ export class Model implements IModel {
 
     /** Provides the sum of all asset total values. */
     public get grandTotalValue() {
-        return this.groups.reduce<number | undefined>(
+        return this.groupingImpl.groups.reduce<number | undefined>(
             (s, a) => s === undefined ? undefined : (a.totalValue === undefined ? undefined : s + a.totalValue), 0);
     }
 
@@ -130,13 +132,12 @@ export class Model implements IModel {
         this.hasUnsavedChangesImpl = (params && params.hasUnsavedChanges) || false;
         this.currencyImpl = (params && params.currency) || this.currencies[0];
         this.onCurrencyChanged();
-        this.ordering = new Ordering({
-            onGroupChanged: () => this.onGroupChanged(),
-            onSortChanged: () => this.doSort(),
+        this.groupingImpl = new GroupingImpl({
+            model: this,
+            bundles: (params && params.createBundles.map((c) => c(this))) || [],
             groupBy: params && params.groupBy,
-            sort: params && params.sort });
-        this.bundles = (params && params.createBundles.map((c) => c(this))) || [];
-        this.update(...this.bundles);
+            sort: params && params.sort,
+        });
     }
 
     /** Returns a JSON-formatted string representing the model. */
@@ -147,38 +148,38 @@ export class Model implements IModel {
     /** Adds `bundle` to the list of asset bundles. */
     public addAsset(asset: Asset) {
         const bundle = asset.bundle();
-        this.bundles.push(bundle);
-        this.update(bundle);
+        this.groupingImpl.bundles.push(bundle);
+        this.groupingImpl.update(bundle);
         this.notifyChanged();
     }
 
     /** Deletes `asset`. */
     public deleteAsset(asset: Asset) {
-        const index = this.bundles.findIndex((b) => b.assets.indexOf(asset) >= 0);
+        const index = this.groupingImpl.bundles.findIndex((b) => b.assets.indexOf(asset) >= 0);
 
         if (index >= 0) {
-            const bundle = this.bundles[index];
+            const bundle = this.groupingImpl.bundles[index];
             bundle.deleteAsset(asset);
 
             if (bundle.assets.length === 0) {
-                this.bundles.splice(index, 1);
+                this.groupingImpl.bundles.splice(index, 1);
             }
 
-            this.update();
+            this.groupingImpl.update();
             this.notifyChanged();
         }
     }
 
     /** Replaces the bundle containing `oldAsset` with a bundle containing `newAsset`. */
     public replaceAsset(oldAsset: Asset, newAsset: Asset) {
-        const index = this.bundles.findIndex((b) => b.assets.indexOf(oldAsset) >= 0);
+        const index = this.groupingImpl.bundles.findIndex((b) => b.assets.indexOf(oldAsset) >= 0);
 
         if (index >= 0) {
             const bundle = newAsset.bundle();
             // Apparently, Vue cannot detect the obvious way of replacing (this.bundles[index] = bundle):
             // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
-            this.bundles.splice(index, 1, bundle);
-            this.update(bundle);
+            this.groupingImpl.bundles.splice(index, 1, bundle);
+            this.groupingImpl.update(bundle);
             this.notifyChanged();
         }
     }
@@ -193,132 +194,20 @@ export class Model implements IModel {
             currency: this.currency,
             groupBy: this.ordering.groupBy,
             sort: this.ordering.sort,
-            bundles: this.bundles.map((bundle) => bundle.toJSON()),
+            bundles: this.groupingImpl.bundles.map((bundle) => bundle.toJSON()),
         };
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static async queryBundleData(bundle: AssetBundle, id: number) {
-        await bundle.queryData();
-
-        return id;
-    }
-
-    private readonly groups = new Array<AssetGroup>();
-
-    private readonly bundles: AssetBundle[];
+    private readonly groupingImpl: GroupingImpl;
 
     private hasUnsavedChangesImpl: boolean;
 
     private currencyImpl: keyof typeof Currency;
 
-    private update(...newBundles: AssetBundle[]) {
-        this.updateImpl(newBundles).catch((error) => console.error(error));
-    }
-
-    private async updateImpl(newBundles: AssetBundle[]) {
-        this.updateGroups();
-        const promises = new Map<number, Promise<number>>(
-            newBundles.map<[number, Promise<number>]>((b, i) => [ i, Model.queryBundleData(b, i) ]));
-        const delayId = Number.MAX_SAFE_INTEGER;
-
-        while (promises.size > 0) {
-            if (!promises.has(delayId)) {
-                promises.set(delayId, new Promise((resolve) => setTimeout(resolve, 1000, delayId)));
-            }
-
-            const index = await Promise.race(promises.values());
-
-            if (index === delayId) {
-                this.updateGroups();
-            }
-
-            promises.delete(index);
-        }
-    }
-
-    private updateGroups() {
-        const newGroups = this.getGroups();
-
-        // Remove no longer existing groups
-        for (let index = 0; index < this.groups.length;) {
-            if (!newGroups.has(this.groups[index][this.ordering.groupBy])) {
-                this.groups.splice(index, 1);
-            } else {
-                ++index;
-            }
-        }
-
-        // Update existing groups with new assets
-        for (const newGroup of newGroups) {
-            const existingGroup = this.groups.find((g) => g[this.ordering.groupBy] === newGroup[0]);
-
-            if (existingGroup === undefined) {
-                this.groups.push(new AssetGroup(this, newGroup[1]));
-            } else {
-                existingGroup.assets.splice(0, existingGroup.assets.length, ...newGroup[1]);
-            }
-        }
-
-        this.doSort();
-    }
-
-    private getGroups() {
-        const result = new Map<string, Asset[]>();
-
-        for (const bundle of this.bundles) {
-            for (const asset of bundle.assets) {
-                const groupName = asset[this.ordering.groupBy];
-                const groupAssets = result.get(groupName);
-
-                if (groupAssets === undefined) {
-                    result.set(groupName, [ asset ]);
-                } else {
-                    groupAssets.push(asset);
-                }
-            }
-        }
-
-        return result;
-    }
-
-    private doSort() {
-        this.groups.sort((l, r) => this.compare(l, r));
-
-        for (const group of this.groups) {
-            group.assets.sort((l, r) => this.compare(l, r));
-        }
-    }
-
-    private compare(left: Asset, right: Asset) {
-        return (this.ordering.sort.descending ? -1 : 1) * this.compareImpl(left, right);
-    }
-
-    private compareImpl(left: Asset, right: Asset) {
-        const leftProperty = left[this.ordering.sort.by];
-        const rightProperty = right[this.ordering.sort.by];
-
-        if (leftProperty === rightProperty) {
-            return 0;
-        } else if (leftProperty === undefined) {
-            return -1;
-        } else if (rightProperty === undefined) {
-            return 1;
-        } else if (leftProperty < rightProperty) {
-            return -1;
-        } else {
-            return 1;
-        }
-    }
-
     private onCurrencyChanged() {
         this.onCurrencyChangedImpl().catch((reason) => console.error(reason));
-    }
-
-    private onGroupChanged() {
-        this.groups.length = 0;
-        this.update();
     }
 
     private async onCurrencyChangedImpl() {
