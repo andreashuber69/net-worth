@@ -44,8 +44,23 @@ export class GroupingImpl {
         this.update(...this.bundles);
     }
 
-    /** Adds `bundle` to the list of asset bundles. */
-    public addAsset(asset: Asset) {
+    /** Provides the grouped assets. */
+    public get grouped() {
+        const result: Asset[] = [];
+
+        for (const group of this.groups) {
+            result.push(group);
+
+            if (group.isExpanded) {
+                result.push(...group.assets);
+            }
+        }
+
+        return result;
+    }
+
+    /** Adds `asset` to the list of asset bundles. */
+    public add(asset: Asset) {
         const bundle = asset.bundle();
         this.bundles.push(bundle);
         this.update(bundle);
@@ -53,7 +68,7 @@ export class GroupingImpl {
     }
 
     /** Deletes `asset`. */
-    public deleteAsset(asset: Asset) {
+    public delete(asset: Asset) {
         const index = this.bundles.findIndex((b) => b.assets.indexOf(asset) >= 0);
 
         if (index >= 0) {
@@ -70,7 +85,7 @@ export class GroupingImpl {
     }
 
     /** Replaces the bundle containing `oldAsset` with a bundle containing `newAsset`. */
-    public replaceAsset(oldAsset: Asset, newAsset: Asset) {
+    public replace(oldAsset: Asset, newAsset: Asset) {
         const index = this.bundles.findIndex((b) => b.assets.indexOf(oldAsset) >= 0);
 
         if (index >= 0) {

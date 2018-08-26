@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Application } from "./Application";
-import { Asset, GroupBy, IModel } from "./Asset";
+import { GroupBy, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
@@ -88,29 +88,14 @@ export class Model implements IModel {
         this.onCurrencyChanged();
     }
 
-    public readonly groupingImpl: GroupingImpl;
+    public readonly assets: GroupingImpl;
 
     public get ordering() {
-        return this.groupingImpl.ordering;
+        return this.assets.ordering;
     }
 
     public get isEmpty() {
-        return this.groupingImpl.groups.length === 0;
-    }
-
-    /** Provides the assets to value. */
-    public get assets() {
-        const result: Asset[] = [];
-
-        for (const group of this.groupingImpl.groups) {
-            result.push(group);
-
-            if (group.isExpanded) {
-                result.push(...group.assets);
-            }
-        }
-
-        return result;
+        return this.assets.groups.length === 0;
     }
 
     /**
@@ -121,7 +106,7 @@ export class Model implements IModel {
 
     /** Provides the sum of all asset total values. */
     public get grandTotalValue() {
-        return this.groupingImpl.groups.reduce<number | undefined>(
+        return this.assets.groups.reduce<number | undefined>(
             (s, a) => s === undefined ? undefined : (a.totalValue === undefined ? undefined : s + a.totalValue), 0);
     }
 
@@ -134,7 +119,7 @@ export class Model implements IModel {
         this.hasUnsavedChangesImpl = (params && params.hasUnsavedChanges) || false;
         this.currencyImpl = (params && params.currency) || this.currencies[0];
         this.onCurrencyChanged();
-        this.groupingImpl = new GroupingImpl({
+        this.assets = new GroupingImpl({
             parent: this,
             bundles: (params && params.createBundles.map((c) => c(this))) || [],
             groupBy: params && params.groupBy,
@@ -165,7 +150,7 @@ export class Model implements IModel {
             currency: this.currency,
             groupBy: this.ordering.groupBy,
             sort: this.ordering.sort,
-            bundles: this.groupingImpl.bundles.map((bundle) => bundle.toJSON()),
+            bundles: this.assets.bundles.map((bundle) => bundle.toJSON()),
         };
     }
 
