@@ -13,10 +13,10 @@
 import { Application } from "./Application";
 import { GroupBy, IModel } from "./Asset";
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
+import { AssetCollection } from "./AssetCollection";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
-import { GroupingImpl } from "./GroupingImpl";
 import { ISort } from "./Ordering";
 
 export interface IModelParameters {
@@ -88,7 +88,7 @@ export class Model implements IModel {
         this.onCurrencyChanged();
     }
 
-    public readonly assets: GroupingImpl;
+    public readonly assets: AssetCollection;
 
     public get ordering() {
         return this.assets.ordering;
@@ -119,7 +119,7 @@ export class Model implements IModel {
         this.hasUnsavedChangesImpl = (params && params.hasUnsavedChanges) || false;
         this.currencyImpl = (params && params.currency) || this.currencies[0];
         this.onCurrencyChanged();
-        this.assets = new GroupingImpl({
+        this.assets = new AssetCollection({
             parent: this,
             bundles: (params && params.createBundles.map((c) => c(this))) || [],
             groupBy: params && params.groupBy,

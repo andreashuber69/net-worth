@@ -19,19 +19,19 @@ interface IParent extends IModel {
     notifyChanged(): void;
 }
 
-interface IBundleParameters {
+interface IAssetCollectionParameters {
     parent: IParent;
     bundles: AssetBundle[];
     groupBy: GroupBy | undefined;
     sort: ISort | undefined;
 }
 
-export class GroupingImpl {
+export class AssetCollection {
     public readonly bundles: AssetBundle[];
     public readonly groups = new Array<AssetGroup>();
     public readonly ordering: Ordering;
 
-    public constructor(params: IBundleParameters) {
+    public constructor(params: IAssetCollectionParameters) {
         this.ordering = new Ordering({
             onGroupChanged: () => this.onGroupChanged(),
             onSortChanged: () => this.doSort(),
@@ -59,7 +59,7 @@ export class GroupingImpl {
         return result;
     }
 
-    /** Adds `asset` to the list of asset bundles. */
+    /** Bundles and adds `asset` to the list of asset bundles. */
     public add(asset: Asset) {
         const bundle = asset.bundle();
         this.bundles.push(bundle);
@@ -128,7 +128,7 @@ export class GroupingImpl {
     private async updateImpl(newBundles: AssetBundle[]) {
         this.updateGroups();
         const promises = new Map<number, Promise<number>>(
-            newBundles.map<[number, Promise<number>]>((b, i) => [ i, GroupingImpl.queryBundleData(b, i) ]));
+            newBundles.map<[number, Promise<number>]>((b, i) => [ i, AssetCollection.queryBundleData(b, i) ]));
         const delayId = Number.MAX_SAFE_INTEGER;
 
         while (promises.size > 0) {
