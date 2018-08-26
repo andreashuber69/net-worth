@@ -98,8 +98,9 @@ export class Model implements IModel, IOrderable {
 
     public readonly order: OrderInfo;
 
-    /** Provides the asset groups. */
-    public readonly groups = new Array<AssetGroup>();
+    public get isEmpty() {
+        return this.groups.length === 0;
+    }
 
     /** Provides the assets to value. */
     public get assets() {
@@ -172,13 +173,13 @@ export class Model implements IModel, IOrderable {
         }
     }
 
-    /** Replaces the bundle containing `oldAsset` with `newBundle`. */
+    /** Replaces the bundle containing `oldAsset` with a bundle containing `newAsset`. */
     public replaceAsset(oldAsset: Asset, newAsset: Asset) {
         const index = this.bundles.findIndex((b) => b.assets.indexOf(oldAsset) >= 0);
 
         if (index >= 0) {
             const bundle = newAsset.bundle();
-            // Apparently, Vue cannot detect the obvious way of replacing (this.bundles[index] = newBundle):
+            // Apparently, Vue cannot detect the obvious way of replacing (this.bundles[index] = bundle):
             // https://codingexplained.com/coding/front-end/vue-js/array-change-detection
             this.bundles.splice(index, 1, bundle);
             this.update(bundle);
@@ -218,6 +219,8 @@ export class Model implements IModel, IOrderable {
 
         return id;
     }
+
+    private readonly groups = new Array<AssetGroup>();
 
     private readonly bundles: AssetBundle[];
 
