@@ -125,24 +125,30 @@ Of course, there are also some (minor) disadvantages:
 ## Technology
 
 <p align="center">
+  <a href="https://www.npmjs.com/">
+	  <svg viewBox="0 0 18 7">
+      <path fill="#CB3837" d="M0 0v6h5v1h4V6h9V0"></path>
+      <path fill="#FFF" d="M1 1v4h2V2h1v3h1V1h1v5h2V2h1v2H8v1h2V1h1v4h2V2h1v3h1V2h1v3h1V1"></path>
+    </svg>
+  </a>
   <a href="http://http://typescriptlang.org">
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/typescript.svg?sanitize=true"
-      alt="Typescript" height="50">
+      alt="Typescript" title="Typescript" height="50">
   </a>
   <a href="https://vuetifyjs.com">
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/vuetify.svg?sanitize=true"
-      alt="Vuetify" height="50">
+      alt="Vuetify" title="Vuetify" height="50">
   </a>
   <a href="https://vuejs.org">
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/vuejs.png"
-      alt="Vue.js" height="50">
+      alt="Vue.js" title="Vue.js" height="50">
   </a>
   <a href="https://webpack.js.org/">
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/webpack.svg?sanitize=true"
-      alt="webpack" height="50">
+      alt="webpack" title="webpack" height="50">
   </a>
 </p>
