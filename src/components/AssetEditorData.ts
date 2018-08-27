@@ -93,14 +93,18 @@ export class AssetEditorData implements IAuxProperties<string> {
     }
 
     private static isCryptoWallet(asset?: IAssetUnion): asset is CryptoWallet {
-        return (asset && (asset.superType === CryptoWallet.superType)) || false;
+        return this.isType(CryptoWallet.superType, asset);
     }
 
     private static isPreciousMetalAsset(asset?: IAssetUnion): asset is PreciousMetalAsset {
-        return (asset && (asset.superType === PreciousMetalAsset.superType)) || false;
+        return this.isType(PreciousMetalAsset.superType, asset);
     }
 
     private static isMiscAsset(asset?: IAssetUnion): asset is MiscAsset {
-        return (asset && (asset.superType === MiscAsset.superType)) || false;
+        return this.isType(MiscAsset.superType, asset);
+    }
+
+    private static isType(superType: string, asset?: IAssetUnion) {
+        return (asset && (asset.superType === superType)) || false;
     }
 }
