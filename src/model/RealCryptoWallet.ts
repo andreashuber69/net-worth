@@ -87,8 +87,11 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         };
     }
 
-    /**
-     * Creates a new [[CryptoWallet]] instance.
+    /** Creates a new [[RealCryptoWallet]] instance.
+     * @description If a non-empty string is passed for [[IRealCryptoWalletParameters.address]], then an attempt is made
+     * to retrieve the wallet balance, which is then added to whatever is passed for
+     * [[IRealCryptoWalletParameters.quantity]]. It therefore usually only makes sense to specify either address or
+     * quantity, not both.
      * @param parent The parent model to which this asset belongs.
      * @param params The crypto wallet parameters.
      */

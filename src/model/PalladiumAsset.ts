@@ -18,11 +18,6 @@ import { PreciousMetalAsset } from "./PreciousMetalAsset";
 export class PalladiumAsset extends PreciousMetalAsset {
     public readonly type = "Palladium";
 
-    /**
-     * Creates a new [[PalladiumAsset]] instance.
-     * @param parent The parent model to which this asset belongs.
-     * @param props The precious metal asset properties.
-     */
     public constructor(parent: IModel, props: IPreciousMetalAssetProperties) {
         super(parent, props, "lppm/pall.json");
     }

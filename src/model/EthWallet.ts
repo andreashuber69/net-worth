@@ -23,13 +23,6 @@ import { Value } from "./Value";
 export class EthWallet extends RealCryptoWallet {
     public readonly type = "Ethereum";
 
-    /** Creates a new [[EthWallet]] instance.
-     * @description If a non-empty string is passed for [[ICryptoWalletProperties.address]], then an attempt is made to
-     * retrieve the wallet balance, which is then added to whatever is passed for [[ICryptoWalletProperties.quantity]].
-     * It therefore usually only makes sense to specify either address or quantity, not both.
-     * @param parent The parent model to which this asset belongs.
-     * @param props The crypto wallet properties.
-     */
     public constructor(parent: IModel, props: ICryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "ETH", "ethereum"));
     }

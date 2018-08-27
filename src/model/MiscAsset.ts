@@ -58,11 +58,6 @@ export class MiscAsset extends Asset implements IMiscAsset {
     /** @internal */
     public readonly superType = MiscAsset.superType;
 
-    /**
-     * Creates a new [[MiscAsset]] instance.
-     * @param parent The parent model to which this asset belongs.
-     * @param props The miscellaneous asset properties.
-     */
     public constructor(parent: IModel, props: IMiscAssetProperties) {
         super(parent);
         this.description = props.description;

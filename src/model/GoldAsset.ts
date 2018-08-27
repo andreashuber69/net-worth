@@ -18,11 +18,6 @@ import { PreciousMetalAsset } from "./PreciousMetalAsset";
 export class GoldAsset extends PreciousMetalAsset {
     public readonly type = "Gold";
 
-    /**
-     * Creates a new [[GoldAsset]] instance.
-     * @param parent The parent model to which this asset belongs.
-     * @param props The precious metal asset properties.
-     */
     public constructor(parent: IModel, props: IPreciousMetalAssetProperties) {
         super(parent, props, "lbma/gold.json");
     }
