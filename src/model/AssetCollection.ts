@@ -169,18 +169,22 @@ export class AssetCollection {
         const result = new Map<string, Asset[]>();
 
         for (const bundle of this.bundles) {
-            for (const asset of bundle.assets) {
-                const groupName = asset[this.ordering.groupBy];
-                const groupAssets = result.get(groupName);
-
-                if (groupAssets === undefined) {
-                    result.set(groupName, [ asset ]);
-                } else {
-                    groupAssets.push(asset);
-                }
-            }
+            this.addGroups(result, bundle.assets);
         }
 
         return result;
+    }
+
+    private addGroups(result: Map<string, Asset[]>, assets: Asset[]) {
+        for (const asset of assets) {
+            const groupName = asset[this.ordering.groupBy];
+            const groupAssets = result.get(groupName);
+
+            if (groupAssets === undefined) {
+                result.set(groupName, [asset]);
+            } else {
+                groupAssets.push(asset);
+            }
+        }
     }
 }
