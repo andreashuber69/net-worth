@@ -12,6 +12,7 @@
 
 import { Asset, GroupBy, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
+import { AssetCollectionUtility } from "./AssetCollectionUtility";
 import { AssetGroup } from "./AssetGroup";
 import { ISort, Ordering } from "./Ordering";
 
@@ -34,7 +35,7 @@ export class AssetCollection {
     public constructor(params: IAssetCollectionParameters) {
         this.ordering = new Ordering({
             onGroupChanged: () => this.onGroupChanged(),
-            onSortChanged: () => this.doSort(),
+            onSortChanged: () => AssetCollectionUtility.sort(this.groups, this.ordering.sort),
             groupBy: params.groupBy,
             sort: params.sort,
         });
@@ -113,14 +114,6 @@ export class AssetCollection {
         this.update();
     }
 
-    private doSort() {
-        this.groups.sort((l, r) => this.compare(l, r));
-
-        for (const group of this.groups) {
-            group.assets.sort((l, r) => this.compare(l, r));
-        }
-    }
-
     private update(...newBundles: AssetBundle[]) {
         this.updateImpl(newBundles).catch((error) => console.error(error));
     }
@@ -169,7 +162,7 @@ export class AssetCollection {
             }
         }
 
-        this.doSort();
+        AssetCollectionUtility.sort(this.groups, this.ordering.sort);
     }
 
     private getGroups() {
@@ -189,26 +182,5 @@ export class AssetCollection {
         }
 
         return result;
-    }
-
-    private compare(left: Asset, right: Asset) {
-        return (this.ordering.sort.descending ? -1 : 1) * this.compareImpl(left, right);
-    }
-
-    private compareImpl(left: Asset, right: Asset) {
-        const leftProperty = left[this.ordering.sort.by];
-        const rightProperty = right[this.ordering.sort.by];
-
-        if (leftProperty === rightProperty) {
-            return 0;
-        } else if (leftProperty === undefined) {
-            return -1;
-        } else if (rightProperty === undefined) {
-            return 1;
-        } else if (leftProperty < rightProperty) {
-            return -1;
-        } else {
-            return 1;
-        }
     }
 }
