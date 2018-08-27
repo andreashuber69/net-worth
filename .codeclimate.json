@@ -10,6 +10,11 @@
             "config": {
                 "threshold": 10
             }
+        },
+        "similar-code": {
+            "config": {
+                "threshold": 8
+            }
         }
     },
     "plugins": {
