@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://andreashuber69.github.io/net-worth">
-    <img width="128" src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/icon.svg?sanitize=true">
+    <img width="128" src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/icon.svg?sanitize=true">
   </a>
 </p>
 <p align="center">
@@ -46,7 +46,7 @@ no logins, no passwords and your data is only ever stored locally on your comput
 While the application should work in most recent internet browsers, for privacy reasons it is recommended to
 install either **Chromium** or **Firefox** and point it to <https://andreashuber69.github.io/net-worth>.
 
-![Screenshot](screenshot.png)
+![Screenshot](doc/screenshot.png)
 
 In the toolbar on the left there's a menu with the usual suspects **New**, **Open...**, **Save**, **Save As...** and
 **About**.
