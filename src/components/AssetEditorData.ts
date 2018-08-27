@@ -60,40 +60,47 @@ export class AssetEditorData implements IAuxProperties<string> {
     }
 
     private static getAddress(asset?: IAssetUnion) {
-        return (asset && (asset.superType === CryptoWallet.superType) && asset.address) || "";
+        return (this.isCryptoWallet(asset) && asset.address) || "";
     }
 
     private static getWeight(asset?: IAssetUnion) {
-        return asset && (asset.superType === PreciousMetalAsset.superType) ? asset.weight.toString() : "";
+        return this.isPreciousMetalAsset(asset) ? asset.weight.toString() : "";
     }
 
     private static getWeightUnit(asset?: IAssetUnion) {
-        return asset && (asset.superType === PreciousMetalAsset.superType) ?
-            WeightUnit[asset.weightUnit] as keyof typeof WeightUnit : "";
+        return this.isPreciousMetalAsset(asset) ? WeightUnit[asset.weightUnit] as keyof typeof WeightUnit : "";
     }
 
     private static getFineness(asset?: IAssetUnion) {
-        return asset && (asset.superType === PreciousMetalAsset.superType) ? asset.fineness.toString() : "";
+        return this.isPreciousMetalAsset(asset) ? asset.fineness.toString() : "";
     }
 
     private static getValue(asset?: IAssetUnion) {
-        return asset && (asset.superType === MiscAsset.superType) ? asset.value.toString() : "";
+        return this.isMiscAsset(asset) ? asset.value.toString() : "";
     }
 
     private static getValueCurrency(asset?: IAssetUnion) {
-        return asset && (asset.superType === MiscAsset.superType) ? asset.valueCurrency : "";
+        return this.isMiscAsset(asset) ? asset.valueCurrency : "";
     }
 
     private static getQuantity(asset?: IAssetUnion) {
-        if (asset && ((asset.superType !== CryptoWallet.superType) || !asset.address) &&
-            (asset.quantity !== undefined)) {
-            return asset.quantity.toString();
-        } else {
-            return "";
-        }
+        return (asset && (!this.isCryptoWallet(asset) || !asset.address) &&
+            (asset.quantity !== undefined) && asset.quantity.toString()) || "";
     }
 
     private static getNotes(asset?: IAssetUnion) {
         return (asset && asset.notes) || "";
+    }
+
+    private static isCryptoWallet(asset?: IAssetUnion): asset is CryptoWallet {
+        return (asset && (asset.superType === CryptoWallet.superType)) || false;
+    }
+
+    private static isPreciousMetalAsset(asset?: IAssetUnion): asset is PreciousMetalAsset {
+        return (asset && (asset.superType === PreciousMetalAsset.superType)) || false;
+    }
+
+    private static isMiscAsset(asset?: IAssetUnion): asset is MiscAsset {
+        return (asset && (asset.superType === MiscAsset.superType)) || false;
     }
 }
