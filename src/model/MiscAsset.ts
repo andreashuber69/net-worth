@@ -61,16 +61,16 @@ export class MiscAsset extends Asset implements IMiscAsset {
     /**
      * Creates a new [[MiscAsset]] instance.
      * @param parent The parent model to which this asset belongs.
-     * @param properties The miscellaneous asset properties.
+     * @param props The miscellaneous asset properties.
      */
-    public constructor(parent: IModel, properties: IMiscAssetProperties) {
+    public constructor(parent: IModel, props: IMiscAssetProperties) {
         super(parent);
-        this.description = properties.description;
-        this.location = properties.location || "";
-        this.value = properties.value;
-        this.valueCurrency = properties.valueCurrency;
-        this.quantity = properties.quantity !== undefined ? properties.quantity : Number.NaN;
-        this.notes = properties.notes || "";
+        this.description = props.description;
+        this.location = props.location || "";
+        this.value = props.value;
+        this.valueCurrency = props.valueCurrency;
+        this.quantity = props.quantity !== undefined ? props.quantity : Number.NaN;
+        this.notes = props.notes || "";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

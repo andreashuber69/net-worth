@@ -86,19 +86,18 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     /**
      * Creates a new [[PreciousMetalAsset]] instance.
      * @param parent The parent model to which this asset belongs.
-     * @param properties The precious metal asset properties.
+     * @param props The precious metal asset properties.
      * @param quandlPath The quandl asset path.
      */
-    protected constructor(
-        parent: IModel, properties: IPreciousMetalAssetProperties, private readonly quandlPath: string) {
+    protected constructor(parent: IModel, props: IPreciousMetalAssetProperties, private readonly quandlPath: string) {
         super(parent);
-        this.description = properties.description;
-        this.location = properties.location || "";
-        this.weight = properties.weight;
-        this.weightUnit = properties.weightUnit;
-        this.fineness = properties.fineness;
-        this.quantity = properties.quantity !== undefined ? properties.quantity : Number.NaN;
-        this.notes = properties.notes || "";
+        this.description = props.description;
+        this.location = props.location || "";
+        this.weight = props.weight;
+        this.weightUnit = props.weightUnit;
+        this.fineness = props.fineness;
+        this.quantity = props.quantity !== undefined ? props.quantity : Number.NaN;
+        this.notes = props.notes || "";
         this.pureGramsPerUnit = this.weight * this.weightUnit * this.fineness;
     }
 

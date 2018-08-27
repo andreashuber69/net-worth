@@ -90,16 +90,16 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     /**
      * Creates a new [[CryptoWallet]] instance.
      * @param parent The parent model to which this asset belongs.
-     * @param properties The crypto wallet properties.
+     * @param params The crypto wallet parameters.
      */
-    protected constructor(parent: IModel, properties: IRealCryptoWalletParameters) {
-        super(parent, properties.currencySymbol);
-        this.description = properties.description;
-        this.location = properties.location || "";
-        this.address = properties.address || "";
-        this.quantity = properties.quantity;
-        this.notes = properties.notes || "";
-        this.slug = properties.slug;
+    protected constructor(parent: IModel, params: IRealCryptoWalletParameters) {
+        super(parent, params.currencySymbol);
+        this.description = params.description;
+        this.location = params.location || "";
+        this.address = params.address || "";
+        this.quantity = params.quantity;
+        this.notes = params.notes || "";
+        this.slug = params.slug;
     }
 
     // tslint:disable-next-line:prefer-function-over-method

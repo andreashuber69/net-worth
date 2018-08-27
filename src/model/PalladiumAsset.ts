@@ -21,9 +21,9 @@ export class PalladiumAsset extends PreciousMetalAsset {
     /**
      * Creates a new [[PalladiumAsset]] instance.
      * @param parent The parent model to which this asset belongs.
-     * @param properties The precious metal asset properties.
+     * @param props The precious metal asset properties.
      */
-    public constructor(parent: IModel, properties: IPreciousMetalAssetProperties) {
-        super(parent, properties, "lppm/pall.json");
+    public constructor(parent: IModel, props: IPreciousMetalAssetProperties) {
+        super(parent, props, "lppm/pall.json");
     }
 }

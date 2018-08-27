@@ -22,17 +22,17 @@ import "vuetify/dist/vuetify.min.css";
 import App from "./App.vue";
 
 const urlComponents = window.location.href.split("?");
-const parameters = urlComponents.length === 2 ? urlComponents[1].split("&") : [];
+const params = urlComponents.length === 2 ? urlComponents[1].split("&") : [];
 
-for (const parameter of parameters) {
-    const nameValuePair = parameter.split("=");
+for (const param of params) {
+    const nameValuePair = param.split("=");
 
     if (nameValuePair.length === 2) {
         window.sessionStorage.setItem(nameValuePair[0], nameValuePair[1]);
     }
 }
 
-if (parameters.length > 0) {
+if (params.length > 0) {
     window.location.replace(urlComponents[0]);
 } else {
     OfflinePluginRuntime.install();

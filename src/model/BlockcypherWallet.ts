@@ -25,8 +25,8 @@ export abstract class BlockcypherWallet extends RealCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected constructor(parent: IModel, properties: IRealCryptoWalletParameters) {
-        super(parent, properties);
+    protected constructor(parent: IModel, params: IRealCryptoWalletParameters) {
+        super(parent, params);
     }
 
     protected queryQuantity() {

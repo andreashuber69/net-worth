@@ -64,12 +64,12 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     public includeRelations = false;
 
     /** @internal */
-    public createAsset(parent: IModel, properties: IAssetIntersection) {
+    public createAsset(parent: IModel, props: IAssetIntersection) {
         if (!this.ctor) {
             throw new Error("No ctor was specified.");
         }
 
-        return new this.ctor(parent, properties);
+        return new this.ctor(parent, props);
     }
 
     public get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AssetPropertyName): T {
