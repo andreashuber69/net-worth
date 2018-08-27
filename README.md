@@ -130,7 +130,7 @@ Of course, there are also some (minor) disadvantages:
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/npm.svg?sanitize=true"
       alt="npm" title="npm" height="50">
   </a>
-  <a href="http://http://typescriptlang.org">
+  <a href="http://typescriptlang.org">
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/typescript.svg?sanitize=true"
       alt="Typescript" title="Typescript" height="50">
