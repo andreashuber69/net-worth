@@ -121,3 +121,28 @@ Of course, there are also some (minor) disadvantages:
   are typically changed rarely.
 - If a web site attempts to open a new browser window, pop-up blockers sometimes get in the way. Most browsers allow the
   user to authorize exceptions.
+
+## Technology
+
+<p align="center">
+  <a href="http://http://typescriptlang.org">
+    <img
+      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/typescript.svg?sanitize=true"
+      alt="Typescript" height="50">
+  </a>
+  <a href="https://vuetifyjs.com">
+    <img
+      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/vuetify.svg?sanitize=true"
+      alt="Vuetify" height="50">
+  </a>
+  <a href="https://vuejs.org">
+    <img
+      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/vuejs.png"
+      alt="Vue.js" height="50">
+  </a>
+  <a href="https://webpack.js.org/">
+    <img
+      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/webpack.svg?sanitize=true"
+      alt="webpack" height="50">
+  </a>
+</p>
