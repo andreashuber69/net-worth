@@ -1,22 +1,22 @@
 {
-    "version": "2",
-    "checks": {
-        "return-statements": {
-            "config": {
-                "threshold": 6
-            }
-        },
-        "method-complexity": {
-            "config": {
-                "threshold": 10
-            }
-        },
-        "similar-code": {
-            "config": {
-                "threshold": 60
-            }
-        }
+  "version": "2",
+  "checks": {
+    "return-statements": {
+      "config": {
+        "threshold": 6
+      }
     },
-    "plugins": {
+    "method-complexity": {
+      "config": {
+        "threshold": 10
+      }
+    },
+    "similar-code": {
+      "config": {
+        "threshold": 60
+      }
     }
+  },
+  "plugins": {
+  }
 }

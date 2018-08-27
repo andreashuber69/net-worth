@@ -11,23 +11,23 @@
 // <http://www.gnu.org/licenses/>.
 
 {
-    "cSpell.enabledLanguageIds": [
-        "html",
-        "markdown",
-        "plaintext",
-        "typescript",
-        "vue"
-    ],
-    "cSpell.words": [
-        "Andreas",
-        "Blockchain",
-        "colspan",
-        "Dönni",
-        "dropdown",
-        "nbsp",
-        "nowrap",
-        "Quandl"
-    ],
-    "git.confirmSync": false,
-    "typescript.tsdk": "node_modules/typescript/lib"
+  "cSpell.enabledLanguageIds": [
+    "html",
+    "markdown",
+    "plaintext",
+    "typescript",
+    "vue"
+  ],
+  "cSpell.words": [
+    "Andreas",
+    "Blockchain",
+    "colspan",
+    "Dönni",
+    "dropdown",
+    "nbsp",
+    "nowrap",
+    "Quandl"
+  ],
+  "git.confirmSync": false,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
