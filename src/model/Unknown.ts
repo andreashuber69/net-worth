@@ -18,7 +18,7 @@ type Primitive = boolean | number | string | symbol;
  * value can be anything, `any` has the problem that the compiler silently accepts just about all operations involving
  * values of type `any`. This type aims at retaining the former quality while doing away with the latter. Unlike `any`,
  * a value of this type cannot be `null` or `undefined`. Therefore, parameters or variables needing to include either
- * (or both) can use an appropriate unit type, e.g. `Unknown | null | undefined`.
+ * (or both) can use an appropriate union type, e.g. `Unknown | null | undefined`.
  * [[Unknown]] = {} would be a more sensible definition as any type is assignable to an empty interface. However, it
  * appears that tslint is currently unable to handle such a type definition correctly. More precisely, the rule
  * `strict-type-predicates` often reports false positives. With the current definition, there are still some false

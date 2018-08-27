@@ -13,7 +13,7 @@
 -->
 
 <template>
-  <v-dialog persistent v-model="isOpen" width="960px">
+  <v-dialog v-model="isOpen" width="960px">
     <v-card>
       <v-card-title class="headline">{{ title }}</v-card-title>
       <v-container grid-list-md text-xs-center>
@@ -26,21 +26,21 @@
           <v-flex xs12 sm4>
             <v-btn
               :href="`https://github.com/andreashuber69/${packageName}/blob/master/README.md`" target="_blank"
-              color="primary" class="ma-0" block flat>
+              color="primary" block flat class="ma-0">
               Documentation
             </v-btn>
           </v-flex> 
           <v-flex xs12 sm4>
             <v-btn
               :href="`https://github.com/andreashuber69/${packageName}/issues`" target="_blank"
-              color="primary" class="ma-0" block flat>
+              color="primary" block flat class="ma-0">
               Issues
             </v-btn>
           </v-flex> 
           <v-flex xs12 sm4>
             <v-btn
               :href="`https://github.com/andreashuber69/${packageName}/blob/master/LICENSE`" target="_blank"
-              color="primary" class="ma-0" block flat>
+              color="primary" block flat class="ma-0">
               License
             </v-btn>
           </v-flex> 
@@ -53,42 +53,42 @@
             </v-card>
           </v-flex>
           <v-flex xs12 sm6 md4>
-            <v-btn class="ma-0 d-block" href="https://coinmarketcap.com" target="_blank" flat>
+            <v-btn href="https://coinmarketcap.com" target="_blank" block flat class="ma-0">
               <img src="../assets/coinmarketcap.svg" height="36"/>
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>
-            <v-btn class="ma-0 d-block" href="https://blockchain.info" target="_blank" flat>
+            <v-btn href="https://blockchain.info" target="_blank" block flat class="ma-0">
               <img src="../assets/blockchain.svg" height="36"/>
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>
-            <v-btn class="ma-0 d-block" href="https://blockcypher.com" target="_blank" flat>
+            <v-btn href="https://blockcypher.com" target="_blank" block flat class="ma-0">
               <img src="../assets/blockcypher.svg" height="36"/>
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>
-            <v-btn class="ma-0 d-block" href="https://gastracker.io" target="_blank" flat>
+            <v-btn href="https://gastracker.io" target="_blank" block flat class="ma-0">
               <img src="../assets/gastracker.png" height="36"/>&nbsp;Gastracker.io
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>
-            <v-btn class="ma-0 d-block" href="https://ethplorer.io" target="_blank" flat>
+            <v-btn href="https://ethplorer.io" target="_blank" block flat class="ma-0">
               <img src="../assets/ethplorer.png" height="36"/>
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>
-            <v-btn class="ma-0 d-block" href="https://btgexp.com" target="_blank" flat>
+            <v-btn href="https://btgexp.com" target="_blank" block flat class="ma-0">
               <img src="../assets/btgexp.png" height="36"/>
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>
-            <v-btn class="ma-0 d-block" href="https://chain.so" target="_blank" flat>
+            <v-btn href="https://chain.so" target="_blank" block flat class="ma-0">
               <img src="../assets/sochain.png" height="36"/>
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>
-            <v-btn class="ma-0 d-block" href="https://quandl.com" target="_blank" flat>
+            <v-btn href="https://quandl.com" target="_blank" block flat class="ma-0">
               <img src="../assets/quandl.svg" height="36"/>
             </v-btn>
           </v-flex>
