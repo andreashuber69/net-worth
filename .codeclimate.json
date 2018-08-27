@@ -5,6 +5,11 @@
             "config": {
                 "threshold": 6
             }
+        },
+        "method-complexity": {
+            "config": {
+                "threshold": 10
+            }
         }
     },
     "plugins": {
