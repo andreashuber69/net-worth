@@ -90,10 +90,6 @@ export class Model implements IModel {
 
     public readonly assets: AssetCollection;
 
-    public get isEmpty() {
-        return this.assets.groups.length === 0;
-    }
-
     /**
      * Provides the USD exchange rate of the currently selected currency (USDXXX, where XXX is the currently selected
      * currency).

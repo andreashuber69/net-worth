@@ -108,7 +108,7 @@ export class LocalStorage {
     private static saveImpl(model: Model) {
         let key: string | undefined = this.emptyModelLocalStorageKey;
 
-        if (!model.isEmpty) {
+        if (!model.assets.isEmpty) {
             const json = model.toJsonString();
 
             // tslint:disable-next-line:no-empty

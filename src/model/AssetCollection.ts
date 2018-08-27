@@ -60,6 +60,10 @@ export class AssetCollection {
         return result;
     }
 
+    public get isEmpty() {
+        return this.groups.length === 0;
+    }
+
     /** Bundles and adds `asset` to the list of asset bundles. */
     public add(asset: Asset) {
         const bundle = asset.bundle();
