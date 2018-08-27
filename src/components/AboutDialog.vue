@@ -26,21 +26,21 @@
           <v-flex xs12 sm4>
             <v-btn
               :href="`https://github.com/andreashuber69/${packageName}/blob/master/README.md`" target="_blank"
-              color="primary" class="ma-0 d-block" flat>
+              color="primary" class="ma-0" block flat>
               Documentation
             </v-btn>
           </v-flex> 
           <v-flex xs12 sm4>
             <v-btn
               :href="`https://github.com/andreashuber69/${packageName}/issues`" target="_blank"
-              color="primary" class="ma-0 d-block" flat>
+              color="primary" class="ma-0" block flat>
               Issues
             </v-btn>
           </v-flex> 
           <v-flex xs12 sm4>
             <v-btn
               :href="`https://github.com/andreashuber69/${packageName}/blob/master/LICENSE`" target="_blank"
-              color="primary" class="ma-0 d-block" flat>
+              color="primary" class="ma-0" block flat>
               License
             </v-btn>
           </v-flex> 
