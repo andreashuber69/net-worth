@@ -21,7 +21,7 @@ import { Unknown } from "./Unknown";
 
 /** @internal */
 export interface IModel {
-    readonly ordering: IOrdering;
+    readonly assets: { readonly ordering: IOrdering };
     readonly exchangeRate: number | undefined;
     readonly grandTotalValue: number | undefined;
 }

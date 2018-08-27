@@ -90,10 +90,6 @@ export class Model implements IModel {
 
     public readonly assets: AssetCollection;
 
-    public get ordering() {
-        return this.assets.ordering;
-    }
-
     public get isEmpty() {
         return this.assets.groups.length === 0;
     }
@@ -148,8 +144,8 @@ export class Model implements IModel {
             wasSavedToFile: this.wasSavedToFile,
             hasUnsavedChanges: this.hasUnsavedChanges,
             currency: this.currency,
-            groupBy: this.ordering.groupBy,
-            sort: this.ordering.sort,
+            groupBy: this.assets.ordering.groupBy,
+            sort: this.assets.ordering.sort,
             bundles: this.assets.bundles.map((bundle) => bundle.toJSON()),
         };
     }

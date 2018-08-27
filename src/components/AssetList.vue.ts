@@ -34,14 +34,14 @@ export default class AssetList extends ComponentBase<Model> {
     /** Provides the information required for sorting and paginating the table. */
     public get pagination(): IPagination {
         return {
-            sortBy: this.checkedValue.ordering.sort.by,
-            descending: this.checkedValue.ordering.sort.descending,
+            sortBy: this.checkedValue.assets.ordering.sort.by,
+            descending: this.checkedValue.assets.ordering.sort.descending,
             rowsPerPage: -1,
         };
     }
 
     public set pagination(pagination: IPagination) {
-        this.checkedValue.ordering.sort = { by: pagination.sortBy, descending: pagination.descending };
+        this.checkedValue.assets.ordering.sort = { by: pagination.sortBy, descending: pagination.descending };
     }
 
     public get isLoading() {
@@ -76,11 +76,11 @@ export default class AssetList extends ComponentBase<Model> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getHeaderClass(columnName: ColumnName) {
-        const result = ColumnInfo.getClass(columnName, this.checkedValue.ordering, this.optionalColumnCount);
+        const result = ColumnInfo.getClass(columnName, this.checkedValue.assets.ordering, this.optionalColumnCount);
 
         // Sortable columns
         if (Ordering.isSortBy(columnName)) {
-            const sort = this.checkedValue.ordering.sort;
+            const sort = this.checkedValue.assets.ordering.sort;
             result.push("column", "sortable", sort.descending ? "desc" : "asc");
 
             if (sort.by === columnName) {
@@ -93,13 +93,13 @@ export default class AssetList extends ComponentBase<Model> {
 
     // tslint:disable-next-line:prefer-function-over-method
     public getFooterClass(columnName: ColumnName) {
-        return ColumnInfo.getClass(columnName, this.checkedValue.ordering, this.optionalColumnCount);
+        return ColumnInfo.getClass(columnName, this.checkedValue.assets.ordering, this.optionalColumnCount);
     }
 
     /** Changes the sorting for the given property. */
     public changeSort(sortBy: SortBy) {
-        const currentSort = this.checkedValue.ordering.sort;
-        this.checkedValue.ordering.sort = (currentSort.by === sortBy) ?
+        const currentSort = this.checkedValue.assets.ordering.sort;
+        this.checkedValue.assets.ordering.sort = (currentSort.by === sortBy) ?
             { by: currentSort.by, descending: !currentSort.descending } : { by: sortBy, descending: false };
     }
 
