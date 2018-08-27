@@ -6,6 +6,8 @@ module.exports = {
     // or for local production mode testing. The folling uses an exported environment variable to do just that.
     // Obviously, this needs to bet set accordingly before building for deployment. 
     baseUrl: process.env.WEBPACK_BASE_URL ? process.env.WEBPACK_BASE_URL : "/",
+    // This is mostly a 1:1 copy of the original config, breaking this apart makes maintenance more difficult 
+    // codebeat:disable[LOC]
     configureWebpack: config => {
         if (process.env.NODE_ENV === 'production') {
             config.optimization.minimizer = [
@@ -64,6 +66,7 @@ module.exports = {
             ];
         }
     },
+    // codebeat:enable[LOC]
     chainWebpack: config => {
         config.plugin("offline-plugin").use(OfflinePlugin);
     }
