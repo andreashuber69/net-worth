@@ -14,7 +14,6 @@ import { Enum, EnumInfo } from "./EnumInfo";
 import { ParseError } from "./ParseError";
 import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { Unknown } from "./Unknown";
-import { Value } from "./Value";
 
 export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
     public abstract get items(): string[];
@@ -25,7 +24,7 @@ export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
     }
 }
 
-export interface ISelectInputInfoParameters<T extends Enum<T>> extends IPrimitiveInputInfoProperties {
+interface ISelectInputInfoParameters<T extends Enum<T>> extends IPrimitiveInputInfoProperties {
     readonly enumType?: T;
     readonly acceptStringsOnly: boolean;
 }

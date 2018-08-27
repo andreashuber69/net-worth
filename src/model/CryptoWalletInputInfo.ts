@@ -21,7 +21,7 @@ import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Unknown";
 import { WeightUnit } from "./WeightUnit";
 
-export interface ICryptoWalletInputInfoParameters {
+interface ICryptoWalletInputInfoParameters {
     readonly type: CryptoWalletType;
     readonly ctor: IAssetConstructor;
     readonly addressHint: string;

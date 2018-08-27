@@ -15,7 +15,7 @@ import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveIn
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
 
-export interface ITextInputInfoProperties extends IPrimitiveInputInfoProperties {
+interface ITextInputInfoProperties extends IPrimitiveInputInfoProperties {
     readonly min?: number;
     readonly max?: number;
     readonly step?: number;
