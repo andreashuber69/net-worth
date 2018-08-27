@@ -122,21 +122,26 @@ export class AssetCollection {
         this.updateGroups();
         const promises = new Map<number, Promise<number>>(
             newBundles.map<[number, Promise<number>]>((b, i) => [ i, AssetCollection.queryBundleData(b, i) ]));
-        const delayId = Number.MAX_SAFE_INTEGER;
 
         while (promises.size > 0) {
-            if (!promises.has(delayId)) {
-                promises.set(delayId, new Promise((resolve) => setTimeout(resolve, 1000, delayId)));
-            }
-
-            const index = await Promise.race(promises.values());
-
-            if (index === delayId) {
-                this.updateGroups();
-            }
-
-            promises.delete(index);
+            await this.waitForResponses(promises);
         }
+    }
+
+    private async waitForResponses(promises: Map<number, Promise<number>>) {
+        const delayId = Number.MAX_SAFE_INTEGER;
+
+        if (!promises.has(delayId)) {
+            promises.set(delayId, new Promise((resolve) => setTimeout(resolve, 1000, delayId)));
+        }
+
+        const index = await Promise.race(promises.values());
+
+        if (index === delayId) {
+            this.updateGroups();
+        }
+
+        promises.delete(index);
     }
 
     private updateGroups() {
