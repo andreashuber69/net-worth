@@ -133,7 +133,7 @@ Of course, there are also some (minor) disadvantages:
   <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
   <a href="http://typescriptlang.org">
     <img
-      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/typescript.svg?sanitize=true"
+      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/typescript.png"
       alt="Typescript" title="Typescript" height="50">
   </a>
   <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
