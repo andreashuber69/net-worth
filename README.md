@@ -127,7 +127,7 @@ Of course, there are also some (minor) disadvantages:
 <p>
   <a href="https://www.npmjs.com/">
     <img
-      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/npm.svg?sanitize=true"
+      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/npm.png"
       alt="npm" title="npm" height="50">
   </a>
   <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
