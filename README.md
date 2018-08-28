@@ -122,9 +122,9 @@ Of course, there are also some (minor) disadvantages:
 - If a web site attempts to open a new browser window, pop-up blockers sometimes get in the way. Most browsers allow the
   user to authorize exceptions.
 
-## Technology
+## Technologies
 
-<p align="center">
+<p>
   <a href="https://www.npmjs.com/">
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/npm.svg?sanitize=true"
