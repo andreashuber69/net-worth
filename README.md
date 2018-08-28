@@ -128,26 +128,30 @@ Of course, there are also some (minor) disadvantages:
   <a href="https://www.npmjs.com/">
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/npm.svg?sanitize=true"
-      alt="npm" title="npm" height="50" style="padding-left: 20px; padding-right: 20px">
+      alt="npm" title="npm" height="50">
   </a>
+  <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
   <a href="http://typescriptlang.org">
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/typescript.svg?sanitize=true"
-      alt="Typescript" title="Typescript" height="50" style="padding-left: 20px; padding-right: 20px">
+      alt="Typescript" title="Typescript" height="50">
   </a>
+  <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
   <a href="https://vuetifyjs.com">
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/vuetify.svg?sanitize=true"
-      alt="Vuetify" title="Vuetify" height="50" style="padding-left: 20px; padding-right: 20px">
+      alt="Vuetify" title="Vuetify" height="50">
   </a>
+  <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
   <a href="https://vuejs.org">
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/vuejs.png"
-      alt="Vue.js" title="Vue.js" height="50" style="padding-left: 20px; padding-right: 20px">
+      alt="Vue.js" title="Vue.js" height="50">
   </a>
+  <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
   <a href="https://webpack.js.org/">
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/webpack.svg?sanitize=true"
-      alt="webpack" title="webpack" height="50" style="padding-left: 20px; padding-right: 20px">
+      alt="webpack" title="webpack" height="50">
   </a>
 </p>
