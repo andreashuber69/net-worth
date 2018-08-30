@@ -40,6 +40,7 @@ app.on("browser-window-created", windowCreated);
 function createFirstWindow() {
     const window = new BrowserWindow({
         ...defaultOptions,
+        backgroundColor: "#25272A",
         icon: __dirname + "/../../public/icon-192x192.png",
         webPreferences: { nodeIntegration: false }
     });
