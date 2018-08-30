@@ -3,6 +3,7 @@
   "version": "1.0.22",
   "author": "Andreas Huber Dönni",
   "license": "GPL-3.0-or-later",
+  "repository": "https://github.com/andreashuber69/net-worth",
   "private": true,
   "scripts": {
     "lint": "tslint --project tsconfig.json --config tslint.json --format verbose",
