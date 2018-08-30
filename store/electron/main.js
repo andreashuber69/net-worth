@@ -2,7 +2,7 @@
 const { app, BrowserWindow } = require("electron");
 
 let windows = [];
-const defaultOptions = { width: 1024, height: 768 };
+const defaultOptions = { width: 1024, height: 768, show: false };
 
 function onWindowOpen(ev, url, frameName, disposition, options) {
     // The following mirrors electrons default behavior, with the following differences:
@@ -21,6 +21,9 @@ function onWindowOpen(ev, url, frameName, disposition, options) {
 function windowCreated(ev, window) {
     windows.push(window);
     window.setMenu(null);
+    window.once("ready-to-show", () => window.show());
+    // This event is fired whenever the application calls window.open.
+    window.webContents.on("new-window", onWindowOpen);
     window.on("closed", () => {
         const index = windows.findIndex((w) => w === window);
 
@@ -30,9 +33,6 @@ function windowCreated(ev, window) {
 
         windows.splice(index, 1);
     });
-
-    // This event is fired whenever the application calls window.open.
-    window.webContents.on("new-window", onWindowOpen);
 }
 
 app.on("browser-window-created", windowCreated);
