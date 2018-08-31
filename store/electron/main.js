@@ -1,51 +1,55 @@
 "use strict";
 const { app, BrowserWindow } = require("electron");
 
-let windows = [];
 const defaultOptions = { width: 1024, height: 768, show: false };
 
+let windows = [];
+
 function onWindowOpen(ev, url, frameName, disposition, options) {
-    // The following mirrors electrons default behavior, with the following differences:
+    // The code below mirrors electrons default behavior, with the following differences:
     // - New windows are not registered as guests so that closing the original window does not also automatically close
     //   the new window.
     // - Overwrite some properties of options with the ones of defaultOptions.
     ev.preventDefault();
-    const window = new BrowserWindow({ ...options, ...defaultOptions });
-    window.loadURL(url);
+    const window = addNewWindow(new BrowserWindow({ ...options, ...defaultOptions }), url);
 
     if (disposition !== "new-window") {
         ev.newGuest = window;
     }
 }
 
-function windowCreated(ev, window) {
+function removeClosedWindow(window) {
+    const index = windows.findIndex((w) => w === window);
+
+    if (index < 0) {
+        console.error("Window not found!");
+    }
+
+    windows.splice(index, 1);
+}
+
+function addNewWindow(window, url) {
     windows.push(window);
     window.setMenu(null);
+    window.loadURL(url);
+    // TODO: This works as it should for windows loading normal URLs, it doesn't seem to work for redirects, i.e. when
+    // window.location.replace is called.
     window.once("ready-to-show", () => window.show());
     // This event is fired whenever the application calls window.open.
     window.webContents.on("new-window", onWindowOpen);
-    window.on("closed", () => {
-        const index = windows.findIndex((w) => w === window);
-
-        if (index < 0) {
-            console.error("Window not found!");
-        }
-
-        windows.splice(index, 1);
-    });
+    window.on("closed", () => removeClosedWindow(window));
+    return window;
 }
 
-app.on("browser-window-created", windowCreated);
-
 function createFirstWindow() {
-    const window = new BrowserWindow({
+    const firstWindowOptions = {
         ...defaultOptions,
         backgroundColor: "#25272A",
         icon: __dirname + "/../../public/icon-192x192.png",
         webPreferences: { nodeIntegration: false }
-    });
+    };
 
-    window.loadURL("https://andreashuber69.github.io/net-worth/");
+    addNewWindow(new BrowserWindow(firstWindowOptions), "https://andreashuber69.github.io/net-worth/");
 }
 
 app.on("window-all-closed", function () {
