@@ -2,9 +2,9 @@
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 
+const appUrl = "https://andreashuber69.github.io/net-worth/";
 const defaultOptions = { width: 1024, height: 768, show: false };
-
-let windows = [];
+const windows = [];
 
 function onWindowOpen(ev, url, frameName, disposition, options) {
     // The code below mirrors electrons default behavior, with the following differences:
@@ -29,17 +29,31 @@ function removeClosedWindow(window) {
     windows.splice(index, 1);
 }
 
+function onNavigated(window, url) {
+    if (url.indexOf(appUrl) === 0) {
+        // We can only get here as a result of clicking Open... or New. Both commands open a new window with a url
+        // containing parameters. After reading said parameters, the url without the parameters is then passed to
+        // window.location.replace. The code below ensures that the window is only shown when the page for the real
+        // application url has finished rendering.
+        if (url.length === appUrl.length) {
+            window.once("ready-to-show", () => window.show());
+        } else {
+            window.webContents.once("did-navigate", (ev, url) => onNavigated(window, url));
+        }
+    } else {
+        window.once("ready-to-show", () => window.show());
+    }
+}
+
 function addNewWindow(window, url) {
     windows.push(window);
     window.setMenu(null);
-    window.loadURL(url);
+    onNavigated(window, url);
 
-    // TODO: This works as it should for windows loading normal URLs, it doesn't seem to work for redirects, i.e. when
-    // window.location.replace is called.
-    window.once("ready-to-show", () => window.show());
     // This event is fired whenever the application calls window.open.
     window.webContents.on("new-window", onWindowOpen);
     window.on("closed", () => removeClosedWindow(window));
+    window.loadURL(url);
     return window;
 }
 
@@ -51,7 +65,7 @@ function createFirstWindow() {
         webPreferences: { nodeIntegration: false }
     };
 
-    addNewWindow(new BrowserWindow(firstWindowOptions), "https://andreashuber69.github.io/net-worth/");
+    addNewWindow(new BrowserWindow(firstWindowOptions), appUrl);
 }
 
 app.on("window-all-closed", function () {
