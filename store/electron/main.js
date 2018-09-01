@@ -1,5 +1,6 @@
 "use strict";
 const { app, BrowserWindow } = require("electron");
+const path = require("path");
 
 const defaultOptions = { width: 1024, height: 768, show: false };
 
@@ -22,7 +23,7 @@ function removeClosedWindow(window) {
     const index = windows.findIndex((w) => w === window);
 
     if (index < 0) {
-        console.error("Window not found!");
+        throw new Error("Window not found!");
     }
 
     windows.splice(index, 1);
@@ -32,6 +33,7 @@ function addNewWindow(window, url) {
     windows.push(window);
     window.setMenu(null);
     window.loadURL(url);
+
     // TODO: This works as it should for windows loading normal URLs, it doesn't seem to work for redirects, i.e. when
     // window.location.replace is called.
     window.once("ready-to-show", () => window.show());
@@ -45,7 +47,7 @@ function createFirstWindow() {
     const firstWindowOptions = {
         ...defaultOptions,
         backgroundColor: "#25272A",
-        icon: __dirname + "/../../public/icon-192x192.png",
+        icon: path.join(__dirname, "../../public/icon-192x192.png"),
         webPreferences: { nodeIntegration: false }
     };
 
