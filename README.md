@@ -122,7 +122,7 @@ Of course, there are also some (minor) disadvantages:
 - If a web site attempts to open a new browser window, pop-up blockers sometimes get in the way. Most browsers allow the
   user to authorize exceptions.
 
-## Technologies
+## Technologies & Packages
 
 <p>
   <a href="https://www.npmjs.com/">
@@ -153,5 +153,10 @@ Of course, there are also some (minor) disadvantages:
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/webpack.svg?sanitize=true"
       alt="webpack" title="webpack" height="50">
+  </a>
+  <a href="https://www.npmjs.com/package/offline-plugin">
+    <img
+      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/offline-plugin.svg?sanitize=true"
+      alt="offline-plugin" title="offline-plugin" height="50">
   </a>
 </p>
