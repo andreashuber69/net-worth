@@ -6,13 +6,20 @@ const appUrl = "https://andreashuber69.github.io/net-worth/";
 const defaultOptions = { width: 1024, height: 768, show: false };
 const windows = [];
 
+function addDefaults(options) {
+    for (const property in defaultOptions) {
+        options[property] = defaultOptions[property];
+    }
+}
+
 function onWindowOpen(ev, url, frameName, disposition, options) {
     // The code below mirrors electrons default behavior, with the following differences:
     // - New windows are not registered as guests so that closing the original window does not also automatically close
     //   the new window.
     // - Overwrite some properties of options with the ones of defaultOptions.
     ev.preventDefault();
-    const window = addNewWindow(new BrowserWindow({ ...options, ...defaultOptions }), url);
+    addDefaults(options);
+    const window = addNewWindow(new BrowserWindow(options), url);
 
     if (disposition !== "new-window") {
         ev.newGuest = window;
@@ -59,12 +66,12 @@ function addNewWindow(window, url) {
 
 function createFirstWindow() {
     const firstWindowOptions = {
-        ...defaultOptions,
         backgroundColor: "#25272A",
         icon: path.join(__dirname, "../../public/icon-192x192.png"),
         webPreferences: { nodeIntegration: false }
     };
 
+    addDefaults(firstWindowOptions);
     addNewWindow(new BrowserWindow(firstWindowOptions), appUrl);
 }
 
