@@ -28,7 +28,6 @@ interface IAssetCollectionParameters {
 }
 
 export class AssetCollection {
-    public readonly bundles: AssetBundle[];
     public readonly groups = new Array<AssetGroup>();
     public readonly ordering: Ordering;
 
@@ -103,6 +102,11 @@ export class AssetCollection {
         }
     }
 
+    /** @internal */
+    public toJSON() {
+        return this.bundles.map((bundle) => bundle.toJSON());
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static async queryBundleData(bundle: AssetBundle, id: number) {
@@ -111,6 +115,7 @@ export class AssetCollection {
         return id;
     }
 
+    private readonly bundles: AssetBundle[];
     private readonly parent: IParent;
 
     private onGroupChanged() {

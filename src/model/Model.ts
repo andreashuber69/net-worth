@@ -142,7 +142,7 @@ export class Model implements IModel {
             currency: this.currency,
             groupBy: this.assets.ordering.groupBy,
             sort: this.assets.ordering.sort,
-            bundles: this.assets.bundles.map((bundle) => bundle.toJSON()),
+            bundles: this.assets.toJSON(),
         };
     }
 
