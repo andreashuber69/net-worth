@@ -154,6 +154,7 @@ Of course, there are also some (minor) disadvantages:
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/webpack.svg?sanitize=true"
       alt="webpack" title="webpack" height="50">
   </a>
+  <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
   <a href="https://www.npmjs.com/package/offline-plugin">
     <img
       src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/offline-plugin.svg?sanitize=true"
