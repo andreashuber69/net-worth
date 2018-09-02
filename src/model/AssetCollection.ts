@@ -28,21 +28,7 @@ interface IAssetCollectionParameters {
 }
 
 export class AssetCollection {
-    public readonly groups = new Array<AssetGroup>();
     public readonly ordering: Ordering;
-
-    public constructor(params: IAssetCollectionParameters) {
-        this.ordering = new Ordering({
-            onGroupChanged: () => this.onGroupChanged(),
-            onSortChanged: () => AssetCollectionUtility.sort(this.groups, this.ordering.sort),
-            groupBy: params.groupBy,
-            sort: params.sort,
-        });
-
-        this.parent = params.parent;
-        this.bundles = params.bundles;
-        this.update(...this.bundles);
-    }
 
     /** Provides the grouped assets. */
     public get grouped() {
@@ -61,6 +47,25 @@ export class AssetCollection {
 
     public get isEmpty() {
         return this.groups.length === 0;
+    }
+
+    /** Provides the sum of all asset total values. */
+    public get grandTotalValue() {
+        return this.groups.reduce<number | undefined>(
+            (s, a) => s === undefined ? undefined : (a.totalValue === undefined ? undefined : s + a.totalValue), 0);
+    }
+
+    public constructor(params: IAssetCollectionParameters) {
+        this.ordering = new Ordering({
+            onGroupChanged: () => this.onGroupChanged(),
+            onSortChanged: () => AssetCollectionUtility.sort(this.groups, this.ordering.sort),
+            groupBy: params.groupBy,
+            sort: params.sort,
+        });
+
+        this.parent = params.parent;
+        this.bundles = params.bundles;
+        this.update(...this.bundles);
     }
 
     /** Bundles and adds `asset` to the list of asset bundles. */
@@ -115,6 +120,7 @@ export class AssetCollection {
         return id;
     }
 
+    private readonly groups = new Array<AssetGroup>();
     private readonly bundles: AssetBundle[];
     private readonly parent: IParent;
 

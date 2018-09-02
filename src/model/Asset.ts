@@ -21,9 +21,12 @@ import { Unknown } from "./Unknown";
 
 /** @internal */
 export interface IModel {
-    readonly assets: { readonly ordering: IOrdering };
+    readonly assets: {
+        readonly ordering: IOrdering;
+        readonly grandTotalValue: number | undefined;
+    };
+
     readonly exchangeRate: number | undefined;
-    readonly grandTotalValue: number | undefined;
 }
 
 /** Defines the base of all classes that represent an asset. */
@@ -95,8 +98,8 @@ export abstract class Asset {
 
     /** @internal */
     public get percent() {
-        return (this.totalValue === undefined) || (this.parent.grandTotalValue === undefined) ?
-            undefined : this.totalValue / this.parent.grandTotalValue * 100;
+        return (this.totalValue === undefined) || (this.parent.assets.grandTotalValue === undefined) ?
+            undefined : this.totalValue / this.parent.assets.grandTotalValue * 100;
     }
 
     /** Provides a value indicating whether the asset has any associated actions. */
