@@ -39,6 +39,12 @@
       "type": "npm",
       "script": "build-code-doc",
       "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "path": "store/electron/",
+      "problemMatcher": []
     }
   ]
 }

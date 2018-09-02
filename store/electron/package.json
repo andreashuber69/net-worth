@@ -7,9 +7,11 @@
   "repository": "https://github.com/andreashuber69/net-worth/tree/master/store/electron",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-packager . --out ./dist"
   },
   "devDependencies": {
-    "electron": "^2.0.8"
+    "electron": "^2.0.8",
+    "electron-packager": "^12.1.1"
   }
 }
