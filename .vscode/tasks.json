@@ -18,26 +18,43 @@
     {
       "type": "npm",
       "script": "lint",
-      "problemMatcher": [ "$tslint5" ]
+      "problemMatcher": [
+        "$tslint5"
+      ]
     },
     {
       "type": "npm",
       "script": "serve-development",
-      "problemMatcher": [ "$tsc", "$tslint5" ]
+      "problemMatcher": [
+        "$tsc",
+        "$tslint5"
+      ]
     },
     {
       "type": "npm",
       "script": "serve-production",
-      "problemMatcher": [ "$tsc", "$tslint5" ]
+      "problemMatcher": [
+        "$tsc",
+        "$tslint5"
+      ]
     },
     {
       "type": "npm",
       "script": "build",
-      "problemMatcher": [ "$tsc", "$tslint5" ]
+      "problemMatcher": [
+        "$tsc",
+        "$tslint5"
+      ]
     },
     {
       "type": "npm",
       "script": "build-code-doc",
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "start",
+      "path": "store/electron/",
       "problemMatcher": []
     },
     {
