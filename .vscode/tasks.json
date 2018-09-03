@@ -42,7 +42,13 @@
     },
     {
       "type": "npm",
-      "script": "build",
+      "script": "package",
+      "path": "store/electron/",
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "make",
       "path": "store/electron/",
       "problemMatcher": []
     }

@@ -5,7 +5,7 @@
   "license": "GPL-3.0-or-later",
   "private": true,
   "repository": "https://github.com/andreashuber69/net-worth/tree/master/store/electron",
-  "main": "main.js",
+  "main": "./src/main.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
