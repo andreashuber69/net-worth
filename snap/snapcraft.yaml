@@ -18,7 +18,8 @@ apps:
 
 parts:
   net-worth:
-    source: https://github.com/andreashuber69/net-worth.git
-    source-subdir: store/electron
     plugin: nodejs
+    source: https://github.com/andreashuber69/net-worth.git
+    prepare: |
+      cd store/electron
     npm-run: [ dist ]
