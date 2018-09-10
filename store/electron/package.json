@@ -45,6 +45,9 @@
         "name": "net_worth_desktop"
       },
       "electronInstallerDebian": {
+        "icon": {
+          "scalable": "./../../icon.svg"
+        },
         "description": "Provides an overview of your precious metal and crypto assets.",
         "maintainer": "Andreas Huber Dönni"
       },

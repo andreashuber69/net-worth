@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://andreashuber69.github.io/net-worth">
-    <img width="128" src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/icon.svg?sanitize=true">
+    <img width="128" src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/icon.svg?sanitize=true">
   </a>
 </p>
 <p align="center">
