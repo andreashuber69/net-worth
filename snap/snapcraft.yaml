@@ -18,6 +18,7 @@ apps:
 
 parts:
   net-worth:
-    source: ./store/electron
+    source: https://github.com/andreashuber69/net-worth.git
+    source-subdir: store/electron
     plugin: nodejs
     npm-run: [ dist ]
