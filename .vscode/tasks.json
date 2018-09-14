@@ -36,7 +36,11 @@
       "problemMatcher": [
         "$tsc",
         "$tslint5"
-      ]
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
     },
     {
       "type": "npm",

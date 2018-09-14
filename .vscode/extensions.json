@@ -1,6 +1,6 @@
 {
   "recommendations": [
-    "msjsdiag.debugger-for-chrome",
+    "davidanson.vscode-markdownlint",
     "octref.vetur",
     "prograhammer.tslint-vue",
     "streetsidesoftware.code-spell-checker"
