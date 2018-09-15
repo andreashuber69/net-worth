@@ -47,7 +47,7 @@ While the application should work in most recent internet browsers, for privacy 
 install either **Chromium** or **Firefox** and point it to <https://andreashuber69.github.io/net-worth>.
 
 Alternatively, you can also
-[install the desktop variant of Net Worth](https://github.com/andreashuber69/net-worth-desktop/blob/master/README.md#installation).
+[install a desktop variant of Net Worth](https://github.com/andreashuber69/net-worth-desktop/blob/master/README.md#installation).
 The usage is identical for all variants, the desktop ones just don't have the internet browser controls, like e.g. the
 address bar.
 
