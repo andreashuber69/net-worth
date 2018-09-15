@@ -36,9 +36,9 @@ Net Worth aims to make this a little easier. In a nutshell, the application pres
 currency holdings in a groupable and sortable table, which allows you to quickly see how your net worth is spread among
 the different asset types and locations.
 
-## Usage
+## Getting Started
 
-### Getting Started
+### Installation
 
 Net Worth runs in your internet browser but works and feels much like a conventional desktop application. There are
 no logins, no passwords and your data is only ever stored locally on your computer.
@@ -46,12 +46,18 @@ no logins, no passwords and your data is only ever stored locally on your comput
 While the application should work in most recent internet browsers, for privacy reasons it is recommended to
 install either **Chromium** or **Firefox** and point it to <https://andreashuber69.github.io/net-worth>.
 
+Alternatively, you can also
+[install the desktop variant of Net Worth](https://github.com/andreashuber69/net-worth-desktop/blob/master/README.md#installation).
+The usage is identical for all variants, the desktop ones just don't have the internet browser controls, like e.g. the
+address bar.
+
+### Usage
+
 ![Screenshot](doc/screenshot.png)
 
 In the toolbar on the left there's a menu with the usual suspects **New**, **Open...**, **Save**, **Save As...** and
-**About**.
-On the right, you'll find a button to add a new asset and controls to change the asset grouping and the valuation
-currency.
+**About**. On the right, you'll find a button to add a new asset and controls to change the asset grouping and the
+valuation currency.
 
 In the table, clicking on a row representing an asset group will expand/collapse it. For example, in the screenshot
 above, the **Silver** group is expanded, such that the grouped assets become visible. Individual assets can be edited
