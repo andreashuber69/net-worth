@@ -1,9 +1,23 @@
 {
   "name": "net-worth",
+  "author": {
+    "name": "Andreas Huber Dönni"
+  },
+  "keywords": [
+    "previous-metals",
+    "cryptocurrencies"
+  ],
+  "description": "",
+  "homepage": "https://github.com/andreashuber69/net-worth/blob/master/README.md",
   "version": "1.0.24",
-  "author": "Andreas Huber Dönni",
   "license": "GPL-3.0-or-later",
-  "repository": "https://github.com/andreashuber69/net-worth",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andreashuber69/net-worth"
+  },
+  "bugs": {
+    "url": "https://github.com/andreashuber69/net-worth/issues"
+  },
   "private": true,
   "scripts": {
     "lint": "tslint --project tsconfig.json --config tslint.json --format verbose",
