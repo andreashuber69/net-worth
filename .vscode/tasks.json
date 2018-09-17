@@ -54,24 +54,6 @@
       "type": "npm",
       "script": "build-code-doc",
       "problemMatcher": []
-    },
-    {
-      "type": "npm",
-      "script": "start",
-      "path": "store/electron/",
-      "problemMatcher": []
-    },
-    {
-      "type": "npm",
-      "script": "package",
-      "path": "store/electron/",
-      "problemMatcher": []
-    },
-    {
-      "type": "npm",
-      "script": "make",
-      "path": "store/electron/",
-      "problemMatcher": []
     }
   ]
 }
