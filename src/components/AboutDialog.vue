@@ -25,7 +25,7 @@
           </v-flex> 
           <v-flex xs12 sm4>
             <v-btn
-              :href="`https://github.com/andreashuber69/${packageName}/blob/master/README.md`" target="_blank"
+              :href="`https://github.com/andreashuber69/${packageName}/blob/master/README.md#--`" target="_blank"
               color="primary" block flat class="ma-0">
               Documentation
             </v-btn>
@@ -39,7 +39,7 @@
           </v-flex> 
           <v-flex xs12 sm4>
             <v-btn
-              :href="`https://github.com/andreashuber69/${packageName}/blob/master/LICENSE`" target="_blank"
+              :href="`https://raw.githubusercontent.com/andreashuber69/${packageName}/master/LICENSE`" target="_blank"
               color="primary" block flat class="ma-0">
               License
             </v-btn>
