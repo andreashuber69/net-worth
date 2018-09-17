@@ -26,7 +26,7 @@ export default class AboutDialog extends Vue {
     }
 
     public get packageName() {
-        return Application.packageName;
+        return Application.packageName + (this.userAgent.includes("Electron") ? "-desktop" : "");
     }
 
     public get userAgent() {
