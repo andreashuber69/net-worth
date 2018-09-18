@@ -47,8 +47,8 @@
           <v-flex xs12>
             <v-card flat>
               <v-card-text class="subheading px-0">
-                This application would not work without the following data providers, who generously offer their
-                services free of charge:
+                This application would not work without the help of the following data providers, who generously offer
+                their services free of charge:
               </v-card-text>
             </v-card>
           </v-flex>

@@ -22,7 +22,7 @@ export default class AboutDialog extends Vue {
     public isOpen = false;
 
     public get title() {
-        return `${Application.title} v${Application.version}`;
+        return `${Application.title} v${Application.version}${this.desktopVersion}`;
     }
 
     public get packageName() {
@@ -35,5 +35,15 @@ export default class AboutDialog extends Vue {
 
     public showDialog() {
         this.isOpen = true;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private get desktopVersion() {
+        const userAgent = window.navigator.userAgent;
+        const prefix = `${Application.packageName}/`;
+        const start = userAgent.indexOf(prefix) + prefix.length;
+
+        return start >= prefix.length ? ` (Desktop v${userAgent.substring(start, userAgent.indexOf(" ", start))})` : "";
     }
 }
