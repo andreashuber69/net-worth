@@ -69,6 +69,9 @@
         <v-btn icon title="Add new asset" class="ml-1 mr-0" @click.stop="$refs.assetList.onAdd">
           <v-icon>add</v-icon>
         </v-btn>
+        <v-btn icon title="Refresh" class="ml-1 mr-0" @click.stop="onRefreshClicked">
+          <v-icon>refresh</v-icon>
+        </v-btn>
         <v-menu title="Change grouping" max-height="300px">
           <v-toolbar-title slot="activator" class="ml-2 mr-0">
             <span>{{ groupBy }}</span>

@@ -36,7 +36,6 @@ export default class App extends Vue {
         this.isDrawerVisible = !this.isDrawerVisible;
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
     public onNewClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
         LocalStorage.openNewWindow(undefined);
@@ -80,6 +79,11 @@ export default class App extends Vue {
         this.isDrawerVisible = false;
         // tslint:disable-next-line:no-unsafe-any
         (this.$refs.aboutDialog as AboutDialog).showDialog();
+    }
+
+    // tslint:disable-next-line:prefer-function-over-method
+    public onRefreshClicked(event: MouseEvent) {
+        location.reload();
     }
 
     public get groupBys() {
