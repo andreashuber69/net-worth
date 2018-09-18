@@ -15,3 +15,5 @@ deploy:
   local-dir: dist
   keep-history: true
   github-token: $GITHUB_TOKEN
+  on:
+    tags: true
