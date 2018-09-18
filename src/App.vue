@@ -15,7 +15,7 @@
 <template>
   <div id="app">
     <v-app>
-      <v-navigation-drawer v-model="isDrawerVisible" temporary app>
+      <v-navigation-drawer v-model="isDrawerVisible" app dark temporary>
         <v-list dense>
           <v-list-tile @click="onNewClicked">
             <v-list-tile-action>
