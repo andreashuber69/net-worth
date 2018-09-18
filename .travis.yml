@@ -8,3 +8,10 @@ before_install:
 branches:
   only:
   - /^v\d+\.\d+\.\d+$/
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  local-dir: dist
+  keep-history: true
+  github-token: $GITHUB_TOKEN

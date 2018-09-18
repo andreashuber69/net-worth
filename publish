@@ -4,33 +4,14 @@ set -o nounset
 set -o pipefail
 
 pushd $(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
-WORK_DIR=`mktemp -d`
 
-# Make sure we've really created an empty directory, so that we can safely delete it later
-if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
-  echo "Could not create temp directory!"
-  exit 1
-fi
-
-echo "Clone gh-pages and delete all files..."
-git clone -q --branch gh-pages "https://github.com/andreashuber69/net-worth.git" "$WORK_DIR"
-pushd $WORK_DIR
-git rm -rf *
-popd
-
-echo "Build and copy ./dist contents to the working directory..."
+echo "Bumpting version..."
 VERSION=`npm version patch -m "Publish v%s"`
-git push
-git push --tags
+echo "Building..."
 rm -rf dist
 npm run build
-cp -R dist/* $WORK_DIR
-
-echo "Commit and push..."
-pushd $WORK_DIR
-git add -A
-git commit -m "Publish $VERSION"
+echo "Pushing sources..."
 git push
-popd
-rm -rf $WORK_DIR
+git push --tags
+
 popd
