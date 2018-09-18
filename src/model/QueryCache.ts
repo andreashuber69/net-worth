@@ -26,6 +26,11 @@ export class QueryCache {
         return result;
     }
 
+    /** @internal */
+    public static clear() {
+        this.cache.clear();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly cache = new Map<string, Promise<Unknown | null>>();

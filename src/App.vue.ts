@@ -17,6 +17,7 @@ import BrowserDialog from "./components/BrowserDialog.vue";
 import SaveAsDialog from "./components/SaveAsDialog.vue";
 import { LocalStorage } from "./LocalStorage";
 import { Model } from "./model/Model";
+import { QueryCache } from "./model/QueryCache";
 import { Parser } from "./Parser";
 
 // tslint:disable-next-line:no-unsafe-any
@@ -83,7 +84,8 @@ export default class App extends Vue {
 
     // tslint:disable-next-line:prefer-function-over-method
     public onRefreshClicked(event: MouseEvent) {
-        location.reload();
+        QueryCache.clear();
+        this.model = App.initModel(Parser.parse(this.model.toJsonString()) || new Model());
     }
 
     public get groupBys() {
