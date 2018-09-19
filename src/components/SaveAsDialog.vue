@@ -20,7 +20,7 @@
         <v-form ref="form" @submit="e => e.preventDefault()">
           <v-container grid-list-md>
             <v-layout wrap>
-              <TextField large :info="nameInfo" v-model="name"></TextField>
+              <TextField large="true" :info="nameInfo" v-model="name"></TextField>
             </v-layout>
           </v-container>
         </v-form>
