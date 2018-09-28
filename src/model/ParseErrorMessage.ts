@@ -14,7 +14,7 @@ import { Unknown } from "./Unknown";
 import { Value } from "./Value";
 
 /** Provides error messages for parse failures. */
-export class ParseError {
+export class ParseErrorMessage {
     /** @internal */
     public static getPropertyTypeMismatch(
         propertyName: string, actual: Unknown | null | undefined, ...expected: Array<Unknown | null | undefined>) {
