@@ -27,6 +27,8 @@
 
 <h1 align="center">Net Worth</h1>
 
+Gain a quick overview of your precious metal and crypto assets!
+
 If you primarily store your wealth in 'unconventional' assets like precious metals and cryptocurrencies, it seems
 difficult to get an overview of your current financial situation.
 
