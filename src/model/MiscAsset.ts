@@ -86,10 +86,10 @@ export class MiscAsset extends Asset implements IMiscAsset {
         return new GenericAssetBundle(this);
     }
 
-    /** @internal */
-    public async queryData(): Promise<void> {
-        await super.queryData();
-        this.unitValueUsd = this.value / await ExchangeRate.get(Currency[this.valueCurrency]);
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected async queryUnitValueUsd() {
+        return this.value / await ExchangeRate.get(Currency[this.valueCurrency]);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

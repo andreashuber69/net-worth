@@ -74,13 +74,6 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
         return new GenericAssetBundle(this);
     }
 
-    /** @internal */
-    public async queryData(): Promise<void> {
-        await super.queryData();
-        this.unitValueUsd =
-            this.pureGramsPerUnit / WeightUnit["t oz"] * await new QuandlRequest(this.quandlPath, false).execute();
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -99,6 +92,10 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
         this.quantity = props.quantity !== undefined ? props.quantity : Number.NaN;
         this.notes = props.notes || "";
         this.pureGramsPerUnit = this.weight * this.weightUnit * this.fineness;
+    }
+
+    protected async queryUnitValueUsd() {
+        return this.pureGramsPerUnit / WeightUnit["t oz"] * await new QuandlRequest(this.quandlPath, false).execute();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

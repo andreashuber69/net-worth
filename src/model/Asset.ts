@@ -115,6 +115,7 @@ export abstract class Asset {
     /** @internal */
     // tslint:disable-next-line:no-empty prefer-function-over-method
     public async queryData(): Promise<void> {
+        this.unitValueUsd = await this.queryUnitValueUsd();
     }
 
     /** @internal */
@@ -144,6 +145,11 @@ export abstract class Asset {
      */
     protected constructor(parent: IModel) {
         this.parent = parent;
+    }
+
+    // tslint:disable-next-line:prefer-function-over-method
+    protected queryUnitValueUsd(): Promise<number | undefined> {
+        return Promise.resolve(undefined);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -42,10 +42,6 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     public async queryData(): Promise<void> {
         await super.queryData();
 
-        if (this.slug) {
-            this.unitValueUsd = await new CoinMarketCapRequest(this.slug, false).execute();
-        }
-
         if (this.address) {
             const quantityToAdd = await this.queryQuantity();
 
@@ -108,6 +104,10 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     // tslint:disable-next-line:prefer-function-over-method
     protected queryQuantity(): Promise<number | undefined> {
         return Promise.resolve(undefined);
+    }
+
+    protected queryUnitValueUsd() {
+        return this.slug ? new CoinMarketCapRequest(this.slug, false).execute() : Promise.resolve(undefined);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
