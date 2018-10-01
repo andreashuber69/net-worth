@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
 
 /** @internal */
@@ -36,12 +37,18 @@ export class QueryCache {
     private static readonly cache = new Map<string, Promise<Unknown | null>>();
 
     private static async fetchImpl(query: string) {
+        let responseText: string;
+
         try {
-            return JSON.parse(await (await window.fetch(query)).text()) as Unknown | null;
-        } catch {
-            // It appears that after catch (e), e is sometimes undefined at this point, which is why we go with plain
-            // catch.
-            return { error: "Can't fetch or parse response." };
+            responseText = await (await window.fetch(query)).text();
+        } catch (e) {
+            throw new QueryError(`Network Error: ${e}`);
+        }
+
+        try {
+            return JSON.parse(responseText) as Unknown | null;
+        } catch (e) {
+            throw new QueryError(`Invalid JSON: ${e}`);
         }
     }
 }

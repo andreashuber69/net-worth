@@ -12,6 +12,7 @@
 
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
+import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
 
@@ -42,7 +43,7 @@ export class QuandlRequest implements IWebRequest<number> {
     private static getPrice(response: Unknown | null) {
         if (!Value.hasObjectProperty(response, "dataset") ||
             !Value.hasArrayProperty(response.dataset, "data") || response.dataset.data.length < 1) {
-            return Number.NaN;
+            throw new QueryError();
         }
 
         const array = response.dataset.data[0];
@@ -55,6 +56,6 @@ export class QuandlRequest implements IWebRequest<number> {
             }
         }
 
-        return Number.NaN;
+        throw new QueryError();
     }
 }

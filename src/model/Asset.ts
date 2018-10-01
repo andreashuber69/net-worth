@@ -17,6 +17,7 @@ import {
 
 import { AssetType } from "./AssetTypes";
 import { IOrdering } from "./Ordering";
+import { Query } from "./Query";
 import { Unknown } from "./Unknown";
 
 /** @internal */
@@ -115,7 +116,8 @@ export abstract class Asset {
     /** @internal */
     // tslint:disable-next-line:no-empty prefer-function-over-method
     public async queryData(): Promise<void> {
-        this.unitValueUsd = await this.queryUnitValueUsd();
+        // TODO: Set status
+        ({ result: this.unitValueUsd } = await Query.execute(() => this.queryUnitValueUsd()));
     }
 
     /** @internal */

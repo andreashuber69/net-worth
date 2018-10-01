@@ -12,6 +12,7 @@
 
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
+import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
 
@@ -43,6 +44,6 @@ export class CoinMarketCapRequest implements IWebRequest<number> {
             }
         }
 
-        return  Number.NaN;
+        throw new QueryError();
     }
 }

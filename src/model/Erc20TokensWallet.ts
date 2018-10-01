@@ -16,6 +16,7 @@ import { AssetType } from "./AssetTypes";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
+import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
@@ -74,15 +75,25 @@ export class Erc20TokensWallet extends RealCryptoWallet {
                 return;
             }
 
-            const balances = await QueryCache.fetch(
-                `https://api.ethplorer.io/getAddressInfo/${this.erc20Wallet.address}?apiKey=dvoio1769GSrYx63`);
+            try {
+                // There's no good place where we can visualize an ERC20 query error in the UI, which is why we just log
+                // it in the console.
+                const balances = await QueryCache.fetch(
+                    `https://api.ethplorer.io/getAddressInfo/${this.erc20Wallet.address}?apiKey=dvoio1769GSrYx63`);
 
-            if (!Value.hasArrayProperty(balances, "tokens")) {
-                return;
-            }
+                if (!Value.hasArrayProperty(balances, "tokens")) {
+                    throw new QueryError();
+                }
 
-            for (const token of balances.tokens) {
-                this.addTokenWallet(token);
+                for (const token of balances.tokens) {
+                    this.addTokenWallet(token);
+                }
+            } catch (e) {
+                if (e instanceof QueryError) {
+                    console.warn(e);
+                } else {
+                    throw e;
+                }
             }
         }
 
@@ -117,7 +128,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
         // codebeat:disable[ABC]
         private addTokenWallet(token: Unknown | null | undefined) {
             if (!Value.hasObjectProperty(token, "tokenInfo")) {
-                return;
+                throw new QueryError();
             }
 
             const info = token.tokenInfo;

@@ -12,6 +12,7 @@
 
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
+import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
 
@@ -32,6 +33,6 @@ export class BlockcypherRequest implements IWebRequest<number> {
             return response.balance / 1E8;
         }
 
-        return Number.NaN;
+        throw new QueryError();
     }
 }

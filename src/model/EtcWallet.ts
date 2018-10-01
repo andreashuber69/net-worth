@@ -16,6 +16,7 @@ import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
+import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
@@ -58,7 +59,7 @@ export class EtcWallet extends RealCryptoWallet {
                 return response.balance.ether;
             }
 
-            return Number.NaN;
+            throw new QueryError();
         }
     };
 }

@@ -68,7 +68,6 @@ export class MiscAsset extends Asset implements IMiscAsset {
         this.notes = props.notes || "";
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /** @internal */
     public toJSON() {
         return {

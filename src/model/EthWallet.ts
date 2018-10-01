@@ -15,6 +15,7 @@ import { AssetBundle } from "./AssetBundle";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
+import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
@@ -44,7 +45,7 @@ export class EthWallet extends RealCryptoWallet {
 
     private static getQuantity(response: Unknown | null) {
         if (!Value.hasObjectProperty(response, "ETH") || !Value.hasNumberProperty(response.ETH, "balance")) {
-            return Number.NaN;
+            throw new QueryError();
         }
 
         return response.ETH.balance;

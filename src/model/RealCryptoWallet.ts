@@ -14,6 +14,7 @@ import { IModel } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
+import { Query } from "./Query";
 
 export interface IRealCryptoWalletParameters extends ICryptoWalletProperties {
     /** The crypto currency symbol, e.g. 'BTC', 'LTC'. */
@@ -43,10 +44,11 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         await super.queryData();
 
         if (this.address) {
-            const quantityToAdd = await this.queryQuantity();
+            // TODO: Set status
+            const { result } = await Query.execute(() => this.queryQuantity());
 
-            if (quantityToAdd !== undefined) {
-                this.quantity = (this.quantity === undefined ? 0 : this.quantity) + quantityToAdd;
+            if (result !== undefined) {
+                this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result;
             }
         }
     }

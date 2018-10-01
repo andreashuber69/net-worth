@@ -17,6 +17,7 @@ import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
+import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
@@ -71,6 +72,10 @@ export class BtcWallet extends RealCryptoWallet {
                 if (response.hasOwnProperty(address)) {
                     this.addBalance(response[address], result);
                 }
+            }
+
+            if (Number.isNaN(result.finalBalance)) {
+                throw new QueryError();
             }
 
             return result;

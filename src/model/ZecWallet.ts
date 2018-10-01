@@ -16,6 +16,7 @@ import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
+import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
@@ -59,7 +60,7 @@ export class ZecWallet extends RealCryptoWallet {
                 return Number.parseFloat(response.data.confirmed_balance);
             }
 
-            return Number.NaN;
+            throw new QueryError();
         }
     };
 }
