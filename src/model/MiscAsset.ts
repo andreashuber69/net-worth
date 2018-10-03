@@ -11,7 +11,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetType } from "./AssetTypes";
 import { Currency } from "./Currency";
@@ -19,10 +19,11 @@ import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IMiscAsset, IMiscAssetProperties, miscSuperType } from "./IMiscAsset";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
+import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 
 /** Represents a miscellaneous asset. */
-export class MiscAsset extends Asset implements IMiscAsset {
+export class MiscAsset extends SingleAsset implements IMiscAsset {
     /** @internal */
     public static readonly superType = miscSuperType;
 
@@ -43,8 +44,6 @@ export class MiscAsset extends Asset implements IMiscAsset {
     public readonly value: number;
 
     public readonly valueCurrency: keyof typeof Currency;
-
-    public readonly quantity: number;
 
     public readonly displayDecimals = 0;
 

@@ -10,12 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { IModel } from "./Asset";
 import { AssetType } from "./AssetTypes";
 import { cryptoWalletSuperType, ICryptoWallet } from "./ICryptoWallet";
+import { SingleAsset } from "./SingleAsset";
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
-export abstract class CryptoWallet extends Asset implements ICryptoWallet {
+export abstract class CryptoWallet extends SingleAsset implements ICryptoWallet {
     /** @internal */
     public static readonly superType = cryptoWalletSuperType;
 
@@ -34,8 +35,6 @@ export abstract class CryptoWallet extends Asset implements ICryptoWallet {
     public get fineness() {
         return undefined;
     }
-
-    public quantity: number | undefined;
 
     public readonly displayDecimals = 6;
 

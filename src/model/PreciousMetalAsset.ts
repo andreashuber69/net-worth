@@ -11,18 +11,19 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetType } from "./AssetTypes";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IPreciousMetalAsset, IPreciousMetalAssetProperties, preciousMetalSuperType } from "./IPreciousMetalAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
+import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { WeightUnit } from "./WeightUnit";
 
 /** Defines the base of all classes that represent a precious metal asset. */
-export abstract class PreciousMetalAsset extends Asset implements IPreciousMetalAsset {
+export abstract class PreciousMetalAsset extends SingleAsset implements IPreciousMetalAsset {
     /** @internal */
     public static readonly superType = preciousMetalSuperType;
 
@@ -41,8 +42,6 @@ export abstract class PreciousMetalAsset extends Asset implements IPreciousMetal
     }
 
     public readonly fineness: number;
-
-    public readonly quantity: number;
 
     public readonly displayDecimals = 0;
 

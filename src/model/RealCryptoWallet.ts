@@ -44,12 +44,13 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         await super.queryData();
 
         if (this.address) {
-            // TODO: Set status
-            const { result } = await Query.execute(() => this.queryQuantity());
+            const { result, status } = await Query.execute(() => this.queryQuantity());
 
             if (result !== undefined) {
                 this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result;
             }
+
+            this.quantityHint = status;
         }
     }
 

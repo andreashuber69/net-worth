@@ -81,6 +81,9 @@ export abstract class Asset {
     /** Provides the asset quantity. */
     public abstract get quantity(): number | undefined;
 
+    /** Provides the quantity query error message, if applicable. */
+    public abstract get quantityHint(): string;
+
     /** Provides the number of decimals to format the quantity to. */
     public abstract get displayDecimals(): number;
 
@@ -90,6 +93,11 @@ export abstract class Asset {
     /** @internal */
     public get unitValue() {
         return Asset.multiply(this.unitValueUsd, this.parent.exchangeRate);
+    }
+
+    /** Provides the unit value query error message, if applicable. */
+    public get unitValueHint() {
+        return this.unitValueHintImpl;
     }
 
     /** @internal */
@@ -116,8 +124,9 @@ export abstract class Asset {
     /** @internal */
     // tslint:disable-next-line:no-empty prefer-function-over-method
     public async queryData(): Promise<void> {
-        // TODO: Set status
-        ({ result: this.unitValueUsd } = await Query.execute(() => this.queryUnitValueUsd()));
+        const { result, status } = await Query.execute(() => this.queryUnitValueUsd());
+        this.unitValueUsd = result;
+        this.unitValueHintImpl = status;
     }
 
     /** @internal */
@@ -169,6 +178,8 @@ export abstract class Asset {
     private static multiply(factor1: number | undefined, factor2: number | undefined) {
         return (factor1 === undefined) || (factor2 === undefined) ? undefined : factor1 * factor2;
     }
+
+    private unitValueHintImpl = "";
 }
 
 export type SortBy =

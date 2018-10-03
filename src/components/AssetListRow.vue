@@ -27,9 +27,9 @@
     <td :class="getClass('finenessInteger')">{{ finenessInteger }}</td>
     <td :class="getClass('finenessFraction')">{{ finenessFraction }}</td>
     <td :class="getClass('unitValueInteger')">{{ unitValueInteger }}</td>
-    <td :class="getClass('unitValueFraction')">{{ unitValueFraction }}</td>
+    <td :class="getClass('unitValueFraction')" :title="checkedValue.unitValueHint">{{ unitValueFraction }}</td>
     <td :class="getClass('quantityInteger')">{{ quantityInteger }}</td>
-    <td :class="getClass('quantityFraction')">{{ quantityFraction }}</td>
+    <td :class="getClass('quantityFraction')" :title="checkedValue.quantityHint">{{ quantityFraction }}</td>
     <td :class="getClass('totalValueInteger')">{{ totalValueInteger }}</td>
     <td :class="getClass('totalValueFraction')">{{ totalValueFraction }}</td>
     <td :class="getClass('percentInteger')">{{ percentInteger }}</td>

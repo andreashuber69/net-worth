@@ -10,24 +10,21 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { QueryError } from "./QueryError";
+import { Asset, IModel } from "./Asset";
 
-export class Query {
-    public static async execute(query: () => Promise<number | undefined>) {
-        try {
-            return {
-                result: await query(),
-                status: "",
-            };
-        } catch (e) {
-            if (e instanceof QueryError) {
-                return {
-                    result: Number.NaN,
-                    status: e.message,
-                };
-            } else {
-                throw e;
-            }
-        }
+/** Defines the base of all classes that represent a single asset (as opposed to an [[AssetGroup]]). */
+export abstract class SingleAsset extends Asset  {
+    public quantity: number | undefined;
+
+    public quantityHint = "";
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Creates a new [[SingleAsset]] instance.
+     * @param parent The parent model to which this asset belongs.
+     */
+    protected constructor(parent: IModel) {
+        super(parent);
     }
 }

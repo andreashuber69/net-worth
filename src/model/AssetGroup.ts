@@ -48,6 +48,10 @@ export class AssetGroup extends Asset {
             this.assets.reduce<number | undefined>((s, a) => AssetGroup.add(s, a.quantity), 0) : undefined;
     }
 
+    public get quantityHint() {
+        return this.coalesce((a) => a.quantityHint) || "";
+    }
+
     public get displayDecimals() {
         return this.coalesce((a) => a.displayDecimals) || 0;
     }
@@ -58,6 +62,10 @@ export class AssetGroup extends Asset {
 
     public get unitValue() {
         return this.coalesce((a) => a.unitValue);
+    }
+
+    public get unitValueHint() {
+        return this.coalesce((a) => a.unitValueHint) || "";
     }
 
     public get totalValue() {
