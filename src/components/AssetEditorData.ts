@@ -19,17 +19,17 @@ import { PreciousMetalAsset } from "../model/PreciousMetalAsset";
 import { WeightUnit } from "../model/WeightUnit";
 
 /** Represents the data being edited in the asset editor. */
-export class AssetEditorData implements IAuxProperties<string> {
-    public description: string;
-    public location: string;
-    public address: string;
-    public weight: string;
-    public weightUnit: keyof typeof WeightUnit | "";
-    public fineness: string;
-    public value: string;
-    public valueCurrency: keyof typeof Currency | "";
-    public quantity: string;
-    public notes: string;
+export class AssetEditorData implements Partial<IAuxProperties<string>> {
+    public description?: string;
+    public location?: string;
+    public address?: string;
+    public weight?: string;
+    public weightUnit?: keyof typeof WeightUnit;
+    public fineness?: string;
+    public value?: string;
+    public valueCurrency?: keyof typeof Currency;
+    public quantity?: string;
+    public notes?: string;
 
     /** @internal */
     // The high ABC is due to the number of properties that need to be assigned. Breaking this up would not improve
@@ -52,44 +52,44 @@ export class AssetEditorData implements IAuxProperties<string> {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getDescription(asset?: IAssetUnion) {
-        return asset ? asset.description : "";
+        return asset && asset.description;
     }
 
     private static getLocation(asset?: IAssetUnion) {
-        return (asset && asset.location) || "";
+        return asset && asset.location;
     }
 
     private static getAddress(asset?: IAssetUnion) {
-        return (this.isCryptoWallet(asset) && asset.address) || "";
+        return this.isCryptoWallet(asset) && asset.address || undefined;
     }
 
     private static getWeight(asset?: IAssetUnion) {
-        return this.isPreciousMetalAsset(asset) ? asset.weight.toString() : "";
+        return this.isPreciousMetalAsset(asset) ? asset.weight.toString() : undefined;
     }
 
     private static getWeightUnit(asset?: IAssetUnion) {
-        return this.isPreciousMetalAsset(asset) ? WeightUnit[asset.weightUnit] as keyof typeof WeightUnit : "";
+        return this.isPreciousMetalAsset(asset) ? WeightUnit[asset.weightUnit] as keyof typeof WeightUnit : undefined;
     }
 
     private static getFineness(asset?: IAssetUnion) {
-        return this.isPreciousMetalAsset(asset) ? asset.fineness.toString() : "";
+        return this.isPreciousMetalAsset(asset) ? asset.fineness.toString() : undefined;
     }
 
     private static getValue(asset?: IAssetUnion) {
-        return this.isMiscAsset(asset) ? asset.value.toString() : "";
+        return this.isMiscAsset(asset) ? asset.value.toString() : undefined;
     }
 
     private static getValueCurrency(asset?: IAssetUnion) {
-        return this.isMiscAsset(asset) ? asset.valueCurrency : "";
+        return this.isMiscAsset(asset) ? asset.valueCurrency : undefined;
     }
 
     private static getQuantity(asset?: IAssetUnion) {
-        return (asset && (!this.isCryptoWallet(asset) || !asset.address) &&
-            (asset.quantity !== undefined) && asset.quantity.toString()) || "";
+        return asset && (!this.isCryptoWallet(asset) || !asset.address) &&
+            (asset.quantity !== undefined) && asset.quantity.toString() || undefined;
     }
 
     private static getNotes(asset?: IAssetUnion) {
-        return (asset && asset.notes) || "";
+        return asset && asset.notes;
     }
 
     private static isCryptoWallet(asset?: IAssetUnion): asset is CryptoWallet {

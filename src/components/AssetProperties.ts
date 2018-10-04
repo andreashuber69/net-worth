@@ -19,7 +19,7 @@ import { AssetEditorData } from "./AssetEditorData";
  */
 export class AssetProperties implements IAssetIntersection {
     public get description() {
-        return this.data.description;
+        return AssetProperties.validate("description", this.data.description);
     }
 
     public get location() {
@@ -27,35 +27,27 @@ export class AssetProperties implements IAssetIntersection {
     }
 
     public get address() {
-        return this.data.address || undefined;
+        return this.data.address;
     }
 
     public get weight() {
-        return Number.parseFloat(this.data.weight);
+        return Number.parseFloat(AssetProperties.validate("weight", this.data.weight));
     }
 
     public get weightUnit() {
-        if (this.data.weightUnit === "") {
-            throw new Error("Unexpected weightUnit!");
-        }
-
-        return WeightUnit[this.data.weightUnit];
+        return WeightUnit[AssetProperties.validate("weightUnit", this.data.weightUnit)];
     }
 
     public get fineness() {
-        return Number.parseFloat(this.data.fineness);
+        return Number.parseFloat(AssetProperties.validate("fineness", this.data.fineness));
     }
 
     public get value() {
-        return Number.parseFloat(this.data.value);
+        return Number.parseFloat(AssetProperties.validate("value", this.data.value));
     }
 
     public get valueCurrency() {
-        if (this.data.valueCurrency === "") {
-            throw new Error("Unexpected currency!");
-        }
-
-        return this.data.valueCurrency;
+        return AssetProperties.validate("valueCurrency", this.data.valueCurrency);
     }
 
     public get quantity() {
@@ -68,5 +60,13 @@ export class AssetProperties implements IAssetIntersection {
 
     /** @internal */
     public constructor(private readonly data: AssetEditorData) {
+    }
+
+    private static validate<T extends string | undefined>(name: string, value: T): Exclude<T, undefined> {
+        if (!value) {
+            throw new Error(`Unexpected ${name}.`);
+        }
+
+        return value as Exclude<T, undefined>;
     }
 }
