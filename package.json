@@ -20,12 +20,13 @@
   },
   "private": true,
   "scripts": {
-    "lint": "tslint --project tsconfig.json --config tslint.json --format verbose",
     "serve-development": "vue-cli-service serve --mode development",
+    "preserve-production": "npm run lint",
     "serve-production": "vue-cli-service serve --mode production",
+    "prebuild": "npm run lint",
     "build": "cross-env WEBPACK_BASE_URL=/net-worth vue-cli-service build",
     "build-code-doc": "typedoc --excludePrivate --out ./code-doc",
-    "pretest": "npm run lint",
+    "lint": "tslint --project tsconfig.json --config tslint.json --format verbose",
     "test": "npm run build"
   },
   "dependencies": {
