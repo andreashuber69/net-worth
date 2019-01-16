@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "bitcoinjs-lib": "^3.3.2",
-    "offline-plugin": "^5.0.5",
+    "offline-plugin": "^5.0.6",
     "vue": "^2.5.17",
     "vue-class-component": "^6.2.0",
     "vue-property-decorator": "^7.0.0",
