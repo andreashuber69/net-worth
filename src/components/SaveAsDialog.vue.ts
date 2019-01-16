@@ -12,6 +12,7 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import { TextInputInfo } from "../model/TextInputInfo";
+// tslint:disable-next-line:no-default-import
 import TextField from "./TextField.vue";
 
 // tslint:disable-next-line:no-unsafe-any

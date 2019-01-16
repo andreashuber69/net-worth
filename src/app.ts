@@ -19,6 +19,7 @@ import Vue from "vue";
 import Vuetify from "vuetify";
 // tslint:disable-next-line:no-import-side-effect no-implicit-dependencies no-submodule-imports
 import "vuetify/dist/vuetify.min.css";
+// tslint:disable-next-line:no-default-import
 import App from "./App.vue";
 
 const urlComponents = window.location.href.split("?");

@@ -41,7 +41,7 @@ export abstract class InputInfo {
      * @description When implemented by [[PrimitiveInputInfo]], this method simply returns `this`.
      * @throws `Error` if `T` does not match the type implied by `propertyName`.
      */
-    public abstract get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AssetPropertyName): T;
+    public abstract get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

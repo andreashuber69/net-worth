@@ -19,8 +19,11 @@ import { SelectInputInfo } from "../model/SelectInputInfo";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetProperties } from "./AssetProperties";
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
+// tslint:disable-next-line:no-default-import
 import Select from "./Select.vue";
+// tslint:disable-next-line:no-default-import
 import TextArea from "./TextArea.vue";
+// tslint:disable-next-line:no-default-import
 import TextField from "./TextField.vue";
 
 // tslint:disable-next-line:no-unsafe-any

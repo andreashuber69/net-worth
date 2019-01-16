@@ -14,7 +14,9 @@ import { Component } from "vue-property-decorator";
 import { Asset, SortBy } from "../model/Asset";
 import { Model } from "../model/Model";
 import { Ordering } from "../model/Ordering";
+// tslint:disable-next-line:no-default-import
 import AssetEditor from "./AssetEditor.vue";
+// tslint:disable-next-line:no-default-import
 import AssetListRow, { ColumnName } from "./AssetListRow.vue";
 import { ColumnInfo } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";

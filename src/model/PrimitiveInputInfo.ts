@@ -29,7 +29,7 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
     public readonly isPresent: boolean;
     public readonly isRequired: boolean;
 
-    public get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AssetPropertyName): T {
+    public get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T {
         if (propertyName !== undefined) {
             throw new Error("The propertyName argument must be undefined for a primitive input.");
         }

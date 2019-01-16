@@ -11,9 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Vue } from "vue-property-decorator";
+// tslint:disable-next-line:no-default-import
 import AboutDialog from "./components/AboutDialog.vue";
+// tslint:disable-next-line:no-default-import
 import AssetList from "./components/AssetList.vue";
+// tslint:disable-next-line:no-default-import
 import BrowserDialog from "./components/BrowserDialog.vue";
+// tslint:disable-next-line:no-default-import
 import SaveAsDialog from "./components/SaveAsDialog.vue";
 import { LocalStorage } from "./LocalStorage";
 import { Model } from "./model/Model";

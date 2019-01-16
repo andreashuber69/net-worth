@@ -28,9 +28,7 @@ interface IValidationResults extends IAuxProperties<true | string> {
     [key: string]: true | string;
 }
 
-export interface IAssetConstructor {
-    new (m: IModel, p: IAssetIntersection): Asset;
-}
+export type IAssetConstructor = new (m: IModel, p: IAssetIntersection) => Asset;
 
 /**
  * Defines how the properties of a given asset type need to be input and validated and provides a method to create a
@@ -72,7 +70,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
         return new this.ctor(parent, props);
     }
 
-    public get<T extends PrimitiveInputInfo>(ctor: { new(): T }, propertyName?: AssetPropertyName): T {
+    public get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T {
         if (propertyName === undefined) {
             throw new Error("The propertyName argument cannot be undefined for a composite input.");
         }
