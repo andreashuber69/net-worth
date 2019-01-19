@@ -30,7 +30,7 @@ if (Browser.isCompatible) {
         window.location.replace(urlComponents[0]);
     } else {
         // tslint:disable-next-line:no-require-imports no-var-requires
-        require("./app");
+        require("./app-main");
     }
 } else {
     const appElement = document.getElementById("app");

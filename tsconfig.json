@@ -24,9 +24,8 @@
   },
   "include": [
     "src/main.ts",
-    "src/app.ts",
-    "src/**/*.vue",
-    "tests/**/*.ts"
+    "src/app-main.ts",
+    "src/**/*.vue"
   ],
   "exclude": [
     "dist",
