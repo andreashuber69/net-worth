@@ -35,14 +35,15 @@ interface IPagination {
 export default class AssetList extends ComponentBase<Model> {
     /** Provides the information required for sorting and paginating the table. */
     public get pagination(): IPagination {
-        return {
+        return this.paginationImpl || (this.paginationImpl = {
             sortBy: this.checkedValue.assets.ordering.sort.by,
             descending: this.checkedValue.assets.ordering.sort.descending,
             rowsPerPage: -1,
-        };
+        });
     }
 
     public set pagination(pagination: IPagination) {
+        this.paginationImpl = pagination;
         this.checkedValue.assets.ordering.sort = { by: pagination.sortBy, descending: pagination.descending };
     }
 
@@ -137,6 +138,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private paginationImpl: IPagination | undefined;
     private optionalColumnCountImpl = ColumnInfo.maxOptionalCount;
 
     private timer?: NodeJS.Timer;
