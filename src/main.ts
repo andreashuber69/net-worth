@@ -15,8 +15,23 @@ import { Browser } from "./Browser";
 import { Application } from "./model/Application";
 
 if (Browser.isCompatible) {
-    // tslint:disable-next-line:no-require-imports no-var-requires
-    require("./app");
+    const urlComponents = window.location.href.split("?");
+    const params = urlComponents.length === 2 ? urlComponents[1].split("&") : [];
+
+    for (const param of params) {
+        const nameValuePair = param.split("=");
+
+        if (nameValuePair.length === 2) {
+            window.sessionStorage.setItem(nameValuePair[0], nameValuePair[1]);
+        }
+    }
+
+    if (params.length > 0) {
+        window.location.replace(urlComponents[0]);
+    } else {
+        // tslint:disable-next-line:no-require-imports no-var-requires
+        require("./app");
+    }
 } else {
     const appElement = document.getElementById("app");
 

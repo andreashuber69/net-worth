@@ -22,26 +22,11 @@ import "vuetify/dist/vuetify.min.css";
 // tslint:disable-next-line:no-default-import
 import App from "./App.vue";
 
-const urlComponents = window.location.href.split("?");
-const params = urlComponents.length === 2 ? urlComponents[1].split("&") : [];
+OfflinePluginRuntime.install();
+// tslint:disable:no-unsafe-any
+Vue.config.productionTip = false;
+Vue.use(Vuetify);
 
-for (const param of params) {
-    const nameValuePair = param.split("=");
-
-    if (nameValuePair.length === 2) {
-        window.sessionStorage.setItem(nameValuePair[0], nameValuePair[1]);
-    }
-}
-
-if (params.length > 0) {
-    window.location.replace(urlComponents[0]);
-} else {
-    OfflinePluginRuntime.install();
-    // tslint:disable:no-unsafe-any
-    Vue.config.productionTip = false;
-    Vue.use(Vuetify);
-
-    new Vue({
-        render: (h) => h(App),
-    }).$mount("#app");
-}
+new Vue({
+    render: (h) => h(App),
+}).$mount("#app");
