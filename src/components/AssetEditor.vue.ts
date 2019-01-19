@@ -72,7 +72,7 @@ export default class AssetEditor extends Vue {
     }
 
     public onCancelClicked(event: MouseEvent) {
-        this.close(undefined);
+        this.close();
     }
 
     /** @internal */
@@ -107,7 +107,7 @@ export default class AssetEditor extends Vue {
         }
     }
 
-    private close(asset: Asset | undefined) {
+    private close(asset?: Asset) {
         // This is necessary so that the Type field does not initially show an error next time we add a new asset.
         // tslint:disable-next-line:no-unsafe-any
         (this.$refs.form as any).reset();

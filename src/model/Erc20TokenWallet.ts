@@ -18,7 +18,7 @@ interface ITokenWalletParameters {
     readonly editable: Erc20TokensWallet;
     readonly currencySymbol: string;
     readonly quantity: number;
-    readonly unitValueUsd: number | undefined;
+    readonly unitValueUsd?: number;
 }
 
 export class Erc20TokenWallet extends CryptoWallet {

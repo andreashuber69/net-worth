@@ -23,8 +23,8 @@ interface IParent extends IModel {
 interface IAssetCollectionParameters {
     parent: IParent;
     bundles: AssetBundle[];
-    groupBy: GroupBy | undefined;
-    sort: ISort | undefined;
+    groupBy?: GroupBy;
+    sort?: ISort;
 }
 
 export class AssetCollection {

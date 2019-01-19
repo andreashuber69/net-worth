@@ -24,10 +24,10 @@ import { Unknown } from "./Unknown";
 export interface IModel {
     readonly assets: {
         readonly ordering: IOrdering;
-        readonly grandTotalValue: number | undefined;
+        readonly grandTotalValue?: number;
     };
 
-    readonly exchangeRate: number | undefined;
+    readonly exchangeRate?: number;
 }
 
 /** Defines the base of all classes that represent an asset. */

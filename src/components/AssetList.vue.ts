@@ -138,7 +138,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private paginationImpl: IPagination | undefined;
+    private paginationImpl?: IPagination;
     private optionalColumnCountImpl = ColumnInfo.maxOptionalCount;
 
     private timer?: NodeJS.Timer;
