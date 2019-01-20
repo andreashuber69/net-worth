@@ -18,10 +18,10 @@ import Vue from "vue";
 import "./plugins/vuetify";
 // tslint:disable-next-line:no-default-import ordered-imports
 import App from "./App.vue";
-// tslint:disable-next-line:ordered-imports no-import-side-effect no-submodule-imports
-import "roboto-fontface/css/roboto/roboto-fontface.css";
 // tslint:disable-next-line:no-import-side-effect
 import "./assets/material-icons.css";
+// tslint:disable-next-line:no-import-side-effect
+import "./assets/roboto-fontface.css";
 
 OfflinePluginRuntime.install();
 Vue.config.productionTip = false;

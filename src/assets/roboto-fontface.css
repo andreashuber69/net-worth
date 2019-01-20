@@ -13,28 +13,37 @@ You should have received a copy of the GNU General Public License along with thi
 */
 
 @font-face {
-    font-family: "Material Icons";
-    font-style: normal;
+    font-family: 'Roboto';
+    src: url('./Roboto-Regular.woff2') format('woff2');
     font-weight: 400;
-    src: url("./MaterialIcons-Regular.woff2") format("woff2");
-}
-  
-.material-icons {
-    font-family: "Material Icons";
-    font-weight: normal;
     font-style: normal;
-    font-size: 24px;
-    display: inline-block;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('./Roboto-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./Roboto-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto-Medium';
+    src: url('./Roboto-Medium.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./Roboto-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto-Bold';
+    src: url('./Roboto-Bold.woff2') format('woff2');
 }
