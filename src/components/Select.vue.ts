@@ -14,7 +14,6 @@ import { Component, Prop } from "vue-property-decorator";
 import { SelectInputInfo, SelectInputInfoBase } from "../model/SelectInputInfo";
 import { ControlBase } from "./ControlBase";
 
-// tslint:disable-next-line:no-unsafe-any
 @Component
 /** Implements a select control that simplifies common functionality like e.g. validation. */
 // tslint:disable-next-line:no-default-export

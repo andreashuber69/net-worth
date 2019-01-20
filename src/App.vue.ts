@@ -24,9 +24,8 @@ import { Model } from "./model/Model";
 import { QueryCache } from "./model/QueryCache";
 import { Parser } from "./Parser";
 
-// tslint:disable-next-line:no-unsafe-any
 @Component({ components: { AboutDialog, AssetList, BrowserDialog, SaveAsDialog } })
-// tslint:disable-next-line:no-default-export no-unsafe-any
+// tslint:disable-next-line:no-default-export
 export default class App extends Vue {
     public isDrawerVisible = false;
     public model: Model;
@@ -70,7 +69,6 @@ export default class App extends Vue {
 
     public async onSaveAsClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
-        // tslint:disable-next-line:no-unsafe-any
         const newName = await (this.$refs.saveAsDialog as SaveAsDialog).showDialog(this.model.name);
 
         if (newName !== undefined) {
@@ -82,11 +80,9 @@ export default class App extends Vue {
 
     public onAboutClicked(event: MouseEvent) {
         this.isDrawerVisible = false;
-        // tslint:disable-next-line:no-unsafe-any
         (this.$refs.aboutDialog as AboutDialog).showDialog();
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
     public onRefreshClicked(event: MouseEvent) {
         QueryCache.clear();
         this.model = App.initModel(Parser.parse(this.model.toJsonString()) || new Model());
@@ -127,7 +123,6 @@ export default class App extends Vue {
     }
 
     private get fileInput() {
-        // tslint:disable-next-line:no-unsafe-any
         return this.$refs.fileInput as HTMLInputElement;
     }
 

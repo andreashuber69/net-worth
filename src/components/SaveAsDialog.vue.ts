@@ -15,10 +15,9 @@ import { TextInputInfo } from "../model/TextInputInfo";
 // tslint:disable-next-line:no-default-import
 import TextField from "./TextField.vue";
 
-// tslint:disable-next-line:no-unsafe-any
 @Component({ components: { TextField } })
 /** Implements the dialog used during Save As... */
-// tslint:disable-next-line:no-default-export no-unsafe-any
+// tslint:disable-next-line:no-default-export
 export default class SaveAsDialog extends Vue {
     /** Provides the name being edited. */
     public name = "";

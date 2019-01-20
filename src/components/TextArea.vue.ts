@@ -14,7 +14,6 @@ import { Component } from "vue-property-decorator";
 import { TextInputInfo } from "../model/TextInputInfo";
 import { ControlBase } from "./ControlBase";
 
-// tslint:disable-next-line:no-unsafe-any
 @Component
 /** Implements a text area control that simplifies common functionality like e.g. validation. */
 // tslint:disable-next-line:no-default-export

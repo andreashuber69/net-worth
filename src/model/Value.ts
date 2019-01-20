@@ -59,24 +59,18 @@ export class Value {
     /** Returns whether `value` has an own property of type `boolean` with the name `propertyName`. */
     public static hasBooleanProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: boolean } {
-        // False positive
-        // tslint:disable-next-line:strict-type-predicates
         return this.hasProperty(value, propertyName) && this.isBoolean(value[propertyName]);
     }
 
     /** Returns whether `value` has an own property of type `number` with the name `propertyName`. */
     public static hasNumberProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: number } {
-        // False positive
-        // tslint:disable-next-line:strict-type-predicates
         return this.hasProperty(value, propertyName) && this.isNumber(value[propertyName]);
     }
 
     /** Returns whether `value` has an own property of type `string` with the name `propertyName`. */
     public static hasStringProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: string } {
-        // False positive
-        // tslint:disable-next-line:strict-type-predicates
         return this.hasProperty(value, propertyName) && this.isString(value[propertyName]);
     }
 

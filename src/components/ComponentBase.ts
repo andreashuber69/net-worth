@@ -13,7 +13,6 @@
 import { Prop, Vue } from "vue-property-decorator";
 
 /** Defines common component functionality. */
-// tslint:disable-next-line:no-unsafe-any
 export class ComponentBase<T> extends Vue {
     @Prop()
     // value should be declared as having the type T but doing so triggers the following issue, if T happens to be
@@ -33,7 +32,6 @@ export class ComponentBase<T> extends Vue {
     }
 
     public set checkedValue(value: T) {
-        // tslint:disable-next-line:no-unsafe-any
         this.$emit("input", value);
     }
 
@@ -41,8 +39,6 @@ export class ComponentBase<T> extends Vue {
 
     /** Gets the control with the supplied ref. */
     protected getControl(ref: string) {
-        // https://github.com/palantir/tslint/issues/3540
-        // tslint:disable-next-line:no-unsafe-any no-unnecessary-type-assertion
         return this.$refs[ref] as Vue;
     }
 }

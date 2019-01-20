@@ -26,10 +26,9 @@ import TextArea from "./TextArea.vue";
 // tslint:disable-next-line:no-default-import
 import TextField from "./TextField.vue";
 
-// tslint:disable-next-line:no-unsafe-any
 @Component({ components: { Select, TextArea, TextField } })
 /** Implements the dialog used to edit assets. */
-// tslint:disable-next-line:no-default-export no-unsafe-any
+// tslint:disable-next-line:no-default-export
 export default class AssetEditor extends Vue {
     /** Provides a value indicating whether the asset editor is currently open. */
     public isOpen = false;

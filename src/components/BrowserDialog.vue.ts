@@ -13,10 +13,9 @@
 import { Component, Vue } from "vue-property-decorator";
 import { Application } from "../model/Application";
 
-// tslint:disable-next-line:no-unsafe-any
 @Component
 /** Implements the dialog informing the user about untested browsers. */
-// tslint:disable-next-line:no-default-export no-unsafe-any
+// tslint:disable-next-line:no-default-export
 export default class BrowserDialog extends Vue {
     public get applicationTitle() {
         return Application.title;

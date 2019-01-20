@@ -122,7 +122,6 @@ export abstract class Asset {
     }
 
     /** @internal */
-    // tslint:disable-next-line:no-empty prefer-function-over-method
     public async queryData(): Promise<void> {
         const { result, status } = await Query.execute(() => this.queryUnitValueUsd());
         this.unitValueUsd = result;

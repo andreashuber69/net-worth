@@ -17,7 +17,6 @@ import { ColumnInfo } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
-// tslint:disable-next-line:ban-types
 type PropertyNames<T> = { [K in keyof T]: T[K] extends string ? K : never }[keyof T];
 type Diff<T, U> = T extends U ? never : T;
 export type AssetListRowPropertyName = Diff<PropertyNames<AssetListRow>, PropertyNames<ComponentBase<Asset>>>;
@@ -26,7 +25,6 @@ export type AssetListRowPropertyName = Diff<PropertyNames<AssetListRow>, Propert
 // methods are trivial, so their number shouldn't matter that much.
 // codebeat:disable[TOO_MANY_FUNCTIONS]
 
-// tslint:disable-next-line:no-unsafe-any
 @Component
 /**
  * Implements the UI for a single row of the asset list.
@@ -120,13 +118,11 @@ export default class AssetListRow extends ComponentBase<Asset> {
 
     /** Instructs the parent UI element to open the asset editor dialog with the given asset. */
     public onEditClicked(event: MouseEvent) {
-        // tslint:disable-next-line:no-unsafe-any
         this.$emit("edit", this.checkedValue);
     }
 
     /** Instructs the parent UI element to delete the given asset from the list. */
     public onDeleteClicked(event: MouseEvent) {
-        // tslint:disable-next-line:no-unsafe-any
         this.$emit("delete", this.checkedValue);
     }
 
