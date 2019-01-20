@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "bitcoinjs-lib": "^3.3.2",
-    "material-design-icons-iconfont": "^3.0.3",
     "offline-plugin": "^5.0.6",
     "roboto-fontface": "*",
     "vue": "^2.5.22",

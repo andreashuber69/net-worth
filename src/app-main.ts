@@ -20,8 +20,8 @@ import "./plugins/vuetify";
 import App from "./App.vue";
 // tslint:disable-next-line:ordered-imports no-import-side-effect no-submodule-imports
 import "roboto-fontface/css/roboto/roboto-fontface.css";
-// tslint:disable-next-line:ordered-imports no-import-side-effect no-submodule-imports
-import "material-design-icons-iconfont/dist/material-design-icons.css";
+// tslint:disable-next-line:no-import-side-effect
+import "./assets/material-icons.css";
 
 OfflinePluginRuntime.install();
 Vue.config.productionTip = false;
