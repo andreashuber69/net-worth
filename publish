@@ -17,7 +17,7 @@ set -o pipefail
 
 pushd $(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
 
-echo "Bumpting version..."
+echo "Bumping version..."
 VERSION=`npm version patch -m "Publish v%s"`
 echo "Building..."
 rm -rf dist
