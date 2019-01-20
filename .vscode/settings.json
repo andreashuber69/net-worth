@@ -13,21 +13,18 @@
 {
   "cSpell.enabledLanguageIds": [
     "html",
+    "javascript",
+    "json",
+    "jsonc",
     "markdown",
     "plaintext",
+    "shellscript",
     "typescript",
-    "vue"
+    "vue",
+    "yaml"
   ],
-  "cSpell.words": [
-    "Andreas",
-    "Blockchain",
-    "colspan",
-    "Dönni",
-    "dropdown",
-    "nbsp",
-    "nowrap",
-    "Quandl"
-  ],
+  "cSpell.import": [ "../cspell.json" ],
+  "files.autoSave": "afterDelay",
   "git.confirmSync": false,
   "typescript.tsdk": "node_modules/typescript/lib"
 }

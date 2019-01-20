@@ -1,0 +1,52 @@
+{
+    "version": "0.1",
+    "language": "en",
+    "words": [
+        "Andreas",
+        "bitcoinjs",
+        "blockchain",
+        "blockcypher",
+        "btgexp",
+        "codebeat",
+        "coinmarketcap",
+        "cryptocurrencies",
+        "cryptocurrency",
+        "Dönni",
+        "dont",
+        "ethereum",
+        "ethplorer",
+        "fontface",
+        "gastracker",
+        "groupable",
+        "lbma",
+        "litecoin",
+        "lppm",
+        "pwas",
+        "quandl",
+        "sochain",
+        "submodule",
+        "vuetify",
+        "yandex",
+        "zcash"
+    ],
+    "flagWords": [],
+    "dictionaries": [
+        "css",
+        "fonts",
+        "html",
+        "typescript"
+    ],
+    "ignorePaths": [
+        "**/*.svg",
+        "src/assets/**",
+        "code-doc/**",
+        "coverage/**",
+        "dist/**",
+        "node_modules/**",
+        "cspell.json",
+        "package.json",
+        "package-lock.json",
+        "tsconfig.json",
+        "tslint.json"
+    ]
+}

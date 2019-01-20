@@ -34,6 +34,7 @@ import { Unknown } from "./Unknown";
 import { Value } from "./Value";
 import { ZecWallet } from "./ZecWallet";
 
+// cSpell:ignore xpub, ypub, Mtub, Ltub, drkp
 const btcHint =
     "The wallets public address, single or xpub (ypub is not supported). " +
     "<strong style='color:red'>Will be sent to blockchain.info to query the balance.</strong>";

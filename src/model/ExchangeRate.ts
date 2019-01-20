@@ -29,6 +29,8 @@ export class ExchangeRate {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly currencyMap = new Map<Currency, IWebRequest<number>>([
+        // cSpell:ignore xudladd, xudlcdd, xudlbk, xudlsfd, xudldkd, xudlgbd, xudlhdd, xudljyd, xudlnkd, xudlndd
+        // cSpell:ignore xudlsrd, xudlskd, xudlsgd, xudltwd, xudlzrd
         [Currency.USD, new QuandlRequest("", false)],
         [Currency.AUD, new QuandlRequest("boe/xudladd.json", false)],
         [Currency.CAD, new QuandlRequest("boe/xudlcdd.json", false)],

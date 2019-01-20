@@ -68,6 +68,7 @@ export class Browser {
     public static readonly isEdge = !Browser.isIE && !!(window as any).StyleMedia;
 
     // Chrome 1+
+    // cSpell: ignore webstore
     // tslint:disable-next-line:no-unsafe-any
     public static readonly isChrome = !!(window as any).chrome && !!(window as any).chrome.webstore;
 

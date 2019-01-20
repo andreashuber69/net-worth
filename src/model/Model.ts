@@ -92,6 +92,7 @@ export class Model implements IModel {
     public readonly assets: AssetCollection;
 
     /**
+     * cSpell: ignore usdxxx
      * Provides the USD exchange rate of the currently selected currency (USDXXX, where XXX is the currently selected
      * currency).
      */
