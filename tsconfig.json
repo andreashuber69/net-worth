@@ -14,7 +14,10 @@
       "@/*": [ "src/*" ]
     },
     "strict": true,
-    "types": [ "node" ],
+    "types": [
+      "node",
+      "vuetify"
+    ],
     // Generation options
     "emitDecoratorMetadata": true,
     "module": "es2015",
@@ -28,8 +31,10 @@
     "src/**/*.vue"
   ],
   "exclude": [
+    "code-doc",
     "dist",
     "doc",
-    "node_modules"
+    "node_modules",
+    "public"
   ]
 }

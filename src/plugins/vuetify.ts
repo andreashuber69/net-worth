@@ -11,21 +11,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-// tslint:disable-next-line:no-submodule-imports ordered-imports
-import * as OfflinePluginRuntime from "offline-plugin/runtime";
 import Vue from "vue";
-// tslint:disable-next-line:no-import-side-effect
-import "./plugins/vuetify";
-// tslint:disable-next-line:no-default-import ordered-imports
-import App from "./App.vue";
-// tslint:disable-next-line:ordered-imports no-import-side-effect no-submodule-imports
-import "roboto-fontface/css/roboto/roboto-fontface.css";
-// tslint:disable-next-line:ordered-imports no-import-side-effect no-submodule-imports
-import "material-design-icons-iconfont/dist/material-design-icons.css";
+// tslint:disable-next-line:no-submodule-imports
+import Vuetify from "vuetify/lib";
+// tslint:disable-next-line:no-import-side-effect no-submodule-imports
+import "vuetify/src/stylus/app.styl";
 
-OfflinePluginRuntime.install();
-Vue.config.productionTip = false;
-
-new Vue({
-    render: (h) => h(App),
-}).$mount("#app");
+Vue.use(Vuetify, {
+  iconfont: "md",
+});
