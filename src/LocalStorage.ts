@@ -57,10 +57,11 @@ export class LocalStorage {
     }
 
     public static openNewWindow(model: Model | undefined) {
-        const localStorageKey = model ? this.saveImpl(model) : this.emptyModelLocalStorageKey;
-        const urlFirstPart = `${window.location.href}?${this.sessionLocalStorageKey}=${localStorageKey}`;
-        const url = `${urlFirstPart}&${this.sessionForceLoadFromLocalStorageKey}=${!!model}`;
-        window.open(url);
+        const url = new URL(window.location.origin);
+        url.searchParams.append(
+            this.sessionLocalStorageKey, model ? this.saveImpl(model) : this.emptyModelLocalStorageKey);
+        url.searchParams.append(this.sessionForceLoadFromLocalStorageKey, (!!model).toString());
+        window.open(url.href);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

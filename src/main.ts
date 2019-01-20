@@ -15,19 +15,9 @@ import { Browser } from "./Browser";
 import { Application } from "./model/Application";
 
 if (Browser.isCompatible) {
-    const urlComponents = window.location.href.split("?");
-    const params = urlComponents.length === 2 ? urlComponents[1].split("&") : [];
-
-    for (const param of params) {
-        const nameValuePair = param.split("=");
-
-        if (nameValuePair.length === 2) {
-            window.sessionStorage.setItem(nameValuePair[0], nameValuePair[1]);
-        }
-    }
-
-    if (params.length > 0) {
-        window.location.replace(urlComponents[0]);
+    if (window.location.search) {
+        new URLSearchParams(window.location.search).forEach((value, key) => window.sessionStorage.setItem(key, value));
+        window.location.replace(window.location.origin);
     } else {
         // tslint:disable-next-line:no-require-imports no-var-requires
         require("./app-main");
