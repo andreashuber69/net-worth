@@ -5,10 +5,6 @@ nodejs:
 before_install:
   - npm i -g npm
 
-branches:
-  only:
-  - /^v\d+\.\d+\.\d+$/
-
 deploy:
   provider: pages
   skip-cleanup: true
