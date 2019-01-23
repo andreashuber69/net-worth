@@ -17,7 +17,7 @@ import { Application } from "./model/Application";
 if (Browser.isCompatible) {
     if (window.location.search) {
         new URLSearchParams(window.location.search).forEach((value, key) => window.sessionStorage.setItem(key, value));
-        window.location.replace(window.location.origin);
+        window.location.replace(new URL(window.location.pathname, window.location.origin).href);
     } else {
         // tslint:disable-next-line:no-require-imports no-var-requires
         require("./app-main");
