@@ -57,7 +57,7 @@ export class LocalStorage {
     }
 
     public static openNewWindow(model: Model | undefined) {
-        const url = new URL(window.location.origin);
+        const url = new URL(window.location.pathname, window.location.origin);
         url.searchParams.append(
             this.sessionLocalStorageKey, model ? this.saveImpl(model) : this.emptyModelLocalStorageKey);
         url.searchParams.append(this.sessionForceLoadFromLocalStorageKey, (!!model).toString());
