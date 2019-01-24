@@ -36,38 +36,38 @@ export default class App extends Vue {
         window.addEventListener("beforeunload", (ev) => this.onBeforeUnload(ev));
     }
 
-    public onMenuClicked(event: MouseEvent) {
+    public onMenuClicked() {
         this.isDrawerVisible = !this.isDrawerVisible;
     }
 
-    public onNewClicked(event: MouseEvent) {
+    public onNewClicked() {
         this.isDrawerVisible = false;
         LocalStorage.openNewWindow(undefined);
     }
 
-    public onOpenClicked(event: MouseEvent) {
+    public onOpenClicked() {
         this.isDrawerVisible = false;
         this.fileInput.click();
     }
 
-    public async onFileInputChanged(event: Event) {
+    public async onFileInputChanged() {
         try {
-            await this.onFileInputChangedImpl((event.target as any).files as FileList);
+            await this.onFileInputChangedImpl();
         } finally {
             this.fileInput.value = "";
         }
     }
 
-    public async onSaveClicked(event: MouseEvent) {
+    public async onSaveClicked() {
         if (this.model.wasSavedToFile) {
             this.isDrawerVisible = false;
             this.write();
         } else {
-            await this.onSaveAsClicked(event);
+            await this.onSaveAsClicked();
         }
     }
 
-    public async onSaveAsClicked(event: MouseEvent) {
+    public async onSaveAsClicked() {
         this.isDrawerVisible = false;
         const newName = await (this.$refs.saveAsDialog as SaveAsDialog).showDialog(this.model.name);
 
@@ -78,12 +78,12 @@ export default class App extends Vue {
         }
     }
 
-    public onAboutClicked(event: MouseEvent) {
+    public onAboutClicked() {
         this.isDrawerVisible = false;
         (this.$refs.aboutDialog as AboutDialog).showDialog();
     }
 
-    public onRefreshClicked(event: MouseEvent) {
+    public onRefreshClicked() {
         QueryCache.clear();
         this.model = App.initModel(Parser.parse(this.model.toJsonString()) || new Model());
     }
@@ -126,8 +126,10 @@ export default class App extends Vue {
         return this.$refs.fileInput as HTMLInputElement;
     }
 
-    private async onFileInputChangedImpl(files: FileList) {
-        if (files.length !== 1) {
+    private async onFileInputChangedImpl() {
+        const files = this.fileInput.files;
+
+        if (!files || (files.length !== 1)) {
             return;
         }
 
