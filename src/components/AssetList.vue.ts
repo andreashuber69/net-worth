@@ -146,20 +146,18 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     private onIntervalElapsed() {
-        // tslint:disable-next-line:no-unsafe-any
-        if (this.previousOffset === (this.$el as any).offsetLeft) {
-            // tslint:disable-next-line:no-unsafe-any
-            if ((this.optionalColumnCountImpl > 0) && ((this.$el as any).offsetLeft < 0)) {
+        const element = this.$el as HTMLElement;
+
+        if (this.previousOffset === element.offsetLeft) {
+            if ((this.optionalColumnCountImpl > 0) && (element.offsetLeft < 0)) {
                 --this.optionalColumnCountImpl;
             } else if ((this.optionalColumnCountImpl < ColumnInfo.maxOptionalCount) &&
-                // tslint:disable-next-line:no-unsafe-any
-                ((this.$el as any).offsetLeft * 2 > (this.$el as any).offsetWidth /
+                (element.offsetLeft * 2 > element.offsetWidth /
                     (AssetListRow.requiredColumnCount + this.optionalColumnCountImpl) * 3)) {
                 ++this.optionalColumnCountImpl;
             }
         }
 
-        // tslint:disable-next-line:no-unsafe-any
-        this.previousOffset = (this.$el as any).offsetLeft;
+        this.previousOffset = element.offsetLeft;
     }
 }
