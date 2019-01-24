@@ -15,20 +15,18 @@ import { Prop, Vue } from "vue-property-decorator";
 /** Defines common component functionality. */
 export class ComponentBase<T> extends Vue {
     @Prop()
-    // value should be declared as having the type T but doing so triggers the following issue, if T happens to be
-    // e.g. string: https://github.com/kaorun343/vue-property-decorator/issues/69
-    public value: undefined;
+    public value?: T;
 
     /**
      * Provides the value.
      * @description Provides whatever is set for `value`, but ensures that the value cannot be undefined.
      */
     public get checkedValue() {
-        if ((this.value as any) === undefined) {
+        if (this.value === undefined) {
             throw new Error("No value set.");
         }
 
-        return (this.value as any) as T;
+        return this.value;
     }
 
     public set checkedValue(value: T) {
