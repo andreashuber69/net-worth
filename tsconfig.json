@@ -19,9 +19,10 @@
       "vuetify"
     ],
     // Generation options
-    "emitDecoratorMetadata": true,
-    "module": "es2015",
+    "esModuleInterop": true,
+    "importHelpers": true,
     "jsx": "preserve",
+    "module": "es2015",
     "sourceMap": true,
     "target": "es5"
   },
@@ -31,10 +32,6 @@
     "src/**/*.vue"
   ],
   "exclude": [
-    "code-doc",
-    "dist",
-    "doc",
-    "node_modules",
-    "public"
+    "node_modules"
   ]
 }
