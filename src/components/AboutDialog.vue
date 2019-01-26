@@ -20,7 +20,7 @@
         <v-layout row wrap>
           <v-flex xs12>
             <v-card flat>
-              <v-card-text class="subheading px-0">Copyright &copy; 2018-2019 Andreas Huber Dönni</v-card-text>
+              <v-card-text class="subheading px-0">Copyright &copy; 2018-{{ new Date(Date.now()).getUTCFullYear() }} Andreas Huber Dönni</v-card-text>
             </v-card>
           </v-flex> 
           <v-flex xs12 sm4>
