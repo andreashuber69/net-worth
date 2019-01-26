@@ -6,7 +6,7 @@
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [ "es2015", "dom" ],
+    "lib": [ "esnext", "dom", "dom.iterable", "scripthost" ],
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
@@ -15,14 +15,14 @@
     },
     "strict": true,
     "types": [
-      "node",
-      "vuetify"
+      "vuetify", // https://github.com/vuetifyjs/vue-cli-plugin-vuetify/issues/43#issuecomment-435088739
+      "webpack-env"
     ],
     // Generation options
     "esModuleInterop": true,
     "importHelpers": true,
     "jsx": "preserve",
-    "module": "es2015",
+    "module": "esnext",
     "sourceMap": true,
     "target": "es5"
   },
