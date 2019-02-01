@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 const OfflinePlugin = require("offline-plugin");
+// const PreloadPlugin = require("@vue/preload-webpack-plugin");
 
 module.exports = {
     // publicPath needs to be set differently depending on whether we build for actual deployment (e.g. on github
@@ -28,5 +29,13 @@ module.exports = {
     },
     chainWebpack: config => {
         config.plugin("offline-plugin").use(OfflinePlugin);
+
+        // The following instructs webpack to prefetch all assets (including fonts), which could theoretically speed up
+        // the very first page load. TODO: Test whether this is the case.
+        // // cSpell: ignore prefetch
+        // config.plugin("prefetch").use(PreloadPlugin, [{
+        //     rel: "prefetch",
+        //     include: "allAssets"
+        // }]);
     }
 }
