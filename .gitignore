@@ -1,3 +1,4 @@
-dist/
 code-doc/
+coverage/
+dist/
 node_modules/
