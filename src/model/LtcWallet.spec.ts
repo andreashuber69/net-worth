@@ -15,7 +15,7 @@ import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { LtcWallet } from "./LtcWallet";
 
 const testAsset = <T extends Asset>(ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
-    describe("LtcWallet", () => {
+    describe(ctor.name, () => {
         let sut: T;
 
         beforeEach(() => {
