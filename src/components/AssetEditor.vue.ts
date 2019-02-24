@@ -16,8 +16,8 @@ import { AssetInput } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { AssetType } from "../model/AssetTypes";
 import { SelectInputInfo } from "../model/SelectInputInfo";
-import { AssetEditorData } from "./AssetEditorData";
-import { AssetProperties } from "./AssetProperties";
+import { AssetEditorData } from "../model/AssetEditorData";
+import { AssetProperties } from "../model/AssetProperties";
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
 // tslint:disable-next-line:no-default-import
 import Select from "./Select.vue";

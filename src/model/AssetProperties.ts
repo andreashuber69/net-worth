@@ -10,9 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetIntersection } from "../model/AssetInterfaces";
-import { WeightUnit } from "../model/WeightUnit";
 import { AssetEditorData } from "./AssetEditorData";
+import { IAssetIntersection } from "./AssetInterfaces";
+import { WeightUnit } from "./WeightUnit";
 
 /**
  * Converts the data edited in the editor into the format necessary to construct [[Asset]] subclass objects.

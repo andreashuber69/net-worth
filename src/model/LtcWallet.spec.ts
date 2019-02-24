@@ -10,13 +10,41 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+// tslint:disable-next-line:no-implicit-dependencies no-submodule-imports
 import { IModel } from "./Asset";
+import { AssetEditorData } from "./AssetEditorData";
+import { AssetPropertyName, IAssetIntersection, IAssetUnion } from "./AssetInterfaces";
+import { AssetProperties } from "./AssetProperties";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { LtcWallet } from "./LtcWallet";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 
-const getSut = <T extends RealCryptoWallet>(
-    expected: ICryptoWalletProperties, ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
+let expected: IAssetIntersection;
+
+type Mutable<T> = { -readonly [P in keyof T ]: T[P] };
+
+interface IProperties extends Partial<IAssetIntersection> {
+    [key: string]: unknown;
+}
+
+const allPropertyNames: AssetPropertyName[] = [
+    "description", "location", "quantity", "notes", "weight",
+    "weightUnit", "fineness", "address", "value", "valueCurrency",
+];
+
+const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetPropertyName[]):
+    Partial<IAssetIntersection> => {
+
+    const result: Mutable<IProperties> = {};
+
+    for (const name of names) {
+        result[name] = object[name];
+    }
+
+    return result;
+};
+
+const getSut = <T extends RealCryptoWallet>(ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
 
     const model: IModel = {
         assets: {
@@ -27,45 +55,43 @@ const getSut = <T extends RealCryptoWallet>(
         },
     };
 
-    // Simulate how properties are passed to assets constructors
-    const props: ICryptoWalletProperties = {
-        get description() { return expected.description; },
-        get location() { return expected.location; },
-        get quantity() { return expected.quantity; },
-        get address() { return expected.address; },
-        get notes() { return expected. notes; },
-    };
-
     return new ctor(model, expected);
 };
 
-const testAsset = <T extends RealCryptoWallet>(ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
+const testAsset = <T extends RealCryptoWallet>(
+    ctor: new(model: IModel, props: ICryptoWalletProperties) => T,
+    expectedPropertyNames: AssetPropertyName[]) => {
     describe(ctor.name, () => {
-        let expected: ICryptoWalletProperties;
         let sut: T;
 
         beforeEach(() => {
-            const randomValue = Date.now();
+            let randomValue = Date.now();
+            const data = new AssetEditorData();
 
-            expected = {
-                description: randomValue.toString(),
-                location: (randomValue + 1).toString(),
-                quantity: randomValue + 2,
-                address: (randomValue + 3).toString(),
-                notes: (randomValue + 4).toString(),
-            };
+            for (const name of expectedPropertyNames) {
+                switch (name) {
+                    case "weightUnit":
+                        data[name] = "kg";
+                        break;
+                    case "valueCurrency":
+                        data[name] = "USD";
+                        break;
+                    default:
+                        data[name] = (++randomValue).toString();
+                }
+            }
 
-            sut = getSut(expected, ctor);
+            expected = new AssetProperties(data);
+            sut = getSut(ctor);
         });
 
         describe("constructor", () => {
             it("should copy parameter properties", () => {
-                const { description, location, quantity, address, notes } = sut;
-                const actual: ICryptoWalletProperties = { description, location, quantity, address, notes };
-                expect(actual).toEqual(expected);
+                expect(getPropertyValues(sut, expectedPropertyNames)).toEqual(
+                    getPropertyValues(expected, expectedPropertyNames));
             });
         });
     });
 };
 
-testAsset(LtcWallet);
+testAsset(LtcWallet, [ "description", "location", "quantity", "notes", "address" ]);

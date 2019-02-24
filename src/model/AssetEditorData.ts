@@ -10,13 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetUnion } from "../model/AssetInterfaces";
-import { CryptoWallet } from "../model/CryptoWallet";
-import { Currency } from "../model/Currency";
-import { IAuxProperties } from "../model/IAuxProperties";
-import { MiscAsset } from "../model/MiscAsset";
-import { PreciousMetalAsset } from "../model/PreciousMetalAsset";
-import { WeightUnit } from "../model/WeightUnit";
+import { IAssetUnion } from "./AssetInterfaces";
+import { CryptoWallet } from "./CryptoWallet";
+import { Currency } from "./Currency";
+import { IAuxProperties } from "./IAuxProperties";
+import { MiscAsset } from "./MiscAsset";
+import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import { WeightUnit } from "./WeightUnit";
 
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements Partial<IAuxProperties<string>> {
