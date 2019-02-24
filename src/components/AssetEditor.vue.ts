@@ -12,12 +12,12 @@
 
 import { Component, Vue } from "vue-property-decorator";
 import { Asset, IModel } from "../model/Asset";
+import { AssetEditorData } from "../model/AssetEditorData";
 import { AssetInput } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
+import { AssetProperties } from "../model/AssetProperties";
 import { AssetType } from "../model/AssetTypes";
 import { SelectInputInfo } from "../model/SelectInputInfo";
-import { AssetEditorData } from "../model/AssetEditorData";
-import { AssetProperties } from "../model/AssetProperties";
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
 // tslint:disable-next-line:no-default-import
 import Select from "./Select.vue";
