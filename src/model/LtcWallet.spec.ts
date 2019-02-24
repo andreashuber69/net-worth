@@ -10,34 +10,38 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { Asset, IModel } from "./Asset";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { LtcWallet } from "./LtcWallet";
 
-describe("LtcWallet", () => {
-    let sut: LtcWallet;
+const testAsset = <T extends Asset>(ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
+    describe("LtcWallet", () => {
+        let sut: T;
 
-    beforeEach(() => {
-        const model: IModel = {
-            assets: {
-                ordering: {
-                    groupBy: "type",
-                    otherGroupBys: [ "location" ],
+        beforeEach(() => {
+            const model: IModel = {
+                assets: {
+                    ordering: {
+                        groupBy: "type",
+                        otherGroupBys: [ "location" ],
+                    },
                 },
-            },
-        };
+            };
 
-        const props: ICryptoWalletProperties = {
-            description: "Paper Wallet",
-        };
+            const props: ICryptoWalletProperties = {
+                description: "Paper Wallet",
+            };
 
-        sut = new LtcWallet(model, props);
-    });
+            sut = new ctor(model, props);
+        });
 
-    describe("constructor", () => {
-        it("should copy parameter properties", () => {
-            const { description } = sut;
-            expect(description).toBe("Paper Wallet");
+        describe("constructor", () => {
+            it("should copy parameter properties", () => {
+                const { description } = sut;
+                expect(description).toBe("Paper Wallet");
+            });
         });
     });
-});
+};
+
+testAsset(LtcWallet);
