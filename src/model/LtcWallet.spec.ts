@@ -15,6 +15,30 @@ import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { LtcWallet } from "./LtcWallet";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 
+const getSut = <T extends RealCryptoWallet>(
+    expected: ICryptoWalletProperties, ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
+
+    const model: IModel = {
+        assets: {
+            ordering: {
+                groupBy: "type",
+                otherGroupBys: [ "location" ],
+            },
+        },
+    };
+
+    // Simulate how properties are passed to assets constructors
+    const props: ICryptoWalletProperties = {
+        get description() { return expected.description; },
+        get location() { return expected.location; },
+        get quantity() { return expected.quantity; },
+        get address() { return expected.address; },
+        get notes() { return expected. notes; },
+    };
+
+    return new ctor(model, expected);
+};
+
 const testAsset = <T extends RealCryptoWallet>(ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
     describe(ctor.name, () => {
         let expected: ICryptoWalletProperties;
@@ -31,25 +55,7 @@ const testAsset = <T extends RealCryptoWallet>(ctor: new(model: IModel, props: I
                 notes: (randomValue + 4).toString(),
             };
 
-            const model: IModel = {
-                assets: {
-                    ordering: {
-                        groupBy: "type",
-                        otherGroupBys: [ "location" ],
-                    },
-                },
-            };
-
-            // Simulate how properties are passed to assets constructors
-            const props: ICryptoWalletProperties = {
-                get description() { return expected.description; },
-                get location() { return expected.location; },
-                get quantity() { return expected.quantity; },
-                get address() { return expected.address; },
-                get notes() { return expected. notes; },
-            };
-
-            sut = new ctor(model, expected);
+            sut = getSut(expected, ctor);
         });
 
         describe("constructor", () => {
