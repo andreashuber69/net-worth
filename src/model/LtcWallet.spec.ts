@@ -10,15 +10,27 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { IModel } from "./Asset";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { LtcWallet } from "./LtcWallet";
+import { RealCryptoWallet } from "./RealCryptoWallet";
 
-const testAsset = <T extends Asset>(ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
+const testAsset = <T extends RealCryptoWallet>(ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
     describe(ctor.name, () => {
+        let expected: ICryptoWalletProperties;
         let sut: T;
 
         beforeEach(() => {
+            const randomValue = Date.now();
+
+            expected = {
+                description: randomValue.toString(),
+                location: (randomValue + 1).toString(),
+                quantity: randomValue + 2,
+                address: (randomValue + 3).toString(),
+                notes: (randomValue + 4).toString(),
+            };
+
             const model: IModel = {
                 assets: {
                     ordering: {
@@ -28,17 +40,23 @@ const testAsset = <T extends Asset>(ctor: new(model: IModel, props: ICryptoWalle
                 },
             };
 
+            // Simulate how properties are passed to assets constructors
             const props: ICryptoWalletProperties = {
-                description: "Paper Wallet",
+                get description() { return expected.description; },
+                get location() { return expected.location; },
+                get quantity() { return expected.quantity; },
+                get address() { return expected.address; },
+                get notes() { return expected. notes; },
             };
 
-            sut = new ctor(model, props);
+            sut = new ctor(model, expected);
         });
 
         describe("constructor", () => {
             it("should copy parameter properties", () => {
-                const { description } = sut;
-                expect(description).toBe("Paper Wallet");
+                const { description, location, quantity, address, notes } = sut;
+                const actual: ICryptoWalletProperties = { description, location, quantity, address, notes };
+                expect(actual).toEqual(expected);
             });
         });
     });
