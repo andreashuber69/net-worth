@@ -13,7 +13,7 @@
 // tslint:disable-next-line:no-implicit-dependencies no-submodule-imports
 import { IModel } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
-import { AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
+import { allAssetPropertyNames, AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
 import { AssetProperties } from "./AssetProperties";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { LtcWallet } from "./LtcWallet";
@@ -34,22 +34,15 @@ const getSut = <T extends RealCryptoWallet>(ctor: new(model: IModel, props: ICry
     return new ctor(model, expected);
 };
 
-const getPropertyValues =
-    (object: Partial<IAssetIntersection>, names: AssetPropertyName[]): Partial<IAssetIntersection> => {
+const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetPropertyName[]): Map<string, unknown> => {
+    const result = new Map<string, unknown>();
 
-        const result: { [key: string]: unknown } = {};
+    for (const name of names) {
+        result.set(name, object[name]);
+    }
 
-        for (const name of names) {
-            result[name] = object[name];
-        }
-
-        return result;
-    };
-
-const allPropertyNames: AssetPropertyName[] = [
-    "description", "location", "quantity", "notes", "weight",
-    "weightUnit", "fineness", "address", "value", "valueCurrency",
-];
+    return result;
+};
 
 const testAsset = <T extends RealCryptoWallet>(
     ctor: new(model: IModel, props: ICryptoWalletProperties) => T,
@@ -82,8 +75,9 @@ const testAsset = <T extends RealCryptoWallet>(
 
         describe("constructor", () => {
             it("should copy parameter properties", () => {
-                expect(getPropertyValues(sut, expectedPropertyNames)).toEqual(
-                    getPropertyValues(expected, expectedPropertyNames));
+                const actual = getPropertyValues(sut, allAssetPropertyNames);
+                [...actual.keys()].filter((key) => actual.get(key) === undefined).forEach((key) => actual.delete(key));
+                expect(actual).toEqual(getPropertyValues(expected, expectedPropertyNames));
             });
         });
     });

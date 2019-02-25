@@ -20,6 +20,11 @@ export type IAssetIntersection = IPreciousMetalAssetProperties & ICryptoWalletPr
 
 export type AssetPropertyName = keyof IAssetIntersection;
 
+export const allAssetPropertyNames: AssetPropertyName[] = [
+    "description", "location", "quantity", "notes", "weight",
+    "weightUnit", "fineness", "address", "value", "valueCurrency",
+];
+
 /** @internal */
 export type IAssetUnion = IPreciousMetalAsset | ICryptoWallet | IMiscAsset;
 
