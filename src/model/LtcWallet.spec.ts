@@ -64,9 +64,11 @@ const testAsset = <T extends RealCryptoWallet>(
             for (const name of expectedPropertyNames) {
                 switch (name) {
                     case "weightUnit":
+                        // TODO: Randomize
                         data[name] = "kg";
                         break;
                     case "valueCurrency":
+                        // TODO: Randomize
                         data[name] = "USD";
                         break;
                     default:
