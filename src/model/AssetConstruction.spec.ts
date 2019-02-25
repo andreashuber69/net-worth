@@ -15,8 +15,15 @@ import { Asset, IModel } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
 import { allAssetPropertyNames, AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
 import { AssetProperties } from "./AssetProperties";
+import { BtcWallet } from "./BtcWallet";
+import { BtgWallet } from "./BtgWallet";
+import { DashWallet } from "./DashWallet";
+import { Erc20TokensWallet } from "./Erc20TokensWallet";
+import { EtcWallet } from "./EtcWallet";
+import { EthWallet } from "./EthWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { LtcWallet } from "./LtcWallet";
+import { ZecWallet } from "./ZecWallet";
 
 let expected: IAssetIntersection;
 
@@ -86,4 +93,11 @@ const cryptoWalletPropertyNames: Array<keyof ICryptoWalletProperties> = [
     "description", "location", "quantity", "notes", "address",
 ];
 
+testAsset(BtcWallet, cryptoWalletPropertyNames);
 testAsset(LtcWallet, cryptoWalletPropertyNames);
+testAsset(DashWallet, cryptoWalletPropertyNames);
+testAsset(BtgWallet, cryptoWalletPropertyNames);
+testAsset(Erc20TokensWallet, cryptoWalletPropertyNames);
+testAsset(EtcWallet, cryptoWalletPropertyNames);
+testAsset(EthWallet, cryptoWalletPropertyNames);
+testAsset(ZecWallet, cryptoWalletPropertyNames);
