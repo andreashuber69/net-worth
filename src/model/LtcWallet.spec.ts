@@ -11,17 +11,16 @@
 // <http://www.gnu.org/licenses/>.
 
 // tslint:disable-next-line:no-implicit-dependencies no-submodule-imports
-import { IModel } from "./Asset";
+import { Asset, IModel } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
 import { allAssetPropertyNames, AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
 import { AssetProperties } from "./AssetProperties";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { LtcWallet } from "./LtcWallet";
-import { RealCryptoWallet } from "./RealCryptoWallet";
 
 let expected: IAssetIntersection;
 
-const getSut = <T extends RealCryptoWallet>(ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
+const getSut = <T extends Asset>(ctor: new(model: IModel, props: IAssetIntersection) => T) => {
     const model: IModel = {
         assets: {
             ordering: {
@@ -44,8 +43,8 @@ const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetProp
     return result;
 };
 
-const testAsset = <T extends RealCryptoWallet>(
-    ctor: new(model: IModel, props: ICryptoWalletProperties) => T,
+const testAsset = <T extends Asset>(
+    ctor: new(model: IModel, props: IAssetIntersection) => T,
     expectedPropertyNames: AssetPropertyName[]) => {
     describe(ctor.name, () => {
         let sut: T;
@@ -83,4 +82,8 @@ const testAsset = <T extends RealCryptoWallet>(
     });
 };
 
-testAsset(LtcWallet, [ "description", "location", "quantity", "notes", "address" ]);
+const cryptoWalletPropertyNames: Array<keyof ICryptoWalletProperties> = [
+    "description", "location", "quantity", "notes", "address",
+];
+
+testAsset(LtcWallet, cryptoWalletPropertyNames);
