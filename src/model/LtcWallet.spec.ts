@@ -21,10 +21,18 @@ import { RealCryptoWallet } from "./RealCryptoWallet";
 
 let expected: IAssetIntersection;
 
-const allPropertyNames: AssetPropertyName[] = [
-    "description", "location", "quantity", "notes", "weight",
-    "weightUnit", "fineness", "address", "value", "valueCurrency",
-];
+const getSut = <T extends RealCryptoWallet>(ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
+    const model: IModel = {
+        assets: {
+            ordering: {
+                groupBy: "type",
+                otherGroupBys: [ "location" ],
+            },
+        },
+    };
+
+    return new ctor(model, expected);
+};
 
 const getPropertyValues =
     (object: Partial<IAssetIntersection>, names: AssetPropertyName[]): Partial<IAssetIntersection> => {
@@ -38,18 +46,10 @@ const getPropertyValues =
         return result;
     };
 
-const getSut = <T extends RealCryptoWallet>(ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
-    const model: IModel = {
-        assets: {
-            ordering: {
-                groupBy: "type",
-                otherGroupBys: [ "location" ],
-            },
-        },
-    };
-
-    return new ctor(model, expected);
-};
+const allPropertyNames: AssetPropertyName[] = [
+    "description", "location", "quantity", "notes", "weight",
+    "weightUnit", "fineness", "address", "value", "valueCurrency",
+];
 
 const testAsset = <T extends RealCryptoWallet>(
     ctor: new(model: IModel, props: ICryptoWalletProperties) => T,
