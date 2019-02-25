@@ -13,7 +13,7 @@
 // tslint:disable-next-line:no-implicit-dependencies no-submodule-imports
 import { IModel } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
-import { AssetPropertyName, IAssetIntersection, IAssetUnion } from "./AssetInterfaces";
+import { AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
 import { AssetProperties } from "./AssetProperties";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { LtcWallet } from "./LtcWallet";
@@ -21,31 +21,24 @@ import { RealCryptoWallet } from "./RealCryptoWallet";
 
 let expected: IAssetIntersection;
 
-type Mutable<T> = { -readonly [P in keyof T ]: T[P] };
-
-interface IProperties extends Partial<IAssetIntersection> {
-    [key: string]: unknown;
-}
-
 const allPropertyNames: AssetPropertyName[] = [
     "description", "location", "quantity", "notes", "weight",
     "weightUnit", "fineness", "address", "value", "valueCurrency",
 ];
 
-const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetPropertyName[]):
-    Partial<IAssetIntersection> => {
+const getPropertyValues =
+    (object: Partial<IAssetIntersection>, names: AssetPropertyName[]): Partial<IAssetIntersection> => {
 
-    const result: Mutable<IProperties> = {};
+        const result: { [key: string]: unknown } = {};
 
-    for (const name of names) {
-        result[name] = object[name];
-    }
+        for (const name of names) {
+            result[name] = object[name];
+        }
 
-    return result;
-};
+        return result;
+    };
 
 const getSut = <T extends RealCryptoWallet>(ctor: new(model: IModel, props: ICryptoWalletProperties) => T) => {
-
     const model: IModel = {
         assets: {
             ordering: {
