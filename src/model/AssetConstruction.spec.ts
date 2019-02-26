@@ -21,8 +21,15 @@ import { DashWallet } from "./DashWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { EtcWallet } from "./EtcWallet";
 import { EthWallet } from "./EthWallet";
+import { GoldAsset } from "./GoldAsset";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
+import { IMiscAssetProperties } from "./IMiscAsset";
+import { IPreciousMetalAssetProperties } from "./IPreciousMetalAsset";
 import { LtcWallet } from "./LtcWallet";
+import { MiscAsset } from "./MiscAsset";
+import { PalladiumAsset } from "./PalladiumAsset";
+import { PlatinumAsset } from "./PlatinumAsset";
+import { SilverAsset } from "./SilverAsset";
 import { ZecWallet } from "./ZecWallet";
 
 let expected: IAssetIntersection;
@@ -89,9 +96,19 @@ const testAsset = <T extends Asset>(
     });
 };
 
-const cryptoWalletPropertyNames: Array<keyof ICryptoWalletProperties> = [
-    "description", "location", "quantity", "notes", "address",
-];
+const arrayOfAll = <T>() =>
+    <U extends Array<keyof T>>(...array: U & (Array<keyof T> extends Array<U[number]> ? unknown : never)) => array;
+
+const preciousMetalPropertyNames = arrayOfAll<IPreciousMetalAssetProperties>()(
+    "description", "location", "quantity", "notes", "weight", "weightUnit", "fineness");
+
+testAsset(SilverAsset, preciousMetalPropertyNames);
+testAsset(PalladiumAsset, preciousMetalPropertyNames);
+testAsset(PlatinumAsset, preciousMetalPropertyNames);
+testAsset(GoldAsset, preciousMetalPropertyNames);
+
+const cryptoWalletPropertyNames =
+    arrayOfAll<ICryptoWalletProperties>()("description", "location", "quantity", "notes", "address");
 
 testAsset(BtcWallet, cryptoWalletPropertyNames);
 testAsset(LtcWallet, cryptoWalletPropertyNames);
@@ -101,3 +118,8 @@ testAsset(Erc20TokensWallet, cryptoWalletPropertyNames);
 testAsset(EtcWallet, cryptoWalletPropertyNames);
 testAsset(EthWallet, cryptoWalletPropertyNames);
 testAsset(ZecWallet, cryptoWalletPropertyNames);
+
+const miscAssetPropertyNames =
+    arrayOfAll<IMiscAssetProperties>()("description", "location", "quantity", "notes", "value", "valueCurrency");
+
+testAsset(MiscAsset, miscAssetPropertyNames);
