@@ -12,9 +12,11 @@
 
 // tslint:disable-next-line:no-implicit-dependencies no-submodule-imports
 import { Asset, IModel } from "./Asset";
+import { AssetBundle } from "./AssetBundle";
 import { AssetEditorData } from "./AssetEditorData";
 import { allAssetPropertyNames, AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
 import { AssetProperties } from "./AssetProperties";
+import { AssetType } from "./AssetTypes";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
 import { DashWallet } from "./DashWallet";
@@ -58,8 +60,7 @@ const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetProp
 };
 
 const testAsset = <T extends Asset>(
-    ctor: new(model: IModel, props: IAssetIntersection) => T,
-    expectedPropertyNames: AssetPropertyName[]) => {
+    ctor: new(model: IModel, props: IAssetIntersection) => T, expectedPropertyNames: AssetPropertyName[]) => {
     describe(ctor.name, () => {
         let sut: T;
 
@@ -91,6 +92,18 @@ const testAsset = <T extends Asset>(
                 const actual = getPropertyValues(sut, allAssetPropertyNames);
                 [...actual.keys()].filter((key) => actual.get(key) === undefined).forEach((key) => actual.delete(key));
                 expect(actual).toEqual(getPropertyValues(expected, expectedPropertyNames));
+            });
+        });
+
+        describe("type", () => {
+            it("should return a valid type", () => {
+                expect(Object.keys(AssetType).includes(sut.type)).toBe(true);
+            });
+        });
+
+        describe("bundle", () => {
+            it("should return a bundle", () => {
+                expect(sut.bundle() instanceof AssetBundle).toBe(true);
             });
         });
     });
