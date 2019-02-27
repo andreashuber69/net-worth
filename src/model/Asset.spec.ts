@@ -95,9 +95,51 @@ const testAsset = <T extends Asset>(
             });
         });
 
+        describe("isExpandable", () => {
+            it("should return false", () => {
+                expect(sut.isExpandable).toEqual(false);
+            });
+        });
+
         describe("type", () => {
             it("should return a valid type", () => {
                 expect(Object.keys(AssetType).includes(sut.type)).toBe(true);
+            });
+        });
+
+        describe("locationHint", () => {
+            it("should return a string", () => {
+                expect(typeof sut.locationHint).toEqual("string");
+            });
+        });
+
+        describe("unit", () => {
+            it("should return a defined value", () => {
+                expect(sut.unit).toBeDefined();
+            });
+        });
+
+        describe("quantityHint", () => {
+            it("should return an empty string", () => {
+                expect(sut.quantityHint).toEqual("");
+            });
+        });
+
+        describe("displayDecimals", () => {
+            it("should return a number >= 0", () => {
+                expect(sut.displayDecimals).toBeGreaterThanOrEqual(0);
+            });
+        });
+
+        describe("unitValue", () => {
+            it("should return undefined", () => {
+                expect(sut.unitValue).toBeUndefined();
+            });
+        });
+
+        describe("unitValueHint", () => {
+            it("should return an empty string", () => {
+                expect(sut.unitValueHint).toEqual("");
             });
         });
 
