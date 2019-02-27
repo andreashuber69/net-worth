@@ -96,56 +96,86 @@ const testAsset = <T extends Asset>(
         });
 
         describe("isExpandable", () => {
-            it("should return false", () => {
+            it("should equal false", () => {
                 expect(sut.isExpandable).toEqual(false);
             });
         });
 
         describe("type", () => {
-            it("should return a valid type", () => {
+            it("should be equal to a valid type", () => {
                 expect(Object.keys(AssetType).includes(sut.type)).toBe(true);
             });
         });
 
         describe("locationHint", () => {
-            it("should return a string", () => {
+            it("should be a string", () => {
                 expect(typeof sut.locationHint).toEqual("string");
             });
         });
 
         describe("unit", () => {
-            it("should return a defined value", () => {
+            it("should be defined", () => {
                 expect(sut.unit).toBeDefined();
             });
         });
 
         describe("quantityHint", () => {
-            it("should return an empty string", () => {
+            it("should be an empty string", () => {
                 expect(sut.quantityHint).toEqual("");
             });
         });
 
         describe("displayDecimals", () => {
-            it("should return a number >= 0", () => {
+            it("should be a number >= 0", () => {
                 expect(sut.displayDecimals).toBeGreaterThanOrEqual(0);
             });
         });
 
         describe("unitValue", () => {
-            it("should return undefined", () => {
+            it("should be undefined", () => {
                 expect(sut.unitValue).toBeUndefined();
             });
         });
 
         describe("unitValueHint", () => {
-            it("should return an empty string", () => {
+            it("should be an empty string", () => {
                 expect(sut.unitValueHint).toEqual("");
             });
         });
 
-        describe("bundle", () => {
+        describe("totalValue", () => {
+            it("should be undefined", () => {
+                expect(sut.totalValue).toBeUndefined();
+            });
+        });
+
+        describe("percent", () => {
+            it("should be undefined", () => {
+                expect(sut.percent).toBeUndefined();
+            });
+        });
+
+        describe("hasActions", () => {
+            it("should be true", () => {
+                expect(sut.hasActions).toBe(true);
+            });
+        });
+
+        describe("editableAsset", () => {
+            it("should be equal to sut", () => {
+                expect(sut.editableAsset).toBe(sut);
+            });
+        });
+
+        describe("bundle()", () => {
             it("should return a bundle", () => {
                 expect(sut.bundle() instanceof AssetBundle).toBe(true);
+            });
+        });
+
+        describe("expand()", () => {
+            it("should return undefined", () => {
+                expect(sut.expand()).toBeUndefined();
             });
         });
     });

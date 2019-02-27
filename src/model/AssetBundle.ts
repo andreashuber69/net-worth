@@ -23,9 +23,9 @@ export interface ISerializedBundle {
  * balance of multiple currencies. For example, an ETH address can hold balances of hundreds of ERC20 tokens. A bundle
  * of assets is always defined by a primary asset, the details of which are then used to retrieve information about
  * secondary assets. For example, in the case of ERC20 tokens, a [[Erc20TokensWallet]] object is the primary asset
- * and the nested `TokenWallet` objects are the secondary assets. When the former is instantiated with an address and
- * then put into a bundle by calling [[Erc20TokensWallet.bundle]], `TokenWallet` objects are automatically added to
- * [[assets]] for each of the ERC20 tokens.
+ * and the nested [[Erc20TokenWallet]] objects are the secondary assets. When the former is instantiated with an address
+ * and then put into a bundle by calling [[Erc20TokensWallet.bundle]], [[Erc20TokenWallet]] objects are automatically
+ * added to [[assets]] for each of the ERC20 tokens.
  * Since every asset must reside in a bundle, there is also the class [[GenericAssetBundle]], which never holds
  * secondary assets besides the primary one. This is used for all [[PreciousMetalAsset]] subclasses and other
  * [[CryptoWallet]] subclasses.
