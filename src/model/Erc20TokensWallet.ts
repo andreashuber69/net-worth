@@ -76,8 +76,6 @@ export class Erc20TokensWallet extends RealCryptoWallet {
             }
 
             try {
-                // There's no good place where we can visualize an ERC20 query error in the UI, which is why we just log
-                // it in the console.
                 const balances = await QueryCache.fetch(
                     `https://api.ethplorer.io/getAddressInfo/${this.erc20Wallet.address}?apiKey=dvoio1769GSrYx63`);
 
@@ -90,6 +88,8 @@ export class Erc20TokensWallet extends RealCryptoWallet {
                 }
             } catch (e) {
                 if (e instanceof QueryError) {
+                    // There's no good place where we can visualize an ERC20 query error in the UI, which is why we just
+                    // log it in the console.
                     console.warn(e);
                 } else {
                     throw e;
