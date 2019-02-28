@@ -24,6 +24,7 @@ import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { EtcWallet } from "./EtcWallet";
 import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
+import { IAssetProperties } from "./IAssetProperties";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IMiscAssetProperties } from "./IMiscAsset";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAsset";
@@ -34,8 +35,7 @@ import { PlatinumAsset } from "./PlatinumAsset";
 import { SilverAsset } from "./SilverAsset";
 import { ZecWallet } from "./ZecWallet";
 
-const getSut = <T extends Asset>(
-    ctor: new(model: IModel, props: IAssetIntersection) => T, props: IAssetIntersection) => {
+const getSut = <T extends Asset, U extends IAssetProperties>(ctor: new(model: IModel, props: U) => T, props: U) => {
     const model: IModel = {
         assets: {
             ordering: {
@@ -183,18 +183,9 @@ const testCommonMethods = <T extends Asset>(
 const testQueryData = <T extends Asset>(
     ctor: new(model: IModel, props: ICryptoWalletProperties) => T, address: string) => {
     describe(ctor.name, () => {
-        const model: IModel = {
-            assets: {
-                ordering: {
-                    groupBy: "type",
-                    otherGroupBys: [ "location" ],
-                },
-            },
-        };
-
         describe("queryData", () => {
             it(`should query the balance of ${address}`, async () => {
-                const sut = new ctor(model, { description: "Spending", address });
+                const { sut } = getSut(ctor, { description: "Spending", address });
 
                 expect(sut.quantity).toBeUndefined();
                 expect(await sut.queryData()).toBeUndefined();
