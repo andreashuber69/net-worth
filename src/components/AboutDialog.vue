@@ -78,8 +78,8 @@
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>
-            <v-btn href="https://btgexp.com" target="_blank" block flat class="ma-0">
-              <img src="../assets/btgexp.png" height="36"/>
+            <v-btn href="https://explorer.bitcoingold.org" target="_blank" block flat class="ma-0">
+              <img src="../assets/bitcoingold.png" height="36"/>
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>

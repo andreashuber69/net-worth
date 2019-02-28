@@ -36,26 +36,26 @@ export class BtgWallet extends RealCryptoWallet {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected queryQuantity() {
-        return new BtgWallet.BtgexpRequest(this.address).execute();
+        return new BtgWallet.BitcoinGoldRequest(this.address).execute();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // tslint:disable-next-line:max-classes-per-file variable-name
-    private static readonly BtgexpRequest = class NestedBtgexpRequest implements IWebRequest<number> {
+    private static readonly BitcoinGoldRequest = class NestedBitcoinGoldRequest implements IWebRequest<number> {
         public constructor(private readonly address: string) {
         }
 
         public async execute() {
-            return NestedBtgexpRequest.getBalance(
-                await QueryCache.fetch(`https://btgexp.com/ext/getbalance/${this.address}`));
+            return NestedBitcoinGoldRequest.getBalance(
+                await QueryCache.fetch(`https://explorer.bitcoingold.org/insight-api/addr/${this.address}/balance`));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private static getBalance(response: Unknown | null) {
             if (Value.isNumber(response)) {
-                return response;
+                return response / 1E8;
             }
 
             throw new QueryError();

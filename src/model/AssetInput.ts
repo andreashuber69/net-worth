@@ -57,7 +57,7 @@ const erc20Hint =
 
 const btgHint =
     "The wallets single public address (ypub is not supported). " +
-    "<strong style='color:red'>Will be sent to btgexp.com to query the balance.</strong>";
+    "<strong style='color:red'>Will be sent to bitcoingold.org to query the balance.</strong>";
 
 const dashHint =
     "The wallets single public address (drkp is not supported). " +
