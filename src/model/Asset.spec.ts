@@ -180,6 +180,30 @@ const testCommonMethods = <T extends Asset>(
     });
 };
 
+const testQueryData = <T extends Asset>(
+    ctor: new(model: IModel, props: ICryptoWalletProperties) => T, address: string) => {
+    describe(ctor.name, () => {
+        const model: IModel = {
+            assets: {
+                ordering: {
+                    groupBy: "type",
+                    otherGroupBys: [ "location" ],
+                },
+            },
+        };
+
+        describe("queryData", () => {
+            it(`should query the balance of ${address}`, async () => {
+                const sut = new ctor(model, { description: "Spending", address });
+
+                expect(sut.quantity).toBeUndefined();
+                expect(await sut.queryData()).toBeUndefined();
+                expect(sut.quantity).toBeDefined();
+            });
+        });
+    });
+};
+
 const arrayOfAll = <T>() =>
     <U extends Array<keyof T>>(...array: U & (Array<keyof T> extends Array<U[number]> ? unknown : never)) => array;
 
@@ -207,3 +231,7 @@ const miscAssetPropertyNames =
     arrayOfAll<IMiscAssetProperties>()("description", "location", "quantity", "notes", "value", "valueCurrency");
 
 testCommonMethods(MiscAsset, miscAssetPropertyNames);
+
+// tslint:disable-next-line: max-line-length
+testQueryData(BtcWallet, "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz");
+testQueryData(BtcWallet, "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a");
