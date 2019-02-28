@@ -25,6 +25,7 @@ describe("BtcWallet", () => {
     };
 
     describe("queryData", () => {
+        // cSpell: ignore xpub
         it("should query the quantity of an xpub address", async () => {
             const sut = new BtcWallet(model, {
                 description: "Spending",
