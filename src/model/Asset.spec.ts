@@ -167,6 +167,18 @@ const testCommonMethods = <T extends Asset>(
             });
         });
 
+        describe("interface", () => {
+            it("should be equal to sut", () => {
+                expect(sut.interface as object).toBe(sut);
+            });
+        });
+
+        describe("toJSON()", () => {
+            it("should return an object", () => {
+                expect(typeof sut.toJSON()).toEqual("object");
+            });
+        });
+
         describe("bundle()", () => {
             it("should return a bundle", () => {
                 expect(sut.bundle() instanceof AssetBundle).toBe(true);
