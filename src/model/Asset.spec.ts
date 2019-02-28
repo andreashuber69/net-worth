@@ -34,7 +34,8 @@ import { PlatinumAsset } from "./PlatinumAsset";
 import { SilverAsset } from "./SilverAsset";
 import { ZecWallet } from "./ZecWallet";
 
-const getSut = <T extends Asset>(ctor: new(model: IModel, props: IAssetIntersection) => T, data: AssetEditorData) => {
+const getSut = <T extends Asset>(
+    ctor: new(model: IModel, props: IAssetIntersection) => T, props: IAssetIntersection) => {
     const model: IModel = {
         assets: {
             ordering: {
@@ -44,9 +45,7 @@ const getSut = <T extends Asset>(ctor: new(model: IModel, props: IAssetIntersect
         },
     };
 
-    const expected = new AssetProperties(data);
-
-    return { expected, sut: new ctor(model, expected) };
+    return { expected: props, sut: new ctor(model, props) };
 };
 
 const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetPropertyName[]): Map<string, unknown> => {
@@ -84,7 +83,7 @@ const testAsset = <T extends Asset>(
                 }
             }
 
-            ({ expected, sut } = getSut(ctor, data));
+            ({ expected, sut } = getSut(ctor, new AssetProperties(data)));
         });
 
         describe("constructor", () => {
