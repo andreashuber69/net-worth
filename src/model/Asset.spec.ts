@@ -58,7 +58,7 @@ const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetProp
     return result;
 };
 
-const testAsset = <T extends Asset>(
+const testCommonMethods = <T extends Asset>(
     ctor: new(model: IModel, props: IAssetIntersection) => T, expectedPropertyNames: AssetPropertyName[]) => {
     describe(ctor.name, () => {
         let expected: IAssetIntersection;
@@ -186,24 +186,24 @@ const arrayOfAll = <T>() =>
 const preciousMetalPropertyNames = arrayOfAll<IPreciousMetalAssetProperties>()(
     "description", "location", "quantity", "notes", "weight", "weightUnit", "fineness");
 
-testAsset(SilverAsset, preciousMetalPropertyNames);
-testAsset(PalladiumAsset, preciousMetalPropertyNames);
-testAsset(PlatinumAsset, preciousMetalPropertyNames);
-testAsset(GoldAsset, preciousMetalPropertyNames);
+testCommonMethods(SilverAsset, preciousMetalPropertyNames);
+testCommonMethods(PalladiumAsset, preciousMetalPropertyNames);
+testCommonMethods(PlatinumAsset, preciousMetalPropertyNames);
+testCommonMethods(GoldAsset, preciousMetalPropertyNames);
 
 const cryptoWalletPropertyNames =
     arrayOfAll<ICryptoWalletProperties>()("description", "location", "quantity", "notes", "address");
 
-testAsset(BtcWallet, cryptoWalletPropertyNames);
-testAsset(LtcWallet, cryptoWalletPropertyNames);
-testAsset(DashWallet, cryptoWalletPropertyNames);
-testAsset(BtgWallet, cryptoWalletPropertyNames);
-testAsset(Erc20TokensWallet, cryptoWalletPropertyNames);
-testAsset(EtcWallet, cryptoWalletPropertyNames);
-testAsset(EthWallet, cryptoWalletPropertyNames);
-testAsset(ZecWallet, cryptoWalletPropertyNames);
+testCommonMethods(BtcWallet, cryptoWalletPropertyNames);
+testCommonMethods(LtcWallet, cryptoWalletPropertyNames);
+testCommonMethods(DashWallet, cryptoWalletPropertyNames);
+testCommonMethods(BtgWallet, cryptoWalletPropertyNames);
+testCommonMethods(Erc20TokensWallet, cryptoWalletPropertyNames);
+testCommonMethods(EtcWallet, cryptoWalletPropertyNames);
+testCommonMethods(EthWallet, cryptoWalletPropertyNames);
+testCommonMethods(ZecWallet, cryptoWalletPropertyNames);
 
 const miscAssetPropertyNames =
     arrayOfAll<IMiscAssetProperties>()("description", "location", "quantity", "notes", "value", "valueCurrency");
 
-testAsset(MiscAsset, miscAssetPropertyNames);
+testCommonMethods(MiscAsset, miscAssetPropertyNames);
