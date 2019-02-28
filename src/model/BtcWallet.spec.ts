@@ -11,42 +11,34 @@
 // <http://www.gnu.org/licenses/>.
 
 // tslint:disable-next-line:no-implicit-dependencies no-submodule-imports
-import { IModel } from "./Asset";
+import { Asset, IModel } from "./Asset";
 import { BtcWallet } from "./BtcWallet";
+import { ICryptoWalletProperties } from "./ICryptoWallet";
 
-describe("BtcWallet", () => {
-    const model: IModel = {
-        assets: {
-            ordering: {
-                groupBy: "type",
-                otherGroupBys: [ "location" ],
+const testQueryData = <T extends Asset>(
+    ctor: new(model: IModel, props: ICryptoWalletProperties) => T, address: string) => {
+    describe(ctor.name, () => {
+        const model: IModel = {
+            assets: {
+                ordering: {
+                    groupBy: "type",
+                    otherGroupBys: [ "location" ],
+                },
             },
-        },
-    };
+        };
 
-    describe("queryData", () => {
-        // cSpell: ignore xpub
-        it("should query the quantity of an xpub address", async () => {
-            const sut = new BtcWallet(model, {
-                description: "Spending",
-                // tslint:disable-next-line: max-line-length
-                address: "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz",
+        describe("queryData", () => {
+            it(`should query the balance of ${address}`, async () => {
+                const sut = new ctor(model, { description: "Spending", address });
+
+                expect(sut.quantity).toBeUndefined();
+                expect(await sut.queryData()).toBeUndefined();
+                expect(sut.quantity).toBeDefined();
             });
-
-            expect(sut.quantity).toBeUndefined();
-            expect(await sut.queryData()).toBeUndefined();
-            expect(sut.quantity).toBeDefined();
-        });
-
-        it("should query the quantity of a legacy address", async () => {
-            const sut = new BtcWallet(model, {
-                description: "Spending",
-                address: "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a",
-            });
-
-            expect(sut.quantity).toBeUndefined();
-            expect(await sut.queryData()).toBeUndefined();
-            expect(sut.quantity).toBeDefined();
         });
     });
-});
+};
+
+// tslint:disable-next-line: max-line-length
+testQueryData(BtcWallet, "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz");
+testQueryData(BtcWallet, "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a");
