@@ -43,6 +43,7 @@ const getSut = <T extends Asset, U extends IAssetProperties>(ctor: new(model: IM
                 otherGroupBys: [ "location" ],
             },
         },
+        exchangeRate: 1,
     };
 
     return { expected: props, sut: new ctor(model, props) };
@@ -186,10 +187,21 @@ const testQueryData = <T extends Asset>(
         describe("queryData", () => {
             it(`should query the balance of ${address}`, async () => {
                 const { sut } = getSut(ctor, { description: "Spending", address });
+                const bundle = sut.bundle();
 
-                expect(sut.quantity).toBeUndefined();
-                expect(await sut.queryData()).toBeUndefined();
-                expect(sut.quantity).toBeDefined();
+                for (const asset of bundle.assets) {
+                    expect(asset.quantity).toBeUndefined();
+                    expect(asset.unitValue).toBeUndefined();
+                    expect(asset.totalValue).toBeUndefined();
+                }
+
+                expect(await bundle.queryData()).toBeUndefined();
+
+                for (const asset of bundle.assets) {
+                    expect(asset.quantity).toBeGreaterThanOrEqual(0);
+                    expect(asset.unitValue).toBeGreaterThanOrEqual(0);
+                    expect(asset.totalValue).toBeGreaterThanOrEqual(0);
+                }
             });
         });
     });
@@ -223,6 +235,15 @@ const miscAssetPropertyNames =
 
 testCommonMethods(MiscAsset, miscAssetPropertyNames);
 
+// cSpell: disable
 // tslint:disable-next-line: max-line-length
 testQueryData(BtcWallet, "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz");
 testQueryData(BtcWallet, "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a");
+testQueryData(LtcWallet, "LS6dQU1M1Asx5ATT5gopFo53UfQ9dhLhmP");
+testQueryData(DashWallet, "XjB1d1pNT9nfcCKp1N7AQCmzPNiVg6YEzn");
+testQueryData(BtgWallet, "GJjz2Du9BoJQ3CPcoyVTHUJZSj62i1693U");
+testQueryData(Erc20TokensWallet, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454");
+// testQueryData(EtcWallet, "0x2387f8DB786d43528fFD3b0bD776e2BA39DD3832");
+testQueryData(EthWallet, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454");
+testQueryData(ZecWallet, "t1Tncf8SM9yPsFsWjRMAf6GXobSDhkQ6DEN");
+// cSpell: enable
