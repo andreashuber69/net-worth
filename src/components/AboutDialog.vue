@@ -68,8 +68,8 @@
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>
-            <v-btn href="https://gastracker.io" target="_blank" block flat class="ma-0">
-              <img src="../assets/gastracker.png" height="36"/>&nbsp;Gastracker.io
+            <v-btn href="https://blockscout.com" target="_blank" block flat class="ma-0">
+              <img src="../assets/blockscout.svg" height="36"/>&nbsp;blockscout.com
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>

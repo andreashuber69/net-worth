@@ -255,7 +255,7 @@ testQueryData(LtcWallet, "LS6dQU1M1Asx5ATT5gopFo53UfQ9dhLhmP");
 testQueryData(DashWallet, "XjB1d1pNT9nfcCKp1N7AQCmzPNiVg6YEzn");
 testQueryData(BtgWallet, "GJjz2Du9BoJQ3CPcoyVTHUJZSj62i1693U");
 testQueryData(Erc20TokensWallet, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454");
-// testQueryData(EtcWallet, "0x2387f8DB786d43528fFD3b0bD776e2BA39DD3832");
+testQueryData(EtcWallet, "0x2387f8DB786d43528fFD3b0bD776e2BA39DD3832");
 testQueryData(EthWallet, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454");
 testQueryData(ZecWallet, "t1Tncf8SM9yPsFsWjRMAf6GXobSDhkQ6DEN");
 // cSpell: enable

@@ -47,16 +47,19 @@ export class EtcWallet extends RealCryptoWallet {
         }
 
         public async execute() {
-            return NestedGastrackerRequest.getBalance(
-                await QueryCache.fetch(`https://api.gastracker.io/addr/${this.address}`));
+            return NestedGastrackerRequest.getBalance(await QueryCache.fetch(
+                `https://blockscout.com/etc/mainnet/api?module=account&action=balance&address=${this.address}`));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private static getBalance(response: Unknown | null) {
-            if (Value.hasObjectProperty(response, "balance") &&
-                Value.hasNumberProperty(response.balance, "ether")) {
-                return response.balance.ether;
+            if (Value.hasStringProperty(response, "result") && Value.hasStringProperty(response, "status")) {
+                const result = Number.parseInt(response.result, 10);
+
+                if ((response.status === "1") && Number.isFinite(result)) {
+                    return result / 1E18;
+                }
             }
 
             throw new QueryError();
