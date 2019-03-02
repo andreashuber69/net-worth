@@ -21,6 +21,7 @@ import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
 import { DashWallet } from "./DashWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
+import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { EtcWallet } from "./EtcWallet";
 import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
@@ -196,24 +197,76 @@ const testCommonMethods = <T extends Asset>(
 const testQueryData = <T extends Asset>(
     ctor: new(model: IModel, props: ICryptoWalletProperties) => T, address: string) => {
     describe(ctor.name, () => {
-        describe("queryData", () => {
-            it(`should query the balance of ${address}`, async () => {
-                const { sut } = getSut(ctor, { description: "Spending", address });
-                const bundle = sut.bundle();
+        let sut: T;
+        let bundle: AssetBundle;
 
-                for (const asset of bundle.assets) {
-                    expect(asset.quantity).toBeUndefined();
-                    expect(asset.unitValue).toBeUndefined();
-                    expect(asset.totalValue).toBeUndefined();
-                }
+        beforeAll(() => {
+            ({ sut } = getSut(ctor, { description: "Spending", address }));
+            bundle = sut.bundle();
+        });
 
-                expect(await bundle.queryData()).toBeUndefined();
+        describe("bundle() (before queryData())", () => {
+            describe("assets", () => {
+                it("should contain assets with undefined quantity, unitValue and totalValue", () => {
+                    for (const asset of bundle.assets) {
+                        expect(asset.quantity).toBeUndefined();
+                        expect(asset.unitValue).toBeUndefined();
+                        expect(asset.totalValue).toBeUndefined();
+                    }
+                });
+            });
 
-                for (const asset of bundle.assets) {
-                    expect(asset.quantity).toBeGreaterThanOrEqual(0);
-                    expect(asset.unitValue).toBeGreaterThanOrEqual(0);
-                    expect(asset.totalValue).toBeGreaterThanOrEqual(0);
-                }
+            describe("toJSON()", () => {
+                it("should return an object", () => {
+                    expect(typeof bundle.toJSON()).toEqual("object");
+                });
+            });
+        });
+
+        describe("bundle() (after queryData())", () => {
+            let assets: Asset[];
+
+            beforeAll(async () => {
+                await bundle.queryData();
+                ({ assets } = bundle);
+            });
+
+            describe("assets", () => {
+                it("should contain assets with defined quantity, unitValue and totalValue", () => {
+                    for (const asset of bundle.assets) {
+                        expect(asset.quantity).toBeGreaterThanOrEqual(0);
+                        expect(asset.unitValue).toBeGreaterThanOrEqual(0);
+                        expect(asset.totalValue).toBeGreaterThanOrEqual(0);
+                    }
+                });
+
+                it("should contain assets with the given properties", () => {
+                    for (const asset of assets) {
+                        expect(asset.type).toBe(sut.type);
+                        expect(asset.description).toBe(sut.description);
+                        expect(asset.location).toBe(sut.location);
+                        expect(asset.notes).toBe(sut.notes);
+                        expect(asset.editableAsset).toBe(sut);
+
+                        if (asset instanceof Erc20TokenWallet) {
+                            expect(sut instanceof Erc20TokensWallet).toBe(true);
+                            expect(asset.address).toBe((sut as unknown as Erc20TokensWallet).address);
+                            expect(() => asset.interface).toThrow();
+                            expect(() => asset.toJSON()).toThrow();
+                        }
+                    }
+                });
+            });
+
+            describe("deleteAsset()", () => {
+                it("should remove an asset", () => {
+                    const { length } = assets;
+                    expect(length).toBeGreaterThan(0);
+                    const assetToDelete = bundle.assets[0];
+                    bundle.deleteAsset(assetToDelete);
+                    expect(bundle.assets.length).toBe(length - 1);
+                    expect(bundle.assets.includes(assetToDelete)).toBe(false);
+                });
             });
         });
     });
