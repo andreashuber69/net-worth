@@ -36,18 +36,18 @@ export class EtcWallet extends RealCryptoWallet {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected queryQuantity() {
-        return new EtcWallet.GastrackerRequest(this.address).execute();
+        return new EtcWallet.BlockscoutRequest(this.address).execute();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // tslint:disable-next-line:max-classes-per-file variable-name
-    private static readonly GastrackerRequest = class NestedGastrackerRequest implements IWebRequest<number> {
+    private static readonly BlockscoutRequest = class NestedBlockscoutRequest implements IWebRequest<number> {
         public constructor(private readonly address: string) {
         }
 
         public async execute() {
-            return NestedGastrackerRequest.getBalance(await QueryCache.fetch(
+            return NestedBlockscoutRequest.getBalance(await QueryCache.fetch(
                 `https://blockscout.com/etc/mainnet/api?module=account&action=balance&address=${this.address}`));
         }
 

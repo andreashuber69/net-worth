@@ -45,7 +45,7 @@ const ltcHint =
 
 const etcHint =
     "The wallets single public address (xpub is not supported). " +
-    "<strong style='color:red'>Will be sent to gastracker.io to query the balance.</strong>";
+    "<strong style='color:red'>Will be sent to blockscout.com to query the balance.</strong>";
 
 const ethHint =
     "The wallets single public address (xpub is not supported). " +
