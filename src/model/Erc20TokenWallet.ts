@@ -10,9 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
+import { IAssetUnion, ISerializedObject } from "./AssetInterfaces";
 import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
+import { IAssetProperties } from "./IAssetProperties";
 
 interface ITokenWalletParameters {
     readonly editable: Erc20TokensWallet;
@@ -59,7 +60,7 @@ export class Erc20TokenWallet extends CryptoWallet {
     }
 
     // tslint:disable-next-line:prefer-function-over-method
-    public toJSON(): ISerializedAsset {
+    public toJSON(): ISerializedObject & IAssetProperties {
         throw new Error(`${Erc20TokenWallet.name} cannot be serialized.`);
     }
 

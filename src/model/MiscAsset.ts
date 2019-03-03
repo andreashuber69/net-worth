@@ -13,6 +13,7 @@
 
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
+import { ISerializedObject } from "./AssetInterfaces";
 import { AssetType } from "./AssetTypes";
 import { Currency } from "./Currency";
 import { ExchangeRate } from "./ExchangeRate";
@@ -68,7 +69,7 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
     }
 
     /** @internal */
-    public toJSON() {
+    public toJSON(): ISerializedObject & IMiscAssetProperties {
         return {
             type: this.type,
             description: this.description,

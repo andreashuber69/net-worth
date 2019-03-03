@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetType } from "./AssetTypes";
+import { IAssetProperties } from "./IAssetProperties";
 import { ICryptoWallet, ICryptoWalletProperties } from "./ICryptoWallet";
 import { IMiscAsset, IMiscAssetProperties } from "./IMiscAsset";
 import { IPreciousMetalAsset, IPreciousMetalAssetProperties } from "./IPreciousMetalAsset";
@@ -35,7 +36,3 @@ export interface ISerializedObject {
 
 /** @internal */
 export type SerializedAssetPropertyName = keyof (ISerializedObject & IAssetIntersection);
-
-/** @internal */
-export type ISerializedAsset =
-    ISerializedObject & (IPreciousMetalAssetProperties | ICryptoWalletProperties | IMiscAssetProperties);

@@ -11,7 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "./Asset";
-import { IAssetUnion, ISerializedAsset } from "./AssetInterfaces";
+import { IAssetUnion, ISerializedObject } from "./AssetInterfaces";
+import { IAssetProperties } from "./IAssetProperties";
 
 // This could easily be fixed by overriding abstract methods in two extending classes, but doing so seems strange at
 // best. Most method implementations are trivial, so their number shouldn't matter that much.
@@ -85,7 +86,7 @@ export class AssetGroup extends Asset {
     }
 
     // tslint:disable-next-line:prefer-function-over-method
-    public toJSON(): ISerializedAsset {
+    public toJSON(): ISerializedObject & IAssetProperties {
         throw new Error(`${AssetGroup.name} cannot be serialized.`);
     }
 

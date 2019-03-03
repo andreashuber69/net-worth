@@ -13,6 +13,7 @@
 
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
+import { ISerializedObject } from "./AssetInterfaces";
 import { AssetType } from "./AssetTypes";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IPreciousMetalAsset, IPreciousMetalAssetProperties, preciousMetalSuperType } from "./IPreciousMetalAsset";
@@ -56,7 +57,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
     public readonly superType = PreciousMetalAsset.superType;
 
     /** @internal */
-    public toJSON() {
+    public toJSON(): ISerializedObject & IPreciousMetalAssetProperties {
         return {
             type: this.type,
             description: this.description,

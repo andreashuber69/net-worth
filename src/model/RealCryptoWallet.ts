@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
+import { ISerializedObject } from "./AssetInterfaces";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
@@ -55,7 +56,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     }
 
     /** @internal */
-    public toJSON() {
+    public toJSON(): ISerializedObject & ICryptoWalletProperties {
         return {
             type: this.type,
             description: this.description,

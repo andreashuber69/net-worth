@@ -11,10 +11,11 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset } from "./Asset";
-import { ISerializedAsset } from "./AssetInterfaces";
+import { ISerializedObject } from "./AssetInterfaces";
+import { IAssetProperties } from "./IAssetProperties";
 
 export interface ISerializedBundle {
-    readonly primaryAsset: ISerializedAsset;
+    readonly primaryAsset: ISerializedObject & IAssetProperties;
 }
 
 /**
