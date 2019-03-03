@@ -19,6 +19,7 @@ import { AssetProperties } from "./AssetProperties";
 import { AssetType } from "./AssetTypes";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
+import { CryptoWallet } from "./CryptoWallet";
 import { DashWallet } from "./DashWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
@@ -33,7 +34,6 @@ import { LtcWallet } from "./LtcWallet";
 import { MiscAsset } from "./MiscAsset";
 import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
-import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SilverAsset } from "./SilverAsset";
 import { ZecWallet } from "./ZecWallet";
 
@@ -195,12 +195,12 @@ const testCommonMethods = <T extends Asset>(
     });
 };
 
-const testQueryData = <T extends RealCryptoWallet>(
+const testQueryData = <T extends CryptoWallet>(
     ctor: new(model: IModel, props: ICryptoWalletProperties) => T, address: string) => {
     describe(ctor.name, () => {
         describe("bundle() (before queryData())", () => {
             let sut: T;
-            let bundle: AssetBundle;
+            let bundle: ReturnType<typeof sut.bundle>;
 
             beforeEach(() => {
                 ({ sut } = getSut(ctor, { description: "Spending", address }));
@@ -226,8 +226,8 @@ const testQueryData = <T extends RealCryptoWallet>(
 
         describe("bundle() (after queryData())", () => {
             let sut: T;
-            let bundle: AssetBundle;
-            let assets: Asset[];
+            let bundle: ReturnType<typeof sut.bundle>;
+            let assets: typeof bundle.assets;
 
             beforeAll(async () => {
                 ({ sut } = getSut(ctor, { description: "Spending", address }));
@@ -252,7 +252,7 @@ const testQueryData = <T extends RealCryptoWallet>(
                         expect(asset.location).toBe(sut.location);
                         expect(asset.notes).toBe(sut.notes);
                         expect(asset.editableAsset).toBe(sut);
-                        // expect(asset.address).toBe(sut.address);
+                        expect(asset.address).toBe(sut.address);
 
                         if (asset instanceof Erc20TokenWallet) {
                             expect(sut instanceof Erc20TokensWallet).toBe(true);

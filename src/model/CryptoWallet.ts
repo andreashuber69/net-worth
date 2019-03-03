@@ -12,8 +12,10 @@
 
 import { IModel } from "./Asset";
 import { AssetType } from "./AssetTypes";
-import { cryptoWalletSuperType, ICryptoWallet } from "./ICryptoWallet";
+import { GenericAssetBundle } from "./GenericAssetBundle";
+import { cryptoWalletSuperType, ICryptoWallet, ICryptoWalletProperties } from "./ICryptoWallet";
 import { SingleAsset } from "./SingleAsset";
+import { Unknown } from "./Unknown";
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends SingleAsset implements ICryptoWallet {
@@ -40,6 +42,11 @@ export abstract class CryptoWallet extends SingleAsset implements ICryptoWallet 
 
     /** @internal */
     public readonly superType = CryptoWallet.superType;
+
+    // tslint:disable-next-line: prefer-function-over-method
+    public bundle(bundle?: Unknown): GenericAssetBundle<CryptoWallet, ICryptoWalletProperties> {
+        throw new Error("Asset cannot be bundled.");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
