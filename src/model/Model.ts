@@ -17,6 +17,7 @@ import { AssetCollection } from "./AssetCollection";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
+import { IAssetProperties } from "./IAssetProperties";
 import { ISort } from "./Ordering";
 import { Query } from "./Query";
 
@@ -38,7 +39,7 @@ export interface ISerializedModel {
     readonly currency: string;
     readonly groupBy: GroupBy;
     readonly sort: ISort;
-    readonly bundles: ISerializedBundle[];
+    readonly bundles: Array<ISerializedBundle<IAssetProperties>>;
 }
 
 /** Represents the main model of the application. */

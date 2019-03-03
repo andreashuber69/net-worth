@@ -11,8 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
+import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import { Unknown } from "./Unknown";
 
 /** Represents an asset made of gold. */
 export class GoldAsset extends PreciousMetalAsset {
@@ -20,5 +22,9 @@ export class GoldAsset extends PreciousMetalAsset {
 
     public constructor(parent: IModel, props: IPreciousMetalAssetProperties) {
         super(parent, props, "lbma/gold.json");
+    }
+
+    public bundle(bundle?: Unknown): GenericAssetBundle<GoldAsset, IPreciousMetalAssetProperties> {
+        return new GenericAssetBundle(this);
     }
 }

@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
@@ -28,7 +27,7 @@ export class EthWallet extends RealCryptoWallet {
         super(parent, RealCryptoWallet.getProperties(props, "ETH", "ethereum"));
     }
 
-    public bundle(bundle?: Unknown): GenericAssetBundle<EthWallet> {
+    public bundle(bundle?: Unknown): GenericAssetBundle<EthWallet, ICryptoWalletProperties> {
         return new GenericAssetBundle(this);
     }
 

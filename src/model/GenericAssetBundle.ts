@@ -12,10 +12,12 @@
 
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { ISerializedObject } from "./AssetInterfaces";
+import { IAssetProperties } from "./IAssetProperties";
 import { SingleAsset } from "./SingleAsset";
 
 /** Defines a bundle containing a single asset. */
-export class GenericAssetBundle<T extends SingleAsset & ISerializedObject> extends AssetBundle {
+export class GenericAssetBundle<
+    T extends SingleAsset & ISerializedObject & U, U extends IAssetProperties> extends AssetBundle {
     public readonly assets: T[];
 
     /** @internal */
@@ -36,7 +38,7 @@ export class GenericAssetBundle<T extends SingleAsset & ISerializedObject> exten
         return this.assets[0].queryData();
     }
 
-    public toJSON(): ISerializedBundle {
+    public toJSON(): ISerializedBundle<U> {
         return {
             primaryAsset: this.assets[0],
         };

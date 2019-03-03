@@ -12,7 +12,6 @@
 
 import { HDNode } from "bitcoinjs-lib";
 import { IModel } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
@@ -36,7 +35,7 @@ export class BtcWallet extends RealCryptoWallet {
         super(parent, RealCryptoWallet.getProperties(props, "BTC", "bitcoin"));
     }
 
-    public bundle(bundle?: Unknown): GenericAssetBundle<BtcWallet> {
+    public bundle(bundle?: Unknown): GenericAssetBundle<BtcWallet, ICryptoWalletProperties> {
         return new GenericAssetBundle(this);
     }
 

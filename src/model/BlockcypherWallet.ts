@@ -11,15 +11,15 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
 import { BlockcypherRequest } from "./BlockcypherRequest";
 import { GenericAssetBundle } from "./GenericAssetBundle";
+import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
 
 /** Represents a wallet the balance of which is requested from blockcypher.com. */
 export abstract class BlockcypherWallet extends RealCryptoWallet {
-    public bundle(bundle?: Unknown): GenericAssetBundle<BlockcypherWallet> {
+    public bundle(bundle?: Unknown): GenericAssetBundle<BlockcypherWallet, ICryptoWalletProperties> {
         return new GenericAssetBundle(this);
     }
 

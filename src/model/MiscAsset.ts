@@ -81,7 +81,7 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
         };
     }
 
-    public bundle(bundle?: Unknown): GenericAssetBundle<MiscAsset> {
+    public bundle(bundle?: Unknown): GenericAssetBundle<MiscAsset, IMiscAssetProperties> {
         return new GenericAssetBundle(this);
     }
 

@@ -13,12 +13,13 @@
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
+import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
 
-interface ISerializedErc20TokensBundle extends ISerializedBundle {
+interface ISerializedErc20TokensBundle extends ISerializedBundle<ICryptoWalletProperties> {
     deletedAssets: string[];
 }
 

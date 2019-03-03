@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
@@ -29,7 +28,7 @@ export class ZecWallet extends RealCryptoWallet {
         super(parent, RealCryptoWallet.getProperties(props, "ZEC", "zcash"));
     }
 
-    public bundle(bundle?: Unknown): GenericAssetBundle<ZecWallet> {
+    public bundle(bundle?: Unknown): GenericAssetBundle<ZecWallet, ICryptoWalletProperties> {
         return new GenericAssetBundle(this);
     }
 

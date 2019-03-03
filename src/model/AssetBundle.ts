@@ -14,8 +14,8 @@ import { Asset } from "./Asset";
 import { ISerializedObject } from "./AssetInterfaces";
 import { IAssetProperties } from "./IAssetProperties";
 
-export interface ISerializedBundle {
-    readonly primaryAsset: ISerializedObject & IAssetProperties;
+export interface ISerializedBundle<T extends IAssetProperties> {
+    readonly primaryAsset: ISerializedObject & T;
 }
 
 /**
@@ -44,5 +44,5 @@ export abstract class AssetBundle {
     public abstract queryData(): Promise<void>;
 
     /** @internal */
-    public abstract toJSON(): ISerializedBundle;
+    public abstract toJSON(): ISerializedBundle<IAssetProperties>;
 }
