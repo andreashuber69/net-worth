@@ -33,6 +33,7 @@ import { LtcWallet } from "./LtcWallet";
 import { MiscAsset } from "./MiscAsset";
 import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
+import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SilverAsset } from "./SilverAsset";
 import { ZecWallet } from "./ZecWallet";
 
@@ -194,18 +195,18 @@ const testCommonMethods = <T extends Asset>(
     });
 };
 
-const testQueryData = <T extends Asset>(
+const testQueryData = <T extends RealCryptoWallet>(
     ctor: new(model: IModel, props: ICryptoWalletProperties) => T, address: string) => {
     describe(ctor.name, () => {
-        let sut: T;
-        let bundle: AssetBundle;
-
-        beforeAll(() => {
-            ({ sut } = getSut(ctor, { description: "Spending", address }));
-            bundle = sut.bundle();
-        });
-
         describe("bundle() (before queryData())", () => {
+            let sut: T;
+            let bundle: AssetBundle;
+
+            beforeEach(() => {
+                ({ sut } = getSut(ctor, { description: "Spending", address }));
+                bundle = sut.bundle();
+            });
+
             describe("assets", () => {
                 it("should contain assets with undefined quantity, unitValue and totalValue", () => {
                     for (const asset of bundle.assets) {
@@ -224,9 +225,13 @@ const testQueryData = <T extends Asset>(
         });
 
         describe("bundle() (after queryData())", () => {
+            let sut: T;
+            let bundle: AssetBundle;
             let assets: Asset[];
 
             beforeAll(async () => {
+                ({ sut } = getSut(ctor, { description: "Spending", address }));
+                bundle = sut.bundle();
                 await bundle.queryData();
                 ({ assets } = bundle);
             });
@@ -247,10 +252,10 @@ const testQueryData = <T extends Asset>(
                         expect(asset.location).toBe(sut.location);
                         expect(asset.notes).toBe(sut.notes);
                         expect(asset.editableAsset).toBe(sut);
+                        // expect(asset.address).toBe(sut.address);
 
                         if (asset instanceof Erc20TokenWallet) {
                             expect(sut instanceof Erc20TokensWallet).toBe(true);
-                            expect(asset.address).toBe((sut as unknown as Erc20TokensWallet).address);
                             expect(() => asset.interface).toThrow();
                             expect(() => asset.toJSON()).toThrow();
                         }
