@@ -36,7 +36,7 @@ export class BtcWallet extends RealCryptoWallet {
         super(parent, RealCryptoWallet.getProperties(props, "BTC", "bitcoin"));
     }
 
-    public bundle(bundle?: Unknown): AssetBundle {
+    public bundle(bundle?: Unknown): GenericAssetBundle<BtcWallet> {
         return new GenericAssetBundle(this);
     }
 

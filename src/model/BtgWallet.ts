@@ -29,7 +29,7 @@ export class BtgWallet extends RealCryptoWallet {
         super(parent, RealCryptoWallet.getProperties(props, "BTG", "bitcoin-gold"));
     }
 
-    public bundle(bundle?: Unknown): AssetBundle {
+    public bundle(bundle?: Unknown): GenericAssetBundle<BtgWallet> {
         return new GenericAssetBundle(this);
     }
 

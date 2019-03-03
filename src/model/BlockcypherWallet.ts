@@ -19,7 +19,7 @@ import { Unknown } from "./Unknown";
 
 /** Represents a wallet the balance of which is requested from blockcypher.com. */
 export abstract class BlockcypherWallet extends RealCryptoWallet {
-    public bundle(bundle?: Unknown): AssetBundle {
+    public bundle(bundle?: Unknown): GenericAssetBundle<BlockcypherWallet> {
         return new GenericAssetBundle(this);
     }
 

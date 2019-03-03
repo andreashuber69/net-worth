@@ -29,7 +29,7 @@ export class ZecWallet extends RealCryptoWallet {
         super(parent, RealCryptoWallet.getProperties(props, "ZEC", "zcash"));
     }
 
-    public bundle(bundle?: Unknown): AssetBundle {
+    public bundle(bundle?: Unknown): GenericAssetBundle<ZecWallet> {
         return new GenericAssetBundle(this);
     }
 

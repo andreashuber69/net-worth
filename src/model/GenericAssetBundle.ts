@@ -11,21 +11,20 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle, ISerializedBundle } from "./AssetBundle";
-import { CryptoWallet } from "./CryptoWallet";
-import { MiscAsset } from "./MiscAsset";
-import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import { ISerializedObject } from "./AssetInterfaces";
+import { SingleAsset } from "./SingleAsset";
 
 /** Defines a bundle containing a single asset. */
-export class GenericAssetBundle extends AssetBundle {
-    public readonly assets: Array<CryptoWallet | PreciousMetalAsset | MiscAsset>;
+export class GenericAssetBundle<T extends SingleAsset & ISerializedObject> extends AssetBundle {
+    public readonly assets: T[];
 
     /** @internal */
-    public constructor(asset: CryptoWallet | PreciousMetalAsset | MiscAsset) {
+    public constructor(asset: T) {
         super();
         this.assets = [ asset ];
     }
 
-    public deleteAsset(asset: CryptoWallet | PreciousMetalAsset | MiscAsset) {
+    public deleteAsset(asset: T) {
         const index = this.assets.indexOf(asset);
 
         if (index >= 0) {

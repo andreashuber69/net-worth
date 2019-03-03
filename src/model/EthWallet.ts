@@ -28,7 +28,7 @@ export class EthWallet extends RealCryptoWallet {
         super(parent, RealCryptoWallet.getProperties(props, "ETH", "ethereum"));
     }
 
-    public bundle(bundle?: Unknown): AssetBundle {
+    public bundle(bundle?: Unknown): GenericAssetBundle<EthWallet> {
         return new GenericAssetBundle(this);
     }
 

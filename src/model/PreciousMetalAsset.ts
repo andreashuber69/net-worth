@@ -70,7 +70,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
         };
     }
 
-    public bundle(bundle?: Unknown): AssetBundle {
+    public bundle(bundle?: Unknown): GenericAssetBundle<PreciousMetalAsset> {
         return new GenericAssetBundle(this);
     }
 
