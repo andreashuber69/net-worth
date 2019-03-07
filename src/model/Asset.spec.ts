@@ -34,8 +34,29 @@ import { LtcWallet } from "./LtcWallet";
 import { MiscAsset } from "./MiscAsset";
 import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
+import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
 import { ZecWallet } from "./ZecWallet";
+
+const arrayOfAll = <T>() =>
+    <U extends Array<keyof T>>(...array: U & (Array<keyof T> extends Array<U[number]> ? unknown : never)) => array;
+
+// tslint:disable-next-line: ban-types
+const getExpectedPropertyNames = (ctor: Function & { prototype: unknown }) => {
+
+    switch (ctor) {
+        case PreciousMetalAsset:
+            return arrayOfAll<IPreciousMetalAssetProperties>()(
+                "description", "location", "quantity", "notes", "weight", "weightUnit", "fineness");
+        case CryptoWallet:
+            return arrayOfAll<ICryptoWalletProperties>()("description", "location", "quantity", "notes", "address");
+        case MiscAsset:
+            return arrayOfAll<IMiscAssetProperties>()(
+                "description", "location", "quantity", "notes", "value", "valueCurrency");
+        default:
+            throw new Error();
+    }
+};
 
 const getSut = <T extends Asset, U extends IAssetProperties>(ctor: new(model: IModel, props: U) => T, props: U) => {
     const model: IModel = {
@@ -61,8 +82,11 @@ const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetProp
     return result;
 };
 
-const testAsset =
-    (ctor: new(model: IModel, props: IAssetIntersection) => Asset, expectedPropertyNames: AssetPropertyName[]) => {
+const testAsset = <T extends U, U extends PreciousMetalAsset | CryptoWallet | MiscAsset>(
+    // tslint:disable-next-line: ban-types
+    ctor: new(model: IModel, props: IAssetIntersection) => T, baseCtor: Function & { prototype: U })  => {
+    const expectedPropertyNames =  getExpectedPropertyNames(baseCtor);
+
     describe(ctor.name, () => {
         let expected: IAssetIntersection;
         let sut: InstanceType<typeof ctor>;
@@ -277,33 +301,19 @@ const testCryptoWallet =
     });
 };
 
-const arrayOfAll = <T>() =>
-    <U extends Array<keyof T>>(...array: U & (Array<keyof T> extends Array<U[number]> ? unknown : never)) => array;
-
-const preciousMetalPropertyNames = arrayOfAll<IPreciousMetalAssetProperties>()(
-    "description", "location", "quantity", "notes", "weight", "weightUnit", "fineness");
-
-testAsset(SilverAsset, preciousMetalPropertyNames);
-testAsset(PalladiumAsset, preciousMetalPropertyNames);
-testAsset(PlatinumAsset, preciousMetalPropertyNames);
-testAsset(GoldAsset, preciousMetalPropertyNames);
-
-const cryptoWalletPropertyNames =
-    arrayOfAll<ICryptoWalletProperties>()("description", "location", "quantity", "notes", "address");
-
-testAsset(BtcWallet, cryptoWalletPropertyNames);
-testAsset(LtcWallet, cryptoWalletPropertyNames);
-testAsset(DashWallet, cryptoWalletPropertyNames);
-testAsset(BtgWallet, cryptoWalletPropertyNames);
-testAsset(Erc20TokensWallet, cryptoWalletPropertyNames);
-testAsset(EtcWallet, cryptoWalletPropertyNames);
-testAsset(EthWallet, cryptoWalletPropertyNames);
-testAsset(ZecWallet, cryptoWalletPropertyNames);
-
-const miscAssetPropertyNames =
-    arrayOfAll<IMiscAssetProperties>()("description", "location", "quantity", "notes", "value", "valueCurrency");
-
-testAsset(MiscAsset, miscAssetPropertyNames);
+testAsset(SilverAsset, PreciousMetalAsset);
+testAsset(PalladiumAsset, PreciousMetalAsset);
+testAsset(PlatinumAsset, PreciousMetalAsset);
+testAsset(GoldAsset, PreciousMetalAsset);
+testAsset(BtcWallet, CryptoWallet);
+testAsset(LtcWallet, CryptoWallet);
+testAsset(DashWallet, CryptoWallet);
+testAsset(BtgWallet, CryptoWallet);
+testAsset(Erc20TokensWallet, CryptoWallet);
+testAsset(EtcWallet, CryptoWallet);
+testAsset(EthWallet, CryptoWallet);
+testAsset(ZecWallet, CryptoWallet);
+testAsset(MiscAsset, MiscAsset);
 
 // cSpell: disable
 // tslint:disable-next-line: max-line-length
