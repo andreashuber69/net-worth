@@ -42,19 +42,19 @@ const arrayOfAll = <T>() =>
     <U extends Array<keyof T>>(...array: U & (Array<keyof T> extends Array<U[number]> ? unknown : never)) => array;
 
 // tslint:disable-next-line: ban-types
-const getExpectedPropertyNames = (ctor: Function & { prototype: unknown }) => {
-
-    switch (ctor) {
-        case PreciousMetalAsset:
+const getExpectedPropertyNames =
+    (ctor: new(model: IModel, props: IAssetIntersection) => PreciousMetalAsset | CryptoWallet | MiscAsset) => {
+    switch ((ctor as any).superType) {
+        case PreciousMetalAsset.superType:
             return arrayOfAll<IPreciousMetalAssetProperties>()(
                 "description", "location", "quantity", "notes", "weight", "weightUnit", "fineness");
-        case CryptoWallet:
+        case CryptoWallet.superType:
             return arrayOfAll<ICryptoWalletProperties>()("description", "location", "quantity", "notes", "address");
-        case MiscAsset:
+        case MiscAsset.superType:
             return arrayOfAll<IMiscAssetProperties>()(
                 "description", "location", "quantity", "notes", "value", "valueCurrency");
         default:
-            throw new Error();
+            throw new Error("Unexpected superType");
     }
 };
 
@@ -82,10 +82,9 @@ const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetProp
     return result;
 };
 
-const testAsset = <T extends U, U extends PreciousMetalAsset | CryptoWallet | MiscAsset>(
-    // tslint:disable-next-line: ban-types
-    ctor: new(model: IModel, props: IAssetIntersection) => T, baseCtor: Function & { prototype: U })  => {
-    const expectedPropertyNames =  getExpectedPropertyNames(baseCtor);
+const testAsset =
+    (ctor: new(model: IModel, props: IAssetIntersection) => CryptoWallet | PreciousMetalAsset | MiscAsset)  => {
+    const expectedPropertyNames =  getExpectedPropertyNames(ctor);
 
     describe(ctor.name, () => {
         let expected: IAssetIntersection;
@@ -301,19 +300,19 @@ const testCryptoWallet =
     });
 };
 
-testAsset(SilverAsset, PreciousMetalAsset);
-testAsset(PalladiumAsset, PreciousMetalAsset);
-testAsset(PlatinumAsset, PreciousMetalAsset);
-testAsset(GoldAsset, PreciousMetalAsset);
-testAsset(BtcWallet, CryptoWallet);
-testAsset(LtcWallet, CryptoWallet);
-testAsset(DashWallet, CryptoWallet);
-testAsset(BtgWallet, CryptoWallet);
-testAsset(Erc20TokensWallet, CryptoWallet);
-testAsset(EtcWallet, CryptoWallet);
-testAsset(EthWallet, CryptoWallet);
-testAsset(ZecWallet, CryptoWallet);
-testAsset(MiscAsset, MiscAsset);
+testAsset(SilverAsset);
+testAsset(PalladiumAsset);
+testAsset(PlatinumAsset);
+testAsset(GoldAsset);
+testAsset(BtcWallet);
+testAsset(LtcWallet);
+testAsset(DashWallet);
+testAsset(BtgWallet);
+testAsset(Erc20TokensWallet);
+testAsset(EtcWallet);
+testAsset(EthWallet);
+testAsset(ZecWallet);
+testAsset(MiscAsset);
 
 // cSpell: disable
 // tslint:disable-next-line: max-line-length
