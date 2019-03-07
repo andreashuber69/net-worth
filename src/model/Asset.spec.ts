@@ -61,11 +61,11 @@ const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetProp
     return result;
 };
 
-const testCommonMethods = <T extends Asset>(
-    ctor: new(model: IModel, props: IAssetIntersection) => T, expectedPropertyNames: AssetPropertyName[]) => {
+const testAsset =
+    (ctor: new(model: IModel, props: IAssetIntersection) => Asset, expectedPropertyNames: AssetPropertyName[]) => {
     describe(ctor.name, () => {
         let expected: IAssetIntersection;
-        let sut: T;
+        let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
             let randomValue = Date.now();
@@ -195,11 +195,11 @@ const testCommonMethods = <T extends Asset>(
     });
 };
 
-const testQueryData = <T extends CryptoWallet>(
-    ctor: new(model: IModel, props: ICryptoWalletProperties) => T, address: string) => {
-    describe(ctor.name, () => {
+const testCryptoWallet =
+    (ctor: new(model: IModel, props: ICryptoWalletProperties) => CryptoWallet, address: string) => {
+    describe(`${ctor.name} with address ${address}`, () => {
         describe("bundle() (before queryData())", () => {
-            let sut: T;
+            let sut: InstanceType<typeof ctor>;
             let bundle: ReturnType<typeof sut.bundle>;
 
             beforeEach(() => {
@@ -225,7 +225,7 @@ const testQueryData = <T extends CryptoWallet>(
         });
 
         describe("bundle() (after queryData())", () => {
-            let sut: T;
+            let sut: InstanceType<typeof ctor>;
             let bundle: ReturnType<typeof sut.bundle>;
             let assets: typeof bundle.assets;
 
@@ -283,37 +283,37 @@ const arrayOfAll = <T>() =>
 const preciousMetalPropertyNames = arrayOfAll<IPreciousMetalAssetProperties>()(
     "description", "location", "quantity", "notes", "weight", "weightUnit", "fineness");
 
-testCommonMethods(SilverAsset, preciousMetalPropertyNames);
-testCommonMethods(PalladiumAsset, preciousMetalPropertyNames);
-testCommonMethods(PlatinumAsset, preciousMetalPropertyNames);
-testCommonMethods(GoldAsset, preciousMetalPropertyNames);
+testAsset(SilverAsset, preciousMetalPropertyNames);
+testAsset(PalladiumAsset, preciousMetalPropertyNames);
+testAsset(PlatinumAsset, preciousMetalPropertyNames);
+testAsset(GoldAsset, preciousMetalPropertyNames);
 
 const cryptoWalletPropertyNames =
     arrayOfAll<ICryptoWalletProperties>()("description", "location", "quantity", "notes", "address");
 
-testCommonMethods(BtcWallet, cryptoWalletPropertyNames);
-testCommonMethods(LtcWallet, cryptoWalletPropertyNames);
-testCommonMethods(DashWallet, cryptoWalletPropertyNames);
-testCommonMethods(BtgWallet, cryptoWalletPropertyNames);
-testCommonMethods(Erc20TokensWallet, cryptoWalletPropertyNames);
-testCommonMethods(EtcWallet, cryptoWalletPropertyNames);
-testCommonMethods(EthWallet, cryptoWalletPropertyNames);
-testCommonMethods(ZecWallet, cryptoWalletPropertyNames);
+testAsset(BtcWallet, cryptoWalletPropertyNames);
+testAsset(LtcWallet, cryptoWalletPropertyNames);
+testAsset(DashWallet, cryptoWalletPropertyNames);
+testAsset(BtgWallet, cryptoWalletPropertyNames);
+testAsset(Erc20TokensWallet, cryptoWalletPropertyNames);
+testAsset(EtcWallet, cryptoWalletPropertyNames);
+testAsset(EthWallet, cryptoWalletPropertyNames);
+testAsset(ZecWallet, cryptoWalletPropertyNames);
 
 const miscAssetPropertyNames =
     arrayOfAll<IMiscAssetProperties>()("description", "location", "quantity", "notes", "value", "valueCurrency");
 
-testCommonMethods(MiscAsset, miscAssetPropertyNames);
+testAsset(MiscAsset, miscAssetPropertyNames);
 
 // cSpell: disable
 // tslint:disable-next-line: max-line-length
-testQueryData(BtcWallet, "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz");
-testQueryData(BtcWallet, "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a");
-testQueryData(LtcWallet, "LS6dQU1M1Asx5ATT5gopFo53UfQ9dhLhmP");
-testQueryData(DashWallet, "XjB1d1pNT9nfcCKp1N7AQCmzPNiVg6YEzn");
-testQueryData(BtgWallet, "GJjz2Du9BoJQ3CPcoyVTHUJZSj62i1693U");
-testQueryData(Erc20TokensWallet, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454");
-testQueryData(EtcWallet, "0x2387f8DB786d43528fFD3b0bD776e2BA39DD3832");
-testQueryData(EthWallet, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454");
-testQueryData(ZecWallet, "t1Tncf8SM9yPsFsWjRMAf6GXobSDhkQ6DEN");
+testCryptoWallet(BtcWallet, "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz");
+testCryptoWallet(BtcWallet, "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a");
+testCryptoWallet(LtcWallet, "LS6dQU1M1Asx5ATT5gopFo53UfQ9dhLhmP");
+testCryptoWallet(DashWallet, "XjB1d1pNT9nfcCKp1N7AQCmzPNiVg6YEzn");
+testCryptoWallet(BtgWallet, "GJjz2Du9BoJQ3CPcoyVTHUJZSj62i1693U");
+testCryptoWallet(Erc20TokensWallet, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454");
+testCryptoWallet(EtcWallet, "0x2387f8DB786d43528fFD3b0bD776e2BA39DD3832");
+testCryptoWallet(EthWallet, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454");
+testCryptoWallet(ZecWallet, "t1Tncf8SM9yPsFsWjRMAf6GXobSDhkQ6DEN");
 // cSpell: enable
