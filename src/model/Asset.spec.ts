@@ -82,7 +82,7 @@ const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetProp
     return result;
 };
 
-const testAsset =
+const testConstruction =
     (ctor: new(model: IModel, props: IAssetIntersection) => CryptoWallet | PreciousMetalAsset | MiscAsset)  => {
     const expectedPropertyNames =  getExpectedPropertyNames(ctor);
 
@@ -218,105 +218,118 @@ const testAsset =
     });
 };
 
-const testCryptoWallet =
-    (ctor: new(model: IModel, props: ICryptoWalletProperties) => CryptoWallet, address: string) => {
-    describe(`${ctor.name} with address ${address}`, () => {
-        describe("bundle() (before queryData())", () => {
-            let sut: InstanceType<typeof ctor>;
-            let bundle: ReturnType<typeof sut.bundle>;
+const testQueries =
+    <T extends Asset, U extends IAssetProperties>(ctor: new(model: IModel, props: U) => T, props: U) => {
+    describe("bundle() (before queryData())", () => {
+        let sut: InstanceType<typeof ctor>;
+        let bundle: ReturnType<typeof sut.bundle>;
 
-            beforeEach(() => {
-                ({ sut } = getSut(ctor, { description: "Spending", address }));
-                bundle = sut.bundle();
-            });
+        beforeEach(() => {
+            ({ sut } = getSut(ctor, props));
+            bundle = sut.bundle();
+        });
 
-            describe("assets", () => {
-                it("should contain assets with undefined quantity, unitValue and totalValue", () => {
-                    for (const asset of bundle.assets) {
-                        expect(asset.quantity).toBeUndefined();
-                        expect(asset.unitValue).toBeUndefined();
-                        expect(asset.totalValue).toBeUndefined();
-                    }
-                });
-            });
-
-            describe("toJSON()", () => {
-                it("should return an object", () => {
-                    expect(typeof bundle.toJSON()).toEqual("object");
-                });
+        describe("assets", () => {
+            it("should contain assets with undefined quantity, unitValue and totalValue", () => {
+                for (const asset of bundle.assets) {
+                    expect(asset.quantity).toBeUndefined();
+                    expect(asset.unitValue).toBeUndefined();
+                    expect(asset.totalValue).toBeUndefined();
+                }
             });
         });
 
-        describe("bundle() (after queryData())", () => {
-            let sut: InstanceType<typeof ctor>;
-            let bundle: ReturnType<typeof sut.bundle>;
-            let assets: typeof bundle.assets;
+        describe("toJSON()", () => {
+            it("should return an object", () => {
+                expect(typeof bundle.toJSON()).toEqual("object");
+            });
+        });
+    });
 
-            beforeAll(async () => {
-                ({ sut } = getSut(ctor, { description: "Spending", address }));
-                bundle = sut.bundle();
-                await bundle.queryData();
-                ({ assets } = bundle);
+    describe("bundle() (after queryData())", () => {
+        let sut: InstanceType<typeof ctor>;
+        let bundle: ReturnType<typeof sut.bundle>;
+        let assets: typeof bundle.assets;
+
+        beforeAll(async () => {
+            ({ sut } = getSut(ctor, props));
+            bundle = sut.bundle();
+            await bundle.queryData();
+            ({ assets } = bundle);
+        });
+
+        describe("assets", () => {
+            it("should contain assets with defined quantity, unitValue and totalValue", () => {
+                for (const asset of bundle.assets) {
+                    expect(asset.quantity).toBeGreaterThanOrEqual(0);
+                    expect(asset.unitValue).toBeGreaterThanOrEqual(0);
+                    expect(asset.totalValue).toBeGreaterThanOrEqual(0);
+                }
             });
 
-            describe("assets", () => {
-                it("should contain assets with defined quantity, unitValue and totalValue", () => {
-                    for (const asset of bundle.assets) {
-                        expect(asset.quantity).toBeGreaterThanOrEqual(0);
-                        expect(asset.unitValue).toBeGreaterThanOrEqual(0);
-                        expect(asset.totalValue).toBeGreaterThanOrEqual(0);
-                    }
-                });
+            it("should contain assets with the given properties", () => {
+                for (const asset of assets) {
+                    expect(asset.type).toBe(sut.type);
+                    expect(asset.description).toBe(sut.description);
+                    expect(asset.location).toBe(sut.location);
+                    expect(asset.notes).toBe(sut.notes);
+                    expect(asset.editableAsset).toBe(sut);
 
-                it("should contain assets with the given properties", () => {
-                    for (const asset of assets) {
-                        expect(asset.type).toBe(sut.type);
-                        expect(asset.description).toBe(sut.description);
-                        expect(asset.location).toBe(sut.location);
-                        expect(asset.notes).toBe(sut.notes);
-                        expect(asset.editableAsset).toBe(sut);
-                        expect(asset.address).toBe(sut.address);
-
-                        if (asset instanceof Erc20TokenWallet) {
-                            expect(sut instanceof Erc20TokensWallet).toBe(true);
-                            expect(() => asset.interface).toThrow();
-                            expect(() => asset.toJSON()).toThrow();
+                    if (asset instanceof CryptoWallet) {
+                        if (!(sut instanceof CryptoWallet)) {
+                            fail("Unexpected asset type!");
+                        } else {
+                            expect(asset.address).toBe(sut.address);
                         }
                     }
-                });
-            });
 
-            describe("deleteAsset()", () => {
-                it("should remove an asset", () => {
-                    const { length } = assets;
-                    expect(length).toBeGreaterThan(0);
-                    const assetToDelete = bundle.assets[0];
-                    bundle.deleteAsset(assetToDelete);
-                    expect(bundle.assets.length).toBe(length - 1);
-                    expect(bundle.assets.includes(assetToDelete)).toBe(false);
-                });
+                    if (asset instanceof Erc20TokenWallet) {
+                        expect(sut instanceof Erc20TokensWallet).toBe(true);
+                        expect(() => asset.interface).toThrow();
+                        expect(() => asset.toJSON()).toThrow();
+                    }
+                }
+            });
+        });
+
+        describe("deleteAsset()", () => {
+            it("should remove an asset", () => {
+                const { length } = assets;
+                expect(length).toBeGreaterThan(0);
+                const assetToDelete = bundle.assets[0];
+                bundle.deleteAsset(assetToDelete);
+                expect(bundle.assets.length).toBe(length - 1);
+                expect(bundle.assets.includes(assetToDelete)).toBe(false);
             });
         });
     });
 };
 
-testAsset(SilverAsset);
-testAsset(PalladiumAsset);
-testAsset(PlatinumAsset);
-testAsset(GoldAsset);
-testAsset(BtcWallet);
-testAsset(LtcWallet);
-testAsset(DashWallet);
-testAsset(BtgWallet);
-testAsset(Erc20TokensWallet);
-testAsset(EtcWallet);
-testAsset(EthWallet);
-testAsset(ZecWallet);
-testAsset(MiscAsset);
+const testCryptoWallet =
+    (ctor: new(model: IModel, props: ICryptoWalletProperties) => CryptoWallet, address: string) => {
+    describe(`${ctor.name} with address ${address}`, () => {
+        testQueries(ctor, { description: "Spending", address });
+    });
+};
+
+testConstruction(SilverAsset);
+testConstruction(PalladiumAsset);
+testConstruction(PlatinumAsset);
+testConstruction(GoldAsset);
+testConstruction(BtcWallet);
+testConstruction(LtcWallet);
+testConstruction(DashWallet);
+testConstruction(BtgWallet);
+testConstruction(Erc20TokensWallet);
+testConstruction(EtcWallet);
+testConstruction(EthWallet);
+testConstruction(ZecWallet);
+testConstruction(MiscAsset);
 
 // cSpell: disable
-// tslint:disable-next-line: max-line-length
-testCryptoWallet(BtcWallet, "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz");
+testCryptoWallet(
+    BtcWallet,
+    "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz");
 testCryptoWallet(BtcWallet, "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a");
 testCryptoWallet(LtcWallet, "LS6dQU1M1Asx5ATT5gopFo53UfQ9dhLhmP");
 testCryptoWallet(DashWallet, "XjB1d1pNT9nfcCKp1N7AQCmzPNiVg6YEzn");
