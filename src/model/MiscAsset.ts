@@ -12,7 +12,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
 import { ISerializedObject } from "./AssetInterfaces";
 import { AssetType } from "./AssetTypes";
 import { Currency } from "./Currency";
