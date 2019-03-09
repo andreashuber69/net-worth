@@ -36,6 +36,7 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
+import { WeightUnit } from "./WeightUnit";
 import { ZecWallet } from "./ZecWallet";
 
 const arrayOfAll = <T>() =>
@@ -232,7 +233,12 @@ const testQueries =
         describe("assets", () => {
             it("should contain assets with undefined quantity, unitValue and totalValue", () => {
                 for (const asset of bundle.assets) {
-                    expect(asset.quantity).toBeUndefined();
+                    if (asset instanceof CryptoWallet) {
+                        expect(asset.quantity).toBeUndefined();
+                    } else {
+                        expect(asset.quantity).toBe(1);
+                    }
+
                     expect(asset.unitValue).toBeUndefined();
                     expect(asset.totalValue).toBeUndefined();
                 }
@@ -312,6 +318,13 @@ const testCryptoWallet =
     });
 };
 
+const testPreciousMetalAsset =
+    (ctor: new(model: IModel, props: IPreciousMetalAssetProperties) => PreciousMetalAsset) => {
+    describe(`${ctor.name}`, () => {
+        testQueries(ctor, { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 });
+    });
+};
+
 testConstruction(SilverAsset);
 testConstruction(PalladiumAsset);
 testConstruction(PlatinumAsset);
@@ -339,3 +352,8 @@ testCryptoWallet(EtcWallet, "0x2387f8DB786d43528fFD3b0bD776e2BA39DD3832");
 testCryptoWallet(EthWallet, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454");
 testCryptoWallet(ZecWallet, "t1Tncf8SM9yPsFsWjRMAf6GXobSDhkQ6DEN");
 // cSpell: enable
+
+testPreciousMetalAsset(SilverAsset);
+testPreciousMetalAsset(PalladiumAsset);
+testPreciousMetalAsset(PlatinumAsset);
+testPreciousMetalAsset(GoldAsset);
