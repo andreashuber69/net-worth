@@ -59,7 +59,7 @@ const getExpectedPropertyNames =
     }
 };
 
-const getSut = <T extends Asset, U extends IAssetProperties>(ctor: new(model: IModel, props: U) => T, props: U) => {
+const getSut = <T extends Asset, U>(ctor: new(model: IModel, props: U) => T, props: U) => {
     const model: IModel = {
         assets: {
             ordering: {
