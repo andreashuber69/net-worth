@@ -357,3 +357,7 @@ testPreciousMetalAsset(SilverAsset);
 testPreciousMetalAsset(PalladiumAsset);
 testPreciousMetalAsset(PlatinumAsset);
 testPreciousMetalAsset(GoldAsset);
+
+fdescribe(MiscAsset.name, () => {
+    testQueries(MiscAsset, { description: "Cash", value: 20, valueCurrency: "USD", quantity: 1 });
+});
