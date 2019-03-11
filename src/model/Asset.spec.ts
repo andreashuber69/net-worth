@@ -14,6 +14,7 @@
 import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetEditorData } from "./AssetEditorData";
+import { AssetGroup } from "./AssetGroup";
 import { allAssetPropertyNames, AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
 import { AssetProperties } from "./AssetProperties";
 import { AssetType } from "./AssetTypes";
@@ -59,7 +60,30 @@ const getExpectedPropertyNames =
     }
 };
 
-const getSut = <T extends Asset, U>(ctor: new(model: IModel, props: U) => T, props: U) => {
+let randomValue = Date.now();
+
+const getRandomData = (expectedPropertyNames: AssetPropertyName[]): IAssetIntersection => {
+    const data = new AssetEditorData();
+
+    for (const name of expectedPropertyNames) {
+        switch (name) {
+            case "weightUnit":
+                // TODO: Randomize
+                data[name] = "kg";
+                break;
+            case "valueCurrency":
+                // TODO: Randomize
+                data[name] = "USD";
+                break;
+            default:
+                data[name] = (++randomValue).toString();
+        }
+    }
+
+    return new AssetProperties(data);
+};
+
+const createAsset = <T extends Asset, U>(ctor: new(model: IModel, props: U) => T, props: U) => {
     const model: IModel = {
         assets: {
             ordering: {
@@ -70,7 +94,7 @@ const getSut = <T extends Asset, U>(ctor: new(model: IModel, props: U) => T, pro
         exchangeRate: 1,
     };
 
-    return { expected: props, sut: new ctor(model, props) };
+    return new ctor(model, props);
 };
 
 const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetPropertyName[]): Map<string, unknown> => {
@@ -92,25 +116,8 @@ const testConstruction =
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
-            let randomValue = Date.now();
-            const data = new AssetEditorData();
-
-            for (const name of expectedPropertyNames) {
-                switch (name) {
-                    case "weightUnit":
-                        // TODO: Randomize
-                        data[name] = "kg";
-                        break;
-                    case "valueCurrency":
-                        // TODO: Randomize
-                        data[name] = "USD";
-                        break;
-                    default:
-                        data[name] = (++randomValue).toString();
-                }
-            }
-
-            ({ expected, sut } = getSut(ctor, new AssetProperties(data)));
+            expected = getRandomData(expectedPropertyNames);
+            sut = createAsset(ctor, expected);
         });
 
         describe("constructor", () => {
@@ -226,7 +233,7 @@ const testQueries =
         let bundle: ReturnType<typeof sut.bundle>;
 
         beforeEach(() => {
-            ({ sut } = getSut(ctor, props));
+            sut = createAsset(ctor, props);
             bundle = sut.bundle();
         });
 
@@ -258,7 +265,7 @@ const testQueries =
         let assets: typeof bundle.assets;
 
         beforeAll(async () => {
-            ({ sut } = getSut(ctor, props));
+            sut = createAsset(ctor, props);
             bundle = sut.bundle();
             await bundle.queryData();
             ({ assets } = bundle);
@@ -360,4 +367,16 @@ testPreciousMetalAsset(GoldAsset);
 
 describe(MiscAsset.name, () => {
     testQueries(MiscAsset, { description: "Cash", value: 20, valueCurrency: "USD", quantity: 1 });
+});
+
+describe(AssetGroup.name, () => {
+    let sut: AssetGroup;
+
+    beforeEach(() => {
+        sut = createAsset(AssetGroup, []);
+    });
+
+    describe(AssetGroup.constructor.name, () => {
+        console.log("Whatever");
+    });
 });
