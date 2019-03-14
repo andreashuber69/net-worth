@@ -83,7 +83,7 @@ const getRandomData = (expectedPropertyNames: AssetPropertyName[]): IAssetInters
     return new AssetProperties(data);
 };
 
-const createAsset = <T extends Asset, U>(ctor: new(model: IModel, props: U) => T, props: U) => {
+const createAsset = <T, U>(ctor: new(model: IModel, props: U) => T, props: U) => {
     const model: IModel = {
         assets: {
             ordering: {
@@ -105,6 +105,15 @@ const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetProp
     }
 
     return result;
+};
+
+const expectPropertyValue = <T, U, N extends keyof T & string>(
+    ctor: new(model: IModel, props: U) => T, props: U, name: N, expected: T[N]) => {
+    describe(ctor.name, () => {
+        describe(name, () => {
+            it(`should be equal to '${expected}'`, () => expect(createAsset(ctor, props)[name]).toEqual(expected));
+        });
+    });
 };
 
 const testConstruction =
@@ -369,14 +378,6 @@ describe(MiscAsset.name, () => {
     testQueries(MiscAsset, { description: "Cash", value: 20, valueCurrency: "USD", quantity: 1 });
 });
 
-describe(AssetGroup.name, () => {
-    let sut: AssetGroup;
-
-    beforeEach(() => {
-        sut = createAsset(AssetGroup, []);
-    });
-
-    describe(AssetGroup.constructor.name, () => {
-        console.log("Whatever");
-    });
-});
+const asset1 = createAsset(SilverAsset, getRandomData(getExpectedPropertyNames(SilverAsset)));
+const asset2 = createAsset(BtcWallet, getRandomData(getExpectedPropertyNames(BtcWallet)));
+expectPropertyValue(AssetGroup, [], "notes", "");
