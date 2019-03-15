@@ -427,7 +427,12 @@ describe("two assets", async () => {
         createAsset(BtcWallet, { description: "Spending", quantity: 1 }),
     ];
 
-    beforeAll(() => assets.forEach((a) => a.queryData()));
+    beforeAll(async () => {
+        for (const asset of assets) {
+            await asset.queryData();
+        }
+    });
+
     expectPropertyValue(AssetGroup, assets, "isExpanded", () => false);
     expectPropertyValue(AssetGroup, assets, "isExpandable", () => true);
     expectPropertyValue(AssetGroup, assets, "type", (): "" => "");
@@ -441,6 +446,11 @@ describe("two assets", async () => {
     expectPropertyValue(AssetGroup, assets, "notes", () => "\n\n");
     expectPropertyValue(AssetGroup, assets, "unitValue", () => undefined);
     expectPropertyValue(AssetGroup, assets, "unitValueHint", () => "");
-    expectPropertyValue(AssetGroup, assets, "totalValue", () => undefined);
+    expectPropertyValue(
+        AssetGroup,
+        assets,
+        "totalValue",
+        // tslint:disable-next-line: no-non-null-assertion
+        () => assets.map((a) => a.totalValue).filter((v) => !!v).reduce((p, c) => p! + c!, 0));
     expectPropertyValue(AssetGroup, assets, "hasActions", () => false);
 });
