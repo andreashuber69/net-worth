@@ -108,10 +108,13 @@ const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetProp
 };
 
 const expectPropertyValue = <T, U, N extends keyof T & string>(
-    ctor: new(model: IModel, props: U) => T, props: U, name: N, expected: T[N]) => {
+    ctor: new(model: IModel, props: U) => T, props: U, name: N, getExpected: () => T[N]) => {
     describe(ctor.name, () => {
         describe(name, () => {
-            it(`should be equal to '${expected}'`, () => expect(createAsset(ctor, props)[name]).toEqual(expected));
+            it(
+                "should be equal to the given value",
+                () => expect(createAsset(ctor, props)[name]).toEqual(getExpected()),
+            );
         });
     });
 };
@@ -378,6 +381,66 @@ describe(MiscAsset.name, () => {
     testQueries(MiscAsset, { description: "Cash", value: 20, valueCurrency: "USD", quantity: 1 });
 });
 
-const asset1 = createAsset(SilverAsset, getRandomData(getExpectedPropertyNames(SilverAsset)));
-const asset2 = createAsset(BtcWallet, getRandomData(getExpectedPropertyNames(BtcWallet)));
-expectPropertyValue(AssetGroup, [], "notes", "");
+describe("no assets", () => {
+    expectPropertyValue(AssetGroup, [], "isExpanded", () => false);
+    expectPropertyValue(AssetGroup, [], "isExpandable", () => true);
+    expectPropertyValue(AssetGroup, [], "type", (): "" => "");
+    expectPropertyValue(AssetGroup, [], "description", () => "");
+    expectPropertyValue(AssetGroup, [], "location", () => "");
+    expectPropertyValue(AssetGroup, [], "unit", () => "");
+    expectPropertyValue(AssetGroup, [], "fineness", () => undefined);
+    expectPropertyValue(AssetGroup, [], "quantity", () => undefined);
+    expectPropertyValue(AssetGroup, [], "quantityHint", () => "");
+    expectPropertyValue(AssetGroup, [], "displayDecimals", () => 0);
+    expectPropertyValue(AssetGroup, [], "notes", () => "");
+    expectPropertyValue(AssetGroup, [], "unitValue", () => undefined);
+    expectPropertyValue(AssetGroup, [], "unitValueHint", () => "");
+    expectPropertyValue(AssetGroup, [], "totalValue", () => 0);
+    expectPropertyValue(AssetGroup, [], "hasActions", () => false);
+});
+
+describe("single asset", async () => {
+    const asset = createAsset(
+        SilverAsset, { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 });
+    beforeAll(() => asset.queryData());
+    expectPropertyValue(AssetGroup, [asset], "isExpanded", () => false);
+    expectPropertyValue(AssetGroup, [asset], "isExpandable", () => true);
+    expectPropertyValue(AssetGroup, [asset], "type", (): keyof typeof AssetType => asset.type);
+    expectPropertyValue(AssetGroup, [asset], "description", () => asset.description);
+    expectPropertyValue(AssetGroup, [asset], "location", () => asset.location);
+    expectPropertyValue(AssetGroup, [asset], "unit", () => asset.unit);
+    expectPropertyValue(AssetGroup, [asset], "fineness", () => asset.fineness);
+    expectPropertyValue(AssetGroup, [asset], "quantity", () => asset.quantity);
+    expectPropertyValue(AssetGroup, [asset], "quantityHint", () => asset.quantityHint);
+    expectPropertyValue(AssetGroup, [asset], "displayDecimals", () => asset.displayDecimals);
+    expectPropertyValue(AssetGroup, [asset], "notes", () => `${asset.notes}\n`);
+    expectPropertyValue(AssetGroup, [asset], "unitValue", () => asset.unitValue);
+    expectPropertyValue(AssetGroup, [asset], "unitValueHint", () => asset.unitValueHint);
+    expectPropertyValue(AssetGroup, [asset], "totalValue", () => asset.totalValue);
+    expectPropertyValue(AssetGroup, [asset], "hasActions", () => false);
+});
+
+describe("two assets", async () => {
+    const assets = [
+        createAsset(
+            SilverAsset, { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 }),
+        createAsset(BtcWallet, { description: "Spending", quantity: 1 }),
+    ];
+
+    beforeAll(() => assets.forEach((a) => a.queryData()));
+    expectPropertyValue(AssetGroup, assets, "isExpanded", () => false);
+    expectPropertyValue(AssetGroup, assets, "isExpandable", () => true);
+    expectPropertyValue(AssetGroup, assets, "type", (): "" => "");
+    expectPropertyValue(AssetGroup, assets, "description", () => "");
+    expectPropertyValue(AssetGroup, assets, "location", () => "");
+    expectPropertyValue(AssetGroup, assets, "unit", () => "");
+    expectPropertyValue(AssetGroup, assets, "fineness", () => undefined);
+    expectPropertyValue(AssetGroup, assets, "quantity", () => undefined);
+    expectPropertyValue(AssetGroup, assets, "quantityHint", () => "");
+    expectPropertyValue(AssetGroup, assets, "displayDecimals", () => 0);
+    expectPropertyValue(AssetGroup, assets, "notes", () => "\n\n");
+    expectPropertyValue(AssetGroup, assets, "unitValue", () => undefined);
+    expectPropertyValue(AssetGroup, assets, "unitValueHint", () => "");
+    expectPropertyValue(AssetGroup, assets, "totalValue", () => undefined);
+    expectPropertyValue(AssetGroup, assets, "hasActions", () => false);
+});
