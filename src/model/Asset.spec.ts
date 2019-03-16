@@ -119,6 +119,18 @@ const expectPropertyValue = <T, U, N extends keyof T & string>(
     });
 };
 
+// tslint:disable-next-line: ban-types
+type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
+
+const expectPropertyThrowsError = <T, U, N extends PropertyNames<T> & string>(
+    ctor: new(model: IModel, props: U) => T, props: U, name: N, expectedMessage: string) => {
+    describe(ctor.name, () => {
+        describe(name, () => {
+            it("should throw", () => expect(() => createAsset(ctor, props)[name]).toThrowError(expectedMessage));
+        });
+    });
+};
+
 type MethodNames<T> = { [K in keyof T]: T[K] extends () => unknown ? K : never }[keyof T];
 
 const testMethod = <T, U, N extends MethodNames<T> & string>(
@@ -135,18 +147,6 @@ const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
     describe(ctor.name, () => {
         describe(`${name}()`, () => {
             it("should throw", () => expect(createAsset(ctor, props)[name]).toThrowError(expectedMessage));
-        });
-    });
-};
-
-// tslint:disable-next-line: ban-types
-type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
-
-const expectPropertyThrowsError = <T, U, N extends PropertyNames<T> & string>(
-    ctor: new(model: IModel, props: U) => T, props: U, name: N, expectedMessage: string) => {
-    describe(ctor.name, () => {
-        describe(name, () => {
-            it("should throw", () => expect(() => createAsset(ctor, props)[name]).toThrowError(expectedMessage));
         });
     });
 };
