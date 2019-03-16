@@ -119,6 +119,38 @@ const expectPropertyValue = <T, U, N extends keyof T & string>(
     });
 };
 
+type MethodNames<T> = { [K in keyof T]: T[K] extends () => unknown ? K : never }[keyof T];
+
+const testMethod = <T, U, N extends MethodNames<T> & string>(
+    ctor: new(model: IModel, props: U) => T, props: U, name: N, test: (object: T) => void) => {
+    describe(ctor.name, () => {
+        describe(`${name}()`, () => {
+            test(createAsset(ctor, props));
+        });
+    });
+};
+
+const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
+    ctor: new(model: IModel, props: U) => T, props: U, name: N, expectedMessage: string) => {
+    describe(ctor.name, () => {
+        describe(`${name}()`, () => {
+            it("should throw", () => expect(createAsset(ctor, props)[name]).toThrowError(expectedMessage));
+        });
+    });
+};
+
+// tslint:disable-next-line: ban-types
+type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
+
+const expectPropertyThrowsError = <T, U, N extends PropertyNames<T> & string>(
+    ctor: new(model: IModel, props: U) => T, props: U, name: N, expectedMessage: string) => {
+    describe(ctor.name, () => {
+        describe(name, () => {
+            it("should throw", () => expect(() => createAsset(ctor, props)[name]).toThrowError(expectedMessage));
+        });
+    });
+};
+
 const testConstruction =
     (ctor: new(model: IModel, props: IAssetIntersection) => CryptoWallet | PreciousMetalAsset | MiscAsset)  => {
     const expectedPropertyNames =  getExpectedPropertyNames(ctor);
@@ -397,6 +429,17 @@ describe("no assets", () => {
     expectPropertyValue(AssetGroup, [], "unitValueHint", () => "");
     expectPropertyValue(AssetGroup, [], "totalValue", () => 0);
     expectPropertyValue(AssetGroup, [], "hasActions", () => false);
+    expectPropertyThrowsError(AssetGroup, [], "interface", "AssetGroup cannot be edited.");
+    expectMethodThrowsError(AssetGroup, [], "toJSON", "AssetGroup cannot be serialized.");
+    testMethod(AssetGroup, [], "expand", (assetGroup) => {
+        it("should toggle isExpanded", () => {
+            expect(assetGroup.isExpanded).toBe(false);
+            assetGroup.expand();
+            expect(assetGroup.isExpanded).toBe(true);
+            assetGroup.expand();
+            expect(assetGroup.isExpanded).toBe(false);
+        });
+    });
 });
 
 describe("single asset", async () => {
