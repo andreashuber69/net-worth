@@ -131,12 +131,8 @@ const expectPropertyThrowsError = <T, U, N extends PropertyNames<T> & string>(
 type MethodNames<T> = { [K in keyof T]: T[K] extends () => unknown ? K : never }[keyof T];
 
 const testMethod = <T, U, N extends MethodNames<T> & string>(
-    ctor: new(model: IModel, props: U) => T, props: U, name: N, test: (object: T) => void) => {
-    describe(ctor.name, () => {
-        describe(`${name}()`, () => {
-            test(createAsset(ctor, props));
-        });
-    });
+    ctor: new(model: IModel, props: U) => T, props: U, name: N, expectation: string, test: (object: T) => void) => {
+    describe(ctor.name, () => describe(`${name}()`, () => it(expectation, () => test(createAsset(ctor, props)))));
 };
 
 const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
@@ -151,6 +147,24 @@ const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
 const testConstruction =
     (ctor: new(model: IModel, props: IAssetIntersection) => CryptoWallet | PreciousMetalAsset | MiscAsset)  => {
     const expectedPropertyNames =  getExpectedPropertyNames(ctor);
+    const props = getRandomData(expectedPropertyNames);
+    expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
+    expectProperty(ctor, props, "locationHint", (matcher) => matcher.toEqual(props.address ? props.address : ""));
+    expectProperty(ctor, props, "unit", (matcher) => matcher.toBeDefined());
+    expectProperty(ctor, props, "quantityHint", (matcher) => matcher.toEqual(""));
+    expectProperty(ctor, props, "displayDecimals", (matcher) => matcher.toBeGreaterThanOrEqual(0));
+    expectProperty(ctor, props, "unitValue", (matcher) => matcher.toBeUndefined());
+    expectProperty(ctor, props, "unitValueHint", (matcher) => matcher.toEqual(""));
+    expectProperty(ctor, props, "totalValue", (matcher) => matcher.toBeUndefined());
+    expectProperty(ctor, props, "percent", (matcher) => matcher.toBeUndefined());
+    expectProperty(ctor, props, "hasActions", (matcher) => matcher.toBe(true));
+    testMethod(
+        ctor, props, "toJSON", "should return an object",
+        (asset) => expect(asset.toJSON() instanceof Object).toBe(true));
+    testMethod(
+        ctor, props, "bundle", "should return an AssetBundle",
+        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true));
+    testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
         let expected: IAssetIntersection;
@@ -169,69 +183,9 @@ const testConstruction =
             });
         });
 
-        describe("isExpandable", () => {
-            it("should equal false", () => {
-                expect(sut.isExpandable).toEqual(false);
-            });
-        });
-
         describe("type", () => {
             it("should be equal to a valid type", () => {
                 expect(Object.keys(AssetType).includes(sut.type)).toBe(true);
-            });
-        });
-
-        describe("locationHint", () => {
-            it("should be a string", () => {
-                expect(typeof sut.locationHint).toEqual("string");
-            });
-        });
-
-        describe("unit", () => {
-            it("should be defined", () => {
-                expect(sut.unit).toBeDefined();
-            });
-        });
-
-        describe("quantityHint", () => {
-            it("should be an empty string", () => {
-                expect(sut.quantityHint).toEqual("");
-            });
-        });
-
-        describe("displayDecimals", () => {
-            it("should be a number >= 0", () => {
-                expect(sut.displayDecimals).toBeGreaterThanOrEqual(0);
-            });
-        });
-
-        describe("unitValue", () => {
-            it("should be undefined", () => {
-                expect(sut.unitValue).toBeUndefined();
-            });
-        });
-
-        describe("unitValueHint", () => {
-            it("should be an empty string", () => {
-                expect(sut.unitValueHint).toEqual("");
-            });
-        });
-
-        describe("totalValue", () => {
-            it("should be undefined", () => {
-                expect(sut.totalValue).toBeUndefined();
-            });
-        });
-
-        describe("percent", () => {
-            it("should be undefined", () => {
-                expect(sut.percent).toBeUndefined();
-            });
-        });
-
-        describe("hasActions", () => {
-            it("should be true", () => {
-                expect(sut.hasActions).toBe(true);
             });
         });
 
@@ -244,24 +198,6 @@ const testConstruction =
         describe("interface", () => {
             it("should be equal to sut", () => {
                 expect(sut.interface as object).toBe(sut);
-            });
-        });
-
-        describe("toJSON()", () => {
-            it("should return an object", () => {
-                expect(typeof sut.toJSON()).toEqual("object");
-            });
-        });
-
-        describe("bundle()", () => {
-            it("should return a bundle", () => {
-                expect(sut.bundle() instanceof AssetBundle).toBe(true);
-            });
-        });
-
-        describe("expand()", () => {
-            it("should return undefined", () => {
-                expect(sut.expand()).toBeUndefined();
             });
         });
     });
@@ -428,14 +364,12 @@ describe("no assets", () => {
     expectProperty(AssetGroup, [], "hasActions", (matcher) => matcher.toBe(false));
     expectPropertyThrowsError(AssetGroup, [], "interface", "AssetGroup cannot be edited.");
     expectMethodThrowsError(AssetGroup, [], "toJSON", "AssetGroup cannot be serialized.");
-    testMethod(AssetGroup, [], "expand", (assetGroup) => {
-        it("should toggle isExpanded", () => {
-            expect(assetGroup.isExpanded).toBe(false);
-            assetGroup.expand();
-            expect(assetGroup.isExpanded).toBe(true);
-            assetGroup.expand();
-            expect(assetGroup.isExpanded).toBe(false);
-        });
+    testMethod(AssetGroup, [], "expand", "should toggle isExpanded", (assetGroup) => {
+        expect(assetGroup.isExpanded).toBe(false);
+        assetGroup.expand();
+        expect(assetGroup.isExpanded).toBe(true);
+        assetGroup.expand();
+        expect(assetGroup.isExpanded).toBe(false);
     });
 });
 
