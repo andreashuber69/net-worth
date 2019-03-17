@@ -112,20 +112,16 @@ type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[ke
 
 const expectProperty = <T, U, N extends PropertyNames<T> & string>(
     ctor: new(model: IModel, props: U) => T, props: U, name: N, matcher: (x: jasmine.Matchers<T[N]>) => void) => {
-    describe(ctor.name, () => {
-        describe(name, () => {
-            it("value should meet expectations", () => matcher(expect(createAsset(ctor, props)[name])));
-        });
-    });
+    describe(ctor.name, () => describe(name, () => {
+        it("value should meet expectations", () => matcher(expect(createAsset(ctor, props)[name])));
+    }));
 };
 
 const expectPropertyThrowsError = <T, U, N extends PropertyNames<T> & string>(
     ctor: new(model: IModel, props: U) => T, props: U, name: N, expectedMessage: string) => {
-    describe(ctor.name, () => {
-        describe(name, () => {
-            it("should throw", () => expect(() => createAsset(ctor, props)[name]).toThrowError(expectedMessage));
-        });
-    });
+    describe(ctor.name, () => describe(name, () => {
+        it("should throw", () => expect(() => createAsset(ctor, props)[name]).toThrowError(expectedMessage));
+    }));
 };
 
 type MethodNames<T> = { [K in keyof T]: T[K] extends () => unknown ? K : never }[keyof T];
@@ -137,11 +133,9 @@ const testMethod = <T, U, N extends MethodNames<T> & string>(
 
 const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
     ctor: new(model: IModel, props: U) => T, props: U, name: N, expectedMessage: string) => {
-    describe(ctor.name, () => {
-        describe(`${name}()`, () => {
-            it("should throw", () => expect(createAsset(ctor, props)[name]).toThrowError(expectedMessage));
-        });
-    });
+    describe(ctor.name, () => describe(`${name}()`, () => {
+        it("should throw", () => expect(createAsset(ctor, props)[name]).toThrowError(expectedMessage));
+    }));
 };
 
 const testConstruction =
