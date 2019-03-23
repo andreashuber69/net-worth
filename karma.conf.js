@@ -11,9 +11,17 @@ const karmaTypescriptConfig = {
         // Set this to false while debugging
         instrumentation: true
     },
-    include: [
-        "src/model/*.spec.ts"
-    ],
+    include: {
+        mode: "replace",
+        values: [
+            "src/model/*.spec.ts",
+            "src/model/*.ts"
+        ]
+    },
+    exclude: {
+        mode: "replace",
+        values: []
+    },
     reports: {
         lcovonly: {
             directory: "coverage",
