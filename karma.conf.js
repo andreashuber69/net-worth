@@ -14,7 +14,6 @@ const karmaTypescriptConfig = {
     include: {
         mode: "replace",
         values: [
-            "src/model/*.spec.ts",
             "src/model/*.ts"
         ]
     },
