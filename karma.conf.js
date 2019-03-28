@@ -37,6 +37,11 @@ module.exports = function(config) {
         files: [
             { 
                 pattern: "src/model/*.ts",
+            },
+            { 
+                pattern: "src/model/ModelParser.spec/*.assets",
+                included: false,
+                served: true
             }
         ],
         preprocessors: {
