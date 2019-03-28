@@ -17,10 +17,6 @@ const karmaTypescriptConfig = {
             "src/model/*.ts"
         ]
     },
-    exclude: {
-        mode: "replace",
-        values: []
-    },
     reports: {
         lcovonly: {
             directory: "coverage",
