@@ -33,7 +33,7 @@ export class ModelParser {
         try {
             rawModel = JSON.parse(json) as Unknown | null;
         } catch (e) {
-            return (e as Error).message;
+            return `${(e as Error).message}.`;
         }
 
         if (!Value.hasNumberProperty(rawModel, this.versionName)) {

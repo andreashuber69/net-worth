@@ -10,6 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { Currency } from "./Currency";
+import { EnumInfo } from "./EnumInfo";
+import { Model } from "./Model";
 import { ModelParser } from "./ModelParser";
 
 class BlobUtility {
@@ -40,13 +43,38 @@ const loadTestFile = async (name: string) => {
     return new TextDecoder().decode(new Uint8Array(await BlobUtility.toArrayBuffer(await response.blob())));
 };
 
-const expectError = (expectation: string, fileName: string, message: string) => {
-    it(expectation, async () => {
+const expectModel = (fileName: string, checkModel: (model: Model) => void) => {
+    it(`should parse ${fileName}`, async () => {
+        const result = ModelParser.parse(await loadTestFile(fileName));
+
+        if (result instanceof Model) {
+            checkModel(result);
+        } else {
+            fail(result);
+        }
+    });
+};
+
+const expectError = (fileName: string, message: string) => {
+    it(`should fail to parse ${fileName}`, async () => {
         const json = await loadTestFile(fileName);
         expect(ModelParser.parse(json)).toEqual(message);
     });
 };
 
 describe("ModelParser.parse", () => {
-    expectError("should fail to parse an empty file", "Empty.assets", "Unexpected end of JSON input");
+    expectError("Empty.assets", "Unexpected end of JSON input.");
+    expectModel("Minimal.assets", (model) => {
+        expect(model.name).toEqual("Unnamed");
+        expect(model.fileExtension).toEqual(".assets");
+        expect(model.fileName).toEqual("Unnamed.assets");
+        expect(model.wasSavedToFile).toBe(false);
+        expect(model.hasUnsavedChanges).toBe(false);
+        expect(model.title).toEqual("Unnamed - Net Worth");
+        expect(model.currencies).toEqual(EnumInfo.getMemberNames(Currency));
+        expect(model.currency).toEqual("USD");
+        expect(model.assets.isEmpty).toBe(true);
+        // expect(model.exchangeRate).toBe(1);
+        expect(model.onChanged).toBeUndefined();
+    });
 });
