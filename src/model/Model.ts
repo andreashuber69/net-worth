@@ -121,6 +121,7 @@ export class Model implements IModel {
         return JSON.stringify(this, undefined, 2);
     }
 
+    /** @internal */
     public notifyChanged() {
         this.hasUnsavedChangesImpl = true;
 

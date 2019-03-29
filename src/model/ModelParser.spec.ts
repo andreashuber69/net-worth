@@ -74,7 +74,23 @@ describe("ModelParser.parse", () => {
         expect(model.currencies).toEqual(EnumInfo.getMemberNames(Currency));
         expect(model.currency).toEqual("USD");
         expect(model.assets.isEmpty).toBe(true);
-        // expect(model.exchangeRate).toBe(1);
+        expect(model.exchangeRate).toBeUndefined();
         expect(model.onChanged).toBeUndefined();
+
+        const expected = {
+            version: 1,
+            name: "Unnamed",
+            wasSavedToFile: false,
+            hasUnsavedChanges: false,
+            currency: "USD",
+            groupBy: "type",
+            sort: {
+              by: "totalValue",
+              descending: true,
+            },
+            bundles: [],
+        };
+
+        expect(JSON.parse(model.toJsonString())).toEqual(expected);
     });
 });
