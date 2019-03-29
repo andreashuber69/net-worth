@@ -64,6 +64,18 @@ const expectError = (fileName: string, message: string) => {
 
 describe("ModelParser.parse", () => {
     expectError("Empty.assets", "Unexpected end of JSON input.");
+    expectError(
+        "MissingVersion.assets",
+        "'version': The type of the value (undefined) does not match the expected type(s) number.");
+    expectError(
+        "InvalidVersion.assets",
+        "'version': The type of the value (string) does not match the expected type(s) number.");
+    expectError(
+        "OutOfRangeVersion.assets",
+        "'version': The value '2' does not match any of the possible values.");
+    expectError(
+        "InvalidBundles.assets",
+        "'bundles': The type of the value (number) does not match the expected type(s) Array.");
     expectModel("Minimal.assets", (model) => {
         expect(model.name).toEqual("Unnamed");
         expect(model.fileExtension).toEqual(".assets");
