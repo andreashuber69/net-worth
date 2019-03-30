@@ -10,10 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { AssetGroup } from "./AssetGroup";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { Model } from "./Model";
 import { ModelParser } from "./ModelParser";
+import { SilverAsset } from "./SilverAsset";
+import { WeightUnit } from "./WeightUnit";
 
 class BlobUtility {
     public static toArrayBuffer(blob: Blob) {
@@ -43,11 +46,37 @@ const loadTestFile = async (name: string) => {
     return new TextDecoder().decode(new Uint8Array(await BlobUtility.toArrayBuffer(await response.blob())));
 };
 
-const expectModel = (fileName: string, checkModel: (model: Model) => void) => {
+const expectDefaultProperties = (model: Model, isEmpty: boolean) => {
+    expect(model.name).toEqual("Unnamed");
+    expect(model.fileExtension).toEqual(".assets");
+    expect(model.fileName).toEqual("Unnamed.assets");
+    expect(model.wasSavedToFile).toBe(false);
+    expect(model.hasUnsavedChanges).toBe(false);
+    expect(model.title).toEqual("Unnamed - Net Worth");
+    expect(model.currencies).toEqual(EnumInfo.getMemberNames(Currency));
+    expect(model.currency).toEqual("USD");
+
+    const { assets } = model;
+    const { ordering } = assets;
+    expect(ordering.groupBys).toEqual([ "type", "location" ]);
+    expect(ordering.groupBy).toEqual("type");
+    expect(ordering.groupByLabel).toEqual("Type");
+    expect(ordering.otherGroupBys).toEqual([ "location" ]);
+    expect(ordering.otherGroupByLabels).toEqual([ "Location" ]);
+    expect(ordering.sort).toEqual({ by: "totalValue", descending: true });
+
+    expect(assets.isEmpty).toBe(isEmpty);
+
+    expect(model.exchangeRate).toBeUndefined();
+    expect(model.onChanged).toBeUndefined();
+};
+
+const expectModel = (fileName: string, isEmpty: boolean, checkModel: (model: Model) => void) => {
     it(`should parse ${fileName}`, async () => {
         const result = ModelParser.parse(await loadTestFile(fileName));
 
         if (result instanceof Model) {
+            expectDefaultProperties(result, isEmpty);
             checkModel(result);
         } else {
             fail(result);
@@ -76,19 +105,7 @@ describe("ModelParser.parse", () => {
     expectError(
         "InvalidBundles.assets",
         "'bundles': The type of the value (number) does not match the expected type(s) Array.");
-    expectModel("Minimal.assets", (model) => {
-        expect(model.name).toEqual("Unnamed");
-        expect(model.fileExtension).toEqual(".assets");
-        expect(model.fileName).toEqual("Unnamed.assets");
-        expect(model.wasSavedToFile).toBe(false);
-        expect(model.hasUnsavedChanges).toBe(false);
-        expect(model.title).toEqual("Unnamed - Net Worth");
-        expect(model.currencies).toEqual(EnumInfo.getMemberNames(Currency));
-        expect(model.currency).toEqual("USD");
-        expect(model.assets.isEmpty).toBe(true);
-        expect(model.exchangeRate).toBeUndefined();
-        expect(model.onChanged).toBeUndefined();
-
+    expectModel("Minimal.assets", true, (model) => {
         const expected = {
             version: 1,
             name: "Unnamed",
@@ -97,12 +114,48 @@ describe("ModelParser.parse", () => {
             currency: "USD",
             groupBy: "type",
             sort: {
-              by: "totalValue",
-              descending: true,
+                by: "totalValue",
+                descending: true,
             },
             bundles: [],
         };
 
         expect(JSON.parse(model.toJsonString())).toEqual(expected);
+    });
+
+    expectModel("Silver.assets", false, (model) => {
+        const [ group ] = model.assets.grouped;
+
+        if (group instanceof AssetGroup) {
+            const [ asset ] = group.assets;
+
+            if (asset instanceof SilverAsset) {
+                expect(asset.type).toEqual("Silver");
+                expect(asset.description).toEqual("Coins");
+                expect(asset.location).toEqual("Home");
+                expect(asset.weight).toEqual(1);
+                expect(asset.weightUnit).toEqual(WeightUnit["t oz"]);
+                expect(asset.unit).toEqual(`${asset.weight} ${WeightUnit[asset.weightUnit]}`);
+                expect(asset.fineness).toBe(0.999);
+                expect(asset.displayDecimals).toBe(0);
+                expect(asset.notes).toEqual("Whatever");
+                expect(asset.superType).toEqual("Precious Metal");
+                expect(asset.quantity).toEqual(100);
+                expect(asset.quantityHint).toEqual("");
+                expect(asset.parent).toBe(model);
+                expect(asset.isExpandable).toBe(false);
+                expect(asset.locationHint).toEqual("");
+                expect(asset.unitValue).toBeUndefined();
+                expect(asset.unitValueHint).toEqual("");
+                expect(asset.totalValue).toBeUndefined();
+                expect(asset.percent).toBeUndefined();
+                expect(asset.hasActions).toBe(true);
+                expect(asset.editableAsset).toBe(asset);
+            } else {
+                fail(`Asset is not an instance of ${SilverAsset.name}.`);
+            }
+        } else {
+            fail(`Asset is not an instance of ${AssetGroup.name}.`);
+        }
     });
 });

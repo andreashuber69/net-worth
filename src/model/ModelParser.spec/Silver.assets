@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "bundles": [
+    {
+      "primaryAsset": {
+        "type": "Silver",
+        "description": "Coins",
+        "location": "Home",
+        "weight": 1,
+        "weightUnit": 31.1034768,
+        "fineness": 0.999,
+        "quantity": 100,
+        "notes": "Whatever"
+      }
+    }
+  ]
+}
