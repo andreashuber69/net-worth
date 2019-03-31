@@ -140,24 +140,10 @@ const expectModel = (fileName: string, properties: IModelProperties, checkModel:
     });
 };
 
-describe("ModelParser.parse", () => {
-    expectError("Empty.assets", "Unexpected end of JSON input.");
-    expectError(
-        "MissingVersion.assets",
-        "'version': The type of the value (undefined) does not match the expected type(s) number.");
-    expectError(
-        "InvalidVersion.assets",
-        "'version': The type of the value (string) does not match the expected type(s) number.");
-    expectError(
-        "OutOfRangeVersion.assets",
-        "'version': The value '2' does not match any of the possible values.");
-    expectError(
-        "InvalidBundles.assets",
-        "'bundles': The type of the value (number) does not match the expected type(s) Array.");
-
+const expectEmptyModel = (fileName: string) => {
     const expectedProperties = getExpectedProperties();
 
-    expectModel("Minimal.assets", expectedProperties, (model) => {
+    expectModel(fileName, expectedProperties, (model) => {
         const expectedJson = {
             version: 1,
             name: "Unnamed",
@@ -174,6 +160,34 @@ describe("ModelParser.parse", () => {
 
         expect(JSON.parse(model.toJsonString())).toEqual(expectedJson);
     });
+};
+
+describe("ModelParser.parse", () => {
+    expectError("Empty.assets", "Unexpected end of JSON input.");
+    expectError(
+        "MissingVersion.assets",
+        "'version': The type of the value (undefined) does not match the expected type(s) number.");
+    expectError(
+        "InvalidVersion.assets",
+        "'version': The type of the value (string) does not match the expected type(s) number.");
+    expectError(
+        "OutOfRangeVersion.assets",
+        "'version': The value '2' does not match any of the possible values.");
+    expectError(
+        "InvalidBundles.assets",
+        "'bundles': The type of the value (number) does not match the expected type(s) Array.");
+    expectError(
+        "MissingAssetType.assets",
+        "'type': The type of the value (undefined) does not match the expected type(s) string.");
+    expectError(
+        "InvalidAssetType.assets",
+        "'type': The value 'Flower' does not match any of the possible values.");
+
+    expectEmptyModel("Minimal.assets");
+    expectEmptyModel("EmptyName.assets");
+    expectEmptyModel("InvalidCurrency.assets");
+    expectEmptyModel("InvalidGroupBy.assets");
+    expectEmptyModel("InvalidSort.assets");
 
     expectModel(
         "Silver.assets",

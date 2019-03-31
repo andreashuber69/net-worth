@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "bundles": [
+    {
+      "primaryAsset": {
+        "type": "Flower"
+      }
+    }
+  ]
+}
