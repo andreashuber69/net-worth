@@ -10,11 +10,14 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { GroupBy, SortBy } from "./Asset";
+import { AssetCollection } from "./AssetCollection";
 import { AssetGroup } from "./AssetGroup";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { Model } from "./Model";
 import { ModelParser } from "./ModelParser";
+import { Ordering } from "./Ordering";
 import { SilverAsset } from "./SilverAsset";
 import { WeightUnit } from "./WeightUnit";
 
@@ -46,48 +49,94 @@ const loadTestFile = async (name: string) => {
     return new TextDecoder().decode(new Uint8Array(await BlobUtility.toArrayBuffer(await response.blob())));
 };
 
-const expectDefaultProperties = (model: Model, isEmpty: boolean) => {
-    expect(model.name).toEqual("Unnamed");
-    expect(model.fileExtension).toEqual(".assets");
-    expect(model.fileName).toEqual("Unnamed.assets");
-    expect(model.wasSavedToFile).toBe(false);
-    expect(model.hasUnsavedChanges).toBe(false);
-    expect(model.title).toEqual("Unnamed - Net Worth");
-    expect(model.currencies).toEqual(EnumInfo.getMemberNames(Currency));
-    expect(model.currency).toEqual("USD");
+type Properties<T, U extends keyof T> =
+    // tslint:disable-next-line: ban-types
+    Pick<T, Exclude<{ [K in keyof T]: T[K] extends Function ? never : K }[keyof T], U>>;
+type IOrderingProperties = Properties<Ordering, never>;
+type IAssetCollectionProperties =
+    Properties<AssetCollection, "grouped" | "ordering"> & { readonly ordering: IOrderingProperties};
+type IModelProperties = Properties<Model, "assets"> & { readonly assets: IAssetCollectionProperties };
 
-    const { assets } = model;
-    const { ordering } = assets;
-    expect(ordering.groupBys).toEqual([ "type", "location" ]);
-    expect(ordering.groupBy).toEqual("type");
-    expect(ordering.groupByLabel).toEqual("Type");
-    expect(ordering.otherGroupBys).toEqual([ "location" ]);
-    expect(ordering.otherGroupByLabels).toEqual([ "Location" ]);
-    expect(ordering.sort).toEqual({ by: "totalValue", descending: true });
-
-    expect(assets.isEmpty).toBe(isEmpty);
-
-    expect(model.exchangeRate).toBeUndefined();
-    expect(model.onChanged).toBeUndefined();
-};
-
-const expectModel = (fileName: string, isEmpty: boolean, checkModel: (model: Model) => void) => {
-    it(`should parse ${fileName}`, async () => {
-        const result = ModelParser.parse(await loadTestFile(fileName));
-
-        if (result instanceof Model) {
-            expectDefaultProperties(result, isEmpty);
-            checkModel(result);
-        } else {
-            fail(result);
-        }
+const expectError = (fileName: string, message: string) => {
+    describe(fileName, () => {
+        it("should fail to parse", async () => {
+            const json = await loadTestFile(fileName);
+            expect(ModelParser.parse(json)).toEqual(message);
+        });
     });
 };
 
-const expectError = (fileName: string, message: string) => {
-    it(`should fail to parse ${fileName}`, async () => {
-        const json = await loadTestFile(fileName);
-        expect(ModelParser.parse(json)).toEqual(message);
+const capitalize = (str: string) => `${str[0].toUpperCase()}${str.substr(1)}`;
+
+const getExpectedProperties = (
+    name = "Unnamed",
+    wasSavedToFile = false,
+    hasUnsavedChanges = false,
+    currency: keyof typeof Currency = "USD",
+    groupBy: GroupBy = "type",
+    sortBy: SortBy = "totalValue",
+    descending = true,
+    isEmpty = true,
+): IModelProperties => {
+    const groupBys: GroupBy[] = ["type", "location"];
+    const otherGroupBys = groupBys.filter((value) => value !== groupBy);
+
+    return {
+        name,
+        fileExtension: ".assets",
+        fileName: `${name}.assets`,
+        wasSavedToFile,
+        hasUnsavedChanges,
+        title: `${name}${hasUnsavedChanges ? " (Modified)" : ""} - Net Worth`,
+        currencies: EnumInfo.getMemberNames(Currency),
+        currency,
+        assets: {
+            ordering: {
+                groupBys,
+                groupBy,
+                groupByLabel: capitalize(groupBy),
+                groupByLabels: groupBys.map(capitalize),
+                otherGroupBys,
+                otherGroupByLabels: otherGroupBys.map(capitalize),
+                sort: { by: sortBy, descending },
+            },
+            isEmpty,
+            grandTotalValue: isEmpty ? 0 : undefined,
+        },
+        exchangeRate: undefined,
+        onChanged: undefined,
+    };
+};
+
+const expectToEqual = (actual: { [key: string]: any }, expected: { [key: string]: any }) => {
+    for (const key in expected) {
+        if (expected.hasOwnProperty(key)) {
+            const actualValue = actual[key];
+            const expectedValue = expected[key];
+
+            if (((typeof actualValue) === "object") && ((typeof expectedValue) === "object")) {
+                // tslint:disable-next-line: no-unsafe-any
+                expectToEqual(actualValue, expectedValue);
+            } else {
+                expect(actualValue).toEqual(expectedValue);
+            }
+        }
+    }
+};
+
+const expectModel = (fileName: string, properties: IModelProperties, checkModel: (model: Model) => void) => {
+    describe(fileName, () => {
+        it("should parse", async () => {
+            const result = ModelParser.parse(await loadTestFile(fileName));
+
+            if (result instanceof Model) {
+                // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/14579#issuecomment-341326257
+                expectToEqual(result, properties);
+                checkModel(result);
+            } else {
+                fail(result);
+            }
+        });
     });
 };
 
@@ -105,8 +154,11 @@ describe("ModelParser.parse", () => {
     expectError(
         "InvalidBundles.assets",
         "'bundles': The type of the value (number) does not match the expected type(s) Array.");
-    expectModel("Minimal.assets", true, (model) => {
-        const expected = {
+
+    const expectedProperties = getExpectedProperties();
+
+    expectModel("Minimal.assets", expectedProperties, (model) => {
+        const expectedJson = {
             version: 1,
             name: "Unnamed",
             wasSavedToFile: false,
@@ -120,42 +172,46 @@ describe("ModelParser.parse", () => {
             bundles: [],
         };
 
-        expect(JSON.parse(model.toJsonString())).toEqual(expected);
+        expect(JSON.parse(model.toJsonString())).toEqual(expectedJson);
     });
 
-    expectModel("Silver.assets", false, (model) => {
-        const [ group ] = model.assets.grouped;
+    expectModel(
+        "Silver.assets",
+        getExpectedProperties("Joe", false, true, "CHF", "location", "unitValue", false, false),
+        (model) => {
+            const [ group ] = model.assets.grouped;
 
-        if (group instanceof AssetGroup) {
-            const [ asset ] = group.assets;
+            if (group instanceof AssetGroup) {
+                const [ asset ] = group.assets;
 
-            if (asset instanceof SilverAsset) {
-                expect(asset.type).toEqual("Silver");
-                expect(asset.description).toEqual("Coins");
-                expect(asset.location).toEqual("Home");
-                expect(asset.weight).toEqual(1);
-                expect(asset.weightUnit).toEqual(WeightUnit["t oz"]);
-                expect(asset.unit).toEqual(`${asset.weight} ${WeightUnit[asset.weightUnit]}`);
-                expect(asset.fineness).toBe(0.999);
-                expect(asset.displayDecimals).toBe(0);
-                expect(asset.notes).toEqual("Whatever");
-                expect(asset.superType).toEqual("Precious Metal");
-                expect(asset.quantity).toEqual(100);
-                expect(asset.quantityHint).toEqual("");
-                expect(asset.parent).toBe(model);
-                expect(asset.isExpandable).toBe(false);
-                expect(asset.locationHint).toEqual("");
-                expect(asset.unitValue).toBeUndefined();
-                expect(asset.unitValueHint).toEqual("");
-                expect(asset.totalValue).toBeUndefined();
-                expect(asset.percent).toBeUndefined();
-                expect(asset.hasActions).toBe(true);
-                expect(asset.editableAsset).toBe(asset);
+                if (asset instanceof SilverAsset) {
+                    expect(asset.type).toEqual("Silver");
+                    expect(asset.description).toEqual("Coins");
+                    expect(asset.location).toEqual("Home");
+                    expect(asset.weight).toEqual(1);
+                    expect(asset.weightUnit).toEqual(WeightUnit["t oz"]);
+                    expect(asset.unit).toEqual(`${asset.weight} ${WeightUnit[asset.weightUnit]}`);
+                    expect(asset.fineness).toBe(0.999);
+                    expect(asset.displayDecimals).toBe(0);
+                    expect(asset.notes).toEqual("Whatever");
+                    expect(asset.superType).toEqual("Precious Metal");
+                    expect(asset.quantity).toEqual(100);
+                    expect(asset.quantityHint).toEqual("");
+                    expect(asset.parent).toBe(model);
+                    expect(asset.isExpandable).toBe(false);
+                    expect(asset.locationHint).toEqual("");
+                    expect(asset.unitValue).toBeUndefined();
+                    expect(asset.unitValueHint).toEqual("");
+                    expect(asset.totalValue).toBeUndefined();
+                    expect(asset.percent).toBeUndefined();
+                    expect(asset.hasActions).toBe(true);
+                    expect(asset.editableAsset).toBe(asset);
+                } else {
+                    fail(`Asset is not an instance of ${SilverAsset.name}.`);
+                }
             } else {
-                fail(`Asset is not an instance of ${SilverAsset.name}.`);
+                fail(`Asset is not an instance of ${AssetGroup.name}.`);
             }
-        } else {
-            fail(`Asset is not an instance of ${AssetGroup.name}.`);
-        }
-    });
+        },
+    );
 });

@@ -1,5 +1,14 @@
 {
   "version": 1,
+  "name": "Joe",
+  "wasSavedToFile": false,
+  "hasUnsavedChanges": true,
+  "currency": "CHF",
+  "groupBy": "location",
+  "sort": {
+    "by": "unitValue",
+    "descending": false
+  },
   "bundles": [
     {
       "primaryAsset": {
