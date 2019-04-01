@@ -49,10 +49,10 @@ const loadTestFile = async (name: string) => {
     return new TextDecoder().decode(new Uint8Array(await BlobUtility.toArrayBuffer(await response.blob())));
 };
 
-type Properties<T, U extends keyof T> =
+type Properties<T, U extends keyof T = never> =
     // tslint:disable-next-line: ban-types
     Pick<T, Exclude<{ [K in keyof T]: T[K] extends Function ? never : K }[keyof T], U>>;
-type IOrderingProperties = Properties<Ordering, never>;
+type IOrderingProperties = Properties<Ordering>;
 type IAssetCollectionProperties =
     Properties<AssetCollection, "grouped" | "ordering"> & { readonly ordering: IOrderingProperties};
 type IModelProperties = Properties<Model, "assets"> & { readonly assets: IAssetCollectionProperties };
