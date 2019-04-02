@@ -13,11 +13,13 @@
 import { GroupBy, SortBy } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { AssetGroup } from "./AssetGroup";
+import { PreciousMetalAssetType } from "./AssetTypes";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { Model } from "./Model";
 import { ModelParser } from "./ModelParser";
 import { Ordering } from "./Ordering";
+import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
 import { WeightUnit } from "./WeightUnit";
 
@@ -162,6 +164,33 @@ const expectEmptyModel = (fileName: string) => {
     });
 };
 
+type IPreciousMetalProperties<T extends PreciousMetalAsset> =
+    Properties<T, "key" | "interface" | "parent" | "editableAsset">;
+
+const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
+    type: T["type"], description: string, location: string, weight: number,
+    weightUnit: WeightUnit, fineness: number, notes: string, quantity: number) => ({
+        type,
+        description,
+        location,
+        weight,
+        weightUnit,
+        unit: `${weight} ${WeightUnit[weightUnit]}`,
+        fineness,
+        displayDecimals: 0 as 0,
+        notes,
+        superType: "Precious Metal" as "Precious Metal",
+        quantity,
+        quantityHint: "",
+        isExpandable: false,
+        locationHint: "",
+        unitValue: undefined,
+        unitValueHint: "",
+        totalValue: undefined,
+        percent: undefined,
+        hasActions: true,
+    });
+
 describe("ModelParser.parse", () => {
     expectError("Empty.assets", "Unexpected end of JSON input.");
     expectError(
@@ -199,27 +228,10 @@ describe("ModelParser.parse", () => {
                 const [ asset ] = group.assets;
 
                 if (asset instanceof SilverAsset) {
-                    expect(asset.type).toEqual("Silver");
-                    expect(asset.description).toEqual("Coins");
-                    expect(asset.location).toEqual("Home");
-                    expect(asset.weight).toEqual(1);
-                    expect(asset.weightUnit).toEqual(WeightUnit["t oz"]);
-                    expect(asset.unit).toEqual(`${asset.weight} ${WeightUnit[asset.weightUnit]}`);
-                    expect(asset.fineness).toBe(0.999);
-                    expect(asset.displayDecimals).toBe(0);
-                    expect(asset.notes).toEqual("Whatever");
-                    expect(asset.superType).toEqual("Precious Metal");
-                    expect(asset.quantity).toEqual(100);
-                    expect(asset.quantityHint).toEqual("");
-                    expect(asset.parent).toBe(model);
-                    expect(asset.isExpandable).toBe(false);
-                    expect(asset.locationHint).toEqual("");
-                    expect(asset.unitValue).toBeUndefined();
-                    expect(asset.unitValueHint).toEqual("");
-                    expect(asset.totalValue).toBeUndefined();
-                    expect(asset.percent).toBeUndefined();
-                    expect(asset.hasActions).toBe(true);
-                    expect(asset.editableAsset).toBe(asset);
+                    const expected: IPreciousMetalProperties<SilverAsset> =
+                        getExpectedPreciousMetalProperties<SilverAsset>(
+                            "Silver", "Coins", "Home", 1, WeightUnit["t oz"], 0.999, "Whatever", 100);
+                    expectToEqual(asset, expected);
                 } else {
                     fail(`Asset is not an instance of ${SilverAsset.name}.`);
                 }
