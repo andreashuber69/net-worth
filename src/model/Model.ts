@@ -86,8 +86,10 @@ export class Model implements IModel {
 
     /** Provides the selected currency. */
     public set currency(currency: keyof typeof Currency) {
-        this.currencyImpl = currency;
-        this.onCurrencyChanged();
+        if (this.currencyImpl !== currency) {
+            this.currencyImpl = currency;
+            this.onCurrencyChanged();
+        }
     }
 
     public readonly assets: AssetCollection;

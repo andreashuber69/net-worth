@@ -106,7 +106,7 @@ const getExpectedProperties = (
             isEmpty,
             grandTotalValue: isEmpty ? 0 : undefined,
         },
-        exchangeRate: undefined,
+        exchangeRate: currency === "USD" ? 1 : undefined,
         onChanged: undefined,
     };
 };
