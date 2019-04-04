@@ -106,8 +106,7 @@ export class Model implements IModel {
         this.name = (params && params.name) || "Unnamed";
         this.wasSavedToFile = (params && params.wasSavedToFile) || false;
         this.hasUnsavedChangesImpl = (params && params.hasUnsavedChanges) || false;
-        this.currencyImpl = (params && params.currency) || this.currencies[0];
-        this.onCurrencyChanged();
+        this.currency = (params && params.currency) || this.currencyImpl;
         this.assets = new AssetCollection({
             parent: this,
             bundles: (params && params.createBundles.map((c) => c(this))) || [],
@@ -148,7 +147,7 @@ export class Model implements IModel {
 
     private hasUnsavedChangesImpl: boolean;
 
-    private currencyImpl: keyof typeof Currency;
+    private currencyImpl: keyof typeof Currency = this.currencies[0];
 
     private onCurrencyChanged() {
         this.onCurrencyChangedImpl().catch((reason) => console.error(reason));
