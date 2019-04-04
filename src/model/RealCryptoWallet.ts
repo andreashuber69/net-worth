@@ -73,17 +73,14 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     // https://github.com/Microsoft/TypeScript/issues/26547
     protected static getProperties(
         props: ICryptoWalletProperties, currencySymbol: string, slug?: string): IRealCryptoWalletParameters {
-        const cs = currencySymbol;
-        const s = slug;
-
         return {
             description: props.description,
             location: props.location,
             address: props.address,
             quantity: props.quantity,
             notes: props.notes,
-            currencySymbol: cs,
-            slug: s,
+            currencySymbol,
+            slug,
         };
     }
 
