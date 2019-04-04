@@ -269,6 +269,7 @@ const testQueries =
 
                     if (asset instanceof Erc20TokenWallet) {
                         expect(sut instanceof Erc20TokensWallet).toBe(true);
+                        expect(() => asset.bundle()).toThrow();
                         expect(() => asset.interface).toThrow();
                         expect(() => asset.toJSON()).toThrow();
                     }

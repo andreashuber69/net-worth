@@ -45,7 +45,7 @@ export abstract class CryptoWallet extends SingleAsset implements ICryptoWallet 
 
     // tslint:disable-next-line: prefer-function-over-method
     public bundle(bundle?: Unknown): GenericAssetBundle<CryptoWallet, ICryptoWalletProperties> {
-        throw new Error("Asset cannot be bundled.");
+        return super.bundle(bundle) as GenericAssetBundle<CryptoWallet, ICryptoWalletProperties>;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
