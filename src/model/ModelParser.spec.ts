@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { GroupBy, SortBy } from "./Asset";
+import { Asset, GroupBy, SortBy } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { AssetGroup } from "./AssetGroup";
 import { PreciousMetalAssetType } from "./AssetTypes";
@@ -51,13 +51,14 @@ const loadTestFile = async (name: string) => {
     return new TextDecoder().decode(new Uint8Array(await BlobUtility.toArrayBuffer(await response.blob())));
 };
 
-type Properties<T, U extends keyof T = never> =
+type IExpectedProperties<T, U extends keyof T = never> =
     // tslint:disable-next-line: ban-types
     Pick<T, Exclude<{ [K in keyof T]: T[K] extends Function ? never : K }[keyof T], U>>;
-type IOrderingProperties = Properties<Ordering>;
-type IAssetCollectionProperties =
-    Properties<AssetCollection, "grouped" | "ordering"> & { readonly ordering: IOrderingProperties};
-type IModelProperties = Properties<Model, "assets"> & { readonly assets: IAssetCollectionProperties };
+type IExpectedOrderingProperties = IExpectedProperties<Ordering>;
+type IExpectedAssetCollectionProperties =
+    IExpectedProperties<AssetCollection, "grouped" | "ordering"> & { readonly ordering: IExpectedOrderingProperties};
+type IExpectedModelProperties =
+    IExpectedProperties<Model, "assets"> & { readonly assets: IExpectedAssetCollectionProperties };
 
 const expectError = (fileName: string, message: string) => {
     describe(fileName, () => {
@@ -79,7 +80,7 @@ const getExpectedProperties = (
     sortBy: SortBy = "totalValue",
     descending = true,
     isEmpty = true,
-): IModelProperties => {
+): IExpectedModelProperties => {
     const groupBys: GroupBy[] = ["type", "location"];
     const otherGroupBys = groupBys.filter((value) => value !== groupBy);
 
@@ -126,7 +127,7 @@ const expectToEqual = (actual: { [key: string]: any }, expected: { [key: string]
     }
 };
 
-const expectModel = (fileName: string, properties: IModelProperties, checkModel: (model: Model) => void) => {
+const expectModel = (fileName: string, properties: IExpectedModelProperties, checkModel: (model: Model) => void) => {
     describe(fileName, () => {
         it("should parse", async () => {
             const result = ModelParser.parse(await loadTestFile(fileName));
@@ -164,8 +165,8 @@ const expectEmptyModel = (fileName: string) => {
     });
 };
 
-type IPreciousMetalProperties<T extends PreciousMetalAsset> =
-    Properties<T, "key" | "interface" | "parent" | "editableAsset">;
+type IExpectedAssetProperties<T extends Asset> =
+    IExpectedProperties<T, "key" | "interface" | "parent" | "editableAsset">;
 
 const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
     type: T["type"], description: string, location: string, weight: number,
@@ -228,7 +229,7 @@ describe("ModelParser.parse", () => {
                 const [ asset ] = group.assets;
 
                 if (asset instanceof SilverAsset) {
-                    const expected: IPreciousMetalProperties<SilverAsset> =
+                    const expected: IExpectedAssetProperties<SilverAsset> =
                         getExpectedPreciousMetalProperties<SilverAsset>(
                             "Silver", "Coins", "Home", 1, WeightUnit["t oz"], 0.999, "Whatever", 100);
                     expectToEqual(asset, expected);
