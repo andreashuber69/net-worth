@@ -11,25 +11,21 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
+import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
 
 /** Represents a ZEC wallet. */
-export class ZecWallet extends RealCryptoWallet {
+export class ZecWallet extends SimpleCryptoWallet {
     public readonly type = "Zcash";
 
     public constructor(parent: IModel, props: ICryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "ZEC", "zcash"));
-    }
-
-    public bundle(bundle?: Unknown): GenericAssetBundle<ZecWallet, ICryptoWalletProperties> {
-        return new GenericAssetBundle(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

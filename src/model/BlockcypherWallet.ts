@@ -12,19 +12,11 @@
 
 import { IModel } from "./Asset";
 import { BlockcypherRequest } from "./BlockcypherRequest";
-import { GenericAssetBundle } from "./GenericAssetBundle";
-import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
-import { Unknown } from "./Unknown";
+import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 
 /** Represents a wallet the balance of which is requested from blockcypher.com. */
-export abstract class BlockcypherWallet extends RealCryptoWallet {
-    public bundle(bundle?: Unknown): GenericAssetBundle<BlockcypherWallet, ICryptoWalletProperties> {
-        return new GenericAssetBundle(this);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+export abstract class BlockcypherWallet extends SimpleCryptoWallet {
     protected constructor(parent: IModel, params: IRealCryptoWalletParameters) {
         super(parent, params);
     }

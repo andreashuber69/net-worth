@@ -43,11 +43,6 @@ export abstract class CryptoWallet extends SingleAsset implements ICryptoWallet 
     /** @internal */
     public readonly superType = CryptoWallet.superType;
 
-    // tslint:disable-next-line: prefer-function-over-method
-    public bundle(bundle?: Unknown): GenericAssetBundle<CryptoWallet, ICryptoWalletProperties> {
-        return super.bundle(bundle) as GenericAssetBundle<CryptoWallet, ICryptoWalletProperties>;
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**

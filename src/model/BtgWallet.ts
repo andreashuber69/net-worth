@@ -11,25 +11,21 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
+import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
 
 /** Represents a BTG wallet. */
-export class BtgWallet extends RealCryptoWallet {
+export class BtgWallet extends SimpleCryptoWallet {
     public readonly type = "Bitcoin Gold";
 
     public constructor(parent: IModel, props: ICryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "BTG", "bitcoin-gold"));
-    }
-
-    public bundle(bundle?: Unknown): GenericAssetBundle<BtgWallet, ICryptoWalletProperties> {
-        return new GenericAssetBundle(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

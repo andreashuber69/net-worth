@@ -12,12 +12,12 @@
 
 import { HDNode } from "bitcoinjs-lib";
 import { IModel } from "./Asset";
-import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
+import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
 
@@ -28,15 +28,11 @@ interface IBalance {
 }
 
 /** Represents a BTC wallet. */
-export class BtcWallet extends RealCryptoWallet {
+export class BtcWallet extends SimpleCryptoWallet {
     public readonly type = "Bitcoin";
 
     public constructor(parent: IModel, props: ICryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "BTC", "bitcoin"));
-    }
-
-    public bundle(bundle?: Unknown): GenericAssetBundle<BtcWallet, ICryptoWalletProperties> {
-        return new GenericAssetBundle(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

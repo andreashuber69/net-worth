@@ -11,25 +11,21 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { GenericAssetBundle } from "./GenericAssetBundle";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
+import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { Unknown } from "./Unknown";
 import { Value } from "./Value";
 
 /** Represents an ETC wallet. */
-export class EtcWallet extends RealCryptoWallet {
+export class EtcWallet extends SimpleCryptoWallet {
     public readonly type = "Ethereum Classic";
 
     public constructor(parent: IModel, props: ICryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "ETC", "ethereum-classic"));
-    }
-
-    public bundle(bundle?: Unknown): GenericAssetBundle<EtcWallet, ICryptoWalletProperties> {
-        return new GenericAssetBundle(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
