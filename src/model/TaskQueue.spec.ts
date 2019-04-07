@@ -35,7 +35,7 @@ const expectFailure = async (promise: Promise<never>) => {
     }
 };
 
-fdescribe(TaskQueue.name, () => {
+describe(TaskQueue.name, () => {
     describe("queue", () => {
         it("should execute tasks sequentially", async () => {
             const sut = new TaskQueue();
@@ -70,7 +70,7 @@ fdescribe(TaskQueue.name, () => {
             await expectFailure(thirdPromise);
             const totalDelay = await firstPromise + await secondPromise + await fourthPromise;
             // Make sure the previous statement did not further delay, i.e. all tasks have in fact completed.
-            expect(Date.now() - start).toBeCloseTo(actualTotalDelay);
+            expect(Date.now() - start).toBeCloseTo(actualTotalDelay, precision);
             expect(actualTotalDelay).toBeCloseTo(totalDelay, precision);
         });
     });
