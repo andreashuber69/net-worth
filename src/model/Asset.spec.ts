@@ -251,7 +251,7 @@ const testQueries =
                 }
             });
 
-            it("should contain assets with the given properties", () => {
+            it("should contain assets with the given properties", async () => {
                 for (const asset of assets) {
                     expect(asset.type).toBe(sut.type);
                     expect(asset.description).toBe(sut.description);
@@ -269,9 +269,10 @@ const testQueries =
 
                     if (asset instanceof Erc20TokenWallet) {
                         expect(sut instanceof Erc20TokensWallet).toBe(true);
-                        expect(() => asset.bundle()).toThrow();
+                        await expectAsync(asset.queryData()).toBeRejected();
                         expect(() => asset.interface).toThrow();
                         expect(() => asset.toJSON()).toThrow();
+                        expect(() => asset.bundle()).toThrow();
                     }
                 }
             });

@@ -157,7 +157,7 @@ export abstract class Asset {
 
     // tslint:disable-next-line:prefer-function-over-method
     protected queryUnitValueUsd(): Promise<number | undefined> {
-        return Promise.resolve(undefined);
+        return Promise.reject(new Error("Asset cannot query unit value."));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
