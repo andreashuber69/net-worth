@@ -203,6 +203,9 @@ describe("ModelParser.parse", () => {
         "InvalidBundles.assets",
         "'bundles': The type of the value (number) does not match the expected type(s) Array.");
     expectError(
+        "MissingPrimaryAsset.assets",
+        "'primaryAsset': The type of the value (undefined) does not match the expected type(s) Object.");
+    expectError(
         "MissingAssetType.assets",
         "'type': The type of the value (undefined) does not match the expected type(s) string.");
     expectError(
