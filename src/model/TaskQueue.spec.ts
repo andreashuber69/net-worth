@@ -42,10 +42,11 @@ describe(TaskQueue.name, () => {
             const start = Date.now();
             const firstPromise = sut.queue(randomDelay);
             const secondPromise = sut.queue(randomDelay);
-            const thirdPromise = sut.queue(throwException);
-            const fourthPromise = sut.queue(randomDelay);
             const firstDelay = await firstPromise;
             expect(Date.now() - start).toBeCloseTo(firstDelay, precision);
+
+            const thirdPromise = sut.queue(throwException);
+            const fourthPromise = sut.queue(randomDelay);
             const secondDelay = await secondPromise;
             expect(Date.now() - start).toBeCloseTo(firstDelay + secondDelay, precision);
 
