@@ -56,9 +56,10 @@ type IExpectedProperties<T, U extends keyof T = never> =
     Pick<T, Exclude<{ [K in keyof T]: T[K] extends Function ? never : K }[keyof T], U>>;
 type IExpectedOrderingProperties = IExpectedProperties<Ordering>;
 type IExpectedAssetCollectionProperties =
-    IExpectedProperties<AssetCollection, "grouped" | "ordering"> & { readonly ordering: IExpectedOrderingProperties};
+    IExpectedProperties<AssetCollection, "grouped" | "ordering" | "grandTotalValue"> &
+    { readonly ordering: IExpectedOrderingProperties};
 type IExpectedModelProperties =
-    IExpectedProperties<Model, "assets"> & { readonly assets: IExpectedAssetCollectionProperties };
+    IExpectedProperties<Model, "assets" | "exchangeRate"> & { readonly assets: IExpectedAssetCollectionProperties };
 
 const expectError = (fileName: string, message: string) => {
     describe(fileName, () => {
@@ -104,9 +105,7 @@ const getExpectedProperties = (
                 sort: { by: sortBy, descending },
             },
             isEmpty,
-            grandTotalValue: isEmpty ? 0 : undefined,
         },
-        exchangeRate: currency === "USD" ? 1 : undefined,
         onChanged: undefined,
     };
 };
@@ -133,6 +132,7 @@ const expectModel = (fileName: string, properties: IExpectedModelProperties, che
             const result = ModelParser.parse(await loadTestFile(fileName));
 
             if (result instanceof Model) {
+                await result.assets.idle();
                 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/14579#issuecomment-341326257
                 expectToEqual(result, properties);
                 checkModel(result);
@@ -166,7 +166,7 @@ const expectEmptyModel = (fileName: string) => {
 };
 
 type IExpectedAssetProperties<T extends Asset> =
-    IExpectedProperties<T, "key" | "interface" | "parent" | "editableAsset">;
+    IExpectedProperties<T, "key" | "unitValue" | "totalValue" | "percent" | "interface" | "parent" | "editableAsset">;
 
 const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
     type: T["type"], description: string, location: string, weight: number,
@@ -185,10 +185,7 @@ const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
         quantityHint: "",
         isExpandable: false,
         locationHint: "",
-        unitValue: undefined,
         unitValueHint: "",
-        totalValue: undefined,
-        percent: undefined,
         hasActions: true,
     });
 
