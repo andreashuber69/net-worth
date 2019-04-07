@@ -368,7 +368,7 @@ describe("no assets", () => {
     });
 });
 
-describe("single asset", async () => {
+describe("single asset", () => {
     const asset = createAsset(
         SilverAsset, { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 });
     beforeAll(() => asset.queryData());
@@ -389,7 +389,7 @@ describe("single asset", async () => {
     expectProperty(AssetGroup, [asset], "hasActions", (matcher) => matcher.toBe(false));
 });
 
-describe("two assets", async () => {
+describe("two assets", () => {
     const assets = [
         createAsset(
             SilverAsset, { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 }),
