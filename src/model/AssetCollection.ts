@@ -15,6 +15,7 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetCollectionUtility } from "./AssetCollectionUtility";
 import { AssetGroup } from "./AssetGroup";
 import { ISort, Ordering } from "./Ordering";
+import { TaskQueue } from "./TaskQueue";
 
 interface IParent extends IModel {
     notifyChanged(): void;
@@ -107,6 +108,10 @@ export class AssetCollection {
         }
     }
 
+    public idle() {
+        return this.taskQueue.idle();
+    }
+
     /** @internal */
     public toJSON() {
         return this.bundles.map((bundle) => bundle.toJSON());
@@ -120,6 +125,7 @@ export class AssetCollection {
         return id;
     }
 
+    private readonly taskQueue = new TaskQueue();
     private readonly groups = new Array<AssetGroup>();
     private readonly bundles: AssetBundle[];
     private readonly parent: IParent;
@@ -130,7 +136,7 @@ export class AssetCollection {
     }
 
     private update(...newBundles: AssetBundle[]) {
-        this.updateImpl(newBundles).catch((error) => console.error(error));
+        this.taskQueue.queue(() => this.updateImpl(newBundles)).catch((error) => console.error(error));
     }
 
     private async updateImpl(newBundles: AssetBundle[]) {
