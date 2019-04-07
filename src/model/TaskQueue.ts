@@ -10,9 +10,15 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+/** Provides the means to execute tasks strictly sequentially. */
 export class TaskQueue {
-    public async queue<T>(createTask: () => Promise<T>) {
-        const task = this.executeAfterPrevious(createTask);
+    /** Queues and executes the supplied task.
+     * @description First waits for possibly still queued tasks to complete in the sequence they were queued and then
+     * calls `executeTask`, waits for the returned promise to settle and then returns the result.
+     * @returns The promise returned by `executeTask`.
+     */
+    public async queue<T>(executeTask: () => Promise<T>) {
+        const task = this.executeAfterPrevious(executeTask);
         this.previousTask = task;
         const result = await task;
         this.previousTask = Promise.resolve();
@@ -20,8 +26,13 @@ export class TaskQueue {
         return result;
     }
 
-    public idle(): Promise<void> {
-        return this.previousTask;
+    /** Waits for all currently queued tasks to complete. */
+    public async idle(): Promise<void> {
+        try {
+            await this.previousTask;
+        // tslint:disable-next-line: no-empty
+        } catch {
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
