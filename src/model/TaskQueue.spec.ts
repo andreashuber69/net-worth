@@ -18,22 +18,42 @@ const randomDelay = () =>
         setTimeout(() => resolve(milliseconds), milliseconds);
     });
 
-const precision = -1;
+const throwException = () => Promise.reject(new Error("Operation failed."));
+
+const precision = -2;
+
+const expectFailure = async (promise: Promise<never>) => {
+    try {
+        await promise;
+        fail("The task unexpectedly succeeded.");
+    } catch (e) {
+        if (e instanceof Error) {
+            expect(e.message).toEqual("Operation failed.");
+        } else {
+            fail("Unexpected exception type.");
+        }
+    }
+};
 
 fdescribe(TaskQueue.name, () => {
     describe("queue", () => {
         it("should execute tasks sequentially", async () => {
             const sut = new TaskQueue();
             const start = Date.now();
-            const firstTask = sut.queue(randomDelay);
-            const secondTask = sut.queue(randomDelay);
-            const thirdTask = sut.queue(randomDelay);
-            const firstDelay = await firstTask;
+            const firstPromise = sut.queue(randomDelay);
+            const secondPromise = sut.queue(randomDelay);
+            const thirdPromise = sut.queue(throwException);
+            const fourthPromise = sut.queue(randomDelay);
+            const firstDelay = await firstPromise;
             expect(Date.now() - start).toBeCloseTo(firstDelay, precision);
-            const secondDelay = await secondTask;
+            const secondDelay = await secondPromise;
             expect(Date.now() - start).toBeCloseTo(firstDelay + secondDelay, precision);
-            const thirdDelay = await thirdTask;
-            expect(Date.now() - start).toBeCloseTo(firstDelay + secondDelay + thirdDelay, precision);
+
+            await expectFailure(thirdPromise);
+            expect(Date.now() - start).toBeCloseTo(firstDelay + secondDelay, precision);
+
+            const fourthDelay = await fourthPromise;
+            expect(Date.now() - start).toBeCloseTo(firstDelay + secondDelay + fourthDelay, precision);
         });
     });
 
@@ -41,13 +61,15 @@ fdescribe(TaskQueue.name, () => {
         it("should only complete when all tasks have completed", async () => {
             const sut = new TaskQueue();
             const start = Date.now();
-            const firstTask = sut.queue(randomDelay);
-            const secondTask = sut.queue(randomDelay);
-            const thirdTask = sut.queue(randomDelay);
+            const firstPromise = sut.queue(randomDelay);
+            const secondPromise = sut.queue(randomDelay);
+            const thirdPromise = sut.queue(throwException);
+            const fourthPromise = sut.queue(randomDelay);
             await sut.idle();
             const actualTotalDelay = Date.now() - start;
-            const totalDelay = await firstTask + await secondTask + await thirdTask;
-            // Make sure the previous statement did not further delay, i.e. all tasks have in fact completed
+            await expectFailure(thirdPromise);
+            const totalDelay = await firstPromise + await secondPromise + await fourthPromise;
+            // Make sure the previous statement did not further delay, i.e. all tasks have in fact completed.
             expect(Date.now() - start).toBeCloseTo(actualTotalDelay);
             expect(actualTotalDelay).toBeCloseTo(totalDelay, precision);
         });
