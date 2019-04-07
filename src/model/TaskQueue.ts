@@ -20,10 +20,12 @@ export class TaskQueue {
     public async queue<T>(executeTask: () => Promise<T>) {
         const task = this.executeAfterPrevious(executeTask);
         this.previousTask = task;
-        const result = await task;
-        this.previousTask = Promise.resolve();
 
-        return result;
+        try {
+            return await task;
+        } finally {
+            this.previousTask = Promise.resolve();
+        }
     }
 
     /** Waits for all currently queued tasks to complete. */
