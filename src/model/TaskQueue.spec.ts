@@ -47,6 +47,7 @@ fdescribe(TaskQueue.name, () => {
             await sut.idle();
             const actualTotalDelay = Date.now() - start;
             const totalDelay = await firstTask + await secondTask + await thirdTask;
+            // Make sure the previous statement did not further delay, i.e. all tasks have in fact completed
             expect(Date.now() - start).toBeCloseTo(actualTotalDelay);
             expect(actualTotalDelay).toBeCloseTo(totalDelay, precision);
         });
