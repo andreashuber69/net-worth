@@ -20,6 +20,10 @@ export class TaskQueue {
         return result;
     }
 
+    public idle(): Promise<void> {
+        return this.previousTask;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private previousTask: Promise<any> = Promise.resolve();

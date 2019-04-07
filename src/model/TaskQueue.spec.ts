@@ -12,23 +12,43 @@
 
 import { TaskQueue } from "./TaskQueue";
 
-const delay = (milliseconds: number) =>
-    new Promise<number>((resolve) => setTimeout(() => resolve(milliseconds), milliseconds));
+const randomDelay = () =>
+    new Promise<number>((resolve) => {
+        const milliseconds = Math.random() * 800 + 200;
+        setTimeout(() => resolve(milliseconds), milliseconds);
+    });
 
-describe(TaskQueue.name, () => {
+const precision = -1;
+
+fdescribe(TaskQueue.name, () => {
     describe("queue", () => {
         it("should execute tasks sequentially", async () => {
             const sut = new TaskQueue();
             const start = Date.now();
-            const firstTask = sut.queue(() => delay(500));
-            const secondTask = sut.queue(() => delay(1000));
-            const thirdTask = sut.queue(() => delay(1500));
+            const firstTask = sut.queue(randomDelay);
+            const secondTask = sut.queue(randomDelay);
+            const thirdTask = sut.queue(randomDelay);
             const firstDelay = await firstTask;
-            expect(Date.now() - start).toBeCloseTo(firstDelay, -2);
+            expect(Date.now() - start).toBeCloseTo(firstDelay, precision);
             const secondDelay = await secondTask;
-            expect(Date.now() - start).toBeCloseTo(firstDelay + secondDelay, -2);
+            expect(Date.now() - start).toBeCloseTo(firstDelay + secondDelay, precision);
             const thirdDelay = await thirdTask;
-            expect(Date.now() - start).toBeCloseTo(firstDelay + secondDelay + thirdDelay, -2);
+            expect(Date.now() - start).toBeCloseTo(firstDelay + secondDelay + thirdDelay, precision);
+        });
+    });
+
+    describe("idle", () => {
+        it("should only complete when all tasks have completed", async () => {
+            const sut = new TaskQueue();
+            const start = Date.now();
+            const firstTask = sut.queue(randomDelay);
+            const secondTask = sut.queue(randomDelay);
+            const thirdTask = sut.queue(randomDelay);
+            await sut.idle();
+            const actualTotalDelay = Date.now() - start;
+            const totalDelay = await firstTask + await secondTask + await thirdTask;
+            expect(Date.now() - start).toBeCloseTo(actualTotalDelay);
+            expect(actualTotalDelay).toBeCloseTo(totalDelay, precision);
         });
     });
 });
