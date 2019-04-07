@@ -211,6 +211,14 @@ describe("ModelParser.parse", () => {
     expectError(
         "InvalidAssetType.assets",
         "'type': The value 'Flower' does not match any of the possible values.");
+    expectError(
+        "MissingRequiredProperties.assets",
+        `'description': A value is required.
+'weight': A value is required.
+'weightUnit': A value is required.
+'fineness': A value is required.
+'quantity': A value is required.
+`);
 
     expectEmptyModel("Minimal.assets");
     expectEmptyModel("EmptyName.assets");
