@@ -240,6 +240,17 @@ describe("ModelParser.parse", () => {
                         getExpectedPreciousMetalProperties<SilverAsset>(
                             "Silver", "Coins", "Home", 1, WeightUnit["t oz"], 0.999, "Whatever", 100);
                     expectToEqual(asset, expected);
+
+                    expect(asset.key).toBeGreaterThan(0);
+                    expect(asset.unitValue).toBeGreaterThan(0);
+
+                    if (asset.unitValue && asset.quantity) {
+                        expect(asset.totalValue).toBe(asset.unitValue * asset.quantity);
+                    } else {
+                        fail("unitValue or quantity are unexpectedly undefined.");
+                    }
+
+                    expect(asset.percent).toBe(100);
                 } else {
                     fail(`Asset is not an instance of ${SilverAsset.name}.`);
                 }
