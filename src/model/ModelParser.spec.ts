@@ -13,6 +13,8 @@
 import { Asset, GroupBy, SortBy } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { AssetGroup } from "./AssetGroup";
+import { BtcWallet } from "./BtcWallet";
+import { CryptoWallet } from "./CryptoWallet";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { Model } from "./Model";
@@ -188,6 +190,26 @@ const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
         hasActions: true,
     });
 
+const getExpectedCryptoProperties = <T extends CryptoWallet, U extends number>(
+    type: T["type"], description: string, location: string, unit: string, displayDecimals: U, address: string,
+    notes: string, quantity: number) => ({
+        type,
+        description,
+        location,
+        unit,
+        fineness: undefined,
+        displayDecimals,
+        notes,
+        superType: "Crypto Currency" as "Crypto Currency",
+        quantity,
+        quantityHint: "",
+        isExpandable: false,
+        locationHint: address,
+        address,
+        unitValueHint: "",
+        hasActions: true,
+    });
+
 describe("ModelParser.parse", () => {
     expectError("Empty.assets", "Unexpected end of JSON input.");
     expectError(
@@ -244,7 +266,7 @@ describe("ModelParser.parse", () => {
                     expect(asset.key).toBeGreaterThan(0);
                     expect(asset.unitValue).toBeGreaterThan(0);
 
-                    if (asset.unitValue && asset.quantity) {
+                    if ((asset.unitValue !== undefined) && (asset.quantity !== undefined)) {
                         expect(asset.totalValue).toBe(asset.unitValue * asset.quantity);
                     } else {
                         fail("unitValue or quantity are unexpectedly undefined.");
@@ -253,6 +275,40 @@ describe("ModelParser.parse", () => {
                     expect(asset.percent).toBe(100);
                 } else {
                     fail(`Asset is not an instance of ${SilverAsset.name}.`);
+                }
+            } else {
+                fail(`Asset is not an instance of ${AssetGroup.name}.`);
+            }
+        },
+    );
+
+    expectModel(
+        "BtcWallet.assets",
+        getExpectedProperties("Unnamed", false, false, "USD", "type", "totalValue", true, false),
+        (model) => {
+            const [ group ] = model.assets.grouped;
+
+            if (group instanceof AssetGroup) {
+                const [ asset ] = group.assets;
+
+                if (asset instanceof BtcWallet) {
+                    const expected: IExpectedAssetProperties<BtcWallet> =
+                        getExpectedCryptoProperties<BtcWallet, 6>(
+                            "Bitcoin", "Spending", "", "BTC", 6, "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a", "", 0);
+                    expectToEqual(asset, expected);
+
+                    expect(asset.key).toBeGreaterThan(0);
+                    expect(asset.unitValue).toBeGreaterThan(0);
+
+                    if ((asset.unitValue !== undefined) && (asset.quantity !== undefined)) {
+                        expect(asset.totalValue).toBe(asset.unitValue * asset.quantity);
+                    } else {
+                        fail("unitValue or quantity are unexpectedly undefined.");
+                    }
+
+                    expect(asset.percent).toBeNaN();
+                } else {
+                    fail(`Asset is not an instance of ${BtcWallet.name}.`);
                 }
             } else {
                 fail(`Asset is not an instance of ${AssetGroup.name}.`);

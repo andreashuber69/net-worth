@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "bundles": [
+    {
+      "primaryAsset": {
+        "type": "Bitcoin",
+        "description": "Spending",
+        "address": "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a"
+      }
+    }
+  ]
+}
