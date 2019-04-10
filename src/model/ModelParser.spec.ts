@@ -241,6 +241,11 @@ describe("ModelParser.parse", () => {
 'fineness': A value is required.
 'quantity': A value is required.
 `);
+    expectError(
+        "InvalidBtcWallet.assets",
+        `'address': A value is required for either the Address or the Quantity (not both).
+'quantity': A value is required for either the Address or the Quantity (not both).
+`);
 
     expectEmptyModel("Minimal.assets");
     expectEmptyModel("EmptyName.assets");
