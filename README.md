@@ -56,16 +56,14 @@ After the installation, you should see the application icon on your desktop. For
 
 ![Desktop Installation Options](./doc/desktop-installation-options.png)
 
+Alternatively, you can also install a self-contained (i.e. browser-independent)
+[desktop variant of Net Worth](https://github.com/andreashuber69/net-worth-desktop/blob/master/README.md#installation).
+
 On recent **Android** phones (and presumably tablets) with the latest version of **Chrome**, you are automatically
 prompted to add an icon to your home screen when you visit <https://andreashuber69.github.io/net-worth> for the first
 time:
 
 ![Phone Installation](./doc/phone-installation.png)
-
-Alternatively, you can also
-[install a desktop variant of Net Worth](https://github.com/andreashuber69/net-worth-desktop/blob/master/README.md#installation).
-The usage is identical for all variants, the desktop ones just don't have the internet browser controls, like e.g. the
-address bar.
 
 ### [Usage](https://github.com/andreashuber69/net-worth-desktop/blob/master/README.md#usage)
 
