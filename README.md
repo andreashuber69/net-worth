@@ -47,7 +47,7 @@ install either **Chromium** or **Firefox** and point it to <https://andreashuber
 ### Installation
 
 In the latest desktop versions of **Chromium** and **Chrome** (currently 73), you have the option to install Net Worth
-locally.
+locally:
 
 ![Desktop Installation](./doc/desktop-installation.png)
 
@@ -58,7 +58,7 @@ After the installation, you should see the application icon on your desktop. For
 
 On recent **Android** phones (and presumably tablets) with the latest version of **Chrome**, you are automatically
 prompted to add an icon to your home screen when you visit <https://andreashuber69.github.io/net-worth> for the first
-time.
+time:
 
 ![Phone Installation](./doc/phone-installation.png)
 
