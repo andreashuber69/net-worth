@@ -38,13 +38,39 @@ among the different asset types and locations.
 
 ## Getting Started
 
-### Installation
-
-Net Worth runs in your internet browser but works and feels much like a conventional desktop application. There are
-no logins, no passwords and your data is only ever stored locally on your computer.
+Net Worth runs in your internet browser but works and feels mostly like a conventional desktop application. There are no
+logins, no passwords and your data is only ever stored locally on your computer.
 
 While the application should work in most recent internet browsers, for privacy reasons it is recommended to
 install either **Chromium** or **Firefox** and point it to <https://andreashuber69.github.io/net-worth>.
+
+### Installation
+
+In the latest versions of **Chromium** and **Chrome** (currently 73), you have the option to install Net Worth locally.
+
+<p align="center">
+  <img
+    src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/desktop-installation.png"
+    alt="Desktop Installation" title="Desktop Installation" height="50">
+</p>
+
+After the installation, you should see the application icon on your desktop. For further options, you can navigate to
+<chrome://apps>:
+
+<p align="center">
+  <img
+    src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/desktop-installation-options.png"
+    alt="Desktop Installation Options" title="Desktop Installation Options" height="50">
+</p>
+
+On recent Android phones with the latest version of **Chrome**, you are automatically prompted to add an icon to your
+home screen when you visit <https://andreashuber69.github.io/net-worth> for the first time.
+
+<p align="center">
+  <img
+    src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/install-phone.png"
+    alt="npm" title="npm" height="50">
+</p>
 
 Alternatively, you can also
 [install a desktop variant of Net Worth](https://github.com/andreashuber69/net-worth-desktop/blob/master/README.md#installation).
