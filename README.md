@@ -56,7 +56,6 @@ After the installation, you should see the application icon on your desktop. For
 
 ![Desktop Installation Options](./doc/desktop-installation-options.png)
 
-
 On recent **Android** phones (and presumably tablets) with the latest version of **Chrome**, you are automatically
 prompted to add an icon to your home screen when you visit <https://andreashuber69.github.io/net-worth> for the first
 time.
@@ -109,38 +108,26 @@ Of course, there are also some (minor) disadvantages:
 
 <p>
   <a href="https://www.npmjs.com/">
-    <img
-      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/npm.png"
-      alt="npm" title="npm" height="50">
+    <img src="./doc/npm.png" alt="npm" title="npm" height="50">
   </a>
-  <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
+  <img src="./doc/spacer.svg?sanitize=true" height="50">
   <a href="http://typescriptlang.org">
-    <img
-      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/typescript.png"
-      alt="Typescript" title="Typescript" height="50">
+    <img src="./doc/typescript.png" alt="Typescript" title="Typescript" height="50">
   </a>
-  <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
+  <img src="./doc/spacer.svg?sanitize=true" height="50">
   <a href="https://vuetifyjs.com">
-    <img
-      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/vuetify.svg?sanitize=true"
-      alt="Vuetify" title="Vuetify" height="50">
+    <img src="./doc/vuetify.svg?sanitize=true" alt="Vuetify" title="Vuetify" height="50">
   </a>
-  <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
+  <img src="./doc/spacer.svg?sanitize=true" height="50">
   <a href="https://vuejs.org">
-    <img
-      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/vuejs.png"
-      alt="Vue.js" title="Vue.js" height="50">
+    <img src="./doc/vuejs.png" alt="Vue.js" title="Vue.js" height="50">
   </a>
-  <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
+  <img src="./doc/spacer.svg?sanitize=true" height="50">
   <a href="https://webpack.js.org/">
-    <img
-      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/webpack.svg?sanitize=true"
-      alt="webpack" title="webpack" height="50">
+    <img src="./doc/webpack.svg?sanitize=true" alt="webpack" title="webpack" height="50">
   </a>
-  <img src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/spacer.svg?sanitize=true" height="50">
+  <img src="./doc/spacer.svg?sanitize=true" height="50">
   <a href="https://www.npmjs.com/package/offline-plugin">
-    <img
-      src="https://raw.githubusercontent.com/andreashuber69/net-worth/master/doc/offline-plugin.svg?sanitize=true"
-      alt="offline-plugin" title="offline-plugin" height="50">
+    <img src="./doc/offline-plugin.svg?sanitize=true" alt="offline-plugin" title="offline-plugin" height="50">
   </a>
 </p>
