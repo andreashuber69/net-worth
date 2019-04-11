@@ -56,7 +56,7 @@ After the installation, you should see the application icon on your desktop. For
 
 ![Desktop Installation Options](./doc/desktop-installation-options.png)
 
-Alternatively, you can also install a self-contained (i.e. browser-independent)
+Alternatively, you can also install the self-contained (i.e. browser-independent)
 [desktop variant of Net Worth](https://github.com/andreashuber69/net-worth-desktop/blob/master/README.md#installation).
 
 On recent **Android** phones (and presumably tablets) with the latest version of **Chrome**, you are automatically
