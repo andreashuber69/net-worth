@@ -244,7 +244,7 @@ const testQueries =
 
         describe("assets", () => {
             it("should contain assets with defined quantity, unitValue and totalValue", () => {
-                for (const asset of bundle.assets) {
+                for (const asset of assets) {
                     expect(asset.quantity).toBeGreaterThanOrEqual(0);
                     expect(asset.unitValue).toBeGreaterThanOrEqual(0);
                     expect(asset.totalValue).toBeGreaterThanOrEqual(0);
@@ -282,10 +282,10 @@ const testQueries =
             it("should remove an asset", () => {
                 const { length } = assets;
                 expect(length).toBeGreaterThan(0);
-                const assetToDelete = bundle.assets[0];
+                const assetToDelete = assets[0];
                 bundle.deleteAsset(assetToDelete);
-                expect(bundle.assets.length).toBe(length - 1);
-                expect(bundle.assets.includes(assetToDelete)).toBe(false);
+                expect(assets.length).toBe(length - 1);
+                expect(assets.includes(assetToDelete)).toBe(false);
             });
         });
     });
