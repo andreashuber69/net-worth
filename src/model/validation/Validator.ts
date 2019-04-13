@@ -14,6 +14,7 @@
 import Ajv from "ajv";
 
 import * as schema from "./schemas/All.schema.json";
+import { ValidationError } from "./ValidationError";
 
 export class Validator {
     public static validateJson<T>(ctor: new () => T, json: string) {
@@ -22,7 +23,7 @@ export class Validator {
 
     public static validate<T>(ctor: new () => T, data: unknown) {
         if (!Validator.ajv.validate(`#/definitions/${ctor.name}`, data)) {
-            throw new Error(Validator.ajv.errorsText());
+            throw new ValidationError(Validator.ajv.errorsText());
         }
 
         const result = new ctor();

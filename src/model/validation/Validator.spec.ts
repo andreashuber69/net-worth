@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { CryptoAuxProperties } from "./schemas/CryptoAuxProperties";
+import { ValidationError } from "./ValidationError";
 import { Validator } from "./Validator";
 
 const shouldPassValidation = (json: string) => {
@@ -40,11 +41,12 @@ const shouldFailValidation = (data: unknown, exception: Error) => {
 describe(Validator.name, () => {
     describe("validateJson", () => {
         shouldFailJsonValidation("", new SyntaxError("Unexpected end of JSON input"));
-        shouldFailJsonValidation("[]", new Error("data should be object"));
-        shouldPassValidation("{}");
-        shouldFailJsonValidation("{\"deletedAssets\":true}", new Error("data.deletedAssets should be array"));
+        shouldFailJsonValidation("[]", new ValidationError("data should be object"));
+        shouldFailValidation("{}", new ValidationError("data should be object"));
+        shouldFailJsonValidation("{\"deletedAssets\":true}", new ValidationError("data.deletedAssets should be array"));
         shouldPassValidation("{\"deletedAssets\":[]}");
-        shouldFailJsonValidation("{\"deletedAssets\":[0]}", new Error("data.deletedAssets[0] should be string"));
+        shouldFailJsonValidation(
+            "{\"deletedAssets\":[0]}", new ValidationError("data.deletedAssets[0] should be string"));
         shouldPassValidation("{\"deletedAssets\":[\"\"]}");
     });
 });
