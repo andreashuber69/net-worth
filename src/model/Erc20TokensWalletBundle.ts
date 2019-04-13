@@ -17,6 +17,8 @@ import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
+import { CryptoAuxProperties } from "./validation/schemas/CryptoAuxProperties";
+import { Validator } from "./validation/Validator";
 import { Value } from "./Value";
 
 interface ISerializedErc20TokensBundle extends ISerializedBundle<ICryptoWalletProperties> {
@@ -29,9 +31,11 @@ export class Erc20TokensWalletBundle extends AssetBundle {
     public constructor(private readonly erc20Wallet: Erc20TokensWallet, bundle?: Unknown) {
         super();
 
-        if (Value.hasArrayProperty(bundle, Erc20TokensWalletBundle.deletedAssetsName)) {
-            // tslint:disable-next-line:no-unbound-method
-            this.deletedAssets = bundle[Erc20TokensWalletBundle.deletedAssetsName].filter(Value.isString);
+        try {
+            const auxProperties = Validator.validate(CryptoAuxProperties, bundle);
+            this.deletedAssets = auxProperties.deletedAssets;
+        } catch {
+            // Exception intentionally ignored
         }
     }
 

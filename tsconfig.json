@@ -12,6 +12,7 @@
     "paths": {
       "@/*": [ "src/*" ]
     },
+    "resolveJsonModule": true,
     "strict": true,
     "types": [
       "jasmine",
@@ -28,5 +29,5 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+  ]
 }

@@ -235,12 +235,14 @@ const testQueries =
         let bundle: ReturnType<typeof sut.bundle>;
         let assets: typeof bundle.assets;
 
-        beforeAll(async () => {
-            sut = createAsset(ctor, props);
-            bundle = sut.bundle();
-            await bundle.queryData();
-            ({ assets } = bundle);
-        });
+        beforeAll(
+            async () => {
+                sut = createAsset(ctor, props);
+                bundle = sut.bundle();
+                await bundle.queryData();
+                ({ assets } = bundle);
+            },
+            10000);
 
         describe("assets", () => {
             it("should contain assets with defined quantity, unitValue and totalValue", () => {

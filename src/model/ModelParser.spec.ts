@@ -311,6 +311,11 @@ describe("ModelParser.parse", () => {
             if (group instanceof AssetGroup) {
                 for (const asset of group.assets) {
                     if (asset instanceof Erc20TokenWallet) {
+                        // cSpell: ignore YOVI
+                        if (asset.unit === "YOVI") {
+                            fail("Deleted asset is available.");
+                        }
+
                         const expected: IExpectedAssetProperties<Erc20TokensWallet> =
                             getExpectedCryptoProperties<Erc20TokensWallet, 6>(
                                 "ERC20 Tokens", "Spending", "", asset.unit,

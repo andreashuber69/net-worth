@@ -1,6 +1,11 @@
 {
   "defaultSeverity": "error",
   "extends": "tslint:all",
+  "linterOptions": {
+    "exclude": [
+      "src/model/validation/schemas/All.schema.json"
+    ]
+  },
   "rulesDirectory": [],
   "rules": {
     "comment-format": [ true, "check-space" ],

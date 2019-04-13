@@ -14,7 +14,7 @@ const karmaTypescriptConfig = {
     include: {
         mode: "replace",
         values: [
-            "src/model/*.ts"
+            "src/model/**/*.ts"
         ]
     },
     reports: {
@@ -36,7 +36,7 @@ module.exports = function(config) {
         frameworks: [ "jasmine", "karma-typescript" ],
         files: [
             { 
-                pattern: "src/model/*.ts",
+                pattern: "src/model/**/*.ts",
             },
             { 
                 pattern: "src/model/ModelParser.spec/*.assets",
