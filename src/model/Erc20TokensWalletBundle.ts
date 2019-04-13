@@ -18,8 +18,8 @@ import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
 import { CryptoAuxProperties } from "./validation/schemas/CryptoAuxProperties";
+import { GetAddressInfoResponse, IToken } from "./validation/schemas/GetAddressInfoResponse";
 import { Validator } from "./validation/Validator";
-import { Value } from "./Value";
 
 interface ISerializedErc20TokensBundle extends ISerializedBundle<ICryptoWalletProperties> {
     deletedAssets: string[];
@@ -56,12 +56,9 @@ export class Erc20TokensWalletBundle extends AssetBundle {
         }
 
         try {
-            const balances = await QueryCache.fetch(
+            const data = await QueryCache.fetch(
                 `https://api.ethplorer.io/getAddressInfo/${this.erc20Wallet.address}?apiKey=dvoio1769GSrYx63`);
-
-            if (!Value.hasArrayProperty(balances, "tokens")) {
-                throw new QueryError();
-            }
+            const balances = Validator.validate(GetAddressInfoResponse, data);
 
             for (const token of balances.tokens) {
                 this.addTokenWallet(token);
@@ -86,43 +83,18 @@ export class Erc20TokensWalletBundle extends AssetBundle {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly deletedAssetsName = Erc20TokensWalletBundle.getName("deletedAssets");
-
-    private static getName<T extends keyof ISerializedErc20TokensBundle>(name: T) {
-        return name;
-    }
-
-    private static getPrice(info: Unknown) {
-        if (!Value.hasObjectProperty(info, "price") || !Value.hasStringProperty(info.price, "rate") ||
-            !Value.hasStringProperty(info.price, "currency") || (info.price.currency !== "USD")) {
-            return 0;
-        } else {
-            return Number.parseFloat(info.price.rate);
-        }
-    }
-
     private readonly deletedAssets: string[] = [];
 
-    // The high abc is probably a result of the many conditions paired with short-circuit logic in the second if
-    // statement. Breaking this up would not improve readability.
-    // codebeat:disable[ABC]
-    private addTokenWallet(token: Unknown | null | undefined) {
-        if (!Value.hasObjectProperty(token, "tokenInfo")) {
-            throw new QueryError();
-        }
-
+    private addTokenWallet(token: IToken) {
         const info = token.tokenInfo;
 
-        if (Value.hasStringProperty(info, "symbol") && Value.hasNumberProperty(token, "balance") &&
-            (Value.hasNumberProperty(info, "decimals") || Value.hasStringProperty(info, "decimals")) &&
-            (this.deletedAssets.indexOf(info.symbol) < 0) && (token.balance > 0)) {
+        if ((this.deletedAssets.indexOf(info.symbol) < 0) && (token.balance > 0)) {
             this.assets.push(new Erc20TokenWallet({
                 editable: this.erc20Wallet,
                 currencySymbol: info.symbol,
                 quantity: token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
-                unitValueUsd: Erc20TokensWalletBundle.getPrice(info),
+                unitValueUsd: info.price && info.price.rate || 0,
             }));
         }
     }
-    // codebeat:enable[ABC]
 }
