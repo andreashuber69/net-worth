@@ -15,10 +15,10 @@ import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { QueryCache } from "./QueryCache";
-import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
 import { CryptoAuxProperties } from "./validation/schemas/CryptoAuxProperties";
 import { GetAddressInfoResponse, IToken } from "./validation/schemas/GetAddressInfoResponse";
+import { ValidationError } from "./validation/ValidationError";
 import { Validator } from "./validation/Validator";
 
 interface ISerializedErc20TokensBundle extends ISerializedBundle<ICryptoWalletProperties> {
@@ -64,7 +64,7 @@ export class Erc20TokensWalletBundle extends AssetBundle {
                 this.addTokenWallet(token);
             }
         } catch (e) {
-            if (e instanceof QueryError) {
+            if (e instanceof ValidationError) {
                 // There's no good place where we can visualize an ERC20 query error in the UI, which is why we just
                 // log it in the console.
                 console.warn(e);
