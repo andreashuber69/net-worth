@@ -330,8 +330,6 @@ describe("ModelParser.parse", () => {
                         } else {
                             fail("unitValue or quantity are unexpectedly undefined.");
                         }
-
-                        expect(asset.percent).toBeNaN();
                     } else {
                         fail(`Asset is not an instance of ${Erc20TokensWallet.name}.`);
                     }
