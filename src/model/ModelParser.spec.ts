@@ -17,6 +17,8 @@ import { BtcWallet } from "./BtcWallet";
 import { CryptoWallet } from "./CryptoWallet";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
+import { Erc20TokensWallet } from "./Erc20TokensWallet";
+import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { Model } from "./Model";
 import { ModelParser } from "./ModelParser";
 import { Ordering } from "./Ordering";
@@ -58,7 +60,7 @@ type IExpectedProperties<T, U extends keyof T = never> =
 type IExpectedOrderingProperties = IExpectedProperties<Ordering>;
 type IExpectedAssetCollectionProperties =
     IExpectedProperties<AssetCollection, "grouped" | "ordering" | "grandTotalValue"> &
-    { readonly ordering: IExpectedOrderingProperties};
+    { readonly ordering: IExpectedOrderingProperties };
 type IExpectedModelProperties =
     IExpectedProperties<Model, "assets" | "exchangeRate"> & { readonly assets: IExpectedAssetCollectionProperties };
 
@@ -327,6 +329,41 @@ describe("ModelParser.parse", () => {
                     expect(asset.percent).toBeNaN();
                 } else {
                     fail(`Asset is not an instance of ${BtcWallet.name}.`);
+                }
+            } else {
+                fail(`Asset is not an instance of ${AssetGroup.name}.`);
+            }
+        },
+    );
+
+    expectModel(
+        "Erc20TokensWallet.assets",
+        getExpectedProperties("Unnamed", false, false, "USD", "type", "totalValue", true, false),
+        (model) => {
+            const [ group ] = model.assets.grouped;
+
+            if (group instanceof AssetGroup) {
+                for (const asset of group.assets) {
+                    if (asset instanceof Erc20TokenWallet) {
+                        const expected: IExpectedAssetProperties<Erc20TokensWallet> =
+                            getExpectedCryptoProperties<Erc20TokensWallet, 6>(
+                                "ERC20 Tokens", "Spending", "", asset.unit,
+                                6, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454", "", asset.quantity || -1);
+                        expectToEqual(asset, expected);
+
+                        expect(asset.key).toBeGreaterThan(0);
+                        expect(asset.unitValue).toBeGreaterThanOrEqual(0);
+
+                        if ((asset.unitValue !== undefined) && (asset.quantity !== undefined)) {
+                            expect(asset.totalValue).toBe(asset.unitValue * asset.quantity);
+                        } else {
+                            fail("unitValue or quantity are unexpectedly undefined.");
+                        }
+
+                        expect(asset.percent).toBeNaN();
+                    } else {
+                        fail(`Asset is not an instance of ${Erc20TokensWallet.name}.`);
+                    }
                 }
             } else {
                 fail(`Asset is not an instance of ${AssetGroup.name}.`);
