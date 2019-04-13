@@ -303,40 +303,6 @@ describe("ModelParser.parse", () => {
     );
 
     expectModel(
-        "BtcWallet.assets",
-        getExpectedProperties("Unnamed", false, false, "USD", "type", "totalValue", true, false),
-        (model) => {
-            const [ group ] = model.assets.grouped;
-
-            if (group instanceof AssetGroup) {
-                const [ asset ] = group.assets;
-
-                if (asset instanceof BtcWallet) {
-                    const expected: IExpectedAssetProperties<BtcWallet> =
-                        getExpectedCryptoProperties<BtcWallet, 6>(
-                            "Bitcoin", "Spending", "", "BTC", 6, "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a", "", 0);
-                    expectToEqual(asset, expected);
-
-                    expect(asset.key).toBeGreaterThan(0);
-                    expect(asset.unitValue).toBeGreaterThan(0);
-
-                    if ((asset.unitValue !== undefined) && (asset.quantity !== undefined)) {
-                        expect(asset.totalValue).toBe(asset.unitValue * asset.quantity);
-                    } else {
-                        fail("unitValue or quantity are unexpectedly undefined.");
-                    }
-
-                    expect(asset.percent).toBeNaN();
-                } else {
-                    fail(`Asset is not an instance of ${BtcWallet.name}.`);
-                }
-            } else {
-                fail(`Asset is not an instance of ${AssetGroup.name}.`);
-            }
-        },
-    );
-
-    expectModel(
         "Erc20TokensWallet.assets",
         getExpectedProperties("Unnamed", false, false, "USD", "type", "totalValue", true, false),
         (model) => {
