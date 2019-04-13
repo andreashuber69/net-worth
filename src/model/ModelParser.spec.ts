@@ -242,6 +242,19 @@ describe("ModelParser.parse", () => {
 'quantity': A value is required.
 `);
     expectError(
+        "InvalidValueProperties1.assets",
+        `'location': The type of the value (boolean) does not match the expected type(s) string.
+'weight': The value must be greater than or equal to 0.001.
+'weightUnit': The value '42' does not match any of the possible values.
+'fineness': The value must be less than or equal to 0.999999.
+'quantity': The value is invalid. The two nearest valid values are 1 and 2.
+`);
+    expectError(
+        "InvalidValueProperties2.assets",
+        `'value': The type of the value (string) does not match the expected type(s) number.
+'valueCurrency': The value '5' does not match any of the possible values.
+`);
+    expectError(
         "InvalidBtcWallet.assets",
         `'address': A value is required for either the Address or the Quantity (not both).
 'quantity': A value is required for either the Address or the Quantity (not both).

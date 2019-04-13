@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "bundles": [
+    {
+      "primaryAsset": {
+        "type": "Misc",
+        "description": "Cash",
+        "value": "30",
+        "valueCurrency": 5,
+        "quantity": 1
+      }
+    }
+  ]
+}
