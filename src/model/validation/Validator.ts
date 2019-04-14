@@ -33,5 +33,6 @@ export class Validator {
         return result;
     }
 
+    // tslint:disable-next-line: no-unsafe-any
     private static readonly ajv = new Ajv({ schemas: [schema] });
 }
