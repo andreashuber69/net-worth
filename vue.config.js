@@ -19,11 +19,13 @@ module.exports = {
     // that. Obviously, this needs to bet set accordingly before building for deployment. 
     publicPath: process.env.WEBPACK_BASE_URL ? process.env.WEBPACK_BASE_URL : "/",
     configureWebpack: config => {
-        if (process.env.NODE_ENV === 'production') {
+        if (process.env.NODE_ENV === "production") {
             // The following tweaks are necessary because bitcoinjs-lib requires that certain class names are not mangled,
             // see https://github.com/bitcoinjs/bitcoinjs-lib/issues/659.
+            // Moreover, Validator also depends on schema class names not being mangled.
             config.optimization.minimizer[0].options.terserOptions.mangle.reserved = [
-                'Array', 'BigInteger', 'Boolean', 'Buffer', 'ECPair', 'Function', 'Number', 'Point'
+                "Array", "BigInteger", "Boolean", "Buffer", "ECPair", "Function", "Number", "Point",
+                "CryptoAuxProperties", "GetAddressInfoResponse"
             ];
         }
     },
