@@ -13,7 +13,8 @@
 // tslint:disable-next-line: match-default-export-name
 import Ajv from "ajv";
 
-import * as schema from "./schemas/All.schema.json";
+// tslint:disable-next-line: no-default-import
+import schema from "./schemas/All.schema.json";
 import { ValidationError } from "./ValidationError";
 
 export class Validator {
