@@ -14,7 +14,7 @@ import { AssetBundle, ISerializedBundle } from "./AssetBundle";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
-import { QueryCache } from "./QueryCache";
+import { Query, QueryCache } from "./QueryCache";
 import { Unknown } from "./Unknown";
 import { CryptoAuxProperties } from "./validation/schemas/CryptoAuxProperties";
 import { GetAddressInfoResponse, IToken } from "./validation/schemas/GetAddressInfoResponse";
@@ -56,9 +56,8 @@ export class Erc20TokensWalletBundle extends AssetBundle {
         }
 
         try {
-            const data = await QueryCache.fetch(
-                `https://api.ethplorer.io/getAddressInfo/${this.erc20Wallet.address}?apiKey=dvoio1769GSrYx63`);
-            const balances = Validator.validate(GetAddressInfoResponse, data);
+            const balances =
+                await QueryCache.fetch(new Erc20TokensWalletBundle.GetAddressInfoQuery(this.erc20Wallet.address));
 
             for (const token of balances.tokens) {
                 this.addTokenWallet(token);
@@ -81,7 +80,14 @@ export class Erc20TokensWalletBundle extends AssetBundle {
         };
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // tslint:disable-next-line: max-classes-per-file variable-name
+    private static readonly GetAddressInfoQuery = class NestedQuery extends Query<GetAddressInfoResponse> {
+        public constructor(address: string) {
+            super(`https://api.ethplorer.io/getAddressInfo/${address}?apiKey=dvoio1769GSrYx63`, GetAddressInfoResponse);
+        }
+    };
 
     private readonly deletedAssets: string[] = [];
 

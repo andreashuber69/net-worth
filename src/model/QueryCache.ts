@@ -12,19 +12,26 @@
 
 import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
+import { Validator } from "./validation/Validator";
+
+export class Query<R extends object> {
+    protected constructor(public readonly url: string, public readonly responseCtor: new () => R) {
+    }
+}
 
 /** @internal */
+// tslint:disable-next-line: max-classes-per-file
 export class QueryCache {
     /** @internal */
-    public static fetch(query: string) {
-        let result = this.cache.get(query);
-
-        if (!result) {
-            result = this.fetchImpl(query);
-            this.cache.set(query, result);
+    public static fetch(query: string): Promise<Unknown | null>;
+    public static fetch<R extends object>(query: Query<R>): Promise<R>;
+    public static async fetch<R extends object>(query: string | Query<R>) {
+        if (typeof query === "string") {
+            return this.cachedFetch(query, () => this.fetchImpl(query));
+        } else {
+            return this.cachedFetch(
+                query.url, async () => Validator.validate(query.responseCtor, await this.fetchImpl(query.url)));
         }
-
-        return result;
     }
 
     /** @internal */
@@ -35,6 +42,17 @@ export class QueryCache {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly cache = new Map<string, Promise<Unknown | null>>();
+
+    private static cachedFetch<R extends Unknown | null>(query: string, getResponse: () => Promise<R>) {
+        let result = this.cache.get(query);
+
+        if (!result) {
+            result = getResponse();
+            this.cache.set(query, result);
+        }
+
+        return result;
+    }
 
     private static async fetchImpl(query: string) {
         let responseText: string;
