@@ -26,12 +26,9 @@ export class QueryCache {
     public static fetch(query: string): Promise<Unknown | null>;
     public static fetch<R extends object>(query: Query<R>): Promise<R>;
     public static async fetch<R extends object>(query: string | Query<R>) {
-        if (typeof query === "string") {
-            return this.cachedFetch(query, () => this.fetchImpl(query));
-        } else {
-            return this.cachedFetch(
-                query.url, async () => Validator.validate(query.responseCtor, await this.fetchImpl(query.url)));
-        }
+        return (typeof query === "string") ?
+            this.cacheResult(query, () => this.fetchAndParse(query)) :
+            this.cacheResult(query.url, () => this.fetchParseAndValidate(query));
     }
 
     /** @internal */
@@ -43,7 +40,7 @@ export class QueryCache {
 
     private static readonly cache = new Map<string, Promise<Unknown | null>>();
 
-    private static cachedFetch<R extends Unknown | null>(query: string, getResponse: () => Promise<R>) {
+    private static cacheResult<R extends Unknown | null>(query: string, getResponse: () => Promise<R>) {
         let result = this.cache.get(query);
 
         if (!result) {
@@ -54,7 +51,17 @@ export class QueryCache {
         return result;
     }
 
-    private static async fetchImpl(query: string) {
+    private static async fetchParseAndValidate<R extends object>(query: Query<R>) {
+        const response = await this.fetchAndParse(query.url);
+
+        try {
+            return Validator.validate(query.responseCtor, response);
+        } catch (e) {
+            throw new QueryError(`Validation Error: ${e}`);
+        }
+    }
+
+    private static async fetchAndParse(query: string) {
         let responseText: string;
 
         try {
