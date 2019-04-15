@@ -15,7 +15,7 @@ import { IAssetIntersection, IAssetUnion, ISerializedObject, SerializedAssetProp
 import { AssetType } from "./AssetTypes";
 import { IAssetProperties } from "./IAssetProperties";
 import { IOrdering } from "./Ordering";
-import { Query } from "./Query";
+import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
 
 /** @internal */
@@ -121,7 +121,7 @@ export abstract class Asset {
 
     /** @internal */
     public async queryData(): Promise<void> {
-        const { result, status } = await Query.execute(() => this.queryUnitValueUsd());
+        const { result, status } = await QueryUtility.execute(() => this.queryUnitValueUsd());
         this.unitValueUsd = result;
         this.unitValueHintImpl = status;
     }

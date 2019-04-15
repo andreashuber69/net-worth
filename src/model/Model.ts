@@ -19,7 +19,7 @@ import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
 import { IAssetProperties } from "./IAssetProperties";
 import { ISort } from "./Ordering";
-import { Query } from "./Query";
+import { QueryUtility } from "./QueryUtility";
 
 export interface IModelParameters {
     readonly name?: string;
@@ -158,6 +158,6 @@ export class Model implements IModel {
     private async onCurrencyChangedImpl() {
         this.exchangeRate = undefined;
         // Status is intentionally ignored
-        ({ result: this.exchangeRate } = await Query.execute(() => ExchangeRate.get(Currency[this.currency])));
+        ({ result: this.exchangeRate } = await QueryUtility.execute(() => ExchangeRate.get(Currency[this.currency])));
     }
 }

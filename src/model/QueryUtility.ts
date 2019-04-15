@@ -12,7 +12,7 @@
 
 import { QueryError } from "./QueryError";
 
-export class Query {
+export class QueryUtility {
     public static async execute(query: () => Promise<number | undefined>) {
         try {
             return {
