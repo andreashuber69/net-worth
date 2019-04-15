@@ -12,13 +12,11 @@
 
 import { IModel } from "./Asset";
 import { ICryptoWalletProperties } from "./ICryptoWallet";
-import { IWebRequest } from "./IWebRequest";
+import { Query } from "./Query";
 import { QueryCache } from "./QueryCache";
-import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
-import { Unknown } from "./Unknown";
-import { Value } from "./Value";
+import { SoChainGetAddressBalanceResponse } from "./validation/schemas/SoChainGetAddressBalanceResponse";
 
 /** Represents a ZEC wallet. */
 export class ZecWallet extends SimpleCryptoWallet {
@@ -30,32 +28,18 @@ export class ZecWallet extends SimpleCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected queryQuantity() {
-        return new ZecWallet.SoChainRequest(this.address).execute();
+    protected async queryQuantity() {
+        return Number.parseFloat((await QueryCache.fetch(new ZecWallet.Query(this.address))).data.confirmed_balance);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // tslint:disable-next-line:max-classes-per-file variable-name
-    private static readonly SoChainRequest = class NestedSoChainRequest implements IWebRequest<number> {
-        public constructor(private readonly address: string) {
-        }
-
-        public async execute() {
-            return NestedSoChainRequest.getBalance(
-                await QueryCache.fetch(`https://chain.so/api/v2/get_address_balance/ZEC/${this.address}`));
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        private static getBalance(response: Unknown | null) {
-            if (Value.hasStringProperty(response, "status") && (response.status === "success") &&
-                Value.hasObjectProperty(response, "data") &&
-                Value.hasStringProperty(response.data, "confirmed_balance")) {
-                return Number.parseFloat(response.data.confirmed_balance);
-            }
-
-            throw new QueryError();
+    // tslint:disable-next-line: max-classes-per-file variable-name
+    private static readonly Query = class NestedQuery extends Query<SoChainGetAddressBalanceResponse> {
+        public constructor(address: string) {
+            super(
+                `https://api.ethplorer.io/getAddressInfo/${address}?apiKey=dvoio1769GSrYx63`,
+                SoChainGetAddressBalanceResponse);
         }
     };
 }
