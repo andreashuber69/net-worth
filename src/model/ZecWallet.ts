@@ -37,9 +37,7 @@ export class ZecWallet extends SimpleCryptoWallet {
     // tslint:disable-next-line: max-classes-per-file variable-name
     private static readonly Query = class NestedQuery extends Query<SoChainGetAddressBalanceResponse> {
         public constructor(address: string) {
-            super(
-                `https://api.ethplorer.io/getAddressInfo/${address}?apiKey=dvoio1769GSrYx63`,
-                SoChainGetAddressBalanceResponse);
+            super(`https://chain.so/api/v2/get_address_balance/ZEC/${address}`, SoChainGetAddressBalanceResponse);
         }
     };
 }
