@@ -26,6 +26,6 @@ export interface IToken {
     balance: number;
 }
 
-export class GetAddressInfoResponse {
+export class EthplorerGetAddressInfoResponse {
     public tokens!: IToken[];
 }
