@@ -13,7 +13,6 @@
 import { Asset, GroupBy, SortBy } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { AssetGroup } from "./AssetGroup";
-import { BtcWallet } from "./BtcWallet";
 import { CryptoWallet } from "./CryptoWallet";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
