@@ -57,8 +57,7 @@ export class Erc20TokensWalletBundle extends AssetBundle {
         }
 
         try {
-            const balances =
-                await QueryCache.fetch(new Erc20TokensWalletBundle.GetAddressInfoQuery(this.erc20Wallet.address));
+            const balances = await QueryCache.fetch(new Erc20TokensWalletBundle.Query(this.erc20Wallet.address));
 
             for (const token of balances.tokens) {
                 this.addTokenWallet(token);
@@ -84,7 +83,7 @@ export class Erc20TokensWalletBundle extends AssetBundle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // tslint:disable-next-line: max-classes-per-file variable-name
-    private static readonly GetAddressInfoQuery = class NestedQuery extends Query<EthplorerGetAddressInfoResponse> {
+    private static readonly Query = class NestedQuery extends Query<EthplorerGetAddressInfoResponse> {
         public constructor(address: string) {
             super(
                 `https://api.ethplorer.io/getAddressInfo/${address}?apiKey=dvoio1769GSrYx63`,
