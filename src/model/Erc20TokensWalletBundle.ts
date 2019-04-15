@@ -86,7 +86,9 @@ export class Erc20TokensWalletBundle extends AssetBundle {
     // tslint:disable-next-line: max-classes-per-file variable-name
     private static readonly GetAddressInfoQuery = class NestedQuery extends Query<EthplorerGetAddressInfoResponse> {
         public constructor(address: string) {
-            super(`https://api.ethplorer.io/getAddressInfo/${address}?apiKey=dvoio1769GSrYx63`, EthplorerGetAddressInfoResponse);
+            super(
+                `https://api.ethplorer.io/getAddressInfo/${address}?apiKey=dvoio1769GSrYx63`,
+                EthplorerGetAddressInfoResponse);
         }
     };
 
