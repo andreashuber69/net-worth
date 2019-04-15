@@ -11,21 +11,21 @@
 // <http://www.gnu.org/licenses/>.
 
 export interface IPrice {
-    rate: number;
-    currency: "USD";
+    readonly rate: number;
+    readonly currency: "USD";
 }
 
 export interface ITokenInfo {
-    symbol: string;
-    decimals: string | number;
-    price: false | IPrice;
+    readonly symbol: string;
+    readonly decimals: string | number;
+    readonly price: false | IPrice;
 }
 
 export interface IToken {
-    tokenInfo: ITokenInfo;
-    balance: number;
+    readonly tokenInfo: ITokenInfo;
+    readonly balance: number;
 }
 
 export class EthplorerGetAddressInfoResponse {
-    public tokens!: IToken[];
+    public readonly tokens!: IToken[];
 }

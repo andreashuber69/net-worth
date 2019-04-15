@@ -11,5 +11,5 @@
 // <http://www.gnu.org/licenses/>.
 
 export class CryptoAuxProperties {
-    public deletedAssets!: string[];
+    public readonly deletedAssets!: string[];
 }

@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 export interface IDataSet {
-    data: [
+    readonly data: [
         [
             string,
             number
@@ -20,5 +20,5 @@ export interface IDataSet {
 }
 
 export class QuandlResponse {
-    public dataset!: IDataSet;
+    public readonly dataset!: IDataSet;
 }

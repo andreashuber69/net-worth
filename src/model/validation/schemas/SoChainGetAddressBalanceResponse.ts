@@ -11,10 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 export interface IData {
-    confirmed_balance: string;
+    readonly confirmed_balance: string;
 }
 
 export class SoChainGetAddressBalanceResponse {
-    public status!: "success";
-    public data!: IData;
+    public readonly status!: "success";
+    public readonly data!: IData;
 }
