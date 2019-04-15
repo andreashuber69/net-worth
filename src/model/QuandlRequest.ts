@@ -11,10 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IWebRequest } from "./IWebRequest";
+import { Query } from "./Query";
 import { QueryCache } from "./QueryCache";
-import { QueryError } from "./QueryError";
-import { Unknown } from "./Unknown";
-import { Value } from "./Value";
+import { QuandlResponse } from "./validation/schemas/QuandlResponse";
 
 /** Represents a single quandl.com request. */
 export class QuandlRequest implements IWebRequest<number> {
@@ -28,9 +27,7 @@ export class QuandlRequest implements IWebRequest<number> {
 
     public async execute() {
         if (this.path.length > 0) {
-            const response = await QueryCache.fetch(
-                `https://www.quandl.com/api/v3/datasets/${this.path}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`);
-            const price = QuandlRequest.getPrice(response);
+            const price = (await QueryCache.fetch(new QuandlRequest.Query(this.path))).dataset.data[0][1];
 
             return this.invert ? 1 / price : price;
         } else {
@@ -40,22 +37,10 @@ export class QuandlRequest implements IWebRequest<number> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getPrice(response: Unknown | null) {
-        if (!Value.hasObjectProperty(response, "dataset") ||
-            !Value.hasArrayProperty(response.dataset, "data") || response.dataset.data.length < 1) {
-            throw new QueryError();
+    // tslint:disable-next-line: max-classes-per-file variable-name
+    private static readonly Query = class NestedQuery extends Query<QuandlResponse> {
+        public constructor(path: string) {
+            super(`https://www.quandl.com/api/v3/datasets/${path}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`, QuandlResponse);
         }
-
-        const array = response.dataset.data[0];
-
-        if (Value.isArray(array) && (array.length >= 2)) {
-            const result = array[1];
-
-            if (Value.isNumber(result)) {
-                return result;
-            }
-        }
-
-        throw new QueryError();
-    }
+    };
 }
