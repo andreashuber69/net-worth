@@ -10,17 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { Query } from "./Query";
 import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
 import { Validator } from "./validation/Validator";
 
-export class Query<R extends object> {
-    protected constructor(public readonly url: string, public readonly responseCtor: new () => R) {
-    }
-}
-
 /** @internal */
-// tslint:disable-next-line: max-classes-per-file
 export class QueryCache {
     /** @internal */
     public static fetch(query: string): Promise<Unknown | null>;
