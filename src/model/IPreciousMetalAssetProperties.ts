@@ -10,12 +10,17 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { IAssetProperties } from "./IAssetProperties";
+import { WeightUnit } from "./WeightUnit";
 
-export const cryptoWalletSuperType = "Crypto Currency";
+/** Contains the defining properties common to all precious metal assets. */
+export interface IPreciousMetalAssetProperties extends IAssetProperties {
+    /** Provides the weight of a single item, expressed in `weightUnit`. */
+    readonly weight: number;
 
-/** @internal */
-export interface ICryptoWallet extends ICryptoWalletProperties {
-    /** @internal */
-    readonly superType: typeof cryptoWalletSuperType;
+    /** Provides the unit used for `weight`, e.g. [[kg]]. */
+    readonly weightUnit: WeightUnit;
+
+    /** Provides the fineness, e.g. 0.999. */
+    readonly fineness: number;
 }

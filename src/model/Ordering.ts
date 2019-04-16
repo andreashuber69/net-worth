@@ -10,15 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, GroupBy, SortBy } from "./Asset";
-
-export interface ISort {
-    /** Provides the name of the property by which the asset list is currently sorted. */
-    readonly by: SortBy;
-
-    /** Provides a value indicating whether the sort order is descending. */
-    readonly descending: boolean;
-}
+import { Asset } from "./Asset";
+import { GroupBy } from "./validation/schemas/GroupBy";
+import { ISort } from "./validation/schemas/ISort";
+import { SortBy } from "./validation/schemas/SortBy";
 
 interface IOrderingParameters {
     // tslint:disable-next-line:prefer-method-signature

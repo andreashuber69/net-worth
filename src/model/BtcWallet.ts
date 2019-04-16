@@ -12,7 +12,7 @@
 
 import { HDNode } from "bitcoinjs-lib";
 import { IModel } from "./Asset";
-import { ICryptoWalletProperties } from "./ICryptoWallet";
+import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";

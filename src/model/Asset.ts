@@ -11,9 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
-import { IAssetIntersection, IAssetUnion, ISerializedObject, SerializedAssetPropertyName } from "./AssetInterfaces";
+import { IAssetIntersection, IAssetUnion, SerializedAssetPropertyName } from "./AssetInterfaces";
 import { AssetType } from "./AssetTypes";
 import { IAssetProperties } from "./IAssetProperties";
+import { ISerializedObject } from "./ISerializedObject";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
@@ -178,12 +179,6 @@ export abstract class Asset {
 
     private unitValueHintImpl = "";
 }
-
-export type SortBy =
-    typeof Asset.typeName | typeof Asset.descriptionName | typeof Asset.locationName |
-    typeof Asset.unitValueName | typeof Asset.totalValueName;
-
-export type GroupBy = typeof Asset.typeName | typeof Asset.locationName;
 
 export type AssetDisplayPropertyName = SerializedAssetPropertyName |
     typeof Asset.unitName | typeof Asset.unitValueName | typeof Asset.totalValueName | typeof Asset.percentName;

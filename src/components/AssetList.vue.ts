@@ -11,9 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component } from "vue-property-decorator";
-import { Asset, SortBy } from "../model/Asset";
+import { Asset } from "../model/Asset";
 import { Model } from "../model/Model";
 import { Ordering } from "../model/Ordering";
+import { SortBy } from "../model/validation/schemas/SortBy";
 // tslint:disable-next-line:no-default-import
 import AssetEditor from "./AssetEditor.vue";
 // tslint:disable-next-line:no-default-import

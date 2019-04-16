@@ -10,12 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { IMiscAssetProperties } from "../../IMiscAssetProperties";
+import { ISerializedBundle } from "../../ISerializedBundle";
 
-export const cryptoWalletSuperType = "Crypto Currency";
-
-/** @internal */
-export interface ICryptoWallet extends ICryptoWalletProperties {
-    /** @internal */
-    readonly superType: typeof cryptoWalletSuperType;
+export interface ISerializedMiscAssetBundle extends ISerializedBundle<IMiscAssetProperties> {
 }

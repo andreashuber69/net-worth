@@ -12,10 +12,11 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { ISerializedObject } from "./AssetInterfaces";
 import { AssetType } from "./AssetTypes";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IPreciousMetalAsset, IPreciousMetalAssetProperties, preciousMetalSuperType } from "./IPreciousMetalAsset";
+import { IPreciousMetalAsset, preciousMetalSuperType } from "./IPreciousMetalAsset";
+import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
+import { ISerializedObject } from "./ISerializedObject";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";

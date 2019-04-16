@@ -12,7 +12,7 @@
 
 import { IModel } from "./Asset";
 import { BlockcypherWallet } from "./BlockcypherWallet";
-import { ICryptoWalletProperties } from "./ICryptoWallet";
+import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 
 /** Represents an LTC wallet. */

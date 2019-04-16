@@ -10,12 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { SortBy } from "./SortBy";
 
-export const cryptoWalletSuperType = "Crypto Currency";
+export interface ISort {
+    /** Provides the name of the property by which the asset list is currently sorted. */
+    readonly by: SortBy;
 
-/** @internal */
-export interface ICryptoWallet extends ICryptoWalletProperties {
-    /** @internal */
-    readonly superType: typeof cryptoWalletSuperType;
+    /** Provides a value indicating whether the sort order is descending. */
+    readonly descending: boolean;
 }

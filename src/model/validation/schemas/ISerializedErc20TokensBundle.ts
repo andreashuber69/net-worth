@@ -10,6 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-export class CryptoAuxProperties {
-    public readonly deletedAssets!: string[];
+import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
+import { ISerializedBundle } from "../../ISerializedBundle";
+import { IDeletedAssets } from "./IDeletedAssets";
+
+export interface ISerializedErc20TokensBundle extends ISerializedBundle<ICryptoWalletProperties>, IDeletedAssets {
 }

@@ -10,9 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetBundle, ISerializedBundle } from "./AssetBundle";
-import { ISerializedObject } from "./AssetInterfaces";
+import { AssetBundle } from "./AssetBundle";
 import { IAssetProperties } from "./IAssetProperties";
+import { ISerializedBundle } from "./ISerializedBundle";
+import { ISerializedObject } from "./ISerializedObject";
 import { SingleAsset } from "./SingleAsset";
 
 /** Defines a bundle containing a single asset. */

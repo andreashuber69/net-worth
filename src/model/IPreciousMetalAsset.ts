@@ -10,18 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetProperties } from "./IAssetProperties";
-import { WeightUnit } from "./WeightUnit";
-
-/** Contains the defining properties common to all precious metal assets. */
-export interface IPreciousMetalAssetProperties extends IAssetProperties {
-    /** Provides the weight of a single item, expressed in `weightUnit`. */
-    readonly weight: number;
-    /** Provides the unit used for `weight`, e.g. [[kg]]. */
-    readonly weightUnit: WeightUnit;
-    /** Provides the fineness, e.g. 0.999. */
-    readonly fineness: number;
-}
+import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 
 /** @internal */
 export const preciousMetalSuperType = "Precious Metal";

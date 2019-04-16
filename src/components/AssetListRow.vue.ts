@@ -11,8 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Prop } from "vue-property-decorator";
-import { Asset, AssetDisplayPropertyName, GroupBy } from "../model/Asset";
+import { Asset, AssetDisplayPropertyName } from "../model/Asset";
 import { PreciousMetalAssetInputInfo } from "../model/PreciousMetalAssetInputInfo";
+import { GroupBy } from "../model/validation/schemas/GroupBy";
 import { ColumnInfo } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";

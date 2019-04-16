@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { ICryptoWalletProperties } from "./ICryptoWallet";
+import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { Query } from "./Query";
 import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";

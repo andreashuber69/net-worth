@@ -11,15 +11,17 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Application } from "./Application";
-import { GroupBy, IModel } from "./Asset";
-import { AssetBundle, ISerializedBundle } from "./AssetBundle";
+import { IModel } from "./Asset";
+import { AssetBundle } from "./AssetBundle";
 import { AssetCollection } from "./AssetCollection";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
 import { IAssetProperties } from "./IAssetProperties";
-import { ISort } from "./Ordering";
+import { ISerializedBundle } from "./ISerializedBundle";
 import { QueryUtility } from "./QueryUtility";
+import { GroupBy } from "./validation/schemas/GroupBy";
+import { ISort } from "./validation/schemas/ISort";
 
 export interface IModelParameters {
     readonly name?: string;

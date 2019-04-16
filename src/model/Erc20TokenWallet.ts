@@ -10,10 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetUnion, ISerializedObject } from "./AssetInterfaces";
+import { IAssetUnion } from "./AssetInterfaces";
 import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { IAssetProperties } from "./IAssetProperties";
+import { ISerializedObject } from "./ISerializedObject";
 
 interface ITokenWalletParameters {
     readonly editable: Erc20TokensWallet;

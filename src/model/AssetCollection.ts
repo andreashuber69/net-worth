@@ -10,12 +10,14 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, GroupBy, IModel } from "./Asset";
+import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetCollectionUtility } from "./AssetCollectionUtility";
 import { AssetGroup } from "./AssetGroup";
-import { ISort, Ordering } from "./Ordering";
+import { Ordering } from "./Ordering";
 import { TaskQueue } from "./TaskQueue";
+import { GroupBy } from "./validation/schemas/GroupBy";
+import { ISort } from "./validation/schemas/ISort";
 
 interface IParent extends IModel {
     notifyChanged(): void;

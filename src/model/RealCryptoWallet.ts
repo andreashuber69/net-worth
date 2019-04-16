@@ -11,10 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { ISerializedObject } from "./AssetInterfaces";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet } from "./CryptoWallet";
-import { ICryptoWalletProperties } from "./ICryptoWallet";
+import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { ISerializedObject } from "./ISerializedObject";
 import { QueryUtility } from "./QueryUtility";
 
 export interface IRealCryptoWalletParameters extends ICryptoWalletProperties {

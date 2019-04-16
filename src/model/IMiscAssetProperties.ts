@@ -10,12 +10,14 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { Currency } from "./Currency";
+import { IAssetProperties } from "./IAssetProperties";
 
-export const cryptoWalletSuperType = "Crypto Currency";
+/** Contains the defining properties of a miscellaneous asset. */
+export interface IMiscAssetProperties extends IAssetProperties {
+    /** Provides the value of a single item, expressed in `valueCurrency`. */
+    readonly value: number;
 
-/** @internal */
-export interface ICryptoWallet extends ICryptoWalletProperties {
-    /** @internal */
-    readonly superType: typeof cryptoWalletSuperType;
+    /** Provides the currency used for `value`, e.g. [[Currency.USD]]. */
+    readonly valueCurrency: keyof typeof Currency;
 }

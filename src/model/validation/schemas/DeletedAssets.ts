@@ -10,12 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { IDeletedAssets } from "./IDeletedAssets";
 
-export const cryptoWalletSuperType = "Crypto Currency";
-
-/** @internal */
-export interface ICryptoWallet extends ICryptoWalletProperties {
-    /** @internal */
-    readonly superType: typeof cryptoWalletSuperType;
+export class DeletedAssets implements IDeletedAssets {
+    public readonly deletedAssets!: string[];
 }

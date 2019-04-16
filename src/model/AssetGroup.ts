@@ -11,8 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "./Asset";
-import { IAssetUnion, ISerializedObject } from "./AssetInterfaces";
+import { IAssetUnion } from "./AssetInterfaces";
 import { IAssetProperties } from "./IAssetProperties";
+import { ISerializedObject } from "./ISerializedObject";
 
 // This could easily be fixed by overriding abstract methods in two extending classes, but doing so seems strange at
 // best. Most method implementations are trivial, so their number shouldn't matter that much.

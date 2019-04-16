@@ -12,12 +12,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { ISerializedObject } from "./AssetInterfaces";
 import { AssetType } from "./AssetTypes";
 import { Currency } from "./Currency";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IMiscAsset, IMiscAssetProperties, miscSuperType } from "./IMiscAsset";
+import { IMiscAsset, miscSuperType } from "./IMiscAsset";
+import { IMiscAssetProperties } from "./IMiscAssetProperties";
+import { ISerializedObject } from "./ISerializedObject";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";

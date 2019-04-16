@@ -12,7 +12,7 @@
 
 import { IModel } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { ICryptoWalletProperties } from "./ICryptoWallet";
+import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
 

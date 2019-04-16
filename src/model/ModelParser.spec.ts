@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, GroupBy, SortBy } from "./Asset";
+import { Asset } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { AssetGroup } from "./AssetGroup";
 import { CryptoWallet } from "./CryptoWallet";
@@ -23,6 +23,8 @@ import { ModelParser } from "./ModelParser";
 import { Ordering } from "./Ordering";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
+import { GroupBy } from "./validation/schemas/GroupBy";
+import { SortBy } from "./validation/schemas/SortBy";
 import { WeightUnit } from "./WeightUnit";
 
 class BlobUtility {

@@ -10,8 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, GroupBy } from "../model/Asset";
+import { Asset } from "../model/Asset";
 import { IOrdering } from "../model/Ordering";
+import { GroupBy } from "../model/validation/schemas/GroupBy";
 import { AssetListRowPropertyName, ColumnName } from "./AssetListRow.vue";
 
 export class ColumnInfo {

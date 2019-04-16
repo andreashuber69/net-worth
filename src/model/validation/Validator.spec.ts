@@ -10,14 +10,15 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { CryptoAuxProperties } from "./schemas/CryptoAuxProperties";
+import { DeletedAssets } from "./schemas/DeletedAssets";
 import { ValidationError } from "./ValidationError";
 import { Validator } from "./Validator";
 
 const shouldPassValidation = (json: string) => {
     describe(json, () => {
         it("should pass validation", () => {
-            expect(Validator.validateJson(CryptoAuxProperties, json) instanceof CryptoAuxProperties).toBe(true);
+            expect(Validator.validateJson(DeletedAssets, json) instanceof
+                DeletedAssets).toBe(true);
         });
     });
 };
@@ -25,7 +26,7 @@ const shouldPassValidation = (json: string) => {
 const shouldFailJsonValidation = (json: string, exception: Error) => {
     describe(json, () => {
         it(`should throw ${exception}`, () => {
-            expect(() => Validator.validateJson(CryptoAuxProperties, json)).toThrow(exception);
+            expect(() => Validator.validateJson(DeletedAssets, json)).toThrow(exception);
         });
     });
 };
@@ -33,7 +34,7 @@ const shouldFailJsonValidation = (json: string, exception: Error) => {
 const shouldFailValidation = (data: unknown, exception: Error) => {
     describe(JSON.stringify(data), () => {
         it(`should throw ${exception}`, () => {
-            expect(() => Validator.validate(CryptoAuxProperties, data)).toThrow(exception);
+            expect(() => Validator.validate(DeletedAssets, data)).toThrow(exception);
         });
     });
 };
@@ -41,6 +42,7 @@ const shouldFailValidation = (data: unknown, exception: Error) => {
 describe(Validator.name, () => {
     describe("validateJson", () => {
         shouldFailJsonValidation("", new SyntaxError("Unexpected end of JSON input"));
+        shouldFailJsonValidation("null", new SyntaxError("data should be object"));
         shouldFailJsonValidation("[]", new ValidationError("data should be object"));
         shouldFailValidation("{}", new ValidationError("data should be object"));
         shouldFailJsonValidation("{\"deletedAssets\":true}", new ValidationError("data.deletedAssets should be array"));

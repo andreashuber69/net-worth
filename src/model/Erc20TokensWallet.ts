@@ -13,7 +13,7 @@
 import { IModel } from "./Asset";
 import { AssetType } from "./AssetTypes";
 import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
-import { ICryptoWalletProperties } from "./ICryptoWallet";
+import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
 

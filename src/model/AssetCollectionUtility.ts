@@ -10,9 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, SortBy } from "./Asset";
+import { Asset } from "./Asset";
 import { AssetGroup } from "./AssetGroup";
-import { ISort } from "./Ordering";
+import { ISort } from "./validation/schemas/ISort";
+import { SortBy } from "./validation/schemas/SortBy";
 
 export class AssetCollectionUtility {
     public static sort(groups: AssetGroup[], sort: ISort) {

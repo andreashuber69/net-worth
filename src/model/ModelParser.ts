@@ -10,14 +10,16 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { GroupBy, IModel } from "./Asset";
+import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetInput } from "./AssetInput";
 import { Currency } from "./Currency";
 import { IModelParameters, ISerializedModel, Model } from "./Model";
-import { ISort, Ordering } from "./Ordering";
+import { Ordering } from "./Ordering";
 import { ParseErrorMessage } from "./ParseErrorMessage";
 import { Unknown } from "./Unknown";
+import { GroupBy } from "./validation/schemas/GroupBy";
+import { ISort } from "./validation/schemas/ISort";
 import { Value } from "./Value";
 
 export class ModelParser {

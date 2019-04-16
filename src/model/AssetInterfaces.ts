@@ -10,11 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetType } from "./AssetTypes";
-import { IAssetProperties } from "./IAssetProperties";
-import { ICryptoWallet, ICryptoWalletProperties } from "./ICryptoWallet";
-import { IMiscAsset, IMiscAssetProperties } from "./IMiscAsset";
-import { IPreciousMetalAsset, IPreciousMetalAssetProperties } from "./IPreciousMetalAsset";
+import { ICryptoWallet } from "./ICryptoWallet";
+import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { IMiscAsset } from "./IMiscAsset";
+import { IMiscAssetProperties } from "./IMiscAssetProperties";
+import { IPreciousMetalAsset } from "./IPreciousMetalAsset";
+import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
+import { ISerializedObject } from "./ISerializedObject";
 
 /** Combines the defining properties of all assets. */
 export type IAssetIntersection = IPreciousMetalAssetProperties & ICryptoWalletProperties & IMiscAssetProperties;
@@ -28,11 +30,6 @@ export const allAssetPropertyNames: AssetPropertyName[] = [
 
 /** @internal */
 export type IAssetUnion = IPreciousMetalAsset | ICryptoWallet | IMiscAsset;
-
-/** @internal */
-export interface ISerializedObject {
-    readonly type: keyof typeof AssetType;
-}
 
 /** @internal */
 export type SerializedAssetPropertyName = keyof (ISerializedObject & IAssetIntersection);

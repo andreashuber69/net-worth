@@ -10,21 +10,17 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetBundle, ISerializedBundle } from "./AssetBundle";
+import { AssetBundle } from "./AssetBundle";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
-import { ICryptoWalletProperties } from "./ICryptoWallet";
 import { Query } from "./Query";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
-import { CryptoAuxProperties } from "./validation/schemas/CryptoAuxProperties";
+import { DeletedAssets } from "./validation/schemas/DeletedAssets";
 import { EthplorerGetAddressInfoResponse, IToken } from "./validation/schemas/EthplorerGetAddressInfoResponse";
+import { ISerializedErc20TokensBundle } from "./validation/schemas/ISerializedErc20TokensBundle";
 import { Validator } from "./validation/Validator";
-
-interface ISerializedErc20TokensBundle extends ISerializedBundle<ICryptoWalletProperties> {
-    deletedAssets: string[];
-}
 
 export class Erc20TokensWalletBundle extends AssetBundle {
     public readonly assets: Erc20TokenWallet[] = [];
@@ -33,8 +29,7 @@ export class Erc20TokensWalletBundle extends AssetBundle {
         super();
 
         try {
-            const auxProperties = Validator.validate(CryptoAuxProperties, bundle);
-            this.deletedAssets = auxProperties.deletedAssets;
+            ({ deletedAssets: this.deletedAssets } = Validator.validate(DeletedAssets, bundle));
         } catch {
             // Exception intentionally ignored
         }

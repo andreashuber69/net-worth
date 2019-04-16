@@ -11,12 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset } from "./Asset";
-import { ISerializedObject } from "./AssetInterfaces";
 import { IAssetProperties } from "./IAssetProperties";
-
-export interface ISerializedBundle<T extends IAssetProperties> {
-    readonly primaryAsset: ISerializedObject & T;
-}
+import { ISerializedBundle } from "./ISerializedBundle";
 
 /**
  * Defines the base of all classes that represent a bundle of assets.

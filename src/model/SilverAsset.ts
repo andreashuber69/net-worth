@@ -12,7 +12,7 @@
 
 import { IModel } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IPreciousMetalAssetProperties } from "./IPreciousMetalAsset";
+import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { Unknown } from "./Unknown";
 
