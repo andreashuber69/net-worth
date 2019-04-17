@@ -23,8 +23,4 @@ export class PalladiumAsset extends PreciousMetalAsset {
     public constructor(parent: IModel, props: IPreciousMetalAssetProperties) {
         super(parent, props, "lppm/pall.json");
     }
-
-    public bundle(bundle?: Unknown): GenericAssetBundle<PalladiumAsset, IPreciousMetalAssetProperties> {
-        return new GenericAssetBundle(this);
-    }
 }

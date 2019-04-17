@@ -18,7 +18,7 @@ import { Unknown } from "./Unknown";
 
 /** Defines the base of all simple crypto currency wallets. */
 export abstract class SimpleCryptoWallet extends RealCryptoWallet {
-    public bundle(bundle?: Unknown): GenericAssetBundle<this, ICryptoWalletProperties> {
+    public bundle(bundle?: Unknown): GenericAssetBundle<SimpleCryptoWallet, ICryptoWalletProperties> {
         return new GenericAssetBundle(this);
     }
 

@@ -23,8 +23,4 @@ export class SilverAsset extends PreciousMetalAsset {
     public constructor(parent: IModel, props: IPreciousMetalAssetProperties) {
         super(parent, props, "lbma/silver.json");
     }
-
-    public bundle(bundle?: Unknown): GenericAssetBundle<SilverAsset, IPreciousMetalAssetProperties> {
-        return new GenericAssetBundle(this);
-    }
 }
