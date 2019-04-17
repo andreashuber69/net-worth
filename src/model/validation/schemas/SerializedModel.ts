@@ -10,16 +10,26 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
+import { IMiscAssetProperties } from "../../IMiscAssetProperties";
+import { IPreciousMetalAssetProperties } from "../../IPreciousMetalAssetProperties";
+import { ISerializedBundle } from "../../ISerializedBundle";
 import { GroupBy } from "./GroupBy";
-import { ISerializedCryptoWalletBundle } from "./ISerializedCryptoWalletBundle";
 import { ISerializedErc20TokensBundle } from "./ISerializedErc20TokensBundle";
-import { ISerializedMiscAssetBundle } from "./ISerializedMiscAssetBundle";
-import { ISerializedPreciousMetalBundle } from "./ISerializedPreciousMetalBundle";
 import { ISort } from "./ISort";
 
-export type IBundle =
+interface ISerializedCryptoWalletBundle extends ISerializedBundle<ICryptoWalletProperties> {
+}
+
+interface ISerializedPreciousMetalBundle extends ISerializedBundle<IPreciousMetalAssetProperties> {
+}
+
+interface ISerializedMiscAssetBundle extends ISerializedBundle<IMiscAssetProperties> {
+}
+
+type SerializedBundles = Array<
     ISerializedPreciousMetalBundle | ISerializedCryptoWalletBundle |
-    ISerializedErc20TokensBundle | ISerializedMiscAssetBundle;
+    ISerializedErc20TokensBundle | ISerializedMiscAssetBundle>;
 
 export class SerializedModel {
     public readonly version!: 1;
@@ -29,5 +39,5 @@ export class SerializedModel {
     public readonly currency?: string;
     public readonly groupBy?: GroupBy;
     public readonly sort?: ISort;
-    public readonly bundles!: IBundle[];
+    public readonly bundles!: SerializedBundles;
 }
