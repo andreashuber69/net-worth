@@ -10,17 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { GroupBy } from "./GroupBy";
-import { ISort } from "./ISort";
-import { SerializedBundleUnion } from "./SerializedBundleUnion";
+import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
+import { IMiscAssetProperties } from "../../IMiscAssetProperties";
+import { IPreciousMetalAssetProperties } from "../../IPreciousMetalAssetProperties";
+import { ISerializedBundle } from "../../ISerializedBundle";
+import { ISerializedErc20TokensBundle } from "./ISerializedErc20TokensBundle";
 
-export class SerializedModel {
-    public readonly version!: 1;
-    public readonly name?: string;
-    public readonly wasSavedToFile?: boolean;
-    public readonly hasUnsavedChanges?: boolean;
-    public readonly currency?: string;
-    public readonly groupBy?: GroupBy;
-    public readonly sort?: ISort;
-    public readonly bundles!: SerializedBundleUnion[];
-}
+export type SerializedBundleUnion =
+    ISerializedBundle<IPreciousMetalAssetProperties> | ISerializedBundle<ICryptoWalletProperties> |
+    ISerializedErc20TokensBundle | ISerializedBundle<IMiscAssetProperties>;

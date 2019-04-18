@@ -17,11 +17,10 @@ import { AssetCollection } from "./AssetCollection";
 import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
-import { IAssetProperties } from "./IAssetProperties";
-import { ISerializedBundle } from "./ISerializedBundle";
 import { QueryUtility } from "./QueryUtility";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { ISort } from "./validation/schemas/ISort";
+import { SerializedModel } from "./validation/schemas/SerializedModel";
 
 export interface IModelParameters {
     readonly name?: string;
@@ -33,16 +32,7 @@ export interface IModelParameters {
     readonly createBundles: Array<(model: IModel) => AssetBundle>;
 }
 
-export interface ISerializedModel {
-    readonly version: number;
-    readonly name: string;
-    readonly wasSavedToFile: boolean;
-    readonly hasUnsavedChanges: boolean;
-    readonly currency: string;
-    readonly groupBy: GroupBy;
-    readonly sort: ISort;
-    readonly bundles: Array<ISerializedBundle<IAssetProperties>>;
-}
+export type ISerializedModel = Required<SerializedModel>;
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
