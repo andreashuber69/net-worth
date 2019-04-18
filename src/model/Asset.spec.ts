@@ -242,7 +242,7 @@ const testQueries =
                 await bundle.queryData();
                 ({ assets } = bundle);
             },
-            10000);
+            20000);
 
         describe("assets", () => {
             it("should contain assets with defined quantity, unitValue and totalValue", () => {

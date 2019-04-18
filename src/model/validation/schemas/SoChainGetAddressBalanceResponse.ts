@@ -10,11 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-export interface IData {
-    readonly confirmed_balance: string;
-}
-
 export class SoChainGetAddressBalanceResponse {
     public readonly status!: "success";
-    public readonly data!: IData;
+    public readonly data!: {
+        readonly confirmed_balance: string;
+    };
 }

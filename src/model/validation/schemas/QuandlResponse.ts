@@ -10,15 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-export interface IDataSet {
-    readonly data: [
-        [
-            string,
-            number
-        ]
-    ];
-}
-
 export class QuandlResponse {
-    public readonly dataset!: IDataSet;
+    public readonly dataset!: {
+        readonly data: [
+            [
+                string,
+                number
+            ]
+        ];
+    };
 }
