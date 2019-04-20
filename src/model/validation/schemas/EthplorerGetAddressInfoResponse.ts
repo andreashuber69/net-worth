@@ -10,19 +10,16 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-export interface IPrice {
-    readonly rate: number;
-    readonly currency: "USD";
-}
-
-export interface ITokenInfo {
-    readonly symbol: string;
-    readonly decimals: string | number;
-    readonly price: false | IPrice;
-}
-
 export interface IToken {
-    readonly tokenInfo: ITokenInfo;
+    readonly tokenInfo: {
+        readonly symbol: string;
+        readonly decimals: string | number;
+        readonly price: false | {
+            readonly rate: number;
+            readonly currency: "USD";
+        };
+    };
+
     readonly balance: number;
 }
 
