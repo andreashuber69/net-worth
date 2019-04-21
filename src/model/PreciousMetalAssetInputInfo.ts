@@ -15,6 +15,7 @@ import { PreciousMetalAssetType } from "./AssetTypes";
 import { Currency } from "./Currency";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
+import { TextInputInfo2 } from "./TextInputInfo2";
 import { WeightUnit } from "./WeightUnit";
 
 /**
@@ -40,9 +41,9 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
         label: "Unit", hint: "The unit Weight is expressed in.", isPresent: true, isRequired: true,
         enumType: WeightUnit, acceptStringsOnly: false,
     });
-    public readonly fineness = new TextInputInfo({
+    public readonly fineness = new TextInputInfo2({
         label: "Fineness", hint: "The precious metal fineness.", isPresent: true, isRequired: true,
-        min: 0.5, max: 1 - PreciousMetalAssetInputInfo.finenessStep, step: PreciousMetalAssetInputInfo.finenessStep,
+        schemaName: "Fineness",
     });
     public readonly value = new TextInputInfo();
     public readonly valueCurrency = new SelectInputInfo<typeof Currency>();
@@ -58,5 +59,4 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly weightStep = Math.pow(10, -PreciousMetalAssetInputInfo.weightDigits);
-    private static readonly finenessStep = Math.pow(10, -PreciousMetalAssetInputInfo.finenessDigits);
 }

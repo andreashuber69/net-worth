@@ -249,7 +249,7 @@ describe("ModelParser.parse", () => {
         `'location': The type of the value (boolean) does not match the expected type(s) string.
 'weight': The value must be greater than or equal to 0.001.
 'weightUnit': The value '42' does not match any of the possible values.
-'fineness': The value must be less than or equal to 0.999999.
+'fineness': data should be < 1
 'quantity': The value is invalid. The two nearest valid values are 1 and 2.
 `);
     expectError(

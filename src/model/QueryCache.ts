@@ -50,7 +50,7 @@ export class QueryCache {
         const response = await this.fetchAndParse(query.url);
 
         try {
-            return Validator.validate(query.responseCtor, response);
+            return Validator.fromData(query.responseCtor, response);
         } catch (e) {
             throw new QueryError(`Validation Error: ${e}`);
         }

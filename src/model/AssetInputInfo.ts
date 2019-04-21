@@ -44,7 +44,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     public abstract get valueCurrency(): SelectInputInfo<typeof Currency>;
     public abstract get weight(): TextInputInfo;
     public abstract get weightUnit(): SelectInputInfo<typeof WeightUnit>;
-    public abstract get fineness(): TextInputInfo;
+    public abstract get fineness(): PrimitiveInputInfo;
     public abstract get quantity(): TextInputInfo;
     public readonly notes = new TextInputInfo({
         label: "Notes", hint: "Additional asset information.", isPresent: true, isRequired: false,
