@@ -17,13 +17,42 @@ import Ajv from "ajv";
 import schema from "./schemas/All.schema.json";
 import { ValidationError } from "./ValidationError";
 
+type Type = "array" | "boolean" | "integer" | "null" | "number" | "object" | "string";
+
+export interface ISchema {
+    readonly $ref?: string;
+    readonly allOf?: ISchema[];
+    readonly anyOf?: ISchema[];
+    readonly enum?: number[] | string[] | boolean[];
+    readonly items?: ISchema | ISchema[];
+    readonly maximum?: number;
+    readonly exclusiveMaximum?: number;
+    readonly minimum?: number;
+    readonly exclusiveMinimum?: number;
+    readonly multipleOf?: number;
+    readonly properties?: {
+        [name: string]: ISchema;
+    };
+    readonly required?: string[];
+    // TODO: string and string[] should not be necessary here ...
+    readonly type?: string | string[] | Type | Type[];
+}
+
+export type SchemaName = keyof typeof schema.definitions;
+
 export class Validator {
-    public static validateJson<T>(ctor: new () => T, json: string) {
-        return Validator.validate(ctor, JSON.parse(json) as unknown);
+    public static fromJson<T>(ctor: new () => T, json: string) {
+        return Validator.fromData(ctor, JSON.parse(json) as unknown);
     }
 
-    public static validate<T>(ctor: new () => T, data: unknown) {
-        if (!Validator.ajv.validate(`#/definitions/${ctor.name}`, data)) {
+    public static fromData<T>(ctor: new () => T, data: unknown) {
+        if (!Validator.isSchemaName(ctor.name)) {
+            throw new Error(`Unknown schema: ${ctor.name}`);
+        }
+
+        const validationResult = Validator.validate(data, ctor.name);
+
+        if (validationResult !== true) {
             throw new ValidationError(Validator.ajv.errorsText());
         }
 
@@ -33,6 +62,20 @@ export class Validator {
         return result;
     }
 
+    public static validate(data: unknown, schemaName: SchemaName): true | string {
+        return !!Validator.ajv.validate(`#/definitions/${schemaName}`, data) || Validator.ajv.errorsText();
+    }
+
+    public static getSchema(name: SchemaName): ISchema {
+        return schema.definitions[name];
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // tslint:disable-next-line: no-unsafe-any
     private static readonly ajv = new Ajv({ schemas: [schema] });
+
+    private static isSchemaName(name: string): name is SchemaName {
+        return schema.definitions.hasOwnProperty(name);
+    }
 }
