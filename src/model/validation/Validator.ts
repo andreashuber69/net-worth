@@ -46,6 +46,7 @@ export class Validator {
     }
 
     public static getSchema(name: SchemaName) {
+        // tslint:disable-next-line: no-unsafe-any
         return schema.definitions[name];
     }
 
@@ -55,6 +56,7 @@ export class Validator {
     private static readonly ajv = new Ajv({ schemas: [schema] });
 
     private static isSchemaName(name: string): name is SchemaName {
+        // tslint:disable-next-line: no-unsafe-any
         return schema.definitions.hasOwnProperty(name);
     }
 }

@@ -70,6 +70,7 @@ export class TextInputInfo2 extends PrimitiveInputInfo {
 
     private readonly schemaName: SchemaName;
 
+    // tslint:disable-next-line: no-unsafe-any
     private get schema() {
         return Validator.getSchema(this.schemaName);
     }
@@ -79,6 +80,7 @@ export class TextInputInfo2 extends PrimitiveInputInfo {
     }
 
     private getValue(propertyName: string) {
+        // tslint:disable-next-line: no-unsafe-any
         const result = (this.schema as { [propertyName: string]: unknown })[propertyName];
 
         return (typeof result === "number") && result || undefined;
