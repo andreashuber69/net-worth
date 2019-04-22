@@ -15,7 +15,7 @@ import { Unknown } from "./Unknown";
 import { SchemaName, Validator } from "./validation/Validator";
 
 interface ITextInputInfoProperties extends IPrimitiveInputInfoProperties {
-    readonly schemaName: SchemaName;
+    readonly schemaName?: SchemaName;
 }
 
 /**
@@ -37,9 +37,9 @@ export class TextInputInfo2 extends PrimitiveInputInfo {
 
     /** @internal */
     public constructor(
-        { label = "", hint = "", isPresent = false, isRequired = false, schemaName }: ITextInputInfoProperties) {
-        super({ label, hint, isPresent, isRequired });
-        this.schemaName = schemaName;
+        props: ITextInputInfoProperties = { label: "", hint: "", isPresent: false, isRequired: false }) {
+        super(props);
+        ({ schemaName: this.schemaNameImpl } = props);
     }
 
     public get type() {
@@ -68,7 +68,15 @@ export class TextInputInfo2 extends PrimitiveInputInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private readonly schemaName: SchemaName;
+    private readonly schemaNameImpl?: SchemaName;
+
+    private get schemaName() {
+        if (!this.schemaNameImpl) {
+            throw new Error("Missing schemaName.");
+        }
+
+        return this.schemaNameImpl;
+    }
 
     // tslint:disable-next-line: no-unsafe-any
     private get schema() {
