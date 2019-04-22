@@ -246,15 +246,15 @@ describe("ModelParser.parse", () => {
 `);
     expectError(
         "InvalidValueProperties1.assets",
-        `'location': The type of the value (boolean) does not match the expected type(s) string.
-'weight': The value must be greater than or equal to 0.001.
+        `'location': data should be string
+'weight': data should be > 0
 'weightUnit': The value '42' does not match any of the possible values.
 'fineness': data should be < 1
-'quantity': The value is invalid. The two nearest valid values are 1 and 2.
+'quantity': data should be multiple of 1
 `);
     expectError(
         "InvalidValueProperties2.assets",
-        `'value': The type of the value (string) does not match the expected type(s) number.
+        `'value': data should be number
 'valueCurrency': The value '5' does not match any of the possible values.
 `);
     expectError(

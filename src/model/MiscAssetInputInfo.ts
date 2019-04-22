@@ -25,10 +25,11 @@ export class MiscAssetInputInfo extends AssetInputInfo {
     public readonly type = "Misc";
     public readonly description = new TextInputInfo({
         label: "Description", hint: "The nature of the items, e.g. 'Cash', 'Vacation House'.",
-        isPresent: true, isRequired: true,
+        isPresent: true, isRequired: true, schemaName: "Text",
     });
     public readonly location = new TextInputInfo({
         label: "Location", hint: "The location, e.g. 'Safe', 'Redford'.", isPresent: true, isRequired: false,
+        schemaName: "Text",
     });
     public readonly address = new TextInputInfo();
     public readonly weight = new TextInputInfo();
@@ -37,14 +38,14 @@ export class MiscAssetInputInfo extends AssetInputInfo {
     public readonly value = new TextInputInfo({
         label: "Value",
         hint: "The value of a single item, expressed in Currency. A liability can be expressed with a negative number",
-        isPresent: true, isRequired: true, min: undefined, max: undefined, step: MiscAssetInputInfo.valueStep,
+        isPresent: true, isRequired: true, schemaName: "Value",
     });
     public readonly valueCurrency = new SelectInputInfo({
         label: "Currency", hint: "The currency Value is expressed in.", isPresent: true, isRequired: true,
         enumType: Currency, acceptStringsOnly: true,
     });
     public readonly quantity = new TextInputInfo({
-        label: "Quantity", hint: "The number of items.", isPresent: true, isRequired: true, min: 0,
+        label: "Quantity", hint: "The number of items.", isPresent: true, isRequired: true, schemaName: "Quantity0",
     });
 
     /** @internal */

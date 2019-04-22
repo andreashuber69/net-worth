@@ -10,10 +10,4 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-// TODO: multipleOf does not work correctly with ajv, we probably need to go back to the old validation logic
-/** Defines valid values for the precious metal fineness, e.g. 0.999.
- * @minimum 0.5
- * @exclusiveMaximum 1
- * @multipleOf 0.000001
- */
-export type Fineness = number;
+export type Text = string;

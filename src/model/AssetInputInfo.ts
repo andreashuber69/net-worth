@@ -47,7 +47,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     public abstract get fineness(): PrimitiveInputInfo;
     public abstract get quantity(): TextInputInfo;
     public readonly notes = new TextInputInfo({
-        label: "Notes", hint: "Additional asset information.", isPresent: true, isRequired: false,
+        label: "Notes", hint: "Additional asset information.", isPresent: true, isRequired: false, schemaName: "Text",
     });
 
     /**

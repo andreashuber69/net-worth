@@ -10,30 +10,35 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ParseErrorMessage } from "./ParseErrorMessage";
 import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { Unknown } from "./Unknown";
-import { Value } from "./Value";
+import { SchemaName, Validator } from "./validation/Validator";
 
 interface ITextInputInfoProperties extends IPrimitiveInputInfoProperties {
-    readonly min?: number;
-    readonly max?: number;
-    readonly step?: number;
+    readonly schemaName?: SchemaName;
 }
 
 /**
  * Provides input information for a property where a valid value either needs to be a number with certain constraints
  * (minimum, maximum, step) or text.
  */
-export class TextInputInfo extends PrimitiveInputInfo implements ITextInputInfoProperties {
-    public readonly min?: number;
-    public readonly max?: number;
-    public readonly step?: number;
+export class TextInputInfo extends PrimitiveInputInfo {
+    public get min() {
+        return this.getValue("minimum") || this.getValue("exclusiveMinimum");
+    }
+
+    public get max() {
+        return this.getValue("maximum") || this.getValue("exclusiveMaximum");
+    }
+
+    public get step() {
+        return this.getValue("multipleOf");
+    }
 
     /** @internal */
     public constructor(props: ITextInputInfoProperties = { label: "", hint: "", isPresent: false, isRequired: false }) {
         super(props);
-        ({ min: this.min, max: this.max, step: this.step } = props);
+        ({ schemaName: this.schemaName } = props);
     }
 
     public get type() {
@@ -50,27 +55,8 @@ export class TextInputInfo extends PrimitiveInputInfo implements ITextInputInfoP
      *   non-English locale would get mixed languages in the UI.
      * - We want to use exactly the same rules to validate file content.
      */
-    // Breaking this one up is harder than it might look, because the validateValue call depends on the type
-    // discrimination above it.
-    // codebeat:disable[ABC,BLOCK_NESTING]
     protected validateContent(strict: boolean, input: Unknown) {
-        if (strict) {
-            if (this.isNumber) {
-                if (!Value.isNumber(input)) {
-                    return ParseErrorMessage.getTypeMismatch(input, 0);
-                }
-            } else {
-                if (!Value.isString(input)) {
-                    return ParseErrorMessage.getTypeMismatch(input, "");
-                }
-            }
-        } else {
-            if (!Value.isNumber(input) && !Value.isString(input)) {
-                return ParseErrorMessage.getTypeMismatch(input, 0, "");
-            }
-        }
-
-        const valueResult = this.validateValue(input);
+        const valueResult = this.validateValue(strict, input);
 
         if (valueResult !== true) {
             return valueResult;
@@ -78,57 +64,33 @@ export class TextInputInfo extends PrimitiveInputInfo implements ITextInputInfoP
 
         return super.validateContent(strict, input);
     }
-    // codebeat:enable[ABC,BLOCK_NESTING]
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static format(value: number, epsilonFactor: number = 1) {
-        return value.toLocaleString(
-            undefined, { maximumFractionDigits: Math.floor(-Math.log10(this.getMaxError(value, epsilonFactor))) });
-    }
-
-    private static getMaxError(value: number, epsilonFactor: number = 1) {
-        return Math.max(Math.abs(value) * epsilonFactor, 1) * Number.EPSILON;
-    }
+    private readonly schemaName?: SchemaName;
 
     private get isNumber() {
         return (this.min !== undefined) || (this.max !== undefined) || (this.step !== undefined);
     }
 
-    private validateValue(input: string | number) {
-        if (!this.isNumber) {
-            return true;
+    private getValue(propertyName: string) {
+        if (this.schemaName) {
+            // tslint:disable-next-line: no-unsafe-any
+            const result = (Validator.getSchema(this.schemaName) as { [propertyName: string]: unknown })[propertyName];
+
+            return (typeof result === "number") && result || undefined;
+        } else {
+            return undefined;
         }
-
-        const numericValue = Value.isNumber(input) ? input : Number.parseFloat(input);
-
-        if ((this.min !== undefined) && (this.min - numericValue > Number.EPSILON)) {
-            return `The value must be greater than or equal to ${TextInputInfo.format(this.min)}.`;
-        }
-
-        if ((this.max !== undefined) && (numericValue - this.max > Number.EPSILON)) {
-            return `The value must be less than or equal to ${TextInputInfo.format(this.max)}.`;
-        }
-
-        return this.validateStep(numericValue);
     }
 
-    private validateStep(numericValue: number) {
-        const bottom = this.min !== undefined ? this.min : 0;
-        const step = this.step !== undefined ? this.step : 1;
-        const lower = Math.floor((numericValue - bottom) / step) * step + bottom;
-        const upper = lower + step;
-        // The calculations for the conditions below each involve at most 6 operations, each of which might produce
-        // a result that could be wrong by at most Number.EPSILON.
-        const maxError = TextInputInfo.getMaxError(upper, 6);
-
-        if ((numericValue - lower > maxError) && (upper - numericValue > maxError)) {
-            const lowerText = TextInputInfo.format(lower, 4);
-            const upperText = TextInputInfo.format(upper, 5);
-
-            return `The value is invalid. The two nearest valid values are ${lowerText} and ${upperText}.`;
+    private validateValue(strict: boolean, input: unknown) {
+        if (!this.schemaName) {
+            throw new Error("Missing schemaName.");
         }
 
-        return true;
+        return Validator.validate(
+            !strict && this.isNumber && (typeof input === "string") ? Number.parseFloat(input) : input,
+            this.schemaName);
     }
 }

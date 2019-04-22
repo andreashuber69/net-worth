@@ -15,7 +15,6 @@ import { PreciousMetalAssetType } from "./AssetTypes";
 import { Currency } from "./Currency";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { TextInputInfo2 } from "./TextInputInfo2";
 import { WeightUnit } from "./WeightUnit";
 
 /**
@@ -28,27 +27,29 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
 
     public readonly description = new TextInputInfo({
         label: "Description", hint: "Describes the items, e.g. 'Coins', 'Bars'.", isPresent: true, isRequired: true,
+        schemaName: "Text",
     });
     public readonly location = new TextInputInfo({
         label: "Location", hint: "The location, e.g. 'Safe', 'Safety Deposit Box'.", isPresent: true, isRequired: false,
+        schemaName: "Text",
     });
     public readonly address = new TextInputInfo();
     public readonly weight = new TextInputInfo({
         label: "Weight", hint: "The weight of a single item, expressed in Unit.", isPresent: true, isRequired: true,
-        min: PreciousMetalAssetInputInfo.weightStep, max: undefined, step: PreciousMetalAssetInputInfo.weightStep,
+        schemaName: "Weight",
     });
     public readonly weightUnit = new SelectInputInfo({
         label: "Unit", hint: "The unit Weight is expressed in.", isPresent: true, isRequired: true,
         enumType: WeightUnit, acceptStringsOnly: false,
     });
-    public readonly fineness = new TextInputInfo2({
+    public readonly fineness = new TextInputInfo({
         label: "Fineness", hint: "The precious metal fineness.", isPresent: true, isRequired: true,
         schemaName: "Fineness",
     });
     public readonly value = new TextInputInfo();
     public readonly valueCurrency = new SelectInputInfo<typeof Currency>();
     public readonly quantity = new TextInputInfo({
-        label: "Quantity", hint: "The number of items.", isPresent: true, isRequired: true, min: 0,
+        label: "Quantity", hint: "The number of items.", isPresent: true, isRequired: true, schemaName: "Quantity0",
     });
 
     /** @internal */

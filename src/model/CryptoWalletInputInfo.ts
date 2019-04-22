@@ -25,7 +25,7 @@ interface ICryptoWalletInputInfoParameters {
     readonly type: CryptoWalletType;
     readonly ctor: IAssetConstructor;
     readonly addressHint: string;
-    readonly quantityDecimals?: number;
+    readonly quantityDecimals?: 8 | 18;
 }
 
 /**
@@ -36,11 +36,11 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly type: CryptoWalletType;
     public readonly description = new TextInputInfo({
         label: "Description", hint: "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.",
-        isPresent: true, isRequired: true,
+        isPresent: true, isRequired: true, schemaName: "Text",
     });
     public readonly location = new TextInputInfo({
         label: "Location", hint: "The location of the wallet, e.g. 'My Mobile', 'Home', 'Safety Deposit Box'.",
-        isPresent: true, isRequired: false,
+        isPresent: true, isRequired: false, schemaName: "Text",
     });
     public readonly address: TextInputInfo;
 
@@ -58,6 +58,7 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
 
         this.address = new TextInputInfo({
             label: "Address", hint: params.addressHint, isPresent: true, isRequired: !params.quantityDecimals,
+            schemaName: "Text",
         });
 
         this.quantity = CryptoWalletInputInfo.getQuantityInputInfo(params.quantityDecimals);
@@ -77,11 +78,11 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getQuantityInputInfo(quantityDecimals: number | undefined) {
+    private static getQuantityInputInfo(quantityDecimals: 8 | 18 | undefined) {
         if (quantityDecimals) {
             return new TextInputInfo({
                 label: "Quantity", hint: "The amount in the wallet.", isPresent: true, isRequired: false,
-                min: 0, max: undefined, step: Math.pow(10, -quantityDecimals),
+                schemaName: this.getSchema(quantityDecimals),
             });
         } else {
             return new TextInputInfo();
@@ -90,5 +91,15 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
 
     private static isUndefined(value: Unknown | null | undefined) {
         return (value === undefined) || (value === null) || (value === "");
+    }
+
+    private static getSchema(quantityDecimals: 8 | 18) {
+        // tslint:disable-next-line: switch-default
+        switch (quantityDecimals) {
+            case 8:
+                return "Quantity8";
+            case 18:
+                return "Quantity18";
+        }
     }
 }
