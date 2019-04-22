@@ -17,27 +17,6 @@ import Ajv from "ajv";
 import schema from "./schemas/All.schema.json";
 import { ValidationError } from "./ValidationError";
 
-type Type = "array" | "boolean" | "integer" | "null" | "number" | "object" | "string";
-
-export interface ISchema {
-    readonly $ref?: string;
-    readonly allOf?: ISchema[];
-    readonly anyOf?: ISchema[];
-    readonly enum?: number[] | string[] | boolean[];
-    readonly items?: ISchema | ISchema[];
-    readonly maximum?: number;
-    readonly exclusiveMaximum?: number;
-    readonly minimum?: number;
-    readonly exclusiveMinimum?: number;
-    readonly multipleOf?: number;
-    readonly properties?: {
-        [name: string]: ISchema;
-    };
-    readonly required?: string[];
-    // TODO: string and string[] should not be necessary here ...
-    readonly type?: string | string[] | Type | Type[];
-}
-
 export type SchemaName = keyof typeof schema.definitions;
 
 export class Validator {
@@ -66,7 +45,7 @@ export class Validator {
         return !!Validator.ajv.validate(`#/definitions/${schemaName}`, data) || Validator.ajv.errorsText();
     }
 
-    public static getSchema(name: SchemaName): ISchema {
+    public static getSchema(name: SchemaName) {
         return schema.definitions[name];
     }
 

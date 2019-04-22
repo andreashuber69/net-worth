@@ -24,15 +24,15 @@ interface ITextInputInfoProperties extends IPrimitiveInputInfoProperties {
  */
 export class TextInputInfo2 extends PrimitiveInputInfo {
     public get min() {
-        return this.schema.minimum || this.schema.exclusiveMinimum;
+        return this.getValue("minimum") || this.getValue("exclusiveMinimum");
     }
 
     public get max() {
-        return this.schema.maximum || this.schema.exclusiveMaximum;
+        return this.getValue("maximum") || this.getValue("exclusiveMaximum");
     }
 
     public get step() {
-        return this.schema.multipleOf;
+        return this.getValue("multipleOf");
     }
 
     /** @internal */
@@ -76,6 +76,12 @@ export class TextInputInfo2 extends PrimitiveInputInfo {
 
     private get isNumber() {
         return (this.min !== undefined) || (this.max !== undefined) || (this.step !== undefined);
+    }
+
+    private getValue(propertyName: string) {
+        const result = (this.schema as { [propertyName: string]: unknown })[propertyName];
+
+        return (typeof result === "number") && result || undefined;
     }
 
     private validateValue(strict: boolean, input: unknown) {
