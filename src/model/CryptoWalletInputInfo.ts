@@ -99,7 +99,7 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
             case 8:
                 return "Quantity8";
             case 18:
-                return "Quantity18";
+                return "QuantityAny";
         }
     }
 }
