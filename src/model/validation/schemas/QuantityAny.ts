@@ -10,8 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-/** Defines valid values for asset quantities with 18 decimals.
+/** Defines valid values for asset quantities with any number of decimals.
  * @minimum 0
- * @multipleOf 0.000000000000000001
  */
-export type Quantity18 = number;
+export type QuantityAny = number;
