@@ -12,8 +12,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { AssetType } from "./AssetTypes";
-import { Currency } from "./Currency";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IMiscAsset, miscSuperType } from "./IMiscAsset";
@@ -22,6 +20,8 @@ import { ISerializedObject } from "./ISerializedObject";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
+import { AssetType } from "./validation/schemas/AssetType";
+import { Currency } from "./validation/schemas/Currency";
 
 /** Represents a miscellaneous asset. */
 export class MiscAsset extends SingleAsset implements IMiscAsset {

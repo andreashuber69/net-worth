@@ -12,12 +12,12 @@
 
 import { AssetBundle } from "./AssetBundle";
 import { IAssetIntersection, IAssetUnion, SerializedAssetPropertyName } from "./AssetInterfaces";
-import { AssetType } from "./AssetTypes";
 import { IAssetProperties } from "./IAssetProperties";
 import { ISerializedObject } from "./ISerializedObject";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
+import { AssetType } from "./validation/schemas/AssetType";
 
 /** @internal */
 export interface IModel {

@@ -12,7 +12,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { AssetType } from "./AssetTypes";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IPreciousMetalAsset, preciousMetalSuperType } from "./IPreciousMetalAsset";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
@@ -21,6 +20,7 @@ import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
+import { AssetType } from "./validation/schemas/AssetType";
 import { WeightUnit } from "./WeightUnit";
 
 /** Defines the base of all classes that represent a precious metal asset. */

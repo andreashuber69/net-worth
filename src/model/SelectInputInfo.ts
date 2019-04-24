@@ -14,6 +14,7 @@ import { Enum, EnumInfo } from "./EnumInfo";
 import { ParseErrorMessage } from "./ParseErrorMessage";
 import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { Unknown } from "./Unknown";
+import { EnumSchemaName, Validator } from "./validation/Validator";
 
 export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
     public abstract get items(): string[];
@@ -26,6 +27,7 @@ export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
 
 interface ISelectInputInfoParameters<T extends Enum<T>> extends IPrimitiveInputInfoProperties {
     readonly enumType?: T;
+    readonly enumSchemaName?: EnumSchemaName;
     readonly acceptStringsOnly: boolean;
 }
 
@@ -36,7 +38,8 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     public constructor(params: ISelectInputInfoParameters<T> =
         { label: "", hint: "", isPresent: false, isRequired: false, acceptStringsOnly: false }) {
         super(params);
-        ({ enumType: this.enumType, acceptStringsOnly: this.acceptStringsOnly } = params);
+        ({ enumType: this.enumType, enumSchemaName: this.enumSchemaName, acceptStringsOnly: this.acceptStringsOnly } =
+            params);
     }
 
     public get items() {
@@ -46,8 +49,14 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected validateContent(strict: boolean, input: Unknown) {
-        if (this.enumType) {
-            if (!(input in this.enumType) || (this.acceptStringsOnly && (typeof input !== "string"))) {
+        if (this.enumType && this.enumSchemaName) {
+            const result = Validator.validate(input, this.enumSchemaName);
+
+            if (result !== true) {
+                return result;
+            }
+
+            if ((this.acceptStringsOnly && (typeof input !== "string"))) {
                 return ParseErrorMessage.getUnknownValue(input);
             }
         }
@@ -58,5 +67,6 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private readonly enumType?: T;
+    private readonly enumSchemaName?: EnumSchemaName;
     private readonly acceptStringsOnly: boolean;
 }

@@ -14,7 +14,6 @@ import { Asset } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { AssetGroup } from "./AssetGroup";
 import { CryptoWallet } from "./CryptoWallet";
-import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
@@ -23,6 +22,7 @@ import { ModelParser } from "./ModelParser";
 import { Ordering } from "./Ordering";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
+import { Currency } from "./validation/schemas/Currency";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { SortBy } from "./validation/schemas/SortBy";
 import { WeightUnit } from "./WeightUnit";
@@ -248,7 +248,7 @@ describe("ModelParser.parse", () => {
         "InvalidValueProperties1.assets",
         `'location': data should be string
 'weight': data should be > 0
-'weightUnit': The value '42' does not match any of the possible values.
+'weightUnit': data should be equal to one of the allowed values
 'fineness': data should be < 1
 'quantity': data should be multiple of 1
 `);

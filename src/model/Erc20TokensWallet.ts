@@ -11,11 +11,11 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { AssetType } from "./AssetTypes";
 import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
+import { AssetType } from "./validation/schemas/AssetType";
 
 /** Represents a wallet for ERC20 tokens. */
 export class Erc20TokensWallet extends RealCryptoWallet {

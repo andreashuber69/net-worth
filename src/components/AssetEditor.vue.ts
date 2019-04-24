@@ -16,8 +16,8 @@ import { AssetEditorData } from "../model/AssetEditorData";
 import { AssetInput } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { AssetProperties } from "../model/AssetProperties";
-import { AssetType } from "../model/AssetTypes";
 import { SelectInputInfo } from "../model/SelectInputInfo";
+import { AssetType } from "../model/validation/schemas/AssetType";
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
 // tslint:disable-next-line:no-default-import
 import Select from "./Select.vue";
@@ -41,7 +41,8 @@ export default class AssetEditor extends Vue {
     /** Provides the asset type input information. */
     public get typeInputInfo() {
         return new SelectInputInfo({
-            label: "Type", hint: "", isPresent: true, isRequired: true, enumType: AssetType, acceptStringsOnly: false,
+            label: "Type", hint: "", isPresent: true, isRequired: true, enumType: AssetType,
+            enumSchemaName: "AssetType", acceptStringsOnly: false,
         });
     }
 

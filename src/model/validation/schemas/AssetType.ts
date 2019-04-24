@@ -26,8 +26,3 @@ export enum AssetType {
     "Zcash",
     "Misc",
 }
-
-export type PreciousMetalAssetType = "Silver" | "Palladium" | "Platinum" | "Gold";
-
-export type CryptoWalletType =
-    "Bitcoin" | "Litecoin" | "Ethereum Classic" | "Ethereum" | "ERC20 Tokens" | "Bitcoin Gold" | "Dash" | "Zcash";

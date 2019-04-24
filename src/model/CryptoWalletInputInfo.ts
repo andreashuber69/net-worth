@@ -13,13 +13,15 @@
 import { Asset } from "./Asset";
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
 import { AssetPropertyName } from "./AssetInterfaces";
-import { CryptoWalletType } from "./AssetTypes";
-import { Currency } from "./Currency";
 import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Unknown";
+import { Currency } from "./validation/schemas/Currency";
 import { WeightUnit } from "./WeightUnit";
+
+type CryptoWalletType =
+    "Bitcoin" | "Litecoin" | "Ethereum Classic" | "Ethereum" | "ERC20 Tokens" | "Bitcoin Gold" | "Dash" | "Zcash";
 
 interface ICryptoWalletInputInfoParameters {
     readonly type: CryptoWalletType;

@@ -17,7 +17,6 @@ import { AssetEditorData } from "./AssetEditorData";
 import { AssetGroup } from "./AssetGroup";
 import { allAssetPropertyNames, AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
 import { AssetProperties } from "./AssetProperties";
-import { AssetType } from "./AssetTypes";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
 import { CryptoWallet } from "./CryptoWallet";
@@ -37,6 +36,7 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
+import { AssetType } from "./validation/schemas/AssetType";
 import { WeightUnit } from "./WeightUnit";
 import { ZecWallet } from "./ZecWallet";
 

@@ -19,6 +19,9 @@ import { ValidationError } from "./ValidationError";
 
 export type SchemaName = keyof typeof schema.definitions;
 
+type PropertyNamesWithEnumMembers<T> = { [K in keyof T]: T[K] extends { enum: Array<unknown> } ? K : never }[keyof T];
+export type EnumSchemaName = PropertyNamesWithEnumMembers<typeof schema.definitions>;
+
 export class Validator {
     public static fromJson<T>(json: string, ctor: new () => T) {
         return Validator.fromData(JSON.parse(json) as unknown, ctor);

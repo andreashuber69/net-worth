@@ -13,11 +13,11 @@
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetInput } from "./AssetInput";
-import { Currency } from "./Currency";
 import { IModelParameters, ISerializedModel, Model } from "./Model";
 import { Ordering } from "./Ordering";
 import { ParseErrorMessage } from "./ParseErrorMessage";
 import { Unknown } from "./Unknown";
+import { Currency } from "./validation/schemas/Currency";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { ISort } from "./validation/schemas/ISort";
 import { Value } from "./Value";

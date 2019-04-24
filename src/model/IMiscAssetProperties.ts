@@ -10,8 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Currency } from "./Currency";
 import { IAssetProperties } from "./IAssetProperties";
+import { Currency } from "./validation/schemas/Currency";
 
 /** Contains the defining properties of a miscellaneous asset. */
 export interface IMiscAssetProperties extends IAssetProperties {

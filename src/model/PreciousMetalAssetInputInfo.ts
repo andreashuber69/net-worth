@@ -11,11 +11,12 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
-import { PreciousMetalAssetType } from "./AssetTypes";
-import { Currency } from "./Currency";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
+import { Currency } from "./validation/schemas/Currency";
 import { WeightUnit } from "./WeightUnit";
+
+type PreciousMetalAssetType = "Silver" | "Palladium" | "Platinum" | "Gold";
 
 /**
  * Defines how the properties of a precious metal asset need to be input and validated and provides a method to create a
@@ -40,7 +41,7 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     });
     public readonly weightUnit = new SelectInputInfo({
         label: "Unit", hint: "The unit Weight is expressed in.", isPresent: true, isRequired: true,
-        enumType: WeightUnit, acceptStringsOnly: false,
+        enumType: WeightUnit, enumSchemaName: "WeightUnit", acceptStringsOnly: false,
     });
     public readonly fineness = new TextInputInfo({
         label: "Fineness", hint: "The precious metal fineness.", isPresent: true, isRequired: true,

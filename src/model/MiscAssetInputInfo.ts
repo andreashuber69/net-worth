@@ -11,9 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
-import { Currency } from "./Currency";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
+import { Currency } from "./validation/schemas/Currency";
 import { WeightUnit } from "./WeightUnit";
 
 /**
@@ -42,7 +42,7 @@ export class MiscAssetInputInfo extends AssetInputInfo {
     });
     public readonly valueCurrency = new SelectInputInfo({
         label: "Currency", hint: "The currency Value is expressed in.", isPresent: true, isRequired: true,
-        enumType: Currency, acceptStringsOnly: true,
+        enumType: Currency, enumSchemaName: "Currency", acceptStringsOnly: true,
     });
     public readonly quantity = new TextInputInfo({
         label: "Quantity", hint: "The number of items.", isPresent: true, isRequired: true, schemaName: "Quantity0",
