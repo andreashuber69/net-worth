@@ -17,7 +17,7 @@ import { Validator } from "./Validator";
 const shouldPassValidation = (json: string) => {
     describe(json, () => {
         it("should pass validation", () => {
-            expect(Validator.fromJson(DeletedAssets, json) instanceof
+            expect(Validator.fromJson(json, DeletedAssets) instanceof
                 DeletedAssets).toBe(true);
         });
     });
@@ -26,7 +26,7 @@ const shouldPassValidation = (json: string) => {
 const shouldFailJsonValidation = (json: string, exception: Error) => {
     describe(json, () => {
         it(`should throw ${exception}`, () => {
-            expect(() => Validator.fromJson(DeletedAssets, json)).toThrow(exception);
+            expect(() => Validator.fromJson(json, DeletedAssets)).toThrow(exception);
         });
     });
 };
@@ -34,7 +34,7 @@ const shouldFailJsonValidation = (json: string, exception: Error) => {
 const shouldFailValidation = (data: unknown, exception: Error) => {
     describe(JSON.stringify(data), () => {
         it(`should throw ${exception}`, () => {
-            expect(() => Validator.fromData(DeletedAssets, data)).toThrow(exception);
+            expect(() => Validator.fromData(data, DeletedAssets)).toThrow(exception);
         });
     });
 };

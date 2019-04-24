@@ -29,7 +29,7 @@ export class Erc20TokensWalletBundle extends AssetBundle {
         super();
 
         try {
-            ({ deletedAssets: this.deletedAssets } = Validator.fromData(DeletedAssets, bundle));
+            ({ deletedAssets: this.deletedAssets } = Validator.fromData(bundle, DeletedAssets));
         } catch {
             // Exception intentionally ignored
         }

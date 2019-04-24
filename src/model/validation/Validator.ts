@@ -20,11 +20,11 @@ import { ValidationError } from "./ValidationError";
 export type SchemaName = keyof typeof schema.definitions;
 
 export class Validator {
-    public static fromJson<T>(ctor: new () => T, json: string) {
-        return Validator.fromData(ctor, JSON.parse(json) as unknown);
+    public static fromJson<T>(json: string, ctor: new () => T) {
+        return Validator.fromData(JSON.parse(json) as unknown, ctor);
     }
 
-    public static fromData<T>(ctor: new () => T, data: unknown) {
+    public static fromData<T>(data: unknown, ctor: new () => T) {
         if (!Validator.isSchemaName(ctor.name)) {
             throw new Error(`Unknown schema: ${ctor.name}`);
         }
