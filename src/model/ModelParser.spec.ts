@@ -247,9 +247,9 @@ describe("ModelParser.parse", () => {
     expectError(
         "InvalidValueProperties1.assets",
         `'location': data should be string
-'weight': data should be > 0
+'weight': data should be >= 0.001
 'weightUnit': data should be equal to one of the allowed values
-'fineness': data should be < 1
+'fineness': data should be <= 0.999999
 'quantity': data should be multiple of 1
 `);
     expectError(

@@ -24,11 +24,11 @@ interface ITextInputInfoProperties extends IPrimitiveInputInfoProperties {
  */
 export class TextInputInfo extends PrimitiveInputInfo {
     public get min() {
-        return this.getValue("minimum") || this.getValue("exclusiveMinimum");
+        return this.getValue("minimum");
     }
 
     public get max() {
-        return this.getValue("maximum") || this.getValue("exclusiveMaximum");
+        return this.getValue("maximum");
     }
 
     public get step() {

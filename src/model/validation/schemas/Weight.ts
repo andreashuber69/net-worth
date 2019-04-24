@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 /** Defines valid values for the precious metal weights.
- * @exclusiveMinimum 0
+ * @minimum 0.001
  * @multipleOf 0.001
  */
 export type Weight = number;
