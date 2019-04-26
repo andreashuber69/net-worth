@@ -10,10 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetProperties } from "./IAssetProperties";
-import { ISerializedObject } from "./ISerializedObject";
-import { AssetType } from "./validation/schemas/AssetType";
+import { IPreciousMetalAssetProperties } from "../../IPreciousMetalAssetProperties";
+import { ISerializedBundle } from "../../ISerializedBundle";
 
-export interface ISerializedBundle<T extends keyof typeof AssetType, U extends IAssetProperties> {
-    readonly primaryAsset: ISerializedObject<T> & U;
+export type PreciousMetalAssetType = "Silver" | "Palladium" | "Platinum" | "Gold";
+
+export interface ISerializedPreciousMetalAssetBundle extends
+    ISerializedBundle<PreciousMetalAssetType, IPreciousMetalAssetProperties> {
 }

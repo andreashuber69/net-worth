@@ -131,7 +131,7 @@ export abstract class Asset {
     public abstract get interface(): IAssetUnion;
 
     /** @internal */
-    public abstract toJSON(): ISerializedObject & IAssetProperties;
+    public abstract toJSON(): ISerializedObject<keyof typeof AssetType> & IAssetProperties;
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
@@ -165,7 +165,8 @@ export abstract class Asset {
 
     private static nextKey = 0;
 
-    private static getPropertyName<T extends keyof (ISerializedObject & IAssetIntersection)>(name: T) {
+    private static getPropertyName<
+        T extends keyof (ISerializedObject<keyof typeof AssetType> & IAssetIntersection)>(name: T) {
         return name;
     }
 

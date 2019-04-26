@@ -20,7 +20,7 @@ import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
-import { AssetType } from "./validation/schemas/AssetType";
+import { PreciousMetalAssetType } from "./validation/schemas/ISerializedPreciousMetalAsset";
 import { WeightUnit } from "./WeightUnit";
 
 /** Defines the base of all classes that represent a precious metal asset. */
@@ -28,7 +28,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
     /** @internal */
     public static readonly superType = preciousMetalSuperType;
 
-    public abstract get type(): keyof typeof AssetType;
+    public abstract get type(): PreciousMetalAssetType;
 
     public readonly description: string;
 
@@ -57,7 +57,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
     public readonly superType = PreciousMetalAsset.superType;
 
     /** @internal */
-    public toJSON(): ISerializedObject & IPreciousMetalAssetProperties {
+    public toJSON(): ISerializedObject<this["type"]> & IPreciousMetalAssetProperties {
         return {
             type: this.type,
             description: this.description,

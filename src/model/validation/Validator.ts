@@ -56,7 +56,7 @@ export class Validator {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // tslint:disable-next-line: no-unsafe-any
-    private static readonly ajv = new Ajv({ schemas: [schema], allErrors: true, multipleOfPrecision: 9 });
+    private static readonly ajv = new Ajv({ schemas: [schema], multipleOfPrecision: 9 });
 
     private static isSchemaName(name: string): name is SchemaName {
         // tslint:disable-next-line: no-unsafe-any

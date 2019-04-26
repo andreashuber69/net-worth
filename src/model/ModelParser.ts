@@ -13,14 +13,9 @@
 import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetInput } from "./AssetInput";
-import { IModelParameters, ISerializedModel, Model } from "./Model";
-import { Ordering } from "./Ordering";
-import { ParseErrorMessage } from "./ParseErrorMessage";
-import { Unknown } from "./Unknown";
-import { Currency } from "./validation/schemas/Currency";
-import { GroupBy } from "./validation/schemas/GroupBy";
-import { ISort } from "./validation/schemas/ISort";
-import { Value } from "./Value";
+import { IModelParameters, Model } from "./Model";
+import { SerializedModel } from "./validation/schemas/SerializedModel";
+import { Validator } from "./validation/Validator";
 
 export class ModelParser {
     /**
@@ -30,53 +25,20 @@ export class ModelParser {
      * @param json The string to parse
      */
     public static parse(json: string) {
-        let rawModel: Unknown | null;
-
         try {
-            rawModel = JSON.parse(json) as Unknown | null;
+            return this.parseBundles(Validator.fromJson(json, SerializedModel));
         } catch (e) {
-            return `${(e as Error).message}.`;
+            if (e instanceof Error) {
+                return e.message;
+            } else {
+                throw e;
+            }
         }
-
-        if (!Value.hasNumberProperty(rawModel, this.versionName)) {
-            return ParseErrorMessage.getPropertyTypeMismatch(this.versionName, rawModel, 0);
-        }
-
-        const version = rawModel[this.versionName];
-
-        if (version !== 1) {
-            return ParseErrorMessage.getUnknownPropertyValue(this.versionName, version);
-        }
-
-        return this.parseBundles(rawModel);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly versionName = ModelParser.getModelName("version");
-    private static readonly nameName = ModelParser.getModelName("name");
-    private static readonly wasSavedToFileName = ModelParser.getModelName("wasSavedToFile");
-    private static readonly hasUnsavedChangesName = ModelParser.getModelName("hasUnsavedChanges");
-    private static readonly currencyName = ModelParser.getModelName("currency");
-    private static readonly groupByName = ModelParser.getModelName("groupBy");
-    private static readonly sortName = ModelParser.getModelName("sort");
-    private static readonly sortByName = ModelParser.getSortName("by");
-    private static readonly sortDescendingName = ModelParser.getSortName("descending");
-    private static readonly bundlesName = ModelParser.getModelName("bundles");
-
-    private static getModelName<T extends keyof ISerializedModel>(name: T) {
-        return name;
-    }
-
-    private static getSortName<T extends keyof ISort>(name: T) {
-        return name;
-    }
-
-    private static parseBundles(rawModel: Unknown) {
-        if (!Value.hasArrayProperty(rawModel, this.bundlesName)) {
-            return ParseErrorMessage.getPropertyTypeMismatch(this.bundlesName, rawModel, []);
-        }
-
+    private static parseBundles(rawModel: SerializedModel) {
         const params: IModelParameters = {
             ...this.parseOptionalProperties(rawModel),
             ...this.parseOptionalViewProperties(rawModel),
@@ -96,64 +58,12 @@ export class ModelParser {
         return new Model(params);
     }
 
-    private static parseOptionalProperties(rawModel: Unknown) {
-        const result: { name?: string; wasSavedToFile?: boolean; hasUnsavedChanges?: boolean } = {};
-
-        if (Value.hasStringProperty(rawModel, this.nameName)) {
-            const name = rawModel[this.nameName];
-
-            if (name.length > 0) {
-                result.name = name;
-            }
-        }
-
-        if (Value.hasBooleanProperty(rawModel, this.wasSavedToFileName)) {
-            result.wasSavedToFile = rawModel[this.wasSavedToFileName];
-        }
-
-        if (Value.hasBooleanProperty(rawModel, this.hasUnsavedChangesName)) {
-            result.hasUnsavedChanges = rawModel[this.hasUnsavedChangesName];
-        }
-
-        return result;
+    private static parseOptionalProperties(rawModel: SerializedModel) {
+        return (({ name, wasSavedToFile, hasUnsavedChanges }) =>
+            ({ name, wasSavedToFile, hasUnsavedChanges }))(rawModel);
     }
 
-    private static parseOptionalViewProperties(rawModel: Unknown) {
-        const result: { currency?: keyof typeof Currency; groupBy?: GroupBy; sort?: ISort } = {};
-
-        if (Value.hasStringProperty(rawModel, this.currencyName)) {
-            const currency = rawModel[this.currencyName];
-
-            if (currency in Currency) {
-                result.currency = currency as keyof typeof Currency;
-            }
-        }
-
-        if (Value.hasStringProperty(rawModel, this.groupByName)) {
-            const groupBy = rawModel[this.groupByName];
-
-            if (this.isGroupBy(groupBy)) {
-                result.groupBy = groupBy;
-            }
-        }
-
-        if (Value.hasObjectProperty(rawModel, this.sortName)) {
-            const sort = rawModel[this.sortName];
-
-            if (this.isSort(sort)) {
-                result.sort = sort;
-            }
-        }
-
-        return result;
-    }
-
-    private static isSort(sort: Unknown): sort is ISort {
-        return Value.hasStringProperty(sort, this.sortByName) && Ordering.isSortBy(sort.by) &&
-            Value.hasBooleanProperty(sort, this.sortDescendingName);
-    }
-
-    private static isGroupBy(groupBy: string): groupBy is GroupBy {
-        return Ordering.groupBys.findIndex((g) => g === groupBy) >= 0;
+    private static parseOptionalViewProperties(rawModel: SerializedModel) {
+        return (({ currency, groupBy, sort }) => ({ currency, groupBy, sort }))(rawModel);
     }
 }

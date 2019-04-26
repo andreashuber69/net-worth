@@ -15,11 +15,10 @@ import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
-import { AssetType } from "./validation/schemas/AssetType";
 
 /** Represents a wallet for ERC20 tokens. */
 export class Erc20TokensWallet extends RealCryptoWallet {
-    public readonly type: keyof typeof AssetType = "ERC20 Tokens";
+    public readonly type = "ERC20 Tokens";
 
     /**
      * Creates a new [[Erc20TokensWallet]] instance.

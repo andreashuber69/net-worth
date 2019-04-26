@@ -15,10 +15,11 @@ import { IAssetProperties } from "./IAssetProperties";
 import { ISerializedBundle } from "./ISerializedBundle";
 import { ISerializedObject } from "./ISerializedObject";
 import { SingleAsset } from "./SingleAsset";
+import { AssetType } from "./validation/schemas/AssetType";
 
 /** Defines a bundle containing a single asset. */
 export class GenericAssetBundle<
-    T extends SingleAsset & ISerializedObject & U, U extends IAssetProperties> extends AssetBundle {
+    T extends SingleAsset & ISerializedObject<T["type"]> & U, U extends IAssetProperties> extends AssetBundle {
     public readonly assets: T[];
 
     /** @internal */
@@ -39,7 +40,7 @@ export class GenericAssetBundle<
         return this.assets[0].queryData();
     }
 
-    public toJSON(): ISerializedBundle<U> {
+    public toJSON(): ISerializedBundle<T["type"], U> {
         return {
             primaryAsset: this.assets[0],
         };

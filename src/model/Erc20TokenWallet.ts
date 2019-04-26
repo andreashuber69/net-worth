@@ -15,6 +15,8 @@ import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { IAssetProperties } from "./IAssetProperties";
 import { ISerializedObject } from "./ISerializedObject";
+import { AssetType } from "./validation/schemas/AssetType";
+import { Erc20TokensWalletType } from "./validation/schemas/ISerializedErc20TokensWalletBundle";
 
 interface ITokenWalletParameters {
     readonly editable: Erc20TokensWallet;
@@ -24,7 +26,7 @@ interface ITokenWalletParameters {
 }
 
 export class Erc20TokenWallet extends CryptoWallet {
-    public get type() {
+    public get type(): Erc20TokensWalletType {
         return this.editable.type;
     }
 
@@ -61,7 +63,7 @@ export class Erc20TokenWallet extends CryptoWallet {
     }
 
     // tslint:disable-next-line:prefer-function-over-method
-    public toJSON(): ISerializedObject & IAssetProperties {
+    public toJSON(): ISerializedObject<keyof typeof AssetType> & IAssetProperties {
         throw new Error(`${Erc20TokenWallet.name} cannot be serialized.`);
     }
 

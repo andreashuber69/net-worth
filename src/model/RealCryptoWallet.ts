@@ -56,7 +56,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     }
 
     /** @internal */
-    public toJSON(): ISerializedObject & ICryptoWalletProperties {
+    public toJSON(): ISerializedObject<this["type"]> & ICryptoWalletProperties {
         return {
             type: this.type,
             description: this.description,

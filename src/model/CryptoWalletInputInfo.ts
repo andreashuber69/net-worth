@@ -18,10 +18,11 @@ import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Unknown";
 import { Currency } from "./validation/schemas/Currency";
+import { Erc20TokensWalletType } from "./validation/schemas/ISerializedErc20TokensWalletBundle";
+import { SimpleCryptoWalletType } from "./validation/schemas/ISerializedSimpleCryptoWalletBundle";
 import { WeightUnit } from "./WeightUnit";
 
-type CryptoWalletType =
-    "Bitcoin" | "Litecoin" | "Ethereum Classic" | "Ethereum" | "ERC20 Tokens" | "Bitcoin Gold" | "Dash" | "Zcash";
+type CryptoWalletType = SimpleCryptoWalletType | Erc20TokensWalletType;
 
 interface ICryptoWalletInputInfoParameters {
     readonly type: CryptoWalletType;

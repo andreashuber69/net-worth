@@ -13,14 +13,15 @@
 import { IModel } from "./Asset";
 import { cryptoWalletSuperType, ICryptoWallet } from "./ICryptoWallet";
 import { SingleAsset } from "./SingleAsset";
-import { AssetType } from "./validation/schemas/AssetType";
+import { Erc20TokensWalletType } from "./validation/schemas/ISerializedErc20TokensWalletBundle";
+import { SimpleCryptoWalletType } from "./validation/schemas/ISerializedSimpleCryptoWalletBundle";
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends SingleAsset implements ICryptoWallet {
     /** @internal */
     public static readonly superType = cryptoWalletSuperType;
 
-    public abstract get type(): keyof typeof AssetType;
+    public abstract get type(): SimpleCryptoWalletType | Erc20TokensWalletType;
 
     public get locationHint() {
         return this.address;

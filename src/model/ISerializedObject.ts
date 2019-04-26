@@ -13,6 +13,6 @@
 import { AssetType } from "./validation/schemas/AssetType";
 
 /** @internal */
-export interface ISerializedObject {
-    readonly type: keyof typeof AssetType;
+export interface ISerializedObject<T extends keyof typeof AssetType> {
+    readonly type: T;
 }

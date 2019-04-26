@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetProperties } from "./IAssetProperties";
-import { ISerializedObject } from "./ISerializedObject";
-import { AssetType } from "./validation/schemas/AssetType";
+import { IMiscAssetProperties } from "../../IMiscAssetProperties";
+import { ISerializedBundle } from "../../ISerializedBundle";
 
-export interface ISerializedBundle<T extends keyof typeof AssetType, U extends IAssetProperties> {
-    readonly primaryAsset: ISerializedObject<T> & U;
+export type MiscAssetType = "Misc";
+
+export interface ISerializedMiscAssetBundle extends ISerializedBundle<MiscAssetType, IMiscAssetProperties> {
 }

@@ -214,28 +214,23 @@ const getExpectedCryptoProperties = <T extends CryptoWallet, U extends number>(
     });
 
 describe("ModelParser.parse", () => {
-    expectError("Empty.assets", "Unexpected end of JSON input.");
-    expectError(
-        "MissingVersion.assets",
-        "'version': The type of the value (undefined) does not match the expected type(s) number.");
-    expectError(
-        "InvalidVersion.assets",
-        "'version': The type of the value (string) does not match the expected type(s) number.");
-    expectError(
-        "OutOfRangeVersion.assets",
-        "'version': The value '2' does not match any of the possible values.");
-    expectError(
-        "InvalidBundles.assets",
-        "'bundles': The type of the value (number) does not match the expected type(s) Array.");
+    expectError("Empty.assets", "Unexpected end of JSON input");
+    expectError("MissingVersion.assets", "data should have required property 'version'");
+    expectError("InvalidVersion.assets", "data.version should be number");
+    expectError("OutOfRangeVersion.assets", "data.version should be equal to one of the allowed values");
+    expectError("InvalidBundles.assets", "data.bundles should be array");
     expectError(
         "MissingPrimaryAsset.assets",
-        "'primaryAsset': The type of the value (undefined) does not match the expected type(s) Object.");
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0] should have required property 'primaryAsset', data.bundles[0] should have required property 'primaryAsset', data.bundles[0] should have required property 'primaryAsset', data.bundles[0] should match some schema in anyOf");
     expectError(
         "MissingAssetType.assets",
-        "'type': The type of the value (undefined) does not match the expected type(s) string.");
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'type', data.bundles[0].primaryAsset should have required property 'type', data.bundles[0].primaryAsset should have required property 'type', data.bundles[0] should match some schema in anyOf");
     expectError(
         "InvalidAssetType.assets",
-        "'type': The value 'Flower' does not match any of the possible values.");
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
     expectError(
         "MissingRequiredProperties.assets",
         `'description': A value is required.
@@ -265,9 +260,9 @@ describe("ModelParser.parse", () => {
 
     expectEmptyModel("Minimal.assets");
     expectEmptyModel("EmptyName.assets");
-    expectEmptyModel("InvalidCurrency.assets");
-    expectEmptyModel("InvalidGroupBy.assets");
-    expectEmptyModel("InvalidSort.assets");
+    expectError("InvalidCurrency.assets", "data.currency should be equal to one of the allowed values");
+    expectError("InvalidGroupBy.assets", "data.groupBy should be equal to one of the allowed values");
+    expectError("InvalidSort.assets", "data.sort should have required property 'by'");
 
     expectModel(
         "Silver.assets",

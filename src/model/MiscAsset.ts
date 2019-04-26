@@ -1,4 +1,3 @@
-
 // Copyright (C) 2018-2019 Andreas Huber Dönni
 //
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
@@ -28,7 +27,7 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
     /** @internal */
     public static readonly superType = miscSuperType;
 
-    public readonly type: keyof typeof AssetType = "Misc";
+    public readonly type  = "Misc";
 
     public readonly description: string;
 
@@ -69,7 +68,7 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
     }
 
     /** @internal */
-    public toJSON(): ISerializedObject & IMiscAssetProperties {
+    public toJSON(): ISerializedObject<this["type"]> & IMiscAssetProperties {
         return {
             type: this.type,
             description: this.description,

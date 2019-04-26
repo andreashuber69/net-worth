@@ -14,5 +14,8 @@ import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
 import { ISerializedBundle } from "../../ISerializedBundle";
 import { IDeletedAssets } from "./IDeletedAssets";
 
-export interface ISerializedErc20TokensBundle extends ISerializedBundle<ICryptoWalletProperties>, IDeletedAssets {
+export type Erc20TokensWalletType = "ERC20 Tokens";
+
+export interface ISerializedErc20TokensWalletBundle extends
+    ISerializedBundle<Erc20TokensWalletType, ICryptoWalletProperties>, IDeletedAssets {
 }
