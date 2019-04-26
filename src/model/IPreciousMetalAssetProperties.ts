@@ -11,16 +11,18 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAssetProperties } from "./IAssetProperties";
+import { Fineness } from "./validation/schemas/Fineness";
+import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./WeightUnit";
 
 /** Contains the defining properties common to all precious metal assets. */
 export interface IPreciousMetalAssetProperties extends IAssetProperties {
     /** Provides the weight of a single item, expressed in `weightUnit`. */
-    readonly weight: number;
+    readonly weight: Weight;
 
     /** Provides the unit used for `weight`, e.g. [[kg]]. */
     readonly weightUnit: WeightUnit;
 
     /** Provides the fineness, e.g. 0.999. */
-    readonly fineness: number;
+    readonly fineness: Fineness;
 }

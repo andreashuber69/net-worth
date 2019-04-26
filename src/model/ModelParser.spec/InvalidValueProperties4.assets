@@ -5,10 +5,10 @@
       "primaryAsset": {
         "type": "Silver",
         "description": "Coins",
-        "location": true,
+        "location": "Home",
         "weight": 1,
         "weightUnit": 1000,
-        "fineness": 0.9,
+        "fineness": 1.1,
         "quantity": 1
       }
     }

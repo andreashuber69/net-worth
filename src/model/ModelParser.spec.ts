@@ -23,8 +23,10 @@ import { Ordering } from "./Ordering";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
 import { Currency } from "./validation/schemas/Currency";
+import { Fineness } from "./validation/schemas/Fineness";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { SortBy } from "./validation/schemas/SortBy";
+import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./WeightUnit";
 
 class BlobUtility {
@@ -173,8 +175,8 @@ type IExpectedAssetProperties<T extends Asset> =
     IExpectedProperties<T, "key" | "unitValue" | "totalValue" | "percent" | "interface" | "parent" | "editableAsset">;
 
 const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
-    type: T["type"], description: string, location: string, weight: number,
-    weightUnit: WeightUnit, fineness: number, notes: string, quantity: number) => ({
+    type: T["type"], description: string, location: string, weight: Weight,
+    weightUnit: WeightUnit, fineness: Fineness, notes: string, quantity: number) => ({
         type,
         description,
         location,
@@ -241,17 +243,28 @@ describe("ModelParser.parse", () => {
 `);
     expectError(
         "InvalidValueProperties1.assets",
-        `'location': data should be string
-'weight': data should be >= 0.001
-'weightUnit': data should be equal to one of the allowed values
-'fineness': data should be <= 0.999999
-'quantity': data should be multiple of 1
-`);
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset.location should be string, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
     expectError(
         "InvalidValueProperties2.assets",
-        `'value': data should be number
-'valueCurrency': The value '5' does not match any of the possible values.
-`);
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset.weight should be >= 0.001, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
+    expectError(
+        "InvalidValueProperties3.assets",
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset.weightUnit should be equal to one of the allowed values, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
+    expectError(
+        "InvalidValueProperties4.assets",
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset.fineness should be <= 0.999999, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
+    expectError(
+        "InvalidValueProperties7.assets",
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.value should be number, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
+    expectError(
+        "InvalidValueProperties8.assets",
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.valueCurrency should be string, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
     expectError(
         "InvalidBtcWallet.assets",
         `'address': A value is required for either the Address or the Quantity (not both).

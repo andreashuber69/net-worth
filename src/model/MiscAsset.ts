@@ -19,7 +19,6 @@ import { ISerializedObject } from "./ISerializedObject";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
-import { AssetType } from "./validation/schemas/AssetType";
 import { Currency } from "./validation/schemas/Currency";
 
 /** Represents a miscellaneous asset. */

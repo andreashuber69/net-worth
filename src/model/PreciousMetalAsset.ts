@@ -20,7 +20,9 @@ import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
+import { Fineness } from "./validation/schemas/Fineness";
 import { PreciousMetalAssetType } from "./validation/schemas/ISerializedPreciousMetalAsset";
+import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./WeightUnit";
 
 /** Defines the base of all classes that represent a precious metal asset. */
@@ -34,7 +36,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
 
     public readonly location: string;
 
-    public readonly weight: number;
+    public readonly weight: Weight;
 
     public readonly weightUnit: WeightUnit;
 
@@ -42,7 +44,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
         return PreciousMetalAsset.getUnit(this.weight, this.weightUnit);
     }
 
-    public readonly fineness: number;
+    public readonly fineness: Fineness;
 
     public readonly displayDecimals = 0;
 
@@ -103,7 +105,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
     private static readonly unitFormatOptions = {
         maximumFractionDigits: PreciousMetalAssetInputInfo.weightDigits, minimumFractionDigits: 0, useGrouping: true };
 
-    private static getUnit(weight: number, unit: WeightUnit) {
+    private static getUnit(weight: Weight, unit: WeightUnit) {
         return `${weight.toLocaleString(undefined, this.unitFormatOptions)} ${WeightUnit[unit]}`;
     }
 

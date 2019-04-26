@@ -3,10 +3,12 @@
   "bundles": [
     {
       "primaryAsset": {
-        "type": "Misc",
-        "description": "Cash",
-        "value": "30",
-        "valueCurrency": 5,
+        "type": "Silver",
+        "description": "Coins",
+        "location": "Home",
+        "weight": 0,
+        "weightUnit": 1000,
+        "fineness": 0.99,
         "quantity": 1
       }
     }

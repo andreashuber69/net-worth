@@ -18,6 +18,7 @@ import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
 import { AssetType } from "./validation/schemas/AssetType";
+import { Fineness } from "./validation/schemas/Fineness";
 
 /** @internal */
 export interface IModel {
@@ -75,7 +76,7 @@ export abstract class Asset {
     public abstract get unit(): string;
 
     /** Provides the fineness, e.g. 0.999. For anything other than precious metals this is always undefined. */
-    public abstract get fineness(): number | undefined;
+    public abstract get fineness(): Fineness | undefined;
 
     /** Provides the asset quantity. */
     public abstract get quantity(): number | undefined;
