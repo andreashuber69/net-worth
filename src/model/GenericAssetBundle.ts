@@ -15,7 +15,6 @@ import { IAssetProperties } from "./IAssetProperties";
 import { ISerializedBundle } from "./ISerializedBundle";
 import { ISerializedObject } from "./ISerializedObject";
 import { SingleAsset } from "./SingleAsset";
-import { AssetType } from "./validation/schemas/AssetType";
 
 /** Defines a bundle containing a single asset. */
 export class GenericAssetBundle<

@@ -13,9 +13,7 @@
 import { Asset, IModel } from "./Asset";
 
 /** Defines the base of all classes that represent a single asset (as opposed to an [[AssetGroup]]). */
-export abstract class SingleAsset extends Asset  {
-    public quantity: number | undefined;
-
+export abstract class SingleAsset extends Asset {
     public quantityHint = "";
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

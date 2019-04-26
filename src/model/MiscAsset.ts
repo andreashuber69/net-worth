@@ -20,6 +20,7 @@ import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { Currency } from "./validation/schemas/Currency";
+import { Quantity0 } from "./validation/schemas/Quantity0";
 
 /** Represents a miscellaneous asset. */
 export class MiscAsset extends SingleAsset implements IMiscAsset {
@@ -43,6 +44,8 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
     public readonly value: number;
 
     public readonly valueCurrency: keyof typeof Currency;
+
+    public readonly quantity: Quantity0;
 
     public readonly displayDecimals = 0;
 

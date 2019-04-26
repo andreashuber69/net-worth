@@ -22,6 +22,7 @@ import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { Fineness } from "./validation/schemas/Fineness";
 import { PreciousMetalAssetType } from "./validation/schemas/ISerializedPreciousMetalAsset";
+import { Quantity0 } from "./validation/schemas/Quantity0";
 import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./WeightUnit";
 
@@ -45,6 +46,8 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
     }
 
     public readonly fineness: Fineness;
+
+    public readonly quantity: Quantity0;
 
     public readonly displayDecimals = 0;
 

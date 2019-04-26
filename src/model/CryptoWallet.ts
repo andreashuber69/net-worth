@@ -15,6 +15,7 @@ import { cryptoWalletSuperType, ICryptoWallet } from "./ICryptoWallet";
 import { SingleAsset } from "./SingleAsset";
 import { Erc20TokensWalletType } from "./validation/schemas/ISerializedErc20TokensWalletBundle";
 import { SimpleCryptoWalletType } from "./validation/schemas/ISerializedSimpleCryptoWalletBundle";
+import { QuantityAny } from "./validation/schemas/QuantityAny";
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends SingleAsset implements ICryptoWallet {
@@ -36,6 +37,8 @@ export abstract class CryptoWallet extends SingleAsset implements ICryptoWallet 
     public get fineness() {
         return undefined;
     }
+
+    public quantity: QuantityAny | undefined;
 
     public readonly displayDecimals = 6;
 

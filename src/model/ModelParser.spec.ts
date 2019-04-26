@@ -25,6 +25,8 @@ import { SilverAsset } from "./SilverAsset";
 import { Currency } from "./validation/schemas/Currency";
 import { Fineness } from "./validation/schemas/Fineness";
 import { GroupBy } from "./validation/schemas/GroupBy";
+import { Quantity0 } from "./validation/schemas/Quantity0";
+import { QuantityAny } from "./validation/schemas/QuantityAny";
 import { SortBy } from "./validation/schemas/SortBy";
 import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./WeightUnit";
@@ -176,7 +178,7 @@ type IExpectedAssetProperties<T extends Asset> =
 
 const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
     type: T["type"], description: string, location: string, weight: Weight,
-    weightUnit: WeightUnit, fineness: Fineness, notes: string, quantity: number) => ({
+    weightUnit: WeightUnit, fineness: Fineness, notes: string, quantity: Quantity0) => ({
         type,
         description,
         location,
@@ -197,7 +199,7 @@ const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
 
 const getExpectedCryptoProperties = <T extends CryptoWallet, U extends number>(
     type: T["type"], description: string, location: string, unit: string, displayDecimals: U, address: string,
-    notes: string, quantity: number) => ({
+    notes: string, quantity: QuantityAny) => ({
         type,
         description,
         location,
@@ -258,6 +260,10 @@ describe("ModelParser.parse", () => {
         // tslint:disable-next-line: max-line-length
         "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset.fineness should be <= 0.999999, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
     expectError(
+        "InvalidValueProperties5.assets",
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset.quantity should be multiple of 1, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
+    expectError(
         "InvalidValueProperties7.assets",
         // tslint:disable-next-line: max-line-length
         "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.value should be number, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
@@ -295,7 +301,7 @@ describe("ModelParser.parse", () => {
                     expect(asset.key).toBeGreaterThan(0);
                     expect(asset.unitValue).toBeGreaterThan(0);
 
-                    if ((asset.unitValue !== undefined) && (asset.quantity !== undefined)) {
+                    if (asset.unitValue !== undefined) {
                         expect(asset.totalValue).toBe(asset.unitValue * asset.quantity);
                     } else {
                         fail("unitValue or quantity are unexpectedly undefined.");

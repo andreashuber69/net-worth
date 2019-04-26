@@ -11,9 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAssetProperties } from "./IAssetProperties";
+import { QuantityAny } from "./validation/schemas/QuantityAny";
 
 /** Contains the defining properties common to all crypto currency wallets. */
 export interface ICryptoWalletProperties extends IAssetProperties {
     /** Provides the public address. */
     readonly address?: string;
+
+    /** Provides the asset quantity. */
+    readonly quantity?: QuantityAny;
 }

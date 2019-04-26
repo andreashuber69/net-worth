@@ -12,6 +12,7 @@
 
 import { IAssetProperties } from "./IAssetProperties";
 import { Currency } from "./validation/schemas/Currency";
+import { Quantity0 } from "./validation/schemas/Quantity0";
 
 /** Contains the defining properties of a miscellaneous asset. */
 export interface IMiscAssetProperties extends IAssetProperties {
@@ -20,4 +21,7 @@ export interface IMiscAssetProperties extends IAssetProperties {
 
     /** Provides the currency used for `value`, e.g. [[Currency.USD]]. */
     readonly valueCurrency: keyof typeof Currency;
+
+    /** Provides the asset quantity. */
+    readonly quantity?: Quantity0;
 }

@@ -12,6 +12,7 @@
 
 import { IAssetProperties } from "./IAssetProperties";
 import { Fineness } from "./validation/schemas/Fineness";
+import { Quantity0 } from "./validation/schemas/Quantity0";
 import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./WeightUnit";
 
@@ -25,4 +26,7 @@ export interface IPreciousMetalAssetProperties extends IAssetProperties {
 
     /** Provides the fineness, e.g. 0.999. */
     readonly fineness: Fineness;
+
+    /** Provides the asset quantity. */
+    readonly quantity?: Quantity0;
 }

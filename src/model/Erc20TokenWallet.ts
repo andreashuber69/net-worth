@@ -17,11 +17,12 @@ import { IAssetProperties } from "./IAssetProperties";
 import { ISerializedObject } from "./ISerializedObject";
 import { AssetType } from "./validation/schemas/AssetType";
 import { Erc20TokensWalletType } from "./validation/schemas/ISerializedErc20TokensWalletBundle";
+import { QuantityAny } from "./validation/schemas/QuantityAny";
 
 interface ITokenWalletParameters {
     readonly editable: Erc20TokensWallet;
     readonly currencySymbol: string;
-    readonly quantity: number;
+    readonly quantity: QuantityAny;
     readonly unitValueUsd?: number;
 }
 

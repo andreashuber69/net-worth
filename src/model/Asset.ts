@@ -19,6 +19,7 @@ import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
 import { AssetType } from "./validation/schemas/AssetType";
 import { Fineness } from "./validation/schemas/Fineness";
+import { QuantityAny } from "./validation/schemas/QuantityAny";
 
 /** @internal */
 export interface IModel {
@@ -79,7 +80,7 @@ export abstract class Asset {
     public abstract get fineness(): Fineness | undefined;
 
     /** Provides the asset quantity. */
-    public abstract get quantity(): number | undefined;
+    public abstract get quantity(): QuantityAny | undefined;
 
     /** Provides the quantity query error message, if applicable. */
     public abstract get quantityHint(): string;
