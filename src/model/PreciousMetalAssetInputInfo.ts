@@ -10,7 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
+import { IModel } from "./Asset";
+import { AssetInputInfo } from "./AssetInputInfo";
+import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
+import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Currency } from "./validation/schemas/Currency";
@@ -54,11 +57,13 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     });
 
     /** @internal */
-    public constructor(public readonly type: PreciousMetalAssetType, ctor: IAssetConstructor) {
-        super(ctor);
+    public constructor(
+        public readonly type: PreciousMetalAssetType,
+        private readonly ctor: new (parent: IModel, props: IPreciousMetalAssetProperties) => PreciousMetalAsset) {
+        super();
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static readonly weightStep = Math.pow(10, -PreciousMetalAssetInputInfo.weightDigits);
+    public createAsset(parent: IModel, props: IPreciousMetalAssetProperties) {
+        return new this.ctor(parent, props);
+    }
 }

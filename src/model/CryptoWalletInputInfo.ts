@@ -10,9 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset } from "./Asset";
-import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
+import { Asset, IModel } from "./Asset";
+import { AssetInputInfo } from "./AssetInputInfo";
 import { AssetPropertyName } from "./AssetInterfaces";
+import { CryptoWallet } from "./CryptoWallet";
+import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
@@ -26,7 +28,7 @@ type CryptoWalletType = SimpleCryptoWalletType | Erc20TokensWalletType;
 
 interface ICryptoWalletInputInfoParameters {
     readonly type: CryptoWalletType;
-    readonly ctor: IAssetConstructor;
+    readonly ctor: new (parent: IModel, props: ICryptoWalletProperties) => CryptoWallet;
     readonly addressHint: string;
     readonly quantityDecimals?: 8 | 18;
 }
@@ -56,8 +58,9 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
 
     /** @internal */
     public constructor(params: ICryptoWalletInputInfoParameters) {
-        super(params.ctor);
+        super();
         this.type = params.type;
+        this.ctor = params.ctor;
 
         this.address = new TextInputInfo({
             label: "Address", hint: params.addressHint, isPresent: true, isRequired: !params.quantityDecimals,
@@ -65,6 +68,10 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
         });
 
         this.quantity = CryptoWalletInputInfo.getQuantityInputInfo(params.quantityDecimals);
+    }
+
+    public createAsset(parent: IModel, props: ICryptoWalletProperties) {
+        return new this.ctor(parent, props);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,4 +112,6 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
                 return "QuantityAny";
         }
     }
+
+    private readonly ctor: new (parent: IModel, props: ICryptoWalletProperties) => CryptoWallet;
 }

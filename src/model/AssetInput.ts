@@ -83,7 +83,7 @@ export class AssetInput {
         new CryptoWalletInputInfo({ type: "Bitcoin Gold", ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
         new CryptoWalletInputInfo({ type: "Dash", ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
         new CryptoWalletInputInfo({ type: "Zcash", ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
-        new MiscAssetInputInfo(MiscAsset),
+        new MiscAssetInputInfo(),
     ];
 
     /** @internal */

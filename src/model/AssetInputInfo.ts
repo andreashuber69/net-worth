@@ -28,8 +28,6 @@ interface IValidationResults extends IAuxProperties<true | string> {
     [key: string]: true | string;
 }
 
-export type IAssetConstructor = new (m: IModel, p: IAssetIntersection) => Asset;
-
 /**
  * Defines how the properties of a given asset type need to be input and validated and provides a method to create a
  * representation of the asset.
@@ -62,13 +60,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     public includeRelations = false;
 
     /** @internal */
-    public createAsset(parent: IModel, props: IAssetIntersection) {
-        if (!this.ctor) {
-            throw new Error("No ctor was specified.");
-        }
-
-        return new this.ctor(parent, props);
-    }
+    public abstract createAsset(parent: IModel, props: IAssetIntersection): Asset;
 
     public get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T {
         if (propertyName === undefined) {
@@ -126,11 +118,6 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /** @internal */
-    protected constructor(private readonly ctor?: IAssetConstructor) {
-        super();
-    }
 
     /** @internal */
     protected validateComposite(strict: boolean, input: CompositeInput, propertyName?: AssetPropertyName) {

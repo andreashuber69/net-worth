@@ -10,7 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetInputInfo, IAssetConstructor } from "./AssetInputInfo";
+import { IModel } from "./Asset";
+import { AssetInputInfo } from "./AssetInputInfo";
+import { IMiscAssetProperties } from "./IMiscAssetProperties";
+import { MiscAsset } from "./MiscAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Currency } from "./validation/schemas/Currency";
@@ -48,12 +51,8 @@ export class MiscAssetInputInfo extends AssetInputInfo {
         label: "Quantity", hint: "The number of items.", isPresent: true, isRequired: true, schemaName: "Quantity0",
     });
 
-    /** @internal */
-    public constructor(ctor: IAssetConstructor) {
-        super(ctor);
+    // tslint:disable-next-line: prefer-function-over-method
+    public createAsset(parent: IModel, props: IMiscAssetProperties) {
+        return new MiscAsset(parent, props);
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static readonly valueStep = Math.pow(10, -MiscAssetInputInfo.valueDigits);
 }

@@ -10,7 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { Asset, IModel } from "../model/Asset";
 import { AssetInputInfo } from "../model/AssetInputInfo";
+import { IAssetIntersection } from "../model/AssetInterfaces";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { TextInputInfo } from "../model/TextInputInfo";
 import { Currency } from "../model/validation/schemas/Currency";
@@ -37,5 +39,10 @@ export class NoAssetInputInfo extends AssetInputInfo {
     /** @internal */
     public constructor() {
         super();
+    }
+
+    // tslint:disable-next-line: prefer-function-over-method
+    public createAsset(parent: IModel, props: IAssetIntersection): Asset {
+        throw new Error("Can't create asset.");
     }
 }
