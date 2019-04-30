@@ -10,9 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { IAssetProperties } from "./IAssetProperties";
 import { AssetType } from "./validation/schemas/AssetType";
 
-/** @internal */
-export interface ISerializedObject<T extends keyof typeof AssetType> {
+interface ISerializedObject<T extends keyof typeof AssetType> {
     readonly type: T;
 }
+
+export type ISerializedAsset<T extends keyof typeof AssetType, U extends IAssetProperties> = ISerializedObject<T> & U;

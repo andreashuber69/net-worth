@@ -15,7 +15,7 @@ import { IModel } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IPreciousMetalAsset, preciousMetalSuperType } from "./IPreciousMetalAsset";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
-import { ISerializedObject } from "./ISerializedObject";
+import { ISerializedAsset } from "./ISerializedAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
@@ -62,7 +62,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
     public readonly superType = PreciousMetalAsset.superType;
 
     /** @internal */
-    public toJSON(): ISerializedObject<this["type"]> & IPreciousMetalAssetProperties {
+    public toJSON(): ISerializedAsset<this["type"], IPreciousMetalAssetProperties> {
         return {
             type: this.type,
             description: this.description,

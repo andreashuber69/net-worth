@@ -13,7 +13,7 @@
 import { AssetBundle } from "./AssetBundle";
 import { IAssetIntersection, IAssetUnion, SerializedAssetPropertyName } from "./AssetInterfaces";
 import { IAssetProperties } from "./IAssetProperties";
-import { ISerializedObject } from "./ISerializedObject";
+import { ISerializedAsset } from "./ISerializedAsset";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
@@ -133,7 +133,7 @@ export abstract class Asset {
     public abstract get interface(): IAssetUnion;
 
     /** @internal */
-    public abstract toJSON(): ISerializedObject<keyof typeof AssetType> & IAssetProperties;
+    public abstract toJSON(): ISerializedAsset<keyof typeof AssetType, IAssetProperties>;
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
@@ -168,7 +168,7 @@ export abstract class Asset {
     private static nextKey = 0;
 
     private static getPropertyName<
-        T extends keyof (ISerializedObject<keyof typeof AssetType> & IAssetIntersection)>(name: T) {
+        T extends keyof (ISerializedAsset<keyof typeof AssetType, IAssetIntersection>)>(name: T) {
         return name;
     }
 

@@ -15,7 +15,7 @@ import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IMiscAsset, miscSuperType } from "./IMiscAsset";
 import { IMiscAssetProperties } from "./IMiscAssetProperties";
-import { ISerializedObject } from "./ISerializedObject";
+import { ISerializedAsset } from "./ISerializedAsset";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
@@ -70,7 +70,7 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
     }
 
     /** @internal */
-    public toJSON(): ISerializedObject<this["type"]> & IMiscAssetProperties {
+    public toJSON(): ISerializedAsset<this["type"], IMiscAssetProperties> {
         return {
             type: this.type,
             description: this.description,

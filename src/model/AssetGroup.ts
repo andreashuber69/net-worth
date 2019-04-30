@@ -13,7 +13,7 @@
 import { Asset, IModel } from "./Asset";
 import { IAssetUnion } from "./AssetInterfaces";
 import { IAssetProperties } from "./IAssetProperties";
-import { ISerializedObject } from "./ISerializedObject";
+import { ISerializedAsset } from "./ISerializedAsset";
 import { AssetType } from "./validation/schemas/AssetType";
 
 // This could easily be fixed by overriding abstract methods in two extending classes, but doing so seems strange at
@@ -88,7 +88,7 @@ export class AssetGroup extends Asset {
     }
 
     // tslint:disable-next-line:prefer-function-over-method
-    public toJSON(): ISerializedObject<keyof typeof AssetType> & IAssetProperties {
+    public toJSON(): ISerializedAsset<keyof typeof AssetType, IAssetProperties> {
         throw new Error(`${AssetGroup.name} cannot be serialized.`);
     }
 

@@ -11,9 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAssetProperties } from "./IAssetProperties";
-import { ISerializedObject } from "./ISerializedObject";
+import { ISerializedAsset } from "./ISerializedAsset";
 import { AssetType } from "./validation/schemas/AssetType";
 
 export interface ISerializedBundle<T extends keyof typeof AssetType, U extends IAssetProperties> {
-    readonly primaryAsset: ISerializedObject<T> & U;
+    readonly primaryAsset: ISerializedAsset<T, U>;
 }
