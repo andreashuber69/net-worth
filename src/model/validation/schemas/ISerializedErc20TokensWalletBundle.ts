@@ -10,10 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ISerializedBundle } from "../../ISerializedBundle";
 import { IDeletedAssets } from "./IDeletedAssets";
 import { ISerializedErc20TokensWallet } from "./ISerializedErc20TokensWallet";
 
-export interface ISerializedErc20TokensWalletBundle extends
-    ISerializedBundle<ISerializedErc20TokensWallet>, IDeletedAssets {
+export interface ISerializedErc20TokensWalletBundle extends IDeletedAssets {
+    readonly primaryAsset: ISerializedErc20TokensWallet;
 }

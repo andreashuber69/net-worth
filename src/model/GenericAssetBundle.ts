@@ -13,7 +13,6 @@
 import { AssetBundle } from "./AssetBundle";
 import { IAssetProperties } from "./IAssetProperties";
 import { ISerializedAsset } from "./ISerializedAsset";
-import { ISerializedBundle } from "./ISerializedBundle";
 import { SingleAsset } from "./SingleAsset";
 
 /** Defines a bundle containing a single asset. */
@@ -39,7 +38,7 @@ export class GenericAssetBundle<
         return this.assets[0].queryData();
     }
 
-    public toJSON(): ISerializedBundle<ISerializedAsset<T["type"], U>> {
+    public toJSON() {
         return {
             primaryAsset: this.assets[0],
         };
