@@ -16,11 +16,14 @@ import { IMiscAsset } from "./IMiscAsset";
 import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { IPreciousMetalAsset } from "./IPreciousMetalAsset";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
-import { ISerializedAsset } from "./ISerializedAsset";
 import { AssetType } from "./validation/schemas/AssetType";
 
 /** Combines the defining properties of all assets. */
 export type IAssetIntersection = IPreciousMetalAssetProperties & ICryptoWalletProperties & IMiscAssetProperties;
+
+export interface ISerializedAssetIntersection extends IAssetIntersection {
+    readonly type: keyof typeof AssetType;
+}
 
 export type AssetPropertyName = keyof IAssetIntersection;
 
@@ -33,4 +36,4 @@ export const allAssetPropertyNames: AssetPropertyName[] = [
 export type IAssetUnion = IPreciousMetalAsset | ICryptoWallet | IMiscAsset;
 
 /** @internal */
-export type SerializedAssetPropertyName = keyof (ISerializedAsset<keyof typeof AssetType, IAssetIntersection>);
+export type SerializedAssetPropertyName = keyof ISerializedAssetIntersection;

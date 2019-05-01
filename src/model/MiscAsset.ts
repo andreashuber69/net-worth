@@ -15,11 +15,11 @@ import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IMiscAsset, miscSuperType } from "./IMiscAsset";
 import { IMiscAssetProperties } from "./IMiscAssetProperties";
-import { ISerializedAsset } from "./ISerializedAsset";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { Currency } from "./validation/schemas/Currency";
+import { ISerializedMiscAsset } from "./validation/schemas/ISerializedMiscAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 
 /** Represents a miscellaneous asset. */
@@ -70,7 +70,7 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
     }
 
     /** @internal */
-    public toJSON(): ISerializedAsset<this["type"], IMiscAssetProperties> {
+    public toJSON(): ISerializedMiscAsset {
         return {
             type: this.type,
             description: this.description,

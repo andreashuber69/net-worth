@@ -15,13 +15,14 @@ import { IModel } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IPreciousMetalAsset, preciousMetalSuperType } from "./IPreciousMetalAsset";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
-import { ISerializedAsset } from "./ISerializedAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { Fineness } from "./validation/schemas/Fineness";
-import { PreciousMetalAssetType } from "./validation/schemas/ISerializedPreciousMetalAsset";
+import {
+    ISerializedPreciousMetalAsset, PreciousMetalAssetType,
+} from "./validation/schemas/ISerializedPreciousMetalAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./WeightUnit";
@@ -62,7 +63,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
     public readonly superType = PreciousMetalAsset.superType;
 
     /** @internal */
-    public toJSON(): ISerializedAsset<this["type"], IPreciousMetalAssetProperties> {
+    public toJSON(): ISerializedPreciousMetalAsset {
         return {
             type: this.type,
             description: this.description,

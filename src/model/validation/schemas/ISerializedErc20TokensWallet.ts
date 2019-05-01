@@ -11,9 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
-import { ISerializedAsset } from "../../ISerializedAsset";
 
 export type Erc20TokensWalletType = "ERC20 Tokens";
 
-export interface ISerializedErc20TokensWallet extends ISerializedAsset<Erc20TokensWalletType, ICryptoWalletProperties> {
+export interface ISerializedErc20TokensWallet extends ICryptoWalletProperties {
+    readonly type: Erc20TokensWalletType;
 }

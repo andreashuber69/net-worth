@@ -10,6 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { AssetType } from "./validation/schemas/AssetType";
+
 /**
  * Defines the common editable properties of all assets.
  * @description This interface (as well as its extending interfaces) defines the properties as they need to be provided
@@ -26,4 +28,8 @@ export interface IAssetProperties {
 
     /** Provides the asset notes. */
     readonly notes?: string;
+}
+
+export interface ISerializedAsset extends IAssetProperties {
+    readonly type: keyof typeof AssetType;
 }

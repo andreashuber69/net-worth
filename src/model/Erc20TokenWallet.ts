@@ -13,9 +13,7 @@
 import { IAssetUnion } from "./AssetInterfaces";
 import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
-import { IAssetProperties } from "./IAssetProperties";
-import { ISerializedAsset } from "./ISerializedAsset";
-import { AssetType } from "./validation/schemas/AssetType";
+import { ISerializedAsset } from "./IAssetProperties";
 import { Erc20TokensWalletType } from "./validation/schemas/ISerializedErc20TokensWallet";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
 
@@ -64,7 +62,7 @@ export class Erc20TokenWallet extends CryptoWallet {
     }
 
     // tslint:disable-next-line:prefer-function-over-method
-    public toJSON(): ISerializedAsset<keyof typeof AssetType, IAssetProperties> {
+    public toJSON(): ISerializedAsset {
         throw new Error(`${Erc20TokenWallet.name} cannot be serialized.`);
     }
 

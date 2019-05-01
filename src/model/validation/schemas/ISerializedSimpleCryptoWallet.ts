@@ -11,11 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
-import { ISerializedAsset } from "../../ISerializedAsset";
 
 export type SimpleCryptoWalletType =
     "Bitcoin" | "Litecoin" | "Ethereum Classic" | "Ethereum" | "Bitcoin Gold" | "Dash" | "Zcash";
 
-export interface ISerializedSimpleCryptoWallet extends
-    ISerializedAsset<SimpleCryptoWalletType, ICryptoWalletProperties> {
+export interface ISerializedSimpleCryptoWallet extends ICryptoWalletProperties {
+    readonly type: SimpleCryptoWalletType;
 }

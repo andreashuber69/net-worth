@@ -11,10 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IPreciousMetalAssetProperties } from "../../IPreciousMetalAssetProperties";
-import { ISerializedAsset } from "../../ISerializedAsset";
 
 export type PreciousMetalAssetType = "Silver" | "Palladium" | "Platinum" | "Gold";
 
-export interface ISerializedPreciousMetalAsset extends
-    ISerializedAsset<PreciousMetalAssetType, IPreciousMetalAssetProperties> {
+export interface ISerializedPreciousMetalAsset extends IPreciousMetalAssetProperties {
+    readonly type: PreciousMetalAssetType;
 }

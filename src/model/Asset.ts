@@ -11,9 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
-import { IAssetIntersection, IAssetUnion, SerializedAssetPropertyName } from "./AssetInterfaces";
-import { IAssetProperties } from "./IAssetProperties";
-import { ISerializedAsset } from "./ISerializedAsset";
+import { IAssetUnion, ISerializedAssetIntersection, SerializedAssetPropertyName } from "./AssetInterfaces";
+import { ISerializedAsset } from "./IAssetProperties";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
@@ -133,7 +132,7 @@ export abstract class Asset {
     public abstract get interface(): IAssetUnion;
 
     /** @internal */
-    public abstract toJSON(): ISerializedAsset<keyof typeof AssetType, IAssetProperties>;
+    public abstract toJSON(): ISerializedAsset;
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
@@ -167,8 +166,7 @@ export abstract class Asset {
 
     private static nextKey = 0;
 
-    private static getPropertyName<
-        T extends keyof (ISerializedAsset<keyof typeof AssetType, IAssetIntersection>)>(name: T) {
+    private static getPropertyName<T extends keyof ISerializedAssetIntersection>(name: T) {
         return name;
     }
 
