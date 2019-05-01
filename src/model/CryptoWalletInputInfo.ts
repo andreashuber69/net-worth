@@ -20,8 +20,8 @@ import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Unknown";
 import { Currency } from "./validation/schemas/Currency";
-import { Erc20TokensWalletType } from "./validation/schemas/ISerializedErc20TokensWalletBundle";
-import { SimpleCryptoWalletType } from "./validation/schemas/ISerializedSimpleCryptoWalletBundle";
+import { Erc20TokensWalletType } from "./validation/schemas/ISerializedErc20TokensWallet";
+import { SimpleCryptoWalletType } from "./validation/schemas/ISerializedSimpleCryptoWallet";
 import { WeightUnit } from "./WeightUnit";
 
 type CryptoWalletType = SimpleCryptoWalletType | Erc20TokensWalletType;

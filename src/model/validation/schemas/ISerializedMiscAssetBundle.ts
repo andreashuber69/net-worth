@@ -10,11 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IMiscAssetProperties } from "../../IMiscAssetProperties";
-import { ISerializedAsset } from "../../ISerializedAsset";
 import { ISerializedBundle } from "../../ISerializedBundle";
-
-export type ISerializedMiscAsset = ISerializedAsset<"Misc", IMiscAssetProperties>;
+import { ISerializedMiscAsset } from "./ISerializedMiscAsset";
 
 export interface ISerializedMiscAssetBundle extends ISerializedBundle<ISerializedMiscAsset> {
 }

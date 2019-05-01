@@ -10,14 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
-import { ISerializedAsset } from "../../ISerializedAsset";
 import { ISerializedBundle } from "../../ISerializedBundle";
-
-export type SimpleCryptoWalletType =
-    "Bitcoin" | "Litecoin" | "Ethereum Classic" | "Ethereum" | "Bitcoin Gold" | "Dash" | "Zcash";
-
-export type ISerializedSimpleCryptoWallet = ISerializedAsset<SimpleCryptoWalletType, ICryptoWalletProperties>;
+import { ISerializedSimpleCryptoWallet } from "./ISerializedSimpleCryptoWallet";
 
 export interface ISerializedSimpleCryptoWalletBundle extends ISerializedBundle<ISerializedSimpleCryptoWallet> {
 }

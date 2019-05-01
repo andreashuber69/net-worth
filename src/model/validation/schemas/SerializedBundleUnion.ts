@@ -12,7 +12,7 @@
 
 import { ISerializedErc20TokensWalletBundle } from "./ISerializedErc20TokensWalletBundle";
 import { ISerializedMiscAssetBundle } from "./ISerializedMiscAssetBundle";
-import { ISerializedPreciousMetalAssetBundle } from "./ISerializedPreciousMetalAsset";
+import { ISerializedPreciousMetalAssetBundle } from "./ISerializedPreciousMetalAssetBundle";
 import { ISerializedSimpleCryptoWalletBundle } from "./ISerializedSimpleCryptoWalletBundle";
 
 export type SerializedBundleUnion =

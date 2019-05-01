@@ -12,11 +12,9 @@
 
 import { IPreciousMetalAssetProperties } from "../../IPreciousMetalAssetProperties";
 import { ISerializedAsset } from "../../ISerializedAsset";
-import { ISerializedBundle } from "../../ISerializedBundle";
 
 export type PreciousMetalAssetType = "Silver" | "Palladium" | "Platinum" | "Gold";
 
-export type ISerializedPreciousMetalAsset = ISerializedAsset<PreciousMetalAssetType, IPreciousMetalAssetProperties>;
-
-export interface ISerializedPreciousMetalAssetBundle extends ISerializedBundle<ISerializedPreciousMetalAsset> {
+export interface ISerializedPreciousMetalAsset extends
+    ISerializedAsset<PreciousMetalAssetType, IPreciousMetalAssetProperties> {
 }

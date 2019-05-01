@@ -16,7 +16,7 @@ import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { IAssetProperties } from "./IAssetProperties";
 import { ISerializedAsset } from "./ISerializedAsset";
 import { AssetType } from "./validation/schemas/AssetType";
-import { Erc20TokensWalletType } from "./validation/schemas/ISerializedErc20TokensWalletBundle";
+import { Erc20TokensWalletType } from "./validation/schemas/ISerializedErc20TokensWallet";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
 
 interface ITokenWalletParameters {
