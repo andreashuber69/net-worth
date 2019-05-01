@@ -11,9 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IMiscAssetProperties } from "../../IMiscAssetProperties";
+import { ISerializedAsset } from "../../ISerializedAsset";
 import { ISerializedBundle } from "../../ISerializedBundle";
 
-export type MiscAssetType = "Misc";
+export type ISerializedMiscAsset = ISerializedAsset<"Misc", IMiscAssetProperties>;
 
-export interface ISerializedMiscAssetBundle extends ISerializedBundle<MiscAssetType, IMiscAssetProperties> {
+export interface ISerializedMiscAssetBundle extends ISerializedBundle<ISerializedMiscAsset> {
 }

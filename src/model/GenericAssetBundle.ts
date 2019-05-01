@@ -39,7 +39,7 @@ export class GenericAssetBundle<
         return this.assets[0].queryData();
     }
 
-    public toJSON(): ISerializedBundle<T["type"], U> {
+    public toJSON(): ISerializedBundle<ISerializedAsset<T["type"], U>> {
         return {
             primaryAsset: this.assets[0],
         };

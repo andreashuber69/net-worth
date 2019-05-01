@@ -14,6 +14,9 @@ import { IAssetProperties } from "./IAssetProperties";
 import { ISerializedAsset } from "./ISerializedAsset";
 import { AssetType } from "./validation/schemas/AssetType";
 
-export interface ISerializedBundle<T extends keyof typeof AssetType, U extends IAssetProperties> {
-    readonly primaryAsset: ISerializedAsset<T, U>;
+export interface ISerializedBundle<
+    S extends ISerializedAsset<T, U>,
+    T extends keyof typeof AssetType = S["type"],
+    U extends IAssetProperties = Pick<S, Exclude<keyof S, "type">>> {
+    readonly primaryAsset: S;
 }

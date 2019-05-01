@@ -11,11 +11,14 @@
 // <http://www.gnu.org/licenses/>.
 
 import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
+import { ISerializedAsset } from "../../ISerializedAsset";
 import { ISerializedBundle } from "../../ISerializedBundle";
 import { IDeletedAssets } from "./IDeletedAssets";
 
 export type Erc20TokensWalletType = "ERC20 Tokens";
 
+export type ISerializedErc20TokensWallet = ISerializedAsset<Erc20TokensWalletType, ICryptoWalletProperties>;
+
 export interface ISerializedErc20TokensWalletBundle extends
-    ISerializedBundle<Erc20TokensWalletType, ICryptoWalletProperties>, IDeletedAssets {
+    ISerializedBundle<ISerializedErc20TokensWallet>, IDeletedAssets {
 }
