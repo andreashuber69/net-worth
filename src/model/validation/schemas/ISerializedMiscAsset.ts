@@ -12,6 +12,8 @@
 
 import { IMiscAssetProperties } from "../../IMiscAssetProperties";
 
+export type MiscAssetType = "Misc";
+
 export interface ISerializedMiscAsset extends IMiscAssetProperties {
-    readonly type: "Misc";
+    readonly type: MiscAssetType;
 }

@@ -11,5 +11,5 @@
 // <http://www.gnu.org/licenses/>.
 
 export interface IDeletedAssets {
-    deletedAssets: string[];
+    readonly deletedAssets: string[];
 }
