@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset } from "./Asset";
-import { SerializedAssetBundleUnion } from "./validation/schemas/SerializedAssetBundleUnion";
+import { TaggedAssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion";
 
 /**
  * Defines the base of all classes that represent a bundle of assets.
@@ -39,5 +39,5 @@ export abstract class AssetBundle {
     public abstract queryData(): Promise<void>;
 
     /** @internal */
-    public abstract toJSON(): SerializedAssetBundleUnion;
+    public abstract toJSON(): TaggedAssetBundleUnion;
 }

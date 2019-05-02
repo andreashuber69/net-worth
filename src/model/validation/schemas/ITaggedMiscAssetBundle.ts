@@ -10,10 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IMiscAssetProperties } from "../../IMiscAssetProperties";
+import { ITaggedMiscAsset } from "./ITaggedMiscAsset";
 
-export type MiscAssetType = "Misc";
-
-export interface ISerializedMiscAsset extends IMiscAssetProperties {
-    readonly type: MiscAssetType;
+export interface ITaggedMiscAssetBundle {
+    readonly primaryAsset: ITaggedMiscAsset;
 }

@@ -10,11 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ISerializedErc20TokensWalletBundle } from "./ISerializedErc20TokensWalletBundle";
-import { ISerializedMiscAssetBundle } from "./ISerializedMiscAssetBundle";
-import { ISerializedPreciousMetalAssetBundle } from "./ISerializedPreciousMetalAssetBundle";
-import { ISerializedSimpleCryptoWalletBundle } from "./ISerializedSimpleCryptoWalletBundle";
+import { IMiscAssetProperties } from "../../IMiscAssetProperties";
 
-export type SerializedAssetBundleUnion =
-    ISerializedPreciousMetalAssetBundle | ISerializedSimpleCryptoWalletBundle |
-    ISerializedErc20TokensWalletBundle | ISerializedMiscAssetBundle;
+export type MiscAssetType = "Misc";
+
+export interface ITaggedMiscAsset extends IMiscAssetProperties {
+    readonly type: MiscAssetType;
+}

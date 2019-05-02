@@ -12,12 +12,12 @@
 
 import { AssetBundle } from "./AssetBundle";
 import { IAssetProperties } from "./IAssetProperties";
-import { ISerializedObject } from "./ISerializedObject";
+import { ITaggedObject } from "./ITaggedObject";
 import { SingleAsset } from "./SingleAsset";
 
 /** Defines a bundle containing a single asset. */
 export class GenericAssetBundle<
-    T extends SingleAsset & ISerializedObject<T["type"]> & U, U extends IAssetProperties> extends AssetBundle {
+    T extends SingleAsset & ITaggedObject<T["type"]> & U, U extends IAssetProperties> extends AssetBundle {
     public readonly assets: T[];
 
     /** @internal */

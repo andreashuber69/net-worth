@@ -29,7 +29,7 @@ import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
 import { Unknown } from "./Unknown";
-import { SerializedAssetBundleUnion } from "./validation/schemas/SerializedAssetBundleUnion";
+import { TaggedAssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion";
 import { ZecWallet } from "./ZecWallet";
 
 // cSpell:ignore xpub, ypub, Mtub, Ltub, drkp
@@ -85,7 +85,7 @@ export class AssetInput {
     ];
 
     /** @internal */
-    public static parseBundle(rawBundle: SerializedAssetBundleUnion) {
+    public static parseBundle(rawBundle: TaggedAssetBundleUnion) {
         const rawAsset = rawBundle.primaryAsset;
         const assetInfo = this.infos.find((info) => info.type === rawAsset.type);
 

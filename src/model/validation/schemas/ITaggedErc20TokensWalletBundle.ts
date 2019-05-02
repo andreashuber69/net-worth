@@ -10,8 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetType } from "./validation/schemas/AssetType";
+import { IDeletedAssets } from "./IDeletedAssets";
+import { ITaggedErc20TokensWallet } from "./ITaggedErc20TokensWallet";
 
-export interface ISerializedObject<T extends keyof typeof AssetType> {
-    readonly type: T;
+export interface ITaggedErc20TokensWalletBundle extends IDeletedAssets {
+    readonly primaryAsset: ITaggedErc20TokensWallet;
 }

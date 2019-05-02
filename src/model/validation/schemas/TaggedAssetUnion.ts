@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IPreciousMetalAssetProperties } from "../../IPreciousMetalAssetProperties";
+import { ITaggedErc20TokensWallet } from "./ITaggedErc20TokensWallet";
+import { ITaggedMiscAsset } from "./ITaggedMiscAsset";
+import { ITaggedPreciousMetalAsset } from "./ITaggedPreciousMetalAsset";
+import { ITaggedSimpleCryptoWallet } from "./ITaggedSimpleCryptoWallet";
 
-export type PreciousMetalAssetType = "Silver" | "Palladium" | "Platinum" | "Gold";
-
-export interface ISerializedPreciousMetalAsset extends IPreciousMetalAssetProperties {
-    readonly type: PreciousMetalAssetType;
-}
+export type TaggedAssetUnion =
+    ITaggedPreciousMetalAsset | ITaggedSimpleCryptoWallet | ITaggedErc20TokensWallet | ITaggedMiscAsset;

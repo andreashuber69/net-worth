@@ -20,7 +20,7 @@ import { QueryUtility } from "./QueryUtility";
 import { Currency } from "./validation/schemas/Currency";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { ISort } from "./validation/schemas/ISort";
-import { SerializedModel } from "./validation/schemas/SerializedModel";
+import { TaggedModel } from "./validation/schemas/TaggedModel";
 
 export interface IModelParameters {
     readonly name?: string;
@@ -32,7 +32,7 @@ export interface IModelParameters {
     readonly createBundles: Array<(model: IModel) => AssetBundle>;
 }
 
-export type ISerializedModel = Required<SerializedModel>;
+export type ITaggedModel = Required<TaggedModel>;
 
 /** Represents the main model of the application. */
 export class Model implements IModel {
@@ -124,7 +124,7 @@ export class Model implements IModel {
     }
 
     /** @internal */
-    public toJSON(): ISerializedModel {
+    public toJSON(): ITaggedModel {
         return {
             version: 1,
             name: this.name,

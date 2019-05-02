@@ -14,7 +14,7 @@ import { IModel } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
-import { ISerializedObject } from "./ISerializedObject";
+import { ITaggedObject } from "./ITaggedObject";
 import { QueryUtility } from "./QueryUtility";
 
 export interface IRealCryptoWalletParameters extends ICryptoWalletProperties {
@@ -56,7 +56,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     }
 
     /** @internal */
-    public toJSON(): ISerializedObject<this["type"]> & ICryptoWalletProperties {
+    public toJSON(): ITaggedObject<this["type"]> & ICryptoWalletProperties {
         return {
             type: this.type,
             description: this.description,

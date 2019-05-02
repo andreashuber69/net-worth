@@ -21,7 +21,7 @@ import { AssetType } from "./validation/schemas/AssetType";
 /** Combines the defining properties of all assets. */
 export type IAssetIntersection = IPreciousMetalAssetProperties & ICryptoWalletProperties & IMiscAssetProperties;
 
-export interface ISerializedAssetIntersection extends IAssetIntersection {
+export interface ITaggedAssetIntersection extends IAssetIntersection {
     readonly type: keyof typeof AssetType;
 }
 
@@ -36,4 +36,4 @@ export const allAssetPropertyNames: AssetPropertyName[] = [
 export type IAssetUnion = IPreciousMetalAsset | ICryptoWallet | IMiscAsset;
 
 /** @internal */
-export type SerializedAssetPropertyName = keyof ISerializedAssetIntersection;
+export type TaggedAssetPropertyName = keyof ITaggedAssetIntersection;

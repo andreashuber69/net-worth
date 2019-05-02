@@ -10,8 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ISerializedMiscAsset } from "./ISerializedMiscAsset";
+import { IPreciousMetalAssetProperties } from "../../IPreciousMetalAssetProperties";
 
-export interface ISerializedMiscAssetBundle {
-    readonly primaryAsset: ISerializedMiscAsset;
+export type PreciousMetalAssetType = "Silver" | "Palladium" | "Platinum" | "Gold";
+
+export interface ITaggedPreciousMetalAsset extends IPreciousMetalAssetProperties {
+    readonly type: PreciousMetalAssetType;
 }

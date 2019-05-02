@@ -12,7 +12,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { IAssetUnion } from "./AssetInterfaces";
-import { ISerializedAsset } from "./IAssetProperties";
+import { ITaggedAsset } from "./IAssetProperties";
 
 // This could easily be fixed by overriding abstract methods in two extending classes, but doing so seems strange at
 // best. Most method implementations are trivial, so their number shouldn't matter that much.
@@ -86,7 +86,7 @@ export class AssetGroup extends Asset {
     }
 
     // tslint:disable-next-line:prefer-function-over-method
-    public toJSON(): ISerializedAsset {
+    public toJSON(): ITaggedAsset {
         throw new Error(`${AssetGroup.name} cannot be serialized.`);
     }
 

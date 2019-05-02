@@ -11,8 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
-import { IAssetUnion, ISerializedAssetIntersection, SerializedAssetPropertyName } from "./AssetInterfaces";
-import { ISerializedAsset } from "./IAssetProperties";
+import { IAssetUnion, ITaggedAssetIntersection, TaggedAssetPropertyName } from "./AssetInterfaces";
+import { ITaggedAsset } from "./IAssetProperties";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
@@ -132,7 +132,7 @@ export abstract class Asset {
     public abstract get interface(): IAssetUnion;
 
     /** @internal */
-    public abstract toJSON(): ISerializedAsset;
+    public abstract toJSON(): ITaggedAsset;
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
@@ -166,7 +166,7 @@ export abstract class Asset {
 
     private static nextKey = 0;
 
-    private static getPropertyName<T extends keyof ISerializedAssetIntersection>(name: T) {
+    private static getPropertyName<T extends keyof ITaggedAssetIntersection>(name: T) {
         return name;
     }
 
@@ -181,5 +181,5 @@ export abstract class Asset {
     private unitValueHintImpl = "";
 }
 
-export type AssetDisplayPropertyName = SerializedAssetPropertyName |
+export type AssetDisplayPropertyName = TaggedAssetPropertyName |
     typeof Asset.unitName | typeof Asset.unitValueName | typeof Asset.totalValueName | typeof Asset.percentName;

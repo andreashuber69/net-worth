@@ -14,7 +14,7 @@ import { IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetInput } from "./AssetInput";
 import { IModelParameters, Model } from "./Model";
-import { SerializedModel } from "./validation/schemas/SerializedModel";
+import { TaggedModel } from "./validation/schemas/TaggedModel";
 import { Validator } from "./validation/Validator";
 
 export class ModelParser {
@@ -26,7 +26,7 @@ export class ModelParser {
      */
     public static parse(json: string) {
         try {
-            return this.parseBundles(Validator.fromJson(json, SerializedModel));
+            return this.parseBundles(Validator.fromJson(json, TaggedModel));
         } catch (e) {
             if (e instanceof Error) {
                 return e.message;
@@ -38,7 +38,7 @@ export class ModelParser {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static parseBundles(rawModel: SerializedModel) {
+    private static parseBundles(rawModel: TaggedModel) {
         const params: IModelParameters = {
             ...this.parseOptionalProperties(rawModel),
             ...this.parseOptionalViewProperties(rawModel),
@@ -58,12 +58,12 @@ export class ModelParser {
         return new Model(params);
     }
 
-    private static parseOptionalProperties(rawModel: SerializedModel) {
+    private static parseOptionalProperties(rawModel: TaggedModel) {
         return (({ name, wasSavedToFile, hasUnsavedChanges }) =>
             ({ name, wasSavedToFile, hasUnsavedChanges }))(rawModel);
     }
 
-    private static parseOptionalViewProperties(rawModel: SerializedModel) {
+    private static parseOptionalViewProperties(rawModel: TaggedModel) {
         return (({ currency, groupBy, sort }) => ({ currency, groupBy, sort }))(rawModel);
     }
 }

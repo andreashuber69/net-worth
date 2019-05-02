@@ -30,6 +30,6 @@ export interface IAssetProperties {
     readonly notes?: string;
 }
 
-export interface ISerializedAsset extends IAssetProperties {
+export interface ITaggedAsset extends IAssetProperties {
     readonly type: keyof typeof AssetType;
 }

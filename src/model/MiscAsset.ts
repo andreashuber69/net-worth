@@ -19,7 +19,7 @@ import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { Currency } from "./validation/schemas/Currency";
-import { ISerializedMiscAsset } from "./validation/schemas/ISerializedMiscAsset";
+import { ITaggedMiscAsset } from "./validation/schemas/ITaggedMiscAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 
 /** Represents a miscellaneous asset. */
@@ -70,7 +70,7 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
     }
 
     /** @internal */
-    public toJSON(): ISerializedMiscAsset {
+    public toJSON(): ITaggedMiscAsset {
         return {
             type: this.type,
             description: this.description,

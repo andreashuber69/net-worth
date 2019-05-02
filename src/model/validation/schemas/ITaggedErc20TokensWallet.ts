@@ -10,8 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ISerializedSimpleCryptoWallet } from "./ISerializedSimpleCryptoWallet";
+import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
 
-export interface ISerializedSimpleCryptoWalletBundle {
-    readonly primaryAsset: ISerializedSimpleCryptoWallet;
+export type Erc20TokensWalletType = "ERC20 Tokens";
+
+export interface ITaggedErc20TokensWallet extends ICryptoWalletProperties {
+    readonly type: Erc20TokensWalletType;
 }

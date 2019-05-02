@@ -12,8 +12,9 @@
 
 import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
 
-export type Erc20TokensWalletType = "ERC20 Tokens";
+export type SimpleCryptoWalletType =
+    "Bitcoin" | "Litecoin" | "Ethereum Classic" | "Ethereum" | "Bitcoin Gold" | "Dash" | "Zcash";
 
-export interface ISerializedErc20TokensWallet extends ICryptoWalletProperties {
-    readonly type: Erc20TokensWalletType;
+export interface ITaggedSimpleCryptoWallet extends ICryptoWalletProperties {
+    readonly type: SimpleCryptoWalletType;
 }

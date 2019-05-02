@@ -10,9 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IDeletedAssets } from "./IDeletedAssets";
-import { ISerializedErc20TokensWallet } from "./ISerializedErc20TokensWallet";
+import { ITaggedSimpleCryptoWallet } from "./ITaggedSimpleCryptoWallet";
 
-export interface ISerializedErc20TokensWalletBundle extends IDeletedAssets {
-    readonly primaryAsset: ISerializedErc20TokensWallet;
+export interface ITaggedSimpleCryptoWalletBundle {
+    readonly primaryAsset: ITaggedSimpleCryptoWallet;
 }
