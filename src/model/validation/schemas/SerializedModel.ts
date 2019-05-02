@@ -13,7 +13,7 @@
 import { Currency } from "./Currency";
 import { GroupBy } from "./GroupBy";
 import { ISort } from "./ISort";
-import { SerializedBundleUnion } from "./SerializedBundleUnion";
+import { SerializedAssetBundleUnion } from "./SerializedAssetBundleUnion";
 
 export class SerializedModel {
     public readonly version!: 1;
@@ -23,5 +23,5 @@ export class SerializedModel {
     public readonly currency?: keyof typeof Currency;
     public readonly groupBy?: GroupBy;
     public readonly sort?: ISort;
-    public readonly bundles!: SerializedBundleUnion[];
+    public readonly bundles!: SerializedAssetBundleUnion[];
 }

@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IModel } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { IAssetIntersection } from "./AssetInterfaces";
 import { BtcWallet } from "./BtcWallet";
@@ -23,7 +22,6 @@ import { EtcWallet } from "./EtcWallet";
 import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
 import { LtcWallet } from "./LtcWallet";
-import { MiscAsset } from "./MiscAsset";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { PalladiumAsset } from "./PalladiumAsset";
 import { ParseErrorMessage } from "./ParseErrorMessage";
@@ -31,7 +29,7 @@ import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
 import { Unknown } from "./Unknown";
-import { Value } from "./Value";
+import { SerializedAssetBundleUnion } from "./validation/schemas/SerializedAssetBundleUnion";
 import { ZecWallet } from "./ZecWallet";
 
 // cSpell:ignore xpub, ypub, Mtub, Ltub, drkp
@@ -87,17 +85,8 @@ export class AssetInput {
     ];
 
     /** @internal */
-    public static parseBundle(rawBundle: Unknown | null | undefined) {
-        if (!Value.hasObjectProperty(rawBundle, AssetBundle.primaryAssetName)) {
-            return ParseErrorMessage.getPropertyTypeMismatch(AssetBundle.primaryAssetName, rawBundle, {});
-        }
-
-        const rawAsset = rawBundle[AssetBundle.primaryAssetName];
-
-        if (!Value.hasStringProperty(rawAsset, Asset.typeName)) {
-            return ParseErrorMessage.getPropertyTypeMismatch(Asset.typeName, rawAsset, "");
-        }
-
+    public static parseBundle(rawBundle: SerializedAssetBundleUnion) {
+        const rawAsset = rawBundle.primaryAsset;
         const assetInfo = this.infos.find((info) => info.type === rawAsset.type);
 
         if (!assetInfo) {

@@ -15,6 +15,6 @@ import { ISerializedMiscAssetBundle } from "./ISerializedMiscAssetBundle";
 import { ISerializedPreciousMetalAssetBundle } from "./ISerializedPreciousMetalAssetBundle";
 import { ISerializedSimpleCryptoWalletBundle } from "./ISerializedSimpleCryptoWalletBundle";
 
-export type SerializedBundleUnion =
+export type SerializedAssetBundleUnion =
     ISerializedPreciousMetalAssetBundle | ISerializedSimpleCryptoWalletBundle |
     ISerializedErc20TokensWalletBundle | ISerializedMiscAssetBundle;
