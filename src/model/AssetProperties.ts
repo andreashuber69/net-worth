@@ -12,7 +12,7 @@
 
 import { AssetEditorData } from "./AssetEditorData";
 import { IAssetIntersection } from "./AssetInterfaces";
-import { WeightUnit } from "./WeightUnit";
+import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 /**
  * Converts the data edited in the editor into the format necessary to construct [[Asset]] subclass objects.

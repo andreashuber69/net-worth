@@ -22,7 +22,7 @@ import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Unknown";
 import { Erc20TokensWalletType } from "./validation/schemas/ITaggedErc20TokensWallet";
 import { SimpleCryptoWalletType } from "./validation/schemas/ITaggedSimpleCryptoWallet";
-import { WeightUnit } from "./WeightUnit";
+import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 type CryptoWalletType = SimpleCryptoWalletType | Erc20TokensWalletType;
 

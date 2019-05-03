@@ -25,7 +25,7 @@ import {
 } from "./validation/schemas/ITaggedPreciousMetalAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 import { Weight } from "./validation/schemas/Weight";
-import { WeightUnit } from "./WeightUnit";
+import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 /** Defines the base of all classes that represent a precious metal asset. */
 export abstract class PreciousMetalAsset extends SingleAsset implements IPreciousMetalAsset {

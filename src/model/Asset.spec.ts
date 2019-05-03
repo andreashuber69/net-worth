@@ -37,7 +37,7 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
-import { WeightUnit } from "./WeightUnit";
+import { WeightUnit } from "./validation/schemas/WeightUnit";
 import { ZecWallet } from "./ZecWallet";
 
 const arrayOfAll = <T>() =>

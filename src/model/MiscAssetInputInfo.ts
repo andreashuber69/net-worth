@@ -17,7 +17,7 @@ import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { MiscAsset } from "./MiscAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { WeightUnit } from "./WeightUnit";
+import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 /**
  * Defines how the properties of a miscellaneous asset need to be input and validated and provides a method to create a

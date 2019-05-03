@@ -14,7 +14,7 @@ import { IAssetProperties } from "./IAssetProperties";
 import { Fineness } from "./validation/schemas/Fineness";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 import { Weight } from "./validation/schemas/Weight";
-import { WeightUnit } from "./WeightUnit";
+import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 /** Contains the defining properties common to all precious metal assets. */
 export interface IPreciousMetalAssetProperties extends IAssetProperties {

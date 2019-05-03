@@ -16,7 +16,7 @@ import { IAssetIntersection } from "../model/AssetInterfaces";
 import { Currency } from "../model/Currency";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { TextInputInfo } from "../model/TextInputInfo";
-import { WeightUnit } from "../model/WeightUnit";
+import { WeightUnit } from "../model/validation/schemas/WeightUnit";
 
 /**
  * Defines how an asset with no properties needs to be "input".

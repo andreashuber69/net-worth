@@ -29,7 +29,7 @@ import { Quantity0 } from "./validation/schemas/Quantity0";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
 import { SortBy } from "./validation/schemas/SortBy";
 import { Weight } from "./validation/schemas/Weight";
-import { WeightUnit } from "./WeightUnit";
+import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 class BlobUtility {
     public static toArrayBuffer(blob: Blob) {

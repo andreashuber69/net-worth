@@ -16,7 +16,7 @@ import { Currency } from "./Currency";
 import { IAuxProperties } from "./IAuxProperties";
 import { MiscAsset } from "./MiscAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
-import { WeightUnit } from "./WeightUnit";
+import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements Partial<IAuxProperties<string>> {

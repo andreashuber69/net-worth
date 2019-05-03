@@ -17,7 +17,7 @@ import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { WeightUnit } from "./WeightUnit";
+import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 type PreciousMetalAssetType = "Silver" | "Palladium" | "Platinum" | "Gold";
 
