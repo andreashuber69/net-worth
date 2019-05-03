@@ -12,7 +12,7 @@
 
 import { IModel } from "./Asset";
 import { BlockcypherRequest } from "./BlockcypherRequest";
-import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
+import { IRealCryptoWalletParameters } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 
 /** Represents a wallet the balance of which is requested from blockcypher.com. */
