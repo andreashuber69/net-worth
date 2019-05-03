@@ -27,7 +27,7 @@ export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
 
 interface ISelectInputInfoParameters<T extends Enum<T>> extends IPrimitiveInputInfoProperties {
     readonly enumType?: T;
-    readonly enumSchemaName?: EnumSchemaName;
+    readonly enumSchemaNames: EnumSchemaName[];
     readonly acceptStringsOnly: boolean;
 }
 
@@ -36,9 +36,9 @@ interface ISelectInputInfoParameters<T extends Enum<T>> extends IPrimitiveInputI
 export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     /** @internal */
     public constructor(params: ISelectInputInfoParameters<T> =
-        { label: "", hint: "", isPresent: false, isRequired: false, acceptStringsOnly: false }) {
+        { label: "", hint: "", isPresent: false, isRequired: false, enumSchemaNames: [], acceptStringsOnly: false }) {
         super(params);
-        ({ enumType: this.enumType, enumSchemaName: this.enumSchemaName, acceptStringsOnly: this.acceptStringsOnly } =
+        ({ enumType: this.enumType, enumSchemaNames: this.enumSchemaNames, acceptStringsOnly: this.acceptStringsOnly } =
             params);
     }
 
@@ -49,8 +49,9 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected validateContent(strict: boolean, input: Unknown) {
-        if (this.enumType && this.enumSchemaName) {
-            const result = Validator.validate(input, this.enumSchemaName);
+        if (this.enumType && this.enumSchemaNames.length) {
+            const result = this.enumSchemaNames.reduce<string | true>(
+                (p, c) => p === true ? p : Validator.validate(input, c), "");
 
             if (result !== true) {
                 return result;
@@ -67,6 +68,6 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private readonly enumType?: T;
-    private readonly enumSchemaName?: EnumSchemaName;
+    private readonly enumSchemaNames: EnumSchemaName[];
     private readonly acceptStringsOnly: boolean;
 }

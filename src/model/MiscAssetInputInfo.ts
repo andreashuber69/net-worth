@@ -45,7 +45,7 @@ export class MiscAssetInputInfo extends AssetInputInfo {
     });
     public readonly valueCurrency = new SelectInputInfo({
         label: "Currency", hint: "The currency Value is expressed in.", isPresent: true, isRequired: true,
-        enumType: Currency, enumSchemaName: "CurrencyName", acceptStringsOnly: true,
+        enumType: Currency, enumSchemaNames: [ "CurrencyName" ], acceptStringsOnly: true,
     });
     public readonly quantity = new TextInputInfo({
         label: "Quantity", hint: "The number of items.", isPresent: true, isRequired: true, schemaName: "Quantity0",
