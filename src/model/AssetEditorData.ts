@@ -12,11 +12,12 @@
 
 import { IAssetUnion } from "./AssetInterfaces";
 import { CryptoWallet } from "./CryptoWallet";
-import { Currency } from "./Currency";
 import { IAuxProperties } from "./IAuxProperties";
 import { MiscAsset } from "./MiscAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import { CurrencyName } from "./validation/schemas/CurrencyName";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
+import { WeightUnitName } from "./validation/schemas/WeightUnitName";
 
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements Partial<IAuxProperties<string>> {
@@ -24,10 +25,10 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     public location?: string;
     public address?: string;
     public weight?: string;
-    public weightUnit?: keyof typeof WeightUnit;
+    public weightUnit?: WeightUnitName;
     public fineness?: string;
     public value?: string;
-    public valueCurrency?: keyof typeof Currency;
+    public valueCurrency?: CurrencyName;
     public quantity?: string;
     public notes?: string;
 
@@ -68,7 +69,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getWeightUnit(asset?: IAssetUnion) {
-        return this.isPreciousMetalAsset(asset) ? WeightUnit[asset.weightUnit] as keyof typeof WeightUnit : undefined;
+        return this.isPreciousMetalAsset(asset) ? WeightUnit[asset.weightUnit] as WeightUnitName : undefined;
     }
 
     private static getFineness(asset?: IAssetUnion) {

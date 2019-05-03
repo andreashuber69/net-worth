@@ -18,6 +18,7 @@ import { Currency } from "./Currency";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
 import { QueryUtility } from "./QueryUtility";
+import { CurrencyName } from "./validation/schemas/CurrencyName";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { ISort } from "./validation/schemas/ISort";
 import { TaggedModel } from "./validation/schemas/TaggedModel";
@@ -26,7 +27,7 @@ export interface IModelParameters {
     readonly name?: string;
     readonly wasSavedToFile?: boolean;
     readonly hasUnsavedChanges?: boolean;
-    readonly currency?: keyof typeof Currency;
+    readonly currency?: CurrencyName;
     readonly groupBy?: GroupBy;
     readonly sort?: ISort;
     readonly createBundles: Array<(model: IModel) => AssetBundle>;
@@ -77,7 +78,7 @@ export class Model implements IModel {
     }
 
     /** Provides the selected currency. */
-    public set currency(currency: keyof typeof Currency) {
+    public set currency(currency: CurrencyName) {
         if (this.currencyImpl !== currency) {
             this.currencyImpl = currency;
             this.onCurrencyChanged();
@@ -141,7 +142,7 @@ export class Model implements IModel {
 
     private hasUnsavedChangesImpl: boolean;
 
-    private currencyImpl: keyof typeof Currency = this.currencies[0];
+    private currencyImpl: CurrencyName = this.currencies[0];
 
     private onCurrencyChanged() {
         this.onCurrencyChangedImpl().catch((reason) => console.error(reason));

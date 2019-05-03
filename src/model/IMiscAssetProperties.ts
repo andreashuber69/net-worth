@@ -10,8 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Currency } from "./Currency";
 import { IAssetProperties } from "./IAssetProperties";
+import { CurrencyName } from "./validation/schemas/CurrencyName";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 
 /** Contains the defining properties of a miscellaneous asset. */
@@ -20,7 +20,7 @@ export interface IMiscAssetProperties extends IAssetProperties {
     readonly value: number;
 
     /** Provides the currency used for `value`, e.g. [[Currency.USD]]. */
-    readonly valueCurrency: keyof typeof Currency;
+    readonly valueCurrency: CurrencyName;
 
     /** Provides the asset quantity. */
     readonly quantity?: Quantity0;

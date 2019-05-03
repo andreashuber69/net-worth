@@ -23,6 +23,7 @@ import { ModelParser } from "./ModelParser";
 import { Ordering } from "./Ordering";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
+import { CurrencyName } from "./validation/schemas/CurrencyName";
 import { Fineness } from "./validation/schemas/Fineness";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { Quantity0 } from "./validation/schemas/Quantity0";
@@ -84,7 +85,7 @@ const getExpectedProperties = (
     name = "Unnamed",
     wasSavedToFile = false,
     hasUnsavedChanges = false,
-    currency: keyof typeof Currency = "USD",
+    currency: CurrencyName = "USD",
     groupBy: GroupBy = "type",
     sortBy: SortBy = "totalValue",
     descending = true,

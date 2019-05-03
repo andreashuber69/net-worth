@@ -19,6 +19,7 @@ import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
+import { CurrencyName } from "./validation/schemas/CurrencyName";
 import { ITaggedMiscAsset } from "./validation/schemas/ITaggedMiscAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 
@@ -43,7 +44,7 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
 
     public readonly value: number;
 
-    public readonly valueCurrency: keyof typeof Currency;
+    public readonly valueCurrency: CurrencyName;
 
     public readonly quantity: Quantity0;
 

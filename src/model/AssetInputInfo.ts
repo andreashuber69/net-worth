@@ -12,7 +12,6 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
-import { AssetType } from "./AssetType";
 import { Currency } from "./Currency";
 import { IAuxProperties } from "./IAuxProperties";
 import { CompositeInput, InputUtility } from "./Input";
@@ -22,6 +21,7 @@ import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Unknown";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 interface IValidationResults extends IAuxProperties<true | string> {
@@ -33,7 +33,7 @@ interface IValidationResults extends IAuxProperties<true | string> {
  * representation of the asset.
  */
 export abstract class AssetInputInfo extends InputInfo implements IAuxProperties<PrimitiveInputInfo> {
-    public abstract get type(): keyof typeof AssetType | "";
+    public abstract get type(): AssetTypeName | "";
 
     public abstract get description(): TextInputInfo;
     public abstract get location(): TextInputInfo;

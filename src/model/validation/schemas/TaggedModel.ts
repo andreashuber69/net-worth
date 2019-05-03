@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Currency } from "../../Currency";
+import { CurrencyName } from "./CurrencyName";
 import { GroupBy } from "./GroupBy";
 import { ISort } from "./ISort";
 import { TaggedAssetBundleUnion } from "./TaggedAssetBundleUnion";
@@ -20,7 +20,7 @@ export class TaggedModel {
     public readonly name?: string;
     public readonly wasSavedToFile?: boolean;
     public readonly hasUnsavedChanges?: boolean;
-    public readonly currency?: keyof typeof Currency;
+    public readonly currency?: CurrencyName;
     public readonly groupBy?: GroupBy;
     public readonly sort?: ISort;
     public readonly bundles!: TaggedAssetBundleUnion[];

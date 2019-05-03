@@ -12,11 +12,11 @@
 
 import { AssetBundle } from "./AssetBundle";
 import { IAssetUnion, ITaggedAssetIntersection, TaggedAssetPropertyName } from "./AssetInterfaces";
-import { AssetType } from "./AssetType";
 import { ITaggedAsset } from "./IAssetProperties";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { Fineness } from "./validation/schemas/Fineness";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
 
@@ -59,7 +59,7 @@ export abstract class Asset {
     }
 
     /** Provides the type of asset, e.g. 'Silver, 'Gold', 'Bitcoin', 'Litecoin'. */
-    public abstract get type(): keyof typeof AssetType | "";
+    public abstract get type(): AssetTypeName | "";
 
     /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
     public abstract get description(): string;

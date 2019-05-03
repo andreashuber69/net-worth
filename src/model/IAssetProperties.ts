@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetType } from "./AssetType";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 
 /**
  * Defines the common editable properties of all assets.
@@ -31,5 +31,5 @@ export interface IAssetProperties {
 }
 
 export interface ITaggedAsset extends IAssetProperties {
-    readonly type: keyof typeof AssetType;
+    readonly type: AssetTypeName;
 }

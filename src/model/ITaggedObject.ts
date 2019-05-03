@@ -10,8 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetType } from "./AssetType";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 
-export interface ITaggedObject<T extends keyof typeof AssetType> {
+export interface ITaggedObject<T extends AssetTypeName> {
     readonly type: T;
 }
