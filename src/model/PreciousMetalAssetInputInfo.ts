@@ -12,11 +12,11 @@
 
 import { IModel } from "./Asset";
 import { AssetInputInfo } from "./AssetInputInfo";
+import { Currency } from "./Currency";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { Currency } from "./validation/schemas/Currency";
 import { WeightUnit } from "./WeightUnit";
 
 type PreciousMetalAssetType = "Silver" | "Palladium" | "Platinum" | "Gold";

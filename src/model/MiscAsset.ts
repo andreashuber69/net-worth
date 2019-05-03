@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
+import { Currency } from "./Currency";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IMiscAsset, miscSuperType } from "./IMiscAsset";
@@ -18,7 +19,6 @@ import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
-import { Currency } from "./validation/schemas/Currency";
 import { ITaggedMiscAsset } from "./validation/schemas/ITaggedMiscAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 

@@ -11,9 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
+import { Currency } from "./Currency";
 import { IWebRequest } from "./IWebRequest";
 import { QuandlRequest } from "./QuandlRequest";
-import { Currency } from "./validation/schemas/Currency";
 
 export class ExchangeRate {
     public static get(currency: Currency) {

@@ -12,6 +12,8 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
+import { AssetType } from "./AssetType";
+import { Currency } from "./Currency";
 import { IAuxProperties } from "./IAuxProperties";
 import { CompositeInput, InputUtility } from "./Input";
 import { InputInfo } from "./InputInfo";
@@ -20,8 +22,6 @@ import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Unknown";
-import { AssetType } from "./validation/schemas/AssetType";
-import { Currency } from "./validation/schemas/Currency";
 import { WeightUnit } from "./WeightUnit";
 
 interface IValidationResults extends IAuxProperties<true | string> {

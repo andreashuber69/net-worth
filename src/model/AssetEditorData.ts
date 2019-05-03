@@ -12,10 +12,10 @@
 
 import { IAssetUnion } from "./AssetInterfaces";
 import { CryptoWallet } from "./CryptoWallet";
+import { Currency } from "./Currency";
 import { IAuxProperties } from "./IAuxProperties";
 import { MiscAsset } from "./MiscAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
-import { Currency } from "./validation/schemas/Currency";
 import { WeightUnit } from "./WeightUnit";
 
 /** Represents the data being edited in the asset editor. */

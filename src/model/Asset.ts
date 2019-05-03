@@ -12,11 +12,11 @@
 
 import { AssetBundle } from "./AssetBundle";
 import { IAssetUnion, ITaggedAssetIntersection, TaggedAssetPropertyName } from "./AssetInterfaces";
+import { AssetType } from "./AssetType";
 import { ITaggedAsset } from "./IAssetProperties";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
-import { AssetType } from "./validation/schemas/AssetType";
 import { Fineness } from "./validation/schemas/Fineness";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
 
