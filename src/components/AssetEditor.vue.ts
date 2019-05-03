@@ -42,7 +42,7 @@ export default class AssetEditor extends Vue {
     public get typeInputInfo() {
         return new SelectInputInfo({
             label: "Type", hint: "", isPresent: true, isRequired: true, enumType: AssetType,
-            enumSchemaName: "AssetTypeName", acceptStringsOnly: false,
+            enumSchemaName: "AssetTypeName", acceptStringsOnly: true,
         });
     }
 
