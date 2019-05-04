@@ -15,7 +15,7 @@ import { Asset, IModel } from "../model/Asset";
 import { AssetEditorData } from "../model/AssetEditorData";
 import { AssetInput } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
-import { AssetProperties } from "../model/AssetProperties";
+import { getProperties } from "../model/AssetProperties";
 import { AssetType } from "../model/AssetType";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
@@ -68,7 +68,7 @@ export default class AssetEditor extends Vue {
         }
 
         if (this.isValid()) {
-            this.close(this.assetInfo.createAsset(this.parent, new AssetProperties(this.data)));
+            this.close(this.assetInfo.createAsset(this.parent, getProperties(this.data)));
         }
     }
 

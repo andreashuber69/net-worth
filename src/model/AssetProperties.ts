@@ -14,10 +14,11 @@ import { AssetEditorData } from "./AssetEditorData";
 import { IAssetIntersection } from "./AssetInterfaces";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
-/**
- * Converts the data edited in the editor into the format necessary to construct [[Asset]] subclass objects.
- */
-export class AssetProperties implements IAssetIntersection {
+class AssetProperties implements IAssetIntersection {
+    public get type() {
+        return AssetProperties.validate("type", this.data.type);
+    }
+
     public get description() {
         return AssetProperties.validate("description", this.data.description);
     }
@@ -58,15 +59,19 @@ export class AssetProperties implements IAssetIntersection {
         return this.data.notes;
     }
 
-    /** @internal */
     public constructor(private readonly data: AssetEditorData) {
     }
 
-    private static validate<T extends string | undefined>(name: string, value: T): Exclude<T, undefined> {
+    private static validate<T extends string | undefined>(name: string, value: T): Exclude<T, undefined | ""> {
         if (!value) {
             throw new Error(`Unexpected ${name}.`);
         }
 
-        return value as Exclude<T, undefined>;
+        return value as Exclude<T, undefined | "">;
     }
+}
+
+// tslint:disable-next-line: only-arrow-functions
+export function getProperties(data: AssetEditorData): IAssetIntersection {
+    return new AssetProperties(data);
 }

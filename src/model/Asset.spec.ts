@@ -16,7 +16,7 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetGroup } from "./AssetGroup";
 import { allAssetPropertyNames, AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
-import { AssetProperties } from "./AssetProperties";
+import { getProperties } from "./AssetProperties";
 import { AssetType } from "./AssetType";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
@@ -80,7 +80,7 @@ const getRandomData = (expectedPropertyNames: AssetPropertyName[]): IAssetInters
         }
     }
 
-    return new AssetProperties(data);
+    return getProperties(data);
 };
 
 const createAsset = <T, U>(ctor: new(model: IModel, props: U) => T, props: U) => {
