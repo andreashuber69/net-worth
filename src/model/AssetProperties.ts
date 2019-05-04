@@ -14,7 +14,7 @@ import { AssetEditorData } from "./AssetEditorData";
 import { IAssetIntersection } from "./AssetInterfaces";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
-class AssetProperties implements IAssetIntersection {
+abstract class AssetProperties {
     public get type() {
         return AssetProperties.validate("type", this.data.type);
     }
@@ -59,8 +59,12 @@ class AssetProperties implements IAssetIntersection {
         return this.data.notes;
     }
 
-    public constructor(private readonly data: AssetEditorData) {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected constructor(private readonly data: AssetEditorData) {
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static validate<T extends string | undefined>(name: string, value: T): Exclude<T, undefined | ""> {
         if (!value) {
@@ -71,7 +75,56 @@ class AssetProperties implements IAssetIntersection {
     }
 }
 
+// tslint:disable-next-line: max-classes-per-file
+class PreciousMetalProperties extends AssetProperties implements IAssetIntersection {
+    public constructor(data: AssetEditorData) {
+        super(data);
+    }
+}
+
+// tslint:disable-next-line: max-classes-per-file
+class SimpleCryptoWalletProperties extends AssetProperties implements IAssetIntersection {
+    public constructor(data: AssetEditorData) {
+        super(data);
+    }
+}
+
+// tslint:disable-next-line: max-classes-per-file
+class Erc20TokensWalletProperties extends AssetProperties implements IAssetIntersection {
+    public constructor(data: AssetEditorData) {
+        super(data);
+    }
+}
+
+// tslint:disable-next-line: max-classes-per-file
+class MiscAssetProperties extends AssetProperties implements IAssetIntersection {
+    public constructor(data: AssetEditorData) {
+        super(data);
+    }
+}
+
 // tslint:disable-next-line: only-arrow-functions
 export function getProperties(data: AssetEditorData): IAssetIntersection {
-    return new AssetProperties(data);
+    // tslint:disable-next-line: switch-default
+    switch (data.type) {
+        case "Silver":
+        case "Palladium":
+        case "Platinum":
+        case "Gold":
+            return new PreciousMetalProperties(data);
+        case "Bitcoin":
+        case "Litecoin":
+        case "Ethereum Classic":
+        case "Ethereum":
+        case "Bitcoin Gold":
+        case "Dash":
+        case "Zcash":
+            return new SimpleCryptoWalletProperties(data);
+        case "ERC20 Tokens":
+            return new Erc20TokensWalletProperties(data);
+        case "Misc":
+            return new MiscAssetProperties(data);
+        case "":
+            throw new Error("Invalid asset type!");
+    }
 }

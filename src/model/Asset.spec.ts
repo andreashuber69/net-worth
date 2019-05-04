@@ -37,16 +37,20 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 import { ZecWallet } from "./ZecWallet";
 
 const arrayOfAll = <T>() =>
     <U extends Array<keyof T>>(...array: U & (Array<keyof T> extends Array<U[number]> ? unknown : never)) => array;
 
+type AssetCtor =
+    (new(model: IModel, props: IAssetIntersection) => PreciousMetalAsset | CryptoWallet | MiscAsset) &
+    { superType: string };
+
 // tslint:disable-next-line: ban-types
-const getExpectedPropertyNames =
-    (ctor: new(model: IModel, props: IAssetIntersection) => PreciousMetalAsset | CryptoWallet | MiscAsset) => {
-    switch ((ctor as any).superType) {
+const getExpectedPropertyNames = (ctor: AssetCtor) => {
+    switch (ctor.superType) {
         case PreciousMetalAsset.superType:
             return arrayOfAll<IPreciousMetalAssetProperties>()(
                 "description", "location", "quantity", "notes", "weight", "weightUnit", "fineness");
@@ -62,8 +66,9 @@ const getExpectedPropertyNames =
 
 let randomValue = Date.now();
 
-const getRandomData = (expectedPropertyNames: AssetPropertyName[]): IAssetIntersection => {
+const getRandomData = (type: AssetTypeName, expectedPropertyNames: AssetPropertyName[]): IAssetIntersection => {
     const data = new AssetEditorData();
+    data.type = type;
 
     for (const name of expectedPropertyNames) {
         switch (name) {
@@ -138,10 +143,9 @@ const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
     }));
 };
 
-const testConstruction =
-    (ctor: new(model: IModel, props: IAssetIntersection) => CryptoWallet | PreciousMetalAsset | MiscAsset)  => {
-    const expectedPropertyNames =  getExpectedPropertyNames(ctor);
-    const props = getRandomData(expectedPropertyNames);
+const testConstruction = (type: AssetTypeName, ctor: AssetCtor) => {
+    const expectedPropertyNames = getExpectedPropertyNames(ctor);
+    const props = getRandomData(type, expectedPropertyNames);
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
     expectProperty(ctor, props, "locationHint", (matcher) => matcher.toEqual(props.address ? props.address : ""));
     expectProperty(ctor, props, "unit", (matcher) => matcher.toBeDefined());
@@ -165,7 +169,7 @@ const testConstruction =
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
-            expected = getRandomData(expectedPropertyNames);
+            expected = getRandomData(type, expectedPropertyNames);
             sut = createAsset(ctor, expected);
         });
 
@@ -307,19 +311,19 @@ const testPreciousMetalAsset =
     });
 };
 
-testConstruction(SilverAsset);
-testConstruction(PalladiumAsset);
-testConstruction(PlatinumAsset);
-testConstruction(GoldAsset);
-testConstruction(BtcWallet);
-testConstruction(LtcWallet);
-testConstruction(DashWallet);
-testConstruction(BtgWallet);
-testConstruction(Erc20TokensWallet);
-testConstruction(EtcWallet);
-testConstruction(EthWallet);
-testConstruction(ZecWallet);
-testConstruction(MiscAsset);
+testConstruction("Silver", SilverAsset);
+testConstruction("Palladium", PalladiumAsset);
+testConstruction("Platinum", PlatinumAsset);
+testConstruction("Gold", GoldAsset);
+testConstruction("Bitcoin", BtcWallet);
+testConstruction("Litecoin", LtcWallet);
+testConstruction("Dash", DashWallet);
+testConstruction("Bitcoin Gold", BtgWallet);
+testConstruction("ERC20 Tokens", Erc20TokensWallet);
+testConstruction("Ethereum Classic", EtcWallet);
+testConstruction("Ethereum", EthWallet);
+testConstruction("Zcash", ZecWallet);
+testConstruction("Misc", MiscAsset);
 
 // cSpell: disable
 testCryptoWallet(
