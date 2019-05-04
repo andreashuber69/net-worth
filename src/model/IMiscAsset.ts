@@ -11,12 +11,15 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IMiscAssetProperties } from "./IMiscAssetProperties";
+import { MiscAssetType } from "./validation/schemas/ITaggedMiscAsset";
 
 /** @internal */
 export const miscSuperType = "Miscellaneous Asset";
 
 /** @internal */
 export interface IMiscAsset extends IMiscAssetProperties {
+    readonly type: MiscAssetType;
+
     /** @internal */
     readonly superType: typeof miscSuperType;
 }

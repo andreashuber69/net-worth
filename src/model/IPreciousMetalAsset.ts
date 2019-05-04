@@ -11,12 +11,15 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
+import { PreciousMetalAssetType } from "./validation/schemas/ITaggedPreciousMetalAsset";
 
 /** @internal */
 export const preciousMetalSuperType = "Precious Metal";
 
 /** @internal */
 export interface IPreciousMetalAsset extends IPreciousMetalAssetProperties {
+    readonly type: PreciousMetalAssetType;
+
     /** @internal */
     readonly superType: typeof preciousMetalSuperType;
 }

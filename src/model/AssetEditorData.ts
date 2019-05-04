@@ -15,12 +15,14 @@ import { CryptoWallet } from "./CryptoWallet";
 import { IAuxProperties } from "./IAuxProperties";
 import { MiscAsset } from "./MiscAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { CurrencyName } from "./validation/schemas/CurrencyName";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 import { WeightUnitName } from "./validation/schemas/WeightUnitName";
 
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements Partial<IAuxProperties<string>> {
+    public type: AssetTypeName | "";
     public description?: string;
     public location?: string;
     public address?: string;
@@ -37,6 +39,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     // readability.
     // codebeat:disable[ABC]
     public constructor(asset?: IAssetUnion) {
+        this.type = AssetEditorData.getType(asset);
         this.description = AssetEditorData.getDescription(asset);
         this.location = AssetEditorData.getLocation(asset);
         this.address = AssetEditorData.getAddress(asset);
@@ -51,6 +54,10 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     // codebeat:enable[ABC]
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static getType(asset?: IAssetUnion) {
+        return asset && asset.type || "";
+    }
 
     private static getDescription(asset?: IAssetUnion) {
         return asset && asset.description;

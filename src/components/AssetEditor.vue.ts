@@ -53,6 +53,7 @@ export default class AssetEditor extends Vue {
 
     public set type(value: string | undefined) {
         this.assetInfo = AssetInput.infos.find((info) => info.type === value) || new NoAssetInputInfo();
+        this.data.type = this.assetInfo.type;
     }
 
     /** Provides information about the currently selected asset type. */

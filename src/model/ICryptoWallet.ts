@@ -11,11 +11,15 @@
 // <http://www.gnu.org/licenses/>.
 
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { Erc20TokensWalletType } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { SimpleCryptoWalletType } from "./validation/schemas/ITaggedSimpleCryptoWallet";
 
 export const cryptoWalletSuperType = "Crypto Currency";
 
 /** @internal */
 export interface ICryptoWallet extends ICryptoWalletProperties {
+    readonly type: SimpleCryptoWalletType | Erc20TokensWalletType;
+
     /** @internal */
     readonly superType: typeof cryptoWalletSuperType;
 }
