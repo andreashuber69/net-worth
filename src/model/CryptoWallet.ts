@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { cryptoWalletSuperType, ICryptoWallet } from "./ICryptoWallet";
+import { cryptoWalletSuperTypeName, ICryptoWallet } from "./ICryptoWallet";
 import { SingleAsset } from "./SingleAsset";
 import { Erc20TokensWalletTypeName } from "./validation/schemas/ITaggedErc20TokensWallet";
 import { SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
@@ -20,7 +20,7 @@ import { QuantityAny } from "./validation/schemas/QuantityAny";
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends SingleAsset implements ICryptoWallet {
     /** @internal */
-    public static readonly superType = cryptoWalletSuperType;
+    public static readonly superType = cryptoWalletSuperTypeName;
 
     public abstract get type(): SimpleCryptoWalletTypeName | Erc20TokensWalletTypeName;
 

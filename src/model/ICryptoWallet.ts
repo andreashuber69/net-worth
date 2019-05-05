@@ -14,12 +14,12 @@ import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { Erc20TokensWalletTypeName } from "./validation/schemas/ITaggedErc20TokensWallet";
 import { SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
 
-export const cryptoWalletSuperType = "Crypto Currency";
+export const cryptoWalletSuperTypeName = "Crypto Currency";
 
 /** @internal */
 export interface ICryptoWallet extends ICryptoWalletProperties {
     readonly type: SimpleCryptoWalletTypeName | Erc20TokensWalletTypeName;
 
     /** @internal */
-    readonly superType: typeof cryptoWalletSuperType;
+    readonly superType: typeof cryptoWalletSuperTypeName;
 }
