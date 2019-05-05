@@ -12,8 +12,8 @@
 
 import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
 
-export type Erc20TokensWalletType = "ERC20 Tokens";
+export type Erc20TokensWalletTypeName = "ERC20 Tokens";
 
 export interface ITaggedErc20TokensWallet extends ICryptoWalletProperties {
-    readonly type: Erc20TokensWalletType;
+    readonly type: Erc20TokensWalletTypeName;
 }

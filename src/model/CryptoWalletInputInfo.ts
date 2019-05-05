@@ -20,11 +20,11 @@ import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Unknown";
-import { Erc20TokensWalletType } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { SimpleCryptoWalletType } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { Erc20TokensWalletTypeName } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
-type CryptoWalletType = SimpleCryptoWalletType | Erc20TokensWalletType;
+type CryptoWalletType = SimpleCryptoWalletTypeName | Erc20TokensWalletTypeName;
 
 interface ICryptoWalletInputInfoParameters {
     readonly type: CryptoWalletType;

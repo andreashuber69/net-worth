@@ -12,9 +12,9 @@
 
 import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
 
-export type SimpleCryptoWalletType =
+export type SimpleCryptoWalletTypeName =
     "Bitcoin" | "Litecoin" | "Ethereum Classic" | "Ethereum" | "Bitcoin Gold" | "Dash" | "Zcash";
 
 export interface ITaggedSimpleCryptoWallet extends ICryptoWalletProperties {
-    readonly type: SimpleCryptoWalletType;
+    readonly type: SimpleCryptoWalletTypeName;
 }

@@ -14,7 +14,7 @@ import { IAssetUnion } from "./AssetInterfaces";
 import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { ITaggedAsset } from "./IAssetProperties";
-import { Erc20TokensWalletType } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { Erc20TokensWalletTypeName } from "./validation/schemas/ITaggedErc20TokensWallet";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
 
 interface ITokenWalletParameters {
@@ -25,7 +25,7 @@ interface ITokenWalletParameters {
 }
 
 export class Erc20TokenWallet extends CryptoWallet {
-    public get type(): Erc20TokensWalletType {
+    public get type(): Erc20TokensWalletTypeName {
         return this.editable.type;
     }
 
