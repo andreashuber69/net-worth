@@ -51,7 +51,7 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     protected validateContent(strict: boolean, input: Unknown) {
         if (this.enumType && this.enumSchemaNames.length) {
             const result = this.enumSchemaNames.reduce<string | true>(
-                (p, c) => p === true ? p : Validator.validate(input, c), "");
+                (p: string | true, c: EnumSchemaName) => p === true ? p : Validator.validate(input, c), "");
 
             if (result !== true) {
                 return result;
