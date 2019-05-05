@@ -25,7 +25,8 @@ module.exports = {
             // Moreover, Validator also depends on schema class names not being mangled.
             config.optimization.minimizer[0].options.terserOptions.mangle.reserved = [
                 "Array", "BigInteger", "Boolean", "Buffer", "ECPair", "Function", "Number", "Point",
-                "CryptoAuxProperties", "GetAddressInfoResponse"
+                "DeletedAssets", "EthplorerGetAddressInfoResponse", "QuandlResponse", "SoChainGetAddressBalanceResponse",
+                "TaggedModel",
             ];
         }
     },
