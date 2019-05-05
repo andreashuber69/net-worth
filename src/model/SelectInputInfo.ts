@@ -14,7 +14,7 @@ import { Enum, EnumInfo } from "./EnumInfo";
 import { ParseErrorMessage } from "./ParseErrorMessage";
 import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { Unknown } from "./Unknown";
-import { EnumSchemaName, Validator } from "./validation/Validator";
+import { EnumSchemaName, SchemaName, Validator } from "./validation/Validator";
 
 export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
     public abstract get items(): string[];
@@ -51,7 +51,7 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     protected validateContent(strict: boolean, input: Unknown) {
         if (this.enumType && this.enumSchemaNames.length) {
             const result = this.enumSchemaNames.reduce<string | true>(
-                (p: string | true, c: EnumSchemaName) => p === true ? p : Validator.validate(input, c), "");
+                (p: string | true, c: SchemaName) => p === true ? p : Validator.validate(input, c), "");
 
             if (result !== true) {
                 return result;
