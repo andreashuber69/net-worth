@@ -14,7 +14,7 @@ import { IModel } from "./Asset";
 import { Currency } from "./Currency";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IMiscAsset, miscSuperType } from "./IMiscAsset";
+import { IMiscAsset, miscAssetSuperTypeName } from "./IMiscAsset";
 import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { SingleAsset } from "./SingleAsset";
@@ -26,7 +26,7 @@ import { Quantity0 } from "./validation/schemas/Quantity0";
 /** Represents a miscellaneous asset. */
 export class MiscAsset extends SingleAsset implements IMiscAsset {
     /** @internal */
-    public static readonly superType = miscSuperType;
+    public static readonly superType = miscAssetSuperTypeName;
 
     public readonly type  = "Misc";
 

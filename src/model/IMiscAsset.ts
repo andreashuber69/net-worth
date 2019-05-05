@@ -14,12 +14,12 @@ import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { MiscAssetTypeName } from "./validation/schemas/ITaggedMiscAsset";
 
 /** @internal */
-export const miscSuperType = "Miscellaneous Asset";
+export const miscAssetSuperTypeName = "Miscellaneous Asset";
 
 /** @internal */
 export interface IMiscAsset extends IMiscAssetProperties {
     readonly type: MiscAssetTypeName;
 
     /** @internal */
-    readonly superType: typeof miscSuperType;
+    readonly superType: typeof miscAssetSuperTypeName;
 }
