@@ -59,9 +59,7 @@ abstract class AssetProperties {
         return this.data.notes;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected constructor(private readonly data: AssetEditorData) {
+    public constructor(private readonly data: AssetEditorData) {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,30 +75,18 @@ abstract class AssetProperties {
 
 // tslint:disable-next-line: max-classes-per-file
 class PreciousMetalProperties extends AssetProperties implements IAssetIntersection {
-    public constructor(data: AssetEditorData) {
-        super(data);
-    }
 }
 
 // tslint:disable-next-line: max-classes-per-file
 class SimpleCryptoWalletProperties extends AssetProperties implements IAssetIntersection {
-    public constructor(data: AssetEditorData) {
-        super(data);
-    }
 }
 
 // tslint:disable-next-line: max-classes-per-file
 class Erc20TokensWalletProperties extends AssetProperties implements IAssetIntersection {
-    public constructor(data: AssetEditorData) {
-        super(data);
-    }
 }
 
 // tslint:disable-next-line: max-classes-per-file
 class MiscAssetProperties extends AssetProperties implements IAssetIntersection {
-    public constructor(data: AssetEditorData) {
-        super(data);
-    }
 }
 
 // tslint:disable-next-line: only-arrow-functions
