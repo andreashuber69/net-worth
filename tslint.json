@@ -42,14 +42,18 @@
     "no-conditional-assignment": false,
     "no-console": false,
     "no-magic-numbers": false,
+    "no-null-undefined-union": false,
     "no-parameter-properties": false,
     "no-unnecessary-class": [ "allow-static-only" ],
     "no-unused-variable": false,
     "no-void-expression": false,
     "object-literal-sort-keys": false,
+    "ordered-imports": false,
     "promise-function-async": false,
+    "static-this": false,
     "strict-boolean-expressions": false,
-    "typedef": false
+    "typedef": false,
+    "unnecessary-else": false
   },
   "jsRules": {
     "max-line-length": { "options": [ 120 ] }

@@ -76,8 +76,8 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
         };
     }
 
-    public bundle(bundle?: Unknown): GenericAssetBundle<PreciousMetalAsset, IPreciousMetalAssetProperties> {
-        return new GenericAssetBundle(this);
+    public bundle(bundle?: Unknown): GenericAssetBundle<PreciousMetalAsset> {
+        return new PreciousMetalAsset.Bundle(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,11 +106,20 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // tslint:disable-next-line: max-classes-per-file variable-name
+    private static readonly Bundle = class NestedBundle extends GenericAssetBundle<PreciousMetalAsset> {
+        public toJSON() {
+            return {
+                primaryAsset: this.assets[0],
+            };
+        }
+    };
+
     private static readonly unitFormatOptions = {
         maximumFractionDigits: PreciousMetalAssetInputInfo.weightDigits, minimumFractionDigits: 0, useGrouping: true };
 
     private static getUnit(weight: Weight, unit: WeightUnit) {
-        return `${weight.toLocaleString(undefined, this.unitFormatOptions)} ${WeightUnit[unit]}`;
+        return `${weight.toLocaleString(undefined, PreciousMetalAsset.unitFormatOptions)} ${WeightUnit[unit]}`;
     }
 
     private readonly pureGramsPerUnit: number;

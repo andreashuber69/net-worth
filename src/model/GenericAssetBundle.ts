@@ -11,13 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
-import { IAssetProperties } from "./IAssetProperties";
-import { ITaggedObject } from "./ITaggedObject";
 import { SingleAsset } from "./SingleAsset";
 
 /** Defines a bundle containing a single asset. */
-export class GenericAssetBundle<
-    T extends SingleAsset & ITaggedObject<T["type"]> & U, U extends IAssetProperties> extends AssetBundle {
+export abstract class GenericAssetBundle<T extends SingleAsset> extends AssetBundle {
     public readonly assets: T[];
 
     /** @internal */
@@ -36,11 +33,5 @@ export class GenericAssetBundle<
 
     public queryData() {
         return this.assets[0].queryData();
-    }
-
-    public toJSON() {
-        return {
-            primaryAsset: this.assets[0],
-        };
     }
 }

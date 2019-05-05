@@ -83,8 +83,8 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
         };
     }
 
-    public bundle(bundle?: Unknown): GenericAssetBundle<MiscAsset, IMiscAssetProperties> {
-        return new GenericAssetBundle(this);
+    public bundle(bundle?: Unknown): GenericAssetBundle<MiscAsset> {
+        return new MiscAsset.Bundle(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,6 +95,15 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // tslint:disable-next-line: max-classes-per-file variable-name
+    private static readonly Bundle = class NestedBundle extends GenericAssetBundle<MiscAsset> {
+        public toJSON() {
+            return {
+                primaryAsset: this.assets[0],
+            };
+        }
+    };
+
     private static readonly unitFormatOptions = {
         maximumFractionDigits: MiscAssetInputInfo.valueDigits,
         minimumFractionDigits: MiscAssetInputInfo.valueDigits,
@@ -102,6 +111,6 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
     };
 
     private static getUnit(value: number, valueCurrency: Currency) {
-        return `${value.toLocaleString(undefined, this.unitFormatOptions)} ${Currency[valueCurrency]}`;
+        return `${value.toLocaleString(undefined, MiscAsset.unitFormatOptions)} ${Currency[valueCurrency]}`;
     }
 }

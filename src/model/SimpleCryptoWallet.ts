@@ -12,7 +12,6 @@
 
 import { IModel } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
 import { SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
@@ -21,8 +20,8 @@ import { SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCr
 export abstract class SimpleCryptoWallet extends RealCryptoWallet {
     public abstract get type(): SimpleCryptoWalletTypeName;
 
-    public bundle(bundle?: Unknown): GenericAssetBundle<SimpleCryptoWallet, ICryptoWalletProperties> {
-        return new GenericAssetBundle(this);
+    public bundle(bundle?: Unknown): GenericAssetBundle<SimpleCryptoWallet> {
+        return new SimpleCryptoWallet.Bundle(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,4 +34,15 @@ export abstract class SimpleCryptoWallet extends RealCryptoWallet {
     protected constructor(parent: IModel, props: IRealCryptoWalletParameters) {
         super(parent, props);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // tslint:disable-next-line: max-classes-per-file variable-name
+    private static readonly Bundle = class NestedBundle extends GenericAssetBundle<SimpleCryptoWallet> {
+        public toJSON() {
+            return {
+                primaryAsset: this.assets[0],
+            };
+        }
+    };
 }
