@@ -15,9 +15,9 @@ import { Parser } from "./Parser";
 
 export class LocalStorage {
     public static load() {
-        const localStorageKey = window.sessionStorage.getItem(this.sessionLocalStorageKey);
+        const localStorageKey = window.sessionStorage.getItem(LocalStorage.sessionLocalStorageKey);
 
-        return localStorageKey ? this.loadExistingSession(localStorageKey) : this.loadNewSession();
+        return localStorageKey ? LocalStorage.loadExistingSession(localStorageKey) : LocalStorage.loadNewSession();
     }
 
     public static save(model: Model) {
@@ -53,14 +53,15 @@ export class LocalStorage {
         // browser is started.
         // Unfortunately, the beforeunload handler doesn't seem to ever be called on Android when the user closes the
         // browser, neither on Chrome, Firefox nor Edge. Luckily, at least reload works.
-        window.sessionStorage.setItem(this.sessionLocalStorageKey, this.saveImpl(model));
+        window.sessionStorage.setItem(LocalStorage.sessionLocalStorageKey, LocalStorage.saveImpl(model));
     }
 
     public static openNewWindow(model: Model | undefined) {
         const url = new URL(window.location.pathname, window.location.origin);
         url.searchParams.append(
-            this.sessionLocalStorageKey, model ? this.saveImpl(model) : this.emptyModelLocalStorageKey);
-        url.searchParams.append(this.sessionForceLoadFromLocalStorageKey, (!!model).toString());
+            LocalStorage.sessionLocalStorageKey,
+            model ? LocalStorage.saveImpl(model) : LocalStorage.emptyModelLocalStorageKey);
+        url.searchParams.append(LocalStorage.sessionForceLoadFromLocalStorageKey, (!!model).toString());
         window.open(url.href);
     }
 
@@ -71,28 +72,28 @@ export class LocalStorage {
     private static readonly sessionForceLoadFromLocalStorageKey = "forceLoadFromLocalStorage";
 
     private static loadExistingSession(localStorageKey: string) {
-        if ((localStorageKey !== this.emptyModelLocalStorageKey) &&
+        if ((localStorageKey !== LocalStorage.emptyModelLocalStorageKey) &&
             // tslint:disable-next-line:deprecation
             ((window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD) ||
-            (window.sessionStorage.getItem(this.sessionForceLoadFromLocalStorageKey) === true.toString()))) {
+            (window.sessionStorage.getItem(LocalStorage.sessionForceLoadFromLocalStorageKey) === true.toString()))) {
             // Session storage can only be non-empty because the user either reloaded the page or because Open...
             // or New was clicked. Both call openNewWindow, which opens a new window with parameters attached to the
             // URL. Code in main.ts transfers any URL parameters into session storage and then uses
             // window.location.replace to reload without the parameters.
-            return this.loadModel(localStorageKey);
+            return LocalStorage.loadModel(localStorageKey);
         }
 
         return new Model();
     }
 
     private static loadNewSession() {
-        const oldKeys = this.getOldKeys();
+        const oldKeys = LocalStorage.getOldKeys();
 
         // Sort the array in descending direction, so that the modified model that was last saved will be loaded.
         oldKeys.sort((l, r) => l < r ? 1 : -1);
 
         for (const oldKey of oldKeys) {
-            const model = this.loadModel(oldKey.toString());
+            const model = LocalStorage.loadModel(oldKey.toString());
 
             if (model.hasUnsavedChanges) {
                 // The main goal of this whole mechanism is to prevent data loss, which is why, in a new session, we
@@ -107,13 +108,13 @@ export class LocalStorage {
     }
 
     private static saveImpl(model: Model) {
-        let key: string | undefined = this.emptyModelLocalStorageKey;
+        let key: string | undefined = LocalStorage.emptyModelLocalStorageKey;
 
         if (!model.assets.isEmpty) {
             const json = model.toJsonString();
 
             // tslint:disable-next-line:no-empty
-            while (!(key = this.trySaveToLocalStorage(json))) {
+            while (!(key = LocalStorage.trySaveToLocalStorage(json))) {
             }
         }
 

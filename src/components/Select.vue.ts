@@ -11,7 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Prop } from "vue-property-decorator";
+
 import { SelectInputInfo, SelectInputInfoBase } from "../model/SelectInputInfo";
+
 import { ControlBase } from "./ControlBase";
 
 @Component

@@ -19,25 +19,26 @@ export class ParseErrorMessage {
     public static getPropertyTypeMismatch(
         propertyName: string, actual: Unknown | null | undefined, ...expected: Array<Unknown | null | undefined>) {
         if (Value.isObject(actual)) {
-            return this.addPropertyName(propertyName, this.getTypeMismatch(actual[propertyName], ...expected));
+            return ParseErrorMessage.addPropertyName(
+                propertyName, ParseErrorMessage.getTypeMismatch(actual[propertyName], ...expected));
         } else {
-            return this.getTypeMismatch(actual, {});
+            return ParseErrorMessage.getTypeMismatch(actual, {});
         }
     }
 
     /** @internal */
     public static getTypeMismatch(
         actual: Unknown | null | undefined, ...expected: Array<Unknown | null | undefined>) {
-        const actualType = this.getTypeName(actual);
+        const actualType = ParseErrorMessage.getTypeName(actual);
         const expectedTypes = expected.reduce<string>(
-            (p, c) => p === "" ? this.getTypeName(c) : `${p} or ${this.getTypeName(c)}`, "");
+            (p, c) => p === "" ? ParseErrorMessage.getTypeName(c) : `${p} or ${ParseErrorMessage.getTypeName(c)}`, "");
 
         return `The type of the value (${actualType}) does not match the expected type(s) ${expectedTypes}.`;
     }
 
     /** @internal */
     public static getUnknownPropertyValue(propertyName: string, value: Unknown | null | undefined) {
-        return this.addPropertyName(propertyName, this.getUnknownValue(value));
+        return ParseErrorMessage.addPropertyName(propertyName, ParseErrorMessage.getUnknownValue(value));
     }
 
     /** @internal */

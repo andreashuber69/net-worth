@@ -17,7 +17,7 @@ import { QuandlRequest } from "./QuandlRequest";
 
 export class ExchangeRate {
     public static get(currency: Currency) {
-        const request = this.currencyMap.get(currency);
+        const request = ExchangeRate.currencyMap.get(currency);
 
         if (!request) {
             throw new Error("Unknown currency!");

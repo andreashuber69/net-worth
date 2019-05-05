@@ -14,14 +14,15 @@
 // tslint:disable-next-line:no-submodule-imports ordered-imports
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
 import Vue from "vue";
-// tslint:disable-next-line:no-import-side-effect
-import "./plugins/vuetify";
+
 // tslint:disable-next-line:no-default-import ordered-imports
 import App from "./App.vue";
 // tslint:disable-next-line:no-import-side-effect
 import "./assets/material-icons.css";
 // tslint:disable-next-line:no-import-side-effect
 import "./assets/roboto-fontface.css";
+// tslint:disable-next-line:no-import-side-effect
+import "./plugins/vuetify";
 
 OfflinePluginRuntime.install();
 Vue.config.productionTip = false;

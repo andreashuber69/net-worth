@@ -17,17 +17,17 @@ import { SortBy } from "./validation/schemas/SortBy";
 
 export class AssetCollectionUtility {
     public static sort(groups: AssetGroup[], sort: ISort) {
-        groups.sort((l, r) => this.compare(l, r, sort));
+        groups.sort((l, r) => AssetCollectionUtility.compare(l, r, sort));
 
         for (const group of groups) {
-            group.assets.sort((l, r) => this.compare(l, r, sort));
+            group.assets.sort((l, r) => AssetCollectionUtility.compare(l, r, sort));
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static compare(left: Asset, right: Asset, sort: ISort) {
-        return (sort.descending ? -1 : 1) * this.compareImpl(left, right, sort.by);
+        return (sort.descending ? -1 : 1) * AssetCollectionUtility.compareImpl(left, right, sort.by);
     }
 
     private static compareImpl(left: Asset, right: Asset, sortBy: SortBy) {

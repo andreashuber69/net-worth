@@ -16,9 +16,9 @@ export class Format {
         if ((num === undefined) || Number.isNaN(num)) {
             return "";
         } else {
-            const formatted = this.format(num, decimals);
+            const formatted = Format.format(num, decimals);
 
-            return formatted.substring(0, this.getDecimalPointPosition(formatted));
+            return formatted.substring(0, Format.getDecimalPointPosition(formatted));
         }
     }
 
@@ -29,9 +29,9 @@ export class Format {
         } else if (Number.isNaN(num)) {
             return "Error";
         } else {
-            const formatted = this.format(num, decimals);
+            const formatted = Format.format(num, decimals);
 
-            return formatted.substring(this.getDecimalPointPosition(formatted));
+            return formatted.substring(Format.getDecimalPointPosition(formatted));
         }
     }
 

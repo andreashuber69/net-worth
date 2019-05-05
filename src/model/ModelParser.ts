@@ -26,7 +26,7 @@ export class ModelParser {
      */
     public static parse(json: string) {
         try {
-            return this.parseBundles(Validator.fromJson(json, TaggedModel));
+            return ModelParser.parseBundles(Validator.fromJson(json, TaggedModel));
         } catch (e) {
             if (e instanceof Error) {
                 return e.message;
@@ -40,8 +40,8 @@ export class ModelParser {
 
     private static parseBundles(rawModel: TaggedModel) {
         const params: IModelParameters = {
-            ...this.parseOptionalProperties(rawModel),
-            ...this.parseOptionalViewProperties(rawModel),
+            ...ModelParser.parseOptionalProperties(rawModel),
+            ...ModelParser.parseOptionalViewProperties(rawModel),
             createBundles: new Array<(model: IModel) => AssetBundle>(),
         };
 

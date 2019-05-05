@@ -11,7 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Vue } from "vue-property-decorator";
+
 import { TextInputInfo } from "../model/TextInputInfo";
+
 // tslint:disable-next-line:no-default-import
 import TextField from "./TextField.vue";
 

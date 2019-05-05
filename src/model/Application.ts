@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+// TODO: Replace this with an import
 // tslint:disable-next-line:no-require-imports no-var-requires
 const packageJson = require("../../package.json") as { name: string; version: string };
 
@@ -19,7 +20,7 @@ export class Application {
     }
 
     public static get title() {
-        return this.packageName.split("-").map((c) => `${c[0].toUpperCase()}${c.substr(1)}`).join(" ");
+        return Application.packageName.split("-").map((c) => `${c[0].toUpperCase()}${c.substr(1)}`).join(" ");
     }
 
     public static get version() {

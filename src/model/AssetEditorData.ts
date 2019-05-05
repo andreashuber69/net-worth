@@ -68,31 +68,31 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getAddress(asset?: IAssetUnion) {
-        return this.isCryptoWallet(asset) && asset.address || undefined;
+        return AssetEditorData.isCryptoWallet(asset) && asset.address || undefined;
     }
 
     private static getWeight(asset?: IAssetUnion) {
-        return this.isPreciousMetalAsset(asset) ? asset.weight.toString() : undefined;
+        return AssetEditorData.isPreciousMetalAsset(asset) ? asset.weight.toString() : undefined;
     }
 
     private static getWeightUnit(asset?: IAssetUnion) {
-        return this.isPreciousMetalAsset(asset) ? WeightUnit[asset.weightUnit] as WeightUnitName : undefined;
+        return AssetEditorData.isPreciousMetalAsset(asset) ? WeightUnit[asset.weightUnit] as WeightUnitName : undefined;
     }
 
     private static getFineness(asset?: IAssetUnion) {
-        return this.isPreciousMetalAsset(asset) ? asset.fineness.toString() : undefined;
+        return AssetEditorData.isPreciousMetalAsset(asset) ? asset.fineness.toString() : undefined;
     }
 
     private static getValue(asset?: IAssetUnion) {
-        return this.isMiscAsset(asset) ? asset.value.toString() : undefined;
+        return AssetEditorData.isMiscAsset(asset) ? asset.value.toString() : undefined;
     }
 
     private static getValueCurrency(asset?: IAssetUnion) {
-        return this.isMiscAsset(asset) ? asset.valueCurrency : undefined;
+        return AssetEditorData.isMiscAsset(asset) ? asset.valueCurrency : undefined;
     }
 
     private static getQuantity(asset?: IAssetUnion) {
-        return asset && (!this.isCryptoWallet(asset) || !asset.address) &&
+        return asset && (!AssetEditorData.isCryptoWallet(asset) || !asset.address) &&
             (asset.quantity !== undefined) && asset.quantity.toString() || undefined;
     }
 
@@ -101,15 +101,15 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static isCryptoWallet(asset?: IAssetUnion): asset is CryptoWallet {
-        return this.isType(CryptoWallet.superType, asset);
+        return AssetEditorData.isType(CryptoWallet.superType, asset);
     }
 
     private static isPreciousMetalAsset(asset?: IAssetUnion): asset is PreciousMetalAsset {
-        return this.isType(PreciousMetalAsset.superType, asset);
+        return AssetEditorData.isType(PreciousMetalAsset.superType, asset);
     }
 
     private static isMiscAsset(asset?: IAssetUnion): asset is MiscAsset {
-        return this.isType(MiscAsset.superType, asset);
+        return AssetEditorData.isType(MiscAsset.superType, asset);
     }
 
     private static isType(superType: string, asset?: IAssetUnion) {

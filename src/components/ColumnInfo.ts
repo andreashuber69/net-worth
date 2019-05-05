@@ -13,12 +13,13 @@
 import { Asset } from "../model/Asset";
 import { IOrdering } from "../model/Ordering";
 import { GroupBy } from "../model/validation/schemas/GroupBy";
+
 import { AssetListRowPropertyName, ColumnName } from "./AssetListRow.vue";
 
 export class ColumnInfo {
     /** Provides the maximum number of optional columns that can be displayed. */
     public static get maxOptionalCount() {
-        return this.allColumnCounts.length - 1;
+        return ColumnInfo.allColumnCounts.length - 1;
     }
 
     /** @internal */
@@ -32,16 +33,16 @@ export class ColumnInfo {
 
     /** @internal */
     public static getRawCount(optionalColumnCount: number) {
-        return this.rawColumnCounts[optionalColumnCount];
+        return ColumnInfo.rawColumnCounts[optionalColumnCount];
     }
 
     /** @internal */
     public static getClass(columnName: ColumnName, ordering: IOrdering, optionalColumnCount: number) {
         const result = new Array<string>(
-            ...this.getHidden(columnName, ordering.groupBy, optionalColumnCount),
-            ...this.getAlignment(columnName),
-            ...this.getPadding(columnName, ordering.groupBy, ordering.otherGroupBys),
-            ...this.getTotal(columnName),
+            ...ColumnInfo.getHidden(columnName, ordering.groupBy, optionalColumnCount),
+            ...ColumnInfo.getAlignment(columnName),
+            ...ColumnInfo.getPadding(columnName, ordering.groupBy, ordering.otherGroupBys),
+            ...ColumnInfo.getTotal(columnName),
         );
 
         if (result.length === 0) {
@@ -91,15 +92,15 @@ export class ColumnInfo {
 
     private static getColumns(groupBy: GroupBy) {
         const result: ColumnName[] = [
-            this.expandName, Asset.typeName,
-            Asset.percentName, this.percentIntegerName, this.percentFractionName,
-            this.moreName, this.grandTotalLabelName,
-            Asset.totalValueName, this.totalValueIntegerName, this.totalValueFractionName,
+            ColumnInfo.expandName, Asset.typeName,
+            Asset.percentName, ColumnInfo.percentIntegerName, ColumnInfo.percentFractionName,
+            ColumnInfo.moreName, ColumnInfo.grandTotalLabelName,
+            Asset.totalValueName, ColumnInfo.totalValueIntegerName, ColumnInfo.totalValueFractionName,
             Asset.locationName, Asset.unitName,
-            Asset.quantityName, this.quantityIntegerName, this.quantityFractionName,
-            Asset.unitValueName, this.unitValueIntegerName, this.unitValueFractionName,
+            Asset.quantityName, ColumnInfo.quantityIntegerName, ColumnInfo.quantityFractionName,
+            Asset.unitValueName, ColumnInfo.unitValueIntegerName, ColumnInfo.unitValueFractionName,
             Asset.descriptionName,
-            Asset.finenessName, this.finenessIntegerName, this.finenessFractionName,
+            Asset.finenessName, ColumnInfo.finenessIntegerName, ColumnInfo.finenessFractionName,
         ];
 
         if (groupBy === Asset.locationName) {
@@ -111,13 +112,13 @@ export class ColumnInfo {
     }
 
     private static getHidden(columnName: ColumnName, groupBy: GroupBy, optionalColumnCount: number) {
-        const allColumns = this.allColumns.get(groupBy);
+        const allColumns = ColumnInfo.allColumns.get(groupBy);
 
         if (!allColumns) {
             throw new Error("Unknown groupBy!");
         }
 
-        if (allColumns.indexOf(columnName) >= this.allColumnCounts[optionalColumnCount]) {
+        if (allColumns.indexOf(columnName) >= ColumnInfo.allColumnCounts[optionalColumnCount]) {
             // TODO: Can't this be done with one class?
             return [ "hidden-sm-and-up", "hidden-xs-only" ];
         }
@@ -134,7 +135,7 @@ export class ColumnInfo {
         const rightClass = `pr-${columnPadding}`;
 
         switch (columnName) {
-            case this.expandName:
+            case ColumnInfo.expandName:
                 return [ leftClass, "pr-2" ];
             case groupBy:
                 return [ "pl-0", rightClass ];
@@ -145,23 +146,23 @@ export class ColumnInfo {
             case Asset.unitValueName:
             case Asset.quantityName:
             case Asset.totalValueName:
-            case this.grandTotalLabelName:
+            case ColumnInfo.grandTotalLabelName:
                 return [ leftClass, rightClass ];
             case Asset.percentName:
-            case this.finenessIntegerName:
-            case this.unitValueIntegerName:
-            case this.quantityIntegerName:
-            case this.totalValueIntegerName:
-            case this.percentIntegerName:
+            case ColumnInfo.finenessIntegerName:
+            case ColumnInfo.unitValueIntegerName:
+            case ColumnInfo.quantityIntegerName:
+            case ColumnInfo.totalValueIntegerName:
+            case ColumnInfo.percentIntegerName:
                 return [ leftClass, "pr-0" ];
-            case this.finenessFractionName:
-            case this.unitValueFractionName:
-            case this.quantityFractionName:
-            case this.totalValueFractionName:
+            case ColumnInfo.finenessFractionName:
+            case ColumnInfo.unitValueFractionName:
+            case ColumnInfo.quantityFractionName:
+            case ColumnInfo.totalValueFractionName:
                 return [ "pl-0", rightClass ];
-            case this.percentFractionName:
+            case ColumnInfo.percentFractionName:
                 return [ "pl-0", "pr-0" ];
-            case this.moreName:
+            case ColumnInfo.moreName:
                 return [ "pl-1", rightClass ];
             default:
                 return [];
@@ -178,18 +179,18 @@ export class ColumnInfo {
             case Asset.descriptionName:
             case Asset.locationName:
             case Asset.unitName:
-            case this.finenessFractionName:
-            case this.unitValueFractionName:
-            case this.quantityFractionName:
-            case this.totalValueFractionName:
-            case this.percentFractionName:
-            case this.grandTotalLabelName:
+            case ColumnInfo.finenessFractionName:
+            case ColumnInfo.unitValueFractionName:
+            case ColumnInfo.quantityFractionName:
+            case ColumnInfo.totalValueFractionName:
+            case ColumnInfo.percentFractionName:
+            case ColumnInfo.grandTotalLabelName:
                 return [ "text-xs-left" ];
-            case this.finenessIntegerName:
-            case this.unitValueIntegerName:
-            case this.quantityIntegerName:
-            case this.totalValueIntegerName:
-            case this.percentIntegerName:
+            case ColumnInfo.finenessIntegerName:
+            case ColumnInfo.unitValueIntegerName:
+            case ColumnInfo.quantityIntegerName:
+            case ColumnInfo.totalValueIntegerName:
+            case ColumnInfo.percentIntegerName:
                 return [ "text-xs-right" ];
             default:
                 return [];
@@ -200,12 +201,12 @@ export class ColumnInfo {
     private static getTotal(columnName: string | undefined) {
         switch (columnName) {
             case Asset.totalValueName:
-            case this.totalValueIntegerName:
-            case this.totalValueFractionName:
+            case ColumnInfo.totalValueIntegerName:
+            case ColumnInfo.totalValueFractionName:
             case Asset.percentName:
-            case this.percentIntegerName:
-            case this.percentFractionName:
-            case this.grandTotalLabelName:
+            case ColumnInfo.percentIntegerName:
+            case ColumnInfo.percentFractionName:
+            case ColumnInfo.grandTotalLabelName:
                 return [ "total" ];
             default:
                 return [];

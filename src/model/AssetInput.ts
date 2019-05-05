@@ -87,7 +87,7 @@ export class AssetInput {
     /** @internal */
     public static parseBundle(rawBundle: TaggedAssetBundleUnion) {
         const rawAsset = rawBundle.primaryAsset;
-        const assetInfo = this.infos.find((info) => info.type === rawAsset.type);
+        const assetInfo = AssetInput.infos.find((info) => info.type === rawAsset.type);
 
         if (!assetInfo) {
             return ParseErrorMessage.getUnknownPropertyValue(Asset.typeName, rawAsset.type);
@@ -95,7 +95,7 @@ export class AssetInput {
 
         const validationResult = assetInfo.validateAll(rawAsset);
 
-        if (!this.hasProperties(validationResult, rawAsset)) {
+        if (!AssetInput.hasProperties(validationResult, rawAsset)) {
             return validationResult;
         }
 

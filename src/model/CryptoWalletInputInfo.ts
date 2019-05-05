@@ -92,7 +92,7 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
         if (quantityDecimals) {
             return new TextInputInfo({
                 label: "Quantity", hint: "The amount in the wallet.", isPresent: true, isRequired: false,
-                schemaName: this.getSchema(quantityDecimals),
+                schemaName: CryptoWalletInputInfo.getSchema(quantityDecimals),
             });
         } else {
             return new TextInputInfo();

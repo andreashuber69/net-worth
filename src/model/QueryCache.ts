@@ -22,13 +22,13 @@ export class QueryCache {
     public static fetch<R extends object>(query: Query<R>): Promise<R>;
     public static async fetch<R extends object>(query: string | Query<R>) {
         return (typeof query === "string") ?
-            this.cacheResult(query, () => this.fetchAndParse(query)) :
-            this.cacheResult(query.url, () => this.fetchParseAndValidate(query));
+            QueryCache.cacheResult(query, () => QueryCache.fetchAndParse(query)) :
+            QueryCache.cacheResult(query.url, () => QueryCache.fetchParseAndValidate(query));
     }
 
     /** @internal */
     public static clear() {
-        this.cache.clear();
+        QueryCache.cache.clear();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,18 +36,18 @@ export class QueryCache {
     private static readonly cache = new Map<string, Promise<Unknown | null>>();
 
     private static cacheResult<R extends Unknown | null>(query: string, getResponse: () => Promise<R>) {
-        let result = this.cache.get(query);
+        let result = QueryCache.cache.get(query);
 
         if (!result) {
             result = getResponse();
-            this.cache.set(query, result);
+            QueryCache.cache.set(query, result);
         }
 
         return result;
     }
 
     private static async fetchParseAndValidate<R extends object>(query: Query<R>) {
-        const response = await this.fetchAndParse(query.url);
+        const response = await QueryCache.fetchAndParse(query.url);
 
         try {
             return Validator.fromData(response, query.responseCtor);

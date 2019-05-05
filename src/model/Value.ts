@@ -59,37 +59,37 @@ export class Value {
     /** Returns whether `value` has an own property of type `boolean` with the name `propertyName`. */
     public static hasBooleanProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: boolean } {
-        return this.hasProperty(value, propertyName) && this.isBoolean(value[propertyName]);
+        return Value.hasProperty(value, propertyName) && Value.isBoolean(value[propertyName]);
     }
 
     /** Returns whether `value` has an own property of type `number` with the name `propertyName`. */
     public static hasNumberProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: number } {
-        return this.hasProperty(value, propertyName) && this.isNumber(value[propertyName]);
+        return Value.hasProperty(value, propertyName) && Value.isNumber(value[propertyName]);
     }
 
     /** Returns whether `value` has an own property of type `string` with the name `propertyName`. */
     public static hasStringProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: string } {
-        return this.hasProperty(value, propertyName) && this.isString(value[propertyName]);
+        return Value.hasProperty(value, propertyName) && Value.isString(value[propertyName]);
     }
 
     /** Returns whether `value` has an own property of type `Object` with the name `propertyName`. */
     public static hasObjectProperty<T extends string>(value: Unknown | null | undefined, propertyName: T):
         value is { [K in T]: { [key: string]: Unknown | null | undefined } } {
-        return this.hasProperty(value, propertyName) && this.isObject(value[propertyName]);
+        return Value.hasProperty(value, propertyName) && Value.isObject(value[propertyName]);
     }
 
     /** Returns whether `value` has an own property of type `Array` with the name `propertyName`. */
     public static hasArrayProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: Array<Unknown | null | undefined> } {
-        return this.hasProperty(value, propertyName) && this.isArray(value[propertyName]);
+        return Value.hasProperty(value, propertyName) && Value.isArray(value[propertyName]);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static hasProperty<T extends string>(
         value: Unknown | null | undefined, propertyName: T): value is { [K in T]: Unknown | null | undefined } {
-        return this.isObject(value) && value.hasOwnProperty(propertyName);
+        return Value.isObject(value) && value.hasOwnProperty(propertyName);
     }
 }

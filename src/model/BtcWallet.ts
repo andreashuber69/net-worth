@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { HDNode } from "bitcoinjs-lib";
+
 import { IModel } from "./Asset";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { IWebRequest } from "./IWebRequest";
@@ -65,7 +66,7 @@ export class BtcWallet extends SimpleCryptoWallet {
 
             for (const address in response) {
                 if (response.hasOwnProperty(address)) {
-                    this.addBalance(response[address], result);
+                    NestedBlockchainRequest.addBalance(response[address], result);
                 }
             }
 
@@ -122,18 +123,18 @@ export class BtcWallet extends SimpleCryptoWallet {
         }
 
         private static getBatch(node: HDNode, offset: number) {
-            const result = new Array<string>(this.batchLength);
+            const result = new Array<string>(NestedQuantityRequest.batchLength);
             const start = Date.now();
 
             for (let index = 0; index < result.length; ++index) {
                 result[index] = node.derive(offset + index).getAddress();
             }
 
-            if ((Date.now() - start < 500) && (this.batchLength < 16)) {
+            if ((Date.now() - start < 500) && (NestedQuantityRequest.batchLength < 16)) {
                 // This is an attempt at making address derivation more bearable on browsers with lousy script execution
                 // speed, e.g. Edge. Of course, this doesn't make the overall process faster, but it avoids blocking the
                 // thread for longer than a second.
-                this.batchLength *= 2;
+                NestedQuantityRequest.batchLength *= 2;
             }
 
             return result;

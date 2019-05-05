@@ -48,9 +48,7 @@
     "no-unused-variable": false,
     "no-void-expression": false,
     "object-literal-sort-keys": false,
-    "ordered-imports": false,
     "promise-function-async": false,
-    "static-this": false,
     "strict-boolean-expressions": false,
     "typedef": false,
     "unnecessary-else": false

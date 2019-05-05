@@ -20,21 +20,21 @@ export class Browser {
         // based on Chromium, this method will return true no matter what version of browser it runs on. For now, this
         // might be "good enough", as users tend to update their phones much more often than their desktop computers. A
         // phone therefore has a higher probability to come with a suitable browser.
-        if (this.isFirefox && (this.getVersion(" Firefox/") < 47)) {
+        if (Browser.isFirefox && (Browser.getVersion(" Firefox/") < 47)) {
             return false;
         }
 
-        if (this.isSafari && (this.getVersion(" Version/") < 10)) {
+        if (Browser.isSafari && (Browser.getVersion(" Version/") < 10)) {
             return false;
         }
 
-        if (this.isIE) {
+        if (Browser.isIE) {
             return false;
         }
 
         // Blink is true for Chrome, Chromium and other Chromium-based browsers like Opera and Yandex, all of which have
         // a Chrome version in their userAgent string
-        if (this.isBlink && (this.getVersion(" Chrome/") < 54)) {
+        if (Browser.isBlink && (Browser.getVersion(" Chrome/") < 54)) {
             return false;
         }
 

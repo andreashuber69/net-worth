@@ -11,11 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Prop } from "vue-property-decorator";
+
 import { AssetPropertyName } from "../model/AssetInterfaces";
 import { IAuxProperties } from "../model/IAuxProperties";
 import { InputUtility } from "../model/Input";
 import { InputInfo } from "../model/InputInfo";
 import { PrimitiveInputInfo } from "../model/PrimitiveInputInfo";
+
 import { ComponentBase } from "./ComponentBase";
 
 /** Defines the base for all controls that simplify common functionality like e.g. validation. */
