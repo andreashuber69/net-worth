@@ -28,7 +28,7 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
     /** @internal */
     public static readonly superType = miscAssetSuperTypeName;
 
-    public readonly type  = "Misc";
+    public readonly type = "Misc";
 
     public readonly description: string;
 
@@ -98,7 +98,8 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
     private static readonly unitFormatOptions = {
         maximumFractionDigits: MiscAssetInputInfo.valueDigits,
         minimumFractionDigits: MiscAssetInputInfo.valueDigits,
-        useGrouping: true };
+        useGrouping: true,
+    };
 
     private static getUnit(value: number, valueCurrency: Currency) {
         return `${value.toLocaleString(undefined, this.unitFormatOptions)} ${Currency[valueCurrency]}`;
