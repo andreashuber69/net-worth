@@ -12,8 +12,8 @@
 
 import { IPreciousMetalAssetProperties } from "../../IPreciousMetalAssetProperties";
 
-export type PreciousMetalAssetType = "Silver" | "Palladium" | "Platinum" | "Gold";
+export type PreciousMetalAssetTypeName = "Silver" | "Palladium" | "Platinum" | "Gold";
 
 export interface ITaggedPreciousMetalAsset extends IPreciousMetalAssetProperties {
-    readonly type: PreciousMetalAssetType;
+    readonly type: PreciousMetalAssetTypeName;
 }

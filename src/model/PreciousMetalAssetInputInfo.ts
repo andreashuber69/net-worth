@@ -17,9 +17,8 @@ import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
+import { PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
-
-type PreciousMetalAssetType = "Silver" | "Palladium" | "Platinum" | "Gold";
 
 /**
  * Defines how the properties of a precious metal asset need to be input and validated and provides a method to create a
@@ -58,7 +57,7 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
 
     /** @internal */
     public constructor(
-        public readonly type: PreciousMetalAssetType,
+        public readonly type: PreciousMetalAssetTypeName,
         private readonly ctor: new (parent: IModel, props: IPreciousMetalAssetProperties) => PreciousMetalAsset) {
         super();
     }

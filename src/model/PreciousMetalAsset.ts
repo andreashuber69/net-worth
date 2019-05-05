@@ -21,7 +21,7 @@ import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { Fineness } from "./validation/schemas/Fineness";
 import {
-    ITaggedPreciousMetalAsset, PreciousMetalAssetType,
+    ITaggedPreciousMetalAsset, PreciousMetalAssetTypeName,
 } from "./validation/schemas/ITaggedPreciousMetalAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 import { Weight } from "./validation/schemas/Weight";
@@ -32,7 +32,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
     /** @internal */
     public static readonly superType = preciousMetalSuperType;
 
-    public abstract get type(): PreciousMetalAssetType;
+    public abstract get type(): PreciousMetalAssetTypeName;
 
     public readonly description: string;
 
