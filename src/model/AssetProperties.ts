@@ -12,11 +12,16 @@
 
 import { AssetEditorData } from "./AssetEditorData";
 import { IAssetIntersection } from "./AssetInterfaces";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName";
+import { Erc20TokensWalletTypeName, ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { ITaggedMiscAsset, MiscAssetTypeName } from "./validation/schemas/ITaggedMiscAsset";
+import { ITaggedPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { ITaggedSimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
-abstract class AssetProperties {
-    public get type() {
-        return AssetProperties.validate("type", this.data.type);
+abstract class AssetProperties<T extends AssetTypeName> {
+    public get type(): T {
+        return AssetProperties.validate("type", this.data.type) as T;
     }
 
     public get description() {
@@ -74,19 +79,21 @@ abstract class AssetProperties {
 }
 
 // tslint:disable-next-line: max-classes-per-file
-class PreciousMetalProperties extends AssetProperties implements IAssetIntersection {
+class PreciousMetalProperties extends AssetProperties<PreciousMetalAssetTypeName> implements ITaggedPreciousMetalAsset {
 }
 
 // tslint:disable-next-line: max-classes-per-file
-class SimpleCryptoWalletProperties extends AssetProperties implements IAssetIntersection {
+class SimpleCryptoWalletProperties extends
+    AssetProperties<SimpleCryptoWalletTypeName> implements ITaggedSimpleCryptoWallet {
 }
 
 // tslint:disable-next-line: max-classes-per-file
-class Erc20TokensWalletProperties extends AssetProperties implements IAssetIntersection {
+class Erc20TokensWalletProperties extends
+    AssetProperties<Erc20TokensWalletTypeName> implements ITaggedErc20TokensWallet {
 }
 
 // tslint:disable-next-line: max-classes-per-file
-class MiscAssetProperties extends AssetProperties implements IAssetIntersection {
+class MiscAssetProperties extends AssetProperties<MiscAssetTypeName> implements ITaggedMiscAsset {
 }
 
 // tslint:disable-next-line: only-arrow-functions
