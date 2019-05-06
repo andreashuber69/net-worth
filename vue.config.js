@@ -10,6 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+const schema = require("./src/model/validation/schemas/All.schema.json");
+
 const OfflinePlugin = require("offline-plugin");
 // const PreloadPlugin = require("@vue/preload-webpack-plugin");
 
@@ -20,13 +22,13 @@ module.exports = {
     publicPath: process.env.WEBPACK_BASE_URL ? process.env.WEBPACK_BASE_URL : "/",
     configureWebpack: config => {
         if (process.env.NODE_ENV === "production") {
+            const schemaNames = Object.keys(schema.definitions);
+
             // The following tweaks are necessary because bitcoinjs-lib requires that certain class names are not mangled,
             // see https://github.com/bitcoinjs/bitcoinjs-lib/issues/659.
             // Moreover, Validator also depends on schema class names not being mangled.
             config.optimization.minimizer[0].options.terserOptions.mangle.reserved = [
-                "Array", "BigInteger", "Boolean", "Buffer", "ECPair", "Function", "Number", "Point",
-                "DeletedAssets", "EthplorerGetAddressInfoResponse", "QuandlResponse", "SoChainGetAddressBalanceResponse",
-                "TaggedModel",
+                "Array", "BigInteger", "Boolean", "Buffer", "ECPair", "Function", "Number", "Point", ...schemaNames
             ];
         }
     },
