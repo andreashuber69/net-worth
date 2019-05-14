@@ -12,7 +12,9 @@
 
 import { IPreciousMetalAssetProperties } from "../../IPreciousMetalAssetProperties";
 
-export type PreciousMetalAssetTypeName = "Silver" | "Palladium" | "Platinum" | "Gold";
+export const preciousMetalAssetTypeNames = ["Silver", "Palladium", "Platinum", "Gold"] as const;
+
+export type PreciousMetalAssetTypeName = (typeof preciousMetalAssetTypeNames)[number];
 
 export interface ITaggedPreciousMetalAsset extends IPreciousMetalAssetProperties {
     readonly type: PreciousMetalAssetTypeName;

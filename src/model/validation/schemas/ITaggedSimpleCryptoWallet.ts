@@ -12,8 +12,11 @@
 
 import { ICryptoWalletProperties } from "../../ICryptoWalletProperties";
 
-export type SimpleCryptoWalletTypeName =
-    "Bitcoin" | "Litecoin" | "Ethereum Classic" | "Ethereum" | "Bitcoin Gold" | "Dash" | "Zcash";
+export const simpleCryptoWalletTypeNames = [
+    "Bitcoin", "Litecoin", "Ethereum Classic", "Ethereum", "Bitcoin Gold", "Dash", "Zcash",
+] as const;
+
+export type SimpleCryptoWalletTypeName = (typeof simpleCryptoWalletTypeNames)[number];
 
 export interface ITaggedSimpleCryptoWallet extends ICryptoWalletProperties {
     readonly type: SimpleCryptoWalletTypeName;

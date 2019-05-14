@@ -12,7 +12,9 @@
 
 import { IMiscAssetProperties } from "../../IMiscAssetProperties";
 
-export type MiscAssetTypeName = "Misc";
+export const miscAssetTypeNames = ["Misc"] as const;
+
+export type MiscAssetTypeName = (typeof miscAssetTypeNames)[number];
 
 export interface ITaggedMiscAsset extends IMiscAssetProperties {
     readonly type: MiscAssetTypeName;
