@@ -45,7 +45,7 @@ const arrayOfAll = <T>() =>
     <U extends Array<keyof T>>(...array: U & (Array<keyof T> extends Array<U[number]> ? unknown : never)) => array;
 
 type AssetCtor =
-    (new(model: IModel, props: IAssetIntersection) => PreciousMetalAsset | CryptoWallet | MiscAsset) &
+    (new (model: IModel, props: IAssetIntersection) => PreciousMetalAsset | CryptoWallet | MiscAsset) &
     { superType: string };
 
 // tslint:disable-next-line: ban-types
@@ -88,12 +88,12 @@ const getRandomData = (type: AssetTypeName, expectedPropertyNames: AssetProperty
     return getProperties(data);
 };
 
-const createAsset = <T, U>(ctor: new(model: IModel, props: U) => T, props: U) => {
+const createAsset = <T, U>(ctor: new (model: IModel, props: U) => T, props: U) => {
     const model: IModel = {
         assets: {
             ordering: {
                 groupBy: "type",
-                otherGroupBys: [ "location" ],
+                otherGroupBys: ["location"],
             },
         },
         exchangeRate: 1,
@@ -116,14 +116,16 @@ const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetProp
 type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
 
 const expectProperty = <T, U, N extends PropertyNames<T> & string>(
-    ctor: new(model: IModel, props: U) => T, props: U, name: N, matcher: (x: jasmine.Matchers<T[N]>) => void) => {
+    ctor: new (model: IModel, props: U) => T, props: U, name: N, matcher: (x: jasmine.Matchers<T[N]>) => void,
+) => {
     describe(ctor.name, () => describe(name, () => {
         it("value should meet expectations", () => matcher(expect(createAsset(ctor, props)[name])));
     }));
 };
 
 const expectPropertyThrowsError = <T, U, N extends PropertyNames<T> & string>(
-    ctor: new(model: IModel, props: U) => T, props: U, name: N, expectedMessage: string) => {
+    ctor: new (model: IModel, props: U) => T, props: U, name: N, expectedMessage: string,
+) => {
     describe(ctor.name, () => describe(name, () => {
         it("should throw", () => expect(() => createAsset(ctor, props)[name]).toThrowError(expectedMessage));
     }));
@@ -132,12 +134,14 @@ const expectPropertyThrowsError = <T, U, N extends PropertyNames<T> & string>(
 type MethodNames<T> = { [K in keyof T]: T[K] extends () => unknown ? K : never }[keyof T];
 
 const testMethod = <T, U, N extends MethodNames<T> & string>(
-    ctor: new(model: IModel, props: U) => T, props: U, name: N, expectation: string, test: (object: T) => void) => {
+    ctor: new (model: IModel, props: U) => T, props: U, name: N, expectation: string, test: (object: T) => void,
+) => {
     describe(ctor.name, () => describe(`${name}()`, () => it(expectation, () => test(createAsset(ctor, props)))));
 };
 
 const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
-    ctor: new(model: IModel, props: U) => T, props: U, name: N, expectedMessage: string) => {
+    ctor: new (model: IModel, props: U) => T, props: U, name: N, expectedMessage: string,
+) => {
     describe(ctor.name, () => describe(`${name}()`, () => {
         it("should throw", () => expect(createAsset(ctor, props)[name]).toThrowError(expectedMessage));
     }));
@@ -201,8 +205,9 @@ const testConstruction = (type: AssetTypeName, ctor: AssetCtor) => {
     });
 };
 
-const testQueries =
-    <T extends Asset, U extends IAssetProperties>(ctor: new(model: IModel, props: U) => T, props: U) => {
+const testQueries = <T extends Asset, U extends IAssetProperties>(
+    ctor: new (model: IModel, props: U) => T, props: U,
+) => {
     describe("bundle() (before queryData())", () => {
         let sut: InstanceType<typeof ctor>;
         let bundle: ReturnType<typeof sut.bundle>;
@@ -297,15 +302,17 @@ const testQueries =
     });
 };
 
-const testCryptoWallet =
-    (ctor: new(model: IModel, props: ICryptoWalletProperties) => CryptoWallet, address: string) => {
+const testCryptoWallet = (
+    ctor: new (model: IModel, props: ICryptoWalletProperties) => CryptoWallet, address: string,
+) => {
     describe(`${ctor.name} with address ${address}`, () => {
         testQueries(ctor, { description: "Spending", address });
     });
 };
 
-const testPreciousMetalAsset =
-    (ctor: new(model: IModel, props: IPreciousMetalAssetProperties) => PreciousMetalAsset) => {
+const testPreciousMetalAsset = (
+    ctor: new (model: IModel, props: IPreciousMetalAssetProperties) => PreciousMetalAsset,
+) => {
     describe(`${ctor.name}`, () => {
         testQueries(ctor, { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 });
     });
