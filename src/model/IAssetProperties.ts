@@ -16,8 +16,7 @@ import { AssetTypeName } from "./validation/schemas/AssetTypeName";
  * Defines the common editable properties of all assets.
  * @description This interface (as well as its extending interfaces) defines the properties as they need to be provided
  * by the user as well as by the serialized form. Properties that are defined optional here are also optional in the UI
- * and during parsing. [[IAssetProperties.quantity]] is a special case since it is optional for crypto wallets but
- * required for precious metal assets.
+ * and during parsing.
  */
 export interface IAssetProperties {
     /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */

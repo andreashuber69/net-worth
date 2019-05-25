@@ -10,9 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { IModel } from "./Asset";
 import { AssetInputInfo } from "./AssetInputInfo";
-import { IAssetIntersection } from "./AssetInterfaces";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
 import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
@@ -24,11 +23,17 @@ import { GoldAsset } from "./GoldAsset";
 import { LtcWallet } from "./LtcWallet";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { PalladiumAsset } from "./PalladiumAsset";
-import { ParseErrorMessage } from "./ParseErrorMessage";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
-import { Unknown } from "./Unknown";
+import { erc20TokensWalletTypeNames } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { ITaggedErc20TokensWalletBundle } from "./validation/schemas/ITaggedErc20TokensWalletBundle";
+import { miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
+import { ITaggedMiscAssetBundle } from "./validation/schemas/ITaggedMiscAssetBundle";
+import { preciousMetalAssetTypeNames } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { ITaggedPreciousMetalAssetBundle } from "./validation/schemas/ITaggedPreciousMetalAssetBundle";
+import { simpleCryptoWalletTypeNames } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { ITaggedSimpleCryptoWalletBundle } from "./validation/schemas/ITaggedSimpleCryptoWalletBundle";
 import { TaggedAssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion";
 import { ZecWallet } from "./ZecWallet";
 
@@ -67,7 +72,7 @@ const zecHint =
 
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
-    public static readonly infos: AssetInputInfo[] = [
+    public static readonly infos = [
         new PreciousMetalAssetInputInfo("Silver", SilverAsset),
         new PreciousMetalAssetInputInfo("Palladium", PalladiumAsset),
         new PreciousMetalAssetInputInfo("Platinum", PlatinumAsset),
@@ -82,29 +87,47 @@ export class AssetInput {
         new CryptoWalletInputInfo({ type: "Dash", ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
         new CryptoWalletInputInfo({ type: "Zcash", ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
         new MiscAssetInputInfo(),
-    ];
+    ] as const;
 
     /** @internal */
     public static parseBundle(rawBundle: TaggedAssetBundleUnion) {
-        const rawAsset = rawBundle.primaryAsset;
-        const assetInfo = AssetInput.infos.find((info) => info.type === rawAsset.type);
-
-        if (!assetInfo) {
-            return ParseErrorMessage.getUnknownPropertyValue(Asset.typeName, rawAsset.type);
+        if (AssetInput.isBundle<ITaggedPreciousMetalAssetBundle>(rawBundle, preciousMetalAssetTypeNames)) {
+            return (model: IModel) => AssetInput.getInfo<PreciousMetalAssetInputInfo>(
+                rawBundle.primaryAsset).createAsset(model, rawBundle.primaryAsset).bundle(rawBundle);
+        } else if (AssetInput.isBundle<ITaggedSimpleCryptoWalletBundle>(rawBundle, simpleCryptoWalletTypeNames)) {
+            return (model: IModel) => AssetInput.getInfo<CryptoWalletInputInfo>(
+                rawBundle.primaryAsset).createAsset(model, rawBundle.primaryAsset).bundle(rawBundle);
+        } else if (AssetInput.isBundle<ITaggedErc20TokensWalletBundle>(rawBundle, erc20TokensWalletTypeNames)) {
+            return (model: IModel) => AssetInput.getInfo<CryptoWalletInputInfo>(
+                rawBundle.primaryAsset).createAsset(model, rawBundle.primaryAsset).bundle(rawBundle);
+        } else if (AssetInput.isBundle<ITaggedMiscAssetBundle>(rawBundle, miscAssetTypeNames)) {
+            return (model: IModel) => AssetInput.getInfo<MiscAssetInputInfo>(
+                rawBundle.primaryAsset).createAsset(model, rawBundle.primaryAsset).bundle(rawBundle);
+        } else {
+            throw AssetInput.getUnhandledError(rawBundle);
         }
-
-        const validationResult = assetInfo.validateAll(rawAsset);
-
-        if (!AssetInput.hasProperties(validationResult, rawAsset)) {
-            return validationResult;
-        }
-
-        return (model: IModel) => assetInfo.createAsset(model, rawAsset).bundle(rawBundle);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static hasProperties(validationResult: true | string, raw: Unknown): raw is IAssetIntersection {
-        return validationResult === true;
+    private static isBundle<T extends TaggedAssetBundleUnion>(
+        rawBundle: TaggedAssetBundleUnion, types: readonly string[]): rawBundle is T {
+        return types.includes(rawBundle.primaryAsset.type);
+    }
+
+    private static getInfo<
+        T extends (typeof AssetInput.infos)[number]>(rawAsset: Parameters<T["createAsset"]>[1] & { type: T["type"] }) {
+        const result = AssetInput.infos.find<T>((info: AssetInputInfo): info is T => info.type === rawAsset.type);
+
+        if (!result) {
+            // TODO: Can't we do this statically?
+            throw new Error("InputInfo not found!");
+        }
+
+        return result;
+    }
+
+    private static getUnhandledError(value: never) {
+        return new Error(value);
     }
 }
