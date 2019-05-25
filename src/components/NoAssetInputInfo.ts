@@ -12,7 +12,6 @@
 
 import { Asset, IModel } from "../model/Asset";
 import { AssetInputInfo } from "../model/AssetInputInfo";
-import { IAssetIntersection } from "../model/AssetInterfaces";
 import { Currency } from "../model/Currency";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { TextInputInfo } from "../model/TextInputInfo";
@@ -42,7 +41,7 @@ export class NoAssetInputInfo extends AssetInputInfo {
     }
 
     // tslint:disable-next-line: prefer-function-over-method
-    public createAsset(parent: IModel, props: IAssetIntersection): Asset {
+    public createAsset(): Asset {
         throw new Error("Can't create asset.");
     }
 }
