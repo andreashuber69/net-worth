@@ -91,32 +91,56 @@ export class AssetInput {
 
     /** @internal */
     public static parseBundle(rawBundle: TaggedAssetBundleUnion) {
-        if (AssetInput.isBundle<ITaggedPreciousMetalAssetBundle>(rawBundle, preciousMetalAssetTypeNames)) {
-            return (model: IModel) => AssetInput.getInfo<PreciousMetalAssetInputInfo>(
-                rawBundle.primaryAsset).createAsset(model, rawBundle.primaryAsset).bundle(rawBundle);
-        } else if (AssetInput.isBundle<ITaggedSimpleCryptoWalletBundle>(rawBundle, simpleCryptoWalletTypeNames)) {
-            return (model: IModel) => AssetInput.getInfo<CryptoWalletInputInfo>(
-                rawBundle.primaryAsset).createAsset(model, rawBundle.primaryAsset).bundle(rawBundle);
-        } else if (AssetInput.isBundle<ITaggedErc20TokensWalletBundle>(rawBundle, erc20TokensWalletTypeNames)) {
-            return (model: IModel) => AssetInput.getInfo<CryptoWalletInputInfo>(
-                rawBundle.primaryAsset).createAsset(model, rawBundle.primaryAsset).bundle(rawBundle);
-        } else if (AssetInput.isBundle<ITaggedMiscAssetBundle>(rawBundle, miscAssetTypeNames)) {
-            return (model: IModel) => AssetInput.getInfo<MiscAssetInputInfo>(
-                rawBundle.primaryAsset).createAsset(model, rawBundle.primaryAsset).bundle(rawBundle);
+        const result = AssetInput.parseBundleImpl(rawBundle);
+        const validationResult = result[0].validateAll(rawBundle.primaryAsset);
+
+        if (validationResult === true) {
+            return result[1];
         } else {
-            throw AssetInput.getUnhandledError(rawBundle);
+            return validationResult;
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static parseBundleImpl(rawBundle: TaggedAssetBundleUnion) {
+        if (AssetInput.isBundle<ITaggedPreciousMetalAssetBundle>(rawBundle, preciousMetalAssetTypeNames)) {
+            const info = AssetInput.getInfo<PreciousMetalAssetInputInfo>(rawBundle.primaryAsset);
+
+            return [
+                info, (model: IModel) => info.createAsset(model, rawBundle.primaryAsset).bundle(rawBundle),
+            ] as const;
+        } else if (AssetInput.isBundle<ITaggedSimpleCryptoWalletBundle>(rawBundle, simpleCryptoWalletTypeNames)) {
+            const info = AssetInput.getInfo<CryptoWalletInputInfo>(rawBundle.primaryAsset);
+
+            return [
+                info, (model: IModel) => info.createAsset(model, rawBundle.primaryAsset).bundle(rawBundle),
+            ] as const;
+        } else if (AssetInput.isBundle<ITaggedErc20TokensWalletBundle>(rawBundle, erc20TokensWalletTypeNames)) {
+            const info = AssetInput.getInfo<CryptoWalletInputInfo>(rawBundle.primaryAsset);
+
+            return [
+                info, (model: IModel) => info.createAsset(model, rawBundle.primaryAsset).bundle(rawBundle),
+            ] as const;
+        } else if (AssetInput.isBundle<ITaggedMiscAssetBundle>(rawBundle, miscAssetTypeNames)) {
+            const info = AssetInput.getInfo<MiscAssetInputInfo>(rawBundle.primaryAsset);
+
+            return [
+                info, (model: IModel) => info.createAsset(model, rawBundle.primaryAsset).bundle(rawBundle),
+            ] as const;
+        } else {
+            throw AssetInput.getUnhandledError(rawBundle);
+        }
+    }
 
     private static isBundle<T extends TaggedAssetBundleUnion>(
         rawBundle: TaggedAssetBundleUnion, types: readonly string[]): rawBundle is T {
         return types.includes(rawBundle.primaryAsset.type);
     }
 
-    private static getInfo<
-        T extends (typeof AssetInput.infos)[number]>(rawAsset: Parameters<T["createAsset"]>[1] & { type: T["type"] }) {
+    private static getInfo<T extends (typeof AssetInput.infos)[number]>(
+        rawAsset: Parameters<T["createAsset"]>[1] & { type: T["type"] },
+    ) {
         const result = AssetInput.infos.find<T>((info: AssetInputInfo): info is T => info.type === rawAsset.type);
 
         if (!result) {
