@@ -94,16 +94,14 @@ export class AssetInput {
         const result = AssetInput.parseBundleImpl(rawBundle);
         const validationResult = result[0].validateAll(rawBundle.primaryAsset);
 
-        if (validationResult === true) {
-            return result[1];
-        } else {
-            return validationResult;
-        }
+        return (validationResult === true) ? result[1] : validationResult;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static parseBundleImpl(rawBundle: TaggedAssetBundleUnion) {
+        // TODO: This is rather unwieldy due to the necessity to call AssetInputInfo.validateAll in the caller. Once we
+        // switch over to schema-based validation completely, some of this should go away...
         if (AssetInput.isBundle<ITaggedPreciousMetalAssetBundle>(rawBundle, preciousMetalAssetTypeNames)) {
             const info = AssetInput.getInfo<PreciousMetalAssetInputInfo>(rawBundle.primaryAsset);
 
