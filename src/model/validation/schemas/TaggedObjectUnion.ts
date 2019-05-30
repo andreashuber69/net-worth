@@ -10,15 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IMiscAssetProperties } from "../../IMiscAssetProperties";
+import { ITaggedErc20TokensObject } from "./ITaggedErc20TokensWallet";
+import { ITaggedMiscObject } from "./ITaggedMiscAsset";
+import { ITaggedPreciousMetalObject } from "./ITaggedPreciousMetalAsset";
+import { ITaggedSimpleCryptoObject } from "./ITaggedSimpleCryptoWallet";
 
-export const miscAssetTypeNames = ["Misc"] as const;
-
-export type MiscAssetTypeName = (typeof miscAssetTypeNames)[number];
-
-export interface ITaggedMiscObject {
-    readonly type: MiscAssetTypeName;
-}
-
-export interface ITaggedMiscAsset extends ITaggedMiscObject, IMiscAssetProperties {
-}
+export type TaggedObjectUnion =
+    ITaggedPreciousMetalObject | ITaggedSimpleCryptoObject | ITaggedErc20TokensObject | ITaggedMiscObject;

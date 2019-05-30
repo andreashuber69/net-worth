@@ -27,16 +27,17 @@ import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
 import {
-    Erc20TokensWalletTypeName, erc20TokensWalletTypeNames, ITaggedErc20TokensWallet,
+    erc20TokensWalletTypeNames, ITaggedErc20TokensObject, ITaggedErc20TokensWallet,
 } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { ITaggedMiscAsset, MiscAssetTypeName, miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
+import { ITaggedMiscAsset, ITaggedMiscObject, miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
 import {
-    ITaggedPreciousMetalAsset, PreciousMetalAssetTypeName, preciousMetalAssetTypeNames,
+    ITaggedPreciousMetalAsset, ITaggedPreciousMetalObject, preciousMetalAssetTypeNames,
 } from "./validation/schemas/ITaggedPreciousMetalAsset";
 import {
-    ITaggedSimpleCryptoWallet, SimpleCryptoWalletTypeName, simpleCryptoWalletTypeNames,
+    ITaggedSimpleCryptoObject, ITaggedSimpleCryptoWallet, simpleCryptoWalletTypeNames,
 } from "./validation/schemas/ITaggedSimpleCryptoWallet";
 import { TaggedAssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion";
+import { TaggedObjectUnion } from "./validation/schemas/TaggedObjectUnion";
 import { ZecWallet } from "./ZecWallet";
 
 // cSpell:ignore xpub, ypub, Mtub, Ltub, drkp
@@ -78,25 +79,6 @@ type Converters<PreciousMetal, SimpleCrypto, Erc20Tokens, Misc, Result> = [
     (value: Erc20Tokens, info: CryptoWalletInputInfo) => Result,
     (value: Misc, info: MiscAssetInputInfo) => Result,
 ];
-
-interface ITaggedPreciousMetalObject {
-    readonly type: PreciousMetalAssetTypeName;
-}
-
-interface ITaggedSimpleCryptoObject {
-    readonly type: SimpleCryptoWalletTypeName;
-}
-
-interface ITaggedErc20TokensObject {
-    readonly type: Erc20TokensWalletTypeName;
-}
-
-interface ITaggedMiscObject {
-    readonly type: MiscAssetTypeName;
-}
-
-type ITaggedObjectUnion =
-    ITaggedPreciousMetalObject | ITaggedSimpleCryptoObject | ITaggedErc20TokensObject | ITaggedMiscObject;
 
 class TaggedObjectConverter {
     public static readonly infos = [
@@ -150,8 +132,8 @@ class TaggedObjectConverter {
         }
     }
 
-    private static is<T extends ITaggedObjectUnion>(
-        rawObject: ITaggedObjectUnion, types: ReadonlyArray<T["type"]>): rawObject is T {
+    private static is<T extends TaggedObjectUnion>(
+        rawObject: TaggedObjectUnion, types: ReadonlyArray<T["type"]>): rawObject is T {
         return types.includes(rawObject.type);
     }
 
