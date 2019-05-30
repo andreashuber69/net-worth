@@ -70,8 +70,14 @@ const zecHint =
     "The wallets single public address (xpub is not supported). " +
     "<strong style='color:red'>Will be sent to chain.so to query the balance.</strong>";
 
-export class AssetInput {
-    /** Provides information objects for each of the supported asset types. */
+type Converters<T> = [
+    (bundle: ITaggedPreciousMetalAssetBundle, info: PreciousMetalAssetInputInfo) => T,
+    (bundle: ITaggedSimpleCryptoWalletBundle, info: CryptoWalletInputInfo) => T,
+    (bundle: ITaggedErc20TokensWalletBundle, info: CryptoWalletInputInfo) => T,
+    (bundle: ITaggedMiscAssetBundle, info: MiscAssetInputInfo) => T,
+];
+
+class BundleConverter {
     public static readonly infos = [
         new PreciousMetalAssetInputInfo("Silver", SilverAsset),
         new PreciousMetalAssetInputInfo("Palladium", PalladiumAsset),
@@ -89,45 +95,30 @@ export class AssetInput {
         new MiscAssetInputInfo(),
     ] as const;
 
-    /** @internal */
-    public static parseBundle(rawBundle: TaggedAssetBundleUnion) {
-        const result = AssetInput.parseBundleImpl(rawBundle);
-        const validationResult = result[0].validateAll(rawBundle.primaryAsset);
+    public static convert<T>(
+        rawBundle: TaggedAssetBundleUnion,
+        [convertPmAsset, convertSimpleCryptoWallet, convertErc20TokensWallet, convertMiscAsset]: Converters<T>,
+    ) {
+        // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should
+        // go away...
+        if (BundleConverter.isBundle<ITaggedPreciousMetalAssetBundle>(rawBundle, preciousMetalAssetTypeNames)) {
+            const info = BundleConverter.getInfo<PreciousMetalAssetInputInfo>(rawBundle.primaryAsset);
 
-        return (validationResult === true) ? result[1] : validationResult;
-    }
+            return [ info, convertPmAsset(rawBundle, info) ] as const;
+        } else if (BundleConverter.isBundle<ITaggedSimpleCryptoWalletBundle>(rawBundle, simpleCryptoWalletTypeNames)) {
+            const info = BundleConverter.getInfo<CryptoWalletInputInfo>(rawBundle.primaryAsset);
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            return [ info, convertSimpleCryptoWallet(rawBundle, info) ] as const;
+        } else if (BundleConverter.isBundle<ITaggedErc20TokensWalletBundle>(rawBundle, erc20TokensWalletTypeNames)) {
+            const info = BundleConverter.getInfo<CryptoWalletInputInfo>(rawBundle.primaryAsset);
 
-    private static parseBundleImpl(rawBundle: TaggedAssetBundleUnion) {
-        // TODO: This is rather unwieldy due to the necessity to call AssetInputInfo.validateAll in the caller. Once we
-        // switch over to schema-based validation completely, some of this should go away...
-        if (AssetInput.isBundle<ITaggedPreciousMetalAssetBundle>(rawBundle, preciousMetalAssetTypeNames)) {
-            const info = AssetInput.getInfo<PreciousMetalAssetInputInfo>(rawBundle.primaryAsset);
+            return [ info, convertErc20TokensWallet(rawBundle, info) ] as const;
+        } else if (BundleConverter.isBundle<ITaggedMiscAssetBundle>(rawBundle, miscAssetTypeNames)) {
+            const info = BundleConverter.getInfo<MiscAssetInputInfo>(rawBundle.primaryAsset);
 
-            return [
-                info, (model: IModel) => info.createAsset(model, rawBundle.primaryAsset).bundle(rawBundle),
-            ] as const;
-        } else if (AssetInput.isBundle<ITaggedSimpleCryptoWalletBundle>(rawBundle, simpleCryptoWalletTypeNames)) {
-            const info = AssetInput.getInfo<CryptoWalletInputInfo>(rawBundle.primaryAsset);
-
-            return [
-                info, (model: IModel) => info.createAsset(model, rawBundle.primaryAsset).bundle(rawBundle),
-            ] as const;
-        } else if (AssetInput.isBundle<ITaggedErc20TokensWalletBundle>(rawBundle, erc20TokensWalletTypeNames)) {
-            const info = AssetInput.getInfo<CryptoWalletInputInfo>(rawBundle.primaryAsset);
-
-            return [
-                info, (model: IModel) => info.createAsset(model, rawBundle.primaryAsset).bundle(rawBundle),
-            ] as const;
-        } else if (AssetInput.isBundle<ITaggedMiscAssetBundle>(rawBundle, miscAssetTypeNames)) {
-            const info = AssetInput.getInfo<MiscAssetInputInfo>(rawBundle.primaryAsset);
-
-            return [
-                info, (model: IModel) => info.createAsset(model, rawBundle.primaryAsset).bundle(rawBundle),
-            ] as const;
+            return [ info, convertMiscAsset(rawBundle, info) ] as const;
         } else {
-            throw AssetInput.getUnhandledError(rawBundle);
+            throw BundleConverter.getUnhandledError(rawBundle);
         }
     }
 
@@ -136,10 +127,10 @@ export class AssetInput {
         return types.includes(rawBundle.primaryAsset.type);
     }
 
-    private static getInfo<T extends (typeof AssetInput.infos)[number]>(
+    private static getInfo<T extends (typeof BundleConverter.infos)[number]>(
         rawAsset: Parameters<T["createAsset"]>[1] & { type: T["type"] },
     ) {
-        const result = AssetInput.infos.find<T>((info: AssetInputInfo): info is T => info.type === rawAsset.type);
+        const result = BundleConverter.infos.find<T>((info: AssetInputInfo): info is T => info.type === rawAsset.type);
 
         if (!result) {
             // TODO: Can't we do this statically?
@@ -151,5 +142,30 @@ export class AssetInput {
 
     private static getUnhandledError(value: never) {
         return new Error(value);
+    }
+}
+
+// tslint:disable-next-line: max-classes-per-file
+export class AssetInput {
+    /** Provides information objects for each of the supported asset types. */
+    public static readonly infos = BundleConverter.infos;
+
+    /** @internal */
+    public static parseBundle(rawBundle: TaggedAssetBundleUnion) {
+        const [info, result] = AssetInput.parseBundleImpl(rawBundle);
+        const validationResult = info.validateAll(rawBundle.primaryAsset);
+
+        return (validationResult === true) ? result : validationResult;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static parseBundleImpl(rawBundle: TaggedAssetBundleUnion) {
+        return BundleConverter.convert(rawBundle, [
+            (bundle, info) => ((model: IModel) => info.createAsset(model, bundle.primaryAsset).bundle(bundle)),
+            (bundle, info) => ((model: IModel) => info.createAsset(model, bundle.primaryAsset).bundle(bundle)),
+            (bundle, info) => ((model: IModel) => info.createAsset(model, bundle.primaryAsset).bundle(bundle)),
+            (bundle, info) => ((model: IModel) => info.createAsset(model, bundle.primaryAsset).bundle(bundle)),
+        ]);
     }
 }
