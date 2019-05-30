@@ -26,12 +26,17 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
-import { erc20TokensWalletTypeNames, ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { ITaggedMiscAsset, miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
-import { ITaggedPreciousMetalAsset, preciousMetalAssetTypeNames } from "./validation/schemas/ITaggedPreciousMetalAsset";
-import { ITaggedSimpleCryptoWallet, simpleCryptoWalletTypeNames } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import {
+    Erc20TokensWalletTypeName, erc20TokensWalletTypeNames, ITaggedErc20TokensWallet,
+} from "./validation/schemas/ITaggedErc20TokensWallet";
+import { ITaggedMiscAsset, MiscAssetTypeName, miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
+import {
+    ITaggedPreciousMetalAsset, PreciousMetalAssetTypeName, preciousMetalAssetTypeNames,
+} from "./validation/schemas/ITaggedPreciousMetalAsset";
+import {
+    ITaggedSimpleCryptoWallet, SimpleCryptoWalletTypeName, simpleCryptoWalletTypeNames,
+} from "./validation/schemas/ITaggedSimpleCryptoWallet";
 import { TaggedAssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion";
-import { TaggedAssetUnion } from "./validation/schemas/TaggedAssetUnion";
 import { ZecWallet } from "./ZecWallet";
 
 // cSpell:ignore xpub, ypub, Mtub, Ltub, drkp
@@ -67,14 +72,33 @@ const zecHint =
     "The wallets single public address (xpub is not supported). " +
     "<strong style='color:red'>Will be sent to chain.so to query the balance.</strong>";
 
-type Converters<T> = [
-    (asset: ITaggedPreciousMetalAsset, info: PreciousMetalAssetInputInfo) => T,
-    (asset: ITaggedSimpleCryptoWallet, info: CryptoWalletInputInfo) => T,
-    (asset: ITaggedErc20TokensWallet, info: CryptoWalletInputInfo) => T,
-    (asset: ITaggedMiscAsset, info: MiscAssetInputInfo) => T,
+type Converters<PreciousMetal, SimpleCrypto, Erc20Tokens, Misc, Result> = [
+    (value: PreciousMetal, info: PreciousMetalAssetInputInfo) => Result,
+    (value: SimpleCrypto, info: CryptoWalletInputInfo) => Result,
+    (value: Erc20Tokens, info: CryptoWalletInputInfo) => Result,
+    (value: Misc, info: MiscAssetInputInfo) => Result,
 ];
 
-class AssetConverter {
+interface ITaggedPreciousMetalObject {
+    readonly type: PreciousMetalAssetTypeName;
+}
+
+interface ITaggedSimpleCryptoObject {
+    readonly type: SimpleCryptoWalletTypeName;
+}
+
+interface ITaggedErc20TokensObject {
+    readonly type: Erc20TokensWalletTypeName;
+}
+
+interface ITaggedMiscObject {
+    readonly type: MiscAssetTypeName;
+}
+
+type ITaggedObjectUnion =
+    ITaggedPreciousMetalObject | ITaggedSimpleCryptoObject | ITaggedErc20TokensObject | ITaggedMiscObject;
+
+class TaggedObjectConverter {
     public static readonly infos = [
         new PreciousMetalAssetInputInfo("Silver", SilverAsset),
         new PreciousMetalAssetInputInfo("Palladium", PalladiumAsset),
@@ -92,39 +116,47 @@ class AssetConverter {
         new MiscAssetInputInfo(),
     ] as const;
 
-    public static convert<T>(
-        rawAsset: TaggedAssetUnion,
-        [convertPmAsset, convertSimpleCryptoWallet, convertErc20TokensWallet, convertMiscAsset]: Converters<T>,
+    public static convert<
+        P extends ITaggedPreciousMetalObject,
+        S extends ITaggedSimpleCryptoObject,
+        E extends ITaggedErc20TokensObject,
+        M extends ITaggedMiscObject,
+        R
+    >(
+        rawObject: P | S | E | M,
+        [convertPreciousMetalObject, convertSimpleCryptoObject, convertErc20TokensObject, convertMiscObject]:
+            Converters<P, S, E, M, R>,
     ) {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should
         // go away...
-        if (AssetConverter.isAsset<ITaggedPreciousMetalAsset>(rawAsset, preciousMetalAssetTypeNames)) {
-            const info = AssetConverter.getInfo<PreciousMetalAssetInputInfo>(rawAsset.type);
+        if (TaggedObjectConverter.is<P>(rawObject, preciousMetalAssetTypeNames)) {
+            const info = TaggedObjectConverter.getInfo<PreciousMetalAssetInputInfo>(rawObject.type);
 
-            return [ info, convertPmAsset(rawAsset, info) ] as const;
-        } else if (AssetConverter.isAsset<ITaggedSimpleCryptoWallet>(rawAsset, simpleCryptoWalletTypeNames)) {
-            const info = AssetConverter.getInfo<CryptoWalletInputInfo>(rawAsset.type);
+            return [info, convertPreciousMetalObject(rawObject, info)] as const;
+        } else if (TaggedObjectConverter.is<S>(rawObject, simpleCryptoWalletTypeNames)) {
+            const info = TaggedObjectConverter.getInfo<CryptoWalletInputInfo>(rawObject.type);
 
-            return [ info, convertSimpleCryptoWallet(rawAsset, info) ] as const;
-        } else if (AssetConverter.isAsset<ITaggedErc20TokensWallet>(rawAsset, erc20TokensWalletTypeNames)) {
-            const info = AssetConverter.getInfo<CryptoWalletInputInfo>(rawAsset.type);
+            return [info, convertSimpleCryptoObject(rawObject, info)] as const;
+        } else if (TaggedObjectConverter.is<E>(rawObject, erc20TokensWalletTypeNames)) {
+            const info = TaggedObjectConverter.getInfo<CryptoWalletInputInfo>(rawObject.type);
 
-            return [ info, convertErc20TokensWallet(rawAsset, info) ] as const;
-        } else if (AssetConverter.isAsset<ITaggedMiscAsset>(rawAsset, miscAssetTypeNames)) {
-            const info = AssetConverter.getInfo<MiscAssetInputInfo>(rawAsset.type);
+            return [info, convertErc20TokensObject(rawObject, info)] as const;
+        } else if (TaggedObjectConverter.is<M>(rawObject, miscAssetTypeNames)) {
+            const info = TaggedObjectConverter.getInfo<MiscAssetInputInfo>(rawObject.type);
 
-            return [ info, convertMiscAsset(rawAsset, info) ] as const;
+            return [info, convertMiscObject(rawObject, info)] as const;
         } else {
-            throw AssetConverter.getUnhandledError(rawAsset);
+            throw TaggedObjectConverter.getUnhandledError(rawObject);
         }
     }
 
-    private static isAsset<T extends TaggedAssetUnion>(asset: TaggedAssetUnion, types: readonly string[]): asset is T {
-        return types.includes(asset.type);
+    private static is<T extends ITaggedObjectUnion>(
+        rawObject: ITaggedObjectUnion, types: ReadonlyArray<T["type"]>): rawObject is T {
+        return types.includes(rawObject.type);
     }
 
-    private static getInfo<T extends (typeof AssetConverter.infos)[number]>(type: T["type"]) {
-        const result = AssetConverter.infos.find<T>((info: AssetInputInfo): info is T => info.type === type);
+    private static getInfo<T extends (typeof TaggedObjectConverter.infos)[number]>(type: T["type"]) {
+        const result = TaggedObjectConverter.infos.find<T>((info: AssetInputInfo): info is T => info.type === type);
 
         if (!result) {
             // TODO: Can't we do this statically?
@@ -142,7 +174,7 @@ class AssetConverter {
 // tslint:disable-next-line: max-classes-per-file
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
-    public static readonly infos = AssetConverter.infos;
+    public static readonly infos = TaggedObjectConverter.infos;
 
     /** @internal */
     public static parseBundle(rawBundle: TaggedAssetBundleUnion) {
@@ -155,11 +187,14 @@ export class AssetInput {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static parseBundleImpl(rawBundle: TaggedAssetBundleUnion) {
-        return AssetConverter.convert(rawBundle.primaryAsset, [
-            (asset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
-            (asset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
-            (asset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
-            (asset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
+        return TaggedObjectConverter.convert(rawBundle.primaryAsset, [
+            (asset: ITaggedPreciousMetalAsset, info) =>
+                ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset: ITaggedSimpleCryptoWallet, info) =>
+                ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset: ITaggedErc20TokensWallet, info) =>
+                ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset: ITaggedMiscAsset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
         ]);
     }
 }
