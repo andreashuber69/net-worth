@@ -132,7 +132,7 @@ export function createAsset(parent: IModel, data: AssetEditorData) {
     }
 
     return TaggedObjectConverter.convert(
-        data as TaggedObjectUnion, // TODO
+        { type: data.type },
         [
             (value, info) => ((model: IModel) => info.createAsset(model, new PreciousMetalProperties(data)) as Asset),
             (value, info) => ((model: IModel) => info.createAsset(model, new SimpleCryptoWalletProperties(data))),
