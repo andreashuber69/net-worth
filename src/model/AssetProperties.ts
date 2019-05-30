@@ -10,13 +10,16 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { Asset, IModel } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
 import { IAssetIntersection } from "./AssetInterfaces";
+import { TaggedObjectConverter } from "./TaggedObjectConverter";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { Erc20TokensWalletTypeName, ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
 import { ITaggedMiscAsset, MiscAssetTypeName } from "./validation/schemas/ITaggedMiscAsset";
 import { ITaggedPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
 import { ITaggedSimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { TaggedObjectUnion } from "./validation/schemas/TaggedObjectUnion";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 abstract class AssetProperties<T extends AssetTypeName> {
@@ -120,4 +123,21 @@ export function getProperties(data: AssetEditorData): IAssetIntersection {
         case "":
             throw new Error("Invalid asset type!");
     }
+}
+
+// tslint:disable-next-line: only-arrow-functions
+export function createAsset(parent: IModel, data: AssetEditorData) {
+    if (data.type === "") {
+        throw new Error("Invalid asset type!");
+    }
+
+    return TaggedObjectConverter.convert(
+        data as TaggedObjectUnion, // TODO
+        [
+            (value, info) => ((model: IModel) => info.createAsset(model, new PreciousMetalProperties(data)) as Asset),
+            (value, info) => ((model: IModel) => info.createAsset(model, new SimpleCryptoWalletProperties(data))),
+            (value, info) => ((model: IModel) => info.createAsset(model, new Erc20TokensWalletProperties(data))),
+            (value, info) => ((model: IModel) => info.createAsset(model, new MiscAssetProperties(data))),
+        ],
+    )[1](parent);
 }

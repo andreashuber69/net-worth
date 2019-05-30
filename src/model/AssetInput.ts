@@ -22,6 +22,7 @@ import { TaggedAssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUn
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
     public static readonly infos = TaggedObjectConverter.infos;
+
     /** @internal */
     public static parseBundle(rawBundle: TaggedAssetBundleUnion) {
         const [info, result] = AssetInput.parseBundleImpl(rawBundle);
@@ -29,7 +30,9 @@ export class AssetInput {
 
         return (validationResult === true) ? result : validationResult;
     }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     private static parseBundleImpl(rawBundle: TaggedAssetBundleUnion) {
         return TaggedObjectConverter.convert(rawBundle.primaryAsset, [
             (asset: ITaggedPreciousMetalAsset, info) =>
