@@ -26,15 +26,12 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
-import { erc20TokensWalletTypeNames } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { ITaggedErc20TokensWalletBundle } from "./validation/schemas/ITaggedErc20TokensWalletBundle";
-import { miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
-import { ITaggedMiscAssetBundle } from "./validation/schemas/ITaggedMiscAssetBundle";
-import { preciousMetalAssetTypeNames } from "./validation/schemas/ITaggedPreciousMetalAsset";
-import { ITaggedPreciousMetalAssetBundle } from "./validation/schemas/ITaggedPreciousMetalAssetBundle";
-import { simpleCryptoWalletTypeNames } from "./validation/schemas/ITaggedSimpleCryptoWallet";
-import { ITaggedSimpleCryptoWalletBundle } from "./validation/schemas/ITaggedSimpleCryptoWalletBundle";
+import { erc20TokensWalletTypeNames, ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { ITaggedMiscAsset, miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
+import { ITaggedPreciousMetalAsset, preciousMetalAssetTypeNames } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { ITaggedSimpleCryptoWallet, simpleCryptoWalletTypeNames } from "./validation/schemas/ITaggedSimpleCryptoWallet";
 import { TaggedAssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion";
+import { TaggedAssetUnion } from "./validation/schemas/TaggedAssetUnion";
 import { ZecWallet } from "./ZecWallet";
 
 // cSpell:ignore xpub, ypub, Mtub, Ltub, drkp
@@ -71,13 +68,13 @@ const zecHint =
     "<strong style='color:red'>Will be sent to chain.so to query the balance.</strong>";
 
 type Converters<T> = [
-    (bundle: ITaggedPreciousMetalAssetBundle, info: PreciousMetalAssetInputInfo) => T,
-    (bundle: ITaggedSimpleCryptoWalletBundle, info: CryptoWalletInputInfo) => T,
-    (bundle: ITaggedErc20TokensWalletBundle, info: CryptoWalletInputInfo) => T,
-    (bundle: ITaggedMiscAssetBundle, info: MiscAssetInputInfo) => T,
+    (asset: ITaggedPreciousMetalAsset, info: PreciousMetalAssetInputInfo) => T,
+    (asset: ITaggedSimpleCryptoWallet, info: CryptoWalletInputInfo) => T,
+    (asset: ITaggedErc20TokensWallet, info: CryptoWalletInputInfo) => T,
+    (asset: ITaggedMiscAsset, info: MiscAssetInputInfo) => T,
 ];
 
-class BundleConverter {
+class AssetConverter {
     public static readonly infos = [
         new PreciousMetalAssetInputInfo("Silver", SilverAsset),
         new PreciousMetalAssetInputInfo("Palladium", PalladiumAsset),
@@ -96,41 +93,38 @@ class BundleConverter {
     ] as const;
 
     public static convert<T>(
-        rawBundle: TaggedAssetBundleUnion,
+        rawAsset: TaggedAssetUnion,
         [convertPmAsset, convertSimpleCryptoWallet, convertErc20TokensWallet, convertMiscAsset]: Converters<T>,
     ) {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should
         // go away...
-        if (BundleConverter.isBundle<ITaggedPreciousMetalAssetBundle>(rawBundle, preciousMetalAssetTypeNames)) {
-            const info = BundleConverter.getInfo<PreciousMetalAssetInputInfo>(rawBundle.primaryAsset);
+        if (AssetConverter.isAsset<ITaggedPreciousMetalAsset>(rawAsset, preciousMetalAssetTypeNames)) {
+            const info = AssetConverter.getInfo<PreciousMetalAssetInputInfo>(rawAsset.type);
 
-            return [ info, convertPmAsset(rawBundle, info) ] as const;
-        } else if (BundleConverter.isBundle<ITaggedSimpleCryptoWalletBundle>(rawBundle, simpleCryptoWalletTypeNames)) {
-            const info = BundleConverter.getInfo<CryptoWalletInputInfo>(rawBundle.primaryAsset);
+            return [ info, convertPmAsset(rawAsset, info) ] as const;
+        } else if (AssetConverter.isAsset<ITaggedSimpleCryptoWallet>(rawAsset, simpleCryptoWalletTypeNames)) {
+            const info = AssetConverter.getInfo<CryptoWalletInputInfo>(rawAsset.type);
 
-            return [ info, convertSimpleCryptoWallet(rawBundle, info) ] as const;
-        } else if (BundleConverter.isBundle<ITaggedErc20TokensWalletBundle>(rawBundle, erc20TokensWalletTypeNames)) {
-            const info = BundleConverter.getInfo<CryptoWalletInputInfo>(rawBundle.primaryAsset);
+            return [ info, convertSimpleCryptoWallet(rawAsset, info) ] as const;
+        } else if (AssetConverter.isAsset<ITaggedErc20TokensWallet>(rawAsset, erc20TokensWalletTypeNames)) {
+            const info = AssetConverter.getInfo<CryptoWalletInputInfo>(rawAsset.type);
 
-            return [ info, convertErc20TokensWallet(rawBundle, info) ] as const;
-        } else if (BundleConverter.isBundle<ITaggedMiscAssetBundle>(rawBundle, miscAssetTypeNames)) {
-            const info = BundleConverter.getInfo<MiscAssetInputInfo>(rawBundle.primaryAsset);
+            return [ info, convertErc20TokensWallet(rawAsset, info) ] as const;
+        } else if (AssetConverter.isAsset<ITaggedMiscAsset>(rawAsset, miscAssetTypeNames)) {
+            const info = AssetConverter.getInfo<MiscAssetInputInfo>(rawAsset.type);
 
-            return [ info, convertMiscAsset(rawBundle, info) ] as const;
+            return [ info, convertMiscAsset(rawAsset, info) ] as const;
         } else {
-            throw BundleConverter.getUnhandledError(rawBundle);
+            throw AssetConverter.getUnhandledError(rawAsset);
         }
     }
 
-    private static isBundle<T extends TaggedAssetBundleUnion>(
-        rawBundle: TaggedAssetBundleUnion, types: readonly string[]): rawBundle is T {
-        return types.includes(rawBundle.primaryAsset.type);
+    private static isAsset<T extends TaggedAssetUnion>(asset: TaggedAssetUnion, types: readonly string[]): asset is T {
+        return types.includes(asset.type);
     }
 
-    private static getInfo<T extends (typeof BundleConverter.infos)[number]>(
-        rawAsset: Parameters<T["createAsset"]>[1] & { type: T["type"] },
-    ) {
-        const result = BundleConverter.infos.find<T>((info: AssetInputInfo): info is T => info.type === rawAsset.type);
+    private static getInfo<T extends (typeof AssetConverter.infos)[number]>(type: T["type"]) {
+        const result = AssetConverter.infos.find<T>((info: AssetInputInfo): info is T => info.type === type);
 
         if (!result) {
             // TODO: Can't we do this statically?
@@ -148,7 +142,7 @@ class BundleConverter {
 // tslint:disable-next-line: max-classes-per-file
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
-    public static readonly infos = BundleConverter.infos;
+    public static readonly infos = AssetConverter.infos;
 
     /** @internal */
     public static parseBundle(rawBundle: TaggedAssetBundleUnion) {
@@ -161,11 +155,11 @@ export class AssetInput {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static parseBundleImpl(rawBundle: TaggedAssetBundleUnion) {
-        return BundleConverter.convert(rawBundle, [
-            (bundle, info) => ((model: IModel) => info.createAsset(model, bundle.primaryAsset).bundle(bundle)),
-            (bundle, info) => ((model: IModel) => info.createAsset(model, bundle.primaryAsset).bundle(bundle)),
-            (bundle, info) => ((model: IModel) => info.createAsset(model, bundle.primaryAsset).bundle(bundle)),
-            (bundle, info) => ((model: IModel) => info.createAsset(model, bundle.primaryAsset).bundle(bundle)),
+        return AssetConverter.convert(rawBundle.primaryAsset, [
+            (asset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
         ]);
     }
 }
