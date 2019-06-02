@@ -71,11 +71,11 @@ const zecHint =
     "The wallets single public address (xpub is not supported). " +
     "<strong style='color:red'>Will be sent to chain.so to query the balance.</strong>";
 
-type Converters<PreciousMetal, SimpleCrypto, Erc20Tokens, Misc, Result> = [
-    (value: PreciousMetal, info: PreciousMetalAssetInputInfo) => Result,
-    (value: SimpleCrypto, info: CryptoWalletInputInfo) => Result,
-    (value: Erc20Tokens, info: CryptoWalletInputInfo) => Result,
-    (value: Misc, info: MiscAssetInputInfo) => Result,
+type Converters<P, S, E, M, PR, SR, ER, MR> = [
+    (value: P, info: PreciousMetalAssetInputInfo) => PR,
+    (value: S, info: CryptoWalletInputInfo) => SR,
+    (value: E, info: CryptoWalletInputInfo) => ER,
+    (value: M, info: MiscAssetInputInfo) => MR,
 ];
 
 export class TaggedObjectConverter {
@@ -101,11 +101,11 @@ export class TaggedObjectConverter {
         S extends ITaggedSimpleCryptoObject,
         E extends ITaggedErc20TokensObject,
         M extends ITaggedMiscObject,
-        R
+        PR, SR, ER, MR,
     >(
         rawObject: P | S | E | M,
         [convertPreciousMetalObject, convertSimpleCryptoObject, convertErc20TokensObject, convertMiscObject]:
-            Converters<P, S, E, M, R>,
+            Converters<P, S, E, M, PR, SR, ER, MR>,
     ) {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should
         // go away...

@@ -100,29 +100,19 @@ class MiscAssetProperties extends AssetProperties<MiscAssetTypeName> implements 
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function getProperties(data: AssetEditorData): IAssetIntersection {
-    // tslint:disable-next-line: switch-default
-    switch (data.type) {
-        case "Silver":
-        case "Palladium":
-        case "Platinum":
-        case "Gold":
-            return new PreciousMetalProperties(data);
-        case "Bitcoin":
-        case "Litecoin":
-        case "Ethereum Classic":
-        case "Ethereum":
-        case "Bitcoin Gold":
-        case "Dash":
-        case "Zcash":
-            return new SimpleCryptoWalletProperties(data);
-        case "ERC20 Tokens":
-            return new Erc20TokensWalletProperties(data);
-        case "Misc":
-            return new MiscAssetProperties(data);
-        case "":
-            throw new Error("Invalid asset type!");
-    }
+export function getProperties<T extends AssetTypeName>(type: T, data: AssetEditorData) {
+    // tslint:disable-next-line: no-object-literal-type-assertion
+    const obj = { type } as TaggedObjectUnion; // TODO
+
+    return TaggedObjectConverter.convert(
+        obj,
+        [
+            () => new PreciousMetalProperties(data) as ITaggedPreciousMetalAsset,
+            () => new SimpleCryptoWalletProperties(data) as ITaggedSimpleCryptoWallet,
+            () => new Erc20TokensWalletProperties(data) as ITaggedErc20TokensWallet,
+            () => new MiscAssetProperties(data) as ITaggedMiscAsset,
+        ],
+    )[1] as unknown as IAssetIntersection; // TODO;
 }
 
 // tslint:disable-next-line: only-arrow-functions

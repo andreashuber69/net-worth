@@ -85,7 +85,7 @@ const getRandomData = (type: AssetTypeName, expectedPropertyNames: AssetProperty
         }
     }
 
-    return getProperties(data);
+    return getProperties(type, data);
 };
 
 const createAsset = <T, U>(ctor: new (model: IModel, props: U) => T, props: U) => {
