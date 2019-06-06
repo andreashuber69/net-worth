@@ -10,12 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetUnion } from "./AssetInterfaces";
 import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { ITaggedAsset } from "./IAssetProperties";
-import { Erc20TokensWalletTypeName } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { Erc20TokensWalletTypeName, ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
+import { TaggedAssetUnion } from "./validation/schemas/TaggedAssetUnion";
 
 interface ITokenWalletParameters {
     readonly editable: Erc20TokensWallet;
@@ -24,7 +24,7 @@ interface ITokenWalletParameters {
     readonly unitValueUsd?: number;
 }
 
-export class Erc20TokenWallet extends CryptoWallet {
+export class Erc20TokenWallet extends CryptoWallet implements ITaggedErc20TokensWallet {
     public get type(): Erc20TokensWalletTypeName {
         return this.editable.type;
     }
@@ -49,7 +49,7 @@ export class Erc20TokenWallet extends CryptoWallet {
         return this.editable;
     }
 
-    public get interface(): IAssetUnion {
+    public get interface(): TaggedAssetUnion {
         throw new Error(`${Erc20TokenWallet.name} cannot be edited.`);
     }
 

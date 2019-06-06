@@ -10,11 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWallet } from "./ICryptoWallet";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
-import { IMiscAsset } from "./IMiscAsset";
 import { IMiscAssetProperties } from "./IMiscAssetProperties";
-import { IPreciousMetalAsset } from "./IPreciousMetalAsset";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 
@@ -31,9 +28,6 @@ export const allAssetPropertyNames: AssetPropertyName[] = [
     "description", "location", "quantity", "notes", "weight",
     "weightUnit", "fineness", "address", "value", "valueCurrency",
 ];
-
-/** @internal */
-export type IAssetUnion = IPreciousMetalAsset | ICryptoWallet | IMiscAsset;
 
 /** @internal */
 export type TaggedAssetPropertyName = keyof ITaggedAssetIntersection;

@@ -10,7 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetUnion } from "./AssetInterfaces";
 import { IAuxProperties } from "./IAuxProperties";
 import { TaggedObjectConverter } from "./TaggedObjectConverter";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
@@ -41,7 +40,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     // The high ABC is due to the number of properties that need to be assigned. Breaking this up would not improve
     // readability.
     // codebeat:disable[ABC]
-    public constructor(asset?: IAssetUnion) {
+    public constructor(asset?: TaggedAssetUnion) {
         this.type = AssetEditorData.getType(asset);
         this.description = AssetEditorData.getDescription(asset);
         this.location = AssetEditorData.getLocation(asset);
@@ -58,48 +57,48 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getType(asset?: IAssetUnion) {
+    private static getType(asset?: TaggedAssetUnion) {
         return asset && asset.type || "";
     }
 
-    private static getDescription(asset?: IAssetUnion) {
+    private static getDescription(asset?: TaggedAssetUnion) {
         return asset && asset.description;
     }
 
-    private static getLocation(asset?: IAssetUnion) {
+    private static getLocation(asset?: TaggedAssetUnion) {
         return asset && asset.location;
     }
 
-    private static getAddress(asset?: IAssetUnion) {
+    private static getAddress(asset?: TaggedAssetUnion) {
         return AssetEditorData.isCryptoWallet(asset) && asset.address || undefined;
     }
 
-    private static getWeight(asset?: IAssetUnion) {
+    private static getWeight(asset?: TaggedAssetUnion) {
         return AssetEditorData.isPreciousMetalAsset(asset) ? asset.weight.toString() : undefined;
     }
 
-    private static getWeightUnit(asset?: IAssetUnion) {
+    private static getWeightUnit(asset?: TaggedAssetUnion) {
         return AssetEditorData.isPreciousMetalAsset(asset) ? WeightUnit[asset.weightUnit] as WeightUnitName : undefined;
     }
 
-    private static getFineness(asset?: IAssetUnion) {
+    private static getFineness(asset?: TaggedAssetUnion) {
         return AssetEditorData.isPreciousMetalAsset(asset) ? asset.fineness.toString() : undefined;
     }
 
-    private static getValue(asset?: IAssetUnion) {
+    private static getValue(asset?: TaggedAssetUnion) {
         return AssetEditorData.isMiscAsset(asset) ? asset.value.toString() : undefined;
     }
 
-    private static getValueCurrency(asset?: IAssetUnion) {
+    private static getValueCurrency(asset?: TaggedAssetUnion) {
         return AssetEditorData.isMiscAsset(asset) ? asset.valueCurrency : undefined;
     }
 
-    private static getQuantity(asset?: IAssetUnion) {
+    private static getQuantity(asset?: TaggedAssetUnion) {
         return asset && (!AssetEditorData.isCryptoWallet(asset) || !asset.address) &&
             (asset.quantity !== undefined) && asset.quantity.toString() || undefined;
     }
 
-    private static getNotes(asset?: IAssetUnion) {
+    private static getNotes(asset?: TaggedAssetUnion) {
         return asset && asset.notes;
     }
 

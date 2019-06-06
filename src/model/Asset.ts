@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
-import { IAssetUnion, ITaggedAssetIntersection, TaggedAssetPropertyName } from "./AssetInterfaces";
+import { ITaggedAssetIntersection, TaggedAssetPropertyName } from "./AssetInterfaces";
 import { ITaggedAsset } from "./IAssetProperties";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
@@ -19,6 +19,7 @@ import { Unknown } from "./Unknown";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { Fineness } from "./validation/schemas/Fineness";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
+import { TaggedAssetUnion } from "./validation/schemas/TaggedAssetUnion";
 
 /** @internal */
 export interface IModel {
@@ -129,7 +130,7 @@ export abstract class Asset {
     }
 
     /** @internal */
-    public abstract get interface(): IAssetUnion;
+    public abstract get interface(): TaggedAssetUnion;
 
     /** @internal */
     public abstract toJSON(): ITaggedAsset;

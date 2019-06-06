@@ -14,7 +14,6 @@ import { IModel } from "./Asset";
 import { Currency } from "./Currency";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IMiscAsset } from "./IMiscAsset";
 import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
@@ -23,7 +22,7 @@ import { ITaggedMiscAsset } from "./validation/schemas/ITaggedMiscAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 
 /** Represents a miscellaneous asset. */
-export class MiscAsset extends SingleAsset implements IMiscAsset {
+export class MiscAsset extends SingleAsset implements ITaggedMiscAsset {
     public readonly type = "Misc";
 
     public readonly description: string;

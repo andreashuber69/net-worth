@@ -14,10 +14,10 @@ import { IModel } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
-import { SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { ITaggedSimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
 
 /** Defines the base of all simple crypto currency wallets. */
-export abstract class SimpleCryptoWallet extends RealCryptoWallet {
+export abstract class SimpleCryptoWallet extends RealCryptoWallet implements ITaggedSimpleCryptoWallet {
     public abstract get type(): SimpleCryptoWalletTypeName;
 
     public bundle(bundle?: Unknown): GenericAssetBundle<SimpleCryptoWallet> {

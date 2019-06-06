@@ -13,7 +13,6 @@
 
 import { IModel } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IPreciousMetalAsset } from "./IPreciousMetalAsset";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
@@ -25,7 +24,7 @@ import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 /** Defines the base of all classes that represent a precious metal asset. */
-export abstract class PreciousMetalAsset extends SingleAsset implements IPreciousMetalAsset {
+export abstract class PreciousMetalAsset extends SingleAsset implements ITaggedPreciousMetalAsset {
     public abstract get type(): PreciousMetalAssetTypeName;
 
     public readonly description: string;
