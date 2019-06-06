@@ -59,9 +59,6 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
      */
     public includeRelations = false;
 
-    /** @internal */
-    public abstract createAsset(parent: IModel, props: IAssetIntersection): Asset;
-
     public get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T {
         if (propertyName === undefined) {
             throw new Error("The propertyName argument cannot be undefined for a composite input.");
