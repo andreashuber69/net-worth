@@ -10,8 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
-import { AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
+import { Asset } from "./Asset";
+import { AssetPropertyName } from "./AssetInterfaces";
 import { Currency } from "./Currency";
 import { IAuxProperties } from "./IAuxProperties";
 import { CompositeInput, InputUtility } from "./Input";
