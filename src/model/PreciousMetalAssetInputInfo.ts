@@ -25,9 +25,6 @@ import { WeightUnit } from "./validation/schemas/WeightUnit";
  * representation of the asset.
  */
 export class PreciousMetalAssetInputInfo extends AssetInputInfo {
-    public static readonly weightDigits = 3;
-    public static readonly finenessDigits = 6;
-
     public readonly description = new TextInputInfo({
         label: "Description", hint: "Describes the items, e.g. 'Coins', 'Bars'.", isPresent: true, isRequired: true,
         schemaName: "Text",

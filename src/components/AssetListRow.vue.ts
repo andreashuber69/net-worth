@@ -132,9 +132,10 @@ export default class AssetListRow extends ComponentBase<Asset> {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly finenessFormatOptions = {
-        maximumFractionDigits: PreciousMetalAssetInputInfo.finenessDigits,
+        maximumFractionDigits: 6,
         minimumFractionDigits: 1,
-        useGrouping: true };
+        useGrouping: true,
+    };
 
     private getHint(groupBy: GroupBy) {
         switch (groupBy) {

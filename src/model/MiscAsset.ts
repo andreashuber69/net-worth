@@ -16,7 +16,6 @@ import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IMiscAsset, miscAssetSuperTypeName } from "./IMiscAsset";
 import { IMiscAssetProperties } from "./IMiscAssetProperties";
-import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { CurrencyName } from "./validation/schemas/CurrencyName";
@@ -105,8 +104,8 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
     };
 
     private static readonly unitFormatOptions = {
-        maximumFractionDigits: MiscAssetInputInfo.valueDigits,
-        minimumFractionDigits: MiscAssetInputInfo.valueDigits,
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2,
         useGrouping: true,
     };
 

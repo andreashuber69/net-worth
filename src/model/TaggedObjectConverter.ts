@@ -130,7 +130,7 @@ export class TaggedObjectConverter {
         }
     }
 
-    private static is<T extends TaggedObjectUnion>(
+    public static is<T extends TaggedObjectUnion>(
         rawObject: TaggedObjectUnion, types: ReadonlyArray<T["type"]>): rawObject is T {
         return types.includes(rawObject.type);
     }

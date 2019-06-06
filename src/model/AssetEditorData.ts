@@ -11,12 +11,15 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAssetUnion } from "./AssetInterfaces";
-import { CryptoWallet } from "./CryptoWallet";
 import { IAuxProperties } from "./IAuxProperties";
-import { MiscAsset } from "./MiscAsset";
-import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import { TaggedObjectConverter } from "./TaggedObjectConverter";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { CurrencyName } from "./validation/schemas/CurrencyName";
+import { erc20TokensWalletTypeNames, ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { ITaggedMiscAsset, miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
+import { ITaggedPreciousMetalAsset, preciousMetalAssetTypeNames } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { ITaggedSimpleCryptoWallet, simpleCryptoWalletTypeNames } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { TaggedAssetUnion } from "./validation/schemas/TaggedAssetUnion";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 import { WeightUnitName } from "./validation/schemas/WeightUnitName";
 
@@ -100,19 +103,24 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
         return asset && asset.notes;
     }
 
-    private static isCryptoWallet(asset?: IAssetUnion): asset is CryptoWallet {
-        return AssetEditorData.isType(CryptoWallet.superType, asset);
+    private static isCryptoWallet(
+        asset?: TaggedAssetUnion,
+    ): asset is ITaggedSimpleCryptoWallet | ITaggedErc20TokensWallet {
+        return AssetEditorData.isType<ITaggedSimpleCryptoWallet>(simpleCryptoWalletTypeNames, asset) ||
+            AssetEditorData.isType<ITaggedErc20TokensWallet>(erc20TokensWalletTypeNames, asset);
     }
 
-    private static isPreciousMetalAsset(asset?: IAssetUnion): asset is PreciousMetalAsset {
-        return AssetEditorData.isType(PreciousMetalAsset.superType, asset);
+    private static isPreciousMetalAsset(asset?: TaggedAssetUnion): asset is ITaggedPreciousMetalAsset {
+        return AssetEditorData.isType<ITaggedPreciousMetalAsset>(preciousMetalAssetTypeNames, asset);
     }
 
-    private static isMiscAsset(asset?: IAssetUnion): asset is MiscAsset {
-        return AssetEditorData.isType(MiscAsset.superType, asset);
+    private static isMiscAsset(asset?: TaggedAssetUnion): asset is ITaggedMiscAsset {
+        return AssetEditorData.isType<ITaggedMiscAsset>(miscAssetTypeNames, asset);
     }
 
-    private static isType(superType: string, asset?: IAssetUnion) {
-        return (asset && (asset.superType === superType)) || false;
+    private static isType<T extends TaggedAssetUnion>(
+        types: ReadonlyArray<T["type"]>, rawAsset?: TaggedAssetUnion,
+    ): rawAsset is T {
+        return (rawAsset && TaggedObjectConverter.is<T>(rawAsset, types)) || false;
     }
 }

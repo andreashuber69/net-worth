@@ -15,7 +15,6 @@ import { IModel } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IPreciousMetalAsset, preciousMetalAssetSuperTypeName } from "./IPreciousMetalAsset";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
-import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
@@ -116,7 +115,8 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
     };
 
     private static readonly unitFormatOptions = {
-        maximumFractionDigits: PreciousMetalAssetInputInfo.weightDigits, minimumFractionDigits: 0, useGrouping: true };
+        maximumFractionDigits: 3, minimumFractionDigits: 0, useGrouping: true,
+    };
 
     private static getUnit(weight: Weight, unit: WeightUnit) {
         return `${weight.toLocaleString(undefined, PreciousMetalAsset.unitFormatOptions)} ${WeightUnit[unit]}`;
