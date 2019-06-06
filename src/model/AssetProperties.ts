@@ -12,17 +12,15 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
-import { IAssetIntersection } from "./AssetInterfaces";
 import { TaggedObjectConverter } from "./TaggedObjectConverter";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { Erc20TokensWalletTypeName, ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
 import { ITaggedMiscAsset, MiscAssetTypeName } from "./validation/schemas/ITaggedMiscAsset";
 import { ITaggedPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
 import { ITaggedSimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
-import { TaggedObjectUnion } from "./validation/schemas/TaggedObjectUnion";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
-abstract class AssetProperties<T extends AssetTypeName> {
+class AssetProperties<T extends AssetTypeName> {
     public get type(): T {
         return AssetProperties.validate("type", this.data.type) as T;
     }
@@ -81,38 +79,24 @@ abstract class AssetProperties<T extends AssetTypeName> {
     }
 }
 
-// tslint:disable-next-line: max-classes-per-file
-class PreciousMetalProperties extends AssetProperties<PreciousMetalAssetTypeName> implements ITaggedPreciousMetalAsset {
-}
-
-// tslint:disable-next-line: max-classes-per-file
-class SimpleCryptoWalletProperties extends
-    AssetProperties<SimpleCryptoWalletTypeName> implements ITaggedSimpleCryptoWallet {
-}
-
-// tslint:disable-next-line: max-classes-per-file
-class Erc20TokensWalletProperties extends
-    AssetProperties<Erc20TokensWalletTypeName> implements ITaggedErc20TokensWallet {
-}
-
-// tslint:disable-next-line: max-classes-per-file
-class MiscAssetProperties extends AssetProperties<MiscAssetTypeName> implements ITaggedMiscAsset {
+// tslint:disable-next-line: only-arrow-functions
+export function getPreciousMetalProperties(data: AssetEditorData): ITaggedPreciousMetalAsset {
+    return new AssetProperties<PreciousMetalAssetTypeName>(data);
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function getProperties<T extends AssetTypeName>(type: T, data: AssetEditorData) {
-    // tslint:disable-next-line: no-object-literal-type-assertion
-    const obj = { type } as TaggedObjectUnion; // TODO
+export function getSimpleCryptoWalletProperties(data: AssetEditorData): ITaggedSimpleCryptoWallet {
+    return new AssetProperties<SimpleCryptoWalletTypeName>(data);
+}
 
-    return TaggedObjectConverter.convert(
-        obj,
-        [
-            () => new PreciousMetalProperties(data) as ITaggedPreciousMetalAsset,
-            () => new SimpleCryptoWalletProperties(data) as ITaggedSimpleCryptoWallet,
-            () => new Erc20TokensWalletProperties(data) as ITaggedErc20TokensWallet,
-            () => new MiscAssetProperties(data) as ITaggedMiscAsset,
-        ],
-    )[1] as unknown as IAssetIntersection; // TODO;
+// tslint:disable-next-line: only-arrow-functions
+export function getErc20TokensWalletProperties(data: AssetEditorData): ITaggedErc20TokensWallet {
+    return new AssetProperties<Erc20TokensWalletTypeName>(data);
+}
+
+// tslint:disable-next-line: only-arrow-functions
+export function getMiscAssetProperties(data: AssetEditorData): ITaggedMiscAsset {
+    return new AssetProperties<MiscAssetTypeName>(data);
 }
 
 // tslint:disable-next-line: only-arrow-functions
@@ -124,10 +108,10 @@ export function createAsset(parent: IModel, data: AssetEditorData) {
     return TaggedObjectConverter.convert(
         { type: data.type },
         [
-            (value, info) => ((model: IModel) => info.createAsset(model, new PreciousMetalProperties(data)) as Asset),
-            (value, info) => ((model: IModel) => info.createAsset(model, new SimpleCryptoWalletProperties(data))),
-            (value, info) => ((model: IModel) => info.createAsset(model, new Erc20TokensWalletProperties(data))),
-            (value, info) => ((model: IModel) => info.createAsset(model, new MiscAssetProperties(data))),
+            (value, info) => ((model: IModel) => info.createAsset(model, getPreciousMetalProperties(data)) as Asset),
+            (value, info) => ((model: IModel) => info.createAsset(model, getSimpleCryptoWalletProperties(data))),
+            (value, info) => ((model: IModel) => info.createAsset(model, getErc20TokensWalletProperties(data))),
+            (value, info) => ((model: IModel) => info.createAsset(model, getMiscAssetProperties(data))),
         ],
     )[1](parent);
 }

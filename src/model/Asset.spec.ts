@@ -16,7 +16,9 @@ import { AssetBundle } from "./AssetBundle";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetGroup } from "./AssetGroup";
 import { allAssetPropertyNames, AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
-import { getProperties } from "./AssetProperties";
+import {
+    getErc20TokensWalletProperties, getMiscAssetProperties, getPreciousMetalProperties, getSimpleCryptoWalletProperties,
+} from "./AssetProperties";
 import { AssetType } from "./AssetType";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
@@ -38,35 +40,19 @@ import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
+import { Erc20TokensWalletTypeName, ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { ITaggedMiscAsset, MiscAssetTypeName } from "./validation/schemas/ITaggedMiscAsset";
+import { ITaggedPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { ITaggedSimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 import { ZecWallet } from "./ZecWallet";
 
 const arrayOfAll = <T>() =>
     <U extends Array<keyof T>>(...array: U & (Array<keyof T> extends Array<U[number]> ? unknown : never)) => array;
 
-type AssetCtor =
-    (new (model: IModel, props: IAssetIntersection) => PreciousMetalAsset | CryptoWallet | MiscAsset) &
-    { superType: string };
-
-// tslint:disable-next-line: ban-types
-const getExpectedPropertyNames = (ctor: AssetCtor) => {
-    switch (ctor.superType) {
-        case PreciousMetalAsset.superType:
-            return arrayOfAll<IPreciousMetalAssetProperties>()(
-                "description", "location", "quantity", "notes", "weight", "weightUnit", "fineness");
-        case CryptoWallet.superType:
-            return arrayOfAll<ICryptoWalletProperties>()("description", "location", "quantity", "notes", "address");
-        case MiscAsset.superType:
-            return arrayOfAll<IMiscAssetProperties>()(
-                "description", "location", "quantity", "notes", "value", "valueCurrency");
-        default:
-            throw new Error("Unexpected superType");
-    }
-};
-
 let randomValue = Date.now();
 
-const getRandomData = (type: AssetTypeName, expectedPropertyNames: AssetPropertyName[]): IAssetIntersection => {
+const getRandomData = (type: AssetTypeName, expectedPropertyNames: AssetPropertyName[]) => {
     const data = new AssetEditorData();
     data.type = type;
 
@@ -85,7 +71,7 @@ const getRandomData = (type: AssetTypeName, expectedPropertyNames: AssetProperty
         }
     }
 
-    return getProperties(type, data);
+    return data;
 };
 
 const createAsset = <T, U>(ctor: new (model: IModel, props: U) => T, props: U) => {
@@ -147,9 +133,78 @@ const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
     }));
 };
 
-const testConstruction = (type: AssetTypeName, ctor: AssetCtor) => {
-    const expectedPropertyNames = getExpectedPropertyNames(ctor);
-    const props = getRandomData(type, expectedPropertyNames);
+type PreciousMetalCtor =
+    (new (model: IModel, props: IPreciousMetalAssetProperties) => PreciousMetalAsset) &
+    { superType: PreciousMetalAsset["superType"] };
+
+const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ctor: PreciousMetalCtor) => {
+    const expectedPropertyNames = arrayOfAll<IPreciousMetalAssetProperties>()(
+        "description", "location", "quantity", "notes", "weight", "weightUnit", "fineness");
+    const props = getPreciousMetalProperties(getRandomData(type, expectedPropertyNames));
+
+    expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
+    expectProperty(ctor, props, "locationHint", (matcher) => matcher.toEqual(""));
+    expectProperty(ctor, props, "unit", (matcher) => matcher.toBeDefined());
+    expectProperty(ctor, props, "quantityHint", (matcher) => matcher.toEqual(""));
+    expectProperty(ctor, props, "displayDecimals", (matcher) => matcher.toBeGreaterThanOrEqual(0));
+    expectProperty(ctor, props, "unitValue", (matcher) => matcher.toBeUndefined());
+    expectProperty(ctor, props, "unitValueHint", (matcher) => matcher.toEqual(""));
+    expectProperty(ctor, props, "totalValue", (matcher) => matcher.toBeUndefined());
+    expectProperty(ctor, props, "percent", (matcher) => matcher.toBeUndefined());
+    expectProperty(ctor, props, "hasActions", (matcher) => matcher.toBe(true));
+    testMethod(
+        ctor, props, "toJSON", "should return an object",
+        (asset) => expect(asset.toJSON() instanceof Object).toBe(true));
+    testMethod(
+        ctor, props, "bundle", "should return an AssetBundle",
+        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true));
+    testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
+
+    describe(ctor.name, () => {
+        let expected: ITaggedPreciousMetalAsset;
+        let sut: InstanceType<typeof ctor>;
+
+        beforeEach(() => {
+            expected = getPreciousMetalProperties(getRandomData(type, expectedPropertyNames));
+            sut = createAsset(ctor, expected);
+        });
+
+        describe("constructor", () => {
+            it("should copy parameter properties", () => {
+                const actual = getPropertyValues(sut, allAssetPropertyNames);
+                [...actual.keys()].filter((key) => actual.get(key) === undefined).forEach((key) => actual.delete(key));
+                expect(actual).toEqual(getPropertyValues(expected, expectedPropertyNames));
+            });
+        });
+
+        describe("type", () => {
+            it("should be equal to a valid type", () => {
+                expect(Object.keys(AssetType).includes(sut.type)).toBe(true);
+            });
+        });
+
+        describe("editableAsset", () => {
+            it("should be equal to sut", () => {
+                expect(sut.editableAsset).toBe(sut);
+            });
+        });
+
+        describe("interface", () => {
+            it("should be equal to sut", () => {
+                expect(sut.interface as object).toBe(sut);
+            });
+        });
+    });
+};
+
+type CryptoWalletCtor =
+    (new (model: IModel, props: ICryptoWalletProperties) => CryptoWallet) & { superType: CryptoWallet["superType"] };
+
+const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ctor: CryptoWalletCtor) => {
+    const expectedPropertyNames = arrayOfAll<ICryptoWalletProperties>()(
+        "description", "location", "quantity", "notes", "address");
+    const props = getSimpleCryptoWalletProperties(getRandomData(type, expectedPropertyNames));
+
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
     expectProperty(ctor, props, "locationHint", (matcher) => matcher.toEqual(props.address ? props.address : ""));
     expectProperty(ctor, props, "unit", (matcher) => matcher.toBeDefined());
@@ -169,11 +224,134 @@ const testConstruction = (type: AssetTypeName, ctor: AssetCtor) => {
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
-        let expected: IAssetIntersection;
+        let expected: ITaggedSimpleCryptoWallet;
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
-            expected = getRandomData(type, expectedPropertyNames);
+            expected = getSimpleCryptoWalletProperties(getRandomData(type, expectedPropertyNames));
+            sut = createAsset(ctor, expected);
+        });
+
+        describe("constructor", () => {
+            it("should copy parameter properties", () => {
+                const actual = getPropertyValues(sut, allAssetPropertyNames);
+                [...actual.keys()].filter((key) => actual.get(key) === undefined).forEach((key) => actual.delete(key));
+                expect(actual).toEqual(getPropertyValues(expected, expectedPropertyNames));
+            });
+        });
+
+        describe("type", () => {
+            it("should be equal to a valid type", () => {
+                expect(Object.keys(AssetType).includes(sut.type)).toBe(true);
+            });
+        });
+
+        describe("editableAsset", () => {
+            it("should be equal to sut", () => {
+                expect(sut.editableAsset).toBe(sut);
+            });
+        });
+
+        describe("interface", () => {
+            it("should be equal to sut", () => {
+                expect(sut.interface as object).toBe(sut);
+            });
+        });
+    });
+};
+
+const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor: CryptoWalletCtor) => {
+    const expectedPropertyNames = arrayOfAll<ICryptoWalletProperties>()(
+        "description", "location", "quantity", "notes", "address");
+    const props = getErc20TokensWalletProperties(getRandomData(type, expectedPropertyNames));
+
+    expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
+    expectProperty(ctor, props, "locationHint", (matcher) => matcher.toEqual(props.address ? props.address : ""));
+    expectProperty(ctor, props, "unit", (matcher) => matcher.toBeDefined());
+    expectProperty(ctor, props, "quantityHint", (matcher) => matcher.toEqual(""));
+    expectProperty(ctor, props, "displayDecimals", (matcher) => matcher.toBeGreaterThanOrEqual(0));
+    expectProperty(ctor, props, "unitValue", (matcher) => matcher.toBeUndefined());
+    expectProperty(ctor, props, "unitValueHint", (matcher) => matcher.toEqual(""));
+    expectProperty(ctor, props, "totalValue", (matcher) => matcher.toBeUndefined());
+    expectProperty(ctor, props, "percent", (matcher) => matcher.toBeUndefined());
+    expectProperty(ctor, props, "hasActions", (matcher) => matcher.toBe(true));
+    testMethod(
+        ctor, props, "toJSON", "should return an object",
+        (asset) => expect(asset.toJSON() instanceof Object).toBe(true));
+    testMethod(
+        ctor, props, "bundle", "should return an AssetBundle",
+        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true));
+    testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
+
+    describe(ctor.name, () => {
+        let expected: ITaggedErc20TokensWallet;
+        let sut: InstanceType<typeof ctor>;
+
+        beforeEach(() => {
+            expected = getErc20TokensWalletProperties(getRandomData(type, expectedPropertyNames));
+            sut = createAsset(ctor, expected);
+        });
+
+        describe("constructor", () => {
+            it("should copy parameter properties", () => {
+                const actual = getPropertyValues(sut, allAssetPropertyNames);
+                [...actual.keys()].filter((key) => actual.get(key) === undefined).forEach((key) => actual.delete(key));
+                expect(actual).toEqual(getPropertyValues(expected, expectedPropertyNames));
+            });
+        });
+
+        describe("type", () => {
+            it("should be equal to a valid type", () => {
+                expect(Object.keys(AssetType).includes(sut.type)).toBe(true);
+            });
+        });
+
+        describe("editableAsset", () => {
+            it("should be equal to sut", () => {
+                expect(sut.editableAsset).toBe(sut);
+            });
+        });
+
+        describe("interface", () => {
+            it("should be equal to sut", () => {
+                expect(sut.interface as object).toBe(sut);
+            });
+        });
+    });
+};
+
+type MiscAssetCtor =
+    (new (model: IModel, props: IMiscAssetProperties) => MiscAsset) & { superType: MiscAsset["superType"] };
+
+const testMiscAssetConstruction = (type: MiscAssetTypeName, ctor: MiscAssetCtor) => {
+    const expectedPropertyNames = arrayOfAll<IMiscAssetProperties>()(
+        "description", "location", "quantity", "notes", "value", "valueCurrency");
+    const props = getMiscAssetProperties(getRandomData(type, expectedPropertyNames));
+
+    expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
+    expectProperty(ctor, props, "locationHint", (matcher) => matcher.toEqual(""));
+    expectProperty(ctor, props, "unit", (matcher) => matcher.toBeDefined());
+    expectProperty(ctor, props, "quantityHint", (matcher) => matcher.toEqual(""));
+    expectProperty(ctor, props, "displayDecimals", (matcher) => matcher.toBeGreaterThanOrEqual(0));
+    expectProperty(ctor, props, "unitValue", (matcher) => matcher.toBeUndefined());
+    expectProperty(ctor, props, "unitValueHint", (matcher) => matcher.toEqual(""));
+    expectProperty(ctor, props, "totalValue", (matcher) => matcher.toBeUndefined());
+    expectProperty(ctor, props, "percent", (matcher) => matcher.toBeUndefined());
+    expectProperty(ctor, props, "hasActions", (matcher) => matcher.toBe(true));
+    testMethod(
+        ctor, props, "toJSON", "should return an object",
+        (asset) => expect(asset.toJSON() instanceof Object).toBe(true));
+    testMethod(
+        ctor, props, "bundle", "should return an AssetBundle",
+        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true));
+    testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
+
+    describe(ctor.name, () => {
+        let expected: ITaggedMiscAsset;
+        let sut: InstanceType<typeof ctor>;
+
+        beforeEach(() => {
+            expected = getMiscAssetProperties(getRandomData(type, expectedPropertyNames));
             sut = createAsset(ctor, expected);
         });
 
@@ -318,19 +496,19 @@ const testPreciousMetalAsset = (
     });
 };
 
-testConstruction("Silver", SilverAsset);
-testConstruction("Palladium", PalladiumAsset);
-testConstruction("Platinum", PlatinumAsset);
-testConstruction("Gold", GoldAsset);
-testConstruction("Bitcoin", BtcWallet);
-testConstruction("Litecoin", LtcWallet);
-testConstruction("Dash", DashWallet);
-testConstruction("Bitcoin Gold", BtgWallet);
-testConstruction("ERC20 Tokens", Erc20TokensWallet);
-testConstruction("Ethereum Classic", EtcWallet);
-testConstruction("Ethereum", EthWallet);
-testConstruction("Zcash", ZecWallet);
-testConstruction("Misc", MiscAsset);
+testPreciousMetalAssetConstruction("Silver", SilverAsset);
+testPreciousMetalAssetConstruction("Palladium", PalladiumAsset);
+testPreciousMetalAssetConstruction("Platinum", PlatinumAsset);
+testPreciousMetalAssetConstruction("Gold", GoldAsset);
+testSimpleCryptoWalletConstruction("Bitcoin", BtcWallet);
+testSimpleCryptoWalletConstruction("Litecoin", LtcWallet);
+testSimpleCryptoWalletConstruction("Dash", DashWallet);
+testSimpleCryptoWalletConstruction("Bitcoin Gold", BtgWallet);
+testErc20TokensWalletConstruction("ERC20 Tokens", Erc20TokensWallet);
+testSimpleCryptoWalletConstruction("Ethereum Classic", EtcWallet);
+testSimpleCryptoWalletConstruction("Ethereum", EthWallet);
+testSimpleCryptoWalletConstruction("Zcash", ZecWallet);
+testMiscAssetConstruction("Misc", MiscAsset);
 
 // cSpell: disable
 testCryptoWallet(
