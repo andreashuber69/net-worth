@@ -133,9 +133,7 @@ const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
     }));
 };
 
-type PreciousMetalCtor =
-    (new (model: IModel, props: IPreciousMetalAssetProperties) => PreciousMetalAsset) &
-    { superType: PreciousMetalAsset["superType"] };
+type PreciousMetalCtor = (new (model: IModel, props: IPreciousMetalAssetProperties) => PreciousMetalAsset);
 
 const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ctor: PreciousMetalCtor) => {
     const expectedPropertyNames = arrayOfAll<IPreciousMetalAssetProperties>()(
@@ -197,8 +195,7 @@ const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ct
     });
 };
 
-type CryptoWalletCtor =
-    (new (model: IModel, props: ICryptoWalletProperties) => CryptoWallet) & { superType: CryptoWallet["superType"] };
+type CryptoWalletCtor = (new (model: IModel, props: ICryptoWalletProperties) => CryptoWallet);
 
 const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ctor: CryptoWalletCtor) => {
     const expectedPropertyNames = arrayOfAll<ICryptoWalletProperties>()(
@@ -320,8 +317,7 @@ const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor
     });
 };
 
-type MiscAssetCtor =
-    (new (model: IModel, props: IMiscAssetProperties) => MiscAsset) & { superType: MiscAsset["superType"] };
+type MiscAssetCtor = (new (model: IModel, props: IMiscAssetProperties) => MiscAsset);
 
 const testMiscAssetConstruction = (type: MiscAssetTypeName, ctor: MiscAssetCtor) => {
     const expectedPropertyNames = arrayOfAll<IMiscAssetProperties>()(
