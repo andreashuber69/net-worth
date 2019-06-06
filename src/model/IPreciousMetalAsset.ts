@@ -14,12 +14,6 @@ import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
 
 /** @internal */
-export const preciousMetalAssetSuperTypeName = "Precious Metal";
-
-/** @internal */
 export interface IPreciousMetalAsset extends IPreciousMetalAssetProperties {
     readonly type: PreciousMetalAssetTypeName;
-
-    /** @internal */
-    readonly superType: typeof preciousMetalAssetSuperTypeName;
 }

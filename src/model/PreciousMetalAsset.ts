@@ -13,24 +13,19 @@
 
 import { IModel } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IPreciousMetalAsset, preciousMetalAssetSuperTypeName } from "./IPreciousMetalAsset";
+import { IPreciousMetalAsset } from "./IPreciousMetalAsset";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { Fineness } from "./validation/schemas/Fineness";
-import {
-    ITaggedPreciousMetalAsset, PreciousMetalAssetTypeName,
-} from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { ITaggedPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 /** Defines the base of all classes that represent a precious metal asset. */
 export abstract class PreciousMetalAsset extends SingleAsset implements IPreciousMetalAsset {
-    /** @internal */
-    public static readonly superType = preciousMetalAssetSuperTypeName;
-
     public abstract get type(): PreciousMetalAssetTypeName;
 
     public readonly description: string;
@@ -57,9 +52,6 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
     public get interface() {
         return this;
     }
-
-    /** @internal */
-    public readonly superType = PreciousMetalAsset.superType;
 
     /** @internal */
     public toJSON(): ITaggedPreciousMetalAsset {
