@@ -13,7 +13,7 @@
 import { CurrencyName } from "./CurrencyName";
 import { GroupBy } from "./GroupBy";
 import { ISort } from "./ISort";
-import { TaggedAssetBundleUnion } from "./TaggedAssetBundleUnion";
+import { AssetBundleUnion } from "./TaggedAssetBundleUnion";
 
 export class TaggedModel {
     public readonly version!: 1;
@@ -23,5 +23,5 @@ export class TaggedModel {
     public readonly currency?: CurrencyName;
     public readonly groupBy?: GroupBy;
     public readonly sort?: ISort;
-    public readonly bundles!: TaggedAssetBundleUnion[];
+    public readonly bundles!: AssetBundleUnion[];
 }

@@ -15,7 +15,7 @@ import { Asset, IModel } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetGroup } from "./AssetGroup";
-import { allAssetPropertyNames, AssetPropertyName, IAssetIntersection } from "./AssetInterfaces";
+import { allAssetPropertyNames, AssetPropertyName, IAssetPropertiesIntersection } from "./AssetInterfaces";
 import {
     getErc20TokensWalletProperties, getMiscAssetProperties, getPreciousMetalProperties, getSimpleCryptoWalletProperties,
 } from "./AssetProperties";
@@ -40,10 +40,10 @@ import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
-import { Erc20TokensWalletTypeName, ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { ITaggedMiscAsset, MiscAssetTypeName } from "./validation/schemas/ITaggedMiscAsset";
-import { ITaggedPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
-import { ITaggedSimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { Erc20TokensWalletTypeName, IErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { IMiscAsset, MiscAssetTypeName } from "./validation/schemas/ITaggedMiscAsset";
+import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 import { ZecWallet } from "./ZecWallet";
 
@@ -88,7 +88,9 @@ const createAsset = <T, U>(ctor: new (model: IModel, props: U) => T, props: U) =
     return new ctor(model, props);
 };
 
-const getPropertyValues = (object: Partial<IAssetIntersection>, names: AssetPropertyName[]): Map<string, unknown> => {
+const getPropertyValues = (
+    object: Partial<IAssetPropertiesIntersection>, names: AssetPropertyName[],
+): Map<string, unknown> => {
     const result = new Map<string, unknown>();
 
     for (const name of names) {
@@ -159,7 +161,7 @@ const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ct
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
-        let expected: ITaggedPreciousMetalAsset;
+        let expected: IPreciousMetalAsset;
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -221,7 +223,7 @@ const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ct
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
-        let expected: ITaggedSimpleCryptoWallet;
+        let expected: ISimpleCryptoWallet;
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -281,7 +283,7 @@ const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
-        let expected: ITaggedErc20TokensWallet;
+        let expected: IErc20TokensWallet;
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -343,7 +345,7 @@ const testMiscAssetConstruction = (type: MiscAssetTypeName, ctor: MiscAssetCtor)
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
-        let expected: ITaggedMiscAsset;
+        let expected: IMiscAsset;
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {

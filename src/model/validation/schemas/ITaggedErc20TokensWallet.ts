@@ -16,9 +16,9 @@ export const erc20TokensWalletTypeNames = ["ERC20 Tokens"] as const;
 
 export type Erc20TokensWalletTypeName = (typeof erc20TokensWalletTypeNames)[number];
 
-export interface ITaggedErc20TokensObject {
+export interface IErc20TokensObject {
     readonly type: Erc20TokensWalletTypeName;
 }
 
-export interface ITaggedErc20TokensWallet extends ITaggedErc20TokensObject, ICryptoWalletProperties {
+export interface IErc20TokensWallet extends IErc20TokensObject, ICryptoWalletProperties {
 }

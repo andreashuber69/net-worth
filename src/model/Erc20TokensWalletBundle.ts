@@ -19,7 +19,7 @@ import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
 import { DeletedAssets } from "./validation/schemas/DeletedAssets";
 import { EthplorerGetAddressInfoResponse, IToken } from "./validation/schemas/EthplorerGetAddressInfoResponse";
-import { ITaggedErc20TokensWalletBundle } from "./validation/schemas/ITaggedErc20TokensWalletBundle";
+import { IErc20TokensWalletBundle } from "./validation/schemas/ITaggedErc20TokensWalletBundle";
 import { Validator } from "./validation/Validator";
 
 export class Erc20TokensWalletBundle extends AssetBundle {
@@ -68,7 +68,7 @@ export class Erc20TokensWalletBundle extends AssetBundle {
         }
     }
 
-    public toJSON(): ITaggedErc20TokensWalletBundle {
+    public toJSON(): IErc20TokensWalletBundle {
         return {
             primaryAsset: this.erc20Wallet.toJSON(),
             deletedAssets: this.deletedAssets,

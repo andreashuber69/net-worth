@@ -11,14 +11,14 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAuxProperties } from "./IAuxProperties";
-import { TaggedObjectConverter } from "./TaggedObjectConverter";
+import { ObjectConverter } from "./TaggedObjectConverter";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { CurrencyName } from "./validation/schemas/CurrencyName";
-import { erc20TokensWalletTypeNames, ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { ITaggedMiscAsset, miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
-import { ITaggedPreciousMetalAsset, preciousMetalAssetTypeNames } from "./validation/schemas/ITaggedPreciousMetalAsset";
-import { ITaggedSimpleCryptoWallet, simpleCryptoWalletTypeNames } from "./validation/schemas/ITaggedSimpleCryptoWallet";
-import { TaggedAssetUnion } from "./validation/schemas/TaggedAssetUnion";
+import { erc20TokensWalletTypeNames, IErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { IMiscAsset, miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
+import { IPreciousMetalAsset, preciousMetalAssetTypeNames } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { ISimpleCryptoWallet, simpleCryptoWalletTypeNames } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { AssetUnion } from "./validation/schemas/TaggedAssetUnion";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 import { WeightUnitName } from "./validation/schemas/WeightUnitName";
 
@@ -40,7 +40,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     // The high ABC is due to the number of properties that need to be assigned. Breaking this up would not improve
     // readability.
     // codebeat:disable[ABC]
-    public constructor(asset?: TaggedAssetUnion) {
+    public constructor(asset?: AssetUnion) {
         this.type = AssetEditorData.getType(asset);
         this.description = AssetEditorData.getDescription(asset);
         this.location = AssetEditorData.getLocation(asset);
@@ -57,69 +57,67 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getType(asset?: TaggedAssetUnion) {
+    private static getType(asset?: AssetUnion) {
         return asset && asset.type || "";
     }
 
-    private static getDescription(asset?: TaggedAssetUnion) {
+    private static getDescription(asset?: AssetUnion) {
         return asset && asset.description;
     }
 
-    private static getLocation(asset?: TaggedAssetUnion) {
+    private static getLocation(asset?: AssetUnion) {
         return asset && asset.location;
     }
 
-    private static getAddress(asset?: TaggedAssetUnion) {
+    private static getAddress(asset?: AssetUnion) {
         return AssetEditorData.isCryptoWallet(asset) && asset.address || undefined;
     }
 
-    private static getWeight(asset?: TaggedAssetUnion) {
+    private static getWeight(asset?: AssetUnion) {
         return AssetEditorData.isPreciousMetalAsset(asset) ? asset.weight.toString() : undefined;
     }
 
-    private static getWeightUnit(asset?: TaggedAssetUnion) {
+    private static getWeightUnit(asset?: AssetUnion) {
         return AssetEditorData.isPreciousMetalAsset(asset) ? WeightUnit[asset.weightUnit] as WeightUnitName : undefined;
     }
 
-    private static getFineness(asset?: TaggedAssetUnion) {
+    private static getFineness(asset?: AssetUnion) {
         return AssetEditorData.isPreciousMetalAsset(asset) ? asset.fineness.toString() : undefined;
     }
 
-    private static getValue(asset?: TaggedAssetUnion) {
+    private static getValue(asset?: AssetUnion) {
         return AssetEditorData.isMiscAsset(asset) ? asset.value.toString() : undefined;
     }
 
-    private static getValueCurrency(asset?: TaggedAssetUnion) {
+    private static getValueCurrency(asset?: AssetUnion) {
         return AssetEditorData.isMiscAsset(asset) ? asset.valueCurrency : undefined;
     }
 
-    private static getQuantity(asset?: TaggedAssetUnion) {
+    private static getQuantity(asset?: AssetUnion) {
         return asset && (!AssetEditorData.isCryptoWallet(asset) || !asset.address) &&
             (asset.quantity !== undefined) && asset.quantity.toString() || undefined;
     }
 
-    private static getNotes(asset?: TaggedAssetUnion) {
+    private static getNotes(asset?: AssetUnion) {
         return asset && asset.notes;
     }
 
-    private static isCryptoWallet(
-        asset?: TaggedAssetUnion,
-    ): asset is ITaggedSimpleCryptoWallet | ITaggedErc20TokensWallet {
-        return AssetEditorData.isType<ITaggedSimpleCryptoWallet>(simpleCryptoWalletTypeNames, asset) ||
-            AssetEditorData.isType<ITaggedErc20TokensWallet>(erc20TokensWalletTypeNames, asset);
+    private static isCryptoWallet(asset?: AssetUnion): asset is ISimpleCryptoWallet | IErc20TokensWallet {
+        return AssetEditorData.isType<ISimpleCryptoWallet>(simpleCryptoWalletTypeNames, asset) ||
+            AssetEditorData.isType<IErc20TokensWallet>(erc20TokensWalletTypeNames, asset);
     }
 
-    private static isPreciousMetalAsset(asset?: TaggedAssetUnion): asset is ITaggedPreciousMetalAsset {
-        return AssetEditorData.isType<ITaggedPreciousMetalAsset>(preciousMetalAssetTypeNames, asset);
+    private static isPreciousMetalAsset(asset?: AssetUnion): asset is IPreciousMetalAsset {
+        return AssetEditorData.isType<IPreciousMetalAsset>(preciousMetalAssetTypeNames, asset);
     }
 
-    private static isMiscAsset(asset?: TaggedAssetUnion): asset is ITaggedMiscAsset {
-        return AssetEditorData.isType<ITaggedMiscAsset>(miscAssetTypeNames, asset);
+    private static isMiscAsset(asset?: AssetUnion): asset is IMiscAsset {
+        return AssetEditorData.isType<IMiscAsset>(miscAssetTypeNames, asset);
     }
 
-    private static isType<T extends TaggedAssetUnion>(
-        types: ReadonlyArray<T["type"]>, rawAsset?: TaggedAssetUnion,
+    private static isType<T extends AssetUnion>(
+        types: ReadonlyArray<T["type"]>, rawAsset?: AssetUnion,
     ): rawAsset is T {
-        return (rawAsset && TaggedObjectConverter.is<T>(rawAsset, types)) || false;
+        return (rawAsset && ObjectConverter.is<T>(rawAsset, types)) || false;
     }
 }

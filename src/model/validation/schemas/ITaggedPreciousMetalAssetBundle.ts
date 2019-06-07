@@ -10,8 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ITaggedPreciousMetalAsset } from "./ITaggedPreciousMetalAsset";
+import { IPreciousMetalAsset } from "./ITaggedPreciousMetalAsset";
 
-export interface ITaggedPreciousMetalAssetBundle {
-    readonly primaryAsset: ITaggedPreciousMetalAsset;
+export interface IPreciousMetalAssetBundle {
+    readonly primaryAsset: IPreciousMetalAsset;
 }

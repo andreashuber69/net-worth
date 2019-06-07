@@ -10,10 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ITaggedErc20TokensObject } from "./ITaggedErc20TokensWallet";
-import { ITaggedMiscObject } from "./ITaggedMiscAsset";
-import { ITaggedPreciousMetalObject } from "./ITaggedPreciousMetalAsset";
-import { ITaggedSimpleCryptoObject } from "./ITaggedSimpleCryptoWallet";
+import { IErc20TokensObject } from "./ITaggedErc20TokensWallet";
+import { IMiscObject } from "./ITaggedMiscAsset";
+import { IPreciousMetalObject } from "./ITaggedPreciousMetalAsset";
+import { ISimpleCryptoObject } from "./ITaggedSimpleCryptoWallet";
 
-export type TaggedObjectUnion =
-    ITaggedPreciousMetalObject | ITaggedSimpleCryptoObject | ITaggedErc20TokensObject | ITaggedMiscObject;
+export type ObjectUnion = IPreciousMetalObject | ISimpleCryptoObject | IErc20TokensObject | IMiscObject;

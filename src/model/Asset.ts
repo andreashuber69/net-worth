@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetBundle } from "./AssetBundle";
-import { ITaggedAssetIntersection, TaggedAssetPropertyName } from "./AssetInterfaces";
+import { IAssetIntersection } from "./AssetInterfaces";
 import { ITaggedAsset } from "./IAssetProperties";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
@@ -19,7 +19,7 @@ import { Unknown } from "./Unknown";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { Fineness } from "./validation/schemas/Fineness";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
-import { TaggedAssetUnion } from "./validation/schemas/TaggedAssetUnion";
+import { AssetUnion } from "./validation/schemas/TaggedAssetUnion";
 
 /** @internal */
 export interface IModel {
@@ -130,7 +130,7 @@ export abstract class Asset {
     }
 
     /** @internal */
-    public abstract get interface(): TaggedAssetUnion;
+    public abstract get interface(): AssetUnion;
 
     /** @internal */
     public abstract toJSON(): ITaggedAsset;
@@ -167,7 +167,7 @@ export abstract class Asset {
 
     private static nextKey = 0;
 
-    private static getPropertyName<T extends keyof ITaggedAssetIntersection>(name: T) {
+    private static getPropertyName<T extends keyof IAssetIntersection>(name: T) {
         return name;
     }
 
@@ -182,5 +182,5 @@ export abstract class Asset {
     private unitValueHintImpl = "";
 }
 
-export type AssetDisplayPropertyName = TaggedAssetPropertyName |
+export type AssetDisplayPropertyName = (keyof IAssetIntersection) |
     typeof Asset.unitName | typeof Asset.unitValueName | typeof Asset.totalValueName | typeof Asset.percentName;

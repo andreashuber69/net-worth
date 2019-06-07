@@ -18,11 +18,11 @@ import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { CurrencyName } from "./validation/schemas/CurrencyName";
-import { ITaggedMiscAsset } from "./validation/schemas/ITaggedMiscAsset";
+import { IMiscAsset } from "./validation/schemas/ITaggedMiscAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 
 /** Represents a miscellaneous asset. */
-export class MiscAsset extends SingleAsset implements ITaggedMiscAsset {
+export class MiscAsset extends SingleAsset implements IMiscAsset {
     public readonly type = "Misc";
 
     public readonly description: string;
@@ -63,7 +63,7 @@ export class MiscAsset extends SingleAsset implements ITaggedMiscAsset {
     }
 
     /** @internal */
-    public toJSON(): ITaggedMiscAsset {
+    public toJSON(): IMiscAsset {
         return {
             type: this.type,
             description: this.description,

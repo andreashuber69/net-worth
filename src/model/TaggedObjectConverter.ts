@@ -25,17 +25,11 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
-import {
-    erc20TokensWalletTypeNames, ITaggedErc20TokensObject,
-} from "./validation/schemas/ITaggedErc20TokensWallet";
-import { ITaggedMiscObject, miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
-import {
-    ITaggedPreciousMetalObject, preciousMetalAssetTypeNames,
-} from "./validation/schemas/ITaggedPreciousMetalAsset";
-import {
-    ITaggedSimpleCryptoObject, simpleCryptoWalletTypeNames,
-} from "./validation/schemas/ITaggedSimpleCryptoWallet";
-import { TaggedObjectUnion } from "./validation/schemas/TaggedObjectUnion";
+import { erc20TokensWalletTypeNames, IErc20TokensObject } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { IMiscObject, miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
+import { IPreciousMetalObject, preciousMetalAssetTypeNames } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { ISimpleCryptoObject, simpleCryptoWalletTypeNames } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { ObjectUnion } from "./validation/schemas/TaggedObjectUnion";
 import { ZecWallet } from "./ZecWallet";
 
 // cSpell:ignore xpub, ypub, Mtub, Ltub, drkp
@@ -78,7 +72,7 @@ type Converters<P, S, E, M, PR, SR, ER, MR> = [
     (value: M, info: MiscAssetInputInfo) => MR,
 ];
 
-export class TaggedObjectConverter {
+export class ObjectConverter {
     public static readonly infos = [
         new PreciousMetalAssetInputInfo("Silver", SilverAsset),
         new PreciousMetalAssetInputInfo("Palladium", PalladiumAsset),
@@ -97,10 +91,10 @@ export class TaggedObjectConverter {
     ] as const;
 
     public static convert<
-        P extends ITaggedPreciousMetalObject,
-        S extends ITaggedSimpleCryptoObject,
-        E extends ITaggedErc20TokensObject,
-        M extends ITaggedMiscObject,
+        P extends IPreciousMetalObject,
+        S extends ISimpleCryptoObject,
+        E extends IErc20TokensObject,
+        M extends IMiscObject,
         PR, SR, ER, MR,
     >(
         rawObject: P | S | E | M,
@@ -109,34 +103,34 @@ export class TaggedObjectConverter {
     ) {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should
         // go away...
-        if (TaggedObjectConverter.is<P>(rawObject, preciousMetalAssetTypeNames)) {
-            const info = TaggedObjectConverter.getInfo<PreciousMetalAssetInputInfo>(rawObject.type);
+        if (ObjectConverter.is<P>(rawObject, preciousMetalAssetTypeNames)) {
+            const info = ObjectConverter.getInfo<PreciousMetalAssetInputInfo>(rawObject.type);
 
             return [info, convertPreciousMetalObject(rawObject, info)] as const;
-        } else if (TaggedObjectConverter.is<S>(rawObject, simpleCryptoWalletTypeNames)) {
-            const info = TaggedObjectConverter.getInfo<CryptoWalletInputInfo>(rawObject.type);
+        } else if (ObjectConverter.is<S>(rawObject, simpleCryptoWalletTypeNames)) {
+            const info = ObjectConverter.getInfo<CryptoWalletInputInfo>(rawObject.type);
 
             return [info, convertSimpleCryptoObject(rawObject, info)] as const;
-        } else if (TaggedObjectConverter.is<E>(rawObject, erc20TokensWalletTypeNames)) {
-            const info = TaggedObjectConverter.getInfo<CryptoWalletInputInfo>(rawObject.type);
+        } else if (ObjectConverter.is<E>(rawObject, erc20TokensWalletTypeNames)) {
+            const info = ObjectConverter.getInfo<CryptoWalletInputInfo>(rawObject.type);
 
             return [info, convertErc20TokensObject(rawObject, info)] as const;
-        } else if (TaggedObjectConverter.is<M>(rawObject, miscAssetTypeNames)) {
-            const info = TaggedObjectConverter.getInfo<MiscAssetInputInfo>(rawObject.type);
+        } else if (ObjectConverter.is<M>(rawObject, miscAssetTypeNames)) {
+            const info = ObjectConverter.getInfo<MiscAssetInputInfo>(rawObject.type);
 
             return [info, convertMiscObject(rawObject, info)] as const;
         } else {
-            throw TaggedObjectConverter.getUnhandledError(rawObject);
+            throw ObjectConverter.getUnhandledError(rawObject);
         }
     }
 
-    public static is<T extends TaggedObjectUnion>(
-        rawObject: TaggedObjectUnion, types: ReadonlyArray<T["type"]>): rawObject is T {
+    public static is<T extends ObjectUnion>(
+        rawObject: ObjectUnion, types: ReadonlyArray<T["type"]>): rawObject is T {
         return types.includes(rawObject.type);
     }
 
-    private static getInfo<T extends (typeof TaggedObjectConverter.infos)[number]>(type: T["type"]) {
-        const result = TaggedObjectConverter.infos.find<T>((info: AssetInputInfo): info is T => info.type === type);
+    private static getInfo<T extends (typeof ObjectConverter.infos)[number]>(type: T["type"]) {
+        const result = ObjectConverter.infos.find<T>((info: AssetInputInfo): info is T => info.type === type);
 
         if (!result) {
             // TODO: Can't we do this statically?

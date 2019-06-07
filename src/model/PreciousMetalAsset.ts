@@ -18,13 +18,13 @@ import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { Fineness } from "./validation/schemas/Fineness";
-import { ITaggedPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 /** Defines the base of all classes that represent a precious metal asset. */
-export abstract class PreciousMetalAsset extends SingleAsset implements ITaggedPreciousMetalAsset {
+export abstract class PreciousMetalAsset extends SingleAsset implements IPreciousMetalAsset {
     public abstract get type(): PreciousMetalAssetTypeName;
 
     public readonly description: string;
@@ -53,7 +53,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements ITaggedP
     }
 
     /** @internal */
-    public toJSON(): ITaggedPreciousMetalAsset {
+    public toJSON(): IPreciousMetalAsset {
         return {
             type: this.type,
             description: this.description,

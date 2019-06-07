@@ -12,7 +12,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { ITaggedAsset } from "./IAssetProperties";
-import { TaggedAssetUnion } from "./validation/schemas/TaggedAssetUnion";
+import { AssetUnion } from "./validation/schemas/TaggedAssetUnion";
 
 // This could easily be fixed by overriding abstract methods in two extending classes, but doing so seems strange at
 // best. Most method implementations are trivial, so their number shouldn't matter that much.
@@ -77,7 +77,7 @@ export class AssetGroup extends Asset {
         return false;
     }
 
-    public get interface(): TaggedAssetUnion {
+    public get interface(): AssetUnion {
         throw new Error(`${AssetGroup.name} cannot be edited.`);
     }
 

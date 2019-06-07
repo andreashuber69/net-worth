@@ -16,18 +16,16 @@ import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 
 /** Combines the defining properties of all assets. */
-export type IAssetIntersection = IPreciousMetalAssetProperties & ICryptoWalletProperties & IMiscAssetProperties;
+export type IAssetPropertiesIntersection =
+    IPreciousMetalAssetProperties & ICryptoWalletProperties & IMiscAssetProperties;
 
-export interface ITaggedAssetIntersection extends IAssetIntersection {
+export interface IAssetIntersection extends IAssetPropertiesIntersection {
     readonly type: AssetTypeName;
 }
 
-export type AssetPropertyName = keyof IAssetIntersection;
+export type AssetPropertyName = keyof IAssetPropertiesIntersection;
 
 export const allAssetPropertyNames: AssetPropertyName[] = [
     "description", "location", "quantity", "notes", "weight",
     "weightUnit", "fineness", "address", "value", "valueCurrency",
 ];
-
-/** @internal */
-export type TaggedAssetPropertyName = keyof ITaggedAssetIntersection;

@@ -16,9 +16,9 @@ export const miscAssetTypeNames = ["Misc"] as const;
 
 export type MiscAssetTypeName = (typeof miscAssetTypeNames)[number];
 
-export interface ITaggedMiscObject {
+export interface IMiscObject {
     readonly type: MiscAssetTypeName;
 }
 
-export interface ITaggedMiscAsset extends ITaggedMiscObject, IMiscAssetProperties {
+export interface IMiscAsset extends IMiscObject, IMiscAssetProperties {
 }

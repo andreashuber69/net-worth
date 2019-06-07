@@ -13,9 +13,9 @@
 import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { ITaggedAsset } from "./IAssetProperties";
-import { Erc20TokensWalletTypeName, ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { Erc20TokensWalletTypeName, IErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
-import { TaggedAssetUnion } from "./validation/schemas/TaggedAssetUnion";
+import { AssetUnion } from "./validation/schemas/TaggedAssetUnion";
 
 interface ITokenWalletParameters {
     readonly editable: Erc20TokensWallet;
@@ -24,7 +24,7 @@ interface ITokenWalletParameters {
     readonly unitValueUsd?: number;
 }
 
-export class Erc20TokenWallet extends CryptoWallet implements ITaggedErc20TokensWallet {
+export class Erc20TokenWallet extends CryptoWallet implements IErc20TokensWallet {
     public get type(): Erc20TokensWalletTypeName {
         return this.editable.type;
     }
@@ -49,7 +49,7 @@ export class Erc20TokenWallet extends CryptoWallet implements ITaggedErc20Tokens
         return this.editable;
     }
 
-    public get interface(): TaggedAssetUnion {
+    public get interface(): AssetUnion {
         throw new Error(`${Erc20TokenWallet.name} cannot be edited.`);
     }
 

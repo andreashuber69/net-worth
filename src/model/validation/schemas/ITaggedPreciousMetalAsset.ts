@@ -16,9 +16,9 @@ export const preciousMetalAssetTypeNames = ["Silver", "Palladium", "Platinum", "
 
 export type PreciousMetalAssetTypeName = (typeof preciousMetalAssetTypeNames)[number];
 
-export interface ITaggedPreciousMetalObject {
+export interface IPreciousMetalObject {
     readonly type: PreciousMetalAssetTypeName;
 }
 
-export interface ITaggedPreciousMetalAsset extends ITaggedPreciousMetalObject, IPreciousMetalAssetProperties {
+export interface IPreciousMetalAsset extends IPreciousMetalObject, IPreciousMetalAssetProperties {
 }

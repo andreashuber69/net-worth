@@ -18,9 +18,9 @@ export const simpleCryptoWalletTypeNames = [
 
 export type SimpleCryptoWalletTypeName = (typeof simpleCryptoWalletTypeNames)[number];
 
-export interface ITaggedSimpleCryptoObject {
+export interface ISimpleCryptoObject {
     readonly type: SimpleCryptoWalletTypeName;
 }
 
-export interface ITaggedSimpleCryptoWallet extends ITaggedSimpleCryptoObject, ICryptoWalletProperties {
+export interface ISimpleCryptoWallet extends ISimpleCryptoObject, ICryptoWalletProperties {
 }

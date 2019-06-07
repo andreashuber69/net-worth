@@ -11,8 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IDeletedAssets } from "./IDeletedAssets";
-import { ITaggedErc20TokensWallet } from "./ITaggedErc20TokensWallet";
+import { IErc20TokensWallet } from "./ITaggedErc20TokensWallet";
 
-export interface ITaggedErc20TokensWalletBundle extends IDeletedAssets {
-    readonly primaryAsset: ITaggedErc20TokensWallet;
+export interface IErc20TokensWalletBundle extends IDeletedAssets {
+    readonly primaryAsset: IErc20TokensWallet;
 }

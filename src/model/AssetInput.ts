@@ -11,20 +11,20 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { TaggedObjectConverter } from "./TaggedObjectConverter";
-import { ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { ITaggedMiscAsset } from "./validation/schemas/ITaggedMiscAsset";
-import { ITaggedPreciousMetalAsset } from "./validation/schemas/ITaggedPreciousMetalAsset";
-import { ITaggedSimpleCryptoWallet } from "./validation/schemas/ITaggedSimpleCryptoWallet";
-import { TaggedAssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion";
+import { ObjectConverter } from "./TaggedObjectConverter";
+import { IErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { IMiscAsset } from "./validation/schemas/ITaggedMiscAsset";
+import { IPreciousMetalAsset } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { ISimpleCryptoWallet } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { AssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion";
 
 // tslint:disable-next-line: max-classes-per-file
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
-    public static readonly infos = TaggedObjectConverter.infos;
+    public static readonly infos = ObjectConverter.infos;
 
     /** @internal */
-    public static parseBundle(rawBundle: TaggedAssetBundleUnion) {
+    public static parseBundle(rawBundle: AssetBundleUnion) {
         const [info, result] = AssetInput.parseBundleImpl(rawBundle);
         const validationResult = info.validateAll(rawBundle.primaryAsset);
 
@@ -33,15 +33,12 @@ export class AssetInput {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static parseBundleImpl(rawBundle: TaggedAssetBundleUnion) {
-        return TaggedObjectConverter.convert(rawBundle.primaryAsset, [
-            (asset: ITaggedPreciousMetalAsset, info) =>
-                ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
-            (asset: ITaggedSimpleCryptoWallet, info) =>
-                ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
-            (asset: ITaggedErc20TokensWallet, info) =>
-                ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
-            (asset: ITaggedMiscAsset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
+    private static parseBundleImpl(rawBundle: AssetBundleUnion) {
+        return ObjectConverter.convert(rawBundle.primaryAsset, [
+            (asset: IPreciousMetalAsset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset: ISimpleCryptoWallet, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset: IErc20TokensWallet, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset: IMiscAsset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
         ]);
     }
 }

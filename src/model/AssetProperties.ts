@@ -12,12 +12,12 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
-import { TaggedObjectConverter } from "./TaggedObjectConverter";
+import { ObjectConverter } from "./TaggedObjectConverter";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
-import { Erc20TokensWalletTypeName, ITaggedErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { ITaggedMiscAsset, MiscAssetTypeName } from "./validation/schemas/ITaggedMiscAsset";
-import { ITaggedPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
-import { ITaggedSimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { Erc20TokensWalletTypeName, IErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
+import { IMiscAsset, MiscAssetTypeName } from "./validation/schemas/ITaggedMiscAsset";
+import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 class AssetProperties<T extends AssetTypeName> {
@@ -80,22 +80,22 @@ class AssetProperties<T extends AssetTypeName> {
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function getPreciousMetalProperties(data: AssetEditorData): ITaggedPreciousMetalAsset {
+export function getPreciousMetalProperties(data: AssetEditorData): IPreciousMetalAsset {
     return new AssetProperties<PreciousMetalAssetTypeName>(data);
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function getSimpleCryptoWalletProperties(data: AssetEditorData): ITaggedSimpleCryptoWallet {
+export function getSimpleCryptoWalletProperties(data: AssetEditorData): ISimpleCryptoWallet {
     return new AssetProperties<SimpleCryptoWalletTypeName>(data);
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function getErc20TokensWalletProperties(data: AssetEditorData): ITaggedErc20TokensWallet {
+export function getErc20TokensWalletProperties(data: AssetEditorData): IErc20TokensWallet {
     return new AssetProperties<Erc20TokensWalletTypeName>(data);
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function getMiscAssetProperties(data: AssetEditorData): ITaggedMiscAsset {
+export function getMiscAssetProperties(data: AssetEditorData): IMiscAsset {
     return new AssetProperties<MiscAssetTypeName>(data);
 }
 
@@ -105,7 +105,7 @@ export function createAsset(parent: IModel, data: AssetEditorData) {
         throw new Error("Invalid asset type!");
     }
 
-    return TaggedObjectConverter.convert(
+    return ObjectConverter.convert(
         { type: data.type },
         [
             (value, info) => ((model: IModel) => info.createAsset(model, getPreciousMetalProperties(data)) as Asset),
