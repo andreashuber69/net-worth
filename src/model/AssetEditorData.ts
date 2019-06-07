@@ -13,12 +13,12 @@
 import { IAuxProperties } from "./IAuxProperties";
 import { ObjectConverter } from "./TaggedObjectConverter";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
+import { AssetUnion } from "./validation/schemas/AssetUnion";
 import { CurrencyName } from "./validation/schemas/CurrencyName";
-import { erc20TokensWalletTypeNames, IErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { IMiscAsset, miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
-import { IPreciousMetalAsset, preciousMetalAssetTypeNames } from "./validation/schemas/ITaggedPreciousMetalAsset";
-import { ISimpleCryptoWallet, simpleCryptoWalletTypeNames } from "./validation/schemas/ITaggedSimpleCryptoWallet";
-import { AssetUnion } from "./validation/schemas/TaggedAssetUnion";
+import { erc20TokensWalletTypeNames, IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
+import { IMiscAsset, miscAssetTypeNames } from "./validation/schemas/IMiscAsset";
+import { IPreciousMetalAsset, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset";
+import { ISimpleCryptoWallet, simpleCryptoWalletTypeNames } from "./validation/schemas/ISimpleCryptoWallet";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 import { WeightUnitName } from "./validation/schemas/WeightUnitName";
 

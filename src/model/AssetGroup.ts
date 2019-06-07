@@ -12,7 +12,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { ITaggedAsset } from "./IAssetProperties";
-import { AssetUnion } from "./validation/schemas/TaggedAssetUnion";
+import { AssetUnion } from "./validation/schemas/AssetUnion";
 
 // This could easily be fixed by overriding abstract methods in two extending classes, but doing so seems strange at
 // best. Most method implementations are trivial, so their number shouldn't matter that much.

@@ -14,10 +14,10 @@ import { Asset, IModel } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
 import { ObjectConverter } from "./TaggedObjectConverter";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
-import { Erc20TokensWalletTypeName, IErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { IMiscAsset, MiscAssetTypeName } from "./validation/schemas/ITaggedMiscAsset";
-import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
-import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { Erc20TokensWalletTypeName, IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
+import { IMiscAsset, MiscAssetTypeName } from "./validation/schemas/IMiscAsset";
+import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
+import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 class AssetProperties<T extends AssetTypeName> {

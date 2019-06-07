@@ -12,8 +12,8 @@
 
 import { IModel } from "./Asset";
 import { SingleAsset } from "./SingleAsset";
-import { Erc20TokensWalletTypeName } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet";
+import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
 
 /** Defines the base of all classes that represent a crypto currency wallet. */

@@ -18,7 +18,7 @@ import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { CurrencyName } from "./validation/schemas/CurrencyName";
-import { IMiscAsset } from "./validation/schemas/ITaggedMiscAsset";
+import { IMiscAsset } from "./validation/schemas/IMiscAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 
 /** Represents a miscellaneous asset. */

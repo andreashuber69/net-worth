@@ -18,7 +18,7 @@ import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { Fineness } from "./validation/schemas/Fineness";
-import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./validation/schemas/WeightUnit";

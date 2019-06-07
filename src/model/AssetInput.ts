@@ -12,10 +12,10 @@
 
 import { IModel } from "./Asset";
 import { ObjectConverter } from "./TaggedObjectConverter";
-import { IErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { IMiscAsset } from "./validation/schemas/ITaggedMiscAsset";
-import { IPreciousMetalAsset } from "./validation/schemas/ITaggedPreciousMetalAsset";
-import { ISimpleCryptoWallet } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
+import { IMiscAsset } from "./validation/schemas/IMiscAsset";
+import { IPreciousMetalAsset } from "./validation/schemas/IPreciousMetalAsset";
+import { ISimpleCryptoWallet } from "./validation/schemas/ISimpleCryptoWallet";
 import { AssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion";
 
 // tslint:disable-next-line: max-classes-per-file

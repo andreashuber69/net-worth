@@ -25,11 +25,11 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
-import { erc20TokensWalletTypeNames, IErc20TokensObject } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { IMiscObject, miscAssetTypeNames } from "./validation/schemas/ITaggedMiscAsset";
-import { IPreciousMetalObject, preciousMetalAssetTypeNames } from "./validation/schemas/ITaggedPreciousMetalAsset";
-import { ISimpleCryptoObject, simpleCryptoWalletTypeNames } from "./validation/schemas/ITaggedSimpleCryptoWallet";
-import { ObjectUnion } from "./validation/schemas/TaggedObjectUnion";
+import { erc20TokensWalletTypeNames, IErc20TokensObject } from "./validation/schemas/IErc20TokensWallet";
+import { IMiscObject, miscAssetTypeNames } from "./validation/schemas/IMiscAsset";
+import { IPreciousMetalObject, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset";
+import { ISimpleCryptoObject, simpleCryptoWalletTypeNames } from "./validation/schemas/ISimpleCryptoWallet";
+import { ObjectUnion } from "./validation/schemas/ObjectUnion";
 import { ZecWallet } from "./ZecWallet";
 
 // cSpell:ignore xpub, ypub, Mtub, Ltub, drkp

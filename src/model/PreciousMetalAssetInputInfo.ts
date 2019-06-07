@@ -17,7 +17,7 @@ import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
+import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 /**

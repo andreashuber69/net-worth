@@ -40,10 +40,10 @@ import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
-import { Erc20TokensWalletTypeName, IErc20TokensWallet } from "./validation/schemas/ITaggedErc20TokensWallet";
-import { IMiscAsset, MiscAssetTypeName } from "./validation/schemas/ITaggedMiscAsset";
-import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/ITaggedPreciousMetalAsset";
-import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ITaggedSimpleCryptoWallet";
+import { Erc20TokensWalletTypeName, IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
+import { IMiscAsset, MiscAssetTypeName } from "./validation/schemas/IMiscAsset";
+import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
+import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 import { ZecWallet } from "./ZecWallet";
 

@@ -10,9 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IErc20TokensWallet } from "./ITaggedErc20TokensWallet";
-import { IMiscAsset } from "./ITaggedMiscAsset";
-import { IPreciousMetalAsset } from "./ITaggedPreciousMetalAsset";
-import { ISimpleCryptoWallet } from "./ITaggedSimpleCryptoWallet";
+import { IErc20TokensWallet } from "./IErc20TokensWallet";
+import { IMiscAsset } from "./IMiscAsset";
+import { IPreciousMetalAsset } from "./IPreciousMetalAsset";
+import { ISimpleCryptoWallet } from "./ISimpleCryptoWallet";
 
 export type AssetUnion = IPreciousMetalAsset | ISimpleCryptoWallet | IErc20TokensWallet | IMiscAsset;

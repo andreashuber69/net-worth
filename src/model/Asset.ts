@@ -17,9 +17,9 @@ import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
+import { AssetUnion } from "./validation/schemas/AssetUnion";
 import { Fineness } from "./validation/schemas/Fineness";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
-import { AssetUnion } from "./validation/schemas/TaggedAssetUnion";
 
 /** @internal */
 export interface IModel {
