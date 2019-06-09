@@ -29,6 +29,20 @@ export interface IAssetProperties {
     readonly notes?: string;
 }
 
+// TODO: Rename to IAsset
 export interface ITaggedAsset extends IAssetProperties {
     readonly type: AssetTypeName;
+}
+
+export abstract class AssetPropertyNames {
+    public static readonly type = AssetPropertyNames.getPropertyName("type");
+    public static readonly description = AssetPropertyNames.getPropertyName("description");
+    public static readonly location = AssetPropertyNames.getPropertyName("location");
+    public static readonly notes = AssetPropertyNames.getPropertyName("notes");
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static getPropertyName<T extends keyof ITaggedAsset>(name: T) {
+        return name;
+    }
 }

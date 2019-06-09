@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset } from "../model/Asset";
+import { AssetPropertyNames } from "../model/IAssetProperties";
 import { IOrdering } from "../model/Ordering";
 import { GroupBy } from "../model/validation/schemas/GroupBy";
 
@@ -66,8 +67,8 @@ export class ColumnInfo {
     private static readonly percentFractionName = ColumnInfo.getName("percentFraction");
 
     private static readonly allColumns = new Map<GroupBy, ColumnName[]>([
-        [Asset.typeName, ColumnInfo.getColumns(Asset.typeName)],
-        [Asset.locationName, ColumnInfo.getColumns(Asset.locationName)],
+        [AssetPropertyNames.type, ColumnInfo.getColumns(AssetPropertyNames.type)],
+        [AssetPropertyNames.location, ColumnInfo.getColumns(AssetPropertyNames.location)],
     ]);
 
     /**
@@ -92,20 +93,20 @@ export class ColumnInfo {
 
     private static getColumns(groupBy: GroupBy) {
         const result: ColumnName[] = [
-            ColumnInfo.expandName, Asset.typeName,
+            ColumnInfo.expandName, AssetPropertyNames.type,
             Asset.percentName, ColumnInfo.percentIntegerName, ColumnInfo.percentFractionName,
             ColumnInfo.moreName, ColumnInfo.grandTotalLabelName,
             Asset.totalValueName, ColumnInfo.totalValueIntegerName, ColumnInfo.totalValueFractionName,
-            Asset.locationName, Asset.unitName,
+            AssetPropertyNames.location, Asset.unitName,
             Asset.quantityName, ColumnInfo.quantityIntegerName, ColumnInfo.quantityFractionName,
             Asset.unitValueName, ColumnInfo.unitValueIntegerName, ColumnInfo.unitValueFractionName,
-            Asset.descriptionName,
+            AssetPropertyNames.description,
             Asset.finenessName, ColumnInfo.finenessIntegerName, ColumnInfo.finenessFractionName,
         ];
 
-        if (groupBy === Asset.locationName) {
-            result[1] = Asset.locationName;
-            result[10] = Asset.typeName;
+        if (groupBy === AssetPropertyNames.location) {
+            result[1] = AssetPropertyNames.location;
+            result[10] = AssetPropertyNames.type;
         }
 
         return result;
@@ -140,7 +141,7 @@ export class ColumnInfo {
             case groupBy:
                 return [ "pl-0", rightClass ];
             case otherGroupBys[0]:
-            case Asset.descriptionName:
+            case AssetPropertyNames.description:
             case Asset.unitName:
             case Asset.finenessName:
             case Asset.unitValueName:
@@ -175,9 +176,9 @@ export class ColumnInfo {
     // codebeat:disable[ABC,CYCLO]
     private static getAlignment(columnName: string | undefined) {
         switch (columnName) {
-            case Asset.typeName:
-            case Asset.descriptionName:
-            case Asset.locationName:
+            case AssetPropertyNames.type:
+            case AssetPropertyNames.description:
+            case AssetPropertyNames.location:
             case Asset.unitName:
             case ColumnInfo.finenessFractionName:
             case ColumnInfo.unitValueFractionName:

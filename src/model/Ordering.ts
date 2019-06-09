@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset } from "./Asset";
+import { AssetPropertyNames } from "./IAssetProperties";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { ISort } from "./validation/schemas/ISort";
 import { SortBy } from "./validation/schemas/SortBy";
@@ -32,13 +33,13 @@ export interface IOrdering {
 /** Provides information how assets are ordered (grouped and sorted) in the main model of the application. */
 export class Ordering implements IOrdering {
     /** Provides the property names by which the asset list can be grouped. */
-    public static readonly groupBys: GroupBy[] = [ Asset.typeName, Asset.locationName ];
+    public static readonly groupBys: GroupBy[] = [ AssetPropertyNames.type, AssetPropertyNames.location ];
 
     public static isSortBy(sortBy: string | undefined): sortBy is SortBy {
         switch (sortBy) {
-            case Asset.typeName:
-            case Asset.descriptionName:
-            case Asset.locationName:
+            case AssetPropertyNames.type:
+            case AssetPropertyNames.description:
+            case AssetPropertyNames.location:
             case Asset.unitValueName:
             case Asset.totalValueName:
                 return true;
@@ -96,7 +97,7 @@ export class Ordering implements IOrdering {
     public constructor(params: IOrderingParameters) {
         this.onGroupChanged = params.onGroupChanged;
         this.onSortChanged = params.onSortChanged;
-        this.groupByImpl = params.groupBy || Asset.typeName;
+        this.groupByImpl = params.groupBy || AssetPropertyNames.type;
         this.sortImpl = params.sort || { by: Asset.totalValueName, descending: true };
     }
 

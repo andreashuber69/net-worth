@@ -13,6 +13,7 @@
 import { Asset } from "./Asset";
 import { AssetPropertyName } from "./AssetInterfaces";
 import { Currency } from "./Currency";
+import { AssetPropertyNames } from "./IAssetProperties";
 import { IAuxProperties } from "./IAuxProperties";
 import { CompositeInput, InputUtility } from "./Input";
 import { InputInfo } from "./InputInfo";
@@ -83,8 +84,8 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
 
         try {
             const results: IValidationResults = {
-                description: this.validateComposite(true, input, Asset.descriptionName),
-                location: this.validateComposite(true, input, Asset.locationName),
+                description: this.validateComposite(true, input, AssetPropertyNames.description),
+                location: this.validateComposite(true, input, AssetPropertyNames.location),
                 address: this.validateComposite(true, input, Asset.addressName),
                 weight: this.validateComposite(true, input, Asset.weightName),
                 weightUnit: this.validateComposite(true, input, Asset.weightUnitName),
@@ -92,7 +93,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
                 value: this.validateComposite(true, input, Asset.valueName),
                 valueCurrency: this.validateComposite(true, input, Asset.valueCurrencyName),
                 quantity: this.validateComposite(true, input, Asset.quantityName),
-                notes: this.validateComposite(true, input, Asset.notesName),
+                notes: this.validateComposite(true, input, AssetPropertyNames.notes),
             };
 
             let message = "";

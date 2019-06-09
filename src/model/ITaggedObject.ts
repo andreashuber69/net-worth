@@ -12,6 +12,7 @@
 
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 
+// TODO: Remove
 export interface ITaggedObject<T extends AssetTypeName> {
     readonly type: T;
 }

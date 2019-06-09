@@ -11,7 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset } from "../../Asset";
+import { AssetPropertyNames } from "../../IAssetProperties";
 
 export type SortBy =
-    typeof Asset.typeName | typeof Asset.descriptionName |
-    typeof Asset.locationName | typeof Asset.unitValueName | typeof Asset.totalValueName;
+    typeof AssetPropertyNames.type | typeof AssetPropertyNames.description |
+    typeof AssetPropertyNames.location | typeof Asset.unitValueName | typeof Asset.totalValueName;

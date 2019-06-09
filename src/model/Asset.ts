@@ -33,9 +33,6 @@ export interface IModel {
 
 /** Defines the base of all classes that represent an asset. */
 export abstract class Asset {
-    public static readonly typeName = Asset.getPropertyName("type");
-    public static readonly descriptionName = Asset.getPropertyName("description");
-    public static readonly locationName = Asset.getPropertyName("location");
     public static readonly addressName = Asset.getPropertyName("address");
     public static readonly unitName = Asset.getCalculatedPropertyName("unit");
     public static readonly weightName = Asset.getPropertyName("weight");
@@ -45,7 +42,6 @@ export abstract class Asset {
     public static readonly valueCurrencyName = Asset.getPropertyName("valueCurrency");
     public static readonly unitValueName = Asset.getCalculatedPropertyName("unitValue");
     public static readonly quantityName = Asset.getPropertyName("quantity");
-    public static readonly notesName = Asset.getPropertyName("notes");
     public static readonly totalValueName = Asset.getCalculatedPropertyName("totalValue");
     public static readonly percentName = Asset.getCalculatedPropertyName("percent");
 
