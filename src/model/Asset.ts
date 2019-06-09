@@ -33,6 +33,7 @@ export interface IModel {
 
 /** Defines the base of all classes that represent an asset. */
 export abstract class Asset {
+    // TODO: These should be moved into their own classes
     public static readonly addressName = Asset.getPropertyName("address");
     public static readonly unitName = Asset.getCalculatedPropertyName("unit");
     public static readonly weightName = Asset.getPropertyName("weight");

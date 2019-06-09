@@ -15,4 +15,4 @@ import { AssetPropertyNames } from "../../IAssetProperties";
 
 export type SortBy =
     typeof AssetPropertyNames.type | typeof AssetPropertyNames.description |
-    typeof AssetPropertyNames.location | typeof Asset.unitValueName | typeof Asset.totalValueName;
+    typeof AssetPropertyNames.location | typeof Asset.unitValueName | typeof Asset.totalValueName; // TODO
