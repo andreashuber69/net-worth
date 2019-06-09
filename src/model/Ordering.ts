@@ -12,6 +12,7 @@
 
 import { Asset } from "./Asset";
 import { AssetPropertyNames } from "./IAssetProperties";
+import { CalculatedAssetPropertyNames } from "./ICalculatedAssetProperties";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { ISort } from "./validation/schemas/ISort";
 import { SortBy } from "./validation/schemas/SortBy";
@@ -40,8 +41,8 @@ export class Ordering implements IOrdering {
             case AssetPropertyNames.type:
             case AssetPropertyNames.description:
             case AssetPropertyNames.location:
-            case Asset.unitValueName:
-            case Asset.totalValueName:
+            case CalculatedAssetPropertyNames.unitValue:
+            case CalculatedAssetPropertyNames.totalValue:
                 return true;
             default:
                 return false;
@@ -98,7 +99,7 @@ export class Ordering implements IOrdering {
         this.onGroupChanged = params.onGroupChanged;
         this.onSortChanged = params.onSortChanged;
         this.groupByImpl = params.groupBy || AssetPropertyNames.type;
-        this.sortImpl = params.sort || { by: Asset.totalValueName, descending: true };
+        this.sortImpl = params.sort || { by: CalculatedAssetPropertyNames.totalValue, descending: true };
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

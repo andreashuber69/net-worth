@@ -13,6 +13,7 @@
 import { AssetBundle } from "./AssetBundle";
 import { IAssetIntersection } from "./AssetInterfaces";
 import { ITaggedAsset } from "./IAssetProperties";
+import { CalculatedAssetPropertyNames, ICalculatedAssetProperties } from "./ICalculatedAssetProperties";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
@@ -32,19 +33,15 @@ export interface IModel {
 }
 
 /** Defines the base of all classes that represent an asset. */
-export abstract class Asset {
+export abstract class Asset implements ICalculatedAssetProperties {
     // TODO: These should be moved into their own classes
     public static readonly addressName = Asset.getPropertyName("address");
-    public static readonly unitName = Asset.getCalculatedPropertyName("unit");
     public static readonly weightName = Asset.getPropertyName("weight");
     public static readonly weightUnitName = Asset.getPropertyName("weightUnit");
     public static readonly finenessName = Asset.getPropertyName("fineness");
     public static readonly valueName = Asset.getPropertyName("value");
     public static readonly valueCurrencyName = Asset.getPropertyName("valueCurrency");
-    public static readonly unitValueName = Asset.getCalculatedPropertyName("unitValue");
     public static readonly quantityName = Asset.getPropertyName("quantity");
-    public static readonly totalValueName = Asset.getCalculatedPropertyName("totalValue");
-    public static readonly percentName = Asset.getCalculatedPropertyName("percent");
 
     /** Provides the unique key of the asset. */
     public readonly key = Asset.nextKey++;
@@ -180,4 +177,5 @@ export abstract class Asset {
 }
 
 export type AssetDisplayPropertyName = (keyof IAssetIntersection) |
-    typeof Asset.unitName | typeof Asset.unitValueName | typeof Asset.totalValueName | typeof Asset.percentName;
+    typeof CalculatedAssetPropertyNames.unit | typeof CalculatedAssetPropertyNames.unitValue |
+    typeof CalculatedAssetPropertyNames.totalValue | typeof CalculatedAssetPropertyNames.percent;

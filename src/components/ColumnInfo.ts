@@ -12,6 +12,7 @@
 
 import { Asset } from "../model/Asset";
 import { AssetPropertyNames } from "../model/IAssetProperties";
+import { CalculatedAssetPropertyNames } from "../model/ICalculatedAssetProperties";
 import { IOrdering } from "../model/Ordering";
 import { GroupBy } from "../model/validation/schemas/GroupBy";
 
@@ -94,12 +95,12 @@ export class ColumnInfo {
     private static getColumns(groupBy: GroupBy) {
         const result: ColumnName[] = [
             ColumnInfo.expandName, AssetPropertyNames.type,
-            Asset.percentName, ColumnInfo.percentIntegerName, ColumnInfo.percentFractionName,
-            ColumnInfo.moreName, ColumnInfo.grandTotalLabelName,
-            Asset.totalValueName, ColumnInfo.totalValueIntegerName, ColumnInfo.totalValueFractionName,
-            AssetPropertyNames.location, Asset.unitName,
+            CalculatedAssetPropertyNames.percent, ColumnInfo.percentIntegerName, ColumnInfo.percentFractionName,
+            ColumnInfo.moreName, ColumnInfo.grandTotalLabelName, CalculatedAssetPropertyNames.totalValue,
+            ColumnInfo.totalValueIntegerName, ColumnInfo.totalValueFractionName,
+            AssetPropertyNames.location, CalculatedAssetPropertyNames.unit,
             Asset.quantityName, ColumnInfo.quantityIntegerName, ColumnInfo.quantityFractionName,
-            Asset.unitValueName, ColumnInfo.unitValueIntegerName, ColumnInfo.unitValueFractionName,
+            CalculatedAssetPropertyNames.unitValue, ColumnInfo.unitValueIntegerName, ColumnInfo.unitValueFractionName,
             AssetPropertyNames.description,
             Asset.finenessName, ColumnInfo.finenessIntegerName, ColumnInfo.finenessFractionName,
         ];
@@ -142,14 +143,14 @@ export class ColumnInfo {
                 return [ "pl-0", rightClass ];
             case otherGroupBys[0]:
             case AssetPropertyNames.description:
-            case Asset.unitName:
+            case CalculatedAssetPropertyNames.unit:
             case Asset.finenessName:
-            case Asset.unitValueName:
+            case CalculatedAssetPropertyNames.unitValue:
             case Asset.quantityName:
-            case Asset.totalValueName:
+            case CalculatedAssetPropertyNames.totalValue:
             case ColumnInfo.grandTotalLabelName:
                 return [ leftClass, rightClass ];
-            case Asset.percentName:
+            case CalculatedAssetPropertyNames.percent:
             case ColumnInfo.finenessIntegerName:
             case ColumnInfo.unitValueIntegerName:
             case ColumnInfo.quantityIntegerName:
@@ -179,7 +180,7 @@ export class ColumnInfo {
             case AssetPropertyNames.type:
             case AssetPropertyNames.description:
             case AssetPropertyNames.location:
-            case Asset.unitName:
+            case CalculatedAssetPropertyNames.unit:
             case ColumnInfo.finenessFractionName:
             case ColumnInfo.unitValueFractionName:
             case ColumnInfo.quantityFractionName:
@@ -201,10 +202,10 @@ export class ColumnInfo {
 
     private static getTotal(columnName: string | undefined) {
         switch (columnName) {
-            case Asset.totalValueName:
+            case CalculatedAssetPropertyNames.totalValue:
             case ColumnInfo.totalValueIntegerName:
             case ColumnInfo.totalValueFractionName:
-            case Asset.percentName:
+            case CalculatedAssetPropertyNames.percent:
             case ColumnInfo.percentIntegerName:
             case ColumnInfo.percentFractionName:
             case ColumnInfo.grandTotalLabelName:

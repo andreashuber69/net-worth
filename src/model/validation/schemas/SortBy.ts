@@ -10,9 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset } from "../../Asset";
 import { AssetPropertyNames } from "../../IAssetProperties";
+import { CalculatedAssetPropertyNames } from "../../ICalculatedAssetProperties";
 
 export type SortBy =
     typeof AssetPropertyNames.type | typeof AssetPropertyNames.description |
-    typeof AssetPropertyNames.location | typeof Asset.unitValueName | typeof Asset.totalValueName; // TODO
+    typeof AssetPropertyNames.location | typeof CalculatedAssetPropertyNames.unitValue |
+    typeof CalculatedAssetPropertyNames.totalValue;
