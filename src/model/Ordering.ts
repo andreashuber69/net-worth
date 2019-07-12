@@ -10,8 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset } from "./Asset";
-import { AssetPropertyNames } from "./IAssetProperties";
+import { AssetPropertyNames } from "./AssetPropertyNames";
 import { CalculatedAssetPropertyNames } from "./ICalculatedAssetProperties";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { ISort } from "./validation/schemas/ISort";

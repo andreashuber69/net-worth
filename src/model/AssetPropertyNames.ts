@@ -10,6 +10,17 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetPropertyNames } from "../../AssetPropertyNames";
+import { IAsset } from "./IAssetProperties";
 
-export type GroupBy = typeof AssetPropertyNames.type | typeof AssetPropertyNames.location;
+export abstract class AssetPropertyNames {
+    public static readonly type = AssetPropertyNames.getPropertyName("type");
+    public static readonly description = AssetPropertyNames.getPropertyName("description");
+    public static readonly location = AssetPropertyNames.getPropertyName("location");
+    public static readonly notes = AssetPropertyNames.getPropertyName("notes");
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static getPropertyName<T extends keyof IAsset>(name: T) {
+        return name;
+    }
+}

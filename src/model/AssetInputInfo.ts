@@ -12,7 +12,7 @@
 
 import { Asset } from "./Asset";
 import { AssetPropertyName } from "./AssetInterfaces";
-import { AssetPropertyNames } from "./IAssetProperties";
+import { AssetPropertyNames } from "./AssetPropertyNames";
 import { IAuxProperties } from "./IAuxProperties";
 import { CompositeInput, InputUtility } from "./Input";
 import { InputInfo } from "./InputInfo";
