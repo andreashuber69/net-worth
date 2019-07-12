@@ -12,7 +12,7 @@
 
 import { AssetBundle } from "./AssetBundle";
 import { IAssetIntersection } from "./AssetInterfaces";
-import { ITaggedAsset } from "./IAssetProperties";
+import { IAsset } from "./IAssetProperties";
 import { CalculatedAssetPropertyNames, ICalculatedAssetProperties } from "./ICalculatedAssetProperties";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
@@ -127,7 +127,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
     public abstract get interface(): AssetUnion;
 
     /** @internal */
-    public abstract toJSON(): ITaggedAsset;
+    public abstract toJSON(): IAsset;
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method

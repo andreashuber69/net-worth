@@ -29,8 +29,7 @@ export interface IAssetProperties {
     readonly notes?: string;
 }
 
-// TODO: Rename to IAsset
-export interface ITaggedAsset extends IAssetProperties {
+export interface IAsset extends IAssetProperties {
     readonly type: AssetTypeName;
 }
 
@@ -42,7 +41,7 @@ export abstract class AssetPropertyNames {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getPropertyName<T extends keyof ITaggedAsset>(name: T) {
+    private static getPropertyName<T extends keyof IAsset>(name: T) {
         return name;
     }
 }
