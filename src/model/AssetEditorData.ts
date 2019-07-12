@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAuxProperties } from "./IAuxProperties";
-import { ObjectConverter } from "./TaggedObjectConverter";
+import { ObjectConverter } from "./ObjectConverter";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { AssetUnion } from "./validation/schemas/AssetUnion";
 import { CurrencyName } from "./validation/schemas/CurrencyName";

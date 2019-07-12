@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { ObjectConverter } from "./TaggedObjectConverter";
+import { ObjectConverter } from "./ObjectConverter";
 import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset";
 import { IPreciousMetalAsset } from "./validation/schemas/IPreciousMetalAsset";

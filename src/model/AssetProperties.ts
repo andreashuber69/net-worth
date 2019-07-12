@@ -12,7 +12,7 @@
 
 import { Asset, IModel } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
-import { ObjectConverter } from "./TaggedObjectConverter";
+import { ObjectConverter } from "./ObjectConverter";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { Erc20TokensWalletTypeName, IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
 import { IMiscAsset, MiscAssetTypeName } from "./validation/schemas/IMiscAsset";
