@@ -11,12 +11,12 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IModel } from "./Asset";
-import { Currency } from "./Currency";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
+import { Currency } from "./validation/schemas/Currency";
 import { CurrencyName } from "./validation/schemas/CurrencyName";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset";
 import { Quantity0 } from "./validation/schemas/Quantity0";

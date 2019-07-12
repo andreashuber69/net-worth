@@ -19,7 +19,6 @@ import { allAssetPropertyNames, AssetPropertyName, IAssetPropertiesIntersection 
 import {
     getErc20TokensWalletProperties, getMiscAssetProperties, getPreciousMetalProperties, getSimpleCryptoWalletProperties,
 } from "./AssetProperties";
-import { AssetType } from "./AssetType";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
 import { CryptoWallet } from "./CryptoWallet";
@@ -39,6 +38,7 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
+import { AssetType } from "./validation/schemas/AssetType";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { Erc20TokensWalletTypeName, IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
 import { IMiscAsset, MiscAssetTypeName } from "./validation/schemas/IMiscAsset";

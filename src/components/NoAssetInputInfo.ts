@@ -10,11 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "../model/Asset";
+import { Asset } from "../model/Asset";
 import { AssetInputInfo } from "../model/AssetInputInfo";
-import { Currency } from "../model/Currency";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { TextInputInfo } from "../model/TextInputInfo";
+import { Currency } from "../model/validation/schemas/Currency";
 import { WeightUnit } from "../model/validation/schemas/WeightUnit";
 
 /**

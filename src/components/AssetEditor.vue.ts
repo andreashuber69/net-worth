@@ -17,8 +17,8 @@ import { AssetEditorData } from "../model/AssetEditorData";
 import { AssetInput } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { createAsset } from "../model/AssetProperties";
-import { AssetType } from "../model/AssetType";
 import { SelectInputInfo } from "../model/SelectInputInfo";
+import { AssetType } from "../model/validation/schemas/AssetType";
 
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
 // tslint:disable-next-line:no-default-import
