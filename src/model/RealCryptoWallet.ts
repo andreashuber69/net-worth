@@ -14,7 +14,6 @@ import { IModel } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
-import { ITaggedObject } from "./ITaggedObject";
 import { QueryUtility } from "./QueryUtility";
 
 export interface IRealCryptoWalletParameters extends ICryptoWalletProperties {
@@ -53,18 +52,6 @@ export abstract class RealCryptoWallet extends CryptoWallet {
 
             this.quantityHint = status;
         }
-    }
-
-    /** @internal */
-    public toJSON(): ITaggedObject<this["type"]> & ICryptoWalletProperties {
-        return {
-            type: this.type,
-            description: this.description,
-            location: this.location || undefined,
-            address: this.address || undefined,
-            quantity: this.address ? undefined : this.quantity,
-            notes: this.notes || undefined,
-        };
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,6 +96,17 @@ export abstract class RealCryptoWallet extends CryptoWallet {
 
     protected queryUnitValueUsd() {
         return this.slug ? new CoinMarketCapRequest(this.slug, false).execute() : Promise.resolve(undefined);
+    }
+
+    /** @internal */
+    protected getProperties(): ICryptoWalletProperties {
+        return {
+            description: this.description,
+            location: this.location || undefined,
+            address: this.address || undefined,
+            quantity: this.address ? undefined : this.quantity,
+            notes: this.notes || undefined,
+        };
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

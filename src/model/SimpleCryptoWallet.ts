@@ -24,6 +24,14 @@ export abstract class SimpleCryptoWallet extends RealCryptoWallet implements ISi
         return new SimpleCryptoWallet.Bundle(this);
     }
 
+    /** @internal */
+    public toJSON(): ISimpleCryptoWallet {
+        return {
+            type: this.type,
+            ...this.getProperties(),
+        };
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**

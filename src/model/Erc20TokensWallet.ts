@@ -15,6 +15,7 @@ import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
+import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
 
 /** Represents a wallet for ERC20 tokens. */
 export class Erc20TokensWallet extends RealCryptoWallet {
@@ -33,5 +34,13 @@ export class Erc20TokensWallet extends RealCryptoWallet {
 
     public bundle(bundle?: Unknown): Erc20TokensWalletBundle {
         return new Erc20TokensWalletBundle(this, bundle);
+    }
+
+    /** @internal */
+    public toJSON(): IErc20TokensWallet {
+        return {
+            type: this.type,
+            ...this.getProperties(),
+        };
     }
 }
