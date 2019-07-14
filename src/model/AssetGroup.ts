@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { Asset, IParent } from "./Asset";
 import { IAsset } from "./IAssetProperties";
 import { AssetUnion } from "./validation/schemas/AssetUnion";
 
@@ -81,7 +81,7 @@ export class AssetGroup extends Asset {
         throw new Error(`${AssetGroup.name} cannot be edited.`);
     }
 
-    public constructor(parent: IModel, public readonly assets: Asset[]) {
+    public constructor(parent: IParent, public readonly assets: Asset[]) {
         super(parent);
     }
 

@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { ObjectConverter } from "./ObjectConverter";
 import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset";
@@ -35,10 +35,12 @@ export class AssetInput {
 
     private static parseBundleImpl(rawBundle: AssetBundleUnion) {
         return ObjectConverter.convert(rawBundle.primaryAsset, [
-            (asset: IPreciousMetalAsset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
-            (asset: ISimpleCryptoWallet, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
-            (asset: IErc20TokensWallet, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
-            (asset: IMiscAsset, info) => ((model: IModel) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset: IPreciousMetalAsset, info) =>
+                ((model: IParent) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset: ISimpleCryptoWallet, info) =>
+                ((model: IParent) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset: IErc20TokensWallet, info) => ((model: IParent) => info.createAsset(model, asset).bundle(rawBundle)),
+            (asset: IMiscAsset, info) => ((model: IParent) => info.createAsset(model, asset).bundle(rawBundle)),
         ]);
     }
 }

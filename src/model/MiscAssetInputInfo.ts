@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { MiscAsset } from "./MiscAsset";
@@ -51,7 +51,7 @@ export class MiscAssetInputInfo extends AssetInputInfo {
     });
 
     // tslint:disable-next-line: prefer-function-over-method
-    public createAsset(parent: IModel, props: IMiscAssetProperties) {
+    public createAsset(parent: IParent, props: IMiscAssetProperties) {
         return new MiscAsset(parent, props);
     }
 }

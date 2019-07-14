@@ -23,7 +23,7 @@ import { Fineness } from "./validation/schemas/Fineness";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
 
 /** @internal */
-export interface IModel {
+export interface IParent {
     readonly assets: {
         readonly ordering: IOrdering;
         readonly grandTotalValue?: number;
@@ -47,7 +47,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
     public readonly key = Asset.nextKey++;
 
     /** Provides the parent model to which this asset belongs. */
-    public readonly parent: IModel;
+    public readonly parent: IParent;
 
     public get isExpandable() {
         return false;
@@ -148,7 +148,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
      * Creates a new [[Asset]] instance.
      * @param parent The parent model to which this asset belongs.
      */
-    protected constructor(parent: IModel) {
+    protected constructor(parent: IParent) {
         this.parent = parent;
     }
 

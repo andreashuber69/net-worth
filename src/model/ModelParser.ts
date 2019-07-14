@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetInput } from "./AssetInput";
 import { IModelParameters, Model } from "./Model";
@@ -42,7 +42,7 @@ export class ModelParser {
         const params: IModelParameters = {
             ...ModelParser.parseOptionalProperties(rawModel),
             ...ModelParser.parseOptionalViewProperties(rawModel),
-            createBundles: new Array<(model: IModel) => AssetBundle>(),
+            createBundles: new Array<(model: IParent) => AssetBundle>(),
         };
 
         for (const rawBundle of rawModel.bundles) {

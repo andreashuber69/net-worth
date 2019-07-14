@@ -10,14 +10,14 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { BlockcypherRequest } from "./BlockcypherRequest";
 import { IRealCryptoWalletParameters } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 
 /** Represents a wallet the balance of which is requested from blockcypher.com. */
 export abstract class BlockcypherWallet extends SimpleCryptoWallet {
-    protected constructor(parent: IModel, params: IRealCryptoWalletParameters) {
+    protected constructor(parent: IParent, params: IRealCryptoWalletParameters) {
         super(parent, params);
     }
 

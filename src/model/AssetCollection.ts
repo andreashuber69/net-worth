@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { Asset, IParent } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetCollectionUtility } from "./AssetCollectionUtility";
 import { AssetGroup } from "./AssetGroup";
@@ -19,7 +19,7 @@ import { TaskQueue } from "./TaskQueue";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { ISort } from "./validation/schemas/ISort";
 
-interface INotifiableParent extends IModel {
+interface INotifiableParent extends IParent {
     notifyChanged(): void;
 }
 

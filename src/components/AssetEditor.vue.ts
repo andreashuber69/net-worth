@@ -12,7 +12,7 @@
 
 import { Component, Vue } from "vue-property-decorator";
 
-import { Asset, IModel } from "../model/Asset";
+import { Asset, IParent } from "../model/Asset";
 import { AssetEditorData } from "../model/AssetEditorData";
 import { AssetInput } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
@@ -79,7 +79,7 @@ export default class AssetEditor extends Vue {
     }
 
     /** @internal */
-    public showDialog(parent: IModel, asset?: Asset) {
+    public showDialog(parent: IParent, asset?: Asset) {
         this.parent = parent;
         this.isExistingAsset = !!asset;
         this.assetInfo = AssetEditor.getAssetInfo(asset) || new NoAssetInputInfo();
@@ -95,7 +95,7 @@ export default class AssetEditor extends Vue {
         return asset ? AssetInput.infos.find((info) => info.type === asset.editableAsset.type) : undefined;
     }
 
-    private parent?: IModel;
+    private parent?: IParent;
     private isExistingAsset = false;
     private resolve?: (value: Asset | undefined) => void;
 

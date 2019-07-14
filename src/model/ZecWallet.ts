@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { Query } from "./Query";
 import { QueryCache } from "./QueryCache";
@@ -22,7 +22,7 @@ import { SoChainGetAddressBalanceResponse } from "./validation/schemas/SoChainGe
 export class ZecWallet extends SimpleCryptoWallet {
     public readonly type = "Zcash";
 
-    public constructor(parent: IModel, props: ICryptoWalletProperties) {
+    public constructor(parent: IParent, props: ICryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "ZEC", "zcash"));
     }
 

@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { BlockcypherWallet } from "./BlockcypherWallet";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { RealCryptoWallet } from "./RealCryptoWallet";
@@ -19,7 +19,7 @@ import { RealCryptoWallet } from "./RealCryptoWallet";
 export class DashWallet extends BlockcypherWallet {
     public readonly type = "Dash";
 
-    public constructor(parent: IModel, props: ICryptoWalletProperties) {
+    public constructor(parent: IParent, props: ICryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "DASH", "dash"));
     }
 }

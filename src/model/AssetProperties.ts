@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IModel } from "./Asset";
+import { Asset, IParent } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
 import { ObjectConverter } from "./ObjectConverter";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
@@ -100,7 +100,7 @@ export function getMiscAssetProperties(data: AssetEditorData): IMiscAsset {
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function createAsset(parent: IModel, data: AssetEditorData) {
+export function createAsset(parent: IParent, data: AssetEditorData) {
     if (data.type === "") {
         throw new Error("Invalid asset type!");
     }
@@ -108,10 +108,10 @@ export function createAsset(parent: IModel, data: AssetEditorData) {
     return ObjectConverter.convert(
         { type: data.type },
         [
-            (value, info) => ((model: IModel) => info.createAsset(model, getPreciousMetalProperties(data)) as Asset),
-            (value, info) => ((model: IModel) => info.createAsset(model, getSimpleCryptoWalletProperties(data))),
-            (value, info) => ((model: IModel) => info.createAsset(model, getErc20TokensWalletProperties(data))),
-            (value, info) => ((model: IModel) => info.createAsset(model, getMiscAssetProperties(data))),
+            (value, info) => ((model: IParent) => info.createAsset(model, getPreciousMetalProperties(data)) as Asset),
+            (value, info) => ((model: IParent) => info.createAsset(model, getSimpleCryptoWalletProperties(data))),
+            (value, info) => ((model: IParent) => info.createAsset(model, getErc20TokensWalletProperties(data))),
+            (value, info) => ((model: IParent) => info.createAsset(model, getMiscAssetProperties(data))),
         ],
     )[1](parent);
 }

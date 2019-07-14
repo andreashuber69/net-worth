@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { SingleAsset } from "./SingleAsset";
 import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet";
 import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
@@ -45,7 +45,7 @@ export abstract class CryptoWallet extends SingleAsset {
      * @param parent The parent model to which this asset belongs.
      * @param currencySymbol The crypto currency symbol, e.g. 'BTC', 'LTC'.
      */
-    protected constructor(parent: IModel, private readonly currencySymbol: string) {
+    protected constructor(parent: IParent, private readonly currencySymbol: string) {
         super(parent);
     }
 }

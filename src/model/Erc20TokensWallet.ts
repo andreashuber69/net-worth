@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { RealCryptoWallet } from "./RealCryptoWallet";
@@ -28,7 +28,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
      * @param parent The parent model to which this asset belongs.
      * @param props The crypto wallet properties.
      */
-    public constructor(parent: IModel, props: ICryptoWalletProperties) {
+    public constructor(parent: IParent, props: ICryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, ""));
     }
 

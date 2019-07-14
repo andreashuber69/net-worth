@@ -11,7 +11,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { QuandlRequest } from "./QuandlRequest";
@@ -78,7 +78,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
      * @param props The precious metal asset properties.
      * @param quandlPath The quandl asset path.
      */
-    protected constructor(parent: IModel, props: IPreciousMetalAssetProperties, private readonly quandlPath: string) {
+    protected constructor(parent: IParent, props: IPreciousMetalAssetProperties, private readonly quandlPath: string) {
         super(parent);
         this.description = props.description;
         this.location = props.location || "";

@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
@@ -24,7 +24,7 @@ import { Value } from "./Value";
 export class EtcWallet extends SimpleCryptoWallet {
     public readonly type = "Ethereum Classic";
 
-    public constructor(parent: IModel, props: ICryptoWalletProperties) {
+    public constructor(parent: IParent, props: ICryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "ETC", "ethereum-classic"));
     }
 

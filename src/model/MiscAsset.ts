@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IMiscAssetProperties } from "./IMiscAssetProperties";
@@ -52,7 +52,7 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
         return this;
     }
 
-    public constructor(parent: IModel, props: IMiscAssetProperties) {
+    public constructor(parent: IParent, props: IMiscAssetProperties) {
         super(parent);
         this.description = props.description;
         this.location = props.location || "";

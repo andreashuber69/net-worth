@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Application } from "./Application";
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetCollection } from "./AssetCollection";
 import { EnumInfo } from "./EnumInfo";
@@ -30,13 +30,13 @@ export interface IModelParameters {
     readonly currency?: CurrencyName;
     readonly groupBy?: GroupBy;
     readonly sort?: ISort;
-    readonly createBundles: Array<(model: IModel) => AssetBundle>;
+    readonly createBundles: Array<(model: IParent) => AssetBundle>;
 }
 
 export type ITaggedModel = Required<TaggedModel>;
 
 /** Represents the main model of the application. */
-export class Model implements IModel {
+export class Model implements IParent {
     /** Provides the name of the asset collection. */
     public name: string;
 

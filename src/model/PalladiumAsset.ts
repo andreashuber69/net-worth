@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 
@@ -18,7 +18,7 @@ import { PreciousMetalAsset } from "./PreciousMetalAsset";
 export class PalladiumAsset extends PreciousMetalAsset {
     public readonly type = "Palladium";
 
-    public constructor(parent: IModel, props: IPreciousMetalAssetProperties) {
+    public constructor(parent: IParent, props: IPreciousMetalAssetProperties) {
         super(parent, props, "lppm/pall.json");
     }
 }

@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
@@ -79,7 +79,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
      * @param parent The parent model to which this asset belongs.
      * @param params The crypto wallet parameters.
      */
-    protected constructor(parent: IModel, params: IRealCryptoWalletParameters) {
+    protected constructor(parent: IParent, params: IRealCryptoWalletParameters) {
         super(parent, params.currencySymbol);
         this.description = params.description;
         this.location = params.location || "";

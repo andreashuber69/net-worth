@@ -12,7 +12,7 @@
 
 import { HDNode } from "bitcoinjs-lib";
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
@@ -32,7 +32,7 @@ interface IBalance {
 export class BtcWallet extends SimpleCryptoWallet {
     public readonly type = "Bitcoin";
 
-    public constructor(parent: IModel, props: ICryptoWalletProperties) {
+    public constructor(parent: IParent, props: ICryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "BTC", "bitcoin"));
     }
 

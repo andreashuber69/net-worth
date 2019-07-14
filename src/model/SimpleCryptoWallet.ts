@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
@@ -39,7 +39,7 @@ export abstract class SimpleCryptoWallet extends RealCryptoWallet implements ISi
      * @param parent The parent model to which this asset belongs.
      * @param props The crypto wallet properties.
      */
-    protected constructor(parent: IModel, props: IRealCryptoWalletParameters) {
+    protected constructor(parent: IParent, props: IRealCryptoWalletParameters) {
         super(parent, props);
     }
 

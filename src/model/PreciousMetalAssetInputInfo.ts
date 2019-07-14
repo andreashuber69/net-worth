@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IModel } from "./Asset";
+import { IParent } from "./Asset";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
@@ -55,11 +55,11 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     /** @internal */
     public constructor(
         public readonly type: PreciousMetalAssetTypeName,
-        private readonly ctor: new (parent: IModel, props: IPreciousMetalAssetProperties) => PreciousMetalAsset) {
+        private readonly ctor: new (parent: IParent, props: IPreciousMetalAssetProperties) => PreciousMetalAsset) {
         super();
     }
 
-    public createAsset(parent: IModel, props: IPreciousMetalAssetProperties) {
+    public createAsset(parent: IParent, props: IPreciousMetalAssetProperties) {
         return new this.ctor(parent, props);
     }
 }
