@@ -19,12 +19,12 @@ import { TaskQueue } from "./TaskQueue";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { ISort } from "./validation/schemas/ISort";
 
-interface IParent extends IModel {
+interface INotifiableParent extends IModel {
     notifyChanged(): void;
 }
 
 interface IAssetCollectionParameters {
-    parent: IParent;
+    parent: INotifiableParent;
     bundles: AssetBundle[];
     groupBy?: GroupBy;
     sort?: ISort;
@@ -130,7 +130,7 @@ export class AssetCollection {
     private readonly taskQueue = new TaskQueue();
     private readonly groups = new Array<AssetGroup>();
     private readonly bundles: AssetBundle[];
-    private readonly parent: IParent;
+    private readonly parent: INotifiableParent;
 
     private onGroupChanged() {
         this.groups.length = 0;
