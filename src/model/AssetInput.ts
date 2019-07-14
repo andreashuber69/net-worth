@@ -36,11 +36,12 @@ export class AssetInput {
     private static parseBundleImpl(rawBundle: AssetBundleUnion) {
         return ObjectConverter.convert(rawBundle.primaryAsset, [
             (asset: IPreciousMetalAsset, info) =>
-                ((model: IParent) => info.createAsset(model, asset).bundle(rawBundle)),
+                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
             (asset: ISimpleCryptoWallet, info) =>
-                ((model: IParent) => info.createAsset(model, asset).bundle(rawBundle)),
-            (asset: IErc20TokensWallet, info) => ((model: IParent) => info.createAsset(model, asset).bundle(rawBundle)),
-            (asset: IMiscAsset, info) => ((model: IParent) => info.createAsset(model, asset).bundle(rawBundle)),
+                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
+            (asset: IErc20TokensWallet, info) =>
+                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
+            (asset: IMiscAsset, info) => ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
         ]);
     }
 }

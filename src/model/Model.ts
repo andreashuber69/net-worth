@@ -30,7 +30,7 @@ export interface IModelParameters {
     readonly currency?: CurrencyName;
     readonly groupBy?: GroupBy;
     readonly sort?: ISort;
-    readonly createBundles: Array<(model: IParent) => AssetBundle>;
+    readonly createBundles: Array<(parent: IParent) => AssetBundle>;
 }
 
 export type ITaggedModel = Required<TaggedModel>;

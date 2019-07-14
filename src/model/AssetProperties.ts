@@ -108,10 +108,10 @@ export function createAsset(parent: IParent, data: AssetEditorData) {
     return ObjectConverter.convert(
         { type: data.type },
         [
-            (value, info) => ((model: IParent) => info.createAsset(model, getPreciousMetalProperties(data)) as Asset),
-            (value, info) => ((model: IParent) => info.createAsset(model, getSimpleCryptoWalletProperties(data))),
-            (value, info) => ((model: IParent) => info.createAsset(model, getErc20TokensWalletProperties(data))),
-            (value, info) => ((model: IParent) => info.createAsset(model, getMiscAssetProperties(data))),
+            (value, info) => ((p: IParent) => info.createAsset(p, getPreciousMetalProperties(data)) as Asset),
+            (value, info) => ((p: IParent) => info.createAsset(p, getSimpleCryptoWalletProperties(data))),
+            (value, info) => ((p: IParent) => info.createAsset(p, getErc20TokensWalletProperties(data))),
+            (value, info) => ((p: IParent) => info.createAsset(p, getMiscAssetProperties(data))),
         ],
     )[1](parent);
 }

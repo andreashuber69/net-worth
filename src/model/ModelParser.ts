@@ -42,7 +42,7 @@ export class ModelParser {
         const params: IModelParameters = {
             ...ModelParser.parseOptionalProperties(rawModel),
             ...ModelParser.parseOptionalViewProperties(rawModel),
-            createBundles: new Array<(model: IParent) => AssetBundle>(),
+            createBundles: new Array<(parent: IParent) => AssetBundle>(),
         };
 
         for (const rawBundle of rawModel.bundles) {

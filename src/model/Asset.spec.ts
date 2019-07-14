@@ -74,8 +74,8 @@ const getRandomData = (type: AssetTypeName, expectedPropertyNames: AssetProperty
     return data;
 };
 
-const createAsset = <T, U>(ctor: new (model: IParent, props: U) => T, props: U) => {
-    const model: IParent = {
+const createAsset = <T, U>(ctor: new (parent: IParent, props: U) => T, props: U) => {
+    const parent: IParent = {
         assets: {
             ordering: {
                 groupBy: "type",
@@ -85,7 +85,7 @@ const createAsset = <T, U>(ctor: new (model: IParent, props: U) => T, props: U) 
         exchangeRate: 1,
     };
 
-    return new ctor(model, props);
+    return new ctor(parent, props);
 };
 
 const getPropertyValues = (
@@ -104,7 +104,7 @@ const getPropertyValues = (
 type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
 
 const expectProperty = <T, U, N extends PropertyNames<T> & string>(
-    ctor: new (model: IParent, props: U) => T, props: U, name: N, matcher: (x: jasmine.Matchers<T[N]>) => void,
+    ctor: new (parent: IParent, props: U) => T, props: U, name: N, matcher: (x: jasmine.Matchers<T[N]>) => void,
 ) => {
     describe(ctor.name, () => describe(name, () => {
         it("value should meet expectations", () => matcher(expect(createAsset(ctor, props)[name])));
@@ -112,7 +112,7 @@ const expectProperty = <T, U, N extends PropertyNames<T> & string>(
 };
 
 const expectPropertyThrowsError = <T, U, N extends PropertyNames<T> & string>(
-    ctor: new (model: IParent, props: U) => T, props: U, name: N, expectedMessage: string,
+    ctor: new (parent: IParent, props: U) => T, props: U, name: N, expectedMessage: string,
 ) => {
     describe(ctor.name, () => describe(name, () => {
         it("should throw", () => expect(() => createAsset(ctor, props)[name]).toThrowError(expectedMessage));
@@ -122,20 +122,20 @@ const expectPropertyThrowsError = <T, U, N extends PropertyNames<T> & string>(
 type MethodNames<T> = { [K in keyof T]: T[K] extends () => unknown ? K : never }[keyof T];
 
 const testMethod = <T, U, N extends MethodNames<T> & string>(
-    ctor: new (model: IParent, props: U) => T, props: U, name: N, expectation: string, test: (object: T) => void,
+    ctor: new (parent: IParent, props: U) => T, props: U, name: N, expectation: string, test: (object: T) => void,
 ) => {
     describe(ctor.name, () => describe(`${name}()`, () => it(expectation, () => test(createAsset(ctor, props)))));
 };
 
 const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
-    ctor: new (model: IParent, props: U) => T, props: U, name: N, expectedMessage: string,
+    ctor: new (parent: IParent, props: U) => T, props: U, name: N, expectedMessage: string,
 ) => {
     describe(ctor.name, () => describe(`${name}()`, () => {
         it("should throw", () => expect(createAsset(ctor, props)[name]).toThrowError(expectedMessage));
     }));
 };
 
-type PreciousMetalCtor = (new (model: IParent, props: IPreciousMetalAssetProperties) => PreciousMetalAsset);
+type PreciousMetalCtor = (new (parent: IParent, props: IPreciousMetalAssetProperties) => PreciousMetalAsset);
 
 const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ctor: PreciousMetalCtor) => {
     const expectedPropertyNames = arrayOfAll<IPreciousMetalAssetProperties>()(
@@ -197,7 +197,7 @@ const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ct
     });
 };
 
-type CryptoWalletCtor = (new (model: IParent, props: ICryptoWalletProperties) => CryptoWallet);
+type CryptoWalletCtor = (new (parent: IParent, props: ICryptoWalletProperties) => CryptoWallet);
 
 const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ctor: CryptoWalletCtor) => {
     const expectedPropertyNames = arrayOfAll<ICryptoWalletProperties>()(
@@ -319,7 +319,7 @@ const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor
     });
 };
 
-type MiscAssetCtor = (new (model: IParent, props: IMiscAssetProperties) => MiscAsset);
+type MiscAssetCtor = (new (parent: IParent, props: IMiscAssetProperties) => MiscAsset);
 
 const testMiscAssetConstruction = (type: MiscAssetTypeName, ctor: MiscAssetCtor) => {
     const expectedPropertyNames = arrayOfAll<IMiscAssetProperties>()(
@@ -382,7 +382,7 @@ const testMiscAssetConstruction = (type: MiscAssetTypeName, ctor: MiscAssetCtor)
 };
 
 const testQueries = <T extends Asset, U extends IAssetProperties>(
-    ctor: new (model: IParent, props: U) => T, props: U,
+    ctor: new (parent: IParent, props: U) => T, props: U,
 ) => {
     describe("bundle() (before queryData())", () => {
         let sut: InstanceType<typeof ctor>;
@@ -479,7 +479,7 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
 };
 
 const testCryptoWallet = (
-    ctor: new (model: IParent, props: ICryptoWalletProperties) => CryptoWallet, address: string,
+    ctor: new (parent: IParent, props: ICryptoWalletProperties) => CryptoWallet, address: string,
 ) => {
     describe(`${ctor.name} with address ${address}`, () => {
         testQueries(ctor, { description: "Spending", address });
@@ -487,7 +487,7 @@ const testCryptoWallet = (
 };
 
 const testPreciousMetalAsset = (
-    ctor: new (model: IParent, props: IPreciousMetalAssetProperties) => PreciousMetalAsset,
+    ctor: new (parent: IParent, props: IPreciousMetalAssetProperties) => PreciousMetalAsset,
 ) => {
     describe(`${ctor.name}`, () => {
         testQueries(ctor, { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 });
