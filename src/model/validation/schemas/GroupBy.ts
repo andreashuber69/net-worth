@@ -10,6 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetPropertyNames } from "../../AssetPropertyNames";
+import { IAsset } from "./IAssetProperties";
 
-export type GroupBy = typeof AssetPropertyNames.type | typeof AssetPropertyNames.location;
+export type GroupBy = keyof Pick<IAsset, "type" | "location">;
