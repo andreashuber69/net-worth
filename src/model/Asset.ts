@@ -12,7 +12,6 @@
 
 import { AssetBundle } from "./AssetBundle";
 import { IAssetIntersection } from "./AssetInterfaces";
-import { IAsset } from "./IAssetProperties";
 import { CalculatedAssetPropertyNames, ICalculatedAssetProperties } from "./ICalculatedAssetProperties";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
@@ -20,6 +19,7 @@ import { Unknown } from "./Unknown";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { AssetUnion } from "./validation/schemas/AssetUnion";
 import { Fineness } from "./validation/schemas/Fineness";
+import { IAsset } from "./validation/schemas/IAssetProperties";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
 
 /** @internal */

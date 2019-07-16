@@ -12,12 +12,12 @@
 
 import { IParent } from "./Asset";
 import { AssetInputInfo } from "./AssetInputInfo";
-import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Currency } from "./validation/schemas/Currency";
 import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
+import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 /**

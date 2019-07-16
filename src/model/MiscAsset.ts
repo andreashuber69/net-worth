@@ -13,12 +13,12 @@
 import { IParent } from "./Asset";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { Currency } from "./validation/schemas/Currency";
 import { CurrencyName } from "./validation/schemas/CurrencyName";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset";
+import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 
 /** Represents a miscellaneous asset. */

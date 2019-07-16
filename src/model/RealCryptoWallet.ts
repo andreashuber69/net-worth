@@ -13,8 +13,8 @@
 import { IParent } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet } from "./CryptoWallet";
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { QueryUtility } from "./QueryUtility";
+import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
 
 export interface IRealCryptoWalletParameters extends ICryptoWalletProperties {
     /** The crypto currency symbol, e.g. 'BTC', 'LTC'. */

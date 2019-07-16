@@ -12,8 +12,8 @@
 
 import { IParent } from "./Asset";
 import { BlockcypherWallet } from "./BlockcypherWallet";
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { RealCryptoWallet } from "./RealCryptoWallet";
+import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
 
 /** Represents a DASH wallet. */
 export class DashWallet extends BlockcypherWallet {

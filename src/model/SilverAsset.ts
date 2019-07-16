@@ -11,8 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IParent } from "./Asset";
-import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
 
 /** Represents an asset made of silver. */
 export class SilverAsset extends PreciousMetalAsset {

@@ -10,14 +10,18 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { CurrencyName } from "./CurrencyName";
 import { IAssetProperties } from "./IAssetProperties";
-import { QuantityAny } from "./validation/schemas/QuantityAny";
+import { Quantity0 } from "./Quantity0";
 
-/** Contains the defining properties common to all crypto currency wallets. */
-export interface ICryptoWalletProperties extends IAssetProperties {
-    /** Provides the public address. */
-    readonly address?: string;
+/** Contains the defining properties of a miscellaneous asset. */
+export interface IMiscAssetProperties extends IAssetProperties {
+    /** Provides the value of a single item, expressed in `valueCurrency`. */
+    readonly value: number;
+
+    /** Provides the currency used for `value`, e.g. [[Currency.USD]]. */
+    readonly valueCurrency: CurrencyName;
 
     /** Provides the asset quantity. */
-    readonly quantity?: QuantityAny;
+    readonly quantity?: Quantity0;
 }

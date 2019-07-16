@@ -11,11 +11,11 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IParent } from "./Asset";
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { Query } from "./Query";
 import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
+import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
 import { SoChainGetAddressBalanceResponse } from "./validation/schemas/SoChainGetAddressBalanceResponse";
 
 /** Represents a ZEC wallet. */

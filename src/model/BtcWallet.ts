@@ -13,13 +13,13 @@
 import { HDNode } from "bitcoinjs-lib";
 
 import { IParent } from "./Asset";
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { Unknown } from "./Unknown";
+import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
 import { Value } from "./Value";
 
 /** @internal */

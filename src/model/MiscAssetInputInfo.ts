@@ -12,11 +12,11 @@
 
 import { IParent } from "./Asset";
 import { AssetInputInfo } from "./AssetInputInfo";
-import { IMiscAssetProperties } from "./IMiscAssetProperties";
 import { MiscAsset } from "./MiscAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Currency } from "./validation/schemas/Currency";
+import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 /**

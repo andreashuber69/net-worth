@@ -10,11 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { Fineness } from "./Fineness";
 import { IAssetProperties } from "./IAssetProperties";
-import { Fineness } from "./validation/schemas/Fineness";
-import { Quantity0 } from "./validation/schemas/Quantity0";
-import { Weight } from "./validation/schemas/Weight";
-import { WeightUnit } from "./validation/schemas/WeightUnit";
+import { Quantity0 } from "./Quantity0";
+import { Weight } from "./Weight";
+import { WeightUnit } from "./WeightUnit";
 
 /** Contains the defining properties common to all precious metal assets. */
 export interface IPreciousMetalAssetProperties extends IAssetProperties {

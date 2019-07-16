@@ -11,12 +11,12 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IParent } from "./Asset";
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { Unknown } from "./Unknown";
+import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
 import { Value } from "./Value";
 
 /** Represents an ETH wallet. */

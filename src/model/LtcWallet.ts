@@ -12,8 +12,8 @@
 
 import { IParent } from "./Asset";
 import { BlockcypherWallet } from "./BlockcypherWallet";
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { RealCryptoWallet } from "./RealCryptoWallet";
+import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
 
 /** Represents an LTC wallet. */
 export class LtcWallet extends BlockcypherWallet {

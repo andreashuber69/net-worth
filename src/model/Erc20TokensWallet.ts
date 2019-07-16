@@ -12,9 +12,9 @@
 
 import { IParent } from "./Asset";
 import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
+import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
 import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
 
 /** Represents a wallet for ERC20 tokens. */

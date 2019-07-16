@@ -13,12 +13,12 @@
 
 import { IParent } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
 import { Fineness } from "./validation/schemas/Fineness";
 import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
+import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
 import { Quantity0 } from "./validation/schemas/Quantity0";
 import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
