@@ -12,7 +12,8 @@
 
 import { AssetBundle } from "./AssetBundle";
 import { IAssetIntersection } from "./AssetInterfaces";
-import { CalculatedAssetPropertyNames, ICalculatedAssetProperties } from "./ICalculatedAssetProperties";
+import { CalculatedAssetPropertyNames } from "./CalculatedAssetPropertyNames";
+import { ICalculatedAssetProperties } from "./ICalculatedAssetProperties";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";

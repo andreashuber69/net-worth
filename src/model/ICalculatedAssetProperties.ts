@@ -16,16 +16,3 @@ export interface ICalculatedAssetProperties {
     readonly totalValue?: number;
     readonly percent?: number;
 }
-
-export abstract class CalculatedAssetPropertyNames {
-    public static readonly unit = CalculatedAssetPropertyNames.getPropertyName("unit");
-    public static readonly unitValue = CalculatedAssetPropertyNames.getPropertyName("unitValue");
-    public static readonly totalValue = CalculatedAssetPropertyNames.getPropertyName("totalValue");
-    public static readonly percent = CalculatedAssetPropertyNames.getPropertyName("percent");
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static getPropertyName<T extends keyof ICalculatedAssetProperties>(name: T) {
-        return name;
-    }
-}

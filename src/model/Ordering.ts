@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetPropertyNames } from "./AssetPropertyNames";
-import { CalculatedAssetPropertyNames } from "./ICalculatedAssetProperties";
+import { CalculatedAssetPropertyNames } from "./CalculatedAssetPropertyNames";
 import { GroupBy } from "./validation/schemas/GroupBy";
 import { ISort } from "./validation/schemas/ISort";
 import { SortBy } from "./validation/schemas/SortBy";

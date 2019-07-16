@@ -12,7 +12,7 @@
 
 import { Asset } from "../model/Asset";
 import { AssetPropertyNames } from "../model/AssetPropertyNames";
-import { CalculatedAssetPropertyNames } from "../model/ICalculatedAssetProperties";
+import { CalculatedAssetPropertyNames } from "../model/CalculatedAssetPropertyNames";
 import { IOrdering } from "../model/Ordering";
 import { GroupBy } from "../model/validation/schemas/GroupBy";
 
