@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "bundles": [
+    {
+      "primaryAsset": {
+        "description": "Bars",
+        "weight": 1,
+        "weightUnit": 1000,
+        "fineness": 0.999,
+        "quantity": 1
+      }
+    }
+  ]
+}

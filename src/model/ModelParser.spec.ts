@@ -235,6 +235,10 @@ describe("ModelParser.parse", () => {
         // tslint:disable-next-line: max-line-length
         "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0] should match some schema in anyOf");
     expectError(
+        "MissingRequiredProperties0.assets",
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'type', data.bundles[0].primaryAsset should have required property 'type', data.bundles[0].primaryAsset should have required property 'type', data.bundles[0] should match some schema in anyOf");
+    expectError(
         "MissingRequiredProperties1.assets",
         // tslint:disable-next-line: max-line-length
         "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0] should match some schema in anyOf");
@@ -255,6 +259,18 @@ describe("ModelParser.parse", () => {
         // tslint:disable-next-line: max-line-length
         `'quantity': A value is required.
 `);
+    expectError(
+        "MissingRequiredProperties6.assets",
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset should have required property 'fineness', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
+    expectError(
+        "MissingRequiredProperties7.assets",
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'valueCurrency', data.bundles[0].primaryAsset should have required property 'fineness', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
+    expectError(
+        "MissingRequiredProperties8.assets",
+        // tslint:disable-next-line: max-line-length
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'value', data.bundles[0].primaryAsset should have required property 'fineness', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
     expectError(
         "InvalidValueProperties1.assets",
         // tslint:disable-next-line: max-line-length

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "bundles": [
+    {
+      "primaryAsset": {
+        "type": "ERC20 Tokens",
+        "description": "Paper Wallet",
+        "address": "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454"
+      }
+    }
+  ]
+}

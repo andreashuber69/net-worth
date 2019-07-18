@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "bundles": [
+    {
+      "primaryAsset": {
+        "type": "Misc",
+        "description": "Debt",
+        "valueCurrency": "USD",
+        "quantity": 1
+      }
+    }
+  ]
+}
