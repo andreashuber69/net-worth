@@ -65,12 +65,12 @@ class AssetProperties<T extends AssetTypeName> {
         return this.data.notes;
     }
 
-    public constructor(private readonly data: AssetEditorData) {
+    public constructor(protected readonly data: AssetEditorData) {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static validate<T extends string | undefined>(name: string, value: T): Exclude<T, undefined | ""> {
+    protected static validate<T extends string | undefined>(name: string, value: T): Exclude<T, undefined | ""> {
         if (!value) {
             throw new Error(`Unexpected ${name}.`);
         }
@@ -79,9 +79,16 @@ class AssetProperties<T extends AssetTypeName> {
     }
 }
 
+// tslint:disable-next-line: max-classes-per-file
+class RequiredQuantityAssetProperties<T extends AssetTypeName> extends AssetProperties<T> {
+    public get quantity() {
+        return Number.parseFloat(AssetProperties.validate("quantity", this.data.quantity));
+    }
+}
+
 // tslint:disable-next-line: only-arrow-functions
 export function getPreciousMetalProperties(data: AssetEditorData): IPreciousMetalAsset {
-    return new AssetProperties<PreciousMetalAssetTypeName>(data);
+    return new RequiredQuantityAssetProperties<PreciousMetalAssetTypeName>(data);
 }
 
 // tslint:disable-next-line: only-arrow-functions
@@ -96,7 +103,7 @@ export function getErc20TokensWalletProperties(data: AssetEditorData): IErc20Tok
 
 // tslint:disable-next-line: only-arrow-functions
 export function getMiscAssetProperties(data: AssetEditorData): IMiscAsset {
-    return new AssetProperties<MiscAssetTypeName>(data);
+    return new RequiredQuantityAssetProperties<MiscAssetTypeName>(data);
 }
 
 // tslint:disable-next-line: only-arrow-functions

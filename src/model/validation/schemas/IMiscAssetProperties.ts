@@ -23,5 +23,5 @@ export interface IMiscAssetProperties extends IAssetProperties {
     readonly valueCurrency: CurrencyName;
 
     /** Provides the asset quantity. */
-    readonly quantity?: Quantity0;
+    readonly quantity: Quantity0;
 }

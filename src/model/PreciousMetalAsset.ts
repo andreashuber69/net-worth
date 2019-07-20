@@ -85,7 +85,7 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
         this.weight = props.weight;
         this.weightUnit = props.weightUnit;
         this.fineness = props.fineness;
-        this.quantity = props.quantity !== undefined ? props.quantity : Number.NaN;
+        this.quantity = props.quantity;
         this.notes = props.notes || "";
         this.pureGramsPerUnit = this.weight * this.weightUnit * this.fineness;
     }

@@ -27,6 +27,6 @@ export interface IPreciousMetalAssetProperties extends IAssetProperties {
     /** Provides the fineness, e.g. 0.999. */
     readonly fineness: Fineness;
 
-    /** Provides the asset quantity. TODO: This should not be undefined. */
-    readonly quantity?: Quantity0;
+    /** Provides the asset quantity. */
+    readonly quantity: Quantity0;
 }

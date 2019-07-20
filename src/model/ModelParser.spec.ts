@@ -257,12 +257,11 @@ describe("ModelParser.parse", () => {
     expectError(
         "MissingRequiredProperties5.assets",
         // tslint:disable-next-line: max-line-length
-        `'quantity': A value is required.
-`);
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'quantity', data.bundles[0].primaryAsset should have required property 'quantity', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
     expectError(
         "MissingRequiredProperties6.assets",
         // tslint:disable-next-line: max-line-length
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset should have required property 'fineness', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'quantity', data.bundles[0].primaryAsset should have required property 'fineness', data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0] should match some schema in anyOf");
     expectError(
         "MissingRequiredProperties7.assets",
         // tslint:disable-next-line: max-line-length

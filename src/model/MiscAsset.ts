@@ -58,7 +58,7 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
         this.location = props.location || "";
         this.value = props.value;
         this.valueCurrency = props.valueCurrency;
-        this.quantity = props.quantity !== undefined ? props.quantity : Number.NaN;
+        this.quantity = props.quantity;
         this.notes = props.notes || "";
     }
 
