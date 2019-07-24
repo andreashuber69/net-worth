@@ -41,6 +41,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
         return {
             type: this.type,
             ...this.getProperties(),
+            address: this.address,
         };
     }
 }

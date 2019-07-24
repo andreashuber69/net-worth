@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWalletProperties } from "./ICryptoWalletProperties";
+import { IAssetProperties } from "./IAssetProperties";
 
 export const simpleCryptoWalletTypeNames = [
     "Bitcoin", "Litecoin", "Ethereum Classic", "Ethereum", "Bitcoin Gold", "Dash", "Zcash",
@@ -22,5 +22,10 @@ export interface ISimpleCryptoObject {
     readonly type: SimpleCryptoWalletTypeName;
 }
 
-export interface ISimpleCryptoWallet extends ISimpleCryptoObject, ICryptoWalletProperties {
+export interface ISimpleCryptoWallet extends ISimpleCryptoObject, IAssetProperties {
+    /** Provides the public address. */
+    readonly address?: string;
+
+    /** Provides the asset quantity. */
+    readonly quantity?: number;
 }

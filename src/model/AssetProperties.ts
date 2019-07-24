@@ -86,6 +86,13 @@ class RequiredQuantityAssetProperties<T extends AssetTypeName> extends AssetProp
     }
 }
 
+// tslint:disable-next-line: max-classes-per-file
+class RequiredAddressAssetProperties<T extends AssetTypeName> extends AssetProperties<T> {
+    public get address() {
+        return AssetProperties.validate("address", this.data.address);
+    }
+}
+
 // tslint:disable-next-line: only-arrow-functions
 export function getPreciousMetalProperties(data: AssetEditorData): IPreciousMetalAsset {
     return new RequiredQuantityAssetProperties<PreciousMetalAssetTypeName>(data);
@@ -98,7 +105,7 @@ export function getSimpleCryptoWalletProperties(data: AssetEditorData): ISimpleC
 
 // tslint:disable-next-line: only-arrow-functions
 export function getErc20TokensWalletProperties(data: AssetEditorData): IErc20TokensWallet {
-    return new AssetProperties<Erc20TokensWalletTypeName>(data);
+    return new RequiredAddressAssetProperties<Erc20TokensWalletTypeName>(data);
 }
 
 // tslint:disable-next-line: only-arrow-functions
