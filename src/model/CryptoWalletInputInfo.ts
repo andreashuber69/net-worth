@@ -19,16 +19,18 @@ import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Unknown";
 import { Currency } from "./validation/schemas/Currency";
-import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
 import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet";
+import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties";
 import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
-type CryptoWalletType = SimpleCryptoWalletTypeName | Erc20TokensWalletTypeName;
+type CryptoWalletTypeName<T extends ISimpleCryptoWalletProperties | IErc20TokensWalletProperties> =
+    T extends IErc20TokensWalletProperties ? Erc20TokensWalletTypeName : SimpleCryptoWalletTypeName;
 
-interface ICryptoWalletInputInfoParameters {
-    readonly type: CryptoWalletType;
-    readonly ctor: new (parent: IParent, props: ICryptoWalletProperties) => CryptoWallet;
+interface ICryptoWalletInputInfoParameters<T extends ISimpleCryptoWalletProperties | IErc20TokensWalletProperties> {
+    readonly type: CryptoWalletTypeName<T>;
+    readonly ctor: new (parent: IParent, props: T) => CryptoWallet;
     readonly addressHint: string;
     readonly quantityDecimals?: 8 | 18;
 }
@@ -37,8 +39,10 @@ interface ICryptoWalletInputInfoParameters {
  * Defines how the properties of a crypto currency wallet need to be input and validated and provides a method to create
  * a representation of the wallet.
  */
-export class CryptoWalletInputInfo extends AssetInputInfo {
-    public readonly type: CryptoWalletType;
+export class CryptoWalletInputInfo<
+    T extends ISimpleCryptoWalletProperties | IErc20TokensWalletProperties
+> extends AssetInputInfo {
+    public readonly type: CryptoWalletTypeName<T>;
     public readonly description = new TextInputInfo({
         label: "Description", hint: "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.",
         isPresent: true, isRequired: true, schemaName: "Text",
@@ -57,7 +61,7 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly quantity: TextInputInfo;
 
     /** @internal */
-    public constructor(params: ICryptoWalletInputInfoParameters) {
+    public constructor(params: ICryptoWalletInputInfoParameters<T>) {
         super();
         this.type = params.type;
         this.ctor = params.ctor;
@@ -70,7 +74,7 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
         this.quantity = CryptoWalletInputInfo.getQuantityInputInfo(params.quantityDecimals);
     }
 
-    public createAsset(parent: IParent, props: ICryptoWalletProperties) {
+    public createAsset(parent: IParent, props: T) {
         return new this.ctor(parent, props);
     }
 
@@ -113,5 +117,5 @@ export class CryptoWalletInputInfo extends AssetInputInfo {
         }
     }
 
-    private readonly ctor: new (parent: IParent, props: ICryptoWalletProperties) => CryptoWallet;
+    private readonly ctor: new (parent: IParent, props: T) => CryptoWallet;
 }

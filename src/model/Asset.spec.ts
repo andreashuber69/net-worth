@@ -34,16 +34,18 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
+import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { AssetType } from "./validation/schemas/AssetType";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { IAssetProperties } from "./validation/schemas/IAssetProperties";
-import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
 import { Erc20TokensWalletTypeName, IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
+import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties";
 import { IMiscAsset, MiscAssetTypeName } from "./validation/schemas/IMiscAsset";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties";
 import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
 import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 import { ZecWallet } from "./ZecWallet";
 
@@ -197,10 +199,10 @@ const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ct
     });
 };
 
-type CryptoWalletCtor = (new (parent: IParent, props: ICryptoWalletProperties) => CryptoWallet);
+type SimpleCryptoWalletCtor = (new (parent: IParent, props: ISimpleCryptoWalletProperties) => CryptoWallet);
 
-const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ctor: CryptoWalletCtor) => {
-    const expectedPropertyNames = arrayOfAll<ICryptoWalletProperties>()(
+const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ctor: SimpleCryptoWalletCtor) => {
+    const expectedPropertyNames = arrayOfAll<ISimpleCryptoWalletProperties>()(
         "description", "location", "quantity", "notes", "address");
     const props = getSimpleCryptoWalletProperties(getRandomData(type, expectedPropertyNames));
 
@@ -259,9 +261,11 @@ const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ct
     });
 };
 
-const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor: CryptoWalletCtor) => {
-    const expectedPropertyNames = arrayOfAll<ICryptoWalletProperties>()(
-        "description", "location", "quantity", "notes", "address");
+type Erc20TokensWalletCtor = (new (parent: IParent, props: IErc20TokensWalletProperties) => Erc20TokensWallet);
+
+const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor: Erc20TokensWalletCtor) => {
+    const expectedPropertyNames = arrayOfAll<IErc20TokensWalletProperties>()(
+        "description", "location", "notes", "address");
     const props = getErc20TokensWalletProperties(getRandomData(type, expectedPropertyNames));
 
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
@@ -478,22 +482,6 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
     });
 };
 
-const testCryptoWallet = (
-    ctor: new (parent: IParent, props: ICryptoWalletProperties) => CryptoWallet, address: string,
-) => {
-    describe(`${ctor.name} with address ${address}`, () => {
-        testQueries(ctor, { description: "Spending", address });
-    });
-};
-
-const testPreciousMetalAsset = (
-    ctor: new (parent: IParent, props: IPreciousMetalAssetProperties) => PreciousMetalAsset,
-) => {
-    describe(`${ctor.name}`, () => {
-        testQueries(ctor, { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 });
-    });
-};
-
 testPreciousMetalAssetConstruction("Silver", SilverAsset);
 testPreciousMetalAssetConstruction("Palladium", PalladiumAsset);
 testPreciousMetalAssetConstruction("Platinum", PlatinumAsset);
@@ -508,18 +496,37 @@ testSimpleCryptoWalletConstruction("Ethereum", EthWallet);
 testSimpleCryptoWalletConstruction("Zcash", ZecWallet);
 testMiscAssetConstruction("Misc", MiscAsset);
 
+const testSimpleCryptoWallet = (
+    ctor: new (parent: IParent, props: ISimpleCryptoWalletProperties) => SimpleCryptoWallet, address: string,
+) => {
+    describe(`${ctor.name} with address ${address}`, () => {
+        testQueries(ctor, { description: "Spending", address });
+    });
+};
+
+const testPreciousMetalAsset = (
+    ctor: new (parent: IParent, props: IPreciousMetalAssetProperties) => PreciousMetalAsset,
+) => {
+    describe(`${ctor.name}`, () => {
+        testQueries(ctor, { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 });
+    });
+};
+
 // cSpell: disable
-testCryptoWallet(
+testSimpleCryptoWallet(
     BtcWallet,
     "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz");
-testCryptoWallet(BtcWallet, "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a");
-testCryptoWallet(LtcWallet, "LS6dQU1M1Asx5ATT5gopFo53UfQ9dhLhmP");
-testCryptoWallet(DashWallet, "XjB1d1pNT9nfcCKp1N7AQCmzPNiVg6YEzn");
-testCryptoWallet(BtgWallet, "GJjz2Du9BoJQ3CPcoyVTHUJZSj62i1693U");
-testCryptoWallet(Erc20TokensWallet, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454");
-testCryptoWallet(EtcWallet, "0x2387f8DB786d43528fFD3b0bD776e2BA39DD3832");
-testCryptoWallet(EthWallet, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454");
-testCryptoWallet(ZecWallet, "t1Tncf8SM9yPsFsWjRMAf6GXobSDhkQ6DEN");
+testSimpleCryptoWallet(BtcWallet, "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a");
+testSimpleCryptoWallet(LtcWallet, "LS6dQU1M1Asx5ATT5gopFo53UfQ9dhLhmP");
+testSimpleCryptoWallet(DashWallet, "XjB1d1pNT9nfcCKp1N7AQCmzPNiVg6YEzn");
+testSimpleCryptoWallet(BtgWallet, "GJjz2Du9BoJQ3CPcoyVTHUJZSj62i1693U");
+testSimpleCryptoWallet(EtcWallet, "0x2387f8DB786d43528fFD3b0bD776e2BA39DD3832");
+testSimpleCryptoWallet(EthWallet, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454");
+testSimpleCryptoWallet(ZecWallet, "t1Tncf8SM9yPsFsWjRMAf6GXobSDhkQ6DEN");
+
+describe(`${Erc20TokensWallet.name} with address 0x00C5E04176d95A286fccE0E68c683Ca0bfec8454`, () => {
+    testQueries(Erc20TokensWallet, { description: "Spending", address: "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454" });
+});
 // cSpell: enable
 
 testPreciousMetalAsset(SilverAsset);

@@ -14,7 +14,7 @@ import { IAssetProperties } from "./IAssetProperties";
 import { QuantityAny } from "./QuantityAny";
 
 /** Contains the defining properties common to all crypto currency wallets. */
-export interface ICryptoWalletProperties extends IAssetProperties {
+export interface ISimpleCryptoWalletProperties extends IAssetProperties {
     /** Provides the public address. */
     readonly address?: string;
 

@@ -11,13 +11,14 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
-import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
+import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
 
 /** Combines the defining properties of all assets. */
 export type IAssetPropertiesIntersection =
-    IPreciousMetalAssetProperties & ICryptoWalletProperties & IMiscAssetProperties;
+    IPreciousMetalAssetProperties & ISimpleCryptoWalletProperties & IErc20TokensWalletProperties & IMiscAssetProperties;
 
 export interface IAssetIntersection extends IAssetPropertiesIntersection {
     readonly type: AssetTypeName;

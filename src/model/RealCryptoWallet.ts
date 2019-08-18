@@ -14,9 +14,9 @@ import { IParent } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { QueryUtility } from "./QueryUtility";
-import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
 
-export interface IRealCryptoWalletParameters extends ICryptoWalletProperties {
+export interface IRealCryptoWalletParameters extends ISimpleCryptoWalletProperties {
     /** The crypto currency symbol, e.g. 'BTC', 'LTC'. */
     readonly currencySymbol: string;
 
@@ -59,7 +59,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     // TODO: This is a hack to work around the fact that the spread operator does not call property getters:
     // https://github.com/Microsoft/TypeScript/issues/26547
     protected static getProperties(
-        { description, location, address, quantity, notes }: ICryptoWalletProperties,
+        { description, location, address, quantity, notes }: ISimpleCryptoWalletProperties,
         currencySymbol: string, slug?: string): IRealCryptoWalletParameters {
         return { description, location, address, quantity, notes, currencySymbol, slug };
     }
@@ -92,7 +92,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     }
 
     /** @internal */
-    protected getProperties(): ICryptoWalletProperties {
+    protected getProperties(): ISimpleCryptoWalletProperties {
         return {
             description: this.description,
             location: this.location || undefined,

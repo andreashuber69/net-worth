@@ -13,13 +13,13 @@
 import { IParent } from "./Asset";
 import { BlockcypherWallet } from "./BlockcypherWallet";
 import { RealCryptoWallet } from "./RealCryptoWallet";
-import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
 
 /** Represents an LTC wallet. */
 export class LtcWallet extends BlockcypherWallet {
     public readonly type = "Litecoin";
 
-    public constructor(parent: IParent, props: ICryptoWalletProperties) {
+    public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "LTC", "litecoin"));
     }
 }

@@ -26,9 +26,11 @@ import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
 import { erc20TokensWalletTypeNames, IErc20TokensObject } from "./validation/schemas/IErc20TokensWallet";
+import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties";
 import { IMiscObject, miscAssetTypeNames } from "./validation/schemas/IMiscAsset";
 import { IPreciousMetalObject, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset";
 import { ISimpleCryptoObject, simpleCryptoWalletTypeNames } from "./validation/schemas/ISimpleCryptoWallet";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
 import { ObjectUnion } from "./validation/schemas/ObjectUnion";
 import { ZecWallet } from "./ZecWallet";
 
@@ -67,8 +69,8 @@ const zecHint =
 
 type Converters<P, S, E, M, PR, SR, ER, MR> = [
     (value: P, info: PreciousMetalAssetInputInfo) => PR,
-    (value: S, info: CryptoWalletInputInfo) => SR,
-    (value: E, info: CryptoWalletInputInfo) => ER,
+    (value: S, info: CryptoWalletInputInfo<ISimpleCryptoWalletProperties>) => SR,
+    (value: E, info: CryptoWalletInputInfo<IErc20TokensWalletProperties>) => ER,
     (value: M, info: MiscAssetInputInfo) => MR,
 ];
 
@@ -78,15 +80,22 @@ export class ObjectConverter {
         new PreciousMetalAssetInputInfo("Palladium", PalladiumAsset),
         new PreciousMetalAssetInputInfo("Platinum", PlatinumAsset),
         new PreciousMetalAssetInputInfo("Gold", GoldAsset),
-        new CryptoWalletInputInfo({ type: "Bitcoin", ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
-        new CryptoWalletInputInfo({ type: "Litecoin", ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
-        new CryptoWalletInputInfo(
+        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+            { type: "Bitcoin", ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
+        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+            { type: "Litecoin", ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
+        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
             { type: "Ethereum Classic", ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
-        new CryptoWalletInputInfo({ type: "ERC20 Tokens", ctor: Erc20TokensWallet, addressHint: erc20Hint }),
-        new CryptoWalletInputInfo({ type: "Ethereum", ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
-        new CryptoWalletInputInfo({ type: "Bitcoin Gold", ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
-        new CryptoWalletInputInfo({ type: "Dash", ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
-        new CryptoWalletInputInfo({ type: "Zcash", ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
+        new CryptoWalletInputInfo<IErc20TokensWalletProperties>(
+            { type: "ERC20 Tokens", ctor: Erc20TokensWallet, addressHint: erc20Hint }),
+        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+            { type: "Ethereum", ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
+        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+            { type: "Bitcoin Gold", ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
+        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+            { type: "Dash", ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
+        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+            { type: "Zcash", ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
         new MiscAssetInputInfo(),
     ] as const;
 
@@ -108,11 +117,11 @@ export class ObjectConverter {
 
             return [info, convertPreciousMetalObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<S>(rawObject, simpleCryptoWalletTypeNames)) {
-            const info = ObjectConverter.getInfo<CryptoWalletInputInfo>(rawObject.type);
+            const info = ObjectConverter.getInfo<CryptoWalletInputInfo<ISimpleCryptoWalletProperties>>(rawObject.type);
 
             return [info, convertSimpleCryptoObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<E>(rawObject, erc20TokensWalletTypeNames)) {
-            const info = ObjectConverter.getInfo<CryptoWalletInputInfo>(rawObject.type);
+            const info = ObjectConverter.getInfo<CryptoWalletInputInfo<IErc20TokensWalletProperties>>(rawObject.type);
 
             return [info, convertErc20TokensObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<M>(rawObject, miscAssetTypeNames)) {

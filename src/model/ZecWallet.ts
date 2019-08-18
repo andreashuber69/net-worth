@@ -15,14 +15,14 @@ import { Query } from "./Query";
 import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
-import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
 import { SoChainGetAddressBalanceResponse } from "./validation/schemas/SoChainGetAddressBalanceResponse";
 
 /** Represents a ZEC wallet. */
 export class ZecWallet extends SimpleCryptoWallet {
     public readonly type = "Zcash";
 
-    public constructor(parent: IParent, props: ICryptoWalletProperties) {
+    public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "ZEC", "zcash"));
     }
 

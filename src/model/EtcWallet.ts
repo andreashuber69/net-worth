@@ -17,14 +17,14 @@ import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { Unknown } from "./Unknown";
-import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
 import { Value } from "./Value";
 
 /** Represents an ETC wallet. */
 export class EtcWallet extends SimpleCryptoWallet {
     public readonly type = "Ethereum Classic";
 
-    public constructor(parent: IParent, props: ICryptoWalletProperties) {
+    public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "ETC", "ethereum-classic"));
     }
 

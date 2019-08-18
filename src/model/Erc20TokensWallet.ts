@@ -14,8 +14,8 @@ import { IParent } from "./Asset";
 import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
-import { ICryptoWalletProperties } from "./validation/schemas/ICryptoWalletProperties";
 import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
+import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties";
 
 /** Represents a wallet for ERC20 tokens. */
 export class Erc20TokensWallet extends RealCryptoWallet {
@@ -28,7 +28,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
      * @param parent The parent model to which this asset belongs.
      * @param props The crypto wallet properties.
      */
-    public constructor(parent: IParent, props: ICryptoWalletProperties) {
+    public constructor(parent: IParent, props: IErc20TokensWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, ""));
     }
 

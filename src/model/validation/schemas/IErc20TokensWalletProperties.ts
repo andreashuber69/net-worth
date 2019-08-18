@@ -10,16 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
-import { BlockcypherWallet } from "./BlockcypherWallet";
-import { RealCryptoWallet } from "./RealCryptoWallet";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
+import { IAssetProperties } from "./IAssetProperties";
 
-/** Represents a DASH wallet. */
-export class DashWallet extends BlockcypherWallet {
-    public readonly type = "Dash";
-
-    public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
-        super(parent, RealCryptoWallet.getProperties(props, "DASH", "dash"));
-    }
+/** Contains the defining properties common to all crypto currency wallets. */
+export interface IErc20TokensWalletProperties extends IAssetProperties {
+    /** Provides the public address. */
+    readonly address: string;
 }
