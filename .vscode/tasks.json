@@ -54,6 +54,11 @@
       "problemMatcher": [
         "$tslint5"
       ]
+    },
+    {
+      "type": "npm",
+      "script": "show-coverage",
+      "problemMatcher": []
     }
   ]
 }
