@@ -12,8 +12,13 @@
 
 import { IParent } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
-import { AssetInput } from "./AssetInput";
 import { IModelParameters, Model } from "./Model";
+import { ObjectConverter } from "./ObjectConverter";
+import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
+import { IMiscAsset } from "./validation/schemas/IMiscAsset";
+import { IPreciousMetalAsset } from "./validation/schemas/IPreciousMetalAsset";
+import { ISimpleCryptoWallet } from "./validation/schemas/ISimpleCryptoWallet";
+import { AssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion";
 import { TaggedModel } from "./validation/schemas/TaggedModel";
 import { Validator } from "./validation/Validator";
 
@@ -46,7 +51,7 @@ export class ModelParser {
         };
 
         for (const rawBundle of rawModel.bundles) {
-            const createBundle = AssetInput.parseBundle(rawBundle);
+            const createBundle = ModelParser.parseAndValidateBundle(rawBundle);
 
             if (!(createBundle instanceof Function)) {
                 return createBundle;
@@ -65,5 +70,24 @@ export class ModelParser {
 
     private static parseOptionalViewProperties(rawModel: TaggedModel) {
         return (({ currency, groupBy, sort }) => ({ currency, groupBy, sort }))(rawModel);
+    }
+
+    private static parseAndValidateBundle(rawBundle: AssetBundleUnion) {
+        const [info, result] = ModelParser.parseBundle(rawBundle);
+        const validationResult = info.validateAll(rawBundle.primaryAsset);
+
+        return (validationResult === true) ? result : validationResult;
+    }
+
+    private static parseBundle(rawBundle: AssetBundleUnion) {
+        return ObjectConverter.convert(rawBundle.primaryAsset, [
+            (asset: IPreciousMetalAsset, info) =>
+                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
+            (asset: ISimpleCryptoWallet, info) =>
+                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
+            (asset: IErc20TokensWallet, info) =>
+                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
+            (asset: IMiscAsset, info) => ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
+        ]);
     }
 }
