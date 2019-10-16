@@ -20,3 +20,8 @@ deploy:
   verbose: true
   on:
     tags: true
+
+notifications:
+  email:
+    recipients:
+      - secure: "otpxNbTyd4lUNDR06PjV9mSpyUJ0WfxNC4lQjj2gaE8hho8Zzv8rroHTllHC8NW3+e3nrvHkFQcobUupKHJb8Tp/Ihg0ki3PpHB7SDcRw/6Wtcs78ePP777ykF3E2OL1XJAw9pBKUpDc9MqLqjYt/Q6ACnrk67/9iOqoWwYh0UNBVJWvI6lVIOHJLiS+BW6uTxSJlUq/G5qNdp/cISmjoN6Kqbq/m5TTeYeP1qUmF0JshtmCbS4PR4Uhg/XzmlhVPAstH++geuEk/HgVESiViKKbTs0tHZzyXVU943RMmmH3C4t5OHSwxRJRNBQswoKHQMyBy+qqs1p3ftmq7TfBtHizHyCVS6A6FMGdyBGFwqFRk6pb1Ia7mp/1HVTYc7PUarc8UqfzYmqAoPj9i4MBtYnxpwaN63NiZZUruBemMaz7DpYT0n1TgZjcrdF1vckD4gOABC1eGhsC8cukn4QbunEVBfEYrLMBwp3fRkHmCjb7LRwDJF25w9oxZwlClJmHgZ2YAOE9F9LmFcnK0SZIEMvEBB92Ky1WjEv8nxG8iWkWBmDkU5lGEBnEvNqdQS6tzWO0JfiZL0xFoFwP0g8xPU+9w0rCTYeKOjgvY/NopXkjQV5uXszWOYq5r9+RfKtd1P6h+FR86qv7jo1GUByDq4h+RFvpiGHfEZvt58ScZsk="
