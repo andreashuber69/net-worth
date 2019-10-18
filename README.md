@@ -20,6 +20,9 @@
   <a href="https://codeclimate.com/github/andreashuber69/net-worth/maintainability">
     <img src="https://api.codeclimate.com/v1/badges/c9f5acb5f51c8cb85c95/maintainability" alt="CC Maintainability"/>
   </a>
+  <a href="https://codeclimate.com/github/andreashuber69/net-worth/test_coverage">
+    <img src="https://api.codeclimate.com/v1/badges/c9f5acb5f51c8cb85c95/test_coverage"  alt="CC Test Coverage">
+  </a>
   <a href="https://github.com/andreashuber69/net-worth/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/andreashuber69/net-worth.svg" alt="License">
   </a>
