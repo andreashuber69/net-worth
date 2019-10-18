@@ -5,9 +5,21 @@ nodejs:
 addons:
   chrome: stable
 
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
 script:
   - npm run ci
 
+after_script:
+  - ./cc-test-reporter format-coverage --input-type lcov ./coverage/lcov.lcov
+  - ./cc-test-reporter upload-coverage --id $CODECLIMATE_TEST_REPORTER_ID
+  - export CODECLIMATE_API_HOST=https://codebeat.co/webhooks/code_coverage
+  - export CODECLIMATE_REPO_TOKEN=28348b51-d587-463b-86da-7c757d29a09a
+  - npx codeclimate-test-reporter < coverage/lcov.lcov
+  
 deploy:
   provider: pages
   skip-cleanup: true
