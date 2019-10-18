@@ -15,10 +15,10 @@
     <img src="https://img.shields.io/github/issues-raw/andreashuber69/net-worth.svg" alt="Issues">
   </a>
   <a href="https://codebeat.co/projects/github-com-andreashuber69-net-worth-master">
-    <img src="https://codebeat.co/badges/c9f4388c-78b2-48c9-acaa-8f1f1b605065" alt="Codebeat">
+    <img src="https://codebeat.co/badges/28348b51-d587-463b-86da-7c757d29a09a" alt="Codebeat">
   </a>
   <a href="https://codeclimate.com/github/andreashuber69/net-worth/maintainability">
-    <img src="https://api.codeclimate.com/v1/badges/18b79d0f0057c90ab0b3/maintainability" alt="CC Maintainability"/>
+    <img src="https://api.codeclimate.com/v1/badges/c9f5acb5f51c8cb85c95/maintainability" alt="CC Maintainability"/>
   </a>
   <a href="https://github.com/andreashuber69/net-worth/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/andreashuber69/net-worth.svg" alt="License">
