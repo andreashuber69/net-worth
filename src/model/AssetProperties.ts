@@ -13,18 +13,13 @@
 import { Asset, IParent } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
 import { ObjectConverter } from "./ObjectConverter";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName";
-import { Erc20TokensWalletTypeName, IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
-import { IMiscAsset, MiscAssetTypeName } from "./validation/schemas/IMiscAsset";
-import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
-import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
+import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties";
+import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties";
+import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
-class AssetProperties<T extends AssetTypeName> {
-    public get type(): T {
-        return AssetProperties.validate("type", this.data.type) as T;
-    }
-
+class AssetProperties {
     public get description() {
         return AssetProperties.validate("description", this.data.description);
     }
@@ -80,37 +75,37 @@ class AssetProperties<T extends AssetTypeName> {
 }
 
 // tslint:disable-next-line: max-classes-per-file
-class RequiredQuantityAssetProperties<T extends AssetTypeName> extends AssetProperties<T> {
+class RequiredQuantityAssetProperties extends AssetProperties {
     public get quantity() {
         return Number.parseFloat(AssetProperties.validate("quantity", this.data.quantity));
     }
 }
 
 // tslint:disable-next-line: max-classes-per-file
-class RequiredAddressAssetProperties<T extends AssetTypeName> extends AssetProperties<T> {
+class RequiredAddressAssetProperties extends AssetProperties {
     public get address() {
         return AssetProperties.validate("address", this.data.address);
     }
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function getPreciousMetalProperties(data: AssetEditorData): IPreciousMetalAsset {
-    return new RequiredQuantityAssetProperties<PreciousMetalAssetTypeName>(data);
+export function getPreciousMetalProperties(data: AssetEditorData): IPreciousMetalAssetProperties {
+    return new RequiredQuantityAssetProperties(data);
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function getSimpleCryptoWalletProperties(data: AssetEditorData): ISimpleCryptoWallet {
-    return new AssetProperties<SimpleCryptoWalletTypeName>(data);
+export function getSimpleCryptoWalletProperties(data: AssetEditorData): ISimpleCryptoWalletProperties {
+    return new AssetProperties(data);
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function getErc20TokensWalletProperties(data: AssetEditorData): IErc20TokensWallet {
-    return new RequiredAddressAssetProperties<Erc20TokensWalletTypeName>(data);
+export function getErc20TokensWalletProperties(data: AssetEditorData): IErc20TokensWalletProperties {
+    return new RequiredAddressAssetProperties(data);
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function getMiscAssetProperties(data: AssetEditorData): IMiscAsset {
-    return new RequiredQuantityAssetProperties<MiscAssetTypeName>(data);
+export function getMiscAssetProperties(data: AssetEditorData): IMiscAssetProperties {
+    return new RequiredQuantityAssetProperties(data);
 }
 
 // tslint:disable-next-line: only-arrow-functions

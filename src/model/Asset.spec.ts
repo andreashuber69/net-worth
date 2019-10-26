@@ -38,13 +38,13 @@ import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { AssetType } from "./validation/schemas/AssetType";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { IAssetProperties } from "./validation/schemas/IAssetProperties";
-import { Erc20TokensWalletTypeName, IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
+import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet";
 import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties";
-import { IMiscAsset, MiscAssetTypeName } from "./validation/schemas/IMiscAsset";
+import { MiscAssetTypeName } from "./validation/schemas/IMiscAsset";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties";
-import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
+import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
-import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
+import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 import { ZecWallet } from "./ZecWallet";
@@ -163,7 +163,7 @@ const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ct
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
-        let expected: IPreciousMetalAsset;
+        let expected: IPreciousMetalAssetProperties;
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -225,7 +225,7 @@ const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ct
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
-        let expected: ISimpleCryptoWallet;
+        let expected: ISimpleCryptoWalletProperties;
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -287,7 +287,7 @@ const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
-        let expected: IErc20TokensWallet;
+        let expected: IErc20TokensWalletProperties;
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -349,7 +349,7 @@ const testMiscAssetConstruction = (type: MiscAssetTypeName, ctor: MiscAssetCtor)
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
-        let expected: IMiscAsset;
+        let expected: IMiscAssetProperties;
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
