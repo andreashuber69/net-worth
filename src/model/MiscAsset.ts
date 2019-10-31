@@ -22,7 +22,7 @@ import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties"
 import { Quantity0 } from "./validation/schemas/Quantity0";
 
 /** Represents a miscellaneous asset. */
-export class MiscAsset extends SingleAsset implements IMiscAsset {
+export class MiscAsset extends SingleAsset {
     public readonly type = "Misc";
 
     public readonly description: string;
@@ -46,11 +46,6 @@ export class MiscAsset extends SingleAsset implements IMiscAsset {
     public readonly displayDecimals = 0;
 
     public readonly notes: string;
-
-    /** @internal */
-    public get interface() {
-        return this;
-    }
 
     public constructor(parent: IParent, props: IMiscAssetProperties) {
         super(parent);

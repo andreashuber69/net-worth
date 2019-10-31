@@ -125,10 +125,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
     }
 
     /** @internal */
-    public abstract get interface(): AssetUnion;
-
-    /** @internal */
-    public abstract toJSON(): IAsset;
+    public abstract toJSON(): AssetUnion;
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method

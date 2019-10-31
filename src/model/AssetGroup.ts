@@ -77,16 +77,12 @@ export class AssetGroup extends Asset {
         return false;
     }
 
-    public get interface(): AssetUnion {
-        throw new Error(`${AssetGroup.name} cannot be edited.`);
-    }
-
     public constructor(parent: IParent, public readonly assets: Asset[]) {
         super(parent);
     }
 
     // tslint:disable-next-line:prefer-function-over-method
-    public toJSON(): IAsset {
+    public toJSON(): AssetUnion {
         throw new Error(`${AssetGroup.name} cannot be serialized.`);
     }
 

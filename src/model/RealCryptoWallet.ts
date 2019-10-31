@@ -35,11 +35,6 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     public readonly notes: string;
 
     /** @internal */
-    public get interface() {
-        return this;
-    }
-
-    /** @internal */
     public async queryData(): Promise<void> {
         await super.queryData();
 

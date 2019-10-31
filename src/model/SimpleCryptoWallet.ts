@@ -17,7 +17,7 @@ import { Unknown } from "./Unknown";
 import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
 
 /** Defines the base of all simple crypto currency wallets. */
-export abstract class SimpleCryptoWallet extends RealCryptoWallet implements ISimpleCryptoWallet {
+export abstract class SimpleCryptoWallet extends RealCryptoWallet {
     public abstract get type(): SimpleCryptoWalletTypeName;
 
     public bundle(bundle?: Unknown): GenericAssetBundle<SimpleCryptoWallet> {

@@ -190,12 +190,6 @@ const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ct
                 expect(sut.editableAsset).toBe(sut);
             });
         });
-
-        describe("interface", () => {
-            it("should be equal to sut", () => {
-                expect(sut.interface as object).toBe(sut);
-            });
-        });
     });
 };
 
@@ -250,12 +244,6 @@ const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ct
         describe("editableAsset", () => {
             it("should be equal to sut", () => {
                 expect(sut.editableAsset).toBe(sut);
-            });
-        });
-
-        describe("interface", () => {
-            it("should be equal to sut", () => {
-                expect(sut.interface as object).toBe(sut);
             });
         });
     });
@@ -315,11 +303,6 @@ const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor
             });
         });
 
-        describe("interface", () => {
-            it("should be equal to sut", () => {
-                expect(sut.interface as object).toBe(sut);
-            });
-        });
     });
 };
 
@@ -374,12 +357,6 @@ const testMiscAssetConstruction = (type: MiscAssetTypeName, ctor: MiscAssetCtor)
         describe("editableAsset", () => {
             it("should be equal to sut", () => {
                 expect(sut.editableAsset).toBe(sut);
-            });
-        });
-
-        describe("interface", () => {
-            it("should be equal to sut", () => {
-                expect(sut.interface as object).toBe(sut);
             });
         });
     });
@@ -461,7 +438,6 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
                     if (asset instanceof Erc20TokenWallet) {
                         expect(sut instanceof Erc20TokensWallet).toBe(true);
                         await expectAsync(asset.queryData()).toBeRejected();
-                        expect(() => asset.interface).toThrow();
                         expect(() => asset.toJSON()).toThrow();
                         expect(() => asset.bundle()).toThrow();
                     }
@@ -554,7 +530,6 @@ describe("no assets", () => {
     expectProperty(AssetGroup, [], "unitValueHint", (matcher) => matcher.toEqual(""));
     expectProperty(AssetGroup, [], "totalValue", (matcher) => matcher.toBe(0));
     expectProperty(AssetGroup, [], "hasActions", (matcher) => matcher.toBe(false));
-    expectPropertyThrowsError(AssetGroup, [], "interface", "AssetGroup cannot be edited.");
     expectMethodThrowsError(AssetGroup, [], "toJSON", "AssetGroup cannot be serialized.");
     testMethod(AssetGroup, [], "expand", "should toggle isExpanded", (assetGroup) => {
         expect(assetGroup.isExpanded).toBe(false);

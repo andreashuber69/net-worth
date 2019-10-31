@@ -175,7 +175,7 @@ const expectEmptyModel = (fileName: string) => {
 };
 
 type IExpectedAssetProperties<T extends Asset> =
-    IExpectedProperties<T, "key" | "unitValue" | "totalValue" | "percent" | "interface" | "parent" | "editableAsset">;
+    IExpectedProperties<T, "key" | "unitValue" | "totalValue" | "percent" | "parent" | "editableAsset">;
 
 const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
     type: T["type"], description: string, location: string, weight: Weight,

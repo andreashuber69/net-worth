@@ -24,7 +24,7 @@ import { Weight } from "./validation/schemas/Weight";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 
 /** Defines the base of all classes that represent a precious metal asset. */
-export abstract class PreciousMetalAsset extends SingleAsset implements IPreciousMetalAsset {
+export abstract class PreciousMetalAsset extends SingleAsset {
     public abstract get type(): PreciousMetalAssetTypeName;
 
     public readonly description: string;
@@ -46,11 +46,6 @@ export abstract class PreciousMetalAsset extends SingleAsset implements IPreciou
     public readonly displayDecimals = 0;
 
     public readonly notes: string;
-
-    /** @internal */
-    public get interface() {
-        return this;
-    }
 
     /** @internal */
     public toJSON(): IPreciousMetalAsset {

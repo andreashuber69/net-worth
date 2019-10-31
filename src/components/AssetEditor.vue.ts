@@ -83,7 +83,7 @@ export default class AssetEditor extends Vue {
         this.parent = parent;
         this.isExistingAsset = !!asset;
         this.assetInfo = AssetEditor.getAssetInfo(asset) || new NoAssetInputInfo();
-        this.data = new AssetEditorData(asset ? asset.editableAsset.interface : undefined);
+        this.data = new AssetEditorData(asset ? asset.editableAsset.toJSON() : undefined);
         this.isOpen = true;
 
         return new Promise<Asset | undefined>((resolve) => this.resolve = resolve);

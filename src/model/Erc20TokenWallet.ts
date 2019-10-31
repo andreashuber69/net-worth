@@ -24,7 +24,7 @@ interface ITokenWalletParameters {
     readonly unitValueUsd?: number;
 }
 
-export class Erc20TokenWallet extends CryptoWallet implements IErc20TokensWallet {
+export class Erc20TokenWallet extends CryptoWallet {
     public get type(): Erc20TokensWalletTypeName {
         return this.editable.type;
     }
@@ -49,10 +49,6 @@ export class Erc20TokenWallet extends CryptoWallet implements IErc20TokensWallet
         return this.editable;
     }
 
-    public get interface(): AssetUnion {
-        throw new Error(`${Erc20TokenWallet.name} cannot be edited.`);
-    }
-
     /** @internal */
     public constructor(params: ITokenWalletParameters) {
         super(params.editable.parent, params.currencySymbol);
@@ -62,7 +58,7 @@ export class Erc20TokenWallet extends CryptoWallet implements IErc20TokensWallet
     }
 
     // tslint:disable-next-line:prefer-function-over-method
-    public toJSON(): IAsset {
+    public toJSON(): AssetUnion {
         throw new Error(`${Erc20TokenWallet.name} cannot be serialized.`);
     }
 
