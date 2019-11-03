@@ -15,7 +15,7 @@ import { Asset, IParent } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetGroup } from "./AssetGroup";
-import { allAssetPropertyNames, AssetPropertyName, IAssetPropertiesIntersection } from "./AssetInterfaces";
+import { allAssetPropertyNames, AssetPropertyName } from "./AssetInterfaces";
 import {
     getErc20TokensWalletProperties, getMiscAssetProperties, getPreciousMetalProperties, getSimpleCryptoWalletProperties,
 } from "./AssetProperties";
@@ -45,7 +45,9 @@ import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties"
 import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
 import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
+import {
+    ISimpleCryptoWalletAddressProperties, ISimpleCryptoWalletProperties,
+} from "./validation/schemas/ISimpleCryptoWalletProperties";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
 import { ZecWallet } from "./ZecWallet";
 
@@ -90,9 +92,7 @@ const createAsset = <T, U>(ctor: new (parent: IParent, props: U) => T, props: U)
     return new ctor(parent, props);
 };
 
-const getPropertyValues = (
-    object: Partial<IAssetPropertiesIntersection>, names: AssetPropertyName[],
-): Map<string, unknown> => {
+const getPropertyValues = (object: Partial<Record<AssetPropertyName, unknown>>, names: AssetPropertyName[]) => {
     const result = new Map<string, unknown>();
 
     for (const name of names) {
@@ -173,7 +173,7 @@ const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ct
 
         describe("constructor", () => {
             it("should copy parameter properties", () => {
-                const actual = getPropertyValues(sut, allAssetPropertyNames);
+                const actual = getPropertyValues(sut.toJSON(), allAssetPropertyNames);
                 [...actual.keys()].filter((key) => actual.get(key) === undefined).forEach((key) => actual.delete(key));
                 expect(actual).toEqual(getPropertyValues(expected, expectedPropertyNames));
             });
@@ -196,12 +196,13 @@ const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ct
 type SimpleCryptoWalletCtor = (new (parent: IParent, props: ISimpleCryptoWalletProperties) => CryptoWallet);
 
 const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ctor: SimpleCryptoWalletCtor) => {
-    const expectedPropertyNames = arrayOfAll<ISimpleCryptoWalletProperties>()(
-        "description", "location", "quantity", "notes", "address");
+    const expectedPropertyNames =
+        arrayOfAll<ISimpleCryptoWalletAddressProperties>()("description", "location", "notes", "address");
     const props = getSimpleCryptoWalletProperties(getRandomData(type, expectedPropertyNames));
 
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
-    expectProperty(ctor, props, "locationHint", (matcher) => matcher.toEqual(props.address ? props.address : ""));
+    expectProperty(
+        ctor, props, "locationHint", (matcher) => matcher.toEqual(("address" in props) && props.address || ""));
     expectProperty(ctor, props, "unit", (matcher) => matcher.toBeDefined());
     expectProperty(ctor, props, "quantityHint", (matcher) => matcher.toEqual(""));
     expectProperty(ctor, props, "displayDecimals", (matcher) => matcher.toBeGreaterThanOrEqual(0));
@@ -229,7 +230,7 @@ const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ct
 
         describe("constructor", () => {
             it("should copy parameter properties", () => {
-                const actual = getPropertyValues(sut, allAssetPropertyNames);
+                const actual = getPropertyValues(sut.toJSON(), allAssetPropertyNames);
                 [...actual.keys()].filter((key) => actual.get(key) === undefined).forEach((key) => actual.delete(key));
                 expect(actual).toEqual(getPropertyValues(expected, expectedPropertyNames));
             });
@@ -285,7 +286,7 @@ const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor
 
         describe("constructor", () => {
             it("should copy parameter properties", () => {
-                const actual = getPropertyValues(sut, allAssetPropertyNames);
+                const actual = getPropertyValues(sut.toJSON(), allAssetPropertyNames);
                 [...actual.keys()].filter((key) => actual.get(key) === undefined).forEach((key) => actual.delete(key));
                 expect(actual).toEqual(getPropertyValues(expected, expectedPropertyNames));
             });
@@ -342,7 +343,7 @@ const testMiscAssetConstruction = (type: MiscAssetTypeName, ctor: MiscAssetCtor)
 
         describe("constructor", () => {
             it("should copy parameter properties", () => {
-                const actual = getPropertyValues(sut, allAssetPropertyNames);
+                const actual = getPropertyValues(sut.toJSON(), allAssetPropertyNames);
                 [...actual.keys()].filter((key) => actual.get(key) === undefined).forEach((key) => actual.delete(key));
                 expect(actual).toEqual(getPropertyValues(expected, expectedPropertyNames));
             });

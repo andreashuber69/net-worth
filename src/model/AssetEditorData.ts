@@ -70,8 +70,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getAddress(asset?: AssetUnion) {
-        return ((AssetEditorData.isSimpleCryptoWallet(asset) || AssetEditorData.isErc20TokensWallet(asset)) &&
-            asset.address) || undefined;
+        return asset && ("address" in asset) && asset.address || undefined;
     }
 
     private static getWeight(asset?: AssetUnion) {
@@ -95,21 +94,11 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getQuantity(asset?: AssetUnion) {
-        return asset && !(AssetEditorData.isSimpleCryptoWallet(asset) && asset.address) &&
-            !AssetEditorData.isErc20TokensWallet(asset) &&
-            (asset.quantity !== undefined) && asset.quantity.toString() || undefined;
+        return asset && ("quantity" in asset) && asset.quantity.toString() || undefined;
     }
 
     private static getNotes(asset?: AssetUnion) {
         return asset && asset.notes;
-    }
-
-    private static isSimpleCryptoWallet(asset?: AssetUnion): asset is ISimpleCryptoWallet {
-        return AssetEditorData.isType<ISimpleCryptoWallet>(simpleCryptoWalletTypeNames, asset);
-    }
-
-    private static isErc20TokensWallet(asset?: AssetUnion): asset is IErc20TokensWallet {
-        return AssetEditorData.isType<IErc20TokensWallet>(erc20TokensWalletTypeNames, asset);
     }
 
     private static isPreciousMetalAsset(asset?: AssetUnion): asset is IPreciousMetalAsset {

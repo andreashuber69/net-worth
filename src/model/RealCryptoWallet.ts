@@ -15,14 +15,15 @@ import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { QueryUtility } from "./QueryUtility";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
+import { QuantityAny } from "./validation/schemas/QuantityAny";
 
-export interface IRealCryptoWalletParameters extends ISimpleCryptoWalletProperties {
+export type IRealCryptoWalletParameters = ISimpleCryptoWalletProperties & {
     /** The crypto currency symbol, e.g. 'BTC', 'LTC'. */
     readonly currencySymbol: string;
 
     /** The coinmarketcap.com identifier (aka "website_slug") of the currency. */
     readonly slug?: string;
-}
+};
 
 /** Defines the base of all classes that represent a real crypto currency wallet. */
 export abstract class RealCryptoWallet extends CryptoWallet {
@@ -54,9 +55,15 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     // TODO: This is a hack to work around the fact that the spread operator does not call property getters:
     // https://github.com/Microsoft/TypeScript/issues/26547
     protected static getProperties(
-        { description, location, address, quantity, notes }: ISimpleCryptoWalletProperties,
-        currencySymbol: string, slug?: string): IRealCryptoWalletParameters {
-        return { description, location, address, quantity, notes, currencySymbol, slug };
+        props: ISimpleCryptoWalletProperties, currencySymbol: string, slug?: string,
+    ): IRealCryptoWalletParameters {
+        const { description, location, notes } = props;
+        const address = ("address" in props) && props.address || undefined;
+        const quantity = ("quantity" in props) && props.quantity || undefined;
+
+        return {
+            ...RealCryptoWallet._getProperties(description, location, address, quantity, notes), currencySymbol, slug,
+        };
     }
 
     /** Creates a new [[RealCryptoWallet]] instance.
@@ -71,8 +78,8 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         super(parent, params.currencySymbol);
         this.description = params.description;
         this.location = params.location || "";
-        this.address = params.address || "";
-        this.quantity = params.quantity;
+        this.address = ("address" in params) && params.address || "";
+        this.quantity = ("quantity" in params) && params.quantity || undefined;
         this.notes = params.notes || "";
         this.slug = params.slug;
     }
@@ -88,16 +95,32 @@ export abstract class RealCryptoWallet extends CryptoWallet {
 
     /** @internal */
     protected getProperties(): ISimpleCryptoWalletProperties {
-        return {
-            description: this.description,
-            location: this.location || undefined,
-            address: this.address || undefined,
-            quantity: this.address ? undefined : this.quantity,
-            notes: this.notes || undefined,
-        };
+        return RealCryptoWallet._getProperties(
+            this.description,
+            this.location || undefined,
+            this.address || undefined,
+            this.address ? undefined : this.quantity,
+            this.notes || undefined,
+        );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static _getProperties(
+        description: string,
+        location: string | undefined,
+        address: string | undefined,
+        quantity: QuantityAny | undefined,
+        notes: string | undefined,
+    ): ISimpleCryptoWalletProperties {
+        if (address) {
+            return { description, location, address, notes };
+        } else if (quantity) {
+            return { description, location, quantity, notes };
+        } else {
+            throw new Error("Unexpected ISimpleCryptoWalletProperties value!");
+        }
+    }
 
     private readonly slug?: string;
 }

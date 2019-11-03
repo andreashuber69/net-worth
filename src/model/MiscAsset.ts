@@ -86,7 +86,7 @@ export class MiscAsset extends SingleAsset {
     private static readonly Bundle = class NestedBundle extends GenericAssetBundle<MiscAsset> {
         public toJSON() {
             return {
-                primaryAsset: this.assets[0],
+                primaryAsset: this.assets[0].toJSON(),
             };
         }
     };

@@ -95,7 +95,13 @@ export function getPreciousMetalProperties(data: AssetEditorData): IPreciousMeta
 
 // tslint:disable-next-line: only-arrow-functions
 export function getSimpleCryptoWalletProperties(data: AssetEditorData): ISimpleCryptoWalletProperties {
-    return new AssetProperties(data);
+    if (data.address) {
+        return new RequiredAddressAssetProperties(data);
+    } else if (data.quantity) {
+        return new RequiredQuantityAssetProperties(data);
+    } else {
+        throw new Error("Invalid data!");
+    }
 }
 
 // tslint:disable-next-line: only-arrow-functions

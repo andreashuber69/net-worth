@@ -49,7 +49,7 @@ export abstract class SimpleCryptoWallet extends RealCryptoWallet {
     private static readonly Bundle = class NestedBundle extends GenericAssetBundle<SimpleCryptoWallet> {
         public toJSON() {
             return {
-                primaryAsset: this.assets[0],
+                primaryAsset: this.assets[0].toJSON(),
             };
         }
     };

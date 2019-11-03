@@ -12,7 +12,7 @@
 
 import { IAssetProperties } from "./IAssetProperties";
 
-/** Contains the defining properties common to all crypto currency wallets. */
+/** Contains the defining properties of ERC20 tokens wallets. */
 export interface IErc20TokensWalletProperties extends IAssetProperties {
     /** Provides the public address. */
     readonly address: string;

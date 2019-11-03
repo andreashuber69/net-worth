@@ -22,5 +22,4 @@ export interface ISimpleCryptoObject {
     readonly type: SimpleCryptoWalletTypeName;
 }
 
-export interface ISimpleCryptoWallet extends ISimpleCryptoObject, ISimpleCryptoWalletProperties {
-}
+export type ISimpleCryptoWallet = ISimpleCryptoObject & ISimpleCryptoWalletProperties;

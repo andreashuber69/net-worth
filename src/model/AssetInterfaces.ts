@@ -20,9 +20,9 @@ import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCrypt
 export type IAssetPropertiesIntersection =
     IPreciousMetalAssetProperties & ISimpleCryptoWalletProperties & IErc20TokensWalletProperties & IMiscAssetProperties;
 
-export interface IAssetIntersection extends IAssetPropertiesIntersection {
+export type IAssetIntersection = IAssetPropertiesIntersection & {
     readonly type: AssetTypeName;
-}
+};
 
 export type AssetPropertyName = keyof IAssetPropertiesIntersection;
 
