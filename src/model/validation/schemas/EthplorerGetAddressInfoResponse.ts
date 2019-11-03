@@ -17,12 +17,16 @@ export interface IToken {
         readonly price: false | {
             readonly rate: number;
             readonly currency: "USD";
+            readonly [key: string]: unknown;
         };
+        readonly [key: string]: unknown;
     };
 
     readonly balance: number;
+    readonly [key: string]: unknown;
 }
 
 export class EthplorerGetAddressInfoResponse {
     public readonly tokens!: IToken[];
+    readonly [key: string]: unknown;
 }

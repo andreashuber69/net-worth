@@ -18,5 +18,6 @@ export class QuandlResponse {
                 number
             ]
         ];
+        readonly [key: string]: unknown;
     };
 }

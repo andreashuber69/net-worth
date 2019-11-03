@@ -14,4 +14,5 @@ import { IDeletedAssets } from "./IDeletedAssets";
 
 export class DeletedAssets implements IDeletedAssets {
     public readonly deletedAssets!: string[];
+    readonly [key: string]: unknown;
 }

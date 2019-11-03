@@ -29,7 +29,7 @@
     "build-code-doc": "typedoc --excludePrivate --out ./code-doc",
     "prelint": "cspell '**/*.*' && markdownlint *.md",
     "lint": "tslint --project tsconfig.json --config tslint.json --format verbose",
-    "generate-schemas": "typescript-json-schema './tsconfig.json' '*' --required --aliasRefs --include 'src/model/validation/schemas/*.ts' --out 'src/model/validation/schemas/All.schema.json'",
+    "generate-schemas": "typescript-json-schema './tsconfig.json' '*' --required --noExtraProps --aliasRefs --include 'src/model/validation/schemas/*.ts' --out 'src/model/validation/schemas/All.schema.json'",
     "pretest": "npm run generate-schemas",
     "test": "karma start --browsers Chrome",
     "show-coverage": "lite-server --baseDir='coverage/html'",
