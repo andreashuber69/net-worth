@@ -139,7 +139,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected unitValueUsd: number | undefined = undefined;
+    protected unitValueUsd?: number;
 
     /**
      * Creates a new [[Asset]] instance.

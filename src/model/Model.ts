@@ -95,7 +95,7 @@ export class Model implements IParent {
     public exchangeRate: number | undefined = 1;
 
     /** Provides the method that is called when the model has changed. */
-    public onChanged: (() => void) | undefined = undefined;
+    public onChanged?: (() => void);
 
     public constructor(params?: IModelParameters) {
         this.name = (params && params.name) || "Unnamed";
