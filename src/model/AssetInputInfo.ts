@@ -10,17 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset } from "./Asset";
 import { AssetPropertyName } from "./AssetInterfaces";
-import { AssetPropertyNames } from "./AssetPropertyNames";
 import { IAuxProperties } from "./IAuxProperties";
-import { CompositeInput, InputUtility } from "./Input";
+import { CompositeInput } from "./Input";
 import { InputInfo } from "./InputInfo";
-import { ParseErrorMessage } from "./ParseErrorMessage";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { Unknown } from "./Unknown";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { Currency } from "./validation/schemas/Currency";
 import { WeightUnit } from "./validation/schemas/WeightUnit";
@@ -73,46 +69,6 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
         }
 
         return result;
-    }
-
-    public validateAll(input: Unknown) {
-        if (!InputUtility.isComposite(input)) {
-            return ParseErrorMessage.getTypeMismatch(input, {});
-        }
-
-        this.includeRelations = true;
-
-        try {
-            const results: IValidationResults = {
-                description: this.validateComposite(true, input, AssetPropertyNames.description),
-                location: this.validateComposite(true, input, AssetPropertyNames.location),
-                address: this.validateComposite(true, input, Asset.addressName),
-                weight: this.validateComposite(true, input, Asset.weightName),
-                weightUnit: this.validateComposite(true, input, Asset.weightUnitName),
-                fineness: this.validateComposite(true, input, Asset.finenessName),
-                value: this.validateComposite(true, input, Asset.valueName),
-                valueCurrency: this.validateComposite(true, input, Asset.valueCurrencyName),
-                quantity: this.validateComposite(true, input, Asset.quantityName),
-                notes: this.validateComposite(true, input, AssetPropertyNames.notes),
-            };
-
-            let message = "";
-
-            for (const key in results) {
-                if (results.hasOwnProperty(key)) {
-                    const result = results[key];
-
-                    if (result !== true) {
-                        message += `'${key}': ${result}
-`;
-                    }
-                }
-            }
-
-            return message ? message : true;
-        } finally {
-            this.includeRelations = false;
-        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

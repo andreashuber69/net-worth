@@ -11,8 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IParent } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
-import { IModelParameters, Model } from "./Model";
+import { Model } from "./Model";
 import { ObjectConverter } from "./ObjectConverter";
 import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset";
@@ -43,43 +42,18 @@ export class ModelParser {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static parseBundles(rawModel: TaggedModel) {
-        const params: IModelParameters = {
-            ...ModelParser.parseOptionalProperties(rawModel),
-            ...ModelParser.parseOptionalViewProperties(rawModel),
-            createBundles: new Array<(parent: IParent) => AssetBundle>(),
+    private static parseBundles(
+        { name, wasSavedToFile, hasUnsavedChanges, currency, groupBy, sort, bundles }: TaggedModel,
+    ) {
+        const params = {
+            name, wasSavedToFile, hasUnsavedChanges, currency, groupBy, sort,
+            createBundles: bundles.map((bundle) => ModelParser.createBundle(bundle)),
         };
-
-        for (const rawBundle of rawModel.bundles) {
-            const createBundle = ModelParser.parseAndValidateBundle(rawBundle);
-
-            if (!(createBundle instanceof Function)) {
-                return createBundle;
-            }
-
-            params.createBundles.push(createBundle);
-        }
 
         return new Model(params);
     }
 
-    private static parseOptionalProperties(rawModel: TaggedModel) {
-        return (({ name, wasSavedToFile, hasUnsavedChanges }) =>
-            ({ name, wasSavedToFile, hasUnsavedChanges }))(rawModel);
-    }
-
-    private static parseOptionalViewProperties(rawModel: TaggedModel) {
-        return (({ currency, groupBy, sort }) => ({ currency, groupBy, sort }))(rawModel);
-    }
-
-    private static parseAndValidateBundle(rawBundle: AssetBundleUnion) {
-        const [info, result] = ModelParser.parseBundle(rawBundle);
-        const validationResult = info.validateAll(rawBundle.primaryAsset);
-
-        return (validationResult === true) ? result : validationResult;
-    }
-
-    private static parseBundle(rawBundle: AssetBundleUnion) {
+    private static createBundle(rawBundle: AssetBundleUnion) {
         return ObjectConverter.convert(rawBundle.primaryAsset, [
             (asset: IPreciousMetalAsset, info) =>
                 ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
@@ -88,6 +62,6 @@ export class ModelParser {
             (asset: IErc20TokensWallet, info) =>
                 ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
             (asset: IMiscAsset, info) => ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
-        ]);
+        ])[1];
     }
 }
