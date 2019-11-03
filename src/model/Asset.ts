@@ -19,7 +19,6 @@ import { Unknown } from "./Unknown";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName";
 import { AssetUnion } from "./validation/schemas/AssetUnion";
 import { Fineness } from "./validation/schemas/Fineness";
-import { IAsset } from "./validation/schemas/IAssetProperties";
 import { ICalculatedAssetProperties } from "./validation/schemas/ICalculatedAssetProperties";
 import { QuantityAny } from "./validation/schemas/QuantityAny";
 
