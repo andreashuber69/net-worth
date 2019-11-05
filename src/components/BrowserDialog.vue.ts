@@ -40,14 +40,7 @@ export default class BrowserDialog extends Vue {
 
     private static get isUntestedBrowser() {
         const userAgent = window.navigator.userAgent.toLowerCase();
-        const testedBrowsers = [ "chromium", "firefox", "electron" ];
 
-        for (const browser of testedBrowsers) {
-            if (userAgent.indexOf(browser) >= 0) {
-                return false;
-            }
-        }
-
-        return true;
+        return !/firefox|electron/.test(userAgent) && (!/chrome|crios/.test(userAgent) || /edge|opr\//.test(userAgent));
     }
 }
