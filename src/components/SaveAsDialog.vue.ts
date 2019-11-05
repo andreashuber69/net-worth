@@ -29,7 +29,7 @@ export default class SaveAsDialog extends Vue {
 
     /** Provides the name input information. */
     public readonly nameInfo = new TextInputInfo({
-        label: "Name", hint: "The name of the file.", isPresent: true, isRequired: true,
+        label: "Name", hint: "The name of the file.", isPresent: true, isRequired: true, schemaName: "Text",
     });
 
     public onSaveClicked(event: MouseEvent) {
