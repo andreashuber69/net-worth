@@ -41,6 +41,7 @@ export default class BrowserDialog extends Vue {
     private static get isUntestedBrowser() {
         const userAgent = window.navigator.userAgent.toLowerCase();
 
+        // cSpell: ignore crios
         return !/firefox|electron/.test(userAgent) && (!/chrome|crios/.test(userAgent) || /edge|opr\//.test(userAgent));
     }
 }
