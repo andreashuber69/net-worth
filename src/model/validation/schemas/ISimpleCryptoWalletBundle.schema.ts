@@ -10,15 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties";
+import { ISimpleCryptoWallet } from "./ISimpleCryptoWallet.schema";
 
-export const preciousMetalAssetTypeNames = ["Silver", "Palladium", "Platinum", "Gold"] as const;
-
-export type PreciousMetalAssetTypeName = (typeof preciousMetalAssetTypeNames)[number];
-
-export interface IPreciousMetalObject {
-    readonly type: PreciousMetalAssetTypeName;
-}
-
-export interface IPreciousMetalAsset extends IPreciousMetalObject, IPreciousMetalAssetProperties {
+export interface ISimpleCryptoWalletBundle {
+    readonly primaryAsset: ISimpleCryptoWallet;
 }

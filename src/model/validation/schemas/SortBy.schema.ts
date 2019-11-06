@@ -10,10 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IErc20TokensWalletBundle } from "./IErc20TokensWalletBundle";
-import { IMiscAssetBundle } from "./IMiscAssetBundle";
-import { IPreciousMetalAssetBundle } from "./IPreciousMetalAssetBundle";
-import { ISimpleCryptoWalletBundle } from "./ISimpleCryptoWalletBundle";
+import { IAsset } from "./IAssetProperties.schema";
+import { ICalculatedAssetProperties } from "./ICalculatedAssetProperties.schema";
 
-export type AssetBundleUnion =
-    IPreciousMetalAssetBundle | ISimpleCryptoWalletBundle | IErc20TokensWalletBundle | IMiscAssetBundle;
+export type SortBy =
+    keyof Pick<IAsset, "type" | "description" | "location"> |
+    keyof Pick<ICalculatedAssetProperties, "unitValue" | "totalValue">;

@@ -10,12 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { SortBy } from "./SortBy";
+import { IErc20TokensObject } from "./IErc20TokensWallet.schema";
+import { IMiscObject } from "./IMiscAsset.schema";
+import { IPreciousMetalObject } from "./IPreciousMetalAsset.schema";
+import { ISimpleCryptoObject } from "./ISimpleCryptoWallet.schema";
 
-export interface ISort {
-    /** Provides the name of the property by which the asset list is currently sorted. */
-    readonly by: SortBy;
-
-    /** Provides a value indicating whether the sort order is descending. */
-    readonly descending: boolean;
-}
+export type ObjectUnion = IPreciousMetalObject | ISimpleCryptoObject | IErc20TokensObject | IMiscObject;

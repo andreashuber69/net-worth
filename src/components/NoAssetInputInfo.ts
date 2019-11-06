@@ -14,8 +14,8 @@ import { Asset } from "../model/Asset";
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { TextInputInfo } from "../model/TextInputInfo";
-import { Currency } from "../model/validation/schemas/Currency";
-import { WeightUnit } from "../model/validation/schemas/WeightUnit";
+import { Currency } from "../model/validation/schemas/Currency.schema";
+import { WeightUnit } from "../model/validation/schemas/WeightUnit.schema";
 
 /**
  * Defines how an asset with no properties needs to be "input".

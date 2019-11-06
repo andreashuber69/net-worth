@@ -10,9 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IDeletedAssets } from "./IDeletedAssets";
+import { AssetType } from "./AssetType.schema";
 
-export class DeletedAssets implements IDeletedAssets {
-    public readonly deletedAssets!: string[];
-    readonly [key: string]: unknown;
-}
+export type AssetTypeName = keyof typeof AssetType;

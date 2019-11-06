@@ -15,11 +15,11 @@ import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
-import { Currency } from "./validation/schemas/Currency";
-import { CurrencyName } from "./validation/schemas/CurrencyName";
-import { IMiscAsset } from "./validation/schemas/IMiscAsset";
-import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties";
-import { Quantity0 } from "./validation/schemas/Quantity0";
+import { Currency } from "./validation/schemas/Currency.schema";
+import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
+import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
+import { Quantity0 } from "./validation/schemas/Quantity0.schema";
 
 /** Represents a miscellaneous asset. */
 export class MiscAsset extends SingleAsset {

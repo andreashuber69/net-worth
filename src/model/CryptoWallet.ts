@@ -12,9 +12,9 @@
 
 import { IParent } from "./Asset";
 import { SingleAsset } from "./SingleAsset";
-import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet";
-import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
-import { QuantityAny } from "./validation/schemas/QuantityAny";
+import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
+import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
+import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends SingleAsset {

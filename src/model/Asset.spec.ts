@@ -35,20 +35,20 @@ import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
-import { AssetType } from "./validation/schemas/AssetType";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName";
-import { IAssetProperties } from "./validation/schemas/IAssetProperties";
-import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet";
-import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties";
-import { MiscAssetTypeName } from "./validation/schemas/IMiscAsset";
-import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties";
-import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
-import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
-import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
+import { AssetType } from "./validation/schemas/AssetType.schema";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import { IAssetProperties } from "./validation/schemas/IAssetProperties.schema";
+import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
+import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties.schema";
+import { MiscAssetTypeName } from "./validation/schemas/IMiscAsset.schema";
+import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
+import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
+import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
+import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
 import {
     ISimpleCryptoWalletAddressProperties, ISimpleCryptoWalletProperties,
-} from "./validation/schemas/ISimpleCryptoWalletProperties";
-import { WeightUnit } from "./validation/schemas/WeightUnit";
+} from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 import { ZecWallet } from "./ZecWallet";
 
 const arrayOfAll = <T>() =>

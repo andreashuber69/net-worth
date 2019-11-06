@@ -10,6 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Currency } from "./Currency";
+import { IDeletedAssets } from "./IDeletedAssets.schema";
 
-export type CurrencyName = keyof typeof Currency;
+export class DeletedAssets implements IDeletedAssets {
+    public readonly deletedAssets!: string[];
+    readonly [key: string]: unknown;
+}

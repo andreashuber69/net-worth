@@ -10,11 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetTypeName } from "./validation/schemas/AssetTypeName";
-import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties";
-import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties";
-import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties.schema";
+import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
+import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 /** Combines the defining properties of all assets. */
 export type IAssetPropertiesIntersection =

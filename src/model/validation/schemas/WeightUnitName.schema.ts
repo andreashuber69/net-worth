@@ -10,9 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAsset } from "./IAssetProperties";
-import { ICalculatedAssetProperties } from "./ICalculatedAssetProperties";
+import { WeightUnit } from "./WeightUnit.schema";
 
-export type SortBy =
-    keyof Pick<IAsset, "type" | "description" | "location"> |
-    keyof Pick<ICalculatedAssetProperties, "unitValue" | "totalValue">;
+export type WeightUnitName = keyof typeof WeightUnit;

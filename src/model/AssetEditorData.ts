@@ -12,13 +12,13 @@
 
 import { IAuxProperties } from "./IAuxProperties";
 import { ObjectConverter } from "./ObjectConverter";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName";
-import { AssetUnion } from "./validation/schemas/AssetUnion";
-import { CurrencyName } from "./validation/schemas/CurrencyName";
-import { IMiscAsset, miscAssetTypeNames } from "./validation/schemas/IMiscAsset";
-import { IPreciousMetalAsset, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset";
-import { WeightUnit } from "./validation/schemas/WeightUnit";
-import { WeightUnitName } from "./validation/schemas/WeightUnitName";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
+import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import { IMiscAsset, miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
+import { IPreciousMetalAsset, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
+import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
+import { WeightUnitName } from "./validation/schemas/WeightUnitName.schema";
 
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements Partial<IAuxProperties<string>> {

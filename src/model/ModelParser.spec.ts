@@ -22,15 +22,15 @@ import { ModelParser } from "./ModelParser";
 import { Ordering } from "./Ordering";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
-import { Currency } from "./validation/schemas/Currency";
-import { CurrencyName } from "./validation/schemas/CurrencyName";
-import { Fineness } from "./validation/schemas/Fineness";
-import { GroupBy } from "./validation/schemas/GroupBy";
-import { Quantity0 } from "./validation/schemas/Quantity0";
-import { QuantityAny } from "./validation/schemas/QuantityAny";
-import { SortBy } from "./validation/schemas/SortBy";
-import { Weight } from "./validation/schemas/Weight";
-import { WeightUnit } from "./validation/schemas/WeightUnit";
+import { Currency } from "./validation/schemas/Currency.schema";
+import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import { Fineness } from "./validation/schemas/Fineness.schema";
+import { GroupBy } from "./validation/schemas/GroupBy.schema";
+import { Quantity0 } from "./validation/schemas/Quantity0.schema";
+import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
+import { SortBy } from "./validation/schemas/SortBy.schema";
+import { Weight } from "./validation/schemas/Weight.schema";
+import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 class BlobUtility {
     public static toArrayBuffer(blob: Blob) {

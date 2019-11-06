@@ -16,12 +16,12 @@ import { GenericAssetBundle } from "./GenericAssetBundle";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
 import { Unknown } from "./Unknown";
-import { Fineness } from "./validation/schemas/Fineness";
-import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
-import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
-import { Quantity0 } from "./validation/schemas/Quantity0";
-import { Weight } from "./validation/schemas/Weight";
-import { WeightUnit } from "./validation/schemas/WeightUnit";
+import { Fineness } from "./validation/schemas/Fineness.schema";
+import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
+import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
+import { Quantity0 } from "./validation/schemas/Quantity0.schema";
+import { Weight } from "./validation/schemas/Weight.schema";
+import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 /** Defines the base of all classes that represent a precious metal asset. */
 export abstract class PreciousMetalAsset extends SingleAsset {

@@ -17,9 +17,9 @@ import { InputInfo } from "./InputInfo";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName";
-import { Currency } from "./validation/schemas/Currency";
-import { WeightUnit } from "./validation/schemas/WeightUnit";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import { Currency } from "./validation/schemas/Currency.schema";
+import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 interface IValidationResults extends IAuxProperties<true | string> {
     [key: string]: true | string;

@@ -17,9 +17,9 @@ import { Query } from "./Query";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
-import { DeletedAssets } from "./validation/schemas/DeletedAssets";
-import { EthplorerGetAddressInfoResponse, IToken } from "./validation/schemas/EthplorerGetAddressInfoResponse";
-import { IErc20TokensWalletBundle } from "./validation/schemas/IErc20TokensWalletBundle";
+import { DeletedAssets } from "./validation/schemas/DeletedAssets.schema";
+import { EthplorerGetAddressInfoResponse, IToken } from "./validation/schemas/EthplorerGetAddressInfoResponse.schema";
+import { IErc20TokensWalletBundle } from "./validation/schemas/IErc20TokensWalletBundle.schema";
 import { Validator } from "./validation/Validator";
 
 export class Erc20TokensWalletBundle extends AssetBundle {

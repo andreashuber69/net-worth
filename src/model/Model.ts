@@ -17,11 +17,11 @@ import { AssetCollection } from "./AssetCollection";
 import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
 import { QueryUtility } from "./QueryUtility";
-import { Currency } from "./validation/schemas/Currency";
-import { CurrencyName } from "./validation/schemas/CurrencyName";
-import { GroupBy } from "./validation/schemas/GroupBy";
-import { ISort } from "./validation/schemas/ISort";
-import { TaggedModel } from "./validation/schemas/TaggedModel";
+import { Currency } from "./validation/schemas/Currency.schema";
+import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import { GroupBy } from "./validation/schemas/GroupBy.schema";
+import { ISort } from "./validation/schemas/ISort.schema";
+import { TaggedModel } from "./validation/schemas/TaggedModel.schema";
 
 export interface IModelParameters {
     readonly name?: string;

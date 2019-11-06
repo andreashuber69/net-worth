@@ -10,8 +10,18 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IPreciousMetalAsset } from "./IPreciousMetalAsset";
+import { CurrencyName } from "./CurrencyName.schema";
+import { GroupBy } from "./GroupBy.schema";
+import { ISort } from "./ISort.schema";
+import { AssetBundleUnion } from "./TaggedAssetBundleUnion.schema";
 
-export interface IPreciousMetalAssetBundle {
-    readonly primaryAsset: IPreciousMetalAsset;
+export class TaggedModel {
+    public readonly version!: 1;
+    public readonly name?: string;
+    public readonly wasSavedToFile?: boolean;
+    public readonly hasUnsavedChanges?: boolean;
+    public readonly currency?: CurrencyName;
+    public readonly groupBy?: GroupBy;
+    public readonly sort?: ISort;
+    public readonly bundles!: AssetBundleUnion[];
 }

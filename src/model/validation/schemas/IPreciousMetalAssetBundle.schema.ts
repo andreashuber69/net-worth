@@ -10,6 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAsset } from "./IAssetProperties";
+import { IPreciousMetalAsset } from "./IPreciousMetalAsset.schema";
 
-export type GroupBy = keyof Pick<IAsset, "type" | "location">;
+export interface IPreciousMetalAssetBundle {
+    readonly primaryAsset: IPreciousMetalAsset;
+}

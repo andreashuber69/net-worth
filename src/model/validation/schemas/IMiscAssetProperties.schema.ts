@@ -10,22 +10,17 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Fineness } from "./Fineness";
-import { IAssetProperties } from "./IAssetProperties";
-import { Quantity0 } from "./Quantity0";
-import { Weight } from "./Weight";
-import { WeightUnit } from "./WeightUnit";
+import { CurrencyName } from "./CurrencyName.schema";
+import { IAssetProperties } from "./IAssetProperties.schema";
+import { Quantity0 } from "./Quantity0.schema";
 
-/** Contains the defining properties common to all precious metal assets. */
-export interface IPreciousMetalAssetProperties extends IAssetProperties {
-    /** Provides the weight of a single item, expressed in `weightUnit`. */
-    readonly weight: Weight;
+/** Contains the defining properties of a miscellaneous asset. */
+export interface IMiscAssetProperties extends IAssetProperties {
+    /** Provides the value of a single item, expressed in `valueCurrency`. */
+    readonly value: number;
 
-    /** Provides the unit used for `weight`, e.g. [[kg]]. */
-    readonly weightUnit: WeightUnit;
-
-    /** Provides the fineness, e.g. 0.999. */
-    readonly fineness: Fineness;
+    /** Provides the currency used for `value`, e.g. [[Currency.USD]]. */
+    readonly valueCurrency: CurrencyName;
 
     /** Provides the asset quantity. */
     readonly quantity: Quantity0;

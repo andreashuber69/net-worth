@@ -13,12 +13,12 @@
 import { IParent } from "./Asset";
 import { Model } from "./Model";
 import { ObjectConverter } from "./ObjectConverter";
-import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
-import { IMiscAsset } from "./validation/schemas/IMiscAsset";
-import { IPreciousMetalAsset } from "./validation/schemas/IPreciousMetalAsset";
-import { ISimpleCryptoWallet } from "./validation/schemas/ISimpleCryptoWallet";
-import { AssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion";
-import { TaggedModel } from "./validation/schemas/TaggedModel";
+import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet.schema";
+import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
+import { IPreciousMetalAsset } from "./validation/schemas/IPreciousMetalAsset.schema";
+import { ISimpleCryptoWallet } from "./validation/schemas/ISimpleCryptoWallet.schema";
+import { AssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion.schema";
+import { TaggedModel } from "./validation/schemas/TaggedModel.schema";
 import { Validator } from "./validation/Validator";
 
 export class ModelParser {

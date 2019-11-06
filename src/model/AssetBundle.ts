@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset } from "./Asset";
-import { AssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion";
+import { AssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion.schema";
 
 /**
  * Defines the base of all classes that represent a bundle of assets.

@@ -15,7 +15,7 @@ import { Component } from "vue-property-decorator";
 import { Asset } from "../model/Asset";
 import { Model } from "../model/Model";
 import { Ordering } from "../model/Ordering";
-import { SortBy } from "../model/validation/schemas/SortBy";
+import { SortBy } from "../model/validation/schemas/SortBy.schema";
 
 // tslint:disable-next-line:no-default-import
 import AssetEditor from "./AssetEditor.vue";

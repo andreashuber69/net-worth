@@ -10,9 +10,16 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IErc20TokensWallet } from "./IErc20TokensWallet";
-import { IMiscAsset } from "./IMiscAsset";
-import { IPreciousMetalAsset } from "./IPreciousMetalAsset";
-import { ISimpleCryptoWallet } from "./ISimpleCryptoWallet";
+import { ISimpleCryptoWalletProperties } from "./ISimpleCryptoWalletProperties.schema";
 
-export type AssetUnion = IPreciousMetalAsset | ISimpleCryptoWallet | IErc20TokensWallet | IMiscAsset;
+export const simpleCryptoWalletTypeNames = [
+    "Bitcoin", "Litecoin", "Ethereum Classic", "Ethereum", "Bitcoin Gold", "Dash", "Zcash",
+] as const;
+
+export type SimpleCryptoWalletTypeName = (typeof simpleCryptoWalletTypeNames)[number];
+
+export interface ISimpleCryptoObject {
+    readonly type: SimpleCryptoWalletTypeName;
+}
+
+export type ISimpleCryptoWallet = ISimpleCryptoObject & ISimpleCryptoWalletProperties;

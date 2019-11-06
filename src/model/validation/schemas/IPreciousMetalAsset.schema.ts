@@ -10,10 +10,15 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAssetProperties } from "./IAssetProperties";
+import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties.schema";
 
-/** Contains the defining properties of ERC20 tokens wallets. */
-export interface IErc20TokensWalletProperties extends IAssetProperties {
-    /** Provides the public address. */
-    readonly address: string;
+export const preciousMetalAssetTypeNames = ["Silver", "Palladium", "Platinum", "Gold"] as const;
+
+export type PreciousMetalAssetTypeName = (typeof preciousMetalAssetTypeNames)[number];
+
+export interface IPreciousMetalObject {
+    readonly type: PreciousMetalAssetTypeName;
+}
+
+export interface IPreciousMetalAsset extends IPreciousMetalObject, IPreciousMetalAssetProperties {
 }

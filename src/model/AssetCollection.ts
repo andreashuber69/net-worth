@@ -16,8 +16,8 @@ import { AssetCollectionUtility } from "./AssetCollectionUtility";
 import { AssetGroup } from "./AssetGroup";
 import { Ordering } from "./Ordering";
 import { TaskQueue } from "./TaskQueue";
-import { GroupBy } from "./validation/schemas/GroupBy";
-import { ISort } from "./validation/schemas/ISort";
+import { GroupBy } from "./validation/schemas/GroupBy.schema";
+import { ISort } from "./validation/schemas/ISort.schema";
 
 interface INotifiableParent extends IParent {
     notifyChanged(): void;

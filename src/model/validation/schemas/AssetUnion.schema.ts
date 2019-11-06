@@ -10,6 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetType } from "./AssetType";
+import { IErc20TokensWallet } from "./IErc20TokensWallet.schema";
+import { IMiscAsset } from "./IMiscAsset.schema";
+import { IPreciousMetalAsset } from "./IPreciousMetalAsset.schema";
+import { ISimpleCryptoWallet } from "./ISimpleCryptoWallet.schema";
 
-export type AssetTypeName = keyof typeof AssetType;
+export type AssetUnion = IPreciousMetalAsset | ISimpleCryptoWallet | IErc20TokensWallet | IMiscAsset;

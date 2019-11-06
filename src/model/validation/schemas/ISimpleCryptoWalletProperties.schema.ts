@@ -10,15 +10,19 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IErc20TokensWalletProperties } from "./IErc20TokensWalletProperties";
+import { IAssetProperties } from "./IAssetProperties.schema";
+import { QuantityAny } from "./QuantityAny.schema";
 
-export const erc20TokensWalletTypeNames = ["ERC20 Tokens"] as const;
-
-export type Erc20TokensWalletTypeName = (typeof erc20TokensWalletTypeNames)[number];
-
-export interface IErc20TokensObject {
-    readonly type: Erc20TokensWalletTypeName;
+export interface ISimpleCryptoWalletAddressProperties extends IAssetProperties {
+    /** Provides the public address. */
+    readonly address: string;
 }
 
-export interface IErc20TokensWallet extends IErc20TokensObject, IErc20TokensWalletProperties {
+export interface ISimpleCryptoWalletQuantityProperties extends IAssetProperties {
+    /** Provides the asset quantity. */
+    readonly quantity: QuantityAny;
 }
+
+/** Contains the defining properties common to all crypto currency wallets. */
+export type ISimpleCryptoWalletProperties =
+    ISimpleCryptoWalletAddressProperties | ISimpleCryptoWalletQuantityProperties;

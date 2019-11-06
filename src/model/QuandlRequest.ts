@@ -13,7 +13,7 @@
 import { IWebRequest } from "./IWebRequest";
 import { Query } from "./Query";
 import { QueryCache } from "./QueryCache";
-import { QuandlResponse } from "./validation/schemas/QuandlResponse";
+import { QuandlResponse } from "./validation/schemas/QuandlResponse.schema";
 
 /** Represents a single quandl.com request. */
 export class QuandlRequest implements IWebRequest<number> {

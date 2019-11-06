@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICalculatedAssetProperties } from "./validation/schemas/ICalculatedAssetProperties";
+import { ICalculatedAssetProperties } from "./validation/schemas/ICalculatedAssetProperties.schema";
 
 export abstract class CalculatedAssetPropertyNames {
     public static readonly unit = CalculatedAssetPropertyNames.getPropertyName("unit");

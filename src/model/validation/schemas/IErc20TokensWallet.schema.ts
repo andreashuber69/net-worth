@@ -10,6 +10,15 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { WeightUnit } from "./WeightUnit";
+import { IErc20TokensWalletProperties } from "./IErc20TokensWalletProperties.schema";
 
-export type WeightUnitName = keyof typeof WeightUnit;
+export const erc20TokensWalletTypeNames = ["ERC20 Tokens"] as const;
+
+export type Erc20TokensWalletTypeName = (typeof erc20TokensWalletTypeNames)[number];
+
+export interface IErc20TokensObject {
+    readonly type: Erc20TokensWalletTypeName;
+}
+
+export interface IErc20TokensWallet extends IErc20TokensObject, IErc20TokensWalletProperties {
+}

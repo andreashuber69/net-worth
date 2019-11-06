@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Asset, IParent } from "./Asset";
-import { AssetUnion } from "./validation/schemas/AssetUnion";
+import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 
 // This could easily be fixed by overriding abstract methods in two extending classes, but doing so seems strange at
 // best. Most method implementations are trivial, so their number shouldn't matter that much.

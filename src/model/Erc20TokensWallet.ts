@@ -14,8 +14,8 @@ import { IParent } from "./Asset";
 import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
-import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet";
-import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties";
+import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet.schema";
+import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties.schema";
 
 /** Represents a wallet for ERC20 tokens. */
 export class Erc20TokensWallet extends RealCryptoWallet {

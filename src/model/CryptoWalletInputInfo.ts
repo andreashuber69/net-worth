@@ -18,12 +18,12 @@ import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Unknown } from "./Unknown";
-import { Currency } from "./validation/schemas/Currency";
-import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet";
-import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties";
-import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
-import { WeightUnit } from "./validation/schemas/WeightUnit";
+import { Currency } from "./validation/schemas/Currency.schema";
+import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
+import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties.schema";
+import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 type CryptoWalletTypeName<T extends ISimpleCryptoWalletProperties | IErc20TokensWalletProperties> =
     T extends IErc20TokensWalletProperties ? Erc20TokensWalletTypeName : SimpleCryptoWalletTypeName;

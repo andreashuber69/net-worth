@@ -25,13 +25,13 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
-import { erc20TokensWalletTypeNames, IErc20TokensObject } from "./validation/schemas/IErc20TokensWallet";
-import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties";
-import { IMiscObject, miscAssetTypeNames } from "./validation/schemas/IMiscAsset";
-import { IPreciousMetalObject, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset";
-import { ISimpleCryptoObject, simpleCryptoWalletTypeNames } from "./validation/schemas/ISimpleCryptoWallet";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
-import { ObjectUnion } from "./validation/schemas/ObjectUnion";
+import { erc20TokensWalletTypeNames, IErc20TokensObject } from "./validation/schemas/IErc20TokensWallet.schema";
+import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties.schema";
+import { IMiscObject, miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
+import { IPreciousMetalObject, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
+import { ISimpleCryptoObject, simpleCryptoWalletTypeNames } from "./validation/schemas/ISimpleCryptoWallet.schema";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import { ObjectUnion } from "./validation/schemas/ObjectUnion.schema";
 import { ZecWallet } from "./ZecWallet";
 
 // cSpell:ignore xpub, ypub, Mtub, Ltub, drkp

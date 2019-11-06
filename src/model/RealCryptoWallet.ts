@@ -14,8 +14,8 @@ import { IParent } from "./Asset";
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { QueryUtility } from "./QueryUtility";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties";
-import { QuantityAny } from "./validation/schemas/QuantityAny";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 
 export type IRealCryptoWalletParameters = ISimpleCryptoWalletProperties & {
     /** The crypto currency symbol, e.g. 'BTC', 'LTC'. */

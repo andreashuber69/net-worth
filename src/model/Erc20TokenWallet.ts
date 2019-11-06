@@ -12,9 +12,9 @@
 
 import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
-import { AssetUnion } from "./validation/schemas/AssetUnion";
-import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet";
-import { QuantityAny } from "./validation/schemas/QuantityAny";
+import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
+import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
+import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 
 interface ITokenWalletParameters {
     readonly editable: Erc20TokensWallet;

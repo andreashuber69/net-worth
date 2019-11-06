@@ -14,7 +14,7 @@ import { IParent } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
 import { Unknown } from "./Unknown";
-import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet";
+import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
 
 /** Defines the base of all simple crypto currency wallets. */
 export abstract class SimpleCryptoWallet extends RealCryptoWallet {

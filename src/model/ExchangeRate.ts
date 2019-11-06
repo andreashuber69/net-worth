@@ -13,7 +13,7 @@
 import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
 import { IWebRequest } from "./IWebRequest";
 import { QuandlRequest } from "./QuandlRequest";
-import { Currency } from "./validation/schemas/Currency";
+import { Currency } from "./validation/schemas/Currency.schema";
 
 export class ExchangeRate {
     public static get(currency: Currency) {

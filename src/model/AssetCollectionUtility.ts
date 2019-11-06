@@ -12,8 +12,8 @@
 
 import { Asset } from "./Asset";
 import { AssetGroup } from "./AssetGroup";
-import { ISort } from "./validation/schemas/ISort";
-import { SortBy } from "./validation/schemas/SortBy";
+import { ISort } from "./validation/schemas/ISort.schema";
+import { SortBy } from "./validation/schemas/SortBy.schema";
 
 export class AssetCollectionUtility {
     public static sort(groups: AssetGroup[], sort: ISort) {

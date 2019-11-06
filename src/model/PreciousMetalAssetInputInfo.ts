@@ -15,10 +15,10 @@ import { AssetInputInfo } from "./AssetInputInfo";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { Currency } from "./validation/schemas/Currency";
-import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset";
-import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
-import { WeightUnit } from "./validation/schemas/WeightUnit";
+import { Currency } from "./validation/schemas/Currency.schema";
+import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
+import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
+import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 /**
  * Defines how the properties of a precious metal asset need to be input and validated and provides a method to create a

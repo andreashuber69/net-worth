@@ -10,15 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IMiscAssetProperties } from "./IMiscAssetProperties";
+import { SortBy } from "./SortBy.schema";
 
-export const miscAssetTypeNames = ["Misc"] as const;
+export interface ISort {
+    /** Provides the name of the property by which the asset list is currently sorted. */
+    readonly by: SortBy;
 
-export type MiscAssetTypeName = (typeof miscAssetTypeNames)[number];
-
-export interface IMiscObject {
-    readonly type: MiscAssetTypeName;
-}
-
-export interface IMiscAsset extends IMiscObject, IMiscAssetProperties {
+    /** Provides a value indicating whether the sort order is descending. */
+    readonly descending: boolean;
 }

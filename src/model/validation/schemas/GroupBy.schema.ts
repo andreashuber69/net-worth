@@ -10,8 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IMiscAsset } from "./IMiscAsset";
+import { IAsset } from "./IAssetProperties.schema";
 
-export interface IMiscAssetBundle {
-    readonly primaryAsset: IMiscAsset;
-}
+export type GroupBy = keyof Pick<IAsset, "type" | "location">;

@@ -12,9 +12,9 @@
 
 import { AssetPropertyNames } from "./AssetPropertyNames";
 import { CalculatedAssetPropertyNames } from "./CalculatedAssetPropertyNames";
-import { GroupBy } from "./validation/schemas/GroupBy";
-import { ISort } from "./validation/schemas/ISort";
-import { SortBy } from "./validation/schemas/SortBy";
+import { GroupBy } from "./validation/schemas/GroupBy.schema";
+import { ISort } from "./validation/schemas/ISort.schema";
+import { SortBy } from "./validation/schemas/SortBy.schema";
 
 interface IOrderingParameters {
     // tslint:disable-next-line:prefer-method-signature

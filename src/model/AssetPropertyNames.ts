@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAsset } from "./validation/schemas/IAssetProperties";
+import { IAsset } from "./validation/schemas/IAssetProperties.schema";
 
 export abstract class AssetPropertyNames {
     public static readonly type = AssetPropertyNames.getPropertyName("type");

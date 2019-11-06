@@ -12,7 +12,7 @@
 
 import { IParent } from "./Asset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
-import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties";
+import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
 
 /** Represents an asset made of platinum. */
 export class PlatinumAsset extends PreciousMetalAsset {

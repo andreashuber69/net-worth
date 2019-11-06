@@ -16,11 +16,11 @@ import { CalculatedAssetPropertyNames } from "./CalculatedAssetPropertyNames";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { Unknown } from "./Unknown";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName";
-import { AssetUnion } from "./validation/schemas/AssetUnion";
-import { Fineness } from "./validation/schemas/Fineness";
-import { ICalculatedAssetProperties } from "./validation/schemas/ICalculatedAssetProperties";
-import { QuantityAny } from "./validation/schemas/QuantityAny";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
+import { Fineness } from "./validation/schemas/Fineness.schema";
+import { ICalculatedAssetProperties } from "./validation/schemas/ICalculatedAssetProperties.schema";
+import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 
 /** @internal */
 export interface IParent {
