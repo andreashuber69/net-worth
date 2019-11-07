@@ -1,32 +1,5 @@
 {
-  "compilerOptions": {
-    // Compilation options
-    "baseUrl": ".",
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": [ "esnext", "dom", "dom.iterable" ],
-    "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "paths": {
-      "@/*": [ "src/*" ]
-    },
-    "resolveJsonModule": true,
-    "strict": true,
-    "types": [
-      "jasmine",
-      "vuetify", // https://github.com/vuetifyjs/vue-cli-plugin-vuetify/issues/43#issuecomment-435088739
-      "webpack-env"
-    ],
-    // Generation options
-    "esModuleInterop": true,
-    "importHelpers": true,
-    "jsx": "preserve",
-    "module": "esnext",
-    "sourceMap": true,
-    "target": "es5"
-  },
+  "extends": "./schema.tsconfig.json",
   "include": [
     "src/**/*.ts"
   ]

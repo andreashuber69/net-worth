@@ -47,6 +47,7 @@
         "node_modules/**",
         "package.json",
         "package-lock.json",
+        "schema.tsconfig.json",
         "src/assets/**",
         "tsconfig.json"
     ]
