@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { AssetBundleUnion } from "./AssetBundleUnion.schema";
 import { CurrencyName } from "./CurrencyName.schema";
 import { GroupBy } from "./GroupBy.schema";
 import { ISort } from "./ISort.schema";
-import { AssetBundleUnion } from "./TaggedAssetBundleUnion.schema";
 
 export class TaggedModel {
     public readonly version!: 1;

@@ -13,11 +13,11 @@
 import { IParent } from "./Asset";
 import { Model } from "./Model";
 import { ObjectConverter } from "./ObjectConverter";
+import { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
 import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet.schema";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
 import { IPreciousMetalAsset } from "./validation/schemas/IPreciousMetalAsset.schema";
 import { ISimpleCryptoWallet } from "./validation/schemas/ISimpleCryptoWallet.schema";
-import { AssetBundleUnion } from "./validation/schemas/TaggedAssetBundleUnion.schema";
 import { TaggedModel } from "./validation/schemas/TaggedModel.schema";
 import { Validator } from "./validation/Validator";
 
