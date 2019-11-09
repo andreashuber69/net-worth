@@ -33,7 +33,7 @@ export interface IModelParameters {
     readonly createBundles: Array<(parent: IParent) => AssetBundle>;
 }
 
-export type ITaggedModel = Required<TaggedModel>;
+export type IModel = Required<TaggedModel>;
 
 /** Represents the main model of the application. */
 export class Model implements IParent {
@@ -125,7 +125,7 @@ export class Model implements IParent {
     }
 
     /** @internal */
-    public toJSON(): ITaggedModel {
+    public toJSON(): IModel {
         return {
             version: 1,
             name: this.name,
