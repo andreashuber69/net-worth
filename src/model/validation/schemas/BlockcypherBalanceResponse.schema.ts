@@ -10,12 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Query } from "./Query";
-import { BlockcypherBalanceResponse } from "./validation/schemas/BlockcypherBalanceResponse.schema";
-
-/** Represents a single blockcypher.com request. */
-export class BlockcypherRequest extends Query<BlockcypherBalanceResponse> {
-    public constructor(coin: string, address: string) {
-        super(`https://api.blockcypher.com/v1/${coin}/main/addrs/${address}/balance`, BlockcypherBalanceResponse);
-    }
+export class BlockcypherBalanceResponse {
+    public readonly balance!: number;
+    [key: string]: unknown;
 }

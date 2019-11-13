@@ -12,6 +12,7 @@
 
 import { IParent } from "./Asset";
 import { BlockcypherRequest } from "./BlockcypherRequest";
+import { QueryCache } from "./QueryCache";
 import { IRealCryptoWalletParameters } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 
@@ -21,7 +22,7 @@ export abstract class BlockcypherWallet extends SimpleCryptoWallet {
         super(parent, params);
     }
 
-    protected queryQuantity() {
-        return new BlockcypherRequest(this.unit.toLowerCase(), this.address).execute();
+    protected async queryQuantity() {
+        return (await QueryCache.fetch(new BlockcypherRequest(this.unit.toLowerCase(), this.address))).balance / 1E8;
     }
 }
