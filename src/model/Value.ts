@@ -18,14 +18,6 @@ import { Unknown } from "./Unknown";
  */
 export class Value {
     /**
-     * Returns whether the type of `value` is `boolean`.
-     * @description This method is typically used as follows: `array.filter(Value.isBoolean)`.
-     */
-    public static isBoolean(value: Unknown | null | undefined): value is boolean {
-        return typeof value === "boolean";
-    }
-
-    /**
      * Returns whether the type of `value` is `number`.
      * @description This method is typically used as follows: `array.filter(Value.isNumber)`.
      */
@@ -54,12 +46,6 @@ export class Value {
     /** Returns whether the type of `value` is `Array`. */
     public static isArray(value: Unknown | null | undefined): value is Array<Unknown | null | undefined> {
         return Array.isArray(value);
-    }
-
-    /** Returns whether `value` has an own property of type `boolean` with the name `propertyName`. */
-    public static hasBooleanProperty<T extends string>(
-        value: Unknown | null | undefined, propertyName: T): value is { [K in T]: boolean } {
-        return Value.hasProperty(value, propertyName) && Value.isBoolean(value[propertyName]);
     }
 
     /** Returns whether `value` has an own property of type `number` with the name `propertyName`. */
