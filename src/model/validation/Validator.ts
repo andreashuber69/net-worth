@@ -56,15 +56,21 @@ export class Validator {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private static readonly customSchemaKey = "Custom";
     private static readonly ajv = Validator.createAjv();
 
     private static createAjv() {
-        return new Ajv({ schemas: [schema], multipleOfPrecision: 9 });
+        const result = new Ajv({ multipleOfPrecision: 9 });
+        result.addSchema(schema, Validator.customSchemaKey);
+        primitiveSchemaNames.forEach(
+            (name) => result.addSchema(Validator.getPrimitiveSchema(name), Validator.getSchemaKeyRef(name)));
+
+        return result;
     }
 
     private static getSchemaKeyRef(schemaName: SchemaName) {
         return Validator.isPrimitiveSchemaName(schemaName) ?
-            Validator.getPrimitiveSchema(schemaName) : `#/definitions/${schemaName}`;
+            schemaName : `${Validator.customSchemaKey}#/definitions/${schemaName}`;
     }
 
     private static isSchemaName(name: string): name is SchemaName {
