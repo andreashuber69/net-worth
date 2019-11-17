@@ -56,7 +56,11 @@ export class Validator {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly ajv = new Ajv({ schemas: [schema], multipleOfPrecision: 9 });
+    private static readonly ajv = Validator.createAjv();
+
+    private static createAjv() {
+        return new Ajv({ schemas: [schema], multipleOfPrecision: 9 });
+    }
 
     private static getSchemaKeyRef(schemaName: SchemaName) {
         return Validator.isPrimitiveSchemaName(schemaName) ?
