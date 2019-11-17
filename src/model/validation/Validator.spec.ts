@@ -14,41 +14,45 @@ import { DeletedAssets } from "./schemas/DeletedAssets.schema";
 import { ValidationError } from "./ValidationError";
 import { Validator } from "./Validator";
 
-const shouldPassValidation = (json: string) => {
-    describe(json, () => {
-        it("should pass validation", () => {
-            expect(Validator.fromJson(json, DeletedAssets) instanceof
-                DeletedAssets).toBe(true);
+const shouldPassValidation = <T>(json: string, ctor: new (value?: unknown) => T) => {
+    describe("fromJson", () => {
+        describe(json, () => {
+            fit("should pass validation", () => {
+                expect(Validator.fromJson(json, ctor) instanceof ctor).toBe(true);
+            });
         });
     });
 };
 
-const shouldFailJsonValidation = (json: string, exception: Error) => {
-    describe(json, () => {
-        it(`should throw ${exception}`, () => {
-            expect(() => Validator.fromJson(json, DeletedAssets)).toThrow(exception);
+const shouldFailJsonValidation = <T>(json: string, ctor: new (value?: unknown) => T, exception: Error) => {
+    describe("fromJson", () => {
+        describe(json, () => {
+            fit(`should throw ${exception}`, () => {
+                expect(() => Validator.fromJson(json, ctor)).toThrow(exception);
+            });
         });
     });
 };
 
-const shouldFailValidation = (data: unknown, exception: Error) => {
-    describe(JSON.stringify(data), () => {
-        it(`should throw ${exception}`, () => {
-            expect(() => Validator.fromData(data, DeletedAssets)).toThrow(exception);
+const shouldFailValidation = <T>(data: unknown, ctor: new (value?: unknown) => T, exception: Error) => {
+    describe("fromData", () => {
+        describe(JSON.stringify(data), () => {
+            fit(`should throw ${exception}`, () => {
+                expect(() => Validator.fromData(data, ctor)).toThrow(exception);
+            });
         });
     });
 };
 
 describe(Validator.name, () => {
-    describe("validateJson", () => {
-        shouldFailJsonValidation("", new SyntaxError("Unexpected end of JSON input"));
-        shouldFailJsonValidation("null", new SyntaxError("data should be object"));
-        shouldFailJsonValidation("[]", new ValidationError("data should be object"));
-        shouldFailValidation("{}", new ValidationError("data should be object"));
-        shouldFailJsonValidation("{\"deletedAssets\":true}", new ValidationError("data.deletedAssets should be array"));
-        shouldPassValidation("{\"deletedAssets\":[]}");
-        shouldFailJsonValidation(
-            "{\"deletedAssets\":[0]}", new ValidationError("data.deletedAssets[0] should be string"));
-        shouldPassValidation("{\"deletedAssets\":[\"\"]}");
-    });
+    shouldFailJsonValidation("", DeletedAssets, new SyntaxError("Unexpected end of JSON input"));
+    shouldFailJsonValidation("null", DeletedAssets, new SyntaxError("data should be object"));
+    shouldFailJsonValidation("[]", DeletedAssets, new ValidationError("data should be object"));
+    shouldFailValidation("{}", DeletedAssets, new ValidationError("data should be object"));
+    shouldFailJsonValidation(
+        "{\"deletedAssets\":true}", DeletedAssets, new ValidationError("data.deletedAssets should be array"));
+    shouldPassValidation("{\"deletedAssets\":[]}", DeletedAssets);
+    shouldFailJsonValidation(
+        "{\"deletedAssets\":[0]}", DeletedAssets, new ValidationError("data.deletedAssets[0] should be string"));
+    shouldPassValidation("{\"deletedAssets\":[\"\"]}", DeletedAssets);
 });
