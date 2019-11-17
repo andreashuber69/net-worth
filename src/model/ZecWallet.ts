@@ -28,7 +28,7 @@ export class ZecWallet extends SimpleCryptoWallet {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected async queryQuantity() {
-        const url = `https://chain.so/api/v2/get_address_balance/ZEC/${this.address}`;
+        const url = `https://sochain.com/api/v2/get_address_balance/ZEC/${this.address}`;
         const response = await QueryCache.fetch(url, SoChainGetAddressBalanceResponse);
 
         return Number.parseFloat(response.data.confirmed_balance);
