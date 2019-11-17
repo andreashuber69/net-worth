@@ -17,17 +17,18 @@ import Ajv from "ajv";
 import schema from "./schemas/All.schema.json";
 import { ValidationError } from "./ValidationError";
 
-export type SchemaName = keyof typeof schema.definitions;
+type PrimitiveSchemaName = "Boolean" | "Number" | "String"; // Symbol and BigInt cannot currently be represented in JSON
+export type SchemaName = PrimitiveSchemaName | keyof typeof schema.definitions;
 
 type PropertyNamesWithEnumMembers<T> = { [K in keyof T]: T[K] extends { enum: unknown[] } ? K : never }[keyof T];
 export type EnumSchemaName = PropertyNamesWithEnumMembers<typeof schema.definitions>;
 
 export class Validator {
-    public static fromJson<T>(json: string, ctor: new () => T) {
+    public static fromJson<T>(json: string, ctor: new (value?: unknown) => T): T {
         return Validator.fromData(JSON.parse(json) as unknown, ctor);
     }
 
-    public static fromData<T>(data: unknown, ctor: new () => T) {
+    public static fromData<T>(data: unknown, ctor: new (value?: unknown) => T): T {
         if (!Validator.isSchemaName(ctor.name)) {
             throw new Error(`Unknown schema: ${ctor.name}`);
         }
@@ -38,28 +39,50 @@ export class Validator {
             throw new ValidationError(Validator.ajv.errorsText());
         }
 
-        const result = new ctor();
-        Object.assign(result, data);
-
-        return result;
+        switch (ctor as object) {
+            case Boolean:
+            case Number:
+            case String:
+                return new ctor(data);
+            default:
+                return Object.assign(new ctor(), data);
+        }
     }
 
     public static validate(data: unknown, schemaName: SchemaName): true | string {
-        return !!Validator.ajv.validate(`#/definitions/${schemaName}`, data) || Validator.ajv.errorsText();
+        return (Validator.ajv.validate(Validator.getSchemaKeyRef(schemaName), data) === true) ||
+            Validator.ajv.errorsText();
     }
 
     public static getSchema(name: SchemaName) {
-        // tslint:disable-next-line: no-unsafe-any
-        return schema.definitions[name];
+        return Validator.isPrimitiveSchemaName(name) ? Validator.getPrimitiveSchema(name) : schema.definitions[name];
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // tslint:disable-next-line: no-unsafe-any
     private static readonly ajv = new Ajv({ schemas: [schema], multipleOfPrecision: 9 });
 
+    private static getSchemaKeyRef(schemaName: SchemaName) {
+        return Validator.isPrimitiveSchemaName(schemaName) ?
+            Validator.getPrimitiveSchema(schemaName) : `#/definitions/${schemaName}`;
+    }
+
     private static isSchemaName(name: string): name is SchemaName {
-        // tslint:disable-next-line: no-unsafe-any
-        return schema.definitions.hasOwnProperty(name);
+        return Validator.isPrimitiveSchemaName(name) || schema.definitions.hasOwnProperty(name);
+    }
+
+    private static isPrimitiveSchemaName(name: string): name is PrimitiveSchemaName {
+        switch (name) {
+            case "Boolean":
+            case "Number":
+            case "String":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private static getPrimitiveSchema(name: PrimitiveSchemaName) {
+        return { type: name.toLowerCase() };
     }
 }

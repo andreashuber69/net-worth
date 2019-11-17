@@ -14,7 +14,7 @@ import { DeletedAssets } from "./schemas/DeletedAssets.schema";
 import { ValidationError } from "./ValidationError";
 import { Validator } from "./Validator";
 
-const shouldPassValidation = <T>(json: string, ctor: new (value?: unknown) => T) => {
+const shouldPassJsonValidation = <T>(json: string, ctor: new (value?: unknown) => T) => {
     describe("fromJson", () => {
         describe(json, () => {
             fit("should pass validation", () => {
@@ -34,6 +34,16 @@ const shouldFailJsonValidation = <T>(json: string, ctor: new (value?: unknown) =
     });
 };
 
+const shouldPassValidation = <T>(data: unknown, ctor: new (value?: unknown) => T) => {
+    describe("fromData", () => {
+        describe(JSON.stringify(data), () => {
+            fit("should pass validation", () => {
+                expect(Validator.fromData(data, ctor) instanceof ctor).toBe(true);
+            });
+        });
+    });
+};
+
 const shouldFailValidation = <T>(data: unknown, ctor: new (value?: unknown) => T, exception: Error) => {
     describe("fromData", () => {
         describe(JSON.stringify(data), () => {
@@ -48,11 +58,22 @@ describe(Validator.name, () => {
     shouldFailJsonValidation("", DeletedAssets, new SyntaxError("Unexpected end of JSON input"));
     shouldFailJsonValidation("null", DeletedAssets, new SyntaxError("data should be object"));
     shouldFailJsonValidation("[]", DeletedAssets, new ValidationError("data should be object"));
-    shouldFailValidation("{}", DeletedAssets, new ValidationError("data should be object"));
     shouldFailJsonValidation(
         "{\"deletedAssets\":true}", DeletedAssets, new ValidationError("data.deletedAssets should be array"));
-    shouldPassValidation("{\"deletedAssets\":[]}", DeletedAssets);
+    shouldPassJsonValidation("{\"deletedAssets\":[]}", DeletedAssets);
     shouldFailJsonValidation(
         "{\"deletedAssets\":[0]}", DeletedAssets, new ValidationError("data.deletedAssets[0] should be string"));
-    shouldPassValidation("{\"deletedAssets\":[\"\"]}", DeletedAssets);
+    shouldPassJsonValidation("{\"deletedAssets\":[\"\"]}", DeletedAssets);
+
+    shouldFailValidation(3, Boolean, new ValidationError("data should be boolean"));
+    shouldPassValidation(false, Boolean);
+    shouldFailValidation("{}", DeletedAssets, new ValidationError("data should be object"));
+    shouldPassValidation({ deletedAssets: [] }, DeletedAssets);
+
+    shouldFailJsonValidation("", Boolean, new SyntaxError("Unexpected end of JSON input"));
+    shouldPassJsonValidation("true", Boolean);
+    shouldFailJsonValidation("", Number, new SyntaxError("Unexpected end of JSON input"));
+    shouldPassJsonValidation("42", Number);
+    shouldFailJsonValidation("", String, new SyntaxError("Unexpected end of JSON input"));
+    shouldPassJsonValidation("\"blah\"", String);
 });
