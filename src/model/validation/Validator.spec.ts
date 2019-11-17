@@ -17,7 +17,7 @@ import { Validator } from "./Validator";
 const shouldPassJsonValidation = <T>(json: string, ctor: new (value?: unknown) => T) => {
     describe("fromJson", () => {
         describe(json, () => {
-            fit("should pass validation", () => {
+            it("should pass validation", () => {
                 expect(Validator.fromJson(json, ctor) instanceof ctor).toBe(true);
             });
         });
@@ -27,7 +27,7 @@ const shouldPassJsonValidation = <T>(json: string, ctor: new (value?: unknown) =
 const shouldFailJsonValidation = <T>(json: string, ctor: new (value?: unknown) => T, exception: Error) => {
     describe("fromJson", () => {
         describe(json, () => {
-            fit(`should throw ${exception}`, () => {
+            it(`should throw ${exception}`, () => {
                 expect(() => Validator.fromJson(json, ctor)).toThrow(exception);
             });
         });
@@ -37,7 +37,7 @@ const shouldFailJsonValidation = <T>(json: string, ctor: new (value?: unknown) =
 const shouldPassValidation = <T>(data: unknown, ctor: new (value?: unknown) => T) => {
     describe("fromData", () => {
         describe(JSON.stringify(data), () => {
-            fit("should pass validation", () => {
+            it("should pass validation", () => {
                 expect(Validator.fromData(data, ctor) instanceof ctor).toBe(true);
             });
         });
@@ -47,7 +47,7 @@ const shouldPassValidation = <T>(data: unknown, ctor: new (value?: unknown) => T
 const shouldFailValidation = <T>(data: unknown, ctor: new (value?: unknown) => T, exception: Error) => {
     describe("fromData", () => {
         describe(JSON.stringify(data), () => {
-            fit(`should throw ${exception}`, () => {
+            it(`should throw ${exception}`, () => {
                 expect(() => Validator.fromData(data, ctor)).toThrow(exception);
             });
         });
