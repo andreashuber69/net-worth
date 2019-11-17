@@ -17,7 +17,10 @@ import Ajv from "ajv";
 import schema from "./schemas/All.schema.json";
 import { ValidationError } from "./ValidationError";
 
-type PrimitiveSchemaName = "Boolean" | "Number" | "String"; // Symbol and BigInt cannot currently be represented in JSON
+// Symbol and BigInt cannot currently be represented in JSON, TODO
+const primitiveSchemaNames = [Boolean.name, Number.name, String.name] as const;
+
+type PrimitiveSchemaName = (typeof primitiveSchemaNames)[number];
 export type SchemaName = PrimitiveSchemaName | keyof typeof schema.definitions;
 
 type PropertyNamesWithEnumMembers<T> = { [K in keyof T]: T[K] extends { enum: unknown[] } ? K : never }[keyof T];
@@ -39,14 +42,7 @@ export class Validator {
             throw new ValidationError(Validator.ajv.errorsText());
         }
 
-        switch (ctor as object) {
-            case Boolean:
-            case Number:
-            case String:
-                return new ctor(data);
-            default:
-                return Object.assign(new ctor(), data);
-        }
+        return Validator.isPrimitiveSchemaName(ctor.name) ? new ctor(data) : Object.assign(new ctor(), data);
     }
 
     public static validate(data: unknown, schemaName: SchemaName): true | string {
@@ -72,14 +68,7 @@ export class Validator {
     }
 
     private static isPrimitiveSchemaName(name: string): name is PrimitiveSchemaName {
-        switch (name) {
-            case "Boolean":
-            case "Number":
-            case "String":
-                return true;
-            default:
-                return false;
-        }
+        return primitiveSchemaNames.includes(name);
     }
 
     private static getPrimitiveSchema(name: PrimitiveSchemaName) {
