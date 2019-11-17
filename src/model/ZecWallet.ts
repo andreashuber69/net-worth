@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IParent } from "./Asset";
-import { Query } from "./Query";
 import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
@@ -29,15 +28,9 @@ export class ZecWallet extends SimpleCryptoWallet {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected async queryQuantity() {
-        return Number.parseFloat((await QueryCache.fetch(new ZecWallet.Query(this.address))).data.confirmed_balance);
+        const url = `https://chain.so/api/v2/get_address_balance/ZEC/${this.address}`;
+        const response = await QueryCache.fetch(url, SoChainGetAddressBalanceResponse);
+
+        return Number.parseFloat(response.data.confirmed_balance);
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // tslint:disable-next-line: max-classes-per-file variable-name
-    private static readonly Query = class NestedQuery extends Query<SoChainGetAddressBalanceResponse> {
-        public constructor(address: string) {
-            super(`https://chain.so/api/v2/get_address_balance/ZEC/${address}`, SoChainGetAddressBalanceResponse);
-        }
-    };
 }

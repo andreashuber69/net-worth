@@ -10,20 +10,20 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Query } from "./Query";
 import { QueryError } from "./QueryError";
 import { Unknown } from "./Unknown";
 import { Validator } from "./validation/Validator";
 
 /** @internal */
 export class QueryCache {
+    // TODO: Check whether extends object constraint is necessary
     /** @internal */
     public static fetch(query: string): Promise<Unknown | null>;
-    public static fetch<R extends object>(query: Query<R>): Promise<R>;
-    public static async fetch<R extends object>(query: string | Query<R>) {
-        return (typeof query === "string") ?
-            QueryCache.cacheResult(query, () => QueryCache.fetchAndParse(query)) :
-            QueryCache.cacheResult(query.url, () => QueryCache.fetchParseAndValidate(query));
+    public static fetch<R extends object>(query: string, responseCtor: new () => R): Promise<R>;
+    public static async fetch<R extends object>(query: string, responseCtor?: new () => R) {
+        return responseCtor ?
+            QueryCache.cacheResult(query, () => QueryCache.fetchParseAndValidate(query, responseCtor)) :
+            QueryCache.cacheResult(query, () => QueryCache.fetchAndParse(query));
     }
 
     /** @internal */
@@ -46,11 +46,11 @@ export class QueryCache {
         return result;
     }
 
-    private static async fetchParseAndValidate<R extends object>(query: Query<R>) {
-        const response = await QueryCache.fetchAndParse(query.url);
+    private static async fetchParseAndValidate<R extends object>(query: string, responseCtor: new () => R) {
+        const response = await QueryCache.fetchAndParse(query);
 
         try {
-            return Validator.fromData(response, query.responseCtor);
+            return Validator.fromData(response, responseCtor);
         } catch (e) {
             throw new QueryError(`Validation Error: ${e}`);
         }

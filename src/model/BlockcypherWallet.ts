@@ -11,10 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IParent } from "./Asset";
-import { BlockcypherRequest } from "./BlockcypherRequest";
 import { QueryCache } from "./QueryCache";
 import { IRealCryptoWalletParameters } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
+import { BlockcypherBalanceResponse } from "./validation/schemas/BlockcypherBalanceResponse.schema";
 
 /** Represents a wallet the balance of which is requested from blockcypher.com. */
 export abstract class BlockcypherWallet extends SimpleCryptoWallet {
@@ -23,6 +23,8 @@ export abstract class BlockcypherWallet extends SimpleCryptoWallet {
     }
 
     protected async queryQuantity() {
-        return (await QueryCache.fetch(new BlockcypherRequest(this.unit.toLowerCase(), this.address))).balance / 1E8;
+        const url = `https://api.blockcypher.com/v1/${this.unit.toLowerCase()}/main/addrs/${this.address}/balance`;
+
+        return (await QueryCache.fetch(url, BlockcypherBalanceResponse)).balance / 1E8;
     }
 }
