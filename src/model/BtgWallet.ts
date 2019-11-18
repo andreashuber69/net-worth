@@ -11,14 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IParent } from "./Asset";
-import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
-import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
-import { Unknown } from "./Unknown";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
-import { Value } from "./Value";
 
 /** Represents a BTG wallet. */
 export class BtgWallet extends SimpleCryptoWallet {
@@ -30,30 +26,9 @@ export class BtgWallet extends SimpleCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected queryQuantity() {
-        return new BtgWallet.BitcoinGoldRequest(this.address).execute();
+    protected async queryQuantity() {
+        const url = `https://explorer.bitcoingold.org/insight-api/addr/${this.address}/balance`;
+
+        return Number(await QueryCache.fetch(url, Number)) / 1E8;
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // tslint:disable-next-line:max-classes-per-file variable-name
-    private static readonly BitcoinGoldRequest = class NestedBitcoinGoldRequest implements IWebRequest<number> {
-        public constructor(private readonly address: string) {
-        }
-
-        public async execute() {
-            return NestedBitcoinGoldRequest.getBalance(
-                await QueryCache.fetch(`https://explorer.bitcoingold.org/insight-api/addr/${this.address}/balance`));
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        private static getBalance(response: Unknown | null) {
-            if (Value.isNumber(response)) {
-                return response / 1E8;
-            }
-
-            throw new QueryError();
-        }
-    };
 }
