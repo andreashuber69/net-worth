@@ -59,7 +59,7 @@ const shouldFailValidation = <T>(data: unknown, ctor: new (value?: unknown) => T
     });
 };
 
-describe(Validator.name, () => {
+fdescribe(Validator.name, () => {
     shouldFailJsonValidation("", DeletedAssets, new SyntaxError("Unexpected end of JSON input"));
     shouldFailJsonValidation("null", DeletedAssets, new SyntaxError("data should be object"));
     shouldFailJsonValidation("[]", DeletedAssets, new ValidationError("data should be object"));
@@ -80,12 +80,18 @@ describe(Validator.name, () => {
         { deletedAssets: [] }, DeletedAssets, Object.assign(new DeletedAssets(), { deletedAssets: [] }));
 
     shouldFailJsonValidation("", Boolean, new SyntaxError("Unexpected end of JSON input"));
+    shouldFailJsonValidation("42", Boolean, new ValidationError("data should be boolean"));
+    shouldFailJsonValidation("{}", Boolean, new ValidationError("data should be boolean"));
     // tslint:disable-next-line: no-construct
     shouldPassJsonValidation("true", Boolean, new Boolean(true));
     shouldFailJsonValidation("", Number, new SyntaxError("Unexpected end of JSON input"));
+    shouldFailJsonValidation("true", Number, new ValidationError("data should be number"));
+    shouldFailJsonValidation("\"\"", Number, new ValidationError("data should be number"));
     // tslint:disable-next-line: no-construct
     shouldPassJsonValidation("42", Number, new Number(42));
     shouldFailJsonValidation("", String, new SyntaxError("Unexpected end of JSON input"));
+    shouldFailJsonValidation("true", String, new ValidationError("data should be string"));
+    shouldFailJsonValidation("1792", String, new ValidationError("data should be string"));
     // tslint:disable-next-line: no-construct
     shouldPassJsonValidation("\"blah\"", String, new String("blah"));
 });
