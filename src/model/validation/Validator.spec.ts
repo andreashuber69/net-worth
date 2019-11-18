@@ -59,7 +59,7 @@ const shouldFailValidation = <T>(data: unknown, ctor: new (value?: unknown) => T
     });
 };
 
-fdescribe(Validator.name, () => {
+describe(Validator.name, () => {
     shouldFailJsonValidation("", DeletedAssets, new SyntaxError("Unexpected end of JSON input"));
     shouldFailJsonValidation("null", DeletedAssets, new SyntaxError("data should be object"));
     shouldFailJsonValidation("[]", DeletedAssets, new ValidationError("data should be object"));
