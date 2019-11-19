@@ -18,14 +18,13 @@ import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
-import { Unknown } from "./Unknown";
+import { BlockchainBalanceResponse } from "./validation/schemas/BlockchainBalanceResponse.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
-import { Value } from "./Value";
 
 /** @internal */
 interface IBalance {
-    readonly finalBalance: number;
-    readonly transactionCount: number;
+    finalBalance: number;
+    transactionCount: number;
 }
 
 /** Represents a BTC wallet. */
@@ -44,25 +43,23 @@ export class BtcWallet extends SimpleCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // tslint:disable-next-line:variable-name max-classes-per-file
-    private static readonly BlockchainRequest = class NestedBlockchainRequest implements IWebRequest<IBalance> {
+    // tslint:disable-next-line:variable-name
+    private static readonly BlockchainRequest =
+        // tslint:disable-next-line:max-classes-per-file
+        class NestedBlockchainRequest implements IWebRequest<Readonly<IBalance>> {
         public constructor(addresses: string[]) {
             this.addresses = addresses.join("|");
         }
 
         public async execute() {
-            return NestedBlockchainRequest.getFinalBalance(
-                await QueryCache.fetch(`https://blockchain.info/balance?active=${this.addresses}&cors=true`));
+            return NestedBlockchainRequest.getFinalBalance(await QueryCache.fetch(
+                `https://blockchain.info/balance?active=${this.addresses}&cors=true`, BlockchainBalanceResponse));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private static getFinalBalance(response: Unknown | null) {
+        private static getFinalBalance(response: BlockchainBalanceResponse) {
             const result = { finalBalance: Number.NaN, transactionCount: 0 };
-
-            if (!Value.isObject(response)) {
-                return result;
-            }
 
             for (const address in response) {
                 if (response.hasOwnProperty(address)) {
@@ -77,14 +74,10 @@ export class BtcWallet extends SimpleCryptoWallet {
             return result;
         }
 
-        private static addBalance(
-            balance: Unknown | null | undefined, result: { finalBalance: number; transactionCount: number }) {
-            if (Value.hasNumberProperty(balance, "final_balance") &&
-                Value.hasNumberProperty(balance, "n_tx")) {
-                result.transactionCount += balance.n_tx;
-                result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) +
-                    balance.final_balance / 1E8;
-            }
+        private static addBalance(balance: { final_balance: number; n_tx: number }, result: IBalance) {
+            result.transactionCount += balance.n_tx;
+            result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) +
+                balance.final_balance / 1E8;
         }
 
         private readonly addresses: string;
