@@ -18,7 +18,7 @@ import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
-import { BlockchainBalanceResponse } from "./validation/schemas/BlockchainBalanceResponse.schema";
+import { BlockchainBalanceResponse, IAddressBalance } from "./validation/schemas/BlockchainBalanceResponse.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 /** @internal */
@@ -59,11 +59,11 @@ export class BtcWallet extends SimpleCryptoWallet {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private static getFinalBalance(response: BlockchainBalanceResponse) {
-            const result = { finalBalance: Number.NaN, transactionCount: 0 };
+            const result: IBalance = { finalBalance: Number.NaN, transactionCount: 0 };
 
             for (const address in response) {
                 if (response.hasOwnProperty(address)) {
-                    NestedBlockchainRequest.addBalance(response[address], result);
+                    NestedBlockchainRequest.addBalance(result, response[address]);
                 }
             }
 
@@ -74,10 +74,9 @@ export class BtcWallet extends SimpleCryptoWallet {
             return result;
         }
 
-        private static addBalance(balance: { final_balance: number; n_tx: number }, result: IBalance) {
-            result.transactionCount += balance.n_tx;
-            result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) +
-                balance.final_balance / 1E8;
+        private static addBalance(result: IBalance, { final_balance, n_tx }: IAddressBalance) {
+            result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) + final_balance / 1E8;
+            result.transactionCount += n_tx;
         }
 
         private readonly addresses: string;
