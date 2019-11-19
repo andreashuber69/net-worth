@@ -13,8 +13,7 @@
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
-import { Unknown } from "./Unknown";
-import { Value } from "./Value";
+import { CoinMarketCapPriceResponse } from "./validation/schemas/CoinMarketCapPriceResponse.schema";
 
 /** Represents a single coinmarketcap.com request. */
 export class CoinMarketCapRequest implements IWebRequest<number> {
@@ -27,23 +26,19 @@ export class CoinMarketCapRequest implements IWebRequest<number> {
     }
 
     public async execute() {
-        const price = CoinMarketCapRequest.getPrice(
-            await QueryCache.fetch(`https://api.coinmarketcap.com/v1/ticker/${this.coin}/`));
+        const price = CoinMarketCapRequest.getPrice(await QueryCache.fetch(
+            `https://api.coinmarketcap.com/v1/ticker/${this.coin}/`, CoinMarketCapPriceResponse));
 
         return this.invert ? 1 / price : price;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static getPrice(response: Unknown | null) {
-        if (Value.isArray(response) && (response.length === 1)) {
-            const value = response[0];
-
-            if (Value.hasStringProperty(value, "price_usd")) {
-                return Number.parseFloat(value.price_usd);
-            }
+    private static getPrice([price]: CoinMarketCapPriceResponse) {
+        if (!price) {
+            throw new QueryError();
         }
 
-        throw new QueryError();
+        return Number.parseFloat(price.price_usd);
     }
 }
