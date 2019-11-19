@@ -12,5 +12,5 @@
 
 export class BlockcypherBalanceResponse {
     public readonly balance!: number;
-    [key: string]: unknown;
+    readonly [key: string]: unknown;
 }
