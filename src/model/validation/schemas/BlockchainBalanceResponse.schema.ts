@@ -10,10 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+export interface IAddressBalance {
+    readonly final_balance: number;
+    readonly n_tx: number;
+    readonly [key: string]: unknown;
+}
+
 export class BlockchainBalanceResponse {
-    readonly [address: string]: {
-        readonly final_balance: number;
-        readonly n_tx: number;
-        readonly [key: string]: unknown;
-    };
+    readonly [address: string]: IAddressBalance;
 }
