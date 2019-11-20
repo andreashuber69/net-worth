@@ -13,7 +13,6 @@
 import { AssetPropertyName } from "./AssetInterfaces";
 import { InputInfo } from "./InputInfo";
 import { Unknown } from "./Unknown";
-import { Value } from "./Value";
 
 export interface IPrimitiveInputInfoProperties {
     readonly label: string;
@@ -59,7 +58,7 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
             return true;
         }
 
-        if ((input === undefined) || (input === null) || (Value.isString(input) && (input.length === 0))) {
+        if ((input === undefined) || (input === null) || ((typeof input === "string") && (input.length === 0))) {
             return this.isRequired ? "A value is required." : true;
         }
 

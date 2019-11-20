@@ -11,21 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Unknown } from "./Unknown";
-import { Value } from "./Value";
 
 /** Provides error messages for parse failures. */
 export class ParseErrorMessage {
-    /** @internal */
-    public static getPropertyTypeMismatch(
-        propertyName: string, actual: Unknown | null | undefined, ...expected: Array<Unknown | null | undefined>) {
-        if (Value.isObject(actual)) {
-            return ParseErrorMessage.addPropertyName(
-                propertyName, ParseErrorMessage.getTypeMismatch(actual[propertyName], ...expected));
-        } else {
-            return ParseErrorMessage.getTypeMismatch(actual, {});
-        }
-    }
-
     /** @internal */
     public static getTypeMismatch(
         actual: Unknown | null | undefined, ...expected: Array<Unknown | null | undefined>) {
