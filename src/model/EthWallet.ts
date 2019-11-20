@@ -12,12 +12,10 @@
 
 import { IParent } from "./Asset";
 import { QueryCache } from "./QueryCache";
-import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
-import { Unknown } from "./Unknown";
+import { EthplorerGetAddressInfoResponse } from "./validation/schemas/EthplorerGetAddressInfoResponse.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
-import { Value } from "./Value";
 
 /** Represents an ETH wallet. */
 export class EthWallet extends SimpleCryptoWallet {
@@ -30,18 +28,9 @@ export class EthWallet extends SimpleCryptoWallet {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected async queryQuantity() {
-        const response =
-            await QueryCache.fetch(`https://api.ethplorer.io/getAddressInfo/${this.address}?apiKey=dvoio1769GSrYx63`);
-
-        return EthWallet.getQuantity(response);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static getQuantity(response: Unknown | null) {
-        if (!Value.hasObjectProperty(response, "ETH") || !Value.hasNumberProperty(response.ETH, "balance")) {
-            throw new QueryError();
-        }
+        const response = await QueryCache.fetch(
+            `https://api.ethplorer.io/getAddressInfo/${this.address}?apiKey=dvoio1769GSrYx63`,
+            EthplorerGetAddressInfoResponse);
 
         return response.ETH.balance;
     }
