@@ -11,14 +11,12 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IParent } from "./Asset";
-import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
-import { Unknown } from "./Unknown";
+import { BlockscoutBalanceResponse } from "./validation/schemas/BlockscoutBalanceResponse.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
-import { Value } from "./Value";
 
 /** Represents an ETC wallet. */
 export class EtcWallet extends SimpleCryptoWallet {
@@ -30,34 +28,16 @@ export class EtcWallet extends SimpleCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected queryQuantity() {
-        return new EtcWallet.BlockscoutRequest(this.address).execute();
+    protected async queryQuantity() {
+        const response = await QueryCache.fetch(
+            `https://blockscout.com/etc/mainnet/api?module=account&action=balance&address=${this.address}`,
+            BlockscoutBalanceResponse);
+        const result = Number.parseInt(response.result, 10);
+
+        if ((response.status === "1") && Number.isFinite(result)) {
+            return result / 1E18;
+        }
+
+        throw new QueryError();
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // tslint:disable-next-line:max-classes-per-file variable-name
-    private static readonly BlockscoutRequest = class NestedBlockscoutRequest implements IWebRequest<number> {
-        public constructor(private readonly address: string) {
-        }
-
-        public async execute() {
-            return NestedBlockscoutRequest.getBalance(await QueryCache.fetch(
-                `https://blockscout.com/etc/mainnet/api?module=account&action=balance&address=${this.address}`));
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        private static getBalance(response: Unknown | null) {
-            if (Value.hasStringProperty(response, "result") && Value.hasStringProperty(response, "status")) {
-                const result = Number.parseInt(response.result, 10);
-
-                if ((response.status === "1") && Number.isFinite(result)) {
-                    return result / 1E18;
-                }
-            }
-
-            throw new QueryError();
-        }
-    };
 }
