@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Enum, EnumInfo } from "./EnumInfo";
-import { ParseErrorMessage } from "./ParseErrorMessage";
 import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { Unknown } from "./Unknown";
 import { EnumSchemaName, SchemaName, Validator } from "./validation/Validator";
@@ -57,8 +56,10 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
                 return result;
             }
 
-            if ((this.acceptStringsOnly && (typeof input !== "string"))) {
-                return ParseErrorMessage.getUnknownValue(input);
+            const stringResult = this.acceptStringsOnly && Validator.validate(input, String.name);
+
+            if (typeof stringResult === "string") {
+                return stringResult;
             }
         }
 

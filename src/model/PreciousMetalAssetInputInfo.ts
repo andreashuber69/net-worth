@@ -40,7 +40,7 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     });
     public readonly weightUnit = new SelectInputInfo({
         label: "Unit", hint: "The unit Weight is expressed in.", isPresent: true, isRequired: true,
-        enumType: WeightUnit, enumSchemaNames: [ "WeightUnitName", "WeightUnit" ], acceptStringsOnly: false,
+        enumType: WeightUnit, enumSchemaNames: ["WeightUnitName", "WeightUnit"], acceptStringsOnly: false,
     });
     public readonly fineness = new TextInputInfo({
         label: "Fineness", hint: "The precious metal fineness.", isPresent: true, isRequired: true,
