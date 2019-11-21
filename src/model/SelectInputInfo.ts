@@ -27,7 +27,6 @@ export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
 interface ISelectInputInfoParameters<T extends Enum<T>> extends IPrimitiveInputInfoProperties {
     readonly enumType?: T;
     readonly enumSchemaNames: EnumSchemaName[];
-    readonly acceptStringsOnly: boolean;
 }
 
 /** Provides input information for a property where a valid value needs to be equal to one of a given list of values. */
@@ -35,10 +34,9 @@ interface ISelectInputInfoParameters<T extends Enum<T>> extends IPrimitiveInputI
 export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     /** @internal */
     public constructor(params: ISelectInputInfoParameters<T> =
-        { label: "", hint: "", isPresent: false, isRequired: false, enumSchemaNames: [], acceptStringsOnly: false }) {
+        { label: "", hint: "", isPresent: false, isRequired: false, enumSchemaNames: [] }) {
         super(params);
-        ({ enumType: this.enumType, enumSchemaNames: this.enumSchemaNames, acceptStringsOnly: this.acceptStringsOnly } =
-            params);
+        ({ enumType: this.enumType, enumSchemaNames: this.enumSchemaNames } = params);
     }
 
     public get items() {
@@ -55,12 +53,6 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
             if (result !== true) {
                 return result;
             }
-
-            const stringResult = this.acceptStringsOnly && Validator.validate(input, String.name);
-
-            if (typeof stringResult === "string") {
-                return stringResult;
-            }
         }
 
         return super.validateContent(strict, input);
@@ -70,5 +62,4 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
 
     private readonly enumType?: T;
     private readonly enumSchemaNames: EnumSchemaName[];
-    private readonly acceptStringsOnly: boolean;
 }
