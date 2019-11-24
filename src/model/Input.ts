@@ -14,7 +14,7 @@ import { AssetPropertyName } from "./AssetInterfaces";
 import { Unknown } from "./Unknown";
 
 export type CompositeInput = { [K in AssetPropertyName]?: Unknown | null };
-export type Input = CompositeInput | Unknown | null | undefined;
+export type Input = CompositeInput | unknown;
 
 export class InputUtility {
     public static isComposite(input: Input): input is CompositeInput {

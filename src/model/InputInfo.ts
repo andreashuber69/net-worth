@@ -47,7 +47,7 @@ export abstract class InputInfo {
 
     // tslint:disable-next-line:prefer-function-over-method
     protected validatePrimitive(
-        strict: boolean, input: Unknown | undefined | null, propertyName?: AssetPropertyName): true | string {
+        strict: boolean, input: unknown, propertyName?: AssetPropertyName): true | string {
         return "A primitive value was provided when a composite one was expected.";
     }
 

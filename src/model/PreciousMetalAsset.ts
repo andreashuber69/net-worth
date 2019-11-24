@@ -15,7 +15,6 @@ import { IParent } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
-import { Unknown } from "./Unknown";
 import { Fineness } from "./validation/schemas/Fineness.schema";
 import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
@@ -61,7 +60,7 @@ export abstract class PreciousMetalAsset extends SingleAsset {
         };
     }
 
-    public bundle(bundle?: Unknown): GenericAssetBundle<PreciousMetalAsset> {
+    public bundle(bundle?: unknown): GenericAssetBundle<PreciousMetalAsset> {
         return new PreciousMetalAsset.Bundle(this);
     }
 

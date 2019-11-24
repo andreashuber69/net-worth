@@ -17,7 +17,6 @@ import { CryptoWallet } from "./CryptoWallet";
 import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { Unknown } from "./Unknown";
 import { Currency } from "./validation/schemas/Currency.schema";
 import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
 import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties.schema";
@@ -103,7 +102,7 @@ export class CryptoWalletInputInfo<
         }
     }
 
-    private static isUndefined(value: Unknown | null | undefined) {
+    private static isUndefined(value: unknown) {
         return (value === undefined) || (value === null) || (value === "");
     }
 

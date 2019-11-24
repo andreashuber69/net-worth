@@ -14,7 +14,6 @@ import { IParent } from "./Asset";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { SingleAsset } from "./SingleAsset";
-import { Unknown } from "./Unknown";
 import { Currency } from "./validation/schemas/Currency.schema";
 import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
@@ -70,7 +69,7 @@ export class MiscAsset extends SingleAsset {
         };
     }
 
-    public bundle(bundle?: Unknown): GenericAssetBundle<MiscAsset> {
+    public bundle(bundle?: unknown): GenericAssetBundle<MiscAsset> {
         return new MiscAsset.Bundle(this);
     }
 

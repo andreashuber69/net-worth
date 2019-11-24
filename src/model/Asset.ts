@@ -15,7 +15,6 @@ import { IAssetIntersection } from "./AssetInterfaces";
 import { CalculatedAssetPropertyNames } from "./CalculatedAssetPropertyNames";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
-import { Unknown } from "./Unknown";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
 import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 import { Fineness } from "./validation/schemas/Fineness.schema";
@@ -128,7 +127,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    public bundle(bundle?: Unknown): AssetBundle {
+    public bundle(bundle?: unknown): AssetBundle {
         throw new Error("Asset cannot be bundled.");
     }
 
