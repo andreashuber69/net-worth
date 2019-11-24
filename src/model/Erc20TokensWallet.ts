@@ -13,7 +13,6 @@
 import { IParent } from "./Asset";
 import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
 import { RealCryptoWallet } from "./RealCryptoWallet";
-import { Unknown } from "./Unknown";
 import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet.schema";
 import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties.schema";
 
@@ -32,7 +31,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
         super(parent, RealCryptoWallet.getProperties(props, ""));
     }
 
-    public bundle(bundle?: Unknown): Erc20TokensWalletBundle {
+    public bundle(bundle?: unknown): Erc20TokensWalletBundle {
         return new Erc20TokensWalletBundle(this, bundle);
     }
 

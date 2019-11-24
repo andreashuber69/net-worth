@@ -15,7 +15,6 @@ import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
-import { Unknown } from "./Unknown";
 import { DeletedAssets } from "./validation/schemas/DeletedAssets.schema";
 import { EthplorerGetAddressInfoResponse, IToken } from "./validation/schemas/EthplorerGetAddressInfoResponse.schema";
 import { IErc20TokensWalletBundle } from "./validation/schemas/IErc20TokensWalletBundle.schema";
@@ -24,7 +23,7 @@ import { Validator } from "./validation/Validator";
 export class Erc20TokensWalletBundle extends AssetBundle {
     public readonly assets: Erc20TokenWallet[] = [];
 
-    public constructor(private readonly erc20Wallet: Erc20TokensWallet, bundle?: Unknown) {
+    public constructor(private readonly erc20Wallet: Erc20TokensWallet, bundle?: unknown) {
         super();
 
         try {

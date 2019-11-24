@@ -13,7 +13,6 @@
 import { AssetPropertyName } from "./AssetInterfaces";
 import { CompositeInput, Input, InputUtility } from "./Input";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
-import { Unknown } from "./Unknown";
 
 /**
  * Defines the base for all classes that provide input information for a primitive or composite value.
