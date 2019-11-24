@@ -12,7 +12,6 @@
 
 import { AssetPropertyName } from "./AssetInterfaces";
 import { InputInfo } from "./InputInfo";
-import { Unknown } from "./Unknown";
 
 export interface IPrimitiveInputInfoProperties {
     readonly label: string;
@@ -49,7 +48,7 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
     }
 
     /** @internal */
-    protected validatePrimitive(strict: boolean, input: Unknown | undefined | null, propertyName?: AssetPropertyName) {
+    protected validatePrimitive(strict: boolean, input: unknown, propertyName?: AssetPropertyName) {
         if (propertyName !== undefined) {
             throw new Error("The propertyName argument must be undefined for a primitive value.");
         }
@@ -67,7 +66,7 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
 
     /** @internal */
     // tslint:disable-next-line:prefer-function-over-method
-    protected validateContent(strict: boolean, input: Unknown): true | string {
+    protected validateContent(strict: boolean, input: unknown): true | string {
         return true;
     }
 }

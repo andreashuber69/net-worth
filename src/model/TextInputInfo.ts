@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
-import { Unknown } from "./Unknown";
 import { SchemaName, Validator } from "./validation/Validator";
 
 interface ITextInputInfoProperties extends IPrimitiveInputInfoProperties {
@@ -55,7 +54,7 @@ export class TextInputInfo extends PrimitiveInputInfo {
      *   non-English locale would get mixed languages in the UI.
      * - We want to use exactly the same rules to validate file content.
      */
-    protected validateContent(strict: boolean, input: Unknown) {
+    protected validateContent(strict: boolean, input: unknown) {
         const valueResult = this.validateValue(strict, input);
 
         if (valueResult !== true) {
