@@ -11,14 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 import { QueryError } from "./QueryError";
-import { Unknown } from "./Unknown";
 import { Validator } from "./validation/Validator";
 
 /** @internal */
 export class QueryCache {
     // TODO: Check whether extends object constraint is necessary
     /** @internal */
-    public static fetch(query: string): Promise<Unknown | null>;
+    public static fetch(query: string): Promise<unknown>;
     public static fetch<R extends object>(query: string, responseCtor: new () => R): Promise<R>;
     public static async fetch<R extends object>(query: string, responseCtor?: new () => R) {
         return responseCtor ?
@@ -33,9 +32,9 @@ export class QueryCache {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly cache = new Map<string, Promise<Unknown | null>>();
+    private static readonly cache = new Map<string, Promise<unknown>>();
 
-    private static cacheResult<R extends Unknown | null>(query: string, getResponse: () => Promise<R>) {
+    private static cacheResult<R extends unknown>(query: string, getResponse: () => Promise<R>) {
         let result = QueryCache.cache.get(query);
 
         if (!result) {
@@ -66,7 +65,7 @@ export class QueryCache {
         }
 
         try {
-            return JSON.parse(responseText) as Unknown | null;
+            return JSON.parse(responseText) as unknown;
         } catch (e) {
             throw new QueryError(`Invalid JSON: ${e}`);
         }
