@@ -84,7 +84,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     }
 
     protected queryUnitValueUsd() {
-        return this.slug ? new CryptoCompareRequest(this.slug, false).execute() : Promise.resolve(undefined);
+        return this.unit ? new CryptoCompareRequest(this.unit, false).execute() : Promise.resolve(undefined);
     }
 
     /** @internal */
@@ -115,6 +115,4 @@ export abstract class RealCryptoWallet extends CryptoWallet {
             throw new Error("Unexpected ISimpleCryptoWalletProperties value!");
         }
     }
-
-    private readonly slug?: string;
 }
