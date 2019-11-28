@@ -32,7 +32,7 @@ export class BtcWallet extends SimpleCryptoWallet {
     public readonly type = "Bitcoin";
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
-        super(parent, RealCryptoWallet.getProperties(props, "BTC", "BTC"));
+        super(parent, RealCryptoWallet.getProperties(props, "BTC"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

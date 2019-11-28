@@ -20,9 +20,6 @@ import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 export type IRealCryptoWalletParameters = ISimpleCryptoWalletProperties & {
     /** The crypto currency symbol, e.g. 'BTC', 'LTC'. */
     readonly currencySymbol: string;
-
-    /** TODO: remove */
-    readonly slug?: string;
 };
 
 /** Defines the base of all classes that represent a real crypto currency wallet. */
@@ -55,16 +52,13 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     // TODO: This is a hack to work around the fact that the spread operator does not call property getters:
     // https://github.com/Microsoft/TypeScript/issues/26547
     protected static getProperties(
-        // TODO: remove slug
-        props: ISimpleCryptoWalletProperties, currencySymbol: string, slug?: string,
+        props: ISimpleCryptoWalletProperties, currencySymbol: string,
     ): IRealCryptoWalletParameters {
         const { description, location, notes } = props;
         const address = ("address" in props) && props.address || undefined;
         const quantity = ("quantity" in props) && props.quantity || undefined;
 
-        return {
-            ...RealCryptoWallet._getProperties(description, location, address, quantity, notes), currencySymbol, slug,
-        };
+        return { ...RealCryptoWallet._getProperties(description, location, address, quantity, notes), currencySymbol };
     }
 
     /** Creates a new [[RealCryptoWallet]] instance.
@@ -82,7 +76,6 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         this.address = ("address" in params) && params.address || "";
         this.quantity = ("quantity" in params) && params.quantity || undefined;
         this.notes = params.notes || "";
-        this.slug = params.slug;
     }
 
     // tslint:disable-next-line:prefer-function-over-method

@@ -22,7 +22,7 @@ export class EthWallet extends SimpleCryptoWallet {
     public readonly type = "Ethereum";
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
-        super(parent, RealCryptoWallet.getProperties(props, "ETH", "ETH"));
+        super(parent, RealCryptoWallet.getProperties(props, "ETH"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
