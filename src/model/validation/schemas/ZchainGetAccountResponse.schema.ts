@@ -10,9 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-export class SoChainGetAddressBalanceResponse {
-    public readonly status!: "success";
-    public readonly data!: {
-        readonly confirmed_balance: string;
-    };
+export class ZchainGetAccountResponse {
+    public readonly balance!: number;
+    readonly [key: string]: unknown;
 }

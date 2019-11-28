@@ -15,7 +15,7 @@ import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
-import { SoChainGetAddressBalanceResponse } from "./validation/schemas/SoChainGetAddressBalanceResponse.schema";
+import { ZchainGetAccountResponse } from "./validation/schemas/ZchainGetAccountResponse.schema";
 
 /** Represents a ZEC wallet. */
 export class ZecWallet extends SimpleCryptoWallet {
@@ -28,9 +28,8 @@ export class ZecWallet extends SimpleCryptoWallet {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected async queryQuantity() {
-        const url = `https://sochain.com/api/v2/get_address_balance/ZEC/${this.address}`;
-        const response = await QueryCache.fetch(url, SoChainGetAddressBalanceResponse);
+        const url = `https://api.zcha.in/v2/mainnet/accounts/${this.address}`;
 
-        return Number.parseFloat(response.data.confirmed_balance);
+        return (await QueryCache.fetch(url, ZchainGetAccountResponse)).balance;
     }
 }
