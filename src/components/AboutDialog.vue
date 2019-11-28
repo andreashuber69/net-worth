@@ -53,8 +53,8 @@
             </v-card>
           </v-flex>
           <v-flex xs12 sm6 md4>
-            <v-btn href="https://coinmarketcap.com" target="_blank" block flat class="ma-0">
-              <img src="../assets/coinmarketcap.svg" height="36"/>
+            <v-btn href="https://cryptocompare.com" target="_blank" block flat class="ma-0">
+              <img src="../assets/cryptocompare.png" height="36"/>
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>

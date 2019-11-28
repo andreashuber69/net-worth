@@ -12,13 +12,12 @@
 
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
-import { QueryError } from "./QueryError";
-import { CoinMarketCapPriceResponse } from "./validation/schemas/CoinMarketCapPriceResponse.schema";
+import { CryptoCompareResponse } from "./validation/schemas/CryptoCompareResponse.schema";
 
-/** Represents a single coinmarketcap.com request. */
-export class CoinMarketCapRequest implements IWebRequest<number> {
+/** Represents a single cryptocompare.com request. */
+export class CryptoCompareRequest implements IWebRequest<number> {
     /**
-     * Creates a new [[CoinMarketCapRequest]] instance.
+     * Creates a new [[CryptoCompareRequest]] instance.
      * @param coin The coin to query the current price for.
      * @param invert Whether the returned price should be inverted.
      */
@@ -26,19 +25,9 @@ export class CoinMarketCapRequest implements IWebRequest<number> {
     }
 
     public async execute() {
-        const price = CoinMarketCapRequest.getPrice(await QueryCache.fetch(
-            `https://api.coinmarketcap.com/v1/ticker/${this.coin}/`, CoinMarketCapPriceResponse));
+        const price = (await QueryCache.fetch(
+            `https://min-api.cryptocompare.com/data/price?fsym=${this.coin}&tsyms=USD`, CryptoCompareResponse)).USD;
 
         return this.invert ? 1 / price : price;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static getPrice([price]: CoinMarketCapPriceResponse) {
-        if (!price) {
-            throw new QueryError();
-        }
-
-        return Number.parseFloat(price.price_usd);
     }
 }

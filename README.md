@@ -94,7 +94,7 @@ Some table cells reveal more information when hovering over them with the mouse 
 - **Data Storage**: The data you enter into Net Worth is only ever stored locally and can, at your request, be saved to
   a file on your hard drive.
 - **Queries**: The application queries precious metal prices and currency exchange rates
-  ([quandl.com](https://quandl.com)) plus crypto currency prices ([coinmarketcap.com](https://coinmarketcap.com)). For
+  ([quandl.com](https://quandl.com)) plus crypto currency prices ([cryptocompare.com](https://cryptocompare.com)). For
   crypto currencies, you have the option to also track your balance. If you choose to do so, the application will also
   send your public address(es) to an online service like e.g. [blockchain.info](https://blockchain.info).
 - **Encryption**: All queries are always encrypted (https), but of course the owners of the respective services will

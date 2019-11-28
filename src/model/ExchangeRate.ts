@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
+import { CryptoCompareRequest } from "./CryptoCompareRequest";
 import { IWebRequest } from "./IWebRequest";
 import { QuandlRequest } from "./QuandlRequest";
 import { Currency } from "./validation/schemas/Currency.schema";
@@ -60,6 +60,6 @@ export class ExchangeRate {
         [Currency.ZAR, new QuandlRequest("boe/xudlzrd.json", false)],
         [Currency.XAG, new QuandlRequest("lbma/silver.json", true)],
         [Currency.XAU, new QuandlRequest("lbma/gold.json", true)],
-        [Currency.BTC, new CoinMarketCapRequest("bitcoin", true)],
+        [Currency.BTC, new CryptoCompareRequest("BTC", true)],
     ]);
 }

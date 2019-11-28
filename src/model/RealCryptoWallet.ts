@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IParent } from "./Asset";
-import { CoinMarketCapRequest } from "./CoinMarketCapRequest";
+import { CryptoCompareRequest } from "./CryptoCompareRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { QueryUtility } from "./QueryUtility";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
@@ -21,7 +21,7 @@ export type IRealCryptoWalletParameters = ISimpleCryptoWalletProperties & {
     /** The crypto currency symbol, e.g. 'BTC', 'LTC'. */
     readonly currencySymbol: string;
 
-    /** The coinmarketcap.com identifier (aka "website_slug") of the currency. */
+    /** TODO: remove */
     readonly slug?: string;
 };
 
@@ -55,6 +55,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     // TODO: This is a hack to work around the fact that the spread operator does not call property getters:
     // https://github.com/Microsoft/TypeScript/issues/26547
     protected static getProperties(
+        // TODO: remove slug
         props: ISimpleCryptoWalletProperties, currencySymbol: string, slug?: string,
     ): IRealCryptoWalletParameters {
         const { description, location, notes } = props;
@@ -90,7 +91,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     }
 
     protected queryUnitValueUsd() {
-        return this.slug ? new CoinMarketCapRequest(this.slug, false).execute() : Promise.resolve(undefined);
+        return this.slug ? new CryptoCompareRequest(this.slug, false).execute() : Promise.resolve(undefined);
     }
 
     /** @internal */

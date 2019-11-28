@@ -22,7 +22,7 @@ export class ZecWallet extends SimpleCryptoWallet {
     public readonly type = "Zcash";
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
-        super(parent, RealCryptoWallet.getProperties(props, "ZEC", "zcash"));
+        super(parent, RealCryptoWallet.getProperties(props, "ZEC", "ZEC"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

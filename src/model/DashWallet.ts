@@ -20,6 +20,6 @@ export class DashWallet extends BlockcypherWallet {
     public readonly type = "Dash";
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
-        super(parent, RealCryptoWallet.getProperties(props, "DASH", "dash"));
+        super(parent, RealCryptoWallet.getProperties(props, "DASH", "DASH"));
     }
 }

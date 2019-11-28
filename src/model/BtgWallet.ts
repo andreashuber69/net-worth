@@ -21,7 +21,7 @@ export class BtgWallet extends SimpleCryptoWallet {
     public readonly type = "Bitcoin Gold";
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
-        super(parent, RealCryptoWallet.getProperties(props, "BTG", "bitcoin-gold"));
+        super(parent, RealCryptoWallet.getProperties(props, "BTG", "BTG"));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

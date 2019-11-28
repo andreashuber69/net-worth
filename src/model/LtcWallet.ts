@@ -20,6 +20,6 @@ export class LtcWallet extends BlockcypherWallet {
     public readonly type = "Litecoin";
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
-        super(parent, RealCryptoWallet.getProperties(props, "LTC", "litecoin"));
+        super(parent, RealCryptoWallet.getProperties(props, "LTC", "LTC"));
     }
 }

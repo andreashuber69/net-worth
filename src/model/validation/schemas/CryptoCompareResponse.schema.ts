@@ -10,10 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-interface IPrice {
-    readonly price_usd: string;
-    readonly [key: string]: unknown;
-}
-
-export class CoinMarketCapPriceResponse extends Array<IPrice> {
+export class CryptoCompareResponse {
+    public readonly USD!: number;
 }
