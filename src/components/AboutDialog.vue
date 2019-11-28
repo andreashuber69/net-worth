@@ -83,8 +83,8 @@
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>
-            <v-btn href="https://chain.so" target="_blank" block flat class="ma-0">
-              <img src="../assets/sochain.png" height="36"/>
+            <v-btn href="https://zcha.in" target="_blank" block flat class="ma-0">
+              ZCHAIN
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6 md4>
