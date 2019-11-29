@@ -65,7 +65,7 @@ const dashHint =
 
 const zecHint =
     "The wallets single public address (xpub is not supported). " +
-    "<strong style='color:red'>Will be sent to chain.so to query the balance.</strong>";
+    "<strong style='color:red'>Will be sent to zcha.in to query the balance.</strong>";
 
 type Converters<P, S, E, M, PR, SR, ER, MR> = [
     (value: P, info: PreciousMetalAssetInputInfo) => PR,
