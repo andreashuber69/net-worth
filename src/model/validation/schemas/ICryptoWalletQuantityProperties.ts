@@ -10,8 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { ICryptoWalletAddressProperties } from "./ICryptoWalletAddressProperties";
-import { ICryptoWalletQuantityProperties } from "./ICryptoWalletQuantityProperties";
+import { IAssetProperties } from "./IAssetProperties.schema";
+import { QuantityAny } from "./QuantityAny.schema";
 
-/** Contains the defining properties common to all simple crypto currency wallets. */
-export type ISimpleCryptoWalletProperties = ICryptoWalletAddressProperties | ICryptoWalletQuantityProperties;
+export interface ICryptoWalletQuantityProperties extends IAssetProperties {
+    /** Provides the asset quantity. */
+    readonly quantity: QuantityAny;
+}

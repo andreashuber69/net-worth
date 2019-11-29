@@ -38,6 +38,7 @@ import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { AssetType } from "./validation/schemas/AssetType.schema";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
 import { IAssetProperties } from "./validation/schemas/IAssetProperties.schema";
+import { ICryptoWalletAddressProperties } from "./validation/schemas/ICryptoWalletAddressProperties";
 import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
 import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties.schema";
 import { MiscAssetTypeName } from "./validation/schemas/IMiscAsset.schema";
@@ -45,9 +46,7 @@ import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.
 import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
 import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
-import {
-    ICryptoWalletAddressProperties, ISimpleCryptoWalletProperties,
-} from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 import { ZecWallet } from "./ZecWallet";
 
