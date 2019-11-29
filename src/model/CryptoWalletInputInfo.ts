@@ -60,17 +60,16 @@ export class CryptoWalletInputInfo<
     public readonly quantity: TextInputInfo;
 
     /** @internal */
-    public constructor(params: ICryptoWalletInputInfoParameters<T>) {
+    public constructor({ type, ctor, addressHint, quantityDecimals }: ICryptoWalletInputInfoParameters<T>) {
         super();
-        this.type = params.type;
-        this.ctor = params.ctor;
+        this.type = type;
+        this.ctor = ctor;
 
         this.address = new TextInputInfo({
-            label: "Address", hint: params.addressHint, isPresent: true, isRequired: !params.quantityDecimals,
-            schemaName: "Text",
+            label: "Address", hint: addressHint, isPresent: true, isRequired: !quantityDecimals, schemaName: "Text",
         });
 
-        this.quantity = CryptoWalletInputInfo.getQuantityInputInfo(params.quantityDecimals);
+        this.quantity = CryptoWalletInputInfo.getQuantityInputInfo(quantityDecimals);
     }
 
     public createAsset(parent: IParent, props: T) {
