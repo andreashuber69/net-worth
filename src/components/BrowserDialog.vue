@@ -30,7 +30,7 @@
         </p>
         <p>
           <strong>
-            TL;DR To maximize your privacy, please consider using {{ applicationTitle }} on Chromium or Firefox and
+            TL;DR To maximize your privacy, please consider using {{ applicationTitle }} on Brave or Firefox and
             refrain from using services that sync your browser data across devices.
           </strong>
         </p>

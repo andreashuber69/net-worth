@@ -31,7 +31,7 @@ if (Browser.isCompatible) {
                 <p><strong>${Application.title} doesn't work on this browser.</strong></p>
                 <p>
                     It is recommended to use ${Application.title} from within a recent version of an
-                    <strong>open-source</strong> browser like <strong>Chromium</strong> or <strong>Firefox</strong>.
+                    <strong>open-source</strong> browser like <strong>Brave</strong> or <strong>Firefox</strong>.
                 </p>
                 <p>
                     ${Application.title} should also work on recent incarnations of proprietary browsers like Chrome,
