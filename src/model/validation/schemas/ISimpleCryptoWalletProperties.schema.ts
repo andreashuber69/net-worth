@@ -13,16 +13,15 @@
 import { IAssetProperties } from "./IAssetProperties.schema";
 import { QuantityAny } from "./QuantityAny.schema";
 
-export interface ISimpleCryptoWalletAddressProperties extends IAssetProperties {
+export interface ICryptoWalletAddressProperties extends IAssetProperties {
     /** Provides the public address. */
     readonly address: string;
 }
 
-export interface ISimpleCryptoWalletQuantityProperties extends IAssetProperties {
+export interface ICryptoWalletQuantityProperties extends IAssetProperties {
     /** Provides the asset quantity. */
     readonly quantity: QuantityAny;
 }
 
-/** Contains the defining properties common to all crypto currency wallets. */
-export type ISimpleCryptoWalletProperties =
-    ISimpleCryptoWalletAddressProperties | ISimpleCryptoWalletQuantityProperties;
+/** Contains the defining properties common to all simple crypto currency wallets. */
+export type ISimpleCryptoWalletProperties = ICryptoWalletAddressProperties | ICryptoWalletQuantityProperties;

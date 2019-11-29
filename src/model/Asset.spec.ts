@@ -46,7 +46,7 @@ import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalA
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
 import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
 import {
-    ISimpleCryptoWalletAddressProperties, ISimpleCryptoWalletProperties,
+    ICryptoWalletAddressProperties, ISimpleCryptoWalletProperties,
 } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 import { ZecWallet } from "./ZecWallet";
@@ -197,7 +197,7 @@ type SimpleCryptoWalletCtor = (new (parent: IParent, props: ISimpleCryptoWalletP
 
 const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ctor: SimpleCryptoWalletCtor) => {
     const expectedPropertyNames =
-        arrayOfAll<ISimpleCryptoWalletAddressProperties>()("description", "location", "notes", "address");
+        arrayOfAll<ICryptoWalletAddressProperties>()("description", "location", "notes", "address");
     const props = getSimpleCryptoWalletProperties(getRandomData(type, expectedPropertyNames));
 
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
