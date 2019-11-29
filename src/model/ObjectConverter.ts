@@ -34,7 +34,7 @@ import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCrypt
 import { ObjectUnion } from "./validation/schemas/ObjectUnion.schema";
 import { ZecWallet } from "./ZecWallet";
 
-// cSpell:ignore xpub, ypub, Mtub, Ltub, drkp
+// cSpell:ignore xpub, ypub, Mtub, Ltub, drkp, zcha
 const btcHint =
     "The wallets public address, single or xpub (ypub is not supported). " +
     "<strong style='color:red'>Will be sent to blockchain.info to query the balance.</strong>";
