@@ -3,6 +3,7 @@
   "extends": "tslint:all",
   "linterOptions": {
     "exclude": [
+      "package.json",
       "src/model/validation/schemas/All.schema.json"
     ]
   },
