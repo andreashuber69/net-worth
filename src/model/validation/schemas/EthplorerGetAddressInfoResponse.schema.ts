@@ -31,6 +31,6 @@ export class EthplorerGetAddressInfoResponse {
         balance: number;
     };
 
-    public readonly tokens!: IToken[];
+    public readonly tokens?: IToken[];
     readonly [key: string]: unknown;
 }
