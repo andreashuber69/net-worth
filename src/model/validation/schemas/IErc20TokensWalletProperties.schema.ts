@@ -12,6 +12,7 @@
 
 import { IAssetProperties } from "./IAssetProperties.schema";
 
+// TODO: Replace all occurrences of this interface with ICryptoWalletAddressProperties, which generalizes the concept.
 /** Contains the defining properties of ERC20 tokens wallets. */
 export interface IErc20TokensWalletProperties extends IAssetProperties {
     /** Provides the public address. */
