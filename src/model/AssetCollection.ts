@@ -144,7 +144,7 @@ export class AssetCollection {
     private async updateImpl(newBundles: AssetBundle[]) {
         this.updateGroups();
         const promises = new Map<number, Promise<number>>(
-            newBundles.map<[number, Promise<number>]>((b, i) => [ i, AssetCollection.queryBundleData(b, i) ]));
+            newBundles.map<[number, Promise<number>]>((b, i) => [i, AssetCollection.queryBundleData(b, i)]));
 
         while (promises.size > 0) {
             await this.waitForResponses(promises);
