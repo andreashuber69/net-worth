@@ -18,14 +18,14 @@ import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Currency } from "./validation/schemas/Currency.schema";
+import { AddressCryptoWalletTypeName } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
-import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
 import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 type CryptoWalletTypeName<T extends ISimpleCryptoWalletProperties | IAddressCryptoWalletProperties> =
-    T extends IAddressCryptoWalletProperties ? Erc20TokensWalletTypeName : SimpleCryptoWalletTypeName;
+    T extends IAddressCryptoWalletProperties ? AddressCryptoWalletTypeName : SimpleCryptoWalletTypeName;
 
 interface ICryptoWalletInputInfoParameters<T extends ISimpleCryptoWalletProperties | IAddressCryptoWalletProperties> {
     readonly type: CryptoWalletTypeName<T>;

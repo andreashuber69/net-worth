@@ -37,9 +37,9 @@ import { SilverAsset } from "./SilverAsset";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { AssetType } from "./validation/schemas/AssetType.schema";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import { AddressCryptoWalletTypeName } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 import { IAssetProperties } from "./validation/schemas/IAssetProperties.schema";
-import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
 import { MiscAssetTypeName } from "./validation/schemas/IMiscAsset.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
 import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
@@ -250,7 +250,7 @@ const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ct
 
 type Erc20TokensWalletCtor = (new (parent: IParent, props: IAddressCryptoWalletProperties) => Erc20TokensWallet);
 
-const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor: Erc20TokensWalletCtor) => {
+const testErc20TokensWalletConstruction = (type: AddressCryptoWalletTypeName, ctor: Erc20TokensWalletCtor) => {
     const expectedPropertyNames = arrayOfAll<IAddressCryptoWalletProperties>()(
         "description", "location", "notes", "address");
     const props = getErc20TokensWalletProperties(getRandomData(type, expectedPropertyNames));

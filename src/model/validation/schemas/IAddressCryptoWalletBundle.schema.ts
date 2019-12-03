@@ -10,9 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { IAddressCryptoWallet } from "./IAddressCryptoWallet.schema";
 import { IDeletedAssets } from "./IDeletedAssets.schema";
-import { IErc20TokensWallet } from "./IErc20TokensWallet.schema";
 
-export interface IErc20TokensWalletBundle extends IDeletedAssets {
-    readonly primaryAsset: IErc20TokensWallet;
+export interface IAddressCryptoWalletBundle extends IDeletedAssets {
+    readonly primaryAsset: IAddressCryptoWallet;
 }

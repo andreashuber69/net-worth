@@ -13,8 +13,8 @@
 import { IParent } from "./Asset";
 import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
 import { RealCryptoWallet } from "./RealCryptoWallet";
+import { IAddressCryptoWallet } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
-import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet.schema";
 
 /** Represents a wallet for ERC20 tokens. */
 export class Erc20TokensWallet extends RealCryptoWallet {
@@ -36,7 +36,7 @@ export class Erc20TokensWallet extends RealCryptoWallet {
     }
 
     /** @internal */
-    public toJSON(): IErc20TokensWallet {
+    public toJSON(): IAddressCryptoWallet {
         return {
             type: this.type,
             ...this.getProperties(),

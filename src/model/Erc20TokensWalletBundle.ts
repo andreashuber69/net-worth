@@ -17,7 +17,7 @@ import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { DeletedAssets } from "./validation/schemas/DeletedAssets.schema";
 import { EthplorerGetAddressInfoResponse, IToken } from "./validation/schemas/EthplorerGetAddressInfoResponse.schema";
-import { IErc20TokensWalletBundle } from "./validation/schemas/IErc20TokensWalletBundle.schema";
+import { IAddressCryptoWalletBundle } from "./validation/schemas/IAddressCryptoWalletBundle.schema";
 import { Validator } from "./validation/Validator";
 
 export class Erc20TokensWalletBundle extends AssetBundle {
@@ -67,7 +67,7 @@ export class Erc20TokensWalletBundle extends AssetBundle {
         }
     }
 
-    public toJSON(): IErc20TokensWalletBundle {
+    public toJSON(): IAddressCryptoWalletBundle {
         return {
             primaryAsset: this.erc20Wallet.toJSON(),
             deletedAssets: this.deletedAssets,

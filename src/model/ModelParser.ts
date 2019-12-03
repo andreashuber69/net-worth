@@ -14,7 +14,7 @@ import { IParent } from "./Asset";
 import { Model } from "./Model";
 import { ObjectConverter } from "./ObjectConverter";
 import { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
-import { IErc20TokensWallet } from "./validation/schemas/IErc20TokensWallet.schema";
+import { IAddressCryptoWallet } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
 import { IPreciousMetalAsset } from "./validation/schemas/IPreciousMetalAsset.schema";
 import { ISimpleCryptoWallet } from "./validation/schemas/ISimpleCryptoWallet.schema";
@@ -59,7 +59,7 @@ export class ModelParser {
                 ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
             (asset: ISimpleCryptoWallet, info) =>
                 ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
-            (asset: IErc20TokensWallet, info) =>
+            (asset: IAddressCryptoWallet, info) =>
                 ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
             (asset: IMiscAsset, info) => ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
         ])[1];

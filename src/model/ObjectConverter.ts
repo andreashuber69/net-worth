@@ -25,8 +25,8 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
+import { addressCryptoWalletTypeNames, IAddressCryptoObject } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
-import { erc20TokensWalletTypeNames, IErc20TokensObject } from "./validation/schemas/IErc20TokensWallet.schema";
 import { IMiscObject, miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
 import { IPreciousMetalObject, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
 import { ISimpleCryptoObject, simpleCryptoWalletTypeNames } from "./validation/schemas/ISimpleCryptoWallet.schema";
@@ -102,7 +102,7 @@ export class ObjectConverter {
     public static convert<
         P extends IPreciousMetalObject,
         S extends ISimpleCryptoObject,
-        E extends IErc20TokensObject,
+        E extends IAddressCryptoObject,
         M extends IMiscObject,
         PR, SR, ER, MR,
     >(
@@ -120,7 +120,7 @@ export class ObjectConverter {
             const info = ObjectConverter.getInfo<CryptoWalletInputInfo<ISimpleCryptoWalletProperties>>(rawObject.type);
 
             return [info, convertSimpleCryptoObject(rawObject, info)] as const;
-        } else if (ObjectConverter.is<E>(rawObject, erc20TokensWalletTypeNames)) {
+        } else if (ObjectConverter.is<E>(rawObject, addressCryptoWalletTypeNames)) {
             const info = ObjectConverter.getInfo<CryptoWalletInputInfo<IAddressCryptoWalletProperties>>(rawObject.type);
 
             return [info, convertErc20TokensObject(rawObject, info)] as const;

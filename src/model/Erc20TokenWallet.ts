@@ -13,7 +13,7 @@
 import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
-import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
+import { AddressCryptoWalletTypeName } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 
 interface ITokenWalletParameters {
@@ -24,7 +24,7 @@ interface ITokenWalletParameters {
 }
 
 export class Erc20TokenWallet extends CryptoWallet {
-    public get type(): Erc20TokensWalletTypeName {
+    public get type(): AddressCryptoWalletTypeName {
         return this.editable.type;
     }
 

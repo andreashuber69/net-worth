@@ -12,13 +12,13 @@
 
 import { IAddressCryptoWalletProperties } from "./IAddressCryptoWalletProperties.schema";
 
-export const erc20TokensWalletTypeNames = ["ERC20 Tokens"] as const;
+export const addressCryptoWalletTypeNames = ["ERC20 Tokens"] as const;
 
-export type Erc20TokensWalletTypeName = (typeof erc20TokensWalletTypeNames)[number];
+export type AddressCryptoWalletTypeName = (typeof addressCryptoWalletTypeNames)[number];
 
-export interface IErc20TokensObject {
-    readonly type: Erc20TokensWalletTypeName;
+export interface IAddressCryptoObject {
+    readonly type: AddressCryptoWalletTypeName;
 }
 
-export interface IErc20TokensWallet extends IErc20TokensObject, IAddressCryptoWalletProperties {
+export interface IAddressCryptoWallet extends IAddressCryptoObject, IAddressCryptoWalletProperties {
 }
