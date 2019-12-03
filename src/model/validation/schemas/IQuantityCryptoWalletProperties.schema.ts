@@ -13,7 +13,7 @@
 import { IAssetProperties } from "./IAssetProperties.schema";
 import { QuantityAny } from "./QuantityAny.schema";
 
-export interface ICryptoWalletQuantityProperties extends IAssetProperties {
+export interface IQuantityCryptoWalletProperties extends IAssetProperties {
     /** Provides the asset quantity. */
     readonly quantity: QuantityAny;
 }

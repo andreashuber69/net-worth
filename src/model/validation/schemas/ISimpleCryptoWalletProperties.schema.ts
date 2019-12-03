@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAddressCryptoWalletProperties } from "./IAddressCryptoWalletProperties.schema";
-import { ICryptoWalletQuantityProperties } from "./ICryptoWalletQuantityProperties.schema";
+import { IQuantityCryptoWalletProperties } from "./IQuantityCryptoWalletProperties.schema";
 
 /** Contains the defining properties common to all simple crypto currency wallets. */
-export type ISimpleCryptoWalletProperties = IAddressCryptoWalletProperties | ICryptoWalletQuantityProperties;
+export type ISimpleCryptoWalletProperties = IAddressCryptoWalletProperties | IQuantityCryptoWalletProperties;
