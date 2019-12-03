@@ -105,7 +105,7 @@ export function getSimpleCryptoWalletProperties(data: AssetEditorData): ISimpleC
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function getErc20TokensWalletProperties(data: AssetEditorData): IAddressCryptoWalletProperties {
+export function getAddressCryptoWalletProperties(data: AssetEditorData): IAddressCryptoWalletProperties {
     return new RequiredAddressAssetProperties(data);
 }
 
@@ -125,7 +125,7 @@ export function createAsset(parent: IParent, data: AssetEditorData) {
         [
             (value, info) => ((p: IParent) => info.createAsset(p, getPreciousMetalProperties(data)) as Asset),
             (value, info) => ((p: IParent) => info.createAsset(p, getSimpleCryptoWalletProperties(data))),
-            (value, info) => ((p: IParent) => info.createAsset(p, getErc20TokensWalletProperties(data))),
+            (value, info) => ((p: IParent) => info.createAsset(p, getAddressCryptoWalletProperties(data))),
             (value, info) => ((p: IParent) => info.createAsset(p, getMiscAssetProperties(data))),
         ],
     )[1](parent);

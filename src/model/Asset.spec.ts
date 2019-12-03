@@ -17,7 +17,8 @@ import { AssetEditorData } from "./AssetEditorData";
 import { AssetGroup } from "./AssetGroup";
 import { allAssetPropertyNames, AssetPropertyName } from "./AssetInterfaces";
 import {
-    getErc20TokensWalletProperties, getMiscAssetProperties, getPreciousMetalProperties, getSimpleCryptoWalletProperties,
+    getAddressCryptoWalletProperties, getMiscAssetProperties,
+    getPreciousMetalProperties, getSimpleCryptoWalletProperties,
 } from "./AssetProperties";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
@@ -191,7 +192,7 @@ const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ct
     });
 };
 
-type SimpleCryptoWalletCtor = (new (parent: IParent, props: ISimpleCryptoWalletProperties) => CryptoWallet);
+type SimpleCryptoWalletCtor = (new (parent: IParent, props: ISimpleCryptoWalletProperties) => SimpleCryptoWallet);
 
 const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ctor: SimpleCryptoWalletCtor) => {
     const expectedPropertyNames =
@@ -248,12 +249,12 @@ const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ct
     });
 };
 
-type Erc20TokensWalletCtor = (new (parent: IParent, props: IAddressCryptoWalletProperties) => Erc20TokensWallet);
+type AddressCryptoWalletCtor = (new (parent: IParent, props: IAddressCryptoWalletProperties) => Erc20TokensWallet);
 
-const testErc20TokensWalletConstruction = (type: AddressCryptoWalletTypeName, ctor: Erc20TokensWalletCtor) => {
+const testAddressCryptoWalletConstruction = (type: AddressCryptoWalletTypeName, ctor: AddressCryptoWalletCtor) => {
     const expectedPropertyNames = arrayOfAll<IAddressCryptoWalletProperties>()(
         "description", "location", "notes", "address");
-    const props = getErc20TokensWalletProperties(getRandomData(type, expectedPropertyNames));
+    const props = getAddressCryptoWalletProperties(getRandomData(type, expectedPropertyNames));
 
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
     expectProperty(ctor, props, "locationHint", (matcher) => matcher.toEqual(props.address ? props.address : ""));
@@ -278,7 +279,7 @@ const testErc20TokensWalletConstruction = (type: AddressCryptoWalletTypeName, ct
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
-            expected = getErc20TokensWalletProperties(getRandomData(type, expectedPropertyNames));
+            expected = getAddressCryptoWalletProperties(getRandomData(type, expectedPropertyNames));
             sut = createAsset(ctor, expected);
         });
 
@@ -465,7 +466,7 @@ testSimpleCryptoWalletConstruction("Bitcoin", BtcWallet);
 testSimpleCryptoWalletConstruction("Litecoin", LtcWallet);
 testSimpleCryptoWalletConstruction("Dash", DashWallet);
 testSimpleCryptoWalletConstruction("Bitcoin Gold", BtgWallet);
-testErc20TokensWalletConstruction("ERC20 Tokens", Erc20TokensWallet);
+testAddressCryptoWalletConstruction("ERC20 Tokens", Erc20TokensWallet);
 testSimpleCryptoWalletConstruction("Ethereum Classic", EtcWallet);
 testSimpleCryptoWalletConstruction("Ethereum", EthWallet);
 testSimpleCryptoWalletConstruction("Zcash", ZecWallet);
