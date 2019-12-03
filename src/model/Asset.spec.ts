@@ -38,9 +38,8 @@ import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { AssetType } from "./validation/schemas/AssetType.schema";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
 import { IAssetProperties } from "./validation/schemas/IAssetProperties.schema";
-import { ICryptoWalletAddressProperties } from "./validation/schemas/ICryptoWalletAddressProperties";
+import { ICryptoWalletAddressProperties } from "./validation/schemas/ICryptoWalletAddressProperties.schema";
 import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
-import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties.schema";
 import { MiscAssetTypeName } from "./validation/schemas/IMiscAsset.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
 import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
@@ -249,10 +248,10 @@ const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ct
     });
 };
 
-type Erc20TokensWalletCtor = (new (parent: IParent, props: IErc20TokensWalletProperties) => Erc20TokensWallet);
+type Erc20TokensWalletCtor = (new (parent: IParent, props: ICryptoWalletAddressProperties) => Erc20TokensWallet);
 
 const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor: Erc20TokensWalletCtor) => {
-    const expectedPropertyNames = arrayOfAll<IErc20TokensWalletProperties>()(
+    const expectedPropertyNames = arrayOfAll<ICryptoWalletAddressProperties>()(
         "description", "location", "notes", "address");
     const props = getErc20TokensWalletProperties(getRandomData(type, expectedPropertyNames));
 
@@ -275,7 +274,7 @@ const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
-        let expected: IErc20TokensWalletProperties;
+        let expected: ICryptoWalletAddressProperties;
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {

@@ -18,16 +18,16 @@ import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Currency } from "./validation/schemas/Currency.schema";
+import { ICryptoWalletAddressProperties } from "./validation/schemas/ICryptoWalletAddressProperties.schema";
 import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
-import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties.schema";
 import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
-type CryptoWalletTypeName<T extends ISimpleCryptoWalletProperties | IErc20TokensWalletProperties> =
-    T extends IErc20TokensWalletProperties ? Erc20TokensWalletTypeName : SimpleCryptoWalletTypeName;
+type CryptoWalletTypeName<T extends ISimpleCryptoWalletProperties | ICryptoWalletAddressProperties> =
+    T extends ICryptoWalletAddressProperties ? Erc20TokensWalletTypeName : SimpleCryptoWalletTypeName;
 
-interface ICryptoWalletInputInfoParameters<T extends ISimpleCryptoWalletProperties | IErc20TokensWalletProperties> {
+interface ICryptoWalletInputInfoParameters<T extends ISimpleCryptoWalletProperties | ICryptoWalletAddressProperties> {
     readonly type: CryptoWalletTypeName<T>;
     readonly ctor: new (parent: IParent, props: T) => CryptoWallet;
     readonly addressHint: string;
@@ -39,7 +39,7 @@ interface ICryptoWalletInputInfoParameters<T extends ISimpleCryptoWalletProperti
  * a representation of the wallet.
  */
 export class CryptoWalletInputInfo<
-    T extends ISimpleCryptoWalletProperties | IErc20TokensWalletProperties
+    T extends ISimpleCryptoWalletProperties | ICryptoWalletAddressProperties
 > extends AssetInputInfo {
     public readonly type: CryptoWalletTypeName<T>;
     public readonly description = new TextInputInfo({

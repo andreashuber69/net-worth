@@ -25,8 +25,8 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
+import { ICryptoWalletAddressProperties } from "./validation/schemas/ICryptoWalletAddressProperties.schema";
 import { erc20TokensWalletTypeNames, IErc20TokensObject } from "./validation/schemas/IErc20TokensWallet.schema";
-import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties.schema";
 import { IMiscObject, miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
 import { IPreciousMetalObject, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
 import { ISimpleCryptoObject, simpleCryptoWalletTypeNames } from "./validation/schemas/ISimpleCryptoWallet.schema";
@@ -70,7 +70,7 @@ const zecHint =
 type Converters<P, S, E, M, PR, SR, ER, MR> = [
     (value: P, info: PreciousMetalAssetInputInfo) => PR,
     (value: S, info: CryptoWalletInputInfo<ISimpleCryptoWalletProperties>) => SR,
-    (value: E, info: CryptoWalletInputInfo<IErc20TokensWalletProperties>) => ER,
+    (value: E, info: CryptoWalletInputInfo<ICryptoWalletAddressProperties>) => ER,
     (value: M, info: MiscAssetInputInfo) => MR,
 ];
 
@@ -86,7 +86,7 @@ export class ObjectConverter {
             { type: "Litecoin", ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
         new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
             { type: "Ethereum Classic", ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
-        new CryptoWalletInputInfo<IErc20TokensWalletProperties>(
+        new CryptoWalletInputInfo<ICryptoWalletAddressProperties>(
             { type: "ERC20 Tokens", ctor: Erc20TokensWallet, addressHint: erc20Hint }),
         new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
             { type: "Ethereum", ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
@@ -121,7 +121,7 @@ export class ObjectConverter {
 
             return [info, convertSimpleCryptoObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<E>(rawObject, erc20TokensWalletTypeNames)) {
-            const info = ObjectConverter.getInfo<CryptoWalletInputInfo<IErc20TokensWalletProperties>>(rawObject.type);
+            const info = ObjectConverter.getInfo<CryptoWalletInputInfo<ICryptoWalletAddressProperties>>(rawObject.type);
 
             return [info, convertErc20TokensObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<M>(rawObject, miscAssetTypeNames)) {

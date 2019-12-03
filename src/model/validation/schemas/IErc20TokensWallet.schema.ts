@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IErc20TokensWalletProperties } from "./IErc20TokensWalletProperties.schema";
+import { ICryptoWalletAddressProperties } from "./ICryptoWalletAddressProperties.schema";
 
 export const erc20TokensWalletTypeNames = ["ERC20 Tokens"] as const;
 
@@ -20,5 +20,5 @@ export interface IErc20TokensObject {
     readonly type: Erc20TokensWalletTypeName;
 }
 
-export interface IErc20TokensWallet extends IErc20TokensObject, IErc20TokensWalletProperties {
+export interface IErc20TokensWallet extends IErc20TokensObject, ICryptoWalletAddressProperties {
 }

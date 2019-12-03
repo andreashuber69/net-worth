@@ -13,7 +13,7 @@
 import { Asset, IParent } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
 import { ObjectConverter } from "./ObjectConverter";
-import { IErc20TokensWalletProperties } from "./validation/schemas/IErc20TokensWalletProperties.schema";
+import { ICryptoWalletAddressProperties } from "./validation/schemas/ICryptoWalletAddressProperties.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
@@ -105,7 +105,7 @@ export function getSimpleCryptoWalletProperties(data: AssetEditorData): ISimpleC
 }
 
 // tslint:disable-next-line: only-arrow-functions
-export function getErc20TokensWalletProperties(data: AssetEditorData): IErc20TokensWalletProperties {
+export function getErc20TokensWalletProperties(data: AssetEditorData): ICryptoWalletAddressProperties {
     return new RequiredAddressAssetProperties(data);
 }
 
