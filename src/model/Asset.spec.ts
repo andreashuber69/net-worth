@@ -37,8 +37,8 @@ import { SilverAsset } from "./SilverAsset";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { AssetType } from "./validation/schemas/AssetType.schema";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 import { IAssetProperties } from "./validation/schemas/IAssetProperties.schema";
-import { ICryptoWalletAddressProperties } from "./validation/schemas/ICryptoWalletAddressProperties.schema";
 import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
 import { MiscAssetTypeName } from "./validation/schemas/IMiscAsset.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
@@ -195,7 +195,7 @@ type SimpleCryptoWalletCtor = (new (parent: IParent, props: ISimpleCryptoWalletP
 
 const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ctor: SimpleCryptoWalletCtor) => {
     const expectedPropertyNames =
-        arrayOfAll<ICryptoWalletAddressProperties>()("description", "location", "notes", "address");
+        arrayOfAll<IAddressCryptoWalletProperties>()("description", "location", "notes", "address");
     const props = getSimpleCryptoWalletProperties(getRandomData(type, expectedPropertyNames));
 
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
@@ -248,10 +248,10 @@ const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ct
     });
 };
 
-type Erc20TokensWalletCtor = (new (parent: IParent, props: ICryptoWalletAddressProperties) => Erc20TokensWallet);
+type Erc20TokensWalletCtor = (new (parent: IParent, props: IAddressCryptoWalletProperties) => Erc20TokensWallet);
 
 const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor: Erc20TokensWalletCtor) => {
-    const expectedPropertyNames = arrayOfAll<ICryptoWalletAddressProperties>()(
+    const expectedPropertyNames = arrayOfAll<IAddressCryptoWalletProperties>()(
         "description", "location", "notes", "address");
     const props = getErc20TokensWalletProperties(getRandomData(type, expectedPropertyNames));
 
@@ -274,7 +274,7 @@ const testErc20TokensWalletConstruction = (type: Erc20TokensWalletTypeName, ctor
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
-        let expected: ICryptoWalletAddressProperties;
+        let expected: IAddressCryptoWalletProperties;
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {

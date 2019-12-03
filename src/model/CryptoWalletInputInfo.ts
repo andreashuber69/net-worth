@@ -18,16 +18,16 @@ import { CompositeInput } from "./Input";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Currency } from "./validation/schemas/Currency.schema";
-import { ICryptoWalletAddressProperties } from "./validation/schemas/ICryptoWalletAddressProperties.schema";
+import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 import { Erc20TokensWalletTypeName } from "./validation/schemas/IErc20TokensWallet.schema";
 import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
-type CryptoWalletTypeName<T extends ISimpleCryptoWalletProperties | ICryptoWalletAddressProperties> =
-    T extends ICryptoWalletAddressProperties ? Erc20TokensWalletTypeName : SimpleCryptoWalletTypeName;
+type CryptoWalletTypeName<T extends ISimpleCryptoWalletProperties | IAddressCryptoWalletProperties> =
+    T extends IAddressCryptoWalletProperties ? Erc20TokensWalletTypeName : SimpleCryptoWalletTypeName;
 
-interface ICryptoWalletInputInfoParameters<T extends ISimpleCryptoWalletProperties | ICryptoWalletAddressProperties> {
+interface ICryptoWalletInputInfoParameters<T extends ISimpleCryptoWalletProperties | IAddressCryptoWalletProperties> {
     readonly type: CryptoWalletTypeName<T>;
     readonly ctor: new (parent: IParent, props: T) => CryptoWallet;
     readonly addressHint: string;
@@ -39,7 +39,7 @@ interface ICryptoWalletInputInfoParameters<T extends ISimpleCryptoWalletProperti
  * a representation of the wallet.
  */
 export class CryptoWalletInputInfo<
-    T extends ISimpleCryptoWalletProperties | ICryptoWalletAddressProperties
+    T extends ISimpleCryptoWalletProperties | IAddressCryptoWalletProperties
 > extends AssetInputInfo {
     public readonly type: CryptoWalletTypeName<T>;
     public readonly description = new TextInputInfo({
