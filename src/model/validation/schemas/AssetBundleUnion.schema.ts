@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAddressCryptoWalletBundle } from "./IAddressCryptoWalletBundle.schema";
+import { IErc20TokensWalletBundle } from "./IErc20TokensWalletBundle.schema";
 import { IMiscAssetBundle } from "./IMiscAssetBundle.schema";
 import { IPreciousMetalAssetBundle } from "./IPreciousMetalAssetBundle.schema";
 import { ISimpleCryptoWalletBundle } from "./ISimpleCryptoWalletBundle.schema";
 
 export type AssetBundleUnion =
-    IPreciousMetalAssetBundle | ISimpleCryptoWalletBundle | IAddressCryptoWalletBundle | IMiscAssetBundle;
+    IPreciousMetalAssetBundle | ISimpleCryptoWalletBundle | IErc20TokensWalletBundle | IMiscAssetBundle;
