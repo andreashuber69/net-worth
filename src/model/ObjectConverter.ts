@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { AddressCryptoWalletInputInfo } from "./AddressCryptoWalletInputInfo";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
-import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { DashWallet } from "./DashWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { EtcWallet } from "./EtcWallet";
@@ -25,12 +25,11 @@ import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
+import { SimpleCryptoWalletInputInfo } from "./SimpleCryptoWalletInputInfo";
 import { addressCryptoWalletTypeNames, IAddressCryptoObject } from "./validation/schemas/IAddressCryptoWallet.schema";
-import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 import { IMiscObject, miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
 import { IPreciousMetalObject, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
 import { ISimpleCryptoObject, simpleCryptoWalletTypeNames } from "./validation/schemas/ISimpleCryptoWallet.schema";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 import { ObjectUnion } from "./validation/schemas/ObjectUnion.schema";
 import { ZecWallet } from "./ZecWallet";
 
@@ -69,8 +68,8 @@ const zecHint =
 
 type Converters<P, S, E, M, PR, SR, ER, MR> = [
     (value: P, info: PreciousMetalAssetInputInfo) => PR,
-    (value: S, info: CryptoWalletInputInfo<ISimpleCryptoWalletProperties>) => SR,
-    (value: E, info: CryptoWalletInputInfo<IAddressCryptoWalletProperties>) => ER,
+    (value: S, info: SimpleCryptoWalletInputInfo) => SR,
+    (value: E, info: AddressCryptoWalletInputInfo) => ER,
     (value: M, info: MiscAssetInputInfo) => MR,
 ];
 
@@ -80,21 +79,21 @@ export class ObjectConverter {
         new PreciousMetalAssetInputInfo("Palladium", PalladiumAsset),
         new PreciousMetalAssetInputInfo("Platinum", PlatinumAsset),
         new PreciousMetalAssetInputInfo("Gold", GoldAsset),
-        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+        new SimpleCryptoWalletInputInfo(
             { type: "Bitcoin", ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
-        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+        new SimpleCryptoWalletInputInfo(
             { type: "Litecoin", ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
-        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+        new SimpleCryptoWalletInputInfo(
             { type: "Ethereum Classic", ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
-        new CryptoWalletInputInfo<IAddressCryptoWalletProperties>(
+        new AddressCryptoWalletInputInfo(
             { type: "ERC20 Tokens", ctor: Erc20TokensWallet, addressHint: erc20Hint }),
-        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+        new SimpleCryptoWalletInputInfo(
             { type: "Ethereum", ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
-        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+        new SimpleCryptoWalletInputInfo(
             { type: "Bitcoin Gold", ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
-        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+        new SimpleCryptoWalletInputInfo(
             { type: "Dash", ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
-        new CryptoWalletInputInfo<ISimpleCryptoWalletProperties>(
+        new SimpleCryptoWalletInputInfo(
             { type: "Zcash", ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
         new MiscAssetInputInfo(),
     ] as const;
@@ -117,11 +116,11 @@ export class ObjectConverter {
 
             return [info, convertPreciousMetalObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<S>(rawObject, simpleCryptoWalletTypeNames)) {
-            const info = ObjectConverter.getInfo<CryptoWalletInputInfo<ISimpleCryptoWalletProperties>>(rawObject.type);
+            const info = ObjectConverter.getInfo<SimpleCryptoWalletInputInfo>(rawObject.type);
 
             return [info, convertSimpleCryptoObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<E>(rawObject, addressCryptoWalletTypeNames)) {
-            const info = ObjectConverter.getInfo<CryptoWalletInputInfo<IAddressCryptoWalletProperties>>(rawObject.type);
+            const info = ObjectConverter.getInfo<AddressCryptoWalletInputInfo>(rawObject.type);
 
             return [info, convertErc20TokensObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<M>(rawObject, miscAssetTypeNames)) {
