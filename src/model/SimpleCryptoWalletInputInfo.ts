@@ -10,18 +10,16 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IParent } from "./Asset";
+import { Asset } from "./Asset";
 import { AssetPropertyName } from "./AssetInterfaces";
-import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
+import { CryptoWalletInputInfo, ICryptoWalletInputInfoParameters } from "./CryptoWalletInputInfo";
 import { CompositeInput } from "./Input";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { TextInputInfo } from "./TextInputInfo";
-import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
-interface ISimpleCryptoWalletInputInfoParameters {
-    readonly type: SimpleCryptoWalletTypeName;
-    readonly ctor: new (parent: IParent, props: ISimpleCryptoWalletProperties) => SimpleCryptoWallet;
+interface ISimpleCryptoWalletInputInfoParameters extends
+    ICryptoWalletInputInfoParameters<SimpleCryptoWallet, ISimpleCryptoWalletProperties> {
     readonly addressHint: string;
     readonly quantityDecimals: 8 | 18;
 }
@@ -30,16 +28,15 @@ interface ISimpleCryptoWalletInputInfoParameters {
  * Defines how the properties of a simple crypto currency wallet need to be input and validated and provides a method to
  * create a representation of the wallet.
  */
-export class SimpleCryptoWalletInputInfo extends CryptoWalletInputInfo {
-    public readonly type: SimpleCryptoWalletTypeName;
+export class SimpleCryptoWalletInputInfo extends
+    CryptoWalletInputInfo<SimpleCryptoWallet, ISimpleCryptoWalletProperties> {
     public readonly address: TextInputInfo;
     public readonly quantity: TextInputInfo;
 
     /** @internal */
-    public constructor({ type, ctor, addressHint, quantityDecimals }: ISimpleCryptoWalletInputInfoParameters) {
-        super();
-        this.type = type;
-        this.ctor = ctor;
+    public constructor(parameters: ISimpleCryptoWalletInputInfoParameters) {
+        super(parameters);
+        const { addressHint, quantityDecimals } = parameters;
         this.address = new TextInputInfo({
             label: "Address", hint: addressHint, isPresent: true, isRequired: !quantityDecimals, schemaName: "Text",
         });
@@ -47,10 +44,6 @@ export class SimpleCryptoWalletInputInfo extends CryptoWalletInputInfo {
             label: "Quantity", hint: "The amount in the wallet.", isPresent: true, isRequired: false,
             schemaName: SimpleCryptoWalletInputInfo.getSchema(quantityDecimals),
         });
-    }
-
-    public createAsset(parent: IParent, props: ISimpleCryptoWalletProperties) {
-        return new this.ctor(parent, props);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,6 +74,4 @@ export class SimpleCryptoWalletInputInfo extends CryptoWalletInputInfo {
                 return "QuantityAny";
         }
     }
-
-    private readonly ctor: new (parent: IParent, props: ISimpleCryptoWalletProperties) => SimpleCryptoWallet;
 }

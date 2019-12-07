@@ -10,13 +10,22 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { IParent } from "./Asset";
 import { AssetInputInfo } from "./AssetInputInfo";
+import { CryptoWallet } from "./CryptoWallet";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { Currency } from "./validation/schemas/Currency.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
-export abstract class CryptoWalletInputInfo extends AssetInputInfo {
+export interface ICryptoWalletInputInfoParameters<T extends CryptoWallet, U> {
+    readonly type: T["type"];
+    readonly ctor: new (parent: IParent, props: U) => T;
+}
+
+export abstract class CryptoWalletInputInfo<T extends CryptoWallet, U> extends AssetInputInfo {
+    public readonly type: T["type"];
+
     public readonly description = new TextInputInfo({
         label: "Description", hint: "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.",
         isPresent: true, isRequired: true, schemaName: "Text",
@@ -31,4 +40,20 @@ export abstract class CryptoWalletInputInfo extends AssetInputInfo {
     public readonly fineness = new TextInputInfo();
     public readonly value = new TextInputInfo();
     public readonly valueCurrency = new SelectInputInfo<typeof Currency>();
+
+    public createAsset(parent: IParent, props: U) {
+        return new this.ctor(parent, props);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected constructor({ type, ctor }: ICryptoWalletInputInfoParameters<T, U>) {
+        super();
+        this.type = type;
+        this.ctor = ctor;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private readonly ctor: new (parent: IParent, props: U) => T;
 }

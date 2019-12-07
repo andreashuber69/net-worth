@@ -10,39 +10,26 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
-import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
+import { CryptoWalletInputInfo, ICryptoWalletInputInfoParameters } from "./CryptoWalletInputInfo";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { TextInputInfo } from "./TextInputInfo";
-import { AddressCryptoWalletTypeName } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 
-interface IAddressCryptoWalletInputInfoParameters {
-    readonly type: AddressCryptoWalletTypeName;
-    readonly ctor: new (parent: IParent, props: IAddressCryptoWalletProperties) => Erc20TokensWallet;
+interface IAddressCryptoWalletInputInfoParameters extends
+    ICryptoWalletInputInfoParameters<Erc20TokensWallet, IAddressCryptoWalletProperties> {
     readonly addressHint: string;
 }
 
-export class AddressCryptoWalletInputInfo extends CryptoWalletInputInfo {
-    public readonly type: AddressCryptoWalletTypeName;
+export class AddressCryptoWalletInputInfo extends
+    CryptoWalletInputInfo<Erc20TokensWallet, IAddressCryptoWalletProperties> {
     public readonly address: TextInputInfo;
     public readonly quantity = new TextInputInfo();
 
     /** @internal */
-    public constructor({ type, ctor, addressHint }: IAddressCryptoWalletInputInfoParameters) {
-        super();
-        this.type = type;
-        this.ctor = ctor;
+    public constructor(parameters: IAddressCryptoWalletInputInfoParameters) {
+        super(parameters);
         this.address = new TextInputInfo({
-            label: "Address", hint: addressHint, isPresent: true, isRequired: true, schemaName: "Text",
+            label: "Address", hint: parameters.addressHint, isPresent: true, isRequired: true, schemaName: "Text",
         });
     }
-
-    public createAsset(parent: IParent, props: IAddressCryptoWalletProperties) {
-        return new this.ctor(parent, props);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private readonly ctor: new (parent: IParent, props: IAddressCryptoWalletProperties) => Erc20TokensWallet;
 }
