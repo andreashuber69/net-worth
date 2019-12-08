@@ -66,10 +66,10 @@ const zecHint =
     "The wallets single public address (xpub is not supported). " +
     "<strong style='color:red'>Will be sent to zcha.in to query the balance.</strong>";
 
-type Converters<P, S, E, M, PR, SR, ER, MR> = [
+type Converters<P, S, A, M, PR, SR, AR, MR> = [
     (value: P, info: PreciousMetalAssetInputInfo) => PR,
     (value: S, info: SimpleCryptoWalletInputInfo) => SR,
-    (value: E, info: AddressCryptoWalletInputInfo) => ER,
+    (value: A, info: AddressCryptoWalletInputInfo) => AR,
     (value: M, info: MiscAssetInputInfo) => MR,
 ];
 
@@ -106,7 +106,7 @@ export class ObjectConverter {
         PR, SR, ER, MR,
     >(
         rawObject: P | S | E | M,
-        [convertPreciousMetalObject, convertSimpleCryptoObject, convertErc20TokensObject, convertMiscObject]:
+        [convertPreciousMetalObject, convertSimpleCryptoObject, convertAddressCryptoObject, convertMiscObject]:
             Converters<P, S, E, M, PR, SR, ER, MR>,
     ) {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should
@@ -122,7 +122,7 @@ export class ObjectConverter {
         } else if (ObjectConverter.is<E>(rawObject, addressCryptoWalletTypeNames)) {
             const info = ObjectConverter.getInfo<AddressCryptoWalletInputInfo>(rawObject.type);
 
-            return [info, convertErc20TokensObject(rawObject, info)] as const;
+            return [info, convertAddressCryptoObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<M>(rawObject, miscAssetTypeNames)) {
             const info = ObjectConverter.getInfo<MiscAssetInputInfo>(rawObject.type);
 
