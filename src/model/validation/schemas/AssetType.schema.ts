@@ -17,6 +17,7 @@ export enum AssetType {
     "Platinum",
     "Gold",
     "Bitcoin",
+    "Monero",
     "Litecoin",
     "Ethereum Classic",
     "Ethereum",

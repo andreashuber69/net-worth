@@ -13,12 +13,13 @@
 import { IParent } from "./Asset";
 import { SingleAsset } from "./SingleAsset";
 import { AddressCryptoWalletTypeName } from "./validation/schemas/IAddressCryptoWallet.schema";
+import { QuantityCryptoWalletTypeName } from "./validation/schemas/IQuantityCryptoWallet.schema";
 import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
 import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends SingleAsset {
-    public abstract get type(): SimpleCryptoWalletTypeName | AddressCryptoWalletTypeName;
+    public abstract get type(): SimpleCryptoWalletTypeName | AddressCryptoWalletTypeName | QuantityCryptoWalletTypeName;
 
     public get locationHint() {
         return this.address;

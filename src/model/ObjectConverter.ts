@@ -24,13 +24,18 @@ import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
 import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
+import { QuantityCryptoWalletInputInfo } from "./QuantityCryptoWalletInputInfo";
 import { SilverAsset } from "./SilverAsset";
 import { SimpleCryptoWalletInputInfo } from "./SimpleCryptoWalletInputInfo";
 import { addressCryptoWalletTypeNames, IAddressCryptoObject } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { IMiscObject, miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
 import { IPreciousMetalObject, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
+import {
+    IQuantityCryptoObject, quantityCryptoWalletTypeNames,
+} from "./validation/schemas/IQuantityCryptoWallet.schema";
 import { ISimpleCryptoObject, simpleCryptoWalletTypeNames } from "./validation/schemas/ISimpleCryptoWallet.schema";
 import { ObjectUnion } from "./validation/schemas/ObjectUnion.schema";
+import { XmrWallet } from "./XmrWallet";
 import { ZecWallet } from "./ZecWallet";
 
 // cSpell:ignore xpub, ypub, Mtub, Ltub, drkp, zcha
@@ -66,10 +71,11 @@ const zecHint =
     "The wallets single public address (xpub is not supported). " +
     "<strong style='color:red'>Will be sent to zcha.in to query the balance.</strong>";
 
-type Converters<P, S, A, M, PR, SR, AR, MR> = [
+type Converters<P, S, A, Q, M, PR, SR, AR, QR, MR> = [
     (value: P, info: PreciousMetalAssetInputInfo) => PR,
     (value: S, info: SimpleCryptoWalletInputInfo) => SR,
     (value: A, info: AddressCryptoWalletInputInfo) => AR,
+    (value: Q, info: QuantityCryptoWalletInputInfo) => QR,
     (value: M, info: MiscAssetInputInfo) => MR,
 ];
 
@@ -81,6 +87,7 @@ export class ObjectConverter {
         new PreciousMetalAssetInputInfo("Gold", GoldAsset),
         new SimpleCryptoWalletInputInfo(
             { type: "Bitcoin", ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
+        new QuantityCryptoWalletInputInfo({ type: "Monero", ctor: XmrWallet, quantityDecimals: 8 }),
         new SimpleCryptoWalletInputInfo(
             { type: "Litecoin", ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
         new SimpleCryptoWalletInputInfo(
@@ -102,12 +109,15 @@ export class ObjectConverter {
         P extends IPreciousMetalObject,
         S extends ISimpleCryptoObject,
         A extends IAddressCryptoObject,
+        Q extends IQuantityCryptoObject,
         M extends IMiscObject,
-        PR, SR, AR, MR,
+        PR, SR, AR, QR, MR,
     >(
-        rawObject: P | S | A | M,
-        [convertPreciousMetalObject, convertSimpleCryptoObject, convertAddressCryptoObject, convertMiscObject]:
-            Converters<P, S, A, M, PR, SR, AR, MR>,
+        rawObject: P | S | A | Q | M,
+        [
+            convertPreciousMetalObject, convertSimpleCryptoObject,
+            convertAddressCryptoObject, convertQuantityCryptoObject, convertMiscObject,
+        ]: Converters<P, S, A, Q, M, PR, SR, AR, QR, MR>,
     ) {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should
         // go away...
@@ -123,6 +133,10 @@ export class ObjectConverter {
             const info = ObjectConverter.getInfo<AddressCryptoWalletInputInfo>(rawObject.type);
 
             return [info, convertAddressCryptoObject(rawObject, info)] as const;
+        } else if (ObjectConverter.is<Q>(rawObject, quantityCryptoWalletTypeNames)) {
+            const info = ObjectConverter.getInfo<QuantityCryptoWalletInputInfo>(rawObject.type);
+
+            return [info, convertQuantityCryptoObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<M>(rawObject, miscAssetTypeNames)) {
             const info = ObjectConverter.getInfo<MiscAssetInputInfo>(rawObject.type);
 

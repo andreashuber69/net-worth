@@ -16,6 +16,7 @@ import { ObjectConverter } from "./ObjectConverter";
 import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
+import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
@@ -110,6 +111,11 @@ export function getAddressCryptoWalletProperties(data: AssetEditorData): IAddres
 }
 
 // tslint:disable-next-line: only-arrow-functions
+export function getQuantityCryptoWalletProperties(data: AssetEditorData): IQuantityCryptoWalletProperties {
+    return new RequiredQuantityAssetProperties(data);
+}
+
+// tslint:disable-next-line: only-arrow-functions
 export function getMiscAssetProperties(data: AssetEditorData): IMiscAssetProperties {
     return new RequiredQuantityAssetProperties(data);
 }
@@ -126,6 +132,7 @@ export function createAsset(parent: IParent, data: AssetEditorData) {
             (value, info) => ((p: IParent) => info.createAsset(p, getPreciousMetalProperties(data)) as Asset),
             (value, info) => ((p: IParent) => info.createAsset(p, getSimpleCryptoWalletProperties(data))),
             (value, info) => ((p: IParent) => info.createAsset(p, getAddressCryptoWalletProperties(data))),
+            (value, info) => ((p: IParent) => info.createAsset(p, getQuantityCryptoWalletProperties(data))),
             (value, info) => ((p: IParent) => info.createAsset(p, getMiscAssetProperties(data))),
         ],
     )[1](parent);

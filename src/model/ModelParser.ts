@@ -17,6 +17,7 @@ import { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
 import { IAddressCryptoWallet } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
 import { IPreciousMetalAsset } from "./validation/schemas/IPreciousMetalAsset.schema";
+import { IQuantityCryptoWallet } from "./validation/schemas/IQuantityCryptoWallet.schema";
 import { ISimpleCryptoWallet } from "./validation/schemas/ISimpleCryptoWallet.schema";
 import { TaggedModel } from "./validation/schemas/TaggedModel.schema";
 import { Validator } from "./validation/Validator";
@@ -60,6 +61,8 @@ export class ModelParser {
             (asset: ISimpleCryptoWallet, info) =>
                 ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
             (asset: IAddressCryptoWallet, info) =>
+                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
+            (asset: IQuantityCryptoWallet, info) =>
                 ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
             (asset: IMiscAsset, info) => ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
         ])[1];

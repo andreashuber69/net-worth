@@ -14,14 +14,15 @@ import { CryptoWalletInputInfo, ICryptoWalletInputInfoParameters } from "./Crypt
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { TextInputInfo } from "./TextInputInfo";
 import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
+import { XmrWallet } from "./XmrWallet";
 
 interface IQuantityCryptoWalletInputInfoParameters extends
-    ICryptoWalletInputInfoParameters<Erc20TokensWallet, IQuantityCryptoWalletProperties> {
+    ICryptoWalletInputInfoParameters<XmrWallet, IQuantityCryptoWalletProperties> {
     readonly quantityDecimals: 8 | 18;
 }
 
 export class QuantityCryptoWalletInputInfo extends
-    CryptoWalletInputInfo<Erc20TokensWallet, IQuantityCryptoWalletProperties> {
+    CryptoWalletInputInfo<XmrWallet, IQuantityCryptoWalletProperties> {
     public readonly address = new TextInputInfo();
     public readonly quantity: TextInputInfo;
 
