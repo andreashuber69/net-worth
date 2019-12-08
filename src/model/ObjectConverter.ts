@@ -101,13 +101,13 @@ export class ObjectConverter {
     public static convert<
         P extends IPreciousMetalObject,
         S extends ISimpleCryptoObject,
-        E extends IAddressCryptoObject,
+        A extends IAddressCryptoObject,
         M extends IMiscObject,
-        PR, SR, ER, MR,
+        PR, SR, AR, MR,
     >(
-        rawObject: P | S | E | M,
+        rawObject: P | S | A | M,
         [convertPreciousMetalObject, convertSimpleCryptoObject, convertAddressCryptoObject, convertMiscObject]:
-            Converters<P, S, E, M, PR, SR, ER, MR>,
+            Converters<P, S, A, M, PR, SR, AR, MR>,
     ) {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should
         // go away...
@@ -119,7 +119,7 @@ export class ObjectConverter {
             const info = ObjectConverter.getInfo<SimpleCryptoWalletInputInfo>(rawObject.type);
 
             return [info, convertSimpleCryptoObject(rawObject, info)] as const;
-        } else if (ObjectConverter.is<E>(rawObject, addressCryptoWalletTypeNames)) {
+        } else if (ObjectConverter.is<A>(rawObject, addressCryptoWalletTypeNames)) {
             const info = ObjectConverter.getInfo<AddressCryptoWalletInputInfo>(rawObject.type);
 
             return [info, convertAddressCryptoObject(rawObject, info)] as const;
