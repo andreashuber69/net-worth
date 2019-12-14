@@ -15,11 +15,10 @@ import { Validator } from "./validation/Validator";
 
 /** @internal */
 export class QueryCache {
-    // TODO: Check whether extends object constraint is necessary
     /** @internal */
     public static fetch(query: string): Promise<unknown>;
-    public static fetch<R extends object>(query: string, responseCtor: new () => R): Promise<R>;
-    public static async fetch<R extends object>(query: string, responseCtor?: new () => R) {
+    public static fetch<R>(query: string, responseCtor: new () => R): Promise<R>;
+    public static async fetch<R>(query: string, responseCtor?: new () => R) {
         return responseCtor ?
             QueryCache.cacheResult(query, () => QueryCache.fetchParseAndValidate(query, responseCtor)) :
             QueryCache.cacheResult(query, () => QueryCache.fetchAndParse(query));
@@ -34,7 +33,7 @@ export class QueryCache {
 
     private static readonly cache = new Map<string, Promise<unknown>>();
 
-    private static cacheResult<R extends unknown>(query: string, getResponse: () => Promise<R>) {
+    private static cacheResult<R>(query: string, getResponse: () => Promise<R>) {
         let result = QueryCache.cache.get(query);
 
         if (!result) {
@@ -45,7 +44,7 @@ export class QueryCache {
         return result;
     }
 
-    private static async fetchParseAndValidate<R extends object>(query: string, responseCtor: new () => R) {
+    private static async fetchParseAndValidate<R>(query: string, responseCtor: new () => R) {
         const response = await QueryCache.fetchAndParse(query);
 
         try {
