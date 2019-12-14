@@ -37,6 +37,7 @@
     "ci": "karma start --browsers ChromeHeadless"
   },
   "dependencies": {
+    "@vue/preload-webpack-plugin": "^1.1.1",
     "ajv": "^6.10.2",
     "bitcoinjs-lib": "^3.3.2",
     "offline-plugin": "^5.0.7",
