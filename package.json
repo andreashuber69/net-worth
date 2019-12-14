@@ -41,9 +41,9 @@
     "ajv": "^6.10.2",
     "bitcoinjs-lib": "^3.3.2",
     "offline-plugin": "^5.0.7",
-    "vue": "^2.6.10",
-    "vue-class-component": "^6.3.2",
-    "vue-property-decorator": "^7.3.0",
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.1.0",
+    "vue-property-decorator": "^8.3.0",
     "vuetify": "^1.5.14"
   },
   "devDependencies": {
@@ -69,7 +69,7 @@
     "typescript": "^3.5.1",
     "typescript-json-schema": "^0.38.3",
     "vue-cli-plugin-vuetify": "^0.4.6",
-    "vue-template-compiler": "^2.6.10",
+    "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.2.2"
   },
   "postcss": {
