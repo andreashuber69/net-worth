@@ -38,7 +38,12 @@ module.exports = {
         // cSpell: ignore prefetch
         config.plugin("prefetch").use(PreloadPlugin, [{
             rel: "prefetch",
-            include: "allAssets"
+            include: "allAssets",
+            // Apparently there's some unexpected interaction between the two plugins such that the preload plugin
+            // tries to prefetch a file that does not exist in the output. /\.map/ is the default, so we need to add
+            // that too
+            // cSpell: ignore serviceworker
+            fileBlacklist: [/\.map/, /__offline_serviceworker/]
         }]);
     }
 }
