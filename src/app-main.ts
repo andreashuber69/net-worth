@@ -21,12 +21,13 @@ import App from "./App.vue";
 import "./assets/material-icons.css";
 // tslint:disable-next-line:no-import-side-effect
 import "./assets/roboto-fontface.css";
-// tslint:disable-next-line:no-import-side-effect
-import "./plugins/vuetify";
+// tslint:disable-next-line: no-default-import
+import vuetify from "./plugins/vuetify";
 
 OfflinePluginRuntime.install();
 Vue.config.productionTip = false;
 
 new Vue({
+    vuetify,
     render: (h) => h(App),
 }).$mount("#app");

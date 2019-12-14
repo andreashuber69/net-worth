@@ -14,10 +14,12 @@
 import Vue from "vue";
 // tslint:disable-next-line:no-submodule-imports
 import Vuetify from "vuetify/lib";
-// cSpell: ignore styl
-// tslint:disable-next-line:no-import-side-effect no-submodule-imports
-import "vuetify/src/stylus/app.styl";
 
-Vue.use(Vuetify, {
-  iconfont: "md",
+Vue.use(Vuetify);
+
+// tslint:disable-next-line: no-default-export
+export default new Vuetify({
+  icons: {
+    iconfont: "md",
+  },
 });
