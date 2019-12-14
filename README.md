@@ -104,8 +104,8 @@ Some table cells reveal more information when hovering over them with the mouse 
 ## Features
 
 - Supported precious metals: **Silver**, **Palladium**, **Platinum**, **Gold**
-- Supported crypto currencies: **Bitcoin**, **Litecoin**, **Ethereum Classic**, **ERC20 Tokens**, **Ethereum**,
-  **Bitcoin Gold**, **Dash**, **Zcash**. Others will be implemented depending on demand.
+- Supported crypto currencies: **Bitcoin**, **Monero**, **Litecoin**, **Ethereum Classic**, **ERC20 Tokens**,
+  **Ethereum**, **Bitcoin Gold**, **Dash**, **Zcash**. Others will be implemented depending on demand.
 - Assets can be grouped according to asset type or location.
 - Assets other than precious metals and cryptos can be added as (manually valued) Misc assets.
 - Liabilities can be added as negatively valued Misc assets.
