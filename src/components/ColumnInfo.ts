@@ -80,13 +80,13 @@ export class ColumnInfo {
      * as well as "virtual" columns. Examples of real table columns are "totalValueInteger" and "unit" while
      * "totalValue" and "fineness" are virtual columns.
      */
-    private static readonly allColumnCounts = [ 7, 10, 11, 12, 15, 18, 19, 22 ];
+    private static readonly allColumnCounts = [7, 10, 11, 12, 15, 18, 19, 22];
 
     /**
      * Contains the number of real table columns shown with the index being the number of currently visible optional
      * full columns.
      */
-    private static readonly rawColumnCounts = [ 5, 7, 8, 9, 11, 13, 14, 16 ];
+    private static readonly rawColumnCounts = [5, 7, 8, 9, 11, 13, 14, 16];
 
     private static getName(name: AssetListRowPropertyName) {
         return name;
@@ -122,7 +122,7 @@ export class ColumnInfo {
 
         if (allColumns.indexOf(columnName) >= ColumnInfo.allColumnCounts[optionalColumnCount]) {
             // TODO: Can't this be done with one class?
-            return [ "hidden-sm-and-up", "hidden-xs-only" ];
+            return ["hidden-sm-and-up", "hidden-xs-only"];
         }
 
         return [];
@@ -138,9 +138,9 @@ export class ColumnInfo {
 
         switch (columnName) {
             case ColumnInfo.expandName:
-                return [ leftClass, "pr-2" ];
+                return [leftClass, "pr-2"];
             case groupBy:
-                return [ "pl-0", rightClass ];
+                return ["pl-0", rightClass];
             case otherGroupBys[0]:
             case AssetPropertyNames.description:
             case CalculatedAssetPropertyNames.unit:
@@ -149,23 +149,23 @@ export class ColumnInfo {
             case Asset.quantityName:
             case CalculatedAssetPropertyNames.totalValue:
             case ColumnInfo.grandTotalLabelName:
-                return [ leftClass, rightClass ];
+                return [leftClass, rightClass];
             case CalculatedAssetPropertyNames.percent:
             case ColumnInfo.finenessIntegerName:
             case ColumnInfo.unitValueIntegerName:
             case ColumnInfo.quantityIntegerName:
             case ColumnInfo.totalValueIntegerName:
             case ColumnInfo.percentIntegerName:
-                return [ leftClass, "pr-0" ];
+                return [leftClass, "pr-0"];
             case ColumnInfo.finenessFractionName:
             case ColumnInfo.unitValueFractionName:
             case ColumnInfo.quantityFractionName:
             case ColumnInfo.totalValueFractionName:
-                return [ "pl-0", rightClass ];
+                return ["pl-0", rightClass];
             case ColumnInfo.percentFractionName:
-                return [ "pl-0", "pr-0" ];
+                return ["pl-0", "pr-0"];
             case ColumnInfo.moreName:
-                return [ "pl-1", rightClass ];
+                return ["pl-1", rightClass];
             default:
                 return [];
         }
@@ -187,15 +187,15 @@ export class ColumnInfo {
             case ColumnInfo.totalValueFractionName:
             case ColumnInfo.percentFractionName:
             case ColumnInfo.grandTotalLabelName:
-                return [ "text-left" ];
+                return ["text-left"];
             case ColumnInfo.finenessIntegerName:
             case ColumnInfo.unitValueIntegerName:
             case ColumnInfo.quantityIntegerName:
             case ColumnInfo.totalValueIntegerName:
             case ColumnInfo.percentIntegerName:
-                return [ "text-right" ];
+                return ["text-right"];
             default:
-                return [ "text-center" ];
+                return ["text-center"];
         }
     }
     // codebeat:enable[ABC,CYCLO]
@@ -209,7 +209,7 @@ export class ColumnInfo {
             case ColumnInfo.percentIntegerName:
             case ColumnInfo.percentFractionName:
             case ColumnInfo.grandTotalLabelName:
-                return [ "total" ];
+                return ["total"];
             default:
                 return [];
         }

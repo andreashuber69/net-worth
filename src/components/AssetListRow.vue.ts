@@ -13,7 +13,6 @@
 import { Component, Prop } from "vue-property-decorator";
 
 import { Asset, AssetDisplayPropertyName } from "../model/Asset";
-import { PreciousMetalAssetInputInfo } from "../model/PreciousMetalAssetInputInfo";
 import { GroupBy } from "../model/validation/schemas/GroupBy.schema";
 
 import { ColumnInfo } from "./ColumnInfo";
