@@ -36,16 +36,16 @@
     <td :class="getClass('percentFraction')">{{ percentFraction }}</td>
     <td :class="getClass('more')">
       <v-menu v-if="checkedValue.hasActions">
-        <v-btn slot="activator" class="mx-0" icon>
-          <v-icon>more_vert</v-icon>
-        </v-btn>
+        <template v-slot:activator="{ on }">
+          <v-btn icon v-on="on"><v-icon>more_vert</v-icon></v-btn>
+        </template>
         <v-list>
-          <v-list-tile @click="onEditClicked">
-            <v-list-tile-title>Edit</v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile @click="onDeleteClicked">
-            <v-list-tile-title>Delete</v-list-tile-title>
-          </v-list-tile>
+          <v-list-item @click="onEditClicked">
+            <v-list-item-title>Edit</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="onDeleteClicked">
+            <v-list-item-title>Delete</v-list-item-title>
+          </v-list-item>
         </v-list>
       </v-menu>
     </td>

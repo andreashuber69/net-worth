@@ -13,106 +13,103 @@
 -->
 
 <template>
-  <div id="app">
-    <v-app>
-      <v-navigation-drawer v-model="isDrawerVisible" app dark temporary>
-        <v-list dense>
-          <v-list-tile @click="onNewClicked">
-            <v-list-tile-action>
-              <v-icon>note_add</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>New</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile @click="onOpenClicked">
-            <v-list-tile-action>
-              <v-icon>open_in_browser</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Open...</v-list-tile-title>
-              <input
-                ref="fileInput" type="file" :accept="model.fileExtension"
-                style="display:none" @change="onFileInputChanged">
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile @click="onSaveClicked">
-            <v-list-tile-action>
-              <v-icon>save</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Save</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile @click="onSaveAsClicked">
-            <v-list-tile-action>
-              <v-icon>save</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Save As...</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile @click="onAboutClicked">
-            <v-list-tile-action>
-              <v-icon>help</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>About</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+  <v-app>
+    <v-navigation-drawer v-model="isDrawerVisible" app dark temporary>
+      <v-list dense nav>
+        <v-list-item link @click="onNewClicked">
+          <v-list-item-icon>
+            <v-icon>note_add</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>New</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link @click="onOpenClicked">
+          <v-list-item-icon>
+            <v-icon>open_in_browser</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Open...</v-list-item-title>
+            <input
+              ref="fileInput" type="file" :accept="model.fileExtension"
+              style="display:none" @change="onFileInputChanged">
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link @click="onSaveClicked">
+          <v-list-item-icon>
+            <v-icon>save</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Save</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link @click="onSaveAsClicked">
+          <v-list-item-icon>
+            <v-icon>save</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Save As...</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link @click="onAboutClicked">
+          <v-list-item-icon>
+            <v-icon>help</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>About</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+    <v-app-bar app dark color="primary">
+      <v-app-bar-nav-icon @click.stop="onMenuClicked"></v-app-bar-nav-icon>
+      <v-toolbar-title class="hidden-xs-only"><v-icon>account_balance_wallet</v-icon><span>&nbsp;&nbsp;{{ model.title }}</span></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon title="Add new asset" @click.stop="$refs.assetList.onAdd">
+        <v-icon>add</v-icon>
+      </v-btn>
+      <v-btn icon title="Refresh" @click.stop="onRefreshClicked">
+        <v-icon>refresh</v-icon>
+      </v-btn>
+      <v-menu max-height="300px">
+        <template v-slot:activator="{ on }">
+          <v-btn text title="Change grouping" v-on="on">
+            {{ groupBy }} <v-icon right>arrow_drop_down</v-icon> 
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item v-for="newGroupBy in groupBys" :key="newGroupBy" @click="groupBy = newGroupBy">
+            <v-list-item-title>{{ newGroupBy }}</v-list-item-title>
+          </v-list-item>
         </v-list>
-      </v-navigation-drawer>
-      <v-toolbar app dark color="primary">
-        <v-toolbar-side-icon @click.stop="onMenuClicked"></v-toolbar-side-icon>
-        <v-toolbar-title class="hidden-xs-only"><v-icon>account_balance_wallet</v-icon>&nbsp;&nbsp;{{ model.title }}</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn icon title="Add new asset" class="ml-1 mr-0" @click.stop="$refs.assetList.onAdd">
-          <v-icon>add</v-icon>
-        </v-btn>
-        <v-btn icon title="Refresh" class="ml-1 mr-0" @click.stop="onRefreshClicked">
-          <v-icon>refresh</v-icon>
-        </v-btn>
-        <v-menu title="Change grouping" max-height="300px">
-          <v-toolbar-title slot="activator" class="ml-2 mr-0">
-            <span>{{ groupBy }}</span>
-            <v-icon>arrow_drop_down</v-icon>
-          </v-toolbar-title>
-          <v-list>
-            <v-list-tile
-              v-for="newGroupBy in groupBys" :key="newGroupBy" @click="groupBy = newGroupBy">
-              <v-list-tile-title v-text="newGroupBy"></v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
-        <v-menu title="Change valuation currency" max-height="300px">
-          <v-toolbar-title slot="activator" class="ml-2 mr-3">
-            <span>{{ model.currency }}</span>
-            <v-icon>arrow_drop_down</v-icon>
-          </v-toolbar-title>
-          <v-list>
-            <v-list-tile
-              v-for="newCurrency in model.currencies" :key="newCurrency" @click="model.currency = newCurrency">
-              <!-- Without the explicit width, the dropdown ends up being too narrow for most currencies on Firefox. -->
-              <v-list-tile-title v-text="newCurrency" style="width:50px"></v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
-      </v-toolbar>
-      <v-content :style="{
-        'background-image': `url(${require('./assets/background.png')})`,
-        'background-repeat': 'repeat'
-      }">
-        <v-container>
-          <v-layout justify-center>
-            <BrowserDialog/>
-            <AssetList :value="model" ref="assetList"/>
-            <SaveAsDialog ref="saveAsDialog"/>
-            <AboutDialog ref="aboutDialog"/>
-          </v-layout>
-        </v-container>
-      </v-content>
-    </v-app>
-  </div>
+      </v-menu>
+      <v-menu max-height="300px">
+        <template v-slot:activator="{ on }">
+          <v-btn text title="Change valuation currency" v-on="on">
+            {{ model.currency }} <v-icon right>arrow_drop_down</v-icon> 
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item v-for="newCurrency in model.currencies" :key="newCurrency" @click="model.currency = newCurrency">
+            <v-list-item-title>{{ newCurrency }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-app-bar>
+    <v-content :style="{
+      'background-image': `url(${require('./assets/background.png')})`,
+      'background-repeat': 'repeat'
+    }">
+      <v-container>
+        <v-layout justify-center>
+          <BrowserDialog/>
+          <AssetList :value="model" ref="assetList"/>
+          <SaveAsDialog ref="saveAsDialog"/>
+          <AboutDialog ref="aboutDialog"/>
+        </v-layout>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script src="./App.vue.ts" lang="ts">

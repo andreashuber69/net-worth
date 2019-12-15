@@ -187,15 +187,15 @@ export class ColumnInfo {
             case ColumnInfo.totalValueFractionName:
             case ColumnInfo.percentFractionName:
             case ColumnInfo.grandTotalLabelName:
-                return [ "text-xs-left" ];
+                return [ "text-left" ];
             case ColumnInfo.finenessIntegerName:
             case ColumnInfo.unitValueIntegerName:
             case ColumnInfo.quantityIntegerName:
             case ColumnInfo.totalValueIntegerName:
             case ColumnInfo.percentIntegerName:
-                return [ "text-xs-right" ];
+                return [ "text-right" ];
             default:
-                return [];
+                return [ "text-center" ];
         }
     }
     // codebeat:enable[ABC,CYCLO]

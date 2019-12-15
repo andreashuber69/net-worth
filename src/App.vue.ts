@@ -37,6 +37,7 @@ export default class App extends Vue {
         window.addEventListener("beforeunload", (ev) => this.onBeforeUnload(ev));
     }
 
+    // TODO: This is probably not necessary
     public onMenuClicked() {
         this.isDrawerVisible = !this.isDrawerVisible;
     }
