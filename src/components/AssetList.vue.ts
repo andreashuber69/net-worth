@@ -25,28 +25,26 @@ import { ColumnInfo } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
-interface IPagination {
-    sortBy: SortBy;
-    descending: boolean;
-    rowsPerPage: -1;
-}
-
 @Component({ components: { AssetListRow, AssetEditor } })
 /** Implements the asset list UI. */
 // tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
-    /** Provides the information required for sorting and paginating the table. */
-    public get pagination(): IPagination {
-        return this.paginationImpl || (this.paginationImpl = {
-            sortBy: this.checkedValue.assets.ordering.sort.by,
-            descending: this.checkedValue.assets.ordering.sort.descending,
-            rowsPerPage: -1,
-        });
+    public readonly itemsPerPage = -1;
+
+    public get sortBy() {
+        return this.checkedValue.assets.ordering.sort.by;
     }
 
-    public set pagination(pagination: IPagination) {
-        this.paginationImpl = pagination;
-        this.checkedValue.assets.ordering.sort = { by: pagination.sortBy, descending: pagination.descending };
+    public set sortBy(sortBy: SortBy) {
+        this.checkedValue.assets.ordering.sort = { by: sortBy, descending: this.sortDesc };
+    }
+
+    public get sortDesc() {
+        return this.checkedValue.assets.ordering.sort.descending;
+    }
+
+    public set sortDesc(sortDesc: boolean) {
+        this.checkedValue.assets.ordering.sort = { by: this.sortBy, descending: sortDesc };
     }
 
     public get isLoading() {
@@ -138,7 +136,6 @@ export default class AssetList extends ComponentBase<Model> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private paginationImpl?: IPagination;
     private optionalColumnCountImpl = ColumnInfo.maxOptionalCount;
 
     private timer?: NodeJS.Timer;
