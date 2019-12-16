@@ -17,50 +17,53 @@
     <v-layout row justify-center>
       <AssetEditor ref="editor"></AssetEditor>
     </v-layout>
-    <!-- TODO: Use new syntax -->
     <v-data-table
       :items="checkedValue.assets.grouped" item-key="key" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
       :loading="isLoading" :headers-length="16" :server-items-length="checkedValue.assets.grouped.length"
-      hide-default-footer class="elevation-1">
-      <template slot="header" slot-scope="props">
-        <tr>
-          <th :class="getHeaderClass('expand')"></th>
-          <th
-            :class="getHeaderClass(checkedValue.assets.ordering.groupBy)"
-            @click="changeSort(checkedValue.assets.ordering.groupBy)">
-            {{ checkedValue.assets.ordering.groupByLabel }} <v-icon small>arrow_upward</v-icon>
-          </th>
-          <th
-            :class="getHeaderClass(checkedValue.assets.ordering.otherGroupBys[0])"
-            @click="changeSort(checkedValue.assets.ordering.otherGroupBys[0])">
-            {{ checkedValue.assets.ordering.otherGroupByLabels[0] }} <v-icon small>arrow_upward</v-icon>
-          </th>
-          <th :class="getHeaderClass('description')" @click="changeSort('description')">
-            Description <v-icon small>arrow_upward</v-icon>
-          </th>
-          <th :class="getHeaderClass('unit')">Unit</th>
-          <th colspan="2" :class="getHeaderClass('fineness')">Fineness</th>
-          <th colspan="2" :class="getHeaderClass('unitValue')" @click="changeSort('unitValue')">
-            Unit Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.currency }})
-          </th>
-          <th colspan="2" :class="getHeaderClass('quantity')">Quantity</th>
-          <th colspan="2" :class="getHeaderClass('totalValue')" @click="changeSort('totalValue')">
-            Total Value <v-icon small>arrow_upward</v-icon><br>({{ checkedValue.currency }})
-          </th>
-          <th colspan="2" :class="getHeaderClass('percent')">%</th>
-          <th :class="getHeaderClass('more')"></th>
-        </tr>
+      hide-default-header hide-default-footer class="elevation-1">
+      <template v-slot:header="{ props }">
+        <thead class="v-data-table-header">
+          <tr>
+            <th :class="getHeaderClass('expand')"></th>
+            <th
+              :class="getHeaderClass(checkedValue.assets.ordering.groupBy)"
+              @click="changeSort(checkedValue.assets.ordering.groupBy)">
+              {{ checkedValue.assets.ordering.groupByLabel }} <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
+            </th>
+            <th
+              :class="getHeaderClass(checkedValue.assets.ordering.otherGroupBys[0])"
+              @click="changeSort(checkedValue.assets.ordering.otherGroupBys[0])">
+              {{ checkedValue.assets.ordering.otherGroupByLabels[0] }} <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
+            </th>
+            <th :class="getHeaderClass('description')" @click="changeSort('description')">
+              Description <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
+            </th>
+            <th :class="getHeaderClass('unit')">Unit</th>
+            <th colspan="2" :class="getHeaderClass('fineness')">Fineness</th>
+            <th colspan="2" :class="getHeaderClass('unitValue')" @click="changeSort('unitValue')">
+              Unit Value <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon><br>({{ checkedValue.currency }})
+            </th>
+            <th colspan="2" :class="getHeaderClass('quantity')">Quantity</th>
+            <th colspan="2" :class="getHeaderClass('totalValue')" @click="changeSort('totalValue')">
+              Total Value <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon><br>({{ checkedValue.currency }})
+            </th>
+            <th colspan="2" :class="getHeaderClass('percent')">%</th>
+            <th :class="getHeaderClass('more')"></th>
+          </tr>
+        </thead>
       </template>
-      <v-progress-linear slot="progress" indeterminate></v-progress-linear>
-      <template slot="item" slot-scope="props">
-        <AssetListRow :value="props.item" :visibleColumnCount="optionalColumnCount" @edit="onEdit" @delete="onDelete">
+      <template v-slot:progress>
+        <v-progress-linear indeterminate></v-progress-linear>
+      </template>
+      <template v-slot:item="{ item }">
+        <AssetListRow :value="item" :visibleColumnCount="optionalColumnCount" @edit="onEdit" @delete="onDelete">
         </AssetListRow>
       </template>
-      <div class="text-center" slot="no-data">
+      <template v-slot:no-data>
         No assets, yet. Add new ones with the <strong>+</strong> button (top right) or load existing assets with
         <strong>Open...</strong> in the menu (top left).
-      </div>
-      <template slot="body.append">
+      </template>
+      <template v-slot:body.append>
         <tr>
           <td :colspan="grandTotalLabelColumnCount" :class="getFooterClass('grandTotalLabel')">Grand Total</td>
           <td :class="getFooterClass('totalValueInteger')">{{ grandTotalValueInteger }}</td>

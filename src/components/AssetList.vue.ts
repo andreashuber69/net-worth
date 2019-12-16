@@ -82,11 +82,11 @@ export default class AssetList extends ComponentBase<Model> {
 
         // Sortable columns
         if (Ordering.isSortBy(columnName)) {
+            result.push("sortable");
             const sort = this.checkedValue.assets.ordering.sort;
-            result.push("column", "sortable", sort.descending ? "desc" : "asc");
 
             if (sort.by === columnName) {
-                result.push("active");
+                result.push("active", sort.descending ? "desc" : "asc");
             }
         }
 
