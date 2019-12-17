@@ -19,9 +19,9 @@
     </v-layout>
     <v-data-table
       :items="checkedValue.assets.grouped" item-key="key" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-      :loading="isLoading" :headers-length="16" :server-items-length="checkedValue.assets.grouped.length"
-      hide-default-header hide-default-footer class="elevation-1">
-      <template v-slot:header="{ props }">
+      :server-items-length="checkedValue.assets.grouped.length" hide-default-header hide-default-footer
+      class="elevation-1">
+      <template v-slot:header>
         <thead class="v-data-table-header">
           <tr>
             <th :class="getHeaderClass('expand')"></th>
@@ -50,18 +50,29 @@
             <th colspan="2" :class="getHeaderClass('percent')">%</th>
             <th :class="getHeaderClass('more')"></th>
           </tr>
+          <!--
+            The loading indicator and the no data hint should rather be implemented with the associated slots (progress
+            and no-data). However, it appears these currently do not work correctly when the number of columns changes
+            (not even when we set the headers-length property accordingly).
+          -->
+          <tr v-if="isLoading" class="v-data-table__progress">
+            <th :colspan="totalColumnCount">
+              <v-progress-linear indeterminate></v-progress-linear>
+            </th>
+          </tr>
         </thead>
       </template>
-      <template v-slot:progress>
-        <v-progress-linear indeterminate></v-progress-linear>
+      <template v-slot:body.prepend>
+        <tr v-if="checkedValue.assets.grouped.length === 0">
+          <td :colspan="totalColumnCount">
+            No assets, yet. Add new ones with the <strong>+</strong> button (top right) or load existing assets with
+            <strong>Open...</strong> in the menu (top left).
+          </td>
+        </tr>
       </template>
       <template v-slot:item="{ item }">
         <AssetListRow :value="item" :visibleColumnCount="optionalColumnCount" @edit="onEdit" @delete="onDelete">
         </AssetListRow>
-      </template>
-      <template v-slot:no-data>
-        No assets, yet. Add new ones with the <strong>+</strong> button (top right) or load existing assets with
-        <strong>Open...</strong> in the menu (top left).
       </template>
       <template v-slot:body.append>
         <tr>
@@ -83,5 +94,8 @@
 <style scoped>
 .total {
   font-weight: bold;
+}
+::v-deep .v-data-table__empty-wrapper {
+  display: none; /* apparently, there's no easier way to completely hide the default no data row. */
 }
 </style>

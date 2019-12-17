@@ -202,10 +202,8 @@ export class ColumnInfo {
 
     private static getTotal(columnName: string | undefined) {
         switch (columnName) {
-            case CalculatedAssetPropertyNames.totalValue:
             case ColumnInfo.totalValueIntegerName:
             case ColumnInfo.totalValueFractionName:
-            case CalculatedAssetPropertyNames.percent:
             case ColumnInfo.percentIntegerName:
             case ColumnInfo.percentFractionName:
             case ColumnInfo.grandTotalLabelName:

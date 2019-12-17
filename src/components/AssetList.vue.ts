@@ -64,6 +64,11 @@ export default class AssetList extends ComponentBase<Model> {
         return this.optionalColumnCountImpl;
     }
 
+    /** Provides a value indicating how many columns are currently visible. */
+    public get totalColumnCount() {
+        return ColumnInfo.getRawCount(this.optionalColumnCount);
+    }
+
     public get grandTotalLabelColumnCount() {
         // This is the minimal column span for the grand total label.
         let result = 2;
