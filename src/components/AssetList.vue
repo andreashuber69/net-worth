@@ -95,6 +95,11 @@
 .total {
   font-weight: bold;
 }
+
+th {
+  white-space: nowrap;
+}
+
 ::v-deep .v-data-table__empty-wrapper {
   display: none; /* apparently, there's no easier way to completely hide the default no data row. */
 }
