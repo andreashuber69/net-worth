@@ -63,7 +63,7 @@
     </v-navigation-drawer>
     <v-app-bar app dark color="primary">
       <v-app-bar-nav-icon @click.stop="onMenuClicked"></v-app-bar-nav-icon>
-      <v-toolbar-title class="hidden-xs-only"><v-icon>account_balance_wallet</v-icon><span>&nbsp;&nbsp;{{ model.title }}</span></v-toolbar-title>
+      <v-toolbar-title class="hidden-xs-only"><v-icon>account_balance_wallet</v-icon><span class="application-title">&nbsp;&nbsp;{{ model.title }}</span></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon title="Add new asset" @click.stop="$refs.assetList.onAdd">
         <v-icon>add</v-icon>
@@ -119,7 +119,12 @@
 /* https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
+}
+</style>
+<style scoped>
+.application-title {
+  vertical-align: middle;
 }
 </style>
