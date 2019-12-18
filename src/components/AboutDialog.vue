@@ -55,17 +55,17 @@
             </v-flex>
             <v-flex xs12 sm6 md4>
               <v-btn href="https://cryptocompare.com" target="_blank" block text class="ma-0">
-                <v-img :src="require('@/assets/cryptocompare.png')" max-height="36" contain></v-img>
+                <v-img :src="require('@/assets/cryptocompare.png')" max-width="200" max-height="36" contain></v-img>
               </v-btn>
             </v-flex>
             <v-flex xs12 sm6 md4>
               <v-btn href="https://blockchain.info" target="_blank" block text class="ma-0">
-                <v-img :src="require('@/assets/blockchain.svg')" max-height="36" contain></v-img>
+                <v-img :src="require('@/assets/blockchain.svg')" max-width="200" max-height="36" contain></v-img>
               </v-btn>
             </v-flex>
             <v-flex xs12 sm6 md4>
               <v-btn href="https://blockcypher.com" target="_blank" block text class="ma-0">
-                <v-img :src="require('@/assets/blockcypher.svg')" max-height="36" contain></v-img>
+                <v-img :src="require('@/assets/blockcypher.svg')" max-width="200" max-height="36" contain></v-img>
               </v-btn>
             </v-flex>
             <v-flex xs12 sm6 md4>
@@ -76,12 +76,12 @@
             </v-flex>
             <v-flex xs12 sm6 md4>
               <v-btn href="https://ethplorer.io" target="_blank" block text class="ma-0">
-                <v-img :src="require('@/assets/ethplorer.png')" max-height="36" contain></v-img>
+                <v-img :src="require('@/assets/ethplorer.png')" max-width="200" max-height="36" contain></v-img>
               </v-btn>
             </v-flex>
             <v-flex xs12 sm6 md4>
               <v-btn href="https://explorer.bitcoingold.org" target="_blank" block text class="ma-0">
-                <v-img :src="require('@/assets/bitcoingold.png')" max-height="36" contain></v-img>
+                <v-img :src="require('@/assets/bitcoingold.png')" max-width="200" max-height="36" contain></v-img>
               </v-btn>
             </v-flex>
             <v-flex xs12 sm6 md4>
@@ -91,7 +91,7 @@
             </v-flex>
             <v-flex xs12 sm6 md4>
               <v-btn href="https://quandl.com" target="_blank" block text class="ma-0">
-                <v-img :src="require('@/assets/quandl.svg')" max-height="36" contain></v-img>
+                <v-img :src="require('@/assets/quandl.svg')" max-width="200" max-height="36" contain></v-img>
               </v-btn>
             </v-flex>
             <v-flex xs12>
