@@ -62,6 +62,7 @@
           </tr>
         </thead>
       </template>
+      <!-- cSpell:ignore prepend -->
       <template v-slot:body.prepend>
         <tr v-if="checkedValue.assets.grouped.length === 0">
           <td :colspan="totalColumnCount">
