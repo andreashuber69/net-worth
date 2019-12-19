@@ -20,7 +20,7 @@ export abstract class GenericAssetBundle<T extends SingleAsset> extends AssetBun
     /** @internal */
     public constructor(asset: T) {
         super();
-        this.assets = [ asset ];
+        this.assets = [asset];
     }
 
     public deleteAsset(asset: T) {

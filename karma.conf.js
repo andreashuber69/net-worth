@@ -33,7 +33,7 @@ const karmaTypescriptConfig = {
 
 module.exports = function(config) {
     config.set({
-        frameworks: [ "jasmine", "karma-typescript" ],
+        frameworks: ["jasmine", "karma-typescript"],
         files: [
             { 
                 pattern: "src/model/**/*.ts",
@@ -45,10 +45,10 @@ module.exports = function(config) {
             }
         ],
         preprocessors: {
-            "**/*.ts": [ "karma-typescript" ]
+            "**/*.ts": ["karma-typescript"]
         },
-        reporters: [ "dots", "karma-typescript" ],
-        browsers: [ "Chrome", "ChromeHeadless" ],
+        reporters: ["dots", "karma-typescript"],
+        browsers: ["Chrome", "ChromeHeadless"],
         // Set this to false while debugging
         singleRun: true,
         karmaTypescriptConfig: karmaTypescriptConfig

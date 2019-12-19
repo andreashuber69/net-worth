@@ -313,10 +313,10 @@ describe("ModelParser.parse", () => {
         "Silver.assets",
         getExpectedProperties("Joe", false, true, "CHF", "location", "unitValue", false, false),
         (model) => {
-            const [ group ] = model.assets.grouped;
+            const [group] = model.assets.grouped;
 
             if (group instanceof AssetGroup) {
-                const [ asset ] = group.assets;
+                const [asset] = group.assets;
 
                 if (asset instanceof SilverAsset) {
                     const expected: IExpectedAssetProperties<SilverAsset> =
@@ -347,7 +347,7 @@ describe("ModelParser.parse", () => {
         "Erc20TokensWallet.assets",
         getExpectedProperties("Unnamed", false, false, "USD", "type", "totalValue", true, false),
         (model) => {
-            const [ group ] = model.assets.grouped;
+            const [group] = model.assets.grouped;
 
             if (group instanceof AssetGroup) {
                 for (const asset of group.assets) {

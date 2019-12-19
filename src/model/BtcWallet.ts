@@ -91,7 +91,7 @@ export class BtcWallet extends SimpleCryptoWallet {
             // cSpell: ignore xpub
             // TODO: This is a crude test to distinguish between xpub and a normal address
             if (this.address.length <= 100) {
-                await this.add([ this.address ]);
+                await this.add([this.address]);
             } else {
                 await NestedQuantityRequest.delay(1000);
                 const parent = HDNode.fromBase58(this.address);

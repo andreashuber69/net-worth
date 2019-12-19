@@ -33,7 +33,7 @@ export interface IOrdering {
 /** Provides information how assets are ordered (grouped and sorted) in the main model of the application. */
 export class Ordering implements IOrdering {
     /** Provides the property names by which the asset list can be grouped. */
-    public static readonly groupBys: GroupBy[] = [ AssetPropertyNames.type, AssetPropertyNames.location ];
+    public static readonly groupBys: GroupBy[] = [AssetPropertyNames.type, AssetPropertyNames.location];
 
     public static isSortBy(sortBy: string | undefined): sortBy is SortBy {
         switch (sortBy) {
