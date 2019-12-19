@@ -15,13 +15,15 @@
 <template>
   <v-dialog v-model="isOpen" width="960px">
     <v-card>
-      <v-card-title primary-title class="headline">{{ title }}</v-card-title>
+      <v-card-title class="headline">{{ title }}</v-card-title>
       <v-card-text>
         <v-container grid-list-md>
           <v-layout row wrap>
             <v-flex xs12>
               <v-card flat>
-                <v-card-text class="text-center px-0">Copyright &copy; 2018-{{ new Date(Date.now()).getUTCFullYear() }} Andreas Huber Dönni</v-card-text>
+                <v-card-text class="text-center px-0">
+                  Copyright &copy; 2018-{{ new Date(Date.now()).getUTCFullYear() }} Andreas Huber Dönni
+                </v-card-text>
               </v-card>
             </v-flex>
             <v-flex xs12 sm4>
