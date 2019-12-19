@@ -41,35 +41,35 @@ import { ZecWallet } from "./ZecWallet";
 // cSpell:ignore xpub, ypub, Mtub, Ltub, drkp, zcha
 const btcHint =
     "The wallets public address, single or xpub (ypub is not supported). " +
-    "<strong style='color:red'>Will be sent to blockchain.info to query the balance.</strong>";
+    "Will be sent to blockchain.info to query the balance.";
 
 const ltcHint =
     "The wallets single public address (neither Mtub nor Ltub are supported). " +
-    "<strong style='color:red'>Will be sent to blockcypher.com to query the balance.</strong>";
+    "Will be sent to blockcypher.com to query the balance.";
 
 const etcHint =
     "The wallets single public address (xpub is not supported). " +
-    "<strong style='color:red'>Will be sent to blockscout.com to query the balance.</strong>";
+    "Will be sent to blockscout.com to query the balance.";
 
 const ethHint =
     "The wallets single public address (xpub is not supported). " +
-    "<strong style='color:red'>Will be sent to ethplorer.io to query the ETH balance.</strong>";
+    "Will be sent to ethplorer.io to query the ETH balance.";
 
 const erc20Hint =
     "The wallets single public address (xpub is not supported). " +
-    "<strong style='color:red'>Will be sent to ethplorer.io to query ERC20 token balances.</strong>";
+    "Will be sent to ethplorer.io to query ERC20 token balances.";
 
 const btgHint =
     "The wallets single public address (ypub is not supported). " +
-    "<strong style='color:red'>Will be sent to bitcoingold.org to query the balance.</strong>";
+    "Will be sent to bitcoingold.org to query the balance.";
 
 const dashHint =
     "The wallets single public address (drkp is not supported). " +
-    "<strong style='color:red'>Will be sent to blockcypher.com to query the balance.</strong>";
+    "Will be sent to blockcypher.com to query the balance.";
 
 const zecHint =
     "The wallets single public address (xpub is not supported). " +
-    "<strong style='color:red'>Will be sent to zcha.in to query the balance.</strong>";
+    "Will be sent to zcha.in to query the balance.";
 
 type Converters<P, S, A, Q, M, PR, SR, AR, QR, MR> = [
     (value: P, info: PreciousMetalAssetInputInfo) => PR,
