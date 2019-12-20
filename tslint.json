@@ -47,10 +47,12 @@
     "no-parameter-properties": false,
     "no-unnecessary-class": ["allow-static-only"],
     "no-unused-variable": false,
+    "no-use-before-declare": false,
     "no-void-expression": false,
     "object-literal-sort-keys": false,
     "promise-function-async": false,
     "strict-boolean-expressions": false,
+    "strict-comparisons": false,
     "typedef": false,
     "unnecessary-else": false
   },

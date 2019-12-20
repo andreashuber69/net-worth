@@ -125,13 +125,14 @@ type MethodNames<T> = { [K in keyof T]: T[K] extends () => unknown ? K : never }
 const testMethod = <T, U, N extends MethodNames<T> & string>(
     ctor: new (parent: IParent, props: U) => T, props: U, name: N, expectation: string, test: (object: T) => void,
 ) => {
-    describe(ctor.name, () => describe(`${name}()`, () => it(expectation, () => test(createAsset(ctor, props)))));
+    describe(ctor.name, () => describe(`${name.toString()}()`, () =>
+        it(expectation, () => test(createAsset(ctor, props)))));
 };
 
 const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
     ctor: new (parent: IParent, props: U) => T, props: U, name: N, expectedMessage: string,
 ) => {
-    describe(ctor.name, () => describe(`${name}()`, () => {
+    describe(ctor.name, () => describe(`${name.toString()}()`, () => {
         it("should throw", () => expect(createAsset(ctor, props)[name]).toThrowError(expectedMessage));
     }));
 };

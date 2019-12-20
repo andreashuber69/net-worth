@@ -16,9 +16,9 @@ export class EnumInfo {
     public static getMemberNames<T extends Enum<T>>(enumType: T) {
         const result = new Array<keyof T>();
 
-        for (const value in enumType) {
+        for (const value of Object.keys(enumType)) {
             if (Number.isNaN(Number.parseFloat(value))) {
-                result.push(value);
+                result.push(value as keyof T);
             }
         }
 

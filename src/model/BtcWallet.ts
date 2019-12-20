@@ -60,12 +60,7 @@ export class BtcWallet extends SimpleCryptoWallet {
 
         private static getFinalBalance(response: BlockchainBalanceResponse) {
             const result: IBalance = { finalBalance: Number.NaN, transactionCount: 0 };
-
-            for (const address in response) {
-                if (response.hasOwnProperty(address)) {
-                    NestedBlockchainRequest.addBalance(result, response[address]);
-                }
-            }
+            Object.keys(response).forEach((address) => NestedBlockchainRequest.addBalance(result, response[address]));
 
             if (Number.isNaN(result.finalBalance)) {
                 throw new QueryError();

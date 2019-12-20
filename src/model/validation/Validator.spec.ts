@@ -30,7 +30,7 @@ const shouldPassJsonValidation =
 const shouldFailJsonValidation = <T>(json: string, ctor: new (value?: unknown) => T, exception: Error) => {
     describe("fromJson", () => {
         describe(json, () => {
-            it(`should throw ${exception}`, () => {
+            it(`should throw ${exception.toString()}`, () => {
                 expect(() => Validator.fromJson(json, ctor)).toThrow(exception);
             });
         });
@@ -52,7 +52,7 @@ const shouldPassValidation = <T extends object>(data: unknown, ctor: new (value?
 const shouldFailValidation = <T>(data: unknown, ctor: new (value?: unknown) => T, exception: Error) => {
     describe("fromData", () => {
         describe(JSON.stringify(data), () => {
-            it(`should throw ${exception}`, () => {
+            it(`should throw ${exception.toString()}`, () => {
                 expect(() => Validator.fromData(data, ctor)).toThrow(exception);
             });
         });

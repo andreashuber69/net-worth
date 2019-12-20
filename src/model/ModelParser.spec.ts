@@ -120,17 +120,15 @@ const getExpectedProperties = (
 };
 
 const expectToEqual = (actual: { [key: string]: any }, expected: { [key: string]: any }) => {
-    for (const key in expected) {
-        if (expected.hasOwnProperty(key)) {
-            const actualValue = actual[key];
-            const expectedValue = expected[key];
+    for (const key of Object.keys(expected)) {
+        const actualValue = actual[key];
+        const expectedValue = expected[key];
 
-            if (((typeof actualValue) === "object") && ((typeof expectedValue) === "object")) {
-                // tslint:disable-next-line: no-unsafe-any
-                expectToEqual(actualValue, expectedValue);
-            } else {
-                expect(actualValue).toEqual(expectedValue);
-            }
+        if (((typeof actualValue) === "object") && ((typeof expectedValue) === "object")) {
+            // tslint:disable-next-line: no-unsafe-any
+            expectToEqual(actualValue, expectedValue);
+        } else {
+            expect(actualValue).toEqual(expectedValue);
         }
     }
 };
