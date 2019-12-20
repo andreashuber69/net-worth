@@ -155,7 +155,7 @@ export default class App extends Vue {
         this.model.hasUnsavedChanges = false;
         const blob = new Blob([this.model.toJsonString()], { type : "application/json" });
 
-        if (window.navigator.msSaveOrOpenBlob) {
+        if (!!window.navigator.msSaveOrOpenBlob) {
             window.navigator.msSaveBlob(blob, this.model.fileName);
         } else {
             const elem = window.document.createElement("a");
