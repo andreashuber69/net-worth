@@ -69,7 +69,7 @@
     "tslint": "^5.20.1",
     "typedoc": "^0.15.5",
     "typescript": "^3.7.3",
-    "typescript-json-schema": "^0.38.3",
+    "typescript-json-schema": "^0.41.0",
     "vue-cli-plugin-vuetify": "^2.0.2",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.4.3"
