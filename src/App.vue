@@ -62,7 +62,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar app dark color="primary">
-      <v-app-bar-nav-icon title="Open menu" @click.stop="onMenuClicked"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon title="Open menu" @click.stop="isDrawerVisible = !isDrawerVisible"></v-app-bar-nav-icon>
       <v-toolbar-title class="hidden-xs-only"><v-icon>account_balance_wallet</v-icon><span class="application-title">&nbsp;&nbsp;{{ model.title }}</span></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon title="Add new asset" @click.stop="$refs.assetList.onAdd">
