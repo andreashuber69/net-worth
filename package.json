@@ -74,11 +74,6 @@
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.4.3"
   },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
   "browserslist": [
     ">= 0%",
     "not Chrome < 54",
