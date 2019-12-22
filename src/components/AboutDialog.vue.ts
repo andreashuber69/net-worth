@@ -18,7 +18,6 @@ import { Application } from "../model/Application";
 /** Implements the About dialog. */
 // tslint:disable-next-line:no-default-export
 export default class AboutDialog extends Vue {
-    /** Provides a value indicating whether the dialog is currently open. */
     public isOpen = false;
 
     public get title() {

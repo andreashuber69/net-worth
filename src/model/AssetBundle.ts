@@ -29,10 +29,10 @@ import { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
 export abstract class AssetBundle {
     public static readonly primaryAssetName = "primaryAsset";
 
-    /** Provides the bundled assets (primary and secondary). */
+    /** Provides the bundled assets. */
     public abstract get assets(): Asset[];
 
-    /** Deletes `asset` from [[assets]]. If `asset` is the primary asset, all secondary assets are deleted as well. */
+    /** Deletes `asset` from [[assets]]. */
     public abstract deleteAsset(asset: Asset): void;
 
     /** @internal */

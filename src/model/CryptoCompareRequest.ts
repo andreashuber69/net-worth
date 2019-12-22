@@ -16,11 +16,6 @@ import { CryptoCompareResponse } from "./validation/schemas/CryptoCompareRespons
 
 /** Represents a single cryptocompare.com request. */
 export class CryptoCompareRequest implements IWebRequest<number> {
-    /**
-     * Creates a new [[CryptoCompareRequest]] instance.
-     * @param coin The coin to query the current price for.
-     * @param invert Whether the returned price should be inverted.
-     */
     public constructor(private readonly coin: string, private readonly invert: boolean) {
     }
 

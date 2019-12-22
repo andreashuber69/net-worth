@@ -32,10 +32,8 @@ import TextField from "./TextField.vue";
 /** Implements the dialog used to edit assets. */
 // tslint:disable-next-line:no-default-export
 export default class AssetEditor extends Vue {
-    /** Provides a value indicating whether the asset editor is currently open. */
     public isOpen = false;
 
-    /** Provides the title of the asset editor. */
     public get title() {
         return this.isExistingAsset ? "Edit Asset" : "New Asset";
     }

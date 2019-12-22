@@ -20,13 +20,6 @@ import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCry
 export class Erc20TokensWallet extends RealCryptoWallet {
     public readonly type = "ERC20 Tokens";
 
-    /**
-     * Creates a new [[Erc20TokensWallet]] instance.
-     * @description This wallet requires an [[ICryptoWalletProperties.address]] and ignores
-     * [[ICryptoWalletProperties.quantity]].
-     * @param parent The parent model to which this asset belongs.
-     * @param props The crypto wallet properties.
-     */
     public constructor(parent: IParent, props: IAddressCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, ""));
     }

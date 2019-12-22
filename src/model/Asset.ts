@@ -140,10 +140,6 @@ export abstract class Asset implements ICalculatedAssetProperties {
 
     protected unitValueUsd?: number;
 
-    /**
-     * Creates a new [[Asset]] instance.
-     * @param parent The parent model to which this asset belongs.
-     */
     protected constructor(parent: IParent) {
         this.parent = parent;
     }

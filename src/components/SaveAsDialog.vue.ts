@@ -21,10 +21,8 @@ import TextField from "./TextField.vue";
 /** Implements the dialog used during Save As... */
 // tslint:disable-next-line:no-default-export
 export default class SaveAsDialog extends Vue {
-    /** Provides the name being edited. */
     public name = "";
 
-    /** Provides a value indicating whether the dialog is currently open. */
     public isOpen = false;
 
     /** Provides the name input information. */

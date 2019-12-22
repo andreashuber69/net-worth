@@ -33,11 +33,6 @@ export abstract class SimpleCryptoWallet extends RealCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Creates a new [[SimpleCryptoWallet]] instance.
-     * @param parent The parent model to which this asset belongs.
-     * @param props The crypto wallet properties.
-     */
     protected constructor(parent: IParent, props: IRealCryptoWalletParameters) {
         super(parent, props);
     }

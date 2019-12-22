@@ -22,7 +22,6 @@ export default class BrowserDialog extends Vue {
         return Application.title;
     }
 
-    /** Provides a value indicating whether the dialog is currently open. */
     public isOpen = !this.dontShowDialog;
 
     public get dontShowDialog() {

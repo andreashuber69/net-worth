@@ -18,10 +18,6 @@ export abstract class SingleAsset extends Asset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Creates a new [[SingleAsset]] instance.
-     * @param parent The parent model to which this asset belongs.
-     */
     protected constructor(parent: IParent) {
         super(parent);
     }

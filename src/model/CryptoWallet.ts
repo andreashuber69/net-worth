@@ -41,11 +41,6 @@ export abstract class CryptoWallet extends SingleAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Creates a new [[CryptoWallet]] instance.
-     * @param parent The parent model to which this asset belongs.
-     * @param currencySymbol The crypto currency symbol, e.g. 'BTC', 'LTC'.
-     */
     protected constructor(parent: IParent, private readonly currencySymbol: string) {
         super(parent);
     }

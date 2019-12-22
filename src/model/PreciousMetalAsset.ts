@@ -66,12 +66,6 @@ export abstract class PreciousMetalAsset extends SingleAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Creates a new [[PreciousMetalAsset]] instance.
-     * @param parent The parent model to which this asset belongs.
-     * @param props The precious metal asset properties.
-     * @param quandlPath The quandl asset path.
-     */
     protected constructor(parent: IParent, props: IPreciousMetalAssetProperties, private readonly quandlPath: string) {
         super(parent);
         this.description = props.description;
