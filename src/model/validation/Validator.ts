@@ -18,7 +18,7 @@ import schema from "./schemas/All.schema.json";
 import { ValidationError } from "./ValidationError";
 
 // Symbol and BigInt cannot currently be represented in JSON, TODO
-const primitiveSchemaNames = [Boolean.name, Number.name, String.name] as const;
+const primitiveSchemaNames = ["Boolean", "Number", "String"] as const;
 
 type PrimitiveSchemaName = (typeof primitiveSchemaNames)[number];
 export type SchemaName = PrimitiveSchemaName | keyof typeof schema.definitions;
@@ -78,7 +78,7 @@ export class Validator {
     }
 
     private static isPrimitiveSchemaName(name: string): name is PrimitiveSchemaName {
-        return primitiveSchemaNames.includes(name);
+        return (primitiveSchemaNames as readonly string[]).includes(name);
     }
 
     private static getPrimitiveSchema(name: PrimitiveSchemaName) {
