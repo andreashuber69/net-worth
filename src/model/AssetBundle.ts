@@ -30,7 +30,7 @@ export abstract class AssetBundle {
     public static readonly primaryAssetName = "primaryAsset";
 
     /** Provides the bundled assets. */
-    public abstract get assets(): Asset[];
+    public abstract get assets(): readonly Asset[];
 
     /** Deletes `asset` from [[assets]]. */
     public abstract deleteAsset(asset: Asset): void;

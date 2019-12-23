@@ -13,6 +13,6 @@
 import { IDeletedAssets } from "./IDeletedAssets.schema";
 
 export class DeletedAssets implements IDeletedAssets {
-    public readonly deletedAssets!: string[];
+    public readonly deletedAssets!: readonly string[];
     readonly [key: string]: unknown;
 }

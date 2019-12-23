@@ -21,14 +21,15 @@ import { IErc20TokensWalletBundle } from "./validation/schemas/IErc20TokensWalle
 import { Validator } from "./validation/Validator";
 
 export class Erc20TokensWalletBundle extends AssetBundle {
-    public readonly assets: Erc20TokenWallet[] = [];
+    public readonly assets = new Array<Erc20TokenWallet>();
 
     public constructor(private readonly erc20Wallet: Erc20TokensWallet, bundle?: unknown) {
         super();
 
         try {
-            ({ deletedAssets: this.deletedAssets } = Validator.fromData(bundle, DeletedAssets));
+            this.deletedAssets = [...Validator.fromData(bundle, DeletedAssets).deletedAssets];
         } catch {
+            this.deletedAssets = [];
             // Exception intentionally ignored
         }
     }
@@ -76,7 +77,7 @@ export class Erc20TokensWalletBundle extends AssetBundle {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private readonly deletedAssets: string[] = [];
+    private readonly deletedAssets: string[];
 
     private addTokenWallet(token: IToken) {
         const info = token.tokenInfo;

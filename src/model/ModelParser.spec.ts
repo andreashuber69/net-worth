@@ -91,7 +91,7 @@ const getExpectedProperties = (
     descending = true,
     isEmpty = true,
 ): IExpectedModelProperties => {
-    const groupBys: GroupBy[] = ["type", "location"];
+    const groupBys: readonly GroupBy[] = ["type", "location"] as const;
     const otherGroupBys = groupBys.filter((value) => value !== groupBy);
 
     return {

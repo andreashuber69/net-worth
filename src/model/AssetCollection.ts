@@ -35,7 +35,7 @@ export class AssetCollection {
 
     /** Provides the grouped assets. */
     public get grouped() {
-        const result: Asset[] = [];
+        const result = new Array<Asset>();
 
         for (const group of this.groups) {
             result.push(group);
@@ -137,11 +137,11 @@ export class AssetCollection {
         this.update();
     }
 
-    private update(...newBundles: AssetBundle[]) {
+    private update(...newBundles: readonly AssetBundle[]) {
         this.taskQueue.queue(() => this.updateImpl(newBundles)).catch((error) => console.error(error));
     }
 
-    private async updateImpl(newBundles: AssetBundle[]) {
+    private async updateImpl(newBundles: readonly AssetBundle[]) {
         this.updateGroups();
         const promises = new Map<number, Promise<number>>(
             newBundles.map<[number, Promise<number>]>((b, i) => [i, AssetCollection.queryBundleData(b, i)]));
@@ -203,7 +203,7 @@ export class AssetCollection {
         return result;
     }
 
-    private addGroups(result: Map<string, Asset[]>, assets: Asset[]) {
+    private addGroups(result: Map<string, Asset[]>, assets: readonly Asset[]) {
         for (const asset of assets) {
             const groupName = asset[this.ordering.groupBy];
             const groupAssets = result.get(groupName);

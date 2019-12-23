@@ -23,5 +23,5 @@ export class TaggedModel {
     public readonly currency?: CurrencyName;
     public readonly groupBy?: GroupBy;
     public readonly sort?: ISort;
-    public readonly bundles!: AssetBundleUnion[];
+    public readonly bundles!: readonly AssetBundleUnion[];
 }

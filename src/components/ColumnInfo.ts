@@ -40,12 +40,12 @@ export class ColumnInfo {
 
     /** @internal */
     public static getClass(columnName: ColumnName, ordering: IOrdering, optionalColumnCount: number) {
-        const result = new Array<string>(
+        const result = [
             ...ColumnInfo.getHidden(columnName, ordering.groupBy, optionalColumnCount),
             ...ColumnInfo.getAlignment(columnName),
             ...ColumnInfo.getPadding(columnName, ordering.groupBy, ordering.otherGroupBys),
             ...ColumnInfo.getTotal(columnName),
-        );
+        ];
 
         if (result.length === 0) {
             throw new Error(`Unknown column: ${columnName}`);
@@ -67,7 +67,7 @@ export class ColumnInfo {
     private static readonly percentIntegerName = ColumnInfo.getName("percentInteger");
     private static readonly percentFractionName = ColumnInfo.getName("percentFraction");
 
-    private static readonly allColumns = new Map<GroupBy, ColumnName[]>([
+    private static readonly allColumns: ReadonlyMap<GroupBy, readonly ColumnName[]> = new Map([
         [AssetPropertyNames.type, ColumnInfo.getColumns(AssetPropertyNames.type)],
         [AssetPropertyNames.location, ColumnInfo.getColumns(AssetPropertyNames.location)],
     ]);
@@ -80,13 +80,13 @@ export class ColumnInfo {
      * as well as "virtual" columns. Examples of real table columns are "totalValueInteger" and "unit" while
      * "totalValue" and "fineness" are virtual columns.
      */
-    private static readonly allColumnCounts = [7, 10, 11, 12, 15, 18, 19, 22];
+    private static readonly allColumnCounts = [7, 10, 11, 12, 15, 18, 19, 22] as const;
 
     /**
      * Contains the number of real table columns shown with the index being the number of currently visible optional
      * full columns.
      */
-    private static readonly rawColumnCounts = [5, 7, 8, 9, 11, 13, 14, 16];
+    private static readonly rawColumnCounts = [5, 7, 8, 9, 11, 13, 14, 16] as const;
 
     private static getName(name: AssetListRowPropertyName) {
         return name;
@@ -131,7 +131,7 @@ export class ColumnInfo {
     // Obviously the metrics could be improved by breaking the method into multiple parts but doing so would make the
     // code less readable.
     // codebeat:disable[ABC,CYCLO,LOC]
-    private static getPadding(columnName: string | undefined, groupBy: string, otherGroupBys: GroupBy[]) {
+    private static getPadding(columnName: string | undefined, groupBy: string, otherGroupBys: readonly GroupBy[]) {
         const columnPadding = 3;
         const leftClass = `pl-${columnPadding}`;
         const rightClass = `pr-${columnPadding}`;

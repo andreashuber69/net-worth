@@ -12,8 +12,8 @@
 
 export class QuandlResponse {
     public readonly dataset!: {
-        readonly data: [
-            [
+        readonly data: readonly [
+            readonly [
                 string,
                 number
             ]

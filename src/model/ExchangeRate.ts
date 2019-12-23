@@ -28,10 +28,10 @@ export class ExchangeRate {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly currencyMap = new Map<Currency, IWebRequest<number>>([
+    private static readonly currencyMap: ReadonlyMap<Currency, IWebRequest<number>> = new Map([
         // cSpell:ignore xudladd, xudlcdd, xudlbk, xudlsfd, xudldkd, xudlgbd, xudlhdd, xudljyd, xudlnkd, xudlndd
         // cSpell:ignore xudlsrd, xudlskd, xudlsgd, xudltwd, xudlzrd
-        [Currency.USD, new QuandlRequest("", false)],
+        [Currency.USD, new QuandlRequest("", false) as IWebRequest<number>],
         [Currency.AUD, new QuandlRequest("boe/xudladd.json", false)],
         [Currency.CAD, new QuandlRequest("boe/xudlcdd.json", false)],
         [Currency.CNY, new QuandlRequest("boe/xudlbk73.json", false)],

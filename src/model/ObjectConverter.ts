@@ -71,7 +71,7 @@ const zecHint =
     "The wallets single public address (xpub is not supported). " +
     "Will be sent to zcha.in to query the balance.";
 
-type Converters<P, S, A, Q, M, PR, SR, AR, QR, MR> = [
+type Converters<P, S, A, Q, M, PR, SR, AR, QR, MR> = readonly [
     (value: P, info: PreciousMetalAssetInputInfo) => PR,
     (value: S, info: SimpleCryptoWalletInputInfo) => SR,
     (value: A, info: AddressCryptoWalletInputInfo) => AR,

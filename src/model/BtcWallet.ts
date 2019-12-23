@@ -47,7 +47,7 @@ export class BtcWallet extends SimpleCryptoWallet {
     private static readonly BlockchainRequest =
         // tslint:disable-next-line:max-classes-per-file
         class NestedBlockchainRequest implements IWebRequest<Readonly<IBalance>> {
-        public constructor(addresses: string[]) {
+        public constructor(addresses: readonly string[]) {
             this.addresses = addresses.join("|");
         }
 
@@ -129,7 +129,7 @@ export class BtcWallet extends SimpleCryptoWallet {
 
         private quantity = 0;
 
-        private async add(addresses: string[]) {
+        private async add(addresses: readonly string[]) {
             const result = await new BtcWallet.BlockchainRequest(addresses).execute();
             this.quantity += result.finalBalance;
 

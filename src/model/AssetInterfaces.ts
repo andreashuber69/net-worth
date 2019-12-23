@@ -28,7 +28,7 @@ export type IAssetIntersection = IAssetPropertiesIntersection & {
 
 export type AssetPropertyName = keyof IAssetPropertiesIntersection;
 
-export const allAssetPropertyNames: AssetPropertyName[] = [
+export const allAssetPropertyNames: readonly AssetPropertyName[] = [
     "description", "location", "quantity", "notes", "weight",
     "weightUnit", "fineness", "address", "value", "valueCurrency",
-];
+] as const;

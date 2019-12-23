@@ -50,12 +50,12 @@ import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCrypt
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 import { ZecWallet } from "./ZecWallet";
 
-const arrayOfAll = <T>() =>
-    <U extends Array<keyof T>>(...array: U & (Array<keyof T> extends Array<U[number]> ? unknown : never)) => array;
+const arrayOfAll = <T>() => <U extends ReadonlyArray<keyof T>>(
+    ...array: U & (ReadonlyArray<keyof T> extends ReadonlyArray<U[number]> ? unknown : never)) => array;
 
 let randomValue = Date.now();
 
-const getRandomData = (type: AssetTypeName, expectedPropertyNames: AssetPropertyName[]) => {
+const getRandomData = (type: AssetTypeName, expectedPropertyNames: readonly AssetPropertyName[]) => {
     const data = new AssetEditorData();
     data.type = type;
 
@@ -91,7 +91,9 @@ const createAsset = <T, U>(ctor: new (parent: IParent, props: U) => T, props: U)
     return new ctor(parent, props);
 };
 
-const getPropertyValues = (object: Partial<Record<AssetPropertyName, unknown>>, names: AssetPropertyName[]) => {
+const getPropertyValues = (
+    object: Partial<Record<AssetPropertyName, unknown>>, names: readonly AssetPropertyName[],
+) => {
     const result = new Map<string, unknown>();
 
     for (const name of names) {

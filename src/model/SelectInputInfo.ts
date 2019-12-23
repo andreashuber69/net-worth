@@ -15,7 +15,7 @@ import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveIn
 import { EnumSchemaName, SchemaName, Validator } from "./validation/Validator";
 
 export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
-    public abstract get items(): string[];
+    public abstract get items(): readonly string[];
 
     /** @internal */
     protected constructor(props: IPrimitiveInputInfoProperties) {
@@ -25,7 +25,7 @@ export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
 
 interface ISelectInputInfoParameters<T extends Enum<T>> extends IPrimitiveInputInfoProperties {
     readonly enumType?: T;
-    readonly enumSchemaNames: EnumSchemaName[];
+    readonly enumSchemaNames: readonly EnumSchemaName[];
 }
 
 /** Provides input information for a property where a valid value needs to be equal to one of a given list of values. */
@@ -60,5 +60,5 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private readonly enumType?: T;
-    private readonly enumSchemaNames: EnumSchemaName[];
+    private readonly enumSchemaNames: readonly EnumSchemaName[];
 }
