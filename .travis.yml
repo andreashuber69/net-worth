@@ -8,8 +8,8 @@ addons:
 branches:
   only:
     develop
-    pull
-    release
+    /^pull//.*/
+    /^release//.*/
     master
 
 before_script:
