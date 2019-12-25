@@ -17,11 +17,7 @@ set -o pipefail
 
 pushd $(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
 
-echo "Creating release branch..."
-VERSION=`npm version patch --no-git-tag-version`
-git checkout .
-git flow release start ${VERSION}
-npm version patch -m "Start release v%s" --no-git-tag-version
+git flow release finish
 # git push origin --tags
 
 popd
