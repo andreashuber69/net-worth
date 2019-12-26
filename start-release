@@ -17,6 +17,8 @@ set -o pipefail
 
 pushd $(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
 
+git checkout develop
+git pull
 echo "Creating release branch..."
 VERSION=`npm version patch --no-git-tag-version`
 git checkout .
