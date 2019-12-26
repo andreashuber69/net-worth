@@ -17,7 +17,9 @@ set -o pipefail
 
 pushd $(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
 
-git flow release finish
-# git push origin --tags
+VERSION=v`cat package.json | jq '.version' | tr -d '"'`
+git flow release finish -m "Finish release ${VERSION}" ${VERSION}
+git push origin --all
+git push origin --tags
 
 popd
