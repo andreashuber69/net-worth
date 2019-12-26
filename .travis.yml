@@ -34,7 +34,7 @@ deploy:
   github-token: $GITHUB_TOKEN
   verbose: true
   on:
-    tags: true
+    branch: "master"
 
 notifications:
   email:
