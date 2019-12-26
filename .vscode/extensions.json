@@ -17,6 +17,7 @@
     "eg2.vscode-npm-script",
     "octref.vetur",
     "prograhammer.tslint-vue",
-    "streetsidesoftware.code-spell-checker"
+    "streetsidesoftware.code-spell-checker",
+    "vector-of-bool.gitflow"
   ]
 }
