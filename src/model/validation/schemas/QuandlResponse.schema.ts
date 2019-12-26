@@ -15,7 +15,7 @@ export class QuandlResponse {
         readonly data: readonly [
             readonly [
                 string,
-                number
+                number | null
             ]
         ];
         readonly [key: string]: unknown;
