@@ -56,16 +56,8 @@ export class ColumnInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly finenessIntegerName = ColumnInfo.getName("finenessInteger");
-    private static readonly finenessFractionName = ColumnInfo.getName("finenessFraction");
-    private static readonly unitValueIntegerName = ColumnInfo.getName("unitValueInteger");
-    private static readonly unitValueFractionName = ColumnInfo.getName("unitValueFraction");
-    private static readonly quantityIntegerName = ColumnInfo.getName("quantityInteger");
-    private static readonly quantityFractionName = ColumnInfo.getName("quantityFraction");
-    private static readonly totalValueIntegerName = ColumnInfo.getName("totalValueInteger");
-    private static readonly totalValueFractionName = ColumnInfo.getName("totalValueFraction");
-    private static readonly percentIntegerName = ColumnInfo.getName("percentInteger");
-    private static readonly percentFractionName = ColumnInfo.getName("percentFraction");
+    private static readonly totalValueName = ColumnInfo.getName("totalValue");
+    private static readonly percentName = ColumnInfo.getName("percent");
 
     private static readonly allColumns: ReadonlyMap<GroupBy, readonly ColumnName[]> = new Map([
         [AssetPropertyNames.type, ColumnInfo.getColumns(AssetPropertyNames.type)],
@@ -75,18 +67,18 @@ export class ColumnInfo {
     /**
      * From the full list of columns (full, integer and fraction) returned by `getColumns`, contains the number of
      * currently visible columns with the index being the number of currently visible optional full columns. For
-     * example, if no optional full columns are currently visible (i.e. index = 0), the first 7 columns of whatever
+     * example, if no optional full columns are currently visible (i.e. index = 0), the first 5 columns of whatever
      * is returned by `getColumns` will be shown. Note that said list contains real table columns
      * as well as "virtual" columns. Examples of real table columns are "totalValueInteger" and "unit" while
      * "totalValue" and "fineness" are virtual columns.
      */
-    private static readonly allColumnCounts = [7, 10, 11, 12, 15, 18, 19, 22] as const;
+    private static readonly allColumnCounts = [5, 6, 7, 8, 9, 10, 11, 12] as const;
 
     /**
      * Contains the number of real table columns shown with the index being the number of currently visible optional
      * full columns.
      */
-    private static readonly rawColumnCounts = [5, 7, 8, 9, 11, 13, 14, 16] as const;
+    private static readonly rawColumnCounts = [5, 6, 7, 8, 9, 10, 11, 12] as const;
 
     private static getName(name: AssetListRowPropertyName) {
         return name;
@@ -95,19 +87,18 @@ export class ColumnInfo {
     private static getColumns(groupBy: GroupBy) {
         const result: ColumnName[] = [
             ColumnInfo.expandName, AssetPropertyNames.type,
-            CalculatedAssetPropertyNames.percent, ColumnInfo.percentIntegerName, ColumnInfo.percentFractionName,
+            CalculatedAssetPropertyNames.percent,
             ColumnInfo.moreName, ColumnInfo.grandTotalLabelName, CalculatedAssetPropertyNames.totalValue,
-            ColumnInfo.totalValueIntegerName, ColumnInfo.totalValueFractionName,
             AssetPropertyNames.location, CalculatedAssetPropertyNames.unit,
-            Asset.quantityName, ColumnInfo.quantityIntegerName, ColumnInfo.quantityFractionName,
-            CalculatedAssetPropertyNames.unitValue, ColumnInfo.unitValueIntegerName, ColumnInfo.unitValueFractionName,
+            Asset.quantityName,
+            CalculatedAssetPropertyNames.unitValue,
             AssetPropertyNames.description,
-            Asset.finenessName, ColumnInfo.finenessIntegerName, ColumnInfo.finenessFractionName,
+            Asset.finenessName,
         ];
 
         if (groupBy === AssetPropertyNames.location) {
             result[1] = AssetPropertyNames.location;
-            result[10] = AssetPropertyNames.type;
+            result[6] = AssetPropertyNames.type;
         }
 
         return result;
@@ -151,19 +142,7 @@ export class ColumnInfo {
             case ColumnInfo.grandTotalLabelName:
                 return [leftClass, rightClass];
             case CalculatedAssetPropertyNames.percent:
-            case ColumnInfo.finenessIntegerName:
-            case ColumnInfo.unitValueIntegerName:
-            case ColumnInfo.quantityIntegerName:
-            case ColumnInfo.totalValueIntegerName:
-            case ColumnInfo.percentIntegerName:
                 return [leftClass, "pr-0"];
-            case ColumnInfo.finenessFractionName:
-            case ColumnInfo.unitValueFractionName:
-            case ColumnInfo.quantityFractionName:
-            case ColumnInfo.totalValueFractionName:
-                return ["pl-0", rightClass];
-            case ColumnInfo.percentFractionName:
-                return ["pl-0", "pr-0"];
             case ColumnInfo.moreName:
                 return ["pl-1", rightClass];
             default:
@@ -181,19 +160,8 @@ export class ColumnInfo {
             case AssetPropertyNames.description:
             case AssetPropertyNames.location:
             case CalculatedAssetPropertyNames.unit:
-            case ColumnInfo.finenessFractionName:
-            case ColumnInfo.unitValueFractionName:
-            case ColumnInfo.quantityFractionName:
-            case ColumnInfo.totalValueFractionName:
-            case ColumnInfo.percentFractionName:
             case ColumnInfo.grandTotalLabelName:
                 return ["text-left"];
-            case ColumnInfo.finenessIntegerName:
-            case ColumnInfo.unitValueIntegerName:
-            case ColumnInfo.quantityIntegerName:
-            case ColumnInfo.totalValueIntegerName:
-            case ColumnInfo.percentIntegerName:
-                return ["text-right"];
             default:
                 return ["text-center"];
         }
@@ -202,10 +170,8 @@ export class ColumnInfo {
 
     private static getTotal(columnName: string | undefined) {
         switch (columnName) {
-            case ColumnInfo.totalValueIntegerName:
-            case ColumnInfo.totalValueFractionName:
-            case ColumnInfo.percentIntegerName:
-            case ColumnInfo.percentFractionName:
+            case ColumnInfo.totalValueName:
+            case ColumnInfo.percentName:
             case ColumnInfo.grandTotalLabelName:
                 return ["total"];
             default:

@@ -39,15 +39,15 @@
               Description <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
             </th>
             <th :class="getHeaderClass('unit')">Unit</th>
-            <th colspan="2" :class="getHeaderClass('fineness')">Fineness</th>
-            <th colspan="2" :class="getHeaderClass('unitValue')" @click="changeSort('unitValue')">
+            <th :class="getHeaderClass('fineness')">Fineness</th>
+            <th :class="getHeaderClass('unitValue')" @click="changeSort('unitValue')">
               Unit Value <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon><br>({{ checkedValue.currency }})
             </th>
-            <th colspan="2" :class="getHeaderClass('quantity')">Quantity</th>
-            <th colspan="2" :class="getHeaderClass('totalValue')" @click="changeSort('totalValue')">
+            <th :class="getHeaderClass('quantity')">Quantity</th>
+            <th :class="getHeaderClass('totalValue')" @click="changeSort('totalValue')">
               Total Value <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon><br>({{ checkedValue.currency }})
             </th>
-            <th colspan="2" :class="getHeaderClass('percent')">%</th>
+            <th :class="getHeaderClass('percent')">%</th>
             <th :class="getHeaderClass('more')"></th>
           </tr>
           <!--
@@ -78,10 +78,8 @@
       <template v-slot:body.append>
         <tr>
           <td :colspan="grandTotalLabelColumnCount" :class="getFooterClass('grandTotalLabel')">Grand Total</td>
-          <td :class="getFooterClass('totalValueInteger')">{{ grandTotalValueInteger }}</td>
-          <td :class="getFooterClass('totalValueFraction')">{{ grandTotalValueFraction }}</td>
-          <td :class="getFooterClass('percentInteger')">100</td>
-          <td :class="getFooterClass('percentFraction')">.0</td>
+          <td :class="getFooterClass('totalValue')">{{ grandTotalValue }}</td>
+          <td :class="getFooterClass('percent')">100.0</td>
           <td :class="getFooterClass('more')"></td>
         </tr>
       </template>

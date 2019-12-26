@@ -12,26 +12,13 @@
 
 export class Format {
     /** @internal */
-    public static integer(num: number | undefined, decimals: number) {
-        if ((num === undefined) || Number.isNaN(num)) {
-            return "";
-        } else {
-            const formatted = Format.format(num, decimals);
-
-            return formatted.substring(0, Format.getDecimalPointPosition(formatted));
-        }
-    }
-
-    /** @internal */
-    public static fraction(num: number | undefined, decimals: number) {
+    public static value(num: number | undefined, decimals: number) {
         if (num === undefined) {
             return "";
         } else if (Number.isNaN(num)) {
             return "Error";
         } else {
-            const formatted = Format.format(num, decimals);
-
-            return formatted.substring(Format.getDecimalPointPosition(formatted));
+            return Format.format(num, decimals);
         }
     }
 
@@ -40,11 +27,5 @@ export class Format {
     private static format(num: number, decimals: number) {
         return num.toLocaleString(
             undefined, { maximumFractionDigits: decimals, minimumFractionDigits: decimals, useGrouping: true });
-    }
-
-    private static getDecimalPointPosition(formatted: string) {
-        const decimalPointPosition = formatted.lastIndexOf(".");
-
-        return decimalPointPosition < 0 ? formatted.length : decimalPointPosition;
     }
 }

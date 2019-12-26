@@ -67,45 +67,25 @@ export default class AssetListRow extends ComponentBase<Asset> {
         return this.otherGroupBys.map((g) => this.getHint(g));
     }
 
-    public get finenessInteger() {
-        return this.checkedValue.fineness === undefined ? "" : Math.trunc(this.checkedValue.fineness).toString();
-    }
-
-    public get finenessFraction() {
+    public get fineness() {
         return this.checkedValue.fineness === undefined ?
-            "" : this.checkedValue.fineness.toLocaleString(undefined, AssetListRow.finenessFormatOptions).substr(1);
+            "" : this.checkedValue.fineness.toLocaleString(undefined, AssetListRow.finenessFormatOptions);
     }
 
-    public get unitValueInteger() {
-        return Format.integer(this.checkedValue.unitValue, 2);
+    public get unitValue() {
+        return Format.value(this.checkedValue.unitValue, 2);
     }
 
-    public get unitValueFraction() {
-        return Format.fraction(this.checkedValue.unitValue, 2);
+    public get quantity() {
+        return Format.value(this.checkedValue.quantity, this.checkedValue.displayDecimals);
     }
 
-    public get quantityInteger() {
-        return Format.integer(this.checkedValue.quantity, this.checkedValue.displayDecimals);
+    public get totalValue() {
+        return Format.value(this.checkedValue.totalValue, 2);
     }
 
-    public get quantityFraction() {
-        return Format.fraction(this.checkedValue.quantity, this.checkedValue.displayDecimals);
-    }
-
-    public get totalValueInteger() {
-        return Format.integer(this.checkedValue.totalValue, 2);
-    }
-
-    public get totalValueFraction() {
-        return Format.fraction(this.checkedValue.totalValue, 2);
-    }
-
-    public get percentInteger() {
-        return Format.integer(this.checkedValue.percent, 1);
-    }
-
-    public get percentFraction() {
-        return Format.fraction(this.checkedValue.percent, 1);
+    public get percent() {
+        return Format.value(this.checkedValue.percent, 1);
     }
 
     public getClass(columnName: ColumnName) {

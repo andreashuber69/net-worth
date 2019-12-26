@@ -24,16 +24,11 @@
     <td :class="getClass(otherGroupBys[0])" :title="otherGroupByHints[0]">{{ otherGroupByContents[0] }}</td>
     <td :class="getClass('description')" :title="checkedValue.notes">{{ checkedValue.description }}</td>
     <td :class="getClass('unit')">{{ checkedValue.unit }}</td>
-    <td :class="getClass('finenessInteger')">{{ finenessInteger }}</td>
-    <td :class="getClass('finenessFraction')">{{ finenessFraction }}</td>
-    <td :class="getClass('unitValueInteger')">{{ unitValueInteger }}</td>
-    <td :class="getClass('unitValueFraction')" :title="checkedValue.unitValueHint">{{ unitValueFraction }}</td>
-    <td :class="getClass('quantityInteger')">{{ quantityInteger }}</td>
-    <td :class="getClass('quantityFraction')" :title="checkedValue.quantityHint">{{ quantityFraction }}</td>
-    <td :class="getClass('totalValueInteger')">{{ totalValueInteger }}</td>
-    <td :class="getClass('totalValueFraction')">{{ totalValueFraction }}</td>
-    <td :class="getClass('percentInteger')">{{ percentInteger }}</td>
-    <td :class="getClass('percentFraction')">{{ percentFraction }}</td>
+    <td :class="getClass('fineness')">{{ fineness }}</td>
+    <td :class="getClass('unitValue')" :title="checkedValue.unitValueHint">{{ unitValue }}</td>
+    <td :class="getClass('quantity')" :title="checkedValue.quantityHint">{{ quantity }}</td>
+    <td :class="getClass('totalValue')">{{ totalValue }}</td>
+    <td :class="getClass('percent')">{{ percent }}</td>
     <td :class="getClass('more')">
       <v-menu v-if="checkedValue.hasActions">
         <template v-slot:activator="{ on }">
