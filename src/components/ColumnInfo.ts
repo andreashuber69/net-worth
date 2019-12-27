@@ -10,7 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset } from "../model/Asset";
 import { AssetPropertyNames } from "../model/AssetPropertyNames";
 import { CalculatedAssetPropertyNames } from "../model/CalculatedAssetPropertyNames";
 import { IOrdering } from "../model/Ordering";
@@ -21,7 +20,7 @@ import { AssetListRowPropertyName, ColumnName } from "./AssetListRow.vue";
 export class ColumnInfo {
     /** Provides the maximum number of optional columns that can be displayed. */
     public static get maxOptionalCount() {
-        return ColumnInfo.allColumnCounts.length - 1;
+        return ColumnInfo.allCounts.length - 1;
     }
 
     /** @internal */
@@ -35,7 +34,7 @@ export class ColumnInfo {
 
     /** @internal */
     public static getTotalCount(optionalCount: number) {
-        return ColumnInfo.allColumnCounts[optionalCount];
+        return ColumnInfo.allCounts[optionalCount];
     }
 
     /** @internal */
@@ -61,9 +60,9 @@ export class ColumnInfo {
     private static readonly totalValueName = ColumnInfo.getName("totalValue");
     private static readonly percentName = ColumnInfo.getName("percent");
 
-    private static readonly allColumns: ReadonlyMap<GroupBy, readonly ColumnName[]> = new Map([
-        [AssetPropertyNames.type, ColumnInfo.getColumns(AssetPropertyNames.type)],
-        [AssetPropertyNames.location, ColumnInfo.getColumns(AssetPropertyNames.location)],
+    private static readonly all: ReadonlyMap<GroupBy, readonly ColumnName[]> = new Map([
+        [AssetPropertyNames.type, ColumnInfo.getNames(AssetPropertyNames.type)],
+        [AssetPropertyNames.location, ColumnInfo.getNames(AssetPropertyNames.location)],
     ]);
 
     /**
@@ -71,22 +70,22 @@ export class ColumnInfo {
      * index being the number of currently visible optional columns. For example, if no optional columns are currently
      * visible (i.e. index = 0), the first 5 columns of whatever is returned by `getColumns` will be shown.
      */
-    private static readonly allColumnCounts = [5, 6, 7, 8, 9, 10, 11, 12] as const;
+    private static readonly allCounts = [5, 6, 7, 8, 9, 10, 11, 12] as const;
 
     private static getName(name: AssetListRowPropertyName) {
         return name;
     }
 
-    private static getColumns(groupBy: GroupBy) {
+    private static getNames(groupBy: GroupBy) {
         const result: ColumnName[] = [
             ColumnInfo.expandName, AssetPropertyNames.type,
             CalculatedAssetPropertyNames.percent,
             ColumnInfo.moreName, ColumnInfo.grandTotalLabelName, CalculatedAssetPropertyNames.totalValue,
             AssetPropertyNames.location, CalculatedAssetPropertyNames.unit,
-            Asset.quantityName,
+            "quantity",
             CalculatedAssetPropertyNames.unitValue,
             AssetPropertyNames.description,
-            Asset.finenessName,
+            "fineness",
         ];
 
         if (groupBy === AssetPropertyNames.location) {
@@ -97,14 +96,14 @@ export class ColumnInfo {
         return result;
     }
 
-    private static getHidden(columnName: ColumnName, groupBy: GroupBy, optionalColumnCount: number) {
-        const allColumns = ColumnInfo.allColumns.get(groupBy);
+    private static getHidden(name: ColumnName, groupBy: GroupBy, optionalCount: number) {
+        const all = ColumnInfo.all.get(groupBy);
 
-        if (!allColumns) {
+        if (!all) {
             throw new Error("Unknown groupBy!");
         }
 
-        if (allColumns.indexOf(columnName) >= ColumnInfo.allColumnCounts[optionalColumnCount]) {
+        if (all.indexOf(name) >= ColumnInfo.allCounts[optionalCount]) {
             // TODO: Can't this be done with one class?
             return ["hidden-sm-and-up", "hidden-xs-only"];
         }
@@ -112,12 +111,12 @@ export class ColumnInfo {
         return [];
     }
 
-    private static getPadding(columnName: string | undefined, groupBy: string, otherGroupBys: readonly GroupBy[]) {
-        const columnPadding = 3;
-        const leftClass = `pl-${columnPadding}`;
-        const rightClass = `pr-${columnPadding}`;
+    private static getPadding(name: ColumnName, groupBy: GroupBy, otherGroupBys: readonly GroupBy[]) {
+        const padding = 3;
+        const leftClass = `pl-${padding}`;
+        const rightClass = `pr-${padding}`;
 
-        switch (columnName) {
+        switch (name) {
             case ColumnInfo.expandName:
                 return [leftClass, "pr-2"];
             case groupBy:
@@ -125,9 +124,9 @@ export class ColumnInfo {
             case otherGroupBys[0]:
             case AssetPropertyNames.description:
             case CalculatedAssetPropertyNames.unit:
-            case Asset.finenessName:
+            case "fineness":
             case CalculatedAssetPropertyNames.unitValue:
-            case Asset.quantityName:
+            case "quantity":
             case CalculatedAssetPropertyNames.totalValue:
             case ColumnInfo.grandTotalLabelName:
                 return [leftClass, rightClass];
@@ -140,8 +139,8 @@ export class ColumnInfo {
         }
     }
 
-    private static getAlignment(columnName: string | undefined) {
-        switch (columnName) {
+    private static getAlignment(name: ColumnName) {
+        switch (name) {
             case CalculatedAssetPropertyNames.unitValue:
             case CalculatedAssetPropertyNames.totalValue:
             case CalculatedAssetPropertyNames.percent:
@@ -151,8 +150,8 @@ export class ColumnInfo {
         }
     }
 
-    private static getTotal(columnName: string | undefined) {
-        switch (columnName) {
+    private static getTotal(name: ColumnName) {
+        switch (name) {
             case ColumnInfo.totalValueName:
             case ColumnInfo.percentName:
             case ColumnInfo.grandTotalLabelName:

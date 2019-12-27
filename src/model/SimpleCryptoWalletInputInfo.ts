@@ -50,7 +50,7 @@ export class SimpleCryptoWalletInputInfo extends
 
     protected validateRelations(input: CompositeInput, propertyName: AssetPropertyName) {
         if (!this.address.isRequired &&
-            ((propertyName === Asset.addressName) || (propertyName === Asset.quantityName)) &&
+            ((propertyName === "address") || (propertyName === "quantity")) &&
             (SimpleCryptoWalletInputInfo.isUndefined(input.address) ===
                 SimpleCryptoWalletInputInfo.isUndefined(input.quantity))) {
             return `A value is required for either the ${this.address.label} or the ${this.quantity.label} (not both).`;
