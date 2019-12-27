@@ -62,7 +62,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     /** Provides a value indicating how many columns are currently visible. */
     public get totalColumnCount() {
-        return ColumnInfo.getRawCount(this.optionalColumnCount);
+        return ColumnInfo.getTotalCount(this.optionalColumnCount);
     }
 
     public get grandTotalLabelColumnCount() {
@@ -72,7 +72,7 @@ export default class AssetList extends ComponentBase<Model> {
         if (this.optionalColumnCount >= 1) {
             // We need to add to the minimum the number of columns that are added *after* the total value column has
             // appeared.
-            result += (ColumnInfo.getRawCount(this.optionalColumnCount) - ColumnInfo.getRawCount(1));
+            result += (ColumnInfo.getTotalCount(this.optionalColumnCount) - ColumnInfo.getTotalCount(1));
         }
 
         return result;
