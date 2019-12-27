@@ -79,7 +79,8 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public getHeaderClass(columnName: ColumnName) {
-        const result = ColumnInfo.getClass(columnName, this.checkedValue.assets.ordering, this.optionalColumnCount);
+        const result = ColumnInfo.getHeaderClass(
+            columnName, this.checkedValue.assets.ordering, this.optionalColumnCount);
 
         // Sortable columns
         if (Ordering.isSortBy(columnName)) {

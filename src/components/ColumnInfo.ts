@@ -39,19 +39,21 @@ export class ColumnInfo {
     }
 
     /** @internal */
+    public static getHeaderClass(name: ColumnName, ordering: IOrdering, optionalCount: number) {
+        return [
+            ...ColumnInfo.getHidden(name, ordering.groupBy, optionalCount),
+            ...ColumnInfo.getPadding(name, ordering.groupBy, ordering.otherGroupBys),
+        ];
+    }
+
+    /** @internal */
     public static getClass(name: ColumnName, ordering: IOrdering, optionalCount: number) {
-        const result = [
+        return [
             ...ColumnInfo.getHidden(name, ordering.groupBy, optionalCount),
             ...ColumnInfo.getAlignment(name),
             ...ColumnInfo.getPadding(name, ordering.groupBy, ordering.otherGroupBys),
             ...ColumnInfo.getTotal(name),
         ];
-
-        if (result.length === 0) {
-            throw new Error(`Unknown column: ${name}`);
-        }
-
-        return result;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
