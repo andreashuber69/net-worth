@@ -39,16 +39,16 @@ export class ColumnInfo {
     }
 
     /** @internal */
-    public static getClass(columnName: ColumnName, ordering: IOrdering, optionalColumnCount: number) {
+    public static getClass(name: ColumnName, ordering: IOrdering, optionalCount: number) {
         const result = [
-            ...ColumnInfo.getHidden(columnName, ordering.groupBy, optionalColumnCount),
-            ...ColumnInfo.getAlignment(columnName),
-            ...ColumnInfo.getPadding(columnName, ordering.groupBy, ordering.otherGroupBys),
-            ...ColumnInfo.getTotal(columnName),
+            ...ColumnInfo.getHidden(name, ordering.groupBy, optionalCount),
+            ...ColumnInfo.getAlignment(name),
+            ...ColumnInfo.getPadding(name, ordering.groupBy, ordering.otherGroupBys),
+            ...ColumnInfo.getTotal(name),
         ];
 
         if (result.length === 0) {
-            throw new Error(`Unknown column: ${columnName}`);
+            throw new Error(`Unknown column: ${name}`);
         }
 
         return result;
