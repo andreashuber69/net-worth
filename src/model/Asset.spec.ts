@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 // tslint:disable-next-line:no-implicit-dependencies no-submodule-imports
+import { arrayOfAll } from "./arrayOfAll";
 import { Asset, IParent } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetEditorData } from "./AssetEditorData";
@@ -49,9 +50,6 @@ import { SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWa
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 import { ZecWallet } from "./ZecWallet";
-
-const arrayOfAll = <T>() => <U extends ReadonlyArray<keyof T>>(
-    ...array: U & (ReadonlyArray<keyof T> extends ReadonlyArray<U[number]> ? unknown : never)) => array;
 
 let randomValue = Date.now();
 
@@ -142,7 +140,7 @@ const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
 type PreciousMetalCtor = (new (parent: IParent, props: IPreciousMetalAssetProperties) => PreciousMetalAsset);
 
 const testPreciousMetalAssetConstruction = (type: PreciousMetalAssetTypeName, ctor: PreciousMetalCtor) => {
-    const expectedPropertyNames = arrayOfAll<IPreciousMetalAssetProperties>()(
+    const expectedPropertyNames = arrayOfAll<keyof IPreciousMetalAssetProperties>()(
         "description", "location", "quantity", "notes", "weight", "weightUnit", "fineness");
     const props = getPreciousMetalProperties(getRandomData(type, expectedPropertyNames));
 
@@ -199,7 +197,7 @@ type SimpleCryptoWalletCtor = (new (parent: IParent, props: ISimpleCryptoWalletP
 
 const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ctor: SimpleCryptoWalletCtor) => {
     const expectedPropertyNames =
-        arrayOfAll<IAddressCryptoWalletProperties>()("description", "location", "notes", "address");
+        arrayOfAll<keyof IAddressCryptoWalletProperties>()("description", "location", "notes", "address");
     const props = getSimpleCryptoWalletProperties(getRandomData(type, expectedPropertyNames));
 
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
@@ -255,7 +253,7 @@ const testSimpleCryptoWalletConstruction = (type: SimpleCryptoWalletTypeName, ct
 type AddressCryptoWalletCtor = (new (parent: IParent, props: IAddressCryptoWalletProperties) => Erc20TokensWallet);
 
 const testAddressCryptoWalletConstruction = (type: AddressCryptoWalletTypeName, ctor: AddressCryptoWalletCtor) => {
-    const expectedPropertyNames = arrayOfAll<IAddressCryptoWalletProperties>()(
+    const expectedPropertyNames = arrayOfAll<keyof IAddressCryptoWalletProperties>()(
         "description", "location", "notes", "address");
     const props = getAddressCryptoWalletProperties(getRandomData(type, expectedPropertyNames));
 
@@ -312,7 +310,7 @@ const testAddressCryptoWalletConstruction = (type: AddressCryptoWalletTypeName, 
 type MiscAssetCtor = (new (parent: IParent, props: IMiscAssetProperties) => MiscAsset);
 
 const testMiscAssetConstruction = (type: MiscAssetTypeName, ctor: MiscAssetCtor) => {
-    const expectedPropertyNames = arrayOfAll<IMiscAssetProperties>()(
+    const expectedPropertyNames = arrayOfAll<keyof IMiscAssetProperties>()(
         "description", "location", "quantity", "notes", "value", "valueCurrency");
     const props = getMiscAssetProperties(getRandomData(type, expectedPropertyNames));
 

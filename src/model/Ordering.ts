@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { arrayOfAll } from "./arrayOfAll";
 import { AssetPropertyNames } from "./AssetPropertyNames";
 import { CalculatedAssetPropertyNames } from "./CalculatedAssetPropertyNames";
 import { GroupBy } from "./validation/schemas/GroupBy.schema";
@@ -33,19 +34,10 @@ export interface IOrdering {
 /** Provides information how assets are ordered (grouped and sorted) in the main model of the application. */
 export class Ordering implements IOrdering {
     /** Provides the property names by which the asset list can be grouped. */
-    public static readonly groupBys: readonly GroupBy[] = [AssetPropertyNames.type, AssetPropertyNames.location];
+    public static readonly groupBys = arrayOfAll<GroupBy>()("type", "location");
 
-    public static isSortBy(sortBy: string | undefined): sortBy is SortBy {
-        switch (sortBy) {
-            case AssetPropertyNames.type:
-            case AssetPropertyNames.description:
-            case AssetPropertyNames.location:
-            case CalculatedAssetPropertyNames.unitValue:
-            case CalculatedAssetPropertyNames.totalValue:
-                return true;
-            default:
-                return false;
-        }
+    public static isSortBy(sortBy: string): sortBy is SortBy {
+        return (Ordering.sortBys as readonly string[]).includes(sortBy);
     }
 
     /** Provides the property names by which the asset list can be grouped. */
@@ -102,6 +94,9 @@ export class Ordering implements IOrdering {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static readonly sortBys =
+        arrayOfAll<SortBy>()("type", "description", "location", "unitValue", "totalValue");
 
     private static capitalize(str: string) {
         return `${str[0].toUpperCase()}${str.substr(1)}`;
