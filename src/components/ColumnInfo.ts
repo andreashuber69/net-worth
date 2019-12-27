@@ -34,8 +34,8 @@ export class ColumnInfo {
     public static readonly grandTotalLabelName = "grandTotalLabel";
 
     /** @internal */
-    public static getRawCount(optionalColumnCount: number) {
-        return ColumnInfo.allColumnCounts[optionalColumnCount];
+    public static getRawCount(optionalCount: number) {
+        return ColumnInfo.allColumnCounts[optionalCount];
     }
 
     /** @internal */
