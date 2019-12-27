@@ -41,11 +41,11 @@
             <th :class="getHeaderClass('unit')">Unit</th>
             <th :class="getHeaderClass('fineness')">Fineness</th>
             <th :class="getHeaderClass('unitValue')" @click="changeSort('unitValue')">
-              Unit Value <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon><br>({{ checkedValue.currency }})
+              Unit Value<br>({{ checkedValue.currency }}) <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
             </th>
             <th :class="getHeaderClass('quantity')">Quantity</th>
             <th :class="getHeaderClass('totalValue')" @click="changeSort('totalValue')">
-              Total Value <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon><br>({{ checkedValue.currency }})
+              Total Value<br>({{ checkedValue.currency }}) <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
             </th>
             <th :class="getHeaderClass('percent')">%</th>
             <th :class="getHeaderClass('more')"></th>

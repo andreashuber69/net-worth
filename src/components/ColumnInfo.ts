@@ -112,9 +112,6 @@ export class ColumnInfo {
         return [];
     }
 
-    // Obviously the metrics could be improved by breaking the method into multiple parts but doing so would make the
-    // code less readable.
-    // codebeat:disable[ABC,CYCLO,LOC]
     private static getPadding(columnName: string | undefined, groupBy: string, otherGroupBys: readonly GroupBy[]) {
         const columnPadding = 3;
         const leftClass = `pl-${columnPadding}`;
@@ -142,24 +139,17 @@ export class ColumnInfo {
                 return [];
         }
     }
-    // codebeat:enable[ABC,CYCLO,LOC]
 
-    // Obviously the metrics could be improved by breaking the method into multiple parts but doing so would make the
-    // code less readable.
-    // codebeat:disable[ABC,CYCLO]
     private static getAlignment(columnName: string | undefined) {
         switch (columnName) {
-            case AssetPropertyNames.type:
-            case AssetPropertyNames.description:
-            case AssetPropertyNames.location:
-            case CalculatedAssetPropertyNames.unit:
-            case ColumnInfo.grandTotalLabelName:
-                return ["text-left"];
+            case CalculatedAssetPropertyNames.unitValue:
+            case CalculatedAssetPropertyNames.totalValue:
+            case CalculatedAssetPropertyNames.percent:
+                return ["text-right"];
             default:
-                return ["text-center"];
+                return [];
         }
     }
-    // codebeat:enable[ABC,CYCLO]
 
     private static getTotal(columnName: string | undefined) {
         switch (columnName) {
