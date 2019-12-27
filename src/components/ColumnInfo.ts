@@ -35,7 +35,7 @@ export class ColumnInfo {
 
     /** @internal */
     public static getRawCount(optionalColumnCount: number) {
-        return ColumnInfo.rawColumnCounts[optionalColumnCount];
+        return ColumnInfo.allColumnCounts[optionalColumnCount];
     }
 
     /** @internal */
@@ -65,20 +65,11 @@ export class ColumnInfo {
     ]);
 
     /**
-     * From the full list of columns (full, integer and fraction) returned by `getColumns`, contains the number of
-     * currently visible columns with the index being the number of currently visible optional full columns. For
-     * example, if no optional full columns are currently visible (i.e. index = 0), the first 5 columns of whatever
-     * is returned by `getColumns` will be shown. Note that said list contains real table columns
-     * as well as "virtual" columns. Examples of real table columns are "totalValueInteger" and "unit" while
-     * "totalValue" and "fineness" are virtual columns.
+     * From the list of columns returned by `getColumns`, contains the number of currently visible columns with the
+     * index being the number of currently visible optional columns. For example, if no optional columns are currently
+     * visible (i.e. index = 0), the first 5 columns of whatever is returned by `getColumns` will be shown.
      */
     private static readonly allColumnCounts = [5, 6, 7, 8, 9, 10, 11, 12] as const;
-
-    /**
-     * Contains the number of real table columns shown with the index being the number of currently visible optional
-     * full columns.
-     */
-    private static readonly rawColumnCounts = [5, 6, 7, 8, 9, 10, 11, 12] as const;
 
     private static getName(name: AssetListRowPropertyName) {
         return name;
