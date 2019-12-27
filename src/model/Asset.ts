@@ -157,10 +157,6 @@ export abstract class Asset implements ICalculatedAssetProperties {
         return name;
     }
 
-    private static getCalculatedPropertyName<T extends keyof Asset>(name: T) {
-        return name;
-    }
-
     private static multiply(factor1: number | undefined, factor2: number | undefined) {
         return (factor1 === undefined) || (factor2 === undefined) ? undefined : factor1 * factor2;
     }
