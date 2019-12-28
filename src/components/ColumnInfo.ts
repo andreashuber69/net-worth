@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IOrdering } from "../model/Ordering";
-import { GroupBy } from "../model/validation/schemas/GroupBy.schema";
+import { GroupBy, GroupBys } from "../model/validation/schemas/GroupBy.schema";
 
 import { ColumnName } from "./AssetListRow.vue";
 
@@ -58,7 +58,7 @@ export class ColumnInfo {
      */
     private static readonly allCounts = [5, 6, 7, 8, 9, 10, 11, 12] as const;
 
-    private static getNames(...groupBys: readonly [GroupBy, GroupBy]): readonly ColumnName[] {
+    private static getNames(...groupBys: Readonly<GroupBys>): readonly ColumnName[] {
         return [
             "expand", groupBys[0], "percent", "more", "grandTotalLabel", "totalValue", groupBys[1], "unit",
             "quantity", "unitValue", "description", "fineness",
@@ -80,7 +80,7 @@ export class ColumnInfo {
         return [];
     }
 
-    private static getPadding(name: ColumnName, ...groupBys: readonly [GroupBy, GroupBy]) {
+    private static getPadding(name: ColumnName, ...groupBys: Readonly<GroupBys>) {
         const padding = 3;
         const leftClass = `pl-${padding}`;
         const rightClass = `pr-${padding}`;

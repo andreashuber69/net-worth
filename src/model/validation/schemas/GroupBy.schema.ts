@@ -13,3 +13,5 @@
 import { IAsset } from "./IAssetProperties.schema";
 
 export type GroupBy = keyof Pick<IAsset, "type" | "location">;
+
+export type GroupBys = [GroupBy, GroupBy];
