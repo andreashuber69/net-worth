@@ -10,7 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { arrayOfAll } from "./arrayOfAll";
 import { Asset } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { AssetGroup } from "./AssetGroup";
@@ -92,7 +91,7 @@ const getExpectedProperties = (
     descending = true,
     isEmpty = true,
 ): IExpectedModelProperties => {
-    const groupBys = arrayOfAll<GroupBy>()("type", "location");
+    const groupBys = Ordering.groupBys;
     const otherGroupBys = groupBys.filter((value) => value !== groupBy);
 
     return {
