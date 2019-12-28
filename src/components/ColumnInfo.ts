@@ -30,7 +30,7 @@ export class ColumnInfo {
     public static getHeaderClass(name: ColumnName, ordering: IOrdering, optionalCount: number) {
         return [
             ...ColumnInfo.getHidden(name, ordering.groupBy, optionalCount),
-            ...ColumnInfo.getPadding(name, ordering.groupBy, ordering.otherGroupBys),
+            ...ColumnInfo.getPadding(name, ordering.groupBy, ordering.otherGroupBys[0]),
         ];
     }
 
@@ -39,7 +39,7 @@ export class ColumnInfo {
         return [
             ...ColumnInfo.getHidden(name, ordering.groupBy, optionalCount),
             ...ColumnInfo.getAlignment(name),
-            ...ColumnInfo.getPadding(name, ordering.groupBy, ordering.otherGroupBys),
+            ...ColumnInfo.getPadding(name, ordering.groupBy, ordering.otherGroupBys[0]),
             ...ColumnInfo.getTotal(name),
         ];
     }
@@ -58,9 +58,9 @@ export class ColumnInfo {
      */
     private static readonly allCounts = [5, 6, 7, 8, 9, 10, 11, 12] as const;
 
-    private static getNames(groupBy: GroupBy, otherGroupBy: GroupBy): readonly ColumnName[] {
+    private static getNames(...groupBys: readonly [GroupBy, GroupBy]): readonly ColumnName[] {
         return [
-            "expand", groupBy, "percent", "more", "grandTotalLabel", "totalValue", otherGroupBy, "unit",
+            "expand", groupBys[0], "percent", "more", "grandTotalLabel", "totalValue", groupBys[1], "unit",
             "quantity", "unitValue", "description", "fineness",
         ] as const;
     }
@@ -80,7 +80,7 @@ export class ColumnInfo {
         return [];
     }
 
-    private static getPadding(name: ColumnName, groupBy: GroupBy, otherGroupBys: readonly GroupBy[]) {
+    private static getPadding(name: ColumnName, ...groupBys: readonly [GroupBy, GroupBy]) {
         const padding = 3;
         const leftClass = `pl-${padding}`;
         const rightClass = `pr-${padding}`;
@@ -88,9 +88,9 @@ export class ColumnInfo {
         switch (name) {
             case "expand":
                 return [leftClass, "pr-2"];
-            case groupBy:
+            case groupBys[0]:
                 return ["pl-0", rightClass];
-            case otherGroupBys[0]:
+            case groupBys[1]:
             case "description":
             case "unit":
             case "fineness":
