@@ -19,14 +19,14 @@ import { ColumnInfo } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
-type PropertyNames<T> = { [K in keyof T]: T[K] extends string ? K : never }[keyof T];
+type StringPropertyNames<T> = { [K in keyof T]: T[K] extends string ? K : never }[keyof T];
 type Diff<T, U> = T extends U ? never : T;
-export type AssetListRowPropertyName = Diff<PropertyNames<AssetListRow>, PropertyNames<ComponentBase<Asset>>>;
+type AssetListRowPropertyName = Diff<StringPropertyNames<AssetListRow>, StringPropertyNames<ComponentBase<Asset>>>;
+export type ColumnName = AssetDisplayPropertyName | AssetListRowPropertyName | "expand" | "more" | "grandTotalLabel";
 
 // This could easily be fixed by adding methods in two extending classes, but doing so seems strange at best. Most
 // methods are trivial, so their number shouldn't matter that much.
 // codebeat:disable[TOO_MANY_FUNCTIONS]
-
 @Component
 /**
  * Implements the UI for a single row of the asset list.
@@ -136,6 +136,3 @@ export default class AssetListRow extends ComponentBase<Asset> {
     }
 }
 // codebeat:enable[TOO_MANY_FUNCTIONS]
-
-export type ColumnName = AssetDisplayPropertyName | AssetListRowPropertyName |
-    typeof ColumnInfo.expandName | typeof ColumnInfo.moreName | typeof ColumnInfo.grandTotalLabelName;

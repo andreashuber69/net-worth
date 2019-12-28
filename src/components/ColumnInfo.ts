@@ -13,22 +13,13 @@
 import { IOrdering } from "../model/Ordering";
 import { GroupBy } from "../model/validation/schemas/GroupBy.schema";
 
-import { AssetListRowPropertyName, ColumnName } from "./AssetListRow.vue";
+import { ColumnName } from "./AssetListRow.vue";
 
 export class ColumnInfo {
     /** Provides the maximum number of optional columns that can be displayed. */
     public static get maxOptionalCount() {
         return ColumnInfo.allCounts.length - 1;
     }
-
-    /** @internal */
-    public static readonly expandName = "expand";
-
-    /** @internal */
-    public static readonly moreName = "more";
-
-    /** @internal */
-    public static readonly grandTotalLabelName = "grandTotalLabel";
 
     /** @internal */
     public static getTotalCount(optionalCount: number) {
@@ -55,12 +46,9 @@ export class ColumnInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly totalValueName = ColumnInfo.getName("totalValue");
-    private static readonly percentName = ColumnInfo.getName("percent");
-
     private static readonly all: ReadonlyMap<GroupBy, readonly ColumnName[]> = new Map([
-        ["type", ColumnInfo.getNames("type")],
-        ["location", ColumnInfo.getNames("location")],
+        ["type", ColumnInfo.getNames("type", "location")],
+        ["location", ColumnInfo.getNames("location", "type")],
     ]);
 
     /**
@@ -70,28 +58,11 @@ export class ColumnInfo {
      */
     private static readonly allCounts = [5, 6, 7, 8, 9, 10, 11, 12] as const;
 
-    private static getName(name: AssetListRowPropertyName) {
-        return name;
-    }
-
-    private static getNames(groupBy: GroupBy) {
-        const result: ColumnName[] = [
-            ColumnInfo.expandName, "type",
-            "percent",
-            ColumnInfo.moreName, ColumnInfo.grandTotalLabelName, "totalValue",
-            "location", "unit",
-            "quantity",
-            "unitValue",
-            "description",
-            "fineness",
-        ];
-
-        if (groupBy === "location") {
-            result[1] = "location";
-            result[6] = "type";
-        }
-
-        return result;
+    private static getNames(groupBy: GroupBy, otherGroupBy: GroupBy): readonly ColumnName[] {
+        return [
+            "expand", groupBy, "percent", "more", "grandTotalLabel", "totalValue", otherGroupBy, "unit",
+            "quantity", "unitValue", "description", "fineness",
+        ] as const;
     }
 
     private static getHidden(name: ColumnName, groupBy: GroupBy, optionalCount: number) {
@@ -115,7 +86,7 @@ export class ColumnInfo {
         const rightClass = `pr-${padding}`;
 
         switch (name) {
-            case ColumnInfo.expandName:
+            case "expand":
                 return [leftClass, "pr-2"];
             case groupBy:
                 return ["pl-0", rightClass];
@@ -126,11 +97,11 @@ export class ColumnInfo {
             case "unitValue":
             case "quantity":
             case "totalValue":
-            case ColumnInfo.grandTotalLabelName:
+            case "grandTotalLabel":
                 return [leftClass, rightClass];
             case "percent":
                 return [leftClass, "pr-0"];
-            case ColumnInfo.moreName:
+            case "more":
                 return ["pl-1", rightClass];
             default:
                 return [];
@@ -150,9 +121,9 @@ export class ColumnInfo {
 
     private static getTotal(name: ColumnName) {
         switch (name) {
-            case ColumnInfo.totalValueName:
-            case ColumnInfo.percentName:
-            case ColumnInfo.grandTotalLabelName:
+            case "totalValue":
+            case "percent":
+            case "grandTotalLabel":
                 return ["total"];
             default:
                 return [];
