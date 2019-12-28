@@ -12,7 +12,6 @@
 
 import { AssetBundle } from "./AssetBundle";
 import { IAssetIntersection } from "./AssetInterfaces";
-import { CalculatedAssetPropertyNames } from "./CalculatedAssetPropertyNames";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
@@ -151,6 +150,4 @@ export abstract class Asset implements ICalculatedAssetProperties {
     private unitValueHintImpl = "";
 }
 
-export type AssetDisplayPropertyName = (keyof IAssetIntersection) |
-    typeof CalculatedAssetPropertyNames.unit | typeof CalculatedAssetPropertyNames.unitValue |
-    typeof CalculatedAssetPropertyNames.totalValue | typeof CalculatedAssetPropertyNames.percent;
+export type AssetDisplayPropertyName = (keyof IAssetIntersection) | (keyof ICalculatedAssetProperties);

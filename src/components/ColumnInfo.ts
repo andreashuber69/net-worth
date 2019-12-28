@@ -10,7 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { CalculatedAssetPropertyNames } from "../model/CalculatedAssetPropertyNames";
 import { IOrdering } from "../model/Ordering";
 import { GroupBy } from "../model/validation/schemas/GroupBy.schema";
 
@@ -78,11 +77,11 @@ export class ColumnInfo {
     private static getNames(groupBy: GroupBy) {
         const result: ColumnName[] = [
             ColumnInfo.expandName, "type",
-            CalculatedAssetPropertyNames.percent,
-            ColumnInfo.moreName, ColumnInfo.grandTotalLabelName, CalculatedAssetPropertyNames.totalValue,
-            "location", CalculatedAssetPropertyNames.unit,
+            "percent",
+            ColumnInfo.moreName, ColumnInfo.grandTotalLabelName, "totalValue",
+            "location", "unit",
             "quantity",
-            CalculatedAssetPropertyNames.unitValue,
+            "unitValue",
             "description",
             "fineness",
         ];
@@ -122,14 +121,14 @@ export class ColumnInfo {
                 return ["pl-0", rightClass];
             case otherGroupBys[0]:
             case "description":
-            case CalculatedAssetPropertyNames.unit:
+            case "unit":
             case "fineness":
-            case CalculatedAssetPropertyNames.unitValue:
+            case "unitValue":
             case "quantity":
-            case CalculatedAssetPropertyNames.totalValue:
+            case "totalValue":
             case ColumnInfo.grandTotalLabelName:
                 return [leftClass, rightClass];
-            case CalculatedAssetPropertyNames.percent:
+            case "percent":
                 return [leftClass, "pr-0"];
             case ColumnInfo.moreName:
                 return ["pl-1", rightClass];
@@ -140,9 +139,9 @@ export class ColumnInfo {
 
     private static getAlignment(name: ColumnName) {
         switch (name) {
-            case CalculatedAssetPropertyNames.unitValue:
-            case CalculatedAssetPropertyNames.totalValue:
-            case CalculatedAssetPropertyNames.percent:
+            case "unitValue":
+            case "totalValue":
+            case "percent":
                 return ["text-right"];
             default:
                 return [];
