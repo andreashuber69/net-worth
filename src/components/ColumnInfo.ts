@@ -10,7 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetPropertyNames } from "../model/AssetPropertyNames";
 import { CalculatedAssetPropertyNames } from "../model/CalculatedAssetPropertyNames";
 import { IOrdering } from "../model/Ordering";
 import { GroupBy } from "../model/validation/schemas/GroupBy.schema";
@@ -61,8 +60,8 @@ export class ColumnInfo {
     private static readonly percentName = ColumnInfo.getName("percent");
 
     private static readonly all: ReadonlyMap<GroupBy, readonly ColumnName[]> = new Map([
-        [AssetPropertyNames.type, ColumnInfo.getNames(AssetPropertyNames.type)],
-        [AssetPropertyNames.location, ColumnInfo.getNames(AssetPropertyNames.location)],
+        ["type", ColumnInfo.getNames("type")],
+        ["location", ColumnInfo.getNames("location")],
     ]);
 
     /**
@@ -78,19 +77,19 @@ export class ColumnInfo {
 
     private static getNames(groupBy: GroupBy) {
         const result: ColumnName[] = [
-            ColumnInfo.expandName, AssetPropertyNames.type,
+            ColumnInfo.expandName, "type",
             CalculatedAssetPropertyNames.percent,
             ColumnInfo.moreName, ColumnInfo.grandTotalLabelName, CalculatedAssetPropertyNames.totalValue,
-            AssetPropertyNames.location, CalculatedAssetPropertyNames.unit,
+            "location", CalculatedAssetPropertyNames.unit,
             "quantity",
             CalculatedAssetPropertyNames.unitValue,
-            AssetPropertyNames.description,
+            "description",
             "fineness",
         ];
 
-        if (groupBy === AssetPropertyNames.location) {
-            result[1] = AssetPropertyNames.location;
-            result[6] = AssetPropertyNames.type;
+        if (groupBy === "location") {
+            result[1] = "location";
+            result[6] = "type";
         }
 
         return result;
@@ -122,7 +121,7 @@ export class ColumnInfo {
             case groupBy:
                 return ["pl-0", rightClass];
             case otherGroupBys[0]:
-            case AssetPropertyNames.description:
+            case "description":
             case CalculatedAssetPropertyNames.unit:
             case "fineness":
             case CalculatedAssetPropertyNames.unitValue:

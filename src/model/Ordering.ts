@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { arrayOfAll } from "./arrayOfAll";
-import { AssetPropertyNames } from "./AssetPropertyNames";
 import { CalculatedAssetPropertyNames } from "./CalculatedAssetPropertyNames";
 import { GroupBy } from "./validation/schemas/GroupBy.schema";
 import { ISort } from "./validation/schemas/ISort.schema";
@@ -89,7 +88,7 @@ export class Ordering implements IOrdering {
     public constructor(params: IOrderingParameters) {
         this.onGroupChanged = params.onGroupChanged;
         this.onSortChanged = params.onSortChanged;
-        this.groupByImpl = params.groupBy || AssetPropertyNames.type;
+        this.groupByImpl = params.groupBy || "type";
         this.sortImpl = params.sort || { by: CalculatedAssetPropertyNames.totalValue, descending: true };
     }
 
