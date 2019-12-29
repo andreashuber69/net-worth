@@ -66,12 +66,17 @@ export class SimpleCryptoWalletInputInfo extends
     }
 
     private static getSchema(quantityDecimals: 8 | 18) {
-        // tslint:disable-next-line: switch-default
         switch (quantityDecimals) {
             case 8:
                 return "Quantity8";
             case 18:
                 return "QuantityAny";
+            default:
+                return SimpleCryptoWalletInputInfo.assertUnreachable(quantityDecimals);
         }
+    }
+
+    private static assertUnreachable(value: never): never {
+        throw new Error(value);
     }
 }

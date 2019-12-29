@@ -116,6 +116,10 @@ export default class AssetListRow extends ComponentBase<Asset> {
         useGrouping: true,
     };
 
+    private static assertUnreachable(value: never): never {
+        throw new Error(value);
+    }
+
     private getHint(groupBy: GroupBy) {
         switch (groupBy) {
             case "type":
@@ -123,7 +127,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
             case "location":
                 return this.checkedValue.locationHint;
             default:
-                throw new Error("Unknown groupBy!");
+                return AssetListRow.assertUnreachable(groupBy);
         }
     }
 

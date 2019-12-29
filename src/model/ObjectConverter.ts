@@ -142,7 +142,7 @@ export class ObjectConverter {
 
             return [info, convertMiscObject(rawObject, info)] as const;
         } else {
-            throw ObjectConverter.getUnhandledError(rawObject);
+            return ObjectConverter.assertUnreachable(rawObject);
         }
     }
 
@@ -162,7 +162,7 @@ export class ObjectConverter {
         return result;
     }
 
-    private static getUnhandledError(value: never) {
-        return new Error(value);
+    private static assertUnreachable(value: never): never {
+        throw new Error(value);
     }
 }
