@@ -80,8 +80,7 @@ export class Ordering implements IOrdering {
     }
 
     public constructor(params: IOrderingParameters) {
-        this.onGroupChanged = params.onGroupChanged;
-        this.onSortChanged = params.onSortChanged;
+        ({onGroupChanged: this.onGroupChanged, onSortChanged: this.onSortChanged} = params);
         this.groupByIndex = params.groupBy && this.defaultGroupBys.indexOf(params.groupBy) || 0;
         this.sortImpl = params.sort || { by: "totalValue", descending: true };
     }
