@@ -79,8 +79,7 @@ const createAsset = <T, U>(ctor: new (parent: IParent, props: U) => T, props: U)
     const parent: IParent = {
         assets: {
             ordering: {
-                groupBy: "type",
-                otherGroupBys: ["location"],
+                groupBys: ["type", "location"],
             },
         },
         exchangeRate: 1,

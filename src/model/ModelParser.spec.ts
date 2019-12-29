@@ -91,8 +91,8 @@ const getExpectedProperties = (
     descending = true,
     isEmpty = true,
 ): IExpectedModelProperties => {
-    const defaultGroupBys = Ordering.defaultGroupBys;
-    const otherGroupBys = defaultGroupBys.filter((value) => value !== groupBy);
+    const defaultGroupBys = ["type", "location"] as const;
+    const groupBys = groupBy === defaultGroupBys[0] ? defaultGroupBys : ["location", "type"] as const;
 
     return {
         name,
@@ -105,12 +105,9 @@ const getExpectedProperties = (
         currency,
         assets: {
             ordering: {
-                defaultGroupBys,
-                groupBy,
-                groupByLabel: capitalize(groupBy),
-                defaultGroupByLabels: defaultGroupBys.map(capitalize),
-                otherGroupBys,
-                otherGroupByLabels: otherGroupBys.map(capitalize),
+                defaultGroupByLabels: defaultGroupBys.map(capitalize) as [string, string],
+                groupBys,
+                groupByLabels: groupBys.map(capitalize) as [string, string],
                 sort: { by: sortBy, descending },
             },
             isEmpty,

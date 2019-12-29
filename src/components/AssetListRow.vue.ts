@@ -44,7 +44,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
     public visibleColumnCount?: number;
 
     public get groupBy() {
-        return this.checkedValue.parent.assets.ordering.groupBy;
+        return this.checkedValue.parent.assets.ordering.groupBys[0];
     }
 
     public get groupByContent() {
@@ -56,7 +56,7 @@ export default class AssetListRow extends ComponentBase<Asset> {
     }
 
     public get otherGroupBys() {
-        return this.checkedValue.parent.assets.ordering.otherGroupBys;
+        return this.checkedValue.parent.assets.ordering.groupBys.slice(1);
     }
 
     public get otherGroupByContents() {

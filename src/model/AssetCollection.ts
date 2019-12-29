@@ -172,7 +172,7 @@ export class AssetCollection {
 
         // Remove no longer existing groups
         for (let index = 0; index < this.groups.length;) {
-            if (!newGroups.has(this.groups[index][this.ordering.groupBy])) {
+            if (!newGroups.has(this.groups[index][this.ordering.groupBys[0]])) {
                 this.groups.splice(index, 1);
             } else {
                 ++index;
@@ -181,7 +181,7 @@ export class AssetCollection {
 
         // Update existing groups with new assets
         for (const newGroup of newGroups) {
-            const existingGroup = this.groups.find((g) => g[this.ordering.groupBy] === newGroup[0]);
+            const existingGroup = this.groups.find((g) => g[this.ordering.groupBys[0]] === newGroup[0]);
 
             if (existingGroup === undefined) {
                 this.groups.push(new AssetGroup(this.parent, newGroup[1]));
@@ -205,7 +205,7 @@ export class AssetCollection {
 
     private addGroups(result: Map<string, Asset[]>, assets: readonly Asset[]) {
         for (const asset of assets) {
-            const groupName = asset[this.ordering.groupBy];
+            const groupName = asset[this.ordering.groupBys[0]];
             const groupAssets = result.get(groupName);
 
             if (groupAssets === undefined) {

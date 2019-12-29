@@ -10,8 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IOrdering } from "../model/Ordering";
-import { GroupBy, GroupBys } from "../model/validation/schemas/GroupBy.schema";
+import { GroupBys, IOrdering } from "../model/Ordering";
+import { GroupBy } from "../model/validation/schemas/GroupBy.schema";
 
 import { ColumnName } from "./AssetListRow.vue";
 
@@ -29,17 +29,17 @@ export class ColumnInfo {
     /** @internal */
     public static getHeaderClass(name: ColumnName, ordering: IOrdering, optionalCount: number) {
         return [
-            ...ColumnInfo.getHidden(name, ordering.groupBy, optionalCount),
-            ...ColumnInfo.getPadding(name, ordering.groupBy, ordering.otherGroupBys[0]),
+            ...ColumnInfo.getHidden(name, ordering.groupBys[0], optionalCount),
+            ...ColumnInfo.getPadding(name, ordering.groupBys),
         ];
     }
 
     /** @internal */
     public static getClass(name: ColumnName, ordering: IOrdering, optionalCount: number) {
         return [
-            ...ColumnInfo.getHidden(name, ordering.groupBy, optionalCount),
+            ...ColumnInfo.getHidden(name, ordering.groupBys[0], optionalCount),
             ...ColumnInfo.getAlignment(name),
-            ...ColumnInfo.getPadding(name, ordering.groupBy, ordering.otherGroupBys[0]),
+            ...ColumnInfo.getPadding(name, ordering.groupBys),
             ...ColumnInfo.getTotal(name),
         ];
     }
@@ -58,7 +58,7 @@ export class ColumnInfo {
      */
     private static readonly allCounts = [5, 6, 7, 8, 9, 10, 11, 12] as const;
 
-    private static getNames(...groupBys: Readonly<GroupBys>): readonly ColumnName[] {
+    private static getNames(...groupBys: GroupBys): readonly ColumnName[] {
         return [
             "expand", groupBys[0], "percent", "more", "grandTotalLabel", "totalValue", groupBys[1], "unit",
             "quantity", "unitValue", "description", "fineness",
@@ -80,7 +80,7 @@ export class ColumnInfo {
         return [];
     }
 
-    private static getPadding(name: ColumnName, ...groupBys: Readonly<GroupBys>) {
+    private static getPadding(name: ColumnName, groupBys: GroupBys) {
         const padding = 3;
         const leftClass = `pl-${padding}`;
         const rightClass = `pr-${padding}`;

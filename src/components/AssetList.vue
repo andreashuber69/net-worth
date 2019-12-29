@@ -26,14 +26,14 @@
           <tr>
             <th :class="getHeaderClass('expand')"></th>
             <th
-              :class="getHeaderClass(checkedValue.assets.ordering.groupBy)"
-              @click="changeSort(checkedValue.assets.ordering.groupBy)">
-              {{ checkedValue.assets.ordering.groupByLabel }} <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
+              :class="getHeaderClass(checkedValue.assets.ordering.groupBys[0])"
+              @click="changeSort(checkedValue.assets.ordering.groupBys[0])">
+              {{ checkedValue.assets.ordering.groupByLabels[0] }} <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
             </th>
             <th
-              :class="getHeaderClass(checkedValue.assets.ordering.otherGroupBys[0])"
-              @click="changeSort(checkedValue.assets.ordering.otherGroupBys[0])">
-              {{ checkedValue.assets.ordering.otherGroupByLabels[0] }} <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
+              :class="getHeaderClass(checkedValue.assets.ordering.groupBys[1])"
+              @click="changeSort(checkedValue.assets.ordering.groupBys[1])">
+              {{ checkedValue.assets.ordering.groupByLabels[1] }} <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
             </th>
             <th :class="getHeaderClass('description')" @click="changeSort('description')">
               Description <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
