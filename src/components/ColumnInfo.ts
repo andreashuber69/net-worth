@@ -49,13 +49,6 @@ export class ColumnInfo {
      */
     private static readonly requiredCount = 5;
 
-    private static getAllNames(groupBys: GroupBys): readonly ColumnName[] {
-        return [
-            "expand", groupBys[0], "percent", "more", "grandTotalLabel", "totalValue", groupBys[1], "unit",
-            "quantity", "unitValue", "description", "fineness",
-        ] as const;
-    }
-
     private static getHidden(name: ColumnName, groupBys: GroupBys, optionalCount: number) {
 
         if (ColumnInfo.getAllNames(groupBys).indexOf(name) >= ColumnInfo.getTotalCount(optionalCount)) {
@@ -64,6 +57,17 @@ export class ColumnInfo {
         }
 
         return [];
+    }
+
+    private static getAlignment(name: ColumnName) {
+        switch (name) {
+            case "unitValue":
+            case "totalValue":
+            case "percent":
+                return ["text-right"];
+            default:
+                return [];
+        }
     }
 
     private static getPadding(name: ColumnName, groupBys: GroupBys) {
@@ -94,17 +98,6 @@ export class ColumnInfo {
         }
     }
 
-    private static getAlignment(name: ColumnName) {
-        switch (name) {
-            case "unitValue":
-            case "totalValue":
-            case "percent":
-                return ["text-right"];
-            default:
-                return [];
-        }
-    }
-
     private static getTotal(name: ColumnName) {
         switch (name) {
             case "totalValue":
@@ -114,5 +107,12 @@ export class ColumnInfo {
             default:
                 return [];
         }
+    }
+
+    private static getAllNames(groupBys: GroupBys): readonly ColumnName[] {
+        return [
+            "expand", groupBys[0], "percent", "more", "grandTotalLabel", "totalValue", groupBys[1], "unit",
+            "quantity", "unitValue", "description", "fineness",
+        ] as const;
     }
 }
