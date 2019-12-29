@@ -24,9 +24,6 @@ type Diff<T, U> = T extends U ? never : T;
 type AssetListRowPropertyName = Diff<StringPropertyNames<AssetListRow>, StringPropertyNames<ComponentBase<Asset>>>;
 export type ColumnName = AssetDisplayPropertyName | AssetListRowPropertyName | "expand" | "more" | "grandTotalLabel";
 
-// This could easily be fixed by adding methods in two extending classes, but doing so seems strange at best. Most
-// methods are trivial, so their number shouldn't matter that much.
-// codebeat:disable[TOO_MANY_FUNCTIONS]
 @Component
 /**
  * Implements the UI for a single row of the asset list.
@@ -43,28 +40,16 @@ export default class AssetListRow extends ComponentBase<Asset> {
     @Prop()
     public visibleColumnCount?: number;
 
-    public get groupBy() {
-        return this.checkedValue.parent.assets.ordering.groupBys[0];
+    public get groupBys() {
+        return this.checkedValue.parent.assets.ordering.groupBys;
     }
 
-    public get groupByContent() {
-        return this.checkedValue[this.groupBy];
+    public get groupByContents() {
+        return this.groupBys.map((g) => this.checkedValue[g]);
     }
 
-    public get groupByHint() {
-        return this.getHint(this.groupBy);
-    }
-
-    public get otherGroupBys() {
-        return this.checkedValue.parent.assets.ordering.groupBys.slice(1);
-    }
-
-    public get otherGroupByContents() {
-        return this.otherGroupBys.map((g) => this.checkedValue[g]);
-    }
-
-    public get otherGroupByHints() {
-        return this.otherGroupBys.map((g) => this.getHint(g));
+    public get groupByHints() {
+        return this.groupBys.map((g) => this.getHint(g));
     }
 
     public get fineness() {
@@ -139,4 +124,3 @@ export default class AssetListRow extends ComponentBase<Asset> {
         return this.visibleColumnCount;
     }
 }
-// codebeat:enable[TOO_MANY_FUNCTIONS]

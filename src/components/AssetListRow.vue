@@ -20,8 +20,8 @@
         <v-icon v-if="checkedValue.isExpanded">expand_less</v-icon>
       </div>
     </td>
-    <td :class="getClass(groupBy)" :title="groupByHint">{{ groupByContent }}</td>
-    <td :class="getClass(otherGroupBys[0])" :title="otherGroupByHints[0]">{{ otherGroupByContents[0] }}</td>
+    <td :class="getClass(groupBys[0])" :title="groupByHints[0]">{{ groupByContents[0] }}</td>
+    <td :class="getClass(groupBys[1])" :title="groupByHints[1]">{{ groupByContents[1] }}</td>
     <td :class="getClass('description')" :title="checkedValue.notes">{{ checkedValue.description }}</td>
     <td :class="getClass('unit')">{{ checkedValue.unit }}</td>
     <td :class="getClass('fineness')">{{ fineness }}</td>
