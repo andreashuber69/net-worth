@@ -11,25 +11,22 @@
 // <http://www.gnu.org/licenses/>.
 
 import { GroupBys, IOrdering } from "../model/Ordering";
-import { GroupBy } from "../model/validation/schemas/GroupBy.schema";
 
 import { ColumnName } from "./AssetListRow.vue";
 
 export class ColumnInfo {
     /** Provides the maximum number of optional columns that can be displayed. */
-    public static get maxOptionalCount() {
-        return ColumnInfo.allCounts.length - 1;
-    }
+    public static readonly maxOptionalCount = 7;
 
     /** @internal */
     public static getTotalCount(optionalCount: number) {
-        return ColumnInfo.allCounts[optionalCount];
+        return ColumnInfo.requiredCount + optionalCount;
     }
 
     /** @internal */
     public static getHeaderClass(name: ColumnName, ordering: IOrdering, optionalCount: number) {
         return [
-            ...ColumnInfo.getHidden(name, ordering.groupBys[0], optionalCount),
+            ...ColumnInfo.getHidden(name, ordering.groupBys, optionalCount),
             ...ColumnInfo.getPadding(name, ordering.groupBys),
         ];
     }
@@ -37,7 +34,7 @@ export class ColumnInfo {
     /** @internal */
     public static getClass(name: ColumnName, ordering: IOrdering, optionalCount: number) {
         return [
-            ...ColumnInfo.getHidden(name, ordering.groupBys[0], optionalCount),
+            ...ColumnInfo.getHidden(name, ordering.groupBys, optionalCount),
             ...ColumnInfo.getAlignment(name),
             ...ColumnInfo.getPadding(name, ordering.groupBys),
             ...ColumnInfo.getTotal(name),
@@ -46,33 +43,22 @@ export class ColumnInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly all: ReadonlyMap<GroupBy, readonly ColumnName[]> = new Map([
-        ["type", ColumnInfo.getNames("type", "location")],
-        ["location", ColumnInfo.getNames("location", "type")],
-    ]);
-
     /**
-     * From the list of columns returned by `getColumns`, contains the number of currently visible columns with the
-     * index being the number of currently visible optional columns. For example, if no optional columns are currently
-     * visible (i.e. index = 0), the first 5 columns of whatever is returned by `getColumns` will be shown.
+     * This is the number of columns that are always visible. If no optional columns are currently shown (i.e.
+     * optionalCount = 0), the first 5 columns of whatever is returned by `getAllNames` will be shown.
      */
-    private static readonly allCounts = [5, 6, 7, 8, 9, 10, 11, 12] as const;
+    private static readonly requiredCount = 5;
 
-    private static getNames(...groupBys: GroupBys): readonly ColumnName[] {
+    private static getAllNames(groupBys: GroupBys): readonly ColumnName[] {
         return [
             "expand", groupBys[0], "percent", "more", "grandTotalLabel", "totalValue", groupBys[1], "unit",
             "quantity", "unitValue", "description", "fineness",
         ] as const;
     }
 
-    private static getHidden(name: ColumnName, groupBy: GroupBy, optionalCount: number) {
-        const all = ColumnInfo.all.get(groupBy);
+    private static getHidden(name: ColumnName, groupBys: GroupBys, optionalCount: number) {
 
-        if (!all) {
-            throw new Error("Unknown groupBy!");
-        }
-
-        if (all.indexOf(name) >= ColumnInfo.allCounts[optionalCount]) {
+        if (ColumnInfo.getAllNames(groupBys).indexOf(name) >= ColumnInfo.getTotalCount(optionalCount)) {
             // TODO: Can't this be done with one class?
             return ["hidden-sm-and-up", "hidden-xs-only"];
         }
