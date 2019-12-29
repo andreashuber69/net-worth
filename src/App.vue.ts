@@ -86,7 +86,7 @@ export default class App extends Vue {
     }
 
     public get groupBys() {
-        return this.model.assets.ordering.groupByLabels;
+        return this.model.assets.ordering.defaultGroupByLabels;
     }
 
     public get groupBy() {
@@ -94,7 +94,7 @@ export default class App extends Vue {
     }
 
     public set groupBy(groupBy: string) {
-        const rawGroupBy = this.model.assets.ordering.groupBys.find((g) => g === groupBy.toLowerCase());
+        const rawGroupBy = this.model.assets.ordering.defaultGroupBys.find((g) => g === groupBy.toLowerCase());
 
         if (rawGroupBy !== undefined) {
             this.model.assets.ordering.groupBy = rawGroupBy;

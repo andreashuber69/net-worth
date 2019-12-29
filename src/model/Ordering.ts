@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { arrayOfAll } from "./arrayOfAll";
-import { GroupBy } from "./validation/schemas/GroupBy.schema";
+import { GroupBy, GroupBys } from "./validation/schemas/GroupBy.schema";
 import { ISort } from "./validation/schemas/ISort.schema";
 import { SortBy } from "./validation/schemas/SortBy.schema";
 
@@ -32,18 +32,18 @@ export interface IOrdering {
 /** Provides information how assets are ordered (grouped and sorted) in the main model of the application. */
 export class Ordering implements IOrdering {
     /** Provides the property names by which the asset list can be grouped. */
-    public static readonly groupBys = arrayOfAll<GroupBy>()("type", "location");
+    public static readonly defaultGroupBys = arrayOfAll<GroupBy>()("type", "location");
 
     public static isSortBy(sortBy: string): sortBy is SortBy {
         return (Ordering.sortBys as readonly string[]).includes(sortBy);
     }
 
     /** Provides the property names by which the asset list can be grouped. */
-    public readonly groupBys = Ordering.groupBys;
+    public readonly defaultGroupBys = Ordering.defaultGroupBys;
 
     /** Provides the labels for the properties by which the asset list can be grouped. */
-    public get groupByLabels() {
-        return this.groupBys.map((g) => Ordering.capitalize(g));
+    public get defaultGroupByLabels() {
+        return this.defaultGroupBys.map((g) => Ordering.capitalize(g));
     }
 
     /** Provides the name of the property by which the asset list is currently grouped. */
@@ -63,7 +63,7 @@ export class Ordering implements IOrdering {
 
     /** Provides the property names by which the asset list is currently *not* grouped. */
     public get otherGroupBys() {
-        const result = Array.from(this.groupBys);
+        const result = Array.from(this.defaultGroupBys);
         result.splice(result.indexOf(this.groupBy), 1);
 
         return result;
