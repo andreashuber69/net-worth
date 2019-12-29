@@ -51,11 +51,6 @@ export class Ordering implements IOrdering {
         return this.groupByImpl;
     }
 
-    public set groupBy(groupBy: GroupBy) {
-        this.groupByImpl = groupBy;
-        this.onGroupChanged();
-    }
-
     /** Provides the label for the property by which the asset list is currently grouped. */
     public get groupByLabel() {
         return Ordering.capitalize(this.groupBy);
@@ -89,6 +84,11 @@ export class Ordering implements IOrdering {
         this.onSortChanged = params.onSortChanged;
         this.groupByImpl = params.groupBy || "type";
         this.sortImpl = params.sort || { by: "totalValue", descending: true };
+    }
+
+    public setGroupBy(groupBy: GroupBy) {
+        this.groupByImpl = groupBy;
+        this.onGroupChanged();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

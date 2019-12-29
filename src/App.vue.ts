@@ -97,7 +97,7 @@ export default class App extends Vue {
         const rawGroupBy = this.model.assets.ordering.defaultGroupBys.find((g) => g === groupBy.toLowerCase());
 
         if (rawGroupBy !== undefined) {
-            this.model.assets.ordering.groupBy = rawGroupBy;
+            this.model.assets.ordering.setGroupBy(rawGroupBy);
         }
     }
 
