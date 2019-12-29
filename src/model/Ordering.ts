@@ -48,7 +48,7 @@ export class Ordering implements IOrdering {
 
     /** Provides the name of the property by which the asset list is currently grouped. */
     public get groupBy() {
-        return this.groupByImpl;
+        return this.defaultGroupBys[this.groupByIndex];
     }
 
     /** Provides the label for the property by which the asset list is currently grouped. */
@@ -82,12 +82,12 @@ export class Ordering implements IOrdering {
     public constructor(params: IOrderingParameters) {
         this.onGroupChanged = params.onGroupChanged;
         this.onSortChanged = params.onSortChanged;
-        this.groupByImpl = params.groupBy || "type";
+        this.groupByIndex = params.groupBy && this.defaultGroupBys.indexOf(params.groupBy) || 0;
         this.sortImpl = params.sort || { by: "totalValue", descending: true };
     }
 
     public setGroupBy(groupBy: GroupBy) {
-        this.groupByImpl = groupBy;
+        this.groupByIndex = this.defaultGroupBys.indexOf(groupBy);
         this.onGroupChanged();
     }
 
@@ -104,6 +104,6 @@ export class Ordering implements IOrdering {
     private readonly onGroupChanged: () => void;
     // tslint:disable-next-line:prefer-method-signature
     private readonly onSortChanged: () => void;
-    private groupByImpl: GroupBy;
+    private groupByIndex: number;
     private sortImpl: ISort;
 }
