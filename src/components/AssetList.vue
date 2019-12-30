@@ -65,7 +65,7 @@
       <!-- cSpell:ignore prepend -->
       <template v-slot:body.prepend>
         <tr v-if="checkedValue.assets.grouped.length === 0">
-          <td :colspan="totalColumnCount">
+          <td :colspan="totalColumnCount" class="pl-3 pr-3">
             No assets, yet. Add new ones with the <strong>+</strong> button (top right) or load existing assets with
             <strong>Open...</strong> in the menu (top left).
           </td>
