@@ -20,13 +20,13 @@
         <v-icon v-if="checkedValue.isExpanded">expand_less</v-icon>
       </div>
     </td>
-    <td :class="getClass(groupBys[0])" :title="groupByHints[0]">{{ groupByContents[0] }}</td>
-    <td :class="getClass(groupBys[1])" :title="groupByHints[1]">{{ groupByContents[1] }}</td>
-    <td :class="getClass('description')" :title="checkedValue.notes">{{ checkedValue.description }}</td>
+    <td :class="getClass(groupBys[0])"><span :title="groupByHints[0]">{{ groupByContents[0] }}</span></td>
+    <td :class="getClass(groupBys[1])"><span :title="groupByHints[1]">{{ groupByContents[1] }}</span></td>
+    <td :class="getClass('description')"><span :title="checkedValue.notes">{{ checkedValue.description }}</span></td>
     <td :class="getClass('unit')">{{ checkedValue.unit }}</td>
     <td :class="getClass('fineness')">{{ fineness }}</td>
-    <td :class="getClass('unitValue')" :title="checkedValue.unitValueHint">{{ unitValue }}</td>
-    <td :class="getClass('quantity')" :title="checkedValue.quantityHint">{{ quantity }}</td>
+    <td :class="getClass('unitValue')"><span :title="checkedValue.unitValueHint">{{ unitValue }}</span></td>
+    <td :class="getClass('quantity')"><span :title="checkedValue.quantityHint">{{ quantity }}</span></td>
     <td :class="getClass('totalValue')">{{ totalValue }}</td>
     <td :class="getClass('percent')">{{ percent }}</td>
     <td :class="getClass('more')">
