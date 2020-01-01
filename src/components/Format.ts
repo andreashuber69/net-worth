@@ -12,20 +12,20 @@
 
 export class Format {
     /** @internal */
-    public static value(num: number | undefined, decimals: number) {
+    public static value(num: number | undefined, maximumFractionDigits: number, minimumFractionDigits?: number) {
         if (num === undefined) {
             return "";
         } else if (Number.isNaN(num)) {
             return "Error";
         } else {
-            return Format.format(num, decimals);
+            return Format.format(num, maximumFractionDigits, minimumFractionDigits);
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static format(num: number, decimals: number) {
+    private static format(num: number, maximumFractionDigits: number, minimumFractionDigits?: number) {
         return num.toLocaleString(
-            undefined, { maximumFractionDigits: decimals, minimumFractionDigits: decimals, useGrouping: true });
+            undefined, { maximumFractionDigits, minimumFractionDigits, useGrouping: true });
     }
 }

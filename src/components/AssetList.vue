@@ -18,69 +18,52 @@
       <AssetEditor ref="editor"></AssetEditor>
     </v-layout>
     <v-data-table
-      :items="checkedValue.assets.grouped" item-key="key" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-      :server-items-length="checkedValue.assets.grouped.length" hide-default-header hide-default-footer
-      class="elevation-1">
-      <template v-slot:header>
-        <thead class="v-data-table-header">
-          <tr>
-            <th :class="getHeaderClass('expand')"></th>
-            <th
-              :class="getHeaderClass(checkedValue.assets.ordering.groupBys[0])"
-              @click="changeSort(checkedValue.assets.ordering.groupBys[0])">
-              {{ checkedValue.assets.ordering.groupByLabels[0] }} <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
-            </th>
-            <th
-              :class="getHeaderClass(checkedValue.assets.ordering.groupBys[1])"
-              @click="changeSort(checkedValue.assets.ordering.groupBys[1])">
-              {{ checkedValue.assets.ordering.groupByLabels[1] }} <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
-            </th>
-            <th :class="getHeaderClass('description')" @click="changeSort('description')">
-              Description <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
-            </th>
-            <th :class="getHeaderClass('unit')">Unit</th>
-            <th :class="getHeaderClass('fineness')">Fineness</th>
-            <th :class="getHeaderClass('unitValue')" @click="changeSort('unitValue')">
-              Unit Value<br>({{ checkedValue.currency }}) <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
-            </th>
-            <th :class="getHeaderClass('quantity')">Quantity</th>
-            <th :class="getHeaderClass('totalValue')" @click="changeSort('totalValue')">
-              Total Value<br>({{ checkedValue.currency }}) <v-icon small class="v-data-table-header__icon">arrow_upward</v-icon>
-            </th>
-            <th :class="getHeaderClass('percent')">%</th>
-            <th :class="getHeaderClass('more')"></th>
-          </tr>
-          <!--
-            The loading indicator and the no data hint should rather be implemented with the associated slots (progress
-            and no-data). However, it appears these currently do not work correctly when the number of columns changes
-            (not even when we set the headers-length property accordingly).
-          -->
-          <tr v-if="isLoading" class="v-data-table__progress">
-            <th :colspan="totalColumnCount">
-              <v-progress-linear indeterminate></v-progress-linear>
-            </th>
-          </tr>
-        </thead>
+      :headers="headers" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :loading="isLoading"
+      :items="checkedValue.assets.grouped" item-key="key" :server-items-length="checkedValue.assets.grouped.length"
+      hide-default-footer :mobile-breakpoint="0" class="elevation-1">
+      <template v-slot:header.unitValue="{ header }">
+        {{ header.text }}<br>({{ checkedValue.currency }})
+      </template>
+      <template v-slot:header.totalValue="{ header }">
+        {{ header.text }}<br>({{ checkedValue.currency }})
+      </template>
+      <template v-slot:item.description="{ item, value }">
+        <span :title="item.notes">{{ value }}</span>
+      </template>
+      <template v-slot:item.fineness="{ header, value }">
+        <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span><span>{{ format(value, 6) }}</span>
+      </template>
+      <template v-slot:item.unitValue="{ item, header, value }">
+        <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span>
+        <span :title="item.unitValueHint">{{ format(value, 2, 2) }}</span>
+      </template>
+      <template v-slot:item.quantity="{ item, header, value }">
+        <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span>
+        <span :title="item.quantityHint">{{ format(value, 6) }}</span>
+      </template>
+      <template v-slot:item.totalValue="{ header, value }">
+        <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span>
+        <span class="total">{{ format(value, 2, 2) }}</span>
+      </template>
+      <template v-slot:item.percent="{ header, value }">
+        <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span>
+        <span class="total">{{ format(value, 1, 1) }}</span>
       </template>
       <!-- cSpell:ignore prepend -->
       <template v-slot:body.prepend>
         <tr v-if="checkedValue.assets.grouped.length === 0">
-          <td :colspan="totalColumnCount" class="pl-3 pr-3">
+          <td :colspan="totalColumnCount">
             No assets, yet. Add new ones with the <strong>+</strong> button (top right) or load existing assets with
             <strong>Open...</strong> in the menu (top left).
           </td>
         </tr>
       </template>
-      <template v-slot:item="{ item }">
-        <AssetListRow :value="item" :visibleColumnCount="optionalColumnCount" @edit="onEdit" @delete="onDelete">
-        </AssetListRow>
-      </template>
       <template v-slot:body.append>
         <tr>
-          <td :colspan="grandTotalLabelColumnCount" :class="getFooterClass('grandTotalLabel')">Grand Total</td>
-          <td :class="getFooterClass('totalValue')">{{ grandTotalValue }}</td>
-          <td :class="getFooterClass('percent')">100.0</td>
-          <td :class="getFooterClass('more')"></td>
+          <td :colspan="grandTotalLabelColumnCount" class="total">Grand Total</td>
+          <td v-if="isVisible('totalValue')" class="total">{{ grandTotalValue }}</td>
+          <td class="total">100.0</td>
+          <td></td>
         </tr>
       </template>
     </v-data-table>
@@ -91,12 +74,21 @@
 </script>
 
 <style scoped>
+.prefix {
+  visibility: hidden;
+}
+
 .total {
   font-weight: bold;
 }
 
-th {
+::v-deep .v-data-table th, ::v-deep .v-data-table td {
+  padding: 0 12px;
   white-space: nowrap;
+}
+
+::v-deep .v-data-table__progress th {
+  padding: 0;
 }
 
 ::v-deep .v-data-table__empty-wrapper {

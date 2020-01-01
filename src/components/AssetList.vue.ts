@@ -14,22 +14,39 @@ import { Component } from "vue-property-decorator";
 
 import { Asset } from "../model/Asset";
 import { Model } from "../model/Model";
-import { Ordering } from "../model/Ordering";
+import { GroupBys } from "../model/Ordering";
 import { SortBy } from "../model/validation/schemas/SortBy.schema";
 
 // tslint:disable-next-line:no-default-import
 import AssetEditor from "./AssetEditor.vue";
 // tslint:disable-next-line:no-default-import
-import AssetListRow, { ColumnName } from "./AssetListRow.vue";
-import { ColumnInfo } from "./ColumnInfo";
+import { ColumnInfo, ColumnName } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
-@Component({ components: { AssetListRow, AssetEditor } })
+interface ITableHeader {
+    readonly value: ColumnName;
+    readonly text: string;
+    readonly sortable?: false;
+}
+
+const numericColumnNames = ["fineness", "unitValue", "quantity", "totalValue", "percent"] as const;
+type NumericColumnName = keyof Pick<Asset, typeof numericColumnNames[number]>;
+
+@Component({ components: { AssetEditor } })
 /** Implements the asset list UI. */
 // tslint:disable-next-line:no-default-export
 export default class AssetList extends ComponentBase<Model> {
     public readonly itemsPerPage = -1;
+
+    public get headers() {
+        const allColumnNames = ColumnInfo.getAllNames(this.checkedValue.assets.ordering.groupBys);
+        const visibleColumnNames: readonly ColumnName[] = allColumnNames.filter(
+            (name) => allColumnNames.indexOf(name) < ColumnInfo.getTotalCount(this.optionalColumnCount));
+
+        return AssetList.getHeaders(this.checkedValue.assets.ordering.groupBys).filter(
+            (h) => visibleColumnNames.includes(h.value));
+    }
 
     public get sortBy() {
         return this.checkedValue.assets.ordering.sort.by;
@@ -67,7 +84,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     public get grandTotalLabelColumnCount() {
         // This is the minimal column span for the grand total label.
-        let result = 2;
+        let result = 1;
 
         if (this.optionalColumnCount >= 1) {
             // We need to add to the minimum the number of columns that are added *after* the total value column has
@@ -78,32 +95,23 @@ export default class AssetList extends ComponentBase<Model> {
         return result;
     }
 
-    public getHeaderClass(columnName: ColumnName) {
-        const result = ColumnInfo.getHeaderClass(
-            columnName, this.checkedValue.assets.ordering, this.optionalColumnCount);
-
-        // Sortable columns
-        if (Ordering.isSortBy(columnName)) {
-            result.push("sortable");
-            const sort = this.checkedValue.assets.ordering.sort;
-
-            if (sort.by === columnName) {
-                result.push("active", sort.descending ? "desc" : "asc");
-            }
-        }
-
-        return result;
+    public isVisible(columnName: ColumnName) {
+        return ColumnInfo.getAllNames(this.checkedValue.assets.ordering.groupBys).indexOf(columnName) <
+            ColumnInfo.getTotalCount(this.optionalColumnCount);
     }
 
-    public getFooterClass(columnName: ColumnName) {
-        return ColumnInfo.getClass(columnName, this.checkedValue.assets.ordering, this.optionalColumnCount);
+    public format(num: number | undefined, maximumFractionDigits: number, minimumFractionDigits?: number) {
+        // This must be an instance function. The following avoids "Class method does not use 'this'." error.
+        this.toString();
+
+        return Format.value(num, maximumFractionDigits, minimumFractionDigits);
     }
 
-    /** Changes the sorting for the given property. */
-    public changeSort(sortBy: SortBy) {
-        const currentSort = this.checkedValue.assets.ordering.sort;
-        this.checkedValue.assets.ordering.sort = (currentSort.by === sortBy) ?
-            { by: currentSort.by, descending: !currentSort.descending } : { by: sortBy, descending: false };
+    public getInvisibleZeroes(columnName: NumericColumnName, value: number) {
+        const longestFormattedInteger = this.longestFormattedIntegers.get(columnName) || "";
+
+        return longestFormattedInteger.substr(
+            0, longestFormattedInteger.length - this.format(value, 0).length).replace(/\d/g, "0");
     }
 
     public async onAdd() {
@@ -138,6 +146,25 @@ export default class AssetList extends ComponentBase<Model> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private static getHeaders(groupBys: GroupBys): readonly ITableHeader[] {
+        return [
+            { value: groupBys[0], text: AssetList.capitalize(groupBys[0]) },
+            { value: groupBys[1], text: AssetList.capitalize(groupBys[1]) },
+            { value: "description", text: "Description" },
+            { value: "unit", text: "Unit", sortable: false },
+            { value: "fineness", text: "Fineness", sortable: false },
+            { value: "unitValue", text: "Unit Value" },
+            { value: "quantity", text: "Quantity", sortable: false },
+            { value: "totalValue", text: "Total Value" },
+            { value: "percent", text: "%", sortable: false },
+            { value: "more", text: "", sortable: false },
+        ];
+    }
+
+    private static capitalize(str: string) {
+        return `${str[0].toUpperCase()}${str.substr(1)}`;
+    }
+
     private optionalColumnCountImpl = ColumnInfo.maxOptionalCount;
 
     private timer?: NodeJS.Timer;
@@ -145,6 +172,27 @@ export default class AssetList extends ComponentBase<Model> {
 
     private get assetEditor() {
         return this.getControl("editor") as AssetEditor;
+    }
+
+    private get longestFormattedIntegers(): ReadonlyMap<NumericColumnName, string> {
+        const result = new Map<NumericColumnName, string>(numericColumnNames.map((name) => [name, ""]));
+        result.set("totalValue", this.formatNoNan(this.checkedValue.assets.grandTotalValue, 0));
+        result.set("percent", this.formatNoNan(100, 0));
+
+        for (const asset of this.checkedValue.assets.grouped) {
+            for (const property of numericColumnNames) {
+                const longest = result.get(property) || "";
+                const current = this.formatNoNan(asset[property], 0);
+                result.set(property, current.length > longest.length ? current : longest);
+            }
+        }
+
+        return result;
+    }
+
+    private formatNoNan(num: number | undefined, maximumFractionDigits: number, minimumFractionDigits?: number) {
+        return this.format(
+            num !== undefined && Number.isNaN(num) ? undefined : num, maximumFractionDigits, minimumFractionDigits);
     }
 
     private onIntervalElapsed() {
@@ -155,7 +203,7 @@ export default class AssetList extends ComponentBase<Model> {
                 --this.optionalColumnCountImpl;
             } else if ((this.optionalColumnCountImpl < ColumnInfo.maxOptionalCount) &&
                 (element.offsetLeft * 2 > element.offsetWidth /
-                    (AssetListRow.requiredColumnCount + this.optionalColumnCountImpl) * 3)) {
+                    (ColumnInfo.requiredCount + this.optionalColumnCountImpl) * 3)) {
                 ++this.optionalColumnCountImpl;
             }
         }
