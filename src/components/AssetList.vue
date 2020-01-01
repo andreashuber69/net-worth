@@ -54,6 +54,21 @@
         <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span>
         <span class="total">{{ format(value, 1, 1) }}</span>
       </template>
+      <template v-slot:item.more="{ item }">
+        <v-menu v-if="item.hasActions">
+          <template v-slot:activator="{ on }">
+            <v-btn icon v-on="on"><v-icon>more_vert</v-icon></v-btn>
+          </template>
+          <v-list>
+            <v-list-item @click="onEdit(item)">
+              <v-list-item-title>Edit</v-list-item-title>
+            </v-list-item>
+            <v-list-item @click="onDelete(item)">
+              <v-list-item-title>Delete</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </template>
       <!-- cSpell:ignore prepend -->
       <template v-slot:body.prepend>
         <tr v-if="checkedValue.assets.grouped.length === 0">
