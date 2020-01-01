@@ -20,12 +20,16 @@
     <v-data-table
       :headers="headers" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :loading="isLoading"
       :items="checkedValue.assets.grouped" item-key="key" :server-items-length="checkedValue.assets.grouped.length"
-      hide-default-footer :mobile-breakpoint="0" class="elevation-1">
+      hide-default-footer :mobile-breakpoint="0" class="elevation-1" @click:row="$event.expand()">
       <template v-slot:header.unitValue="{ header }">
         {{ header.text }}<br>({{ checkedValue.currency }})
       </template>
       <template v-slot:header.totalValue="{ header }">
         {{ header.text }}<br>({{ checkedValue.currency }})
+      </template>
+      <template v-slot:item.expand="{ item }">
+        <v-icon v-if="item.isExpandable && !item.isExpanded">expand_more</v-icon>
+        <v-icon v-if="item.isExpandable && item.isExpanded">expand_less</v-icon>
       </template>
       <template v-slot:item.description="{ item, value }">
         <span :title="item.notes">{{ value }}</span>

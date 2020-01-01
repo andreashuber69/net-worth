@@ -13,14 +13,14 @@
 import { AssetDisplayPropertyName } from "../model/Asset";
 import { GroupBys } from "../model/Ordering";
 
-export type ColumnName = AssetDisplayPropertyName | "more";
+export type ColumnName = "expand" | AssetDisplayPropertyName | "more";
 
 export class ColumnInfo {
     /**
      * This is the number of columns that are always visible. If no optional columns are currently shown (i.e.
-     * optionalCount = 0), the first 3 columns of whatever is returned by `getAllNames` will be shown.
+     * optionalCount = 0), the first 4 columns of whatever is returned by `getAllNames` will be shown.
      */
-    public static readonly requiredCount = 3;
+    public static readonly requiredCount = 4;
 
     /** Provides the maximum number of optional columns that can be displayed. */
     public static readonly maxOptionalCount = 7;
@@ -32,7 +32,7 @@ export class ColumnInfo {
 
     public static getAllNames(groupBys: GroupBys): readonly ColumnName[] {
         return [
-            groupBys[0], "percent", "more", "totalValue", groupBys[1], "unit",
+            "expand", groupBys[0], "percent", "more", "totalValue", groupBys[1], "unit",
             "quantity", "unitValue", "description", "fineness",
         ] as const;
     }

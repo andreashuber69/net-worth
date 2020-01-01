@@ -84,7 +84,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     public get grandTotalLabelColumnCount() {
         // This is the minimal column span for the grand total label.
-        let result = 1;
+        let result = 2;
 
         if (this.optionalColumnCount >= 1) {
             // We need to add to the minimum the number of columns that are added *after* the total value column has
@@ -101,7 +101,8 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public format(num: number | undefined, maximumFractionDigits: number, minimumFractionDigits?: number) {
-        // This must be an instance function. The following avoids "Class method does not use 'this'." error.
+        // This must be an instance function, because it is called from the template. The following avoids
+        // "Class method does not use 'this'." error.
         this.toString();
 
         return Format.value(num, maximumFractionDigits, minimumFractionDigits);
@@ -148,6 +149,7 @@ export default class AssetList extends ComponentBase<Model> {
 
     private static getHeaders(groupBys: GroupBys): readonly ITableHeader[] {
         return [
+            { value: "expand", text: "", sortable: false },
             { value: groupBys[0], text: AssetList.capitalize(groupBys[0]) },
             { value: groupBys[1], text: AssetList.capitalize(groupBys[1]) },
             { value: "description", text: "Description" },
