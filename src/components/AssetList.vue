@@ -31,7 +31,8 @@
         <span :title="item.notes">{{ value }}</span>
       </template>
       <template v-slot:item.fineness="{ header, value }">
-        <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span><span>{{ format(value, 6) }}</span>
+        <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span>
+        <span>{{ format(value, 6) }}</span>
       </template>
       <template v-slot:item.unitValue="{ item, header, value }">
         <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span>
