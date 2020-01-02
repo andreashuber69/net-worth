@@ -179,8 +179,8 @@ export default class AssetList extends ComponentBase<Model> {
         result.set("totalValue", this.formatNoNan(this.checkedValue.assets.grandTotalValue, 0));
         result.set("percent", this.formatNoNan(100, 0));
 
-        for (const asset of this.checkedValue.assets.grouped) {
-            for (const property of numericColumnNames) {
+        for (const property of numericColumnNames) {
+            for (const asset of this.checkedValue.assets.grouped) {
                 const longest = result.get(property) || "";
                 const current = this.formatNoNan(asset[property], 0);
                 result.set(property, current.length > longest.length ? current : longest);
