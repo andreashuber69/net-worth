@@ -46,12 +46,12 @@ export class Ordering implements IOrdering {
         return Ordering.capitalizeGroupBys(allGroupBys[0]);
     }
 
-    /** Provides the name of the property by which the asset list is currently grouped. */
+    /** Provides the names of the properties by which the asset list is currently grouped. */
     public get groupBys() {
         return allGroupBys[this.groupByIndex];
     }
 
-    /** Provides the label for the property by which the asset list is currently grouped. */
+    /** Provides the labels for the properties by which the asset list is currently grouped. */
     public get groupByLabels() {
         return Ordering.capitalizeGroupBys(this.groupBys);
     }

@@ -18,7 +18,7 @@
       <AssetEditor ref="editor"></AssetEditor>
     </v-layout>
     <v-data-table
-      :headers="headers" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :loading="isLoading"
+      :headers="headers" :options.sync="options" :loading="isLoading"
       :items="checkedValue.assets.grouped" item-key="key" :server-items-length="checkedValue.assets.grouped.length"
       hide-default-footer :mobile-breakpoint="0" class="elevation-1" @click:row="$event.expand()">
       <template v-slot:header.unitValue="{ header }">

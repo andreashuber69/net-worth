@@ -24,10 +24,18 @@ import { ColumnInfo, ColumnName } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
-interface ITableHeader {
-    readonly value: ColumnName;
+type ITableHeader = {
+    readonly value: Exclude<ColumnName, SortBy>;
     readonly text: string;
-    readonly sortable?: false;
+    readonly sortable: false;
+} | {
+    readonly value: SortBy;
+    readonly text: string;
+};
+
+interface IOptions {
+    readonly sortBy: SortBy[];
+    readonly sortDesc: boolean[];
 }
 
 const numericColumnNames = ["fineness", "unitValue", "quantity", "totalValue", "percent"] as const;
@@ -46,20 +54,18 @@ export default class AssetList extends ComponentBase<Model> {
             (h) => visibleColumnNames.includes(h.value));
     }
 
-    public get sortBy() {
-        return this.checkedValue.assets.ordering.sort.by;
+    public get options(): IOptions {
+        return {
+            sortBy: [this.checkedValue.assets.ordering.sort.by],
+            sortDesc: [this.checkedValue.assets.ordering.sort.descending],
+        };
     }
 
-    public set sortBy(sortBy: SortBy) {
-        this.checkedValue.assets.ordering.sort = { by: sortBy, descending: this.sortDesc };
-    }
-
-    public get sortDesc() {
-        return this.checkedValue.assets.ordering.sort.descending;
-    }
-
-    public set sortDesc(sortDesc: boolean) {
-        this.checkedValue.assets.ordering.sort = { by: this.sortBy, descending: sortDesc };
+    public set options(options: IOptions) {
+        this.checkedValue.assets.ordering.sort = {
+            by: options.sortBy?.length && options.sortBy[0] || this.checkedValue.assets.ordering.sort.by,
+            descending: options.sortDesc?.length && options.sortDesc[0] || false,
+        };
     }
 
     public get isLoading() {
@@ -166,9 +172,8 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     private optionalColumnCountImpl = ColumnInfo.maxOptionalCount;
-
     private timer?: NodeJS.Timer;
-    private previousOffset: number = Number.NaN;
+    private previousOffset = Number.NaN;
 
     private get assetEditor() {
         return this.getControl("editor") as AssetEditor;
