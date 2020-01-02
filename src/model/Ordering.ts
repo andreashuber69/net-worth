@@ -13,7 +13,6 @@
 import { arrayOfAll } from "./arrayOfAll";
 import { GroupBy } from "./validation/schemas/GroupBy.schema";
 import { ISort } from "./validation/schemas/ISort.schema";
-import { SortBy } from "./validation/schemas/SortBy.schema";
 
 interface IOrderingParameters {
     // tslint:disable-next-line:prefer-method-signature
@@ -37,10 +36,6 @@ export interface IOrdering {
 
 /** Provides information how assets are ordered (grouped and sorted) in the main model of the application. */
 export class Ordering implements IOrdering {
-    public static isSortBy(sortBy: string): sortBy is SortBy {
-        return (Ordering.sortBys as readonly string[]).includes(sortBy);
-    }
-
     /** Provides the labels for the properties by which the asset list can be grouped. */
     public get defaultGroupByLabels() {
         return Ordering.capitalizeGroupBys(allGroupBys[0]);
@@ -78,9 +73,6 @@ export class Ordering implements IOrdering {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static readonly sortBys =
-        arrayOfAll<SortBy>()("type", "description", "location", "unitValue", "totalValue");
 
     private static getIndex(groupBy: GroupBy) {
         const result = allGroupBys.findIndex((groupBys) => groupBys[0] === groupBy);
