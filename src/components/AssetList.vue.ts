@@ -54,7 +54,7 @@ export default class AssetList extends ComponentBase<Model> {
             (h) => visibleColumnNames.includes(h.value));
     }
 
-    public get options(): IOptions {
+    public get options() {
         return {
             sortBy: [this.checkedValue.assets.ordering.sort.by],
             sortDesc: [this.checkedValue.assets.ordering.sort.descending],
@@ -63,8 +63,8 @@ export default class AssetList extends ComponentBase<Model> {
 
     public set options(options: IOptions) {
         this.checkedValue.assets.ordering.sort = {
-            by: options.sortBy?.length && options.sortBy[0] || this.checkedValue.assets.ordering.sort.by,
-            descending: options.sortDesc?.length && options.sortDesc[0] || false,
+            by: options.sortBy.length && options.sortBy[0] || this.checkedValue.assets.ordering.sort.by,
+            descending: options.sortDesc.length && options.sortDesc[0] || false,
         };
     }
 
@@ -74,11 +74,6 @@ export default class AssetList extends ComponentBase<Model> {
 
     public get grandTotalValue() {
         return Format.value(this.checkedValue.assets.grandTotalValue, 2, 2);
-    }
-
-    /** Provides a value indicating how many optional columns are currently visible. */
-    public get optionalColumnCount() {
-        return this.optionalColumnCountImpl;
     }
 
     /** Provides a value indicating how many columns are currently visible. */
@@ -171,7 +166,7 @@ export default class AssetList extends ComponentBase<Model> {
         return `${str[0].toUpperCase()}${str.substr(1)}`;
     }
 
-    private optionalColumnCountImpl = ColumnInfo.maxOptionalCount;
+    private optionalColumnCount = ColumnInfo.maxOptionalCount;
     private timer?: NodeJS.Timer;
     private previousOffset = Number.NaN;
 
@@ -204,12 +199,12 @@ export default class AssetList extends ComponentBase<Model> {
         const element = this.$el as HTMLElement;
 
         if (this.previousOffset === element.offsetLeft) {
-            if ((this.optionalColumnCountImpl > 0) && (element.offsetLeft < 0)) {
-                --this.optionalColumnCountImpl;
-            } else if ((this.optionalColumnCountImpl < ColumnInfo.maxOptionalCount) &&
+            if ((this.optionalColumnCount > 0) && (element.offsetLeft < 0)) {
+                --this.optionalColumnCount;
+            } else if ((this.optionalColumnCount < ColumnInfo.maxOptionalCount) &&
                 (element.offsetLeft * 2 > element.offsetWidth /
-                    (ColumnInfo.requiredCount + this.optionalColumnCountImpl) * 3)) {
-                ++this.optionalColumnCountImpl;
+                    (ColumnInfo.requiredCount + this.optionalColumnCount) * 3)) {
+                ++this.optionalColumnCount;
             }
         }
 
