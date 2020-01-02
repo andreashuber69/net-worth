@@ -107,7 +107,7 @@ export default class AssetList extends ComponentBase<Model> {
         return Format.value(num, maximumFractionDigits, minimumFractionDigits);
     }
 
-    public getInvisibleZeroes(columnName: NumericColumnName, value: number) {
+    public getPrefix(columnName: NumericColumnName, value: number) {
         const longestFormattedInteger = this.longestFormattedIntegers.get(columnName) || "";
 
         return longestFormattedInteger.substr(

@@ -35,23 +35,23 @@
         <span :title="item.notes">{{ value }}</span>
       </template>
       <template v-slot:item.fineness="{ header, value }">
-        <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span>
+        <span class="prefix">{{ getPrefix(header.value, value) }}</span>
         <span>{{ format(value, 6) }}</span>
       </template>
       <template v-slot:item.unitValue="{ item, header, value }">
-        <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span>
+        <span class="prefix">{{ getPrefix(header.value, value) }}</span>
         <span :title="item.unitValueHint">{{ format(value, 2, 2) }}</span>
       </template>
       <template v-slot:item.quantity="{ item, header, value }">
-        <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span>
+        <span class="prefix">{{ getPrefix(header.value, value) }}</span>
         <span :title="item.quantityHint">{{ format(value, 6) }}</span>
       </template>
       <template v-slot:item.totalValue="{ header, value }">
-        <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span>
+        <span class="prefix">{{ getPrefix(header.value, value) }}</span>
         <span class="total">{{ format(value, 2, 2) }}</span>
       </template>
       <template v-slot:item.percent="{ header, value }">
-        <span class="prefix">{{ getInvisibleZeroes(header.value, value) }}</span>
+        <span class="prefix">{{ getPrefix(header.value, value) }}</span>
         <span class="total">{{ format(value, 1, 1) }}</span>
       </template>
       <template v-slot:item.more="{ item }">
