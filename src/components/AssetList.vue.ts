@@ -73,7 +73,7 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public get grandTotalValue() {
-        return Format.value(this.checkedValue.assets.grandTotalValue, 2);
+        return Format.value(this.checkedValue.assets.grandTotalValue, 2, 2);
     }
 
     /** Provides a value indicating how many optional columns are currently visible. */
