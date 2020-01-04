@@ -72,7 +72,7 @@
       <!-- cSpell:ignore prepend -->
       <template v-slot:body.prepend>
         <tr v-if="checkedValue.assets.grouped.length === 0">
-          <td :colspan="totalColumnCount">
+          <td class="no-data" :colspan="totalColumnCount">
             No assets, yet. Add new ones with the <strong>+</strong> button (top right) or load existing assets with
             <strong>Open...</strong> in the menu (top left).
           </td>
@@ -105,6 +105,11 @@
 ::v-deep .v-data-table th, ::v-deep .v-data-table td {
   padding: 0 12px;
   white-space: nowrap;
+}
+
+td.no-data {
+  white-space: unset;
+  text-align: center;
 }
 
 ::v-deep .v-data-table__progress th {
