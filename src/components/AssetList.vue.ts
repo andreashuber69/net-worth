@@ -180,11 +180,14 @@ export default class AssetList extends ComponentBase<Model> {
         result.set("percent", this.formatNoNan(100, 0));
 
         for (const property of numericColumnNames) {
+            let longest = result.get(property) || "";
+
             for (const asset of this.checkedValue.assets.grouped) {
-                const longest = result.get(property) || "";
                 const current = this.formatNoNan(asset[property], 0);
-                result.set(property, current.length > longest.length ? current : longest);
+                longest = current.length > longest.length ? current : longest;
             }
+
+            result.set(property, longest);
         }
 
         return result;
