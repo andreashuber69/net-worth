@@ -107,13 +107,13 @@
   white-space: nowrap;
 }
 
+::v-deep .v-data-table__progress th {
+  padding: 0;
+}
+
 td.no-data {
   white-space: unset;
   text-align: center;
-}
-
-::v-deep .v-data-table__progress th {
-  padding: 0;
 }
 
 ::v-deep .v-data-table__empty-wrapper {
