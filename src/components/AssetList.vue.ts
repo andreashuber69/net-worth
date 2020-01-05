@@ -108,10 +108,9 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public getPrefix(columnName: NumericColumnName, value: number) {
-        const longestFormattedInteger = this.longestFormattedIntegers.get(columnName) || "";
+        const maxPrefix = this.maxPrefixes.get(columnName) || "";
 
-        return longestFormattedInteger.substr(
-            0, longestFormattedInteger.length - this.format(value, 0).length).replace(/\d/g, "0");
+        return maxPrefix.substr(0, maxPrefix.length - this.format(value, 0).length);
     }
 
     public async onAdd() {
@@ -174,7 +173,7 @@ export default class AssetList extends ComponentBase<Model> {
         return this.getControl("editor") as AssetEditor;
     }
 
-    private get longestFormattedIntegers(): ReadonlyMap<NumericColumnName, string> {
+    private get maxPrefixes(): ReadonlyMap<NumericColumnName, string> {
         const result = new Map<NumericColumnName, string>(numericColumnNames.map((name) => [name, ""]));
         result.set("totalValue", this.formatNoNan(this.checkedValue.assets.grandTotalValue, 0));
         result.set("percent", this.formatNoNan(100, 0));
@@ -187,7 +186,7 @@ export default class AssetList extends ComponentBase<Model> {
                 longest = current.length > longest.length ? current : longest;
             }
 
-            result.set(property, longest);
+            result.set(property, longest.replace(/\d/g, "0"));
         }
 
         return result;
