@@ -47,11 +47,11 @@
         <span :title="item.quantityHint">{{ format(value, 6) }}</span>
       </template>
       <template v-slot:item.totalValue="{ header, value }">
-        <span class="prefix">{{ getPrefix(header.value, value) }}</span>
+        <span class="prefix total">{{ getPrefix(header.value, value) }}</span>
         <span class="total">{{ format(value, 2, 2) }}</span>
       </template>
       <template v-slot:item.percent="{ header, value }">
-        <span class="prefix">{{ getPrefix(header.value, value) }}</span>
+        <span class="prefix total">{{ getPrefix(header.value, value) }}</span>
         <span class="total">{{ format(value, 1, 1) }}</span>
       </template>
       <template v-slot:item.more="{ item }">
@@ -81,8 +81,14 @@
       <template v-slot:body.append>
         <tr>
           <td :colspan="grandTotalLabelColumnCount" class="total">Grand Total</td>
-          <td v-if="isVisible('totalValue')" class="total">{{ grandTotalValue }}</td>
-          <td class="total">100.0</td>
+          <td v-if="isVisible('totalValue')">
+            <span class="prefix total">{{ getPrefix('totalValue', grandTotalValue) }}</span>
+            <span class="total">{{ grandTotalValue }}</span>
+          </td>
+          <td>
+            <span class="prefix total">{{ getPrefix('percent', 100) }}</span>
+            <span class="total">100.0</span>
+          </td>
           <td></td>
         </tr>
       </template>

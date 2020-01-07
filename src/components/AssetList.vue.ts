@@ -107,10 +107,26 @@ export default class AssetList extends ComponentBase<Model> {
         return Format.value(num, maximumFractionDigits, minimumFractionDigits);
     }
 
-    public getPrefix(columnName: NumericColumnName, value: number) {
-        const maxPrefix = this.maxPrefixes.get(columnName) || "";
+    /**
+     * @description Calculates a string that needs to be prepended to a given number such that its decimal point is
+     * aligned with all other numbers in the same column.
+     */
+    public getPrefix(columnName: NumericColumnName, value: number | undefined) {
+        if ((value === undefined) || Number.isNaN(value)) {
+            return "";
+        }
 
-        return maxPrefix.substr(0, maxPrefix.length - this.format(value, 0).length);
+        const maxPrefix = this.maxPrefixes.get(columnName) || ["", false];
+        const valueFormatted = this.format(value, 0);
+
+        // The following logic is necessary so that negative values will be displayed in alignment with their
+        // positive brothers and sisters. In a column with at least one negative value, all positive values are
+        // first prefixed with an invisible - sign, before potentially also being prefixed with zeroes and grouping
+        // characters.
+        const prefixWithoutSign = maxPrefix[0].substr(
+            0, maxPrefix[0].length - valueFormatted.length + ((value < 0) && 1 || 0));
+
+        return ((value < 0) || !maxPrefix[1]) ? prefixWithoutSign : `${prefixWithoutSign}-`;
     }
 
     public async onAdd() {
@@ -173,28 +189,32 @@ export default class AssetList extends ComponentBase<Model> {
         return this.getControl("editor") as AssetEditor;
     }
 
-    private get maxPrefixes(): ReadonlyMap<NumericColumnName, string> {
-        const result = new Map<NumericColumnName, string>(numericColumnNames.map((name) => [name, ""]));
-        result.set("totalValue", this.formatNoNan(this.checkedValue.assets.grandTotalValue, 0));
-        result.set("percent", this.formatNoNan(100, 0));
+    private get maxPrefixes(): ReadonlyMap<NumericColumnName, [string, boolean]> {
+        const result = new Map<NumericColumnName, [string, boolean]>(
+            numericColumnNames.map((name) => [name, ["", false]]));
+        result.set("totalValue", [this.formatZeroes(this.checkedValue.assets.grandTotalValue, 0), false]);
+        result.set("percent", [this.formatZeroes(100, 0), false]);
 
         for (const property of numericColumnNames) {
-            let longest = result.get(property) || "";
+            let [longest, hasNegativeValues] = result.get(property) || ["", false];
 
             for (const asset of this.checkedValue.assets.grouped) {
-                const current = this.formatNoNan(asset[property], 0);
+                const value = asset[property];
+                hasNegativeValues = hasNegativeValues || ((value || 0) < 0);
+                const current = this.formatZeroes(value, 0);
                 longest = current.length > longest.length ? current : longest;
             }
 
-            result.set(property, longest.replace(/\d/g, "0"));
+            result.set(property, [longest, hasNegativeValues]);
         }
 
         return result;
     }
 
-    private formatNoNan(num: number | undefined, maximumFractionDigits: number, minimumFractionDigits?: number) {
-        return this.format(
-            num !== undefined && Number.isNaN(num) ? undefined : num, maximumFractionDigits, minimumFractionDigits);
+    private formatZeroes(num: number | undefined, maximumFractionDigits: number, minimumFractionDigits?: number) {
+        const numToFormat = (num === undefined) || Number.isNaN(num) ? undefined : Math.abs(num);
+
+        return this.format(numToFormat, maximumFractionDigits, minimumFractionDigits).replace(/\d/g, "0");
     }
 
     private onIntervalElapsed() {
