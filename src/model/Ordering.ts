@@ -10,11 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetPropertyNames } from "./AssetPropertyNames";
-import { CalculatedAssetPropertyNames } from "./CalculatedAssetPropertyNames";
+import { arrayOfAll } from "./arrayOfAll";
 import { GroupBy } from "./validation/schemas/GroupBy.schema";
 import { ISort } from "./validation/schemas/ISort.schema";
-import { SortBy } from "./validation/schemas/SortBy.schema";
 
 interface IOrderingParameters {
     // tslint:disable-next-line:prefer-method-signature
@@ -25,63 +23,32 @@ interface IOrderingParameters {
     readonly sort?: ISort;
 }
 
+const allGroupBys = [
+    arrayOfAll<GroupBy>()("type", "location"),
+    arrayOfAll<GroupBy>()("location", "type"),
+] as const;
+
+export type GroupBys = typeof allGroupBys[number];
+
 export interface IOrdering {
-    readonly groupBy: GroupBy;
-    readonly otherGroupBys: readonly GroupBy[];
+    readonly groupBys: GroupBys;
 }
 
 /** Provides information how assets are ordered (grouped and sorted) in the main model of the application. */
 export class Ordering implements IOrdering {
-    /** Provides the property names by which the asset list can be grouped. */
-    public static readonly groupBys: readonly GroupBy[] = [AssetPropertyNames.type, AssetPropertyNames.location];
-
-    public static isSortBy(sortBy: string | undefined): sortBy is SortBy {
-        switch (sortBy) {
-            case AssetPropertyNames.type:
-            case AssetPropertyNames.description:
-            case AssetPropertyNames.location:
-            case CalculatedAssetPropertyNames.unitValue:
-            case CalculatedAssetPropertyNames.totalValue:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    /** Provides the property names by which the asset list can be grouped. */
-    public readonly groupBys = Ordering.groupBys;
-
     /** Provides the labels for the properties by which the asset list can be grouped. */
+    public get defaultGroupByLabels() {
+        return Ordering.capitalizeGroupBys(allGroupBys[0]);
+    }
+
+    /** Provides the names of the properties by which the asset list is currently grouped. */
+    public get groupBys() {
+        return allGroupBys[this.groupByIndex];
+    }
+
+    /** Provides the labels for the properties by which the asset list is currently grouped. */
     public get groupByLabels() {
-        return this.groupBys.map((g) => Ordering.capitalize(g));
-    }
-
-    /** Provides the name of the property by which the asset list is currently grouped. */
-    public get groupBy() {
-        return this.groupByImpl;
-    }
-
-    public set groupBy(groupBy: GroupBy) {
-        this.groupByImpl = groupBy;
-        this.onGroupChanged();
-    }
-
-    /** Provides the label for the property by which the asset list is currently grouped. */
-    public get groupByLabel() {
-        return Ordering.capitalize(this.groupBy);
-    }
-
-    /** Provides the property names by which the asset list is currently *not* grouped. */
-    public get otherGroupBys() {
-        const result = Array.from(this.groupBys);
-        result.splice(result.indexOf(this.groupBy), 1);
-
-        return result;
-    }
-
-    /** Provides the labels for the properties by which the asset list is currently *not* grouped. */
-    public get otherGroupByLabels() {
-        return this.otherGroupBys.map((g) => Ordering.capitalize(g));
+        return Ordering.capitalizeGroupBys(this.groupBys);
     }
 
     /** Provides information on how to sort the asset list. */
@@ -95,22 +62,40 @@ export class Ordering implements IOrdering {
     }
 
     public constructor(params: IOrderingParameters) {
-        this.onGroupChanged = params.onGroupChanged;
-        this.onSortChanged = params.onSortChanged;
-        this.groupByImpl = params.groupBy || AssetPropertyNames.type;
-        this.sortImpl = params.sort || { by: CalculatedAssetPropertyNames.totalValue, descending: true };
+        ({ onGroupChanged: this.onGroupChanged, onSortChanged: this.onSortChanged } = params);
+        this.groupByIndex = params.groupBy && Ordering.getIndex(params.groupBy) || 0;
+        this.sortImpl = params.sort || { by: "totalValue", descending: true };
+    }
+
+    public setGroupBy(groupBy: GroupBy) {
+        this.groupByIndex = Ordering.getIndex(groupBy);
+        this.onGroupChanged();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static capitalize(str: string) {
-        return `${str[0].toUpperCase()}${str.substr(1)}`;
+    private static getIndex(groupBy: GroupBy) {
+        const result = allGroupBys.findIndex((groupBys) => groupBys[0] === groupBy);
+
+        if (result < 0) {
+            throw new Error(`Unknown groupBy: ${groupBy}`);
+        }
+
+        return result;
+    }
+
+    private static capitalizeGroupBys(groupBys: Readonly<GroupBys>) {
+        return [Ordering.capitalizeGroupBy(groupBys[0]), Ordering.capitalizeGroupBy(groupBys[1])] as const;
+    }
+
+    private static capitalizeGroupBy(groupBy: GroupBy) {
+        return `${groupBy[0].toUpperCase()}${groupBy.substr(1)}`;
     }
 
     // tslint:disable-next-line:prefer-method-signature
     private readonly onGroupChanged: () => void;
     // tslint:disable-next-line:prefer-method-signature
     private readonly onSortChanged: () => void;
-    private groupByImpl: GroupBy;
+    private groupByIndex: number;
     private sortImpl: ISort;
 }

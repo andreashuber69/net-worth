@@ -132,7 +132,7 @@ export class Model implements IParent {
             wasSavedToFile: this.wasSavedToFile,
             hasUnsavedChanges: this.hasUnsavedChanges,
             currency: this.currency,
-            groupBy: this.assets.ordering.groupBy,
+            groupBy: this.assets.ordering.groupBys[0],
             sort: this.assets.ordering.sort,
             bundles: this.assets.toJSON(),
         };
