@@ -1,3 +1,4 @@
+// tslint:disable:file-name-casing
 // Copyright (C) 2018-2019 Andreas Huber Dönni
 //
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
@@ -10,17 +11,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IAsset } from "./validation/schemas/IAssetProperties.schema";
-
-export abstract class AssetPropertyNames {
-    public static readonly type = AssetPropertyNames.getPropertyName("type");
-    public static readonly description = AssetPropertyNames.getPropertyName("description");
-    public static readonly location = AssetPropertyNames.getPropertyName("location");
-    public static readonly notes = AssetPropertyNames.getPropertyName("notes");
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static getPropertyName<T extends keyof IAsset>(name: T) {
-        return name;
-    }
-}
+export const arrayOfAll = <T>() => <U extends ReadonlyArray<T>>(
+    ...array: U & (ReadonlyArray<T> extends ReadonlyArray<U[number]> ? unknown : never)
+): Readonly<typeof array> =>
+    array;

@@ -12,7 +12,6 @@
 
 import { AssetBundle } from "./AssetBundle";
 import { IAssetIntersection } from "./AssetInterfaces";
-import { CalculatedAssetPropertyNames } from "./CalculatedAssetPropertyNames";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
@@ -33,15 +32,6 @@ export interface IParent {
 
 /** Defines the base of all classes that represent an asset. */
 export abstract class Asset implements ICalculatedAssetProperties {
-    // TODO: These should be moved into their own classes
-    public static readonly addressName = Asset.getPropertyName("address");
-    public static readonly weightName = Asset.getPropertyName("weight");
-    public static readonly weightUnitName = Asset.getPropertyName("weightUnit");
-    public static readonly finenessName = Asset.getPropertyName("fineness");
-    public static readonly valueName = Asset.getPropertyName("value");
-    public static readonly valueCurrencyName = Asset.getPropertyName("valueCurrency");
-    public static readonly quantityName = Asset.getPropertyName("quantity");
-
     /** Provides the unique key of the asset. */
     public readonly key = Asset.nextKey++;
 
@@ -153,14 +143,6 @@ export abstract class Asset implements ICalculatedAssetProperties {
 
     private static nextKey = 0;
 
-    private static getPropertyName<T extends keyof IAssetIntersection>(name: T) {
-        return name;
-    }
-
-    private static getCalculatedPropertyName<T extends keyof Asset>(name: T) {
-        return name;
-    }
-
     private static multiply(factor1: number | undefined, factor2: number | undefined) {
         return (factor1 === undefined) || (factor2 === undefined) ? undefined : factor1 * factor2;
     }
@@ -168,6 +150,4 @@ export abstract class Asset implements ICalculatedAssetProperties {
     private unitValueHintImpl = "";
 }
 
-export type AssetDisplayPropertyName = (keyof IAssetIntersection) |
-    typeof CalculatedAssetPropertyNames.unit | typeof CalculatedAssetPropertyNames.unitValue |
-    typeof CalculatedAssetPropertyNames.totalValue | typeof CalculatedAssetPropertyNames.percent;
+export type AssetDisplayPropertyName = (keyof IAssetIntersection) | (keyof ICalculatedAssetProperties);
