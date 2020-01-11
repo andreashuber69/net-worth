@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License along with thi
     font-family: "Material Icons";
     font-style: normal;
     font-weight: 400;
+    font-display: block;
     src: url("./MaterialIcons-Regular.woff2") format("woff2");
 }
   
