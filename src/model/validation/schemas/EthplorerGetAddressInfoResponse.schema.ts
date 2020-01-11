@@ -28,7 +28,8 @@ export interface IToken {
 
 export class EthplorerGetAddressInfoResponse {
     public readonly ETH!: {
-        balance: number;
+        readonly balance: number;
+        readonly [key: string]: unknown;
     };
 
     public readonly tokens?: readonly IToken[];
