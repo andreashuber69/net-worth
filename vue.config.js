@@ -35,15 +35,26 @@ module.exports = {
     chainWebpack: config => {
         config.plugin("offline-plugin").use(OfflinePlugin);
 
-        // cSpell: ignore prefetch
-        config.plugin("prefetch").use(PreloadPlugin, [{
-            rel: "prefetch",
-            include: "allAssets",
-            // Apparently there's some unexpected interaction between the two plugins such that the preload plugin
-            // tries to prefetch a file that does not exist in the output. /\.map/ is the default, so we need to add
-            // that too
-            // cSpell: ignore serviceworker
-            fileBlacklist: [/\.map/, /__offline_serviceworker/]
-        }]);
+        config.plugin("preload").use(PreloadPlugin, [
+            {
+                rel: "preload",
+                include: "allAssets",
+                // cSpell: ignore woff
+                as(entry) {
+                    if (/\.woff2$/.test(entry)) {
+                        return 'font';
+                    } else if (/\.png$/.test(entry)) {
+                        return 'image';
+                    }
+                },
+                // cSpell: ignore prefetch
+                // We preload what's necessary to display the main page but isn't already linked in index.html. After
+                // the very first load of the app, the OfflinePlugin will fetch all remaining assets, which is why all
+                // later requests (like e.g. the ones triggered by the About dialog) will be answered by the service
+                // worker and never hit the network. This is also why it doesn't make sense to prefetch additional
+                // assets. 
+                fileWhitelist: [/background/, /\.woff2$/],
+            }
+        ]);
     }
 }
