@@ -81,10 +81,10 @@ type Converters<P, S, A, Q, M, PR, SR, AR, QR, MR> = readonly [
 
 export class ObjectConverter {
     public static readonly infos = [
-        new PreciousMetalAssetInputInfo("Silver", SilverAsset),
-        new PreciousMetalAssetInputInfo("Palladium", PalladiumAsset),
-        new PreciousMetalAssetInputInfo("Platinum", PlatinumAsset),
-        new PreciousMetalAssetInputInfo("Gold", GoldAsset),
+        new PreciousMetalAssetInputInfo(SilverAsset),
+        new PreciousMetalAssetInputInfo(PalladiumAsset),
+        new PreciousMetalAssetInputInfo(PlatinumAsset),
+        new PreciousMetalAssetInputInfo(GoldAsset),
         new SimpleCryptoWalletInputInfo(
             { type: "Bitcoin", ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
         new QuantityCryptoWalletInputInfo({ type: "Monero", ctor: XmrWallet, quantityDecimals: 8 }),

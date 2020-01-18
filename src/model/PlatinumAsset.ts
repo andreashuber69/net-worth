@@ -16,7 +16,11 @@ import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMet
 
 /** Represents an asset made of platinum. */
 export class PlatinumAsset extends PreciousMetalAsset {
-    public readonly type = "Platinum";
+    public static readonly type = "Platinum" as const;
+
+    public get type() {
+        return PlatinumAsset.type;
+    }
 
     public constructor(parent: IParent, props: IPreciousMetalAssetProperties) {
         super(parent, props, "lppm/plat.json");
