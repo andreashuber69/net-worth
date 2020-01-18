@@ -18,7 +18,7 @@ import { TextInputInfo } from "./TextInputInfo";
 import { Currency } from "./validation/schemas/Currency.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
-interface ICryptoWalletCtor<T extends CryptoWallet, U> {
+export interface ICryptoWalletCtor<T extends CryptoWallet, U> {
     readonly type: T["type"];
     new (parent: IParent, props: U): T;
 }

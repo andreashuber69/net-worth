@@ -20,7 +20,7 @@ import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalA
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
-interface IPreciousMetalAssetCtor {
+export interface IPreciousMetalAssetCtor {
     readonly type: PreciousMetalAssetTypeName;
     new (parent: IParent, props: IPreciousMetalAssetProperties): PreciousMetalAsset;
 }
