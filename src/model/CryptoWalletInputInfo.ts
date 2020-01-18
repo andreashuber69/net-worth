@@ -47,6 +47,17 @@ export abstract class CryptoWalletInputInfo<T extends CryptoWallet, U> extends A
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    protected static getSchema(quantityDecimals: 8 | 18) {
+        switch (quantityDecimals) {
+            case 8:
+                return "Quantity8";
+            case 18:
+                return "QuantityAny";
+            default:
+                return CryptoWalletInputInfo.assertUnreachable(quantityDecimals);
+        }
+    }
+
     protected constructor({ type, ctor }: ICryptoWalletInputInfoParameters<T, U>) {
         super();
         this.type = type;
@@ -54,6 +65,10 @@ export abstract class CryptoWalletInputInfo<T extends CryptoWallet, U> extends A
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static assertUnreachable(value: never): never {
+        throw new Error(value);
+    }
 
     private readonly ctor: new (parent: IParent, props: U) => T;
 }

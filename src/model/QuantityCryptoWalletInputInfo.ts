@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { CryptoWalletInputInfo, ICryptoWalletInputInfoParameters } from "./CryptoWalletInputInfo";
-import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { TextInputInfo } from "./TextInputInfo";
 import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
 import { XmrWallet } from "./XmrWallet";
@@ -33,23 +32,5 @@ export class QuantityCryptoWalletInputInfo extends
             label: "Quantity", hint: "The amount in the wallet.", isPresent: true, isRequired: false,
             schemaName: QuantityCryptoWalletInputInfo.getSchema(parameters.quantityDecimals),
         });
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // TODO: Identical implementation in SimpleCryptoWalletInputInfo, move to base?
-    private static getSchema(quantityDecimals: 8 | 18) {
-        switch (quantityDecimals) {
-            case 8:
-                return "Quantity8";
-            case 18:
-                return "QuantityAny";
-            default:
-                return QuantityCryptoWalletInputInfo.assertUnreachable(quantityDecimals);
-        }
-    }
-
-    private static assertUnreachable(value: never): never {
-        throw new Error(value);
     }
 }
