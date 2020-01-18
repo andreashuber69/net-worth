@@ -10,7 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset } from "./Asset";
 import { AssetPropertyName } from "./AssetInterfaces";
 import { CryptoWalletInputInfo, ICryptoWalletInputInfoParameters } from "./CryptoWalletInputInfo";
 import { CompositeInput } from "./Input";
@@ -63,20 +62,5 @@ export class SimpleCryptoWalletInputInfo extends
 
     private static isUndefined(value: unknown) {
         return (value === undefined) || (value === null) || (value === "");
-    }
-
-    private static getSchema(quantityDecimals: 8 | 18) {
-        switch (quantityDecimals) {
-            case 8:
-                return "Quantity8";
-            case 18:
-                return "QuantityAny";
-            default:
-                return SimpleCryptoWalletInputInfo.assertUnreachable(quantityDecimals);
-        }
-    }
-
-    private static assertUnreachable(value: never): never {
-        throw new Error(value);
     }
 }
