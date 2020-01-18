@@ -12,7 +12,6 @@
 
 import { IQuantityCryptoWallet } from "./IQuantityCryptoWallet.schema";
 
-// TODO: Can't we eliminate these with generics?
 export interface IQuantityCryptoWalletBundle {
     readonly primaryAsset: IQuantityCryptoWallet;
 }
