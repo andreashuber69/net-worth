@@ -20,7 +20,11 @@ import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCrypt
 
 /** Represents an ETC wallet. */
 export class EtcWallet extends SimpleCryptoWallet {
-    public readonly type = "Ethereum Classic";
+    public static readonly type = "Ethereum Classic" as const;
+
+    public get type() {
+        return EtcWallet.type;
+    }
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "ETC"));

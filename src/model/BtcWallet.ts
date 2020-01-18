@@ -29,7 +29,11 @@ interface IBalance {
 
 /** Represents a BTC wallet. */
 export class BtcWallet extends SimpleCryptoWallet {
-    public readonly type = "Bitcoin";
+    public static readonly type = "Bitcoin" as const;
+
+    public get type() {
+        return BtcWallet.type;
+    }
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "BTC"));

@@ -17,7 +17,11 @@ import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCrypt
 
 /** Represents an LTC wallet. */
 export class LtcWallet extends BlockcypherWallet {
-    public readonly type = "Litecoin";
+    public static readonly type = "Litecoin" as const;
+
+    public get type() {
+        return LtcWallet.type;
+    }
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "LTC"));

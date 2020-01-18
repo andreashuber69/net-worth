@@ -18,7 +18,11 @@ import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCry
 
 /** Represents a wallet for ERC20 tokens. */
 export class Erc20TokensWallet extends RealCryptoWallet {
-    public readonly type = "ERC20 Tokens";
+    public static readonly type = "ERC20 Tokens" as const;
+
+    public get type() {
+        return Erc20TokensWallet.type;
+    }
 
     public constructor(parent: IParent, props: IAddressCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, ""));

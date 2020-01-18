@@ -19,7 +19,11 @@ import { ZchainGetAccountResponse } from "./validation/schemas/ZchainGetAccountR
 
 /** Represents a ZEC wallet. */
 export class ZecWallet extends SimpleCryptoWallet {
-    public readonly type = "Zcash";
+    public static readonly type = "Zcash" as const;
+
+    public get type() {
+        return ZecWallet.type;
+    }
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "ZEC"));

@@ -17,7 +17,11 @@ import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCrypt
 
 /** Represents a DASH wallet. */
 export class DashWallet extends BlockcypherWallet {
-    public readonly type = "Dash";
+    public static readonly type = "Dash" as const;
+
+    public get type() {
+        return DashWallet.type;
+    }
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "DASH"));
