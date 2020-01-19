@@ -14,7 +14,6 @@ import { IParent } from "./Asset";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { SingleAsset } from "./SingleAsset";
-import { Currency } from "./validation/schemas/Currency.schema";
 import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
@@ -38,7 +37,7 @@ export class MiscAsset extends SingleAsset {
     public readonly location: string;
 
     public get unit() {
-        return MiscAsset.getUnit(this.value, Currency[this.valueCurrency]);
+        return MiscAsset.getUnit(this.value, this.valueCurrency);
     }
 
     public get fineness() {
@@ -85,7 +84,7 @@ export class MiscAsset extends SingleAsset {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected async queryUnitValueUsd() {
-        return this.value / await ExchangeRate.get(Currency[this.valueCurrency]);
+        return this.value / await ExchangeRate.get(this.valueCurrency);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +104,7 @@ export class MiscAsset extends SingleAsset {
         useGrouping: true,
     };
 
-    private static getUnit(value: number, valueCurrency: Currency) {
-        return `${value.toLocaleString(undefined, MiscAsset.unitFormatOptions)} ${Currency[valueCurrency]}`;
+    private static getUnit(value: number, valueCurrency: CurrencyName) {
+        return `${value.toLocaleString(undefined, MiscAsset.unitFormatOptions)} ${valueCurrency}`;
     }
 }

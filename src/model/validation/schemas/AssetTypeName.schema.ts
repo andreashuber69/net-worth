@@ -10,6 +10,21 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetType } from "./AssetType.schema";
+export const assetTypeNames = [
+    "Silver",
+    "Palladium",
+    "Platinum",
+    "Gold",
+    "Bitcoin",
+    "Monero",
+    "Litecoin",
+    "Ethereum Classic",
+    "Ethereum",
+    "ERC20 Tokens",
+    "Bitcoin Gold",
+    "Dash",
+    "Zcash",
+    "Misc",
+] as const;
 
-export type AssetTypeName = keyof typeof AssetType;
+export type AssetTypeName = typeof assetTypeNames[number];

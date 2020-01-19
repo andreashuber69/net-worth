@@ -15,8 +15,6 @@ import { AssetInputInfo } from "./AssetInputInfo";
 import { CryptoWallet } from "./CryptoWallet";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { Currency } from "./validation/schemas/Currency.schema";
-import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 export interface ICryptoWalletCtor<T extends CryptoWallet, U> {
     readonly type: T["type"];
@@ -42,10 +40,10 @@ export abstract class CryptoWalletInputInfo<T extends CryptoWallet, U> extends A
     });
 
     public readonly weight = new TextInputInfo();
-    public readonly weightUnit = new SelectInputInfo<typeof WeightUnit>();
+    public readonly weightUnit = new SelectInputInfo();
     public readonly fineness = new TextInputInfo();
     public readonly value = new TextInputInfo();
-    public readonly valueCurrency = new SelectInputInfo<typeof Currency>();
+    public readonly valueCurrency = new SelectInputInfo();
 
     public createAsset(parent: IParent, props: U) {
         return new this.ctor(parent, props);

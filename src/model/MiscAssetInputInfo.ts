@@ -15,9 +15,8 @@ import { AssetInputInfo } from "./AssetInputInfo";
 import { MiscAsset } from "./MiscAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { Currency } from "./validation/schemas/Currency.schema";
+import { currencyNames } from "./validation/schemas/CurrencyName.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
-import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 /**
  * Defines how the properties of a miscellaneous asset need to be input and validated and provides a method to create a
@@ -38,7 +37,7 @@ export class MiscAssetInputInfo extends AssetInputInfo {
     });
     public readonly address = new TextInputInfo();
     public readonly weight = new TextInputInfo();
-    public readonly weightUnit = new SelectInputInfo<typeof WeightUnit>();
+    public readonly weightUnit = new SelectInputInfo();
     public readonly fineness = new TextInputInfo();
     public readonly value = new TextInputInfo({
         label: "Value",
@@ -47,7 +46,7 @@ export class MiscAssetInputInfo extends AssetInputInfo {
     });
     public readonly valueCurrency = new SelectInputInfo({
         label: "Currency", hint: "The currency Value is expressed in.", isPresent: true, isRequired: true,
-        enumType: Currency, enumSchemaNames: ["CurrencyName"],
+        items: currencyNames, enumSchemaNames: ["CurrencyName"],
     });
     public readonly quantity = new TextInputInfo({
         label: "Quantity", hint: "The number of items.", isPresent: true, isRequired: true, schemaName: "Quantity0",
