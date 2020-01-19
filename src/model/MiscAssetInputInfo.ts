@@ -24,7 +24,10 @@ import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
  * representation of the asset.
  */
 export class MiscAssetInputInfo extends AssetInputInfo {
-    public readonly type = "Misc";
+    public get type() {
+        return MiscAsset.type;
+    }
+
     public readonly description = new TextInputInfo({
         label: "Description", hint: "The nature of the items, e.g. 'Cash', 'Vacation House'.",
         isPresent: true, isRequired: true, schemaName: "Text",
