@@ -39,8 +39,7 @@ import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { IPreciousMetalAssetCtor } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
-import { AssetType } from "./validation/schemas/AssetType.schema";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import { AssetTypeName, assetTypeNames } from "./validation/schemas/AssetTypeName.schema";
 import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 import { IAssetProperties } from "./validation/schemas/IAssetProperties.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
@@ -176,7 +175,7 @@ const testPreciousMetalAssetConstruction = (ctor: IPreciousMetalAssetCtor) => {
 
         describe("type", () => {
             it("should be equal to a valid type", () => {
-                expect(Object.keys(AssetType).includes(sut.type)).toBe(true);
+                expect(assetTypeNames.includes(sut.type)).toBe(true);
             });
         });
 
@@ -233,7 +232,7 @@ const testSimpleCryptoWalletConstruction = (ctor: SimpleCryptoWalletCtor) => {
 
         describe("type", () => {
             it("should be equal to a valid type", () => {
-                expect(Object.keys(AssetType).includes(sut.type)).toBe(true);
+                expect(assetTypeNames.includes(sut.type)).toBe(true);
             });
         });
 
@@ -289,7 +288,7 @@ const testAddressCryptoWalletConstruction = (ctor: AddressCryptoWalletCtor) => {
 
         describe("type", () => {
             it("should be equal to a valid type", () => {
-                expect(Object.keys(AssetType).includes(sut.type)).toBe(true);
+                expect(assetTypeNames.includes(sut.type)).toBe(true);
             });
         });
 
@@ -344,7 +343,7 @@ const testMiscAssetConstruction = (ctor: IMiscAssetCtor) => {
 
         describe("type", () => {
             it("should be equal to a valid type", () => {
-                expect(Object.keys(AssetType).includes(sut.type)).toBe(true);
+                expect(assetTypeNames.includes(sut.type)).toBe(true);
             });
         });
 

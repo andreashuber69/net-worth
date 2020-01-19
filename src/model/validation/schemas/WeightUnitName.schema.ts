@@ -10,6 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { WeightUnit } from "./WeightUnit.schema";
+// TODO: deduplicate info in WeightUnit enum
+export const weightUnitNames = [
+    "g",
+    "kg",
+    "gr",
+    "t oz",
+    "oz",
+] as const;
 
-export type WeightUnitName = keyof typeof WeightUnit;
+export type WeightUnitName = typeof weightUnitNames[number];

@@ -14,7 +14,6 @@ import { Asset } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { AssetGroup } from "./AssetGroup";
 import { CryptoWallet } from "./CryptoWallet";
-import { EnumInfo } from "./EnumInfo";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { Model } from "./Model";
@@ -22,8 +21,7 @@ import { ModelParser } from "./ModelParser";
 import { Ordering } from "./Ordering";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
-import { Currency } from "./validation/schemas/Currency.schema";
-import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import { CurrencyName, currencyNames } from "./validation/schemas/CurrencyName.schema";
 import { Fineness } from "./validation/schemas/Fineness.schema";
 import { GroupBy } from "./validation/schemas/GroupBy.schema";
 import { Quantity0 } from "./validation/schemas/Quantity0.schema";
@@ -101,7 +99,7 @@ const getExpectedProperties = (
         wasSavedToFile,
         hasUnsavedChanges,
         title: `${name}${hasUnsavedChanges ? " (Modified)" : ""} - Net Worth`,
-        currencies: EnumInfo.getMemberNames(Currency),
+        currencies: currencyNames,
         currency,
         assets: {
             ordering: {

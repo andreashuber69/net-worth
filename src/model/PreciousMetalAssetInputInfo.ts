@@ -15,10 +15,9 @@ import { AssetInputInfo } from "./AssetInputInfo";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { Currency } from "./validation/schemas/Currency.schema";
 import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
-import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
+import { weightUnitNames } from "./validation/schemas/WeightUnitName.schema";
 
 export interface IPreciousMetalAssetCtor {
     readonly type: PreciousMetalAssetTypeName;
@@ -49,14 +48,14 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     });
     public readonly weightUnit = new SelectInputInfo({
         label: "Unit", hint: "The unit Weight is expressed in.", isPresent: true, isRequired: true,
-        enumType: WeightUnit, enumSchemaNames: ["WeightUnitName"],
+        items: weightUnitNames, enumSchemaNames: ["WeightUnitName"],
     });
     public readonly fineness = new TextInputInfo({
         label: "Fineness", hint: "The precious metal fineness.", isPresent: true, isRequired: true,
         schemaName: "Fineness",
     });
     public readonly value = new TextInputInfo();
-    public readonly valueCurrency = new SelectInputInfo<typeof Currency>();
+    public readonly valueCurrency = new SelectInputInfo();
     public readonly quantity = new TextInputInfo({
         label: "Quantity", hint: "The number of items.", isPresent: true, isRequired: true, schemaName: "Quantity0",
     });

@@ -18,8 +18,6 @@ import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
-import { Currency } from "./validation/schemas/Currency.schema";
-import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 interface IValidationResults extends IAuxProperties<true | string> {
     [key: string]: true | string;
@@ -36,9 +34,9 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     public abstract get location(): TextInputInfo;
     public abstract get address(): TextInputInfo;
     public abstract get value(): TextInputInfo;
-    public abstract get valueCurrency(): SelectInputInfo<typeof Currency>;
+    public abstract get valueCurrency(): SelectInputInfo;
     public abstract get weight(): TextInputInfo;
-    public abstract get weightUnit(): SelectInputInfo<typeof WeightUnit>;
+    public abstract get weightUnit(): SelectInputInfo;
     public abstract get fineness(): PrimitiveInputInfo;
     public abstract get quantity(): TextInputInfo;
     public readonly notes = new TextInputInfo({

@@ -14,11 +14,9 @@ import { Application } from "./Application";
 import { IParent } from "./Asset";
 import { AssetBundle } from "./AssetBundle";
 import { AssetCollection } from "./AssetCollection";
-import { EnumInfo } from "./EnumInfo";
 import { ExchangeRate } from "./ExchangeRate";
 import { QueryUtility } from "./QueryUtility";
-import { Currency } from "./validation/schemas/Currency.schema";
-import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import { CurrencyName, currencyNames } from "./validation/schemas/CurrencyName.schema";
 import { GroupBy } from "./validation/schemas/GroupBy.schema";
 import { ISort } from "./validation/schemas/ISort.schema";
 import { TaggedModel } from "./validation/schemas/TaggedModel.schema";
@@ -69,7 +67,7 @@ export class Model implements IParent {
 
     /** Provides the available currencies to value the assets in. */
     public get currencies() {
-        return EnumInfo.getMemberNames(Currency);
+        return currencyNames;
     }
 
     /** Provides the selected currency. */
@@ -151,6 +149,6 @@ export class Model implements IParent {
     private async onCurrencyChangedImpl() {
         this.exchangeRate = undefined;
         // Status is intentionally ignored
-        ({ result: this.exchangeRate } = await QueryUtility.execute(() => ExchangeRate.get(Currency[this.currency])));
+        ({ result: this.exchangeRate } = await QueryUtility.execute(() => ExchangeRate.get(this.currency)));
     }
 }

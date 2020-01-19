@@ -14,8 +14,6 @@ import { Asset } from "../model/Asset";
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { TextInputInfo } from "../model/TextInputInfo";
-import { Currency } from "../model/validation/schemas/Currency.schema";
-import { WeightUnit } from "../model/validation/schemas/WeightUnit.schema";
 
 /**
  * Defines how an asset with no properties needs to be "input".
@@ -28,10 +26,10 @@ export class NoAssetInputInfo extends AssetInputInfo {
     public readonly location = new TextInputInfo();
     public readonly address = new TextInputInfo();
     public readonly weight = new TextInputInfo();
-    public readonly weightUnit = new SelectInputInfo<typeof WeightUnit>();
+    public readonly weightUnit = new SelectInputInfo();
     public readonly fineness = new TextInputInfo();
     public readonly value = new TextInputInfo();
-    public readonly valueCurrency = new SelectInputInfo<typeof Currency>();
+    public readonly valueCurrency = new SelectInputInfo();
     public readonly quantity = new TextInputInfo();
     public readonly notes = new TextInputInfo();
 
