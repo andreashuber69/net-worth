@@ -451,7 +451,7 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
     });
 };
 
-// TODO: Text XMR wallet
+// TODO: Test XMR wallet
 testPreciousMetalAssetConstruction(SilverAsset);
 testPreciousMetalAssetConstruction(PalladiumAsset);
 testPreciousMetalAssetConstruction(PlatinumAsset);
