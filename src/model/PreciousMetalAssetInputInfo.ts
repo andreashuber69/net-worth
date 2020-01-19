@@ -17,7 +17,7 @@ import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
-import { weightUnitNames } from "./validation/schemas/WeightUnitName.schema";
+import { weightUnitNames } from "./validation/schemas/WeightUnit.schema";
 
 export interface IPreciousMetalAssetCtor {
     readonly type: PreciousMetalAssetTypeName;
