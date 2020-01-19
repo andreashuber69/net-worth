@@ -18,7 +18,11 @@ import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityC
 
 /** Represents a wallet for Monero. */
 export class XmrWallet extends RealCryptoWallet {
-    public readonly type = "Monero";
+    public static readonly type = "Monero" as const;
+
+    public get type() {
+        return XmrWallet.type;
+    }
 
     public constructor(parent: IParent, props: IQuantityCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "XMR"));

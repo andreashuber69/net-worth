@@ -20,9 +20,18 @@ import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
 import { Quantity0 } from "./validation/schemas/Quantity0.schema";
 
+export interface IMiscAssetCtor {
+    readonly type: typeof MiscAsset.type;
+    new (parent: IParent, props: IMiscAssetProperties): MiscAsset;
+}
+
 /** Represents a miscellaneous asset. */
 export class MiscAsset extends SingleAsset {
-    public readonly type = "Misc";
+    public static readonly type = "Misc" as const;
+
+    public get type() {
+        return MiscAsset.type;
+    }
 
     public readonly description: string;
 

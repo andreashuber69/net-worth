@@ -81,27 +81,19 @@ type Converters<P, S, A, Q, M, PR, SR, AR, QR, MR> = readonly [
 
 export class ObjectConverter {
     public static readonly infos = [
-        new PreciousMetalAssetInputInfo("Silver", SilverAsset),
-        new PreciousMetalAssetInputInfo("Palladium", PalladiumAsset),
-        new PreciousMetalAssetInputInfo("Platinum", PlatinumAsset),
-        new PreciousMetalAssetInputInfo("Gold", GoldAsset),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Bitcoin", ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
-        new QuantityCryptoWalletInputInfo({ type: "Monero", ctor: XmrWallet, quantityDecimals: 8 }),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Litecoin", ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Ethereum Classic", ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
-        new AddressCryptoWalletInputInfo(
-            { type: "ERC20 Tokens", ctor: Erc20TokensWallet, addressHint: erc20Hint }),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Ethereum", ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Bitcoin Gold", ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Dash", ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Zcash", ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
+        new PreciousMetalAssetInputInfo(SilverAsset),
+        new PreciousMetalAssetInputInfo(PalladiumAsset),
+        new PreciousMetalAssetInputInfo(PlatinumAsset),
+        new PreciousMetalAssetInputInfo(GoldAsset),
+        new SimpleCryptoWalletInputInfo({ ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
+        new QuantityCryptoWalletInputInfo({ ctor: XmrWallet, quantityDecimals: 8 }),
+        new SimpleCryptoWalletInputInfo({ ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
+        new SimpleCryptoWalletInputInfo({ ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
+        new AddressCryptoWalletInputInfo({ ctor: Erc20TokensWallet, addressHint: erc20Hint }),
+        new SimpleCryptoWalletInputInfo({ ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
+        new SimpleCryptoWalletInputInfo({ ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
+        new SimpleCryptoWalletInputInfo({ ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
+        new SimpleCryptoWalletInputInfo({ ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
         new MiscAssetInputInfo(),
     ] as const;
 

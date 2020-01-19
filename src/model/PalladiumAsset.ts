@@ -16,7 +16,11 @@ import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMet
 
 /** Represents an asset made of palladium. */
 export class PalladiumAsset extends PreciousMetalAsset {
-    public readonly type = "Palladium";
+    public static readonly type = "Palladium" as const;
+
+    public get type() {
+        return PalladiumAsset.type;
+    }
 
     public constructor(parent: IParent, props: IPreciousMetalAssetProperties) {
         super(parent, props, "lppm/pall.json");

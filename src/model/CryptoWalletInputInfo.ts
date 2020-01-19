@@ -18,13 +18,19 @@ import { TextInputInfo } from "./TextInputInfo";
 import { Currency } from "./validation/schemas/Currency.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
-export interface ICryptoWalletInputInfoParameters<T extends CryptoWallet, U> {
+export interface ICryptoWalletCtor<T extends CryptoWallet, U> {
     readonly type: T["type"];
-    readonly ctor: new (parent: IParent, props: U) => T;
+    new (parent: IParent, props: U): T;
+}
+
+export interface ICryptoWalletInputInfoParameters<T extends CryptoWallet, U> {
+    readonly ctor: ICryptoWalletCtor<T, U>;
 }
 
 export abstract class CryptoWalletInputInfo<T extends CryptoWallet, U> extends AssetInputInfo {
-    public readonly type: T["type"];
+    public get type() {
+        return this.ctor.type;
+    }
 
     public readonly description = new TextInputInfo({
         label: "Description", hint: "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.",
@@ -58,10 +64,9 @@ export abstract class CryptoWalletInputInfo<T extends CryptoWallet, U> extends A
         }
     }
 
-    protected constructor({ type, ctor }: ICryptoWalletInputInfoParameters<T, U>) {
+    protected constructor(params: ICryptoWalletInputInfoParameters<T, U>) {
         super();
-        this.type = type;
-        this.ctor = ctor;
+        this.ctor = params.ctor;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,5 +75,5 @@ export abstract class CryptoWalletInputInfo<T extends CryptoWallet, U> extends A
         throw new Error(value);
     }
 
-    private readonly ctor: new (parent: IParent, props: U) => T;
+    private readonly ctor: ICryptoWalletCtor<T, U>;
 }

@@ -20,11 +20,20 @@ import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalA
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
+export interface IPreciousMetalAssetCtor {
+    readonly type: PreciousMetalAssetTypeName;
+    new (parent: IParent, props: IPreciousMetalAssetProperties): PreciousMetalAsset;
+}
+
 /**
  * Defines how the properties of a precious metal asset need to be input and validated and provides a method to create a
  * representation of the asset.
  */
 export class PreciousMetalAssetInputInfo extends AssetInputInfo {
+    public get type() {
+        return this.ctor.type;
+    }
+
     public readonly description = new TextInputInfo({
         label: "Description", hint: "Describes the items, e.g. 'Coins', 'Bars'.", isPresent: true, isRequired: true,
         schemaName: "Text",
@@ -53,9 +62,7 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
     });
 
     /** @internal */
-    public constructor(
-        public readonly type: PreciousMetalAssetTypeName,
-        private readonly ctor: new (parent: IParent, props: IPreciousMetalAssetProperties) => PreciousMetalAsset) {
+    public constructor(private readonly ctor: IPreciousMetalAssetCtor) {
         super();
     }
 

@@ -18,7 +18,11 @@ import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCrypt
 
 /** Represents a BTG wallet. */
 export class BtgWallet extends SimpleCryptoWallet {
-    public readonly type = "Bitcoin Gold";
+    public static readonly type = "Bitcoin Gold" as const;
+
+    public get type() {
+        return BtgWallet.type;
+    }
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "BTG"));
