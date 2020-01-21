@@ -52,7 +52,7 @@ export default class AssetEditor extends Vue {
     }
 
     public set type(value: string | undefined) {
-        this.assetInfo = AssetInput.infos.find((info) => info.type === value) || new NoAssetInputInfo();
+        this.assetInfo = value && AssetInput.infos[value] || new NoAssetInputInfo();
         this.data.type = this.assetInfo.type;
     }
 
@@ -90,7 +90,7 @@ export default class AssetEditor extends Vue {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getAssetInfo(asset: Asset | undefined) {
-        return asset ? AssetInput.infos.find((info) => info.type === asset.editableAsset.type) : undefined;
+        return asset ? AssetInput.infos[asset.editableAsset.type] : undefined;
     }
 
     private parent?: IParent;

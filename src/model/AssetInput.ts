@@ -10,10 +10,13 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { AssetInputInfo } from "./AssetInputInfo";
 import { ObjectConverter } from "./ObjectConverter";
 
 // tslint:disable-next-line: max-classes-per-file
 export class AssetInput {
     /** Provides information objects for each of the supported asset types. */
-    public static readonly infos = ObjectConverter.infos;
+    public static readonly infos: typeof ObjectConverter.infos & { [key: string]: AssetInputInfo | undefined } = {
+        ...ObjectConverter.infos,
+    };
 }
