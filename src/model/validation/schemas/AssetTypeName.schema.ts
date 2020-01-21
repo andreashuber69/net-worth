@@ -10,21 +10,36 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+export const silver = "Silver";
+export const palladium = "Palladium";
+export const platinum = "Platinum";
+export const gold = "Gold";
+export const bitcoin = "Bitcoin";
+export const monero = "Monero";
+export const litecoin = "Litecoin";
+export const ethereumClassic = "Ethereum Classic";
+export const ethereum = "Ethereum";
+export const erc20Tokens = "ERC20 Tokens";
+export const bitcoinGold = "Bitcoin Gold";
+export const dash = "Dash";
+export const zcash = "Zcash";
+export const misc = "Misc";
+
 export const assetTypeNames = [
-    "Silver",
-    "Palladium",
-    "Platinum",
-    "Gold",
-    "Bitcoin",
-    "Monero",
-    "Litecoin",
-    "Ethereum Classic",
-    "Ethereum",
-    "ERC20 Tokens",
-    "Bitcoin Gold",
-    "Dash",
-    "Zcash",
-    "Misc",
+    silver,
+    palladium,
+    platinum,
+    gold,
+    bitcoin,
+    monero,
+    litecoin,
+    ethereumClassic,
+    ethereum,
+    erc20Tokens,
+    bitcoinGold,
+    dash,
+    zcash,
+    misc,
 ] as const;
 
 export type AssetTypeName = typeof assetTypeNames[number];

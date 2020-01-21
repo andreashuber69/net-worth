@@ -15,16 +15,15 @@ import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
+import { ethereumClassic } from "./validation/schemas/AssetTypeName.schema";
 import { BlockscoutBalanceResponse } from "./validation/schemas/BlockscoutBalanceResponse.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 /** Represents an ETC wallet. */
 export class EtcWallet extends SimpleCryptoWallet {
-    public static readonly type = "Ethereum Classic" as const;
+    public static readonly type = ethereumClassic;
 
-    public get type() {
-        return EtcWallet.type;
-    }
+    public readonly type = ethereumClassic;
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "ETC"));

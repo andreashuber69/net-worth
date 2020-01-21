@@ -23,7 +23,7 @@ import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.
  * representation of the asset.
  */
 export class MiscAssetInputInfo extends AssetInputInfo {
-    public get type() {
+    public get type(): typeof MiscAsset.type {
         return MiscAsset.type;
     }
 

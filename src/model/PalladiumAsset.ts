@@ -12,15 +12,14 @@
 
 import { IParent } from "./Asset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import { palladium } from "./validation/schemas/AssetTypeName.schema";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
 
 /** Represents an asset made of palladium. */
 export class PalladiumAsset extends PreciousMetalAsset {
-    public static readonly type = "Palladium" as const;
+    public static readonly type = palladium;
 
-    public get type() {
-        return PalladiumAsset.type;
-    }
+    public readonly type = palladium;
 
     public constructor(parent: IParent, props: IPreciousMetalAssetProperties) {
         super(parent, props, "lppm/pall.json");

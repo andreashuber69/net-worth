@@ -12,15 +12,14 @@
 
 import { IParent } from "./Asset";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import { gold } from "./validation/schemas/AssetTypeName.schema";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
 
 /** Represents an asset made of gold. */
 export class GoldAsset extends PreciousMetalAsset {
-    public static readonly type = "Gold" as const;
+    public static readonly type = gold;
 
-    public get type() {
-        return GoldAsset.type;
-    }
+    public readonly type = gold;
 
     public constructor(parent: IParent, props: IPreciousMetalAssetProperties) {
         super(parent, props, "lbma/gold.json");

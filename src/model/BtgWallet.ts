@@ -14,15 +14,14 @@ import { IParent } from "./Asset";
 import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
+import { bitcoinGold } from "./validation/schemas/AssetTypeName.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 /** Represents a BTG wallet. */
 export class BtgWallet extends SimpleCryptoWallet {
-    public static readonly type = "Bitcoin Gold" as const;
+    public static readonly type = bitcoinGold;
 
-    public get type() {
-        return BtgWallet.type;
-    }
+    public readonly type = bitcoinGold;
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "BTG"));

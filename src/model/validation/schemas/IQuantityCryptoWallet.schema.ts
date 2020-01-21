@@ -10,11 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { monero } from "./AssetTypeName.schema";
 import { IQuantityCryptoWalletProperties } from "./IQuantityCryptoWalletProperties.schema";
 
-export const quantityCryptoWalletTypeNames = ["Monero"] as const;
+export const quantityCryptoWalletTypeNames = [monero] as const;
 
-export type QuantityCryptoWalletTypeName = (typeof quantityCryptoWalletTypeNames)[number];
+export type QuantityCryptoWalletTypeName = typeof quantityCryptoWalletTypeNames[number];
 
 export interface IQuantityCryptoObject {
     readonly type: QuantityCryptoWalletTypeName;

@@ -21,7 +21,7 @@ import { ValidationError } from "./ValidationError";
 // https://json-schema.org/draft/2019-09/json-schema-core.html#rfc.section.4.2.1
 const primitiveSchemaNames = ["Boolean", "Number", "String"] as const;
 
-type PrimitiveSchemaName = (typeof primitiveSchemaNames)[number];
+type PrimitiveSchemaName = typeof primitiveSchemaNames[number];
 export type SchemaName = PrimitiveSchemaName | keyof typeof schema.definitions;
 
 type PropertyNamesWithEnumMembers<T> = { [K in keyof T]: T[K] extends { enum: unknown[] } ? K : never }[keyof T];

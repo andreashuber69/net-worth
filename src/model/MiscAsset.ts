@@ -14,6 +14,7 @@ import { IParent } from "./Asset";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { SingleAsset } from "./SingleAsset";
+import { misc } from "./validation/schemas/AssetTypeName.schema";
 import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
@@ -26,11 +27,9 @@ export interface IMiscAssetCtor {
 
 /** Represents a miscellaneous asset. */
 export class MiscAsset extends SingleAsset {
-    public static readonly type = "Misc" as const;
+    public static readonly type = misc;
 
-    public get type() {
-        return MiscAsset.type;
-    }
+    public readonly type = misc;
 
     public readonly description: string;
 
