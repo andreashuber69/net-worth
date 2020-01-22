@@ -13,11 +13,14 @@
 import { IParent } from "./Asset";
 import { BlockcypherWallet } from "./BlockcypherWallet";
 import { RealCryptoWallet } from "./RealCryptoWallet";
+import { dash } from "./validation/schemas/AssetTypeName.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 /** Represents a DASH wallet. */
 export class DashWallet extends BlockcypherWallet {
-    public readonly type = "Dash";
+    public static readonly type = dash;
+
+    public readonly type = dash;
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "DASH"));

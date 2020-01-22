@@ -14,22 +14,29 @@ import { IParent } from "./Asset";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { SingleAsset } from "./SingleAsset";
-import { Currency } from "./validation/schemas/Currency.schema";
+import { misc } from "./validation/schemas/AssetTypeName.schema";
 import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
 import { Quantity0 } from "./validation/schemas/Quantity0.schema";
 
+export interface IMiscAssetCtor {
+    readonly type: typeof MiscAsset.type;
+    new (parent: IParent, props: IMiscAssetProperties): MiscAsset;
+}
+
 /** Represents a miscellaneous asset. */
 export class MiscAsset extends SingleAsset {
-    public readonly type = "Misc";
+    public static readonly type = misc;
+
+    public readonly type = misc;
 
     public readonly description: string;
 
     public readonly location: string;
 
     public get unit() {
-        return MiscAsset.getUnit(this.value, Currency[this.valueCurrency]);
+        return MiscAsset.getUnit(this.value, this.valueCurrency);
     }
 
     public get fineness() {
@@ -76,7 +83,7 @@ export class MiscAsset extends SingleAsset {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected async queryUnitValueUsd() {
-        return this.value / await ExchangeRate.get(Currency[this.valueCurrency]);
+        return this.value / await ExchangeRate.get(this.valueCurrency);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,7 +103,7 @@ export class MiscAsset extends SingleAsset {
         useGrouping: true,
     };
 
-    private static getUnit(value: number, valueCurrency: Currency) {
-        return `${value.toLocaleString(undefined, MiscAsset.unitFormatOptions)} ${Currency[valueCurrency]}`;
+    private static getUnit(value: number, valueCurrency: CurrencyName) {
+        return `${value.toLocaleString(undefined, MiscAsset.unitFormatOptions)} ${valueCurrency}`;
     }
 }

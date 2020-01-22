@@ -17,8 +17,7 @@ import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
 import { IMiscAsset, miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
 import { IPreciousMetalAsset, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
-import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
-import { WeightUnitName } from "./validation/schemas/WeightUnitName.schema";
+import { WeightUnit, WeightUnitName } from "./validation/schemas/WeightUnit.schema";
 
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements Partial<IAuxProperties<string>> {

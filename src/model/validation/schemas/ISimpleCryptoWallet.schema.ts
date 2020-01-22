@@ -10,13 +10,14 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { bitcoin, bitcoinGold, dash, ethereum, ethereumClassic, litecoin, zcash } from "./AssetTypeName.schema";
 import { ISimpleCryptoWalletProperties } from "./ISimpleCryptoWalletProperties.schema";
 
 export const simpleCryptoWalletTypeNames = [
-    "Bitcoin", "Litecoin", "Ethereum Classic", "Ethereum", "Bitcoin Gold", "Dash", "Zcash",
+    bitcoin, litecoin, ethereumClassic, ethereum, bitcoinGold, dash, zcash,
 ] as const;
 
-export type SimpleCryptoWalletTypeName = (typeof simpleCryptoWalletTypeNames)[number];
+export type SimpleCryptoWalletTypeName = typeof simpleCryptoWalletTypeNames[number];
 
 export interface ISimpleCryptoObject {
     readonly type: SimpleCryptoWalletTypeName;

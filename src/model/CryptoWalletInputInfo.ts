@@ -15,16 +15,20 @@ import { AssetInputInfo } from "./AssetInputInfo";
 import { CryptoWallet } from "./CryptoWallet";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { Currency } from "./validation/schemas/Currency.schema";
-import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
+
+export interface ICryptoWalletCtor<T extends CryptoWallet, U> {
+    readonly type: T["type"];
+    new (parent: IParent, props: U): T;
+}
 
 export interface ICryptoWalletInputInfoParameters<T extends CryptoWallet, U> {
-    readonly type: T["type"];
-    readonly ctor: new (parent: IParent, props: U) => T;
+    readonly ctor: ICryptoWalletCtor<T, U>;
 }
 
 export abstract class CryptoWalletInputInfo<T extends CryptoWallet, U> extends AssetInputInfo {
-    public readonly type: T["type"];
+    public get type() {
+        return this.ctor.type;
+    }
 
     public readonly description = new TextInputInfo({
         label: "Description", hint: "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.",
@@ -36,10 +40,10 @@ export abstract class CryptoWalletInputInfo<T extends CryptoWallet, U> extends A
     });
 
     public readonly weight = new TextInputInfo();
-    public readonly weightUnit = new SelectInputInfo<typeof WeightUnit>();
+    public readonly weightUnit = new SelectInputInfo();
     public readonly fineness = new TextInputInfo();
     public readonly value = new TextInputInfo();
-    public readonly valueCurrency = new SelectInputInfo<typeof Currency>();
+    public readonly valueCurrency = new SelectInputInfo();
 
     public createAsset(parent: IParent, props: U) {
         return new this.ctor(parent, props);
@@ -47,13 +51,27 @@ export abstract class CryptoWalletInputInfo<T extends CryptoWallet, U> extends A
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected constructor({ type, ctor }: ICryptoWalletInputInfoParameters<T, U>) {
+    protected static getSchema(quantityDecimals: 8 | 18) {
+        switch (quantityDecimals) {
+            case 8:
+                return "Quantity8";
+            case 18:
+                return "QuantityAny";
+            default:
+                return CryptoWalletInputInfo.assertUnreachable(quantityDecimals);
+        }
+    }
+
+    protected constructor(params: ICryptoWalletInputInfoParameters<T, U>) {
         super();
-        this.type = type;
-        this.ctor = ctor;
+        this.ctor = params.ctor;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private readonly ctor: new (parent: IParent, props: U) => T;
+    private static assertUnreachable(value: never): never {
+        throw new Error(value);
+    }
+
+    private readonly ctor: ICryptoWalletCtor<T, U>;
 }

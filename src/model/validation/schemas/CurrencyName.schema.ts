@@ -10,6 +10,37 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Currency } from "./Currency.schema";
+export const currencyNames = [
+    "USD",
+    "AUD",
+    "CAD",
+    "CNY",
+    "CHF",
+    "CZK",
+    "DKK",
+    "GBP",
+    "HKD",
+    "HUF",
+    "INR",
+    "JPY",
+    "KRW",
+    "LTL",
+    "MYR",
+    "NIS",
+    "NOK",
+    "NZD",
+    "PLN",
+    "RUB",
+    "SAR",
+    "SEK",
+    "SGD",
+    "THB",
+    "TRY",
+    "TWD",
+    "ZAR",
+    "XAG",
+    "XAU",
+    "BTC",
+] as const;
 
-export type CurrencyName = keyof typeof Currency;
+export type CurrencyName = typeof currencyNames[number];

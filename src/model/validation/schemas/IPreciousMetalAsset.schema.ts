@@ -10,11 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { gold, palladium, platinum, silver } from "./AssetTypeName.schema";
 import { IPreciousMetalAssetProperties } from "./IPreciousMetalAssetProperties.schema";
 
-export const preciousMetalAssetTypeNames = ["Silver", "Palladium", "Platinum", "Gold"] as const;
+export const preciousMetalAssetTypeNames = [silver, palladium, platinum, gold] as const;
 
-export type PreciousMetalAssetTypeName = (typeof preciousMetalAssetTypeNames)[number];
+export type PreciousMetalAssetTypeName = typeof preciousMetalAssetTypeNames[number];
 
 export interface IPreciousMetalObject {
     readonly type: PreciousMetalAssetTypeName;

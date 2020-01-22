@@ -10,11 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { erc20Tokens } from "./AssetTypeName.schema";
 import { IAddressCryptoWalletProperties } from "./IAddressCryptoWalletProperties.schema";
 
-export const addressCryptoWalletTypeNames = ["ERC20 Tokens"] as const;
+export const addressCryptoWalletTypeNames = [erc20Tokens] as const;
 
-export type AddressCryptoWalletTypeName = (typeof addressCryptoWalletTypeNames)[number];
+export type AddressCryptoWalletTypeName = typeof addressCryptoWalletTypeNames[number];
 
 export interface IAddressCryptoObject {
     readonly type: AddressCryptoWalletTypeName;

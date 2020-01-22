@@ -13,12 +13,15 @@
 import { IParent } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { RealCryptoWallet } from "./RealCryptoWallet";
+import { monero } from "./validation/schemas/AssetTypeName.schema";
 import { IQuantityCryptoWallet } from "./validation/schemas/IQuantityCryptoWallet.schema";
 import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
 
 /** Represents a wallet for Monero. */
 export class XmrWallet extends RealCryptoWallet {
-    public readonly type = "Monero";
+    public static readonly type = monero;
+
+    public readonly type = monero;
 
     public constructor(parent: IParent, props: IQuantityCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "XMR"));

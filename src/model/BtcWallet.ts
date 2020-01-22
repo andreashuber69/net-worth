@@ -18,6 +18,7 @@ import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
+import { bitcoin } from "./validation/schemas/AssetTypeName.schema";
 import { BlockchainBalanceResponse, IAddressBalance } from "./validation/schemas/BlockchainBalanceResponse.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
@@ -29,7 +30,9 @@ interface IBalance {
 
 /** Represents a BTC wallet. */
 export class BtcWallet extends SimpleCryptoWallet {
-    public readonly type = "Bitcoin";
+    public static readonly type = bitcoin;
+
+    public readonly type = bitcoin;
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "BTC"));

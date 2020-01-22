@@ -10,7 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Enum, EnumInfo } from "./EnumInfo";
 import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { EnumSchemaName, SchemaName, Validator } from "./validation/Validator";
 
@@ -23,29 +22,27 @@ export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
     }
 }
 
-interface ISelectInputInfoParameters<T extends Enum<T>> extends IPrimitiveInputInfoProperties {
-    readonly enumType?: T;
+interface ISelectInputInfoParameters extends IPrimitiveInputInfoProperties {
+    readonly items: readonly string[];
     readonly enumSchemaNames: readonly EnumSchemaName[];
 }
 
 /** Provides input information for a property where a valid value needs to be equal to one of a given list of values. */
 // tslint:disable-next-line:max-classes-per-file
-export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
-    /** @internal */
-    public constructor(params: ISelectInputInfoParameters<T> =
-        { label: "", hint: "", isPresent: false, isRequired: false, enumSchemaNames: [] }) {
-        super(params);
-        ({ enumType: this.enumType, enumSchemaNames: this.enumSchemaNames } = params);
-    }
+export class SelectInputInfo extends SelectInputInfoBase {
+    public readonly items: readonly string[];
 
-    public get items() {
-        return this.enumType ? EnumInfo.getMemberNames(this.enumType) as string[] : [];
+    /** @internal */
+    public constructor(params: ISelectInputInfoParameters =
+        { label: "", hint: "", isPresent: false, isRequired: false, items: [], enumSchemaNames: [] }) {
+        super(params);
+        ({ items: this.items, enumSchemaNames: this.enumSchemaNames } = params);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected validateContent(strict: boolean, input: unknown) {
-        if (this.enumType && this.enumSchemaNames.length) {
+        if (this.items.length && this.enumSchemaNames.length) {
             const result = this.enumSchemaNames.reduce<string | true>(
                 (p: string | true, c: SchemaName) => p === true ? p : Validator.validate(input, c), "");
 
@@ -59,6 +56,5 @@ export class SelectInputInfo<T extends Enum<T>> extends SelectInputInfoBase {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private readonly enumType?: T;
     private readonly enumSchemaNames: readonly EnumSchemaName[];
 }

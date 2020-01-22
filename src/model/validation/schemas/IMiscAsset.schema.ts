@@ -10,11 +10,12 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { misc } from "./AssetTypeName.schema";
 import { IMiscAssetProperties } from "./IMiscAssetProperties.schema";
 
-export const miscAssetTypeNames = ["Misc"] as const;
+export const miscAssetTypeNames = [misc] as const;
 
-export type MiscAssetTypeName = (typeof miscAssetTypeNames)[number];
+export type MiscAssetTypeName = typeof miscAssetTypeNames[number];
 
 export interface IMiscObject {
     readonly type: MiscAssetTypeName;

@@ -18,7 +18,7 @@ import { AssetInput } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { createAsset } from "../model/AssetProperties";
 import { SelectInputInfo } from "../model/SelectInputInfo";
-import { AssetType } from "../model/validation/schemas/AssetType.schema";
+import { assetTypeNames } from "../model/validation/schemas/AssetTypeName.schema";
 
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
 // tslint:disable-next-line:no-default-import
@@ -41,7 +41,7 @@ export default class AssetEditor extends Vue {
     /** Provides the asset type input information. */
     public get typeInputInfo() {
         return new SelectInputInfo({
-            label: "Type", hint: "", isPresent: true, isRequired: true, enumType: AssetType,
+            label: "Type", hint: "", isPresent: true, isRequired: true, items: assetTypeNames,
             enumSchemaNames: ["AssetTypeName"],
         });
     }
@@ -52,7 +52,7 @@ export default class AssetEditor extends Vue {
     }
 
     public set type(value: string | undefined) {
-        this.assetInfo = AssetInput.infos.find((info) => info.type === value) || new NoAssetInputInfo();
+        this.assetInfo = value && AssetInput.infos[value] || new NoAssetInputInfo();
         this.data.type = this.assetInfo.type;
     }
 
@@ -90,7 +90,7 @@ export default class AssetEditor extends Vue {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getAssetInfo(asset: Asset | undefined) {
-        return asset ? AssetInput.infos.find((info) => info.type === asset.editableAsset.type) : undefined;
+        return asset ? AssetInput.infos[asset.editableAsset.type] : undefined;
     }
 
     private parent?: IParent;

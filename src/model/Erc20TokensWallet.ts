@@ -13,12 +13,15 @@
 import { IParent } from "./Asset";
 import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
 import { RealCryptoWallet } from "./RealCryptoWallet";
+import { erc20Tokens } from "./validation/schemas/AssetTypeName.schema";
 import { IAddressCryptoWallet } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 
 /** Represents a wallet for ERC20 tokens. */
 export class Erc20TokensWallet extends RealCryptoWallet {
-    public readonly type = "ERC20 Tokens";
+    public static readonly type = erc20Tokens;
+
+    public readonly type = erc20Tokens;
 
     public constructor(parent: IParent, props: IAddressCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, ""));

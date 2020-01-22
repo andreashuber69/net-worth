@@ -11,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AddressCryptoWalletInputInfo } from "./AddressCryptoWalletInputInfo";
-import { AssetInputInfo } from "./AssetInputInfo";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
 import { DashWallet } from "./DashWallet";
@@ -20,6 +19,7 @@ import { EtcWallet } from "./EtcWallet";
 import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
 import { LtcWallet } from "./LtcWallet";
+import { MiscAsset } from "./MiscAsset";
 import { MiscAssetInputInfo } from "./MiscAssetInputInfo";
 import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
@@ -80,30 +80,29 @@ type Converters<P, S, A, Q, M, PR, SR, AR, QR, MR> = readonly [
 ];
 
 export class ObjectConverter {
-    public static readonly infos = [
-        new PreciousMetalAssetInputInfo("Silver", SilverAsset),
-        new PreciousMetalAssetInputInfo("Palladium", PalladiumAsset),
-        new PreciousMetalAssetInputInfo("Platinum", PlatinumAsset),
-        new PreciousMetalAssetInputInfo("Gold", GoldAsset),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Bitcoin", ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
-        new QuantityCryptoWalletInputInfo({ type: "Monero", ctor: XmrWallet, quantityDecimals: 8 }),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Litecoin", ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Ethereum Classic", ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
-        new AddressCryptoWalletInputInfo(
-            { type: "ERC20 Tokens", ctor: Erc20TokensWallet, addressHint: erc20Hint }),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Ethereum", ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Bitcoin Gold", ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Dash", ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
-        new SimpleCryptoWalletInputInfo(
-            { type: "Zcash", ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
-        new MiscAssetInputInfo(),
-    ] as const;
+    public static readonly infos = {
+        [SilverAsset.type]: new PreciousMetalAssetInputInfo(SilverAsset),
+        [PalladiumAsset.type]: new PreciousMetalAssetInputInfo(PalladiumAsset),
+        [PlatinumAsset.type]: new PreciousMetalAssetInputInfo(PlatinumAsset),
+        [GoldAsset.type]: new PreciousMetalAssetInputInfo(GoldAsset),
+        [BtcWallet.type]: new SimpleCryptoWalletInputInfo(
+            { ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
+        [XmrWallet.type]: new QuantityCryptoWalletInputInfo({ ctor: XmrWallet, quantityDecimals: 8 }),
+        [LtcWallet.type]: new SimpleCryptoWalletInputInfo(
+            { ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
+        [EtcWallet.type]: new SimpleCryptoWalletInputInfo(
+            { ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
+        [Erc20TokensWallet.type]: new AddressCryptoWalletInputInfo({ ctor: Erc20TokensWallet, addressHint: erc20Hint }),
+        [EthWallet.type]: new SimpleCryptoWalletInputInfo(
+            { ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
+        [BtgWallet.type]: new SimpleCryptoWalletInputInfo(
+            { ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
+        [DashWallet.type]: new SimpleCryptoWalletInputInfo(
+            { ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
+        [ZecWallet.type]: new SimpleCryptoWalletInputInfo(
+            { ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
+        [MiscAsset.type]: new MiscAssetInputInfo(),
+     } as const;
 
     public static convert<
         P extends IPreciousMetalObject,
@@ -122,23 +121,23 @@ export class ObjectConverter {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should
         // go away...
         if (ObjectConverter.is<P>(rawObject, preciousMetalAssetTypeNames)) {
-            const info = ObjectConverter.getInfo<PreciousMetalAssetInputInfo>(rawObject.type);
+            const info = ObjectConverter.infos[rawObject.type];
 
             return [info, convertPreciousMetalObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<S>(rawObject, simpleCryptoWalletTypeNames)) {
-            const info = ObjectConverter.getInfo<SimpleCryptoWalletInputInfo>(rawObject.type);
+            const info = ObjectConverter.infos[rawObject.type];
 
             return [info, convertSimpleCryptoObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<A>(rawObject, addressCryptoWalletTypeNames)) {
-            const info = ObjectConverter.getInfo<AddressCryptoWalletInputInfo>(rawObject.type);
+            const info = ObjectConverter.infos[rawObject.type];
 
             return [info, convertAddressCryptoObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<Q>(rawObject, quantityCryptoWalletTypeNames)) {
-            const info = ObjectConverter.getInfo<QuantityCryptoWalletInputInfo>(rawObject.type);
+            const info = ObjectConverter.infos[rawObject.type];
 
             return [info, convertQuantityCryptoObject(rawObject, info)] as const;
         } else if (ObjectConverter.is<M>(rawObject, miscAssetTypeNames)) {
-            const info = ObjectConverter.getInfo<MiscAssetInputInfo>(rawObject.type);
+            const info = ObjectConverter.infos[rawObject.type];
 
             return [info, convertMiscObject(rawObject, info)] as const;
         } else {
@@ -149,17 +148,6 @@ export class ObjectConverter {
     public static is<T extends ObjectUnion>(
         rawObject: ObjectUnion, types: ReadonlyArray<T["type"]>): rawObject is T {
         return types.includes(rawObject.type);
-    }
-
-    private static getInfo<T extends (typeof ObjectConverter.infos)[number]>(type: T["type"]) {
-        const result = ObjectConverter.infos.find<T>((info: AssetInputInfo): info is T => info.type === type);
-
-        if (!result) {
-            // TODO: Can't we do this statically?
-            throw new Error("InputInfo not found!");
-        }
-
-        return result;
     }
 
     private static assertUnreachable(value: never): never {

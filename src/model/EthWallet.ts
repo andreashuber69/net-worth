@@ -14,12 +14,15 @@ import { IParent } from "./Asset";
 import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
+import { ethereum } from "./validation/schemas/AssetTypeName.schema";
 import { EthplorerGetAddressInfoResponse } from "./validation/schemas/EthplorerGetAddressInfoResponse.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 /** Represents an ETH wallet. */
 export class EthWallet extends SimpleCryptoWallet {
-    public readonly type = "Ethereum";
+    public static readonly type = ethereum;
+
+    public readonly type = ethereum;
 
     public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
         super(parent, RealCryptoWallet.getProperties(props, "ETH"));
