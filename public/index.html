@@ -24,34 +24,7 @@
     <link rel="manifest" href="<%= webpackConfig.output.publicPath %>manifest.json">
     <link rel="apple-touch-icon" href="<%= webpackConfig.output.publicPath %>icon-192x192.png">
     <style>
-      .loader {
-        display: inline-block;
-        width: 80px;
-        height: 80px;
-      }
-
-      .loader:after {
-        content: " ";
-        display: block;
-        width: 64px;
-        height: 64px;
-        margin: 8px;
-        border-radius: 50%;
-        border: 6px solid;
-        border-color: #99c247 transparent #fe1e67 transparent;
-        animation: loader 2s linear infinite;
-      }
-
-      @keyframes loader {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-
-      .base {
+      .base-page {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -63,9 +36,10 @@
         left: 0;
       }
 
-      .no-script {
+      .no-script-page {
         z-index: 1000;
         color: #99c247;
+        font-family: sans-serif; /* Roboto is not yet known at this point */
         font-size: large;
         font-weight: 700;
       }
@@ -74,26 +48,55 @@
         padding: 20px;
       }
 
-      .loading {
+      .loading-page {
         z-index: 999;
         transition: opacity 0.5s linear;
       }
 
-      .loading.loaded {
+      .loading-page.loaded {
         opacity: 0;
         pointer-events: none;
+      }
+
+      .loading-indicator {
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+      }
+
+      .loading-indicator:after {
+        content: " ";
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid;
+        border-color: #99c247 transparent #fe1e67 transparent;
+        animation: loading-indicator 2s linear infinite;
+      }
+
+      @keyframes loading-indicator {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
     </style>
   </head>
   <body>
     <noscript>
-      <div class="base no-script">
+      <div class="base-page no-script-page">
         <span class="warning">
           This site doesn't work without JavaScript enabled. Please enable it to continue.
         </span>
       </div>
     </noscript>
-    <div id="loader" class="base loading loader"></div>
+    <div id="loader" class="base-page loading-page">
+      <div class="loading-indicator"></div>
+    </div>
     <script>
       window.addEventListener("load", () => document.getElementById("loader").classList.add("loaded"));
     </script>
