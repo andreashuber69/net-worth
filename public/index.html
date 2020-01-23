@@ -51,11 +51,7 @@
         }
       }
 
-      .start {
-        display: none;
-      }
-
-      .loading {
+      .base {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -65,7 +61,21 @@
         position: fixed;
         top: 0;
         left: 0;
-        z-index: 9999;
+      }
+
+      .no-script {
+        z-index: 1000;
+        color: #99c247;
+        font-size: large;
+        font-weight: 700;
+      }
+
+      .warning {
+        padding: 20px;
+      }
+
+      .loading {
+        z-index: 999;
         transition: opacity 0.5s linear;
       }
 
@@ -77,20 +87,15 @@
   </head>
   <body>
     <noscript>
-      <strong style="font-size:large">
-        This site doesn't work without JavaScript enabled. Please enable it to continue.
-      </strong>
+      <div class="base no-script">
+        <span class="warning">
+          This site doesn't work without JavaScript enabled. Please enable it to continue.
+        </span>
+      </div>
     </noscript>
-    <!--
-      The "start" class makes the loader hidden at first. The loader only becomes visible when the script below replaces
-      the class with the "loading" class. This ensures that the loader is not visible when the browser has JavaScript
-      execution disabled.
-    -->
-    <div id="loader" class="loader start"></div>
+    <div id="loader" class="base loading loader"></div>
     <script>
-      const loader = document.getElementById("loader");
-      loader.classList.replace("start", "loading");
-      window.addEventListener("load", () => loader.classList.add("loaded"));
+      window.addEventListener("load", () => document.getElementById("loader").classList.add("loaded"));
     </script>
     <div id="app"></div>
     <!-- built files will be auto injected -->
