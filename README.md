@@ -8,8 +8,8 @@
   <a href="https://github.com/andreashuber69/net-worth/releases/latest">
     <img src="https://img.shields.io/github/release-date/andreashuber69/net-worth.svg" alt="Release Date">
   </a>
-  <a href="https://travis-ci.org/andreashuber69/net-worth">
-    <img src="https://img.shields.io/travis/andreashuber69/net-worth.svg" alt="Build">
+  <a href="https://travis-ci.com/andreashuber69/net-worth">
+    <img src="https://travis-ci.com/andreashuber69/net-worth.svg?branch=develop" alt="Build">
   </a>
   <a href="https://github.com/andreashuber69/net-worth/issues">
     <img src="https://img.shields.io/github/issues-raw/andreashuber69/net-worth.svg" alt="Issues">
