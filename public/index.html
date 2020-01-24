@@ -32,6 +32,13 @@
         top: 0;
         left: 0;
         height: 100vh;
+        /*
+          On desktop browsers, where we have a fixed vertical scroll bar, this setting is suboptimal because the
+          scroll bar is considered a part of the viewport. Consequently, the indicator is positioned slightly right
+          of the center. While 100% would solve that problem nicely, it doesn't work for mobile browsers, where the page
+          is horizontally briefly larger than the viewport and would thus jump around while the table is sized down to
+          fit the page. Therefore 100vw is considered the lesser of two evils.
+         */
         width: 100vw;
         background: #25272a;
       }
