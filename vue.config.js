@@ -32,6 +32,8 @@ module.exports = {
         }
     },
     chainWebpack: config => {
+        // We want to show the loading indicator as soon as possible. Preloading assets potentially just delays this.
+        config.plugins.delete("preload");
         config.plugin("offline-plugin").use(OfflinePlugin);
     }
 }
