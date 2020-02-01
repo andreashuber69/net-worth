@@ -51,6 +51,7 @@
     "@types/node": "^12.12.21",
     "@vue/cli-plugin-typescript": "^3.12.1",
     "@vue/cli-service": "^3.12.1",
+    "async-css-plugin": "^1.0.8",
     "cross-env": "^6.0.3",
     "cspell": "^4.0.37",
     "jasmine-core": "^3.5.0",

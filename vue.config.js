@@ -12,6 +12,7 @@
 
 const schema = require("./src/model/validation/schemas/All.schema.json");
 
+const AsyncCssPlugin = require("async-css-plugin");
 const OfflinePlugin = require("offline-plugin");
 
 module.exports = {
@@ -34,6 +35,7 @@ module.exports = {
     chainWebpack: config => {
         // We want to show the loading indicator as soon as possible. Preloading assets potentially just delays this.
         config.plugins.delete("preload");
+        config.plugin("async-css-plugin").use(AsyncCssPlugin);
         config.plugin("offline-plugin").use(OfflinePlugin);
     }
 }
