@@ -13,8 +13,9 @@
 {
   "recommendations": [
     "davidanson.vscode-markdownlint",
-    "ms-vscode.vscode-typescript-tslint-plugin",
+    "eamodio.gitlens",
     "eg2.vscode-npm-script",
+    "ms-vscode.vscode-typescript-tslint-plugin",
     "octref.vetur",
     "prograhammer.tslint-vue",
     "streetsidesoftware.code-spell-checker",
