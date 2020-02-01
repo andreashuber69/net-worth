@@ -37,7 +37,6 @@
     "ci": "karma start --browsers ChromeHeadless"
   },
   "dependencies": {
-    "@vue/preload-webpack-plugin": "^1.1.1",
     "ajv": "^6.10.2",
     "bitcoinjs-lib": "^3.3.2",
     "offline-plugin": "^5.0.7",
@@ -52,6 +51,7 @@
     "@types/node": "^12.12.21",
     "@vue/cli-plugin-typescript": "^3.12.1",
     "@vue/cli-service": "^3.12.1",
+    "async-css-plugin": "^1.0.8",
     "cross-env": "^6.0.3",
     "cspell": "^4.0.37",
     "jasmine-core": "^3.5.0",
