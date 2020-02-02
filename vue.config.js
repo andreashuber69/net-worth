@@ -34,7 +34,7 @@ module.exports = {
         }
     },
     chainWebpack: config => {
-        config.plugin("async-css-plugin").use(AsyncCssPlugin);
+        config.plugin("async-css-plugin").use(AsyncCssPlugin, [{ logLevel: "info" }]);
         config.plugin("offline-plugin").use(OfflinePlugin);
 
         // The code below leads to font and background downloads being started before script and css downloads and

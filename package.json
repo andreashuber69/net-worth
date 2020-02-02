@@ -52,7 +52,7 @@
     "@vue/cli-plugin-typescript": "^3.12.1",
     "@vue/cli-service": "^3.12.1",
     "@vue/preload-webpack-plugin": "^1.1.1",
-    "async-css-plugin": "^1.0.8",
+    "async-css-plugin": "^1.1.1",
     "cross-env": "^6.0.3",
     "cspell": "^4.0.37",
     "jasmine-core": "^3.5.0",
