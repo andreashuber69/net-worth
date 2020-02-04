@@ -44,12 +44,12 @@
         "coverage/**",
         "dist/**",
         "karma.conf.js",
-        "src/model/ModelParser.spec/*.assets",
         "node_modules/**",
         "package.json",
         "package-lock.json",
         "schema.tsconfig.json",
         "src/assets/**",
+        "src/model/ModelParser.spec/**",
         "tsconfig.json"
     ]
 }
