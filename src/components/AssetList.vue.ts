@@ -73,7 +73,7 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public get grandTotalValue() {
-        return Format.value(this.checkedValue.assets.grandTotalValue, 2, 2);
+        return this.checkedValue.assets.grandTotalValue;
     }
 
     /** Provides a value indicating how many columns are currently visible. */
@@ -117,7 +117,7 @@ export default class AssetList extends ComponentBase<Model> {
         }
 
         const maxPrefix = this.maxPrefixes.get(columnName) || ["", false];
-        const valueFormatted = this.format(value, 0);
+        const valueFormatted = this.format(Math.trunc(value), 0);
 
         // The following logic is necessary so that negative values will be displayed in alignment with their
         // positive brothers and sisters. In a column with at least one negative value, all positive values are
@@ -192,8 +192,8 @@ export default class AssetList extends ComponentBase<Model> {
     private get maxPrefixes(): ReadonlyMap<NumericColumnName, [string, boolean]> {
         const result = new Map<NumericColumnName, [string, boolean]>(
             numericColumnNames.map((name) => [name, ["", false]]));
-        result.set("totalValue", [this.formatZeroes(this.checkedValue.assets.grandTotalValue, 0), false]);
-        result.set("percent", [this.formatZeroes(100, 0), false]);
+        result.set("totalValue", [this.formatZeroes(this.checkedValue.assets.grandTotalValue), false]);
+        result.set("percent", [this.formatZeroes(100), false]);
 
         for (const property of numericColumnNames) {
             let [longest, hasNegativeValues] = result.get(property) || ["", false];
@@ -201,7 +201,7 @@ export default class AssetList extends ComponentBase<Model> {
             for (const asset of this.checkedValue.assets.grouped) {
                 const value = asset[property];
                 hasNegativeValues = hasNegativeValues || ((value || 0) < 0);
-                const current = this.formatZeroes(value, 0);
+                const current = this.formatZeroes(value);
                 longest = current.length > longest.length ? current : longest;
             }
 
@@ -211,10 +211,10 @@ export default class AssetList extends ComponentBase<Model> {
         return result;
     }
 
-    private formatZeroes(num: number | undefined, maximumFractionDigits: number, minimumFractionDigits?: number) {
+    private formatZeroes(num: number | undefined) {
         const numToFormat = (num === undefined) || Number.isNaN(num) ? undefined : Math.abs(num);
 
-        return this.format(numToFormat, maximumFractionDigits, minimumFractionDigits).replace(/\d/g, "0");
+        return this.format(numToFormat && Math.trunc(numToFormat), 0).replace(/\d/g, "0");
     }
 
     private onIntervalElapsed() {
