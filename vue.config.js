@@ -21,6 +21,7 @@ module.exports = {
     // gh-pages) or for local production mode testing. The following uses an exported environment variable to do just
     // that. Obviously, this needs to bet set accordingly before building for deployment. 
     publicPath: process.env.WEBPACK_BASE_URL ? process.env.WEBPACK_BASE_URL : "/",
+    transpileDependencies: ["vuetify"],
     configureWebpack: config => {
         if (process.env.NODE_ENV === "production") {
             const schemaNames = Object.keys(schema.definitions);
