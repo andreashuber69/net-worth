@@ -73,7 +73,7 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public get grandTotalValue() {
-        return Format.value(this.checkedValue.assets.grandTotalValue, 2, 2);
+        return this.checkedValue.assets.grandTotalValue;
     }
 
     /** Provides a value indicating how many columns are currently visible. */
@@ -117,7 +117,7 @@ export default class AssetList extends ComponentBase<Model> {
         }
 
         const maxPrefix = this.maxPrefixes.get(columnName) || ["", false];
-        const valueFormatted = this.format(value, 0);
+        const valueFormatted = this.format(Math.trunc(value), 0);
 
         // The following logic is necessary so that negative values will be displayed in alignment with their
         // positive brothers and sisters. In a column with at least one negative value, all positive values are
@@ -214,7 +214,7 @@ export default class AssetList extends ComponentBase<Model> {
     private formatZeroes(num: number | undefined) {
         const numToFormat = (num === undefined) || Number.isNaN(num) ? undefined : Math.abs(num);
 
-        return this.format(numToFormat, 0).replace(/\d/g, "0");
+        return this.format(numToFormat && Math.trunc(numToFormat), 0).replace(/\d/g, "0");
     }
 
     private onIntervalElapsed() {
