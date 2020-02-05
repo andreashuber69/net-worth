@@ -83,7 +83,7 @@
           <td :colspan="grandTotalLabelColumnCount" class="total">Grand Total</td>
           <td v-if="isVisible('totalValue')">
             <span class="prefix total">{{ getPrefix('totalValue', grandTotalValue) }}</span>
-            <span class="total">{{ grandTotalValue }}</span>
+            <span class="total">{{ format(grandTotalValue, 2, 2) }}</span>
           </td>
           <td>
             <span class="prefix total">{{ getPrefix('percent', 100) }}</span>
