@@ -12,7 +12,6 @@
 
 import { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
-import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 import { AddressCryptoWalletTypeName } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 
@@ -49,15 +48,15 @@ export class Erc20TokenWallet extends CryptoWallet {
     }
 
     /** @internal */
-    public constructor(params: ITokenWalletParameters) {
-        super(params.editable.parent, params.currencySymbol);
-        this.editable = params.editable;
-        this.quantity = params.quantity;
-        this.unitValueUsd = params.unitValueUsd;
+    public constructor({ editable, currencySymbol, quantity, unitValueUsd }: ITokenWalletParameters) {
+        super(editable.parent, currencySymbol);
+        this.editable = editable;
+        this.quantity = quantity;
+        this.unitValueUsd = unitValueUsd;
     }
 
     // tslint:disable-next-line:prefer-function-over-method
-    public toJSON(): AssetUnion {
+    public toJSON(): never {
         throw new Error(`${Erc20TokenWallet.name} cannot be serialized.`);
     }
 
