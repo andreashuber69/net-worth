@@ -54,7 +54,7 @@ export class Erc20TokensWalletBundle extends AssetBundle {
             const url = `https://api.ethplorer.io/getAddressInfo/${this.erc20Wallet.address}?apiKey=dvoio1769GSrYx63`;
             const balances = await QueryCache.fetch(url, EthplorerGetAddressInfoResponse);
 
-            for (const token of balances.tokens || []) {
+            for (const token of balances.tokens || [Erc20TokensWalletBundle.noTokenBalance]) {
                 this.addTokenWallet(token);
             }
         } catch (e) {
@@ -76,6 +76,17 @@ export class Erc20TokensWalletBundle extends AssetBundle {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static get noTokenBalance(): IToken {
+        return {
+            balance: 1e-10,
+            tokenInfo: {
+                decimals: 0,
+                price: false,
+                symbol: "No Token Balance Found!",
+            },
+        };
+    }
 
     private readonly deletedAssets: string[];
 
