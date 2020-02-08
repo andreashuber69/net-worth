@@ -19,6 +19,7 @@ interface ITokenWalletParameters {
     readonly editable: Erc20TokensWallet;
     readonly currencySymbol: string;
     readonly quantity: QuantityAny;
+    readonly quantityHint: string;
     readonly unitValueUsd?: number;
 }
 
@@ -48,10 +49,11 @@ export class Erc20TokenWallet extends CryptoWallet {
     }
 
     /** @internal */
-    public constructor({ editable, currencySymbol, quantity, unitValueUsd }: ITokenWalletParameters) {
+    public constructor({ editable, currencySymbol, quantity, quantityHint, unitValueUsd }: ITokenWalletParameters) {
         super(editable.parent, currencySymbol);
         this.editable = editable;
         this.quantity = quantity;
+        this.quantityHint = quantityHint;
         this.unitValueUsd = unitValueUsd;
     }
 
@@ -60,7 +62,7 @@ export class Erc20TokenWallet extends CryptoWallet {
         throw new Error(`${Erc20TokenWallet.name} cannot be serialized.`);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private readonly editable: Erc20TokensWallet;
 }
