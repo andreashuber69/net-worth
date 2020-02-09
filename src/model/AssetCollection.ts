@@ -49,7 +49,7 @@ export class AssetCollection {
     }
 
     public get isEmpty() {
-        return this.groups.length === 0;
+        return this.bundles.length === 0;
     }
 
     /** Provides the sum of all asset total values. */
