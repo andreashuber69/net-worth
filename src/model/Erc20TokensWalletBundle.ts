@@ -52,16 +52,15 @@ export class Erc20TokensWalletBundle extends AssetBundle {
 
         try {
             const url = `https://api.ethplorer.io/getAddressInfo/${this.erc20Wallet.address}?apiKey=dvoio1769GSrYx63`;
-            const balances = await QueryCache.fetch(url, EthplorerGetAddressInfoResponse);
+            const tokens = Erc20TokensWalletBundle.getTokens(
+                await QueryCache.fetch(url, EthplorerGetAddressInfoResponse));
 
-            for (const token of balances.tokens || []) {
-                this.addTokenWallet(token);
+            for (const token of tokens[0]) {
+                this.addTokenWallet(token, tokens[1]);
             }
         } catch (e) {
             if (e instanceof QueryError) {
-                // There's no good place where we can visualize an ERC20 query error in the UI, which is why we just
-                // log it in the console.
-                console.warn(e);
+                this.addTokenWallet(Erc20TokensWalletBundle.noTokenBalance, e.toString());
             } else {
                 throw e;
             }
@@ -77,16 +76,32 @@ export class Erc20TokensWalletBundle extends AssetBundle {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private static getTokens({ tokens }: EthplorerGetAddressInfoResponse): [readonly IToken[], string] {
+        return tokens && [tokens, ""] || [[Erc20TokensWalletBundle.noTokenBalance], "No Token Balance Found!"];
+    }
+
+    private static get noTokenBalance(): IToken {
+        return {
+            balance: Number.NaN,
+            tokenInfo: {
+                decimals: Number.NaN,
+                price: false,
+                symbol: "NONE",
+            },
+        };
+    }
+
     private readonly deletedAssets: string[];
 
-    private addTokenWallet(token: IToken) {
+    private addTokenWallet(token: IToken, quantityHint: string) {
         const info = token.tokenInfo;
 
-        if ((this.deletedAssets.indexOf(info.symbol) < 0) && (token.balance > 0)) {
+        if ((this.deletedAssets.indexOf(info.symbol) < 0) && (token.balance !== 0)) {
             this.assets.push(new Erc20TokenWallet({
                 editable: this.erc20Wallet,
                 currencySymbol: info.symbol,
                 quantity: token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
+                quantityHint,
                 unitValueUsd: info.price && info.price.rate || 0,
             }));
         }
