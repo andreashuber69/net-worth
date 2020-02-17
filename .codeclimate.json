@@ -17,6 +17,9 @@
       }
     }
   },
+  "exclude_patterns": [
+    "**/*.spec.ts"
+  ],
   "plugins": {
   }
 }
