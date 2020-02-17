@@ -68,10 +68,6 @@ export default class AssetList extends ComponentBase<Model> {
         };
     }
 
-    public get isLoading() {
-        return (this.checkedValue.assets.grandTotalValue === undefined);
-    }
-
     public get grandTotalValue() {
         return this.checkedValue.assets.grandTotalValue;
     }

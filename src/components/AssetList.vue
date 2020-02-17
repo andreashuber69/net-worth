@@ -18,7 +18,7 @@
       <AssetEditor ref="editor"></AssetEditor>
     </v-layout>
     <v-data-table
-      :headers="headers" :options.sync="options" :loading="isLoading"
+      :headers="headers" :options.sync="options" :loading="checkedValue.assets.grandTotalValue === undefined"
       :items="checkedValue.assets.grouped" item-key="key" :server-items-length="checkedValue.assets.grouped.length"
       hide-default-footer :mobile-breakpoint="0" class="elevation-1" @click:row="$event.expand()">
       <template v-slot:header.unitValue="{ header }">

@@ -13,7 +13,7 @@
     },
     "similar-code": {
       "config": {
-        "threshold": 60
+        "threshold": 70
       }
     }
   },

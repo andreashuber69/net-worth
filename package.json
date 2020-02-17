@@ -53,7 +53,7 @@
     "@vue/cli-plugin-typescript": "^4.2.2",
     "@vue/cli-service": "^4.2.2",
     "@vue/preload-webpack-plugin": "^1.1.1",
-    "async-css-plugin": "^1.1.2",
+    "async-css-plugin": "^1.1.3",
     "codeclimate-test-reporter": "^0.5.1",
     "cross-env": "^7.0.0",
     "cspell": "^4.0.47",
