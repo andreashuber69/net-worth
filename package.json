@@ -54,6 +54,7 @@
     "@vue/cli-service": "^4.2.2",
     "@vue/preload-webpack-plugin": "^1.1.1",
     "async-css-plugin": "^1.1.2",
+    "codeclimate-test-reporter": "^0.5.1",
     "cross-env": "^7.0.0",
     "cspell": "^4.0.47",
     "jasmine-core": "^3.5.0",
