@@ -14,8 +14,17 @@ import { IParent } from "./Asset";
 import { CryptoCompareRequest } from "./CryptoCompareRequest";
 import { CryptoWallet } from "./CryptoWallet";
 import { QueryUtility } from "./QueryUtility";
+import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
+import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
-import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
+
+type SimpleCryptoWalletProperties = [
+    ISimpleCryptoWalletProperties["description"],
+    ISimpleCryptoWalletProperties["location"],
+    IAddressCryptoWalletProperties["address"] | undefined,
+    IQuantityCryptoWalletProperties["quantity"] | undefined,
+    ISimpleCryptoWalletProperties["notes"]
+];
 
 export type IRealCryptoWalletParameters = ISimpleCryptoWalletProperties & {
     /** The crypto currency symbol, e.g. 'BTC', 'LTC'. */
@@ -58,7 +67,10 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         const address = ("address" in props) && props.address || undefined;
         const quantity = ("quantity" in props) && props.quantity || undefined;
 
-        return { ...RealCryptoWallet._getProperties(description, location, address, quantity, notes), currencySymbol };
+        return {
+            ...RealCryptoWallet._getProperties([description, location, address, quantity, notes]),
+            currencySymbol,
+        };
     }
 
     protected constructor(parent: IParent, params: IRealCryptoWalletParameters) {
@@ -81,23 +93,19 @@ export abstract class RealCryptoWallet extends CryptoWallet {
 
     /** @internal */
     protected getProperties(): ISimpleCryptoWalletProperties {
-        return RealCryptoWallet._getProperties(
+        return RealCryptoWallet._getProperties([
             this.description,
             this.location || undefined,
             this.address || undefined,
             this.address ? undefined : this.quantity,
             this.notes || undefined,
-        );
+        ]);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static _getProperties(
-        description: string,
-        location: string | undefined,
-        address: string | undefined,
-        quantity: QuantityAny | undefined,
-        notes: string | undefined,
+        [description, location, address, quantity, notes]: SimpleCryptoWalletProperties,
     ): ISimpleCryptoWalletProperties {
         if (address) {
             return { description, location, address, notes };
