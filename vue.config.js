@@ -53,9 +53,11 @@ module.exports = {
                 // cSpell: ignore woff
                 as(entry) {
                     if (/\.woff2$/.test(entry)) {
-                        return 'font';
+                        return "font";
                     } else if (/\.png$/.test(entry)) {
-                        return 'image';
+                        return "image";
+                    } else {
+                        return "";
                     }
                 },
                 // cSpell: ignore prefetch
