@@ -51,17 +51,6 @@ module.exports = {
             "error",
             4,
             {
-                "CallExpression": {
-                    "arguments": "first"
-                },
-                "ArrayExpression": "first",
-                "ObjectExpression": "first",
-                "FunctionDeclaration": {
-                    "parameters": "first"
-                },
-                "FunctionExpression": {
-                    "parameters": "first"
-                },
                 "SwitchCase": 1
             }
         ],
