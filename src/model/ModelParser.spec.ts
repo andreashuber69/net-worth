@@ -172,42 +172,44 @@ type IExpectedAssetProperties<T extends Asset> =
 
 const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
     type: T["type"], description: string, location: string, weight: Weight,
-    weightUnit: WeightUnit, fineness: Fineness, notes: string, quantity: Quantity0) => ({
-        type,
-        description,
-        location,
-        weight,
-        weightUnit,
-        unit: `${weight} ${WeightUnit[weightUnit]}`,
-        fineness,
-        displayDecimals: 0 as 0,
-        notes,
-        quantity,
-        quantityHint: "",
-        isExpandable: false,
-        locationHint: "",
-        unitValueHint: "",
-        hasActions: true,
-    });
+    weightUnit: WeightUnit, fineness: Fineness, notes: string, quantity: Quantity0,
+) => ({
+    type,
+    description,
+    location,
+    weight,
+    weightUnit,
+    unit: `${weight} ${WeightUnit[weightUnit]}`,
+    fineness,
+    displayDecimals: 0 as 0,
+    notes,
+    quantity,
+    quantityHint: "",
+    isExpandable: false,
+    locationHint: "",
+    unitValueHint: "",
+    hasActions: true,
+});
 
 const getExpectedCryptoProperties = <T extends CryptoWallet, U extends number>(
     type: T["type"], description: string, location: string, unit: string, displayDecimals: U, address: string,
-    notes: string, quantity: QuantityAny) => ({
-        type,
-        description,
-        location,
-        unit,
-        fineness: undefined,
-        displayDecimals,
-        notes,
-        quantity,
-        quantityHint: "",
-        isExpandable: false,
-        locationHint: address,
-        address,
-        unitValueHint: "",
-        hasActions: true,
-    });
+    notes: string, quantity: QuantityAny,
+) => ({
+    type,
+    description,
+    location,
+    unit,
+    fineness: undefined,
+    displayDecimals,
+    notes,
+    quantity,
+    quantityHint: "",
+    isExpandable: false,
+    locationHint: address,
+    address,
+    unitValueHint: "",
+    hasActions: true,
+});
 
 describe("ModelParser.parse", () => {
     expectError("Empty.assets", "Unexpected end of JSON input");

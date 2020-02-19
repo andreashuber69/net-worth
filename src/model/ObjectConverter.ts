@@ -102,7 +102,7 @@ export class ObjectConverter {
         [ZecWallet.type]: new SimpleCryptoWalletInputInfo(
             { ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
         [MiscAsset.type]: new MiscAssetInputInfo(),
-     } as const;
+    } as const;
 
     public static convert<
         P extends IPreciousMetalObject,

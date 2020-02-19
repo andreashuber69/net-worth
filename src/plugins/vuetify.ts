@@ -19,7 +19,7 @@ Vue.use(Vuetify);
 
 // tslint:disable-next-line: no-default-export
 export default new Vuetify({
-  icons: {
-    iconfont: "md",
-  },
+    icons: {
+        iconfont: "md",
+    },
 });

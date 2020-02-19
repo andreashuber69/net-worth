@@ -34,7 +34,8 @@ export class SelectInputInfo extends SelectInputInfoBase {
 
     /** @internal */
     public constructor(params: ISelectInputInfoParameters =
-        { label: "", hint: "", isPresent: false, isRequired: false, items: [], enumSchemaNames: [] }) {
+        { label: "", hint: "", isPresent: false, isRequired: false, items: [], enumSchemaNames: [] }
+    ) {
         super(params);
         ({ items: this.items, enumSchemaNames: this.enumSchemaNames } = params);
     }
