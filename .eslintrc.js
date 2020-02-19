@@ -148,7 +148,6 @@ module.exports = {
         "import/no-default-export": "error",
         "import/no-deprecated": "error",
         "import/no-extraneous-dependencies": "error",
-        "import/no-internal-modules": "error",
         "import/no-unassigned-import": "error",
         "import/order": "error",
         "jsdoc/no-types": "error",
