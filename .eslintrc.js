@@ -146,7 +146,8 @@ module.exports = {
         "@typescript-eslint/type-annotation-spacing": "error",
         "@typescript-eslint/unbound-method": "error",
         "@typescript-eslint/unified-signatures": "error",
-        "camelcase": "error",
+        "camelcase": "off",
+        "@typescript-eslint/camelcase": ["error", { "properties": "always" }],
         "class-methods-use-this": "error",
         "comma-dangle": [
             "error",

@@ -11,7 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 export interface IAddressBalance {
+    // eslint-disable-next-line @typescript-eslint/camelcase
     readonly final_balance: number;
+    // eslint-disable-next-line @typescript-eslint/camelcase
     readonly n_tx: number;
     readonly [key: string]: unknown;
 }
