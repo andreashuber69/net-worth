@@ -76,7 +76,32 @@ module.exports = {
                 }
             }
         ],
-        "@typescript-eslint/member-ordering": "error",
+        "@typescript-eslint/member-ordering": [
+            "error",
+            {
+                "default": [
+                    'signature',
+                  
+                    'public-static-field',
+                    'public-static-method',
+                    'public-field',
+                    'public-constructor',
+                    'public-method',
+                  
+                    'protected-static-field',
+                    'protected-static-method',
+                    'protected-field',
+                    'protected-constructor',
+                    'protected-method',
+                  
+                    'private-static-field',
+                    'private-static-method',
+                    'private-field',
+                    'private-constructor',
+                    'private-method'
+                ]
+            }
+        ],
         "@typescript-eslint/no-empty-function": "error",
         "@typescript-eslint/no-empty-interface": "error",
         "@typescript-eslint/no-explicit-any": "off",
