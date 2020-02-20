@@ -90,13 +90,10 @@ class RequiredAddressAssetProperties extends AssetProperties {
     }
 }
 
-// tslint:disable-next-line: only-arrow-functions
-export function getPreciousMetalProperties(data: AssetEditorData): IPreciousMetalAssetProperties {
-    return new RequiredQuantityAssetProperties(data);
-}
+export const getPreciousMetalProperties = (data: AssetEditorData): IPreciousMetalAssetProperties =>
+    new RequiredQuantityAssetProperties(data);
 
-// tslint:disable-next-line: only-arrow-functions
-export function getSimpleCryptoWalletProperties(data: AssetEditorData): ISimpleCryptoWalletProperties {
+export const getSimpleCryptoWalletProperties = (data: AssetEditorData): ISimpleCryptoWalletProperties => {
     if (data.address) {
         return new RequiredAddressAssetProperties(data);
     } else if (data.quantity) {
@@ -104,25 +101,18 @@ export function getSimpleCryptoWalletProperties(data: AssetEditorData): ISimpleC
     } else {
         throw new Error("Invalid data!");
     }
-}
+};
 
-// tslint:disable-next-line: only-arrow-functions
-export function getAddressCryptoWalletProperties(data: AssetEditorData): IAddressCryptoWalletProperties {
-    return new RequiredAddressAssetProperties(data);
-}
+export const getAddressCryptoWalletProperties = (data: AssetEditorData): IAddressCryptoWalletProperties =>
+    new RequiredAddressAssetProperties(data);
 
-// tslint:disable-next-line: only-arrow-functions
-export function getQuantityCryptoWalletProperties(data: AssetEditorData): IQuantityCryptoWalletProperties {
-    return new RequiredQuantityAssetProperties(data);
-}
+export const getQuantityCryptoWalletProperties = (data: AssetEditorData): IQuantityCryptoWalletProperties =>
+    new RequiredQuantityAssetProperties(data);
 
-// tslint:disable-next-line: only-arrow-functions
-export function getMiscAssetProperties(data: AssetEditorData): IMiscAssetProperties {
-    return new RequiredQuantityAssetProperties(data);
-}
+export const getMiscAssetProperties = (data: AssetEditorData): IMiscAssetProperties =>
+    new RequiredQuantityAssetProperties(data);
 
-// tslint:disable-next-line: only-arrow-functions
-export function createAsset(parent: IParent, data: AssetEditorData) {
+export const createAsset = (parent: IParent, data: AssetEditorData) => {
     if (data.type === "") {
         throw new Error("Invalid asset type!");
     }
@@ -137,4 +127,4 @@ export function createAsset(parent: IParent, data: AssetEditorData) {
             (value, info) => ((p: IParent) => info.createAsset(p, getMiscAssetProperties(data))),
         ],
     )[1](parent);
-}
+};

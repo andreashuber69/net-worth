@@ -56,7 +56,7 @@ export class Browser {
         // tslint:disable-next-line:no-unsafe-any
         /constructor/i.test((window as any).HTMLElement) ||
         // tslint:disable-next-line:only-arrow-functions no-unsafe-any
-        (function(p) { return p.toString() === "[object SafariRemoteNotification]"; })(
+        ((p) => p.toString() === "[object SafariRemoteNotification]")(
             // tslint:disable-next-line:no-string-literal no-unsafe-any
             !((window as any)["safari"]) || (typeof safari !== "undefined" && safari.pushNotification));
 
