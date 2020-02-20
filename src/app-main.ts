@@ -17,9 +17,9 @@ import Vue from "vue";
 
 // tslint:disable-next-line:no-default-import ordered-imports
 import App from "./App.vue";
-// tslint:disable-next-line:no-import-side-effect
+// eslint-disable-next-line import/no-unassigned-import
 import "./assets/material-icons.css";
-// tslint:disable-next-line:no-import-side-effect
+// eslint-disable-next-line import/no-unassigned-import
 import "./assets/roboto-fontface.css";
 // tslint:disable-next-line: no-default-import
 import vuetify from "./plugins/vuetify";
