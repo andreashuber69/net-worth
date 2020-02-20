@@ -65,7 +65,7 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
     }
 
     /** @internal */
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     protected validateContent(strict: boolean, input: unknown): true | string {
         return true;
     }

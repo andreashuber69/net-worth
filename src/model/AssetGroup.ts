@@ -19,6 +19,7 @@ import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 export class AssetGroup extends Asset {
     public isExpanded = false;
 
+    // eslint-disable-next-line class-methods-use-this
     public get isExpandable() {
         return true;
     }
@@ -72,6 +73,7 @@ export class AssetGroup extends Asset {
         return this.assets.reduce<number | undefined>((s, a) => AssetGroup.add(s, a.totalValue), 0);
     }
 
+    // eslint-disable-next-line class-methods-use-this
     public get hasActions() {
         return false;
     }
@@ -80,7 +82,7 @@ export class AssetGroup extends Asset {
         super(parent);
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     public toJSON(): AssetUnion {
         throw new Error(`${AssetGroup.name} cannot be serialized.`);
     }

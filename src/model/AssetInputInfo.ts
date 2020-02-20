@@ -84,7 +84,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     }
 
     /** @internal */
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     protected validateRelations(input: CompositeInput, propertyName: AssetPropertyName): true | string {
         return true;
     }

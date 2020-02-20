@@ -28,6 +28,7 @@ export default class AboutDialog extends Vue {
         return Application.packageName + (this.userAgent.includes("Electron") ? "-desktop" : "");
     }
 
+    // eslint-disable-next-line class-methods-use-this
     public get userAgent() {
         return window.navigator.userAgent;
     }
@@ -38,6 +39,7 @@ export default class AboutDialog extends Vue {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // eslint-disable-next-line class-methods-use-this
     private get desktopVersion() {
         const userAgent = window.navigator.userAgent;
         const prefix = `${Application.packageName}/`;

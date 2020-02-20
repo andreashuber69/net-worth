@@ -18,17 +18,20 @@ import { Application } from "../model/Application";
 /** Implements the dialog informing the user about untested browsers. */
 // tslint:disable-next-line:no-default-export
 export default class BrowserDialog extends Vue {
+    // eslint-disable-next-line class-methods-use-this
     public get applicationTitle() {
         return Application.title;
     }
 
     public isOpen = !this.dontShowDialog;
 
+    // eslint-disable-next-line class-methods-use-this
     public get dontShowDialog() {
         return !BrowserDialog.isUntestedBrowser ||
             window.localStorage.getItem(BrowserDialog.dontShowBrowserDialogName) === true.toString();
     }
 
+    // eslint-disable-next-line class-methods-use-this
     public set dontShowDialog(value: boolean) {
         window.localStorage.setItem(BrowserDialog.dontShowBrowserDialogName, value.toString());
     }

@@ -37,6 +37,7 @@ export interface IOrdering {
 /** Provides information how assets are ordered (grouped and sorted) in the main model of the application. */
 export class Ordering implements IOrdering {
     /** Provides the labels for the properties by which the asset list can be grouped. */
+    // eslint-disable-next-line class-methods-use-this
     public get defaultGroupByLabels() {
         return Ordering.capitalizeGroupBys(allGroupBys[0]);
     }

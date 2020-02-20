@@ -82,7 +82,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         this.notes = params.notes || "";
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     protected queryQuantity(): Promise<number | undefined> {
         return Promise.resolve(undefined);
     }

@@ -44,13 +44,13 @@ export abstract class InputInfo {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     protected validatePrimitive(
         strict: boolean, input: unknown, propertyName?: AssetPropertyName): true | string {
         return "A primitive value was provided when a composite one was expected.";
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     protected validateComposite(
         strict: boolean, input: CompositeInput, propertyName?: AssetPropertyName): true | string {
         return "A composite value was provided when a primitive one was expected.";

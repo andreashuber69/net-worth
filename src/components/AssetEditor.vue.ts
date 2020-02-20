@@ -39,6 +39,7 @@ export default class AssetEditor extends Vue {
     }
 
     /** Provides the asset type input information. */
+    // eslint-disable-next-line class-methods-use-this
     public get typeInputInfo() {
         return new SelectInputInfo({
             label: "Type", hint: "", isPresent: true, isRequired: true, items: assetTypeNames,

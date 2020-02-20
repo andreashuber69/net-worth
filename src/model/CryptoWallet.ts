@@ -31,6 +31,7 @@ export abstract class CryptoWallet extends SingleAsset {
         return this.currencySymbol;
     }
 
+    // eslint-disable-next-line class-methods-use-this
     public get fineness() {
         return undefined;
     }

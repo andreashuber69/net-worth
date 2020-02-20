@@ -38,7 +38,7 @@ export class NoAssetInputInfo extends AssetInputInfo {
         super();
     }
 
-    // tslint:disable-next-line: prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     public createAsset(): Asset {
         throw new Error("Can't create asset.");
     }

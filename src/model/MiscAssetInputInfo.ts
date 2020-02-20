@@ -23,6 +23,7 @@ import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.
  * representation of the asset.
  */
 export class MiscAssetInputInfo extends AssetInputInfo {
+    // eslint-disable-next-line class-methods-use-this
     public get type(): typeof MiscAsset.type {
         return MiscAsset.type;
     }
@@ -52,7 +53,7 @@ export class MiscAssetInputInfo extends AssetInputInfo {
         label: "Quantity", hint: "The number of items.", isPresent: true, isRequired: true, schemaName: "Quantity0",
     });
 
-    // tslint:disable-next-line: prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     public createAsset(parent: IParent, props: IMiscAssetProperties) {
         return new MiscAsset(parent, props);
     }

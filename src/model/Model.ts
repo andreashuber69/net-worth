@@ -66,6 +66,7 @@ export class Model implements IParent {
     }
 
     /** Provides the available currencies to value the assets in. */
+    // eslint-disable-next-line class-methods-use-this
     public get currencies() {
         return currencyNames;
     }

@@ -57,7 +57,7 @@ export class Erc20TokenWallet extends CryptoWallet {
         this.unitValueUsd = unitValueUsd;
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     public toJSON(): never {
         throw new Error(`${Erc20TokenWallet.name} cannot be serialized.`);
     }

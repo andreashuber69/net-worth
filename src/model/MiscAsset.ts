@@ -39,6 +39,7 @@ export class MiscAsset extends SingleAsset {
         return MiscAsset.getUnit(this.value, this.valueCurrency);
     }
 
+    // eslint-disable-next-line class-methods-use-this
     public get fineness() {
         return undefined;
     }

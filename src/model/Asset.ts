@@ -38,6 +38,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
     /** Provides the parent model to which this asset belongs. */
     public readonly parent: IParent;
 
+    // eslint-disable-next-line class-methods-use-this
     public get isExpandable() {
         return false;
     }
@@ -52,6 +53,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
     public abstract get location(): string;
 
     /** Provides further information on the location. */
+    // eslint-disable-next-line class-methods-use-this
     public get locationHint() {
         return "";
     }
@@ -96,6 +98,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
     }
 
     /** Provides a value indicating whether the asset has any associated actions. */
+    // eslint-disable-next-line class-methods-use-this
     public get hasActions() {
         return true;
     }
@@ -116,13 +119,13 @@ export abstract class Asset implements ICalculatedAssetProperties {
     public abstract toJSON(): AssetUnion;
 
     /** @internal */
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     public bundle(bundle?: unknown): AssetBundle {
         throw new Error("Asset cannot be bundled.");
     }
 
     /** @internal */
-    // tslint:disable-next-line:no-empty prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     public expand() {
     }
 
@@ -134,7 +137,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
         this.parent = parent;
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     protected queryUnitValueUsd(): Promise<number | undefined> {
         return Promise.reject(new Error("Asset cannot query unit value."));
     }
