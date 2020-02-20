@@ -125,7 +125,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
     }
 
     /** @internal */
-    // eslint-disable-next-line class-methods-use-this
+    // eslint-disable-next-line @typescript-eslint/no-empty-function, class-methods-use-this
     public expand() {
     }
 

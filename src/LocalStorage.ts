@@ -113,7 +113,7 @@ export class LocalStorage {
         if (!model.assets.isEmpty) {
             const json = model.toJsonString();
 
-            // tslint:disable-next-line:no-empty
+            // eslint-disable-next-line no-empty
             while (!(key = LocalStorage.trySaveToLocalStorage(json))) {
             }
         }

@@ -40,7 +40,7 @@ export class TaskQueue {
     public async idle(): Promise<void> {
         try {
             await this.previous;
-        // tslint:disable-next-line: no-empty
+        // eslint-disable-next-line no-empty
         } catch {
         }
     }
