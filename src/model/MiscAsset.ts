@@ -77,6 +77,7 @@ export class MiscAsset extends SingleAsset {
         };
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public bundle(bundle?: unknown): GenericAssetBundle<MiscAsset> {
         return new MiscAsset.Bundle(this);
     }

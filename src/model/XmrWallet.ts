@@ -27,6 +27,7 @@ export class XmrWallet extends RealCryptoWallet {
         super(parent, RealCryptoWallet.getProperties(props, "XMR"));
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public bundle(bundle?: unknown): GenericAssetBundle<XmrWallet> {
         return new XmrWallet.Bundle(this);
     }

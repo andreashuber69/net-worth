@@ -84,7 +84,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
     }
 
     /** @internal */
-    // eslint-disable-next-line class-methods-use-this
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
     protected validateRelations(input: CompositeInput, propertyName: AssetPropertyName): true | string {
         return true;
     }

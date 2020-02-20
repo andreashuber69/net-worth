@@ -60,6 +60,7 @@ export abstract class PreciousMetalAsset extends SingleAsset {
         };
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public bundle(bundle?: unknown): GenericAssetBundle<PreciousMetalAsset> {
         return new PreciousMetalAsset.Bundle(this);
     }

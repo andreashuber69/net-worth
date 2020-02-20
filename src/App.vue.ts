@@ -34,7 +34,7 @@ export default class App extends Vue {
     public constructor() {
         super();
         this.model = App.initModel(LocalStorage.load());
-        window.addEventListener("beforeunload", (ev) => this.onBeforeUnload(ev));
+        window.addEventListener("beforeunload", () => LocalStorage.save(this.model));
     }
 
     public onNewClicked() {
@@ -106,8 +106,8 @@ export default class App extends Vue {
     private static read(blob: Blob) {
         return new Promise<string>((resolve, reject) => {
             const reader = new FileReader();
-            reader.onload = (ev) => resolve(reader.result as string);
-            reader.onerror = (ev) => reject("Unable to read file.");
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = () => reject("Unable to read file.");
             reader.readAsText(blob);
         });
     }
@@ -170,9 +170,5 @@ export default class App extends Vue {
             elem.click();
             document.body.removeChild(elem);
         }
-    }
-
-    private onBeforeUnload(ev: BeforeUnloadEvent) {
-        LocalStorage.save(this.model);
     }
 }

@@ -63,7 +63,7 @@ export default class AssetEditor extends Vue {
     /** Provides the data currently displayed in the asset editor. */
     public data = new AssetEditorData();
 
-    public onSaveClicked(event: MouseEvent) {
+    public onSaveClicked() {
         if (!this.parent) {
             throw new Error("No parent set!");
         }
@@ -73,7 +73,7 @@ export default class AssetEditor extends Vue {
         }
     }
 
-    public onCancelClicked(event: MouseEvent) {
+    public onCancelClicked() {
         this.close();
     }
 

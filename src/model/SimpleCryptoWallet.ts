@@ -19,6 +19,7 @@ import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/sc
 export abstract class SimpleCryptoWallet extends RealCryptoWallet {
     public abstract get type(): SimpleCryptoWalletTypeName;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public bundle(bundle?: unknown): GenericAssetBundle<SimpleCryptoWallet> {
         return new SimpleCryptoWallet.Bundle(this);
     }

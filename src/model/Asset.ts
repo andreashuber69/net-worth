@@ -119,7 +119,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
     public abstract toJSON(): AssetUnion;
 
     /** @internal */
-    // eslint-disable-next-line class-methods-use-this
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
     public bundle(bundle?: unknown): AssetBundle {
         throw new Error("Asset cannot be bundled.");
     }

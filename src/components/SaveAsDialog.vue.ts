@@ -30,13 +30,13 @@ export default class SaveAsDialog extends Vue {
         label: "Name", hint: "The name of the file.", isPresent: true, isRequired: true, schemaName: "Text",
     });
 
-    public onSaveClicked(event: MouseEvent) {
+    public onSaveClicked() {
         if (this.isValid()) {
             this.close(this.name);
         }
     }
 
-    public onCancelClicked(event: MouseEvent) {
+    public onCancelClicked() {
         this.close(undefined);
     }
 
