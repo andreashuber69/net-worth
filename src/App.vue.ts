@@ -26,7 +26,7 @@ import { QueryCache } from "./model/QueryCache";
 import { Parser } from "./Parser";
 
 @Component({ components: { AboutDialog, AssetList, BrowserDialog, SaveAsDialog } })
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class App extends Vue {
     public isDrawerVisible = false;
     public model: Model;

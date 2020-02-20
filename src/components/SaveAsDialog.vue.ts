@@ -19,7 +19,7 @@ import TextField from "./TextField.vue";
 
 @Component({ components: { TextField } })
 /** Implements the dialog used during Save As... */
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class SaveAsDialog extends Vue {
     public name = "";
 

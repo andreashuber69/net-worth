@@ -16,7 +16,7 @@ import { Application } from "../model/Application";
 
 @Component
 /** Implements the dialog informing the user about untested browsers. */
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class BrowserDialog extends Vue {
     // eslint-disable-next-line class-methods-use-this
     public get applicationTitle() {

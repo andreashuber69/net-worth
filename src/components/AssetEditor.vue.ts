@@ -30,7 +30,7 @@ import TextField from "./TextField.vue";
 
 @Component({ components: { Select, TextArea, TextField } })
 /** Implements the dialog used to edit assets. */
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class AssetEditor extends Vue {
     public isOpen = false;
 

@@ -43,7 +43,7 @@ type NumericColumnName = keyof Pick<Asset, typeof numericColumnNames[number]>;
 
 @Component({ components: { AssetEditor } })
 /** Implements the asset list UI. */
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class AssetList extends ComponentBase<Model> {
     public get headers() {
         const allColumnNames = ColumnInfo.getAllNames(this.checkedValue.assets.ordering.groupBys);

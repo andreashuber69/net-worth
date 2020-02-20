@@ -16,7 +16,7 @@ import { Application } from "../model/Application";
 
 @Component
 /** Implements the About dialog. */
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class AboutDialog extends Vue {
     public isOpen = false;
 

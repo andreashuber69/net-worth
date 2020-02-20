@@ -17,7 +17,7 @@ import Vuetify from "vuetify/lib";
 
 Vue.use(Vuetify);
 
-// tslint:disable-next-line: no-default-export
+// eslint-disable-next-line import/no-default-export
 export default new Vuetify({
     icons: {
         iconfont: "md",
