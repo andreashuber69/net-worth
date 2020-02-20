@@ -11,7 +11,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-export const arrayOfAll = <T>() => <U extends ReadonlyArray<T>>(
-    ...array: U & (ReadonlyArray<T> extends ReadonlyArray<U[number]> ? unknown : never)
+export const arrayOfAll = <T>() => <U extends readonly T[]>(
+    ...array: U & (readonly T[] extends ReadonlyArray<U[number]> ? unknown : never)
 ): Readonly<typeof array> =>
     array;
