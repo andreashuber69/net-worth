@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+/* eslint-disable max-classes-per-file */
 import { HDNode } from "bitcoinjs-lib";
 
 import { IParent } from "./Asset";
@@ -48,7 +49,6 @@ export class BtcWallet extends SimpleCryptoWallet {
 
     // tslint:disable-next-line:variable-name
     private static readonly BlockchainRequest =
-        // tslint:disable-next-line:max-classes-per-file
         class NestedBlockchainRequest implements IWebRequest<Readonly<IBalance>> {
         public constructor(addresses: readonly string[]) {
             this.addresses = addresses.join("|");
@@ -83,7 +83,6 @@ export class BtcWallet extends SimpleCryptoWallet {
         private readonly addresses: string;
     };
 
-    // tslint:disable-next-line:variable-name max-classes-per-file
     private static readonly QuantityRequest = class NestedQuantityRequest {
         public constructor(private readonly address: string) {
         }

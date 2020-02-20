@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+/* eslint-disable max-classes-per-file */
 import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { EnumSchemaName, SchemaName, Validator } from "./validation/Validator";
 
@@ -28,7 +29,6 @@ interface ISelectInputInfoParameters extends IPrimitiveInputInfoProperties {
 }
 
 /** Provides input information for a property where a valid value needs to be equal to one of a given list of values. */
-// tslint:disable-next-line:max-classes-per-file
 export class SelectInputInfo extends SelectInputInfoBase {
     public readonly items: readonly string[];
 

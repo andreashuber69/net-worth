@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+/* eslint-disable max-classes-per-file */
 import { IParent } from "./Asset";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
@@ -90,7 +91,6 @@ export class MiscAsset extends SingleAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // tslint:disable-next-line: max-classes-per-file variable-name
     private static readonly Bundle = class NestedBundle extends GenericAssetBundle<MiscAsset> {
         public toJSON() {
             return {

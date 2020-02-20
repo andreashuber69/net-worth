@@ -11,6 +11,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+/* eslint-disable max-classes-per-file */
 import { IParent } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { QuandlRequest } from "./QuandlRequest";
@@ -85,7 +86,6 @@ export abstract class PreciousMetalAsset extends SingleAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // tslint:disable-next-line: max-classes-per-file variable-name
     private static readonly Bundle = class NestedBundle extends GenericAssetBundle<PreciousMetalAsset> {
         public toJSON() {
             return {
