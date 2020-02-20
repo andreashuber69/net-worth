@@ -76,7 +76,7 @@ export class Validator {
     }
 
     private static isSchemaName(name: string): name is SchemaName {
-        return Validator.isPrimitiveSchemaName(name) || schema.definitions.hasOwnProperty(name);
+        return Validator.isPrimitiveSchemaName(name) || Object.prototype.hasOwnProperty.call(schema.definitions, name);
     }
 
     private static isPrimitiveSchemaName(name: string): name is PrimitiveSchemaName {
