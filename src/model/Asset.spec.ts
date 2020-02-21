@@ -577,7 +577,6 @@ describe("two assets", () => {
         AssetGroup,
         assets,
         "totalValue",
-        // tslint:disable-next-line: no-non-null-assertion
-        () => assets.map((a) => a.totalValue).filter((v) => !!v).reduce((p, c) => p! + c!, 0));
+        () => assets.map((a) => a.totalValue ?? 0).reduce((p, c) => p + c, 0));
     expectProperty(AssetGroup, assets, "hasActions", (matcher) => matcher.toBe(false));
 });
