@@ -61,8 +61,7 @@ export class Browser {
             !((window as any)["safari"]) || (typeof safari !== "undefined" && safari.pushNotification));
 
     // Internet Explorer 6-11
-    // tslint:disable-next-line:binary-expression-operand-order
-    public static readonly isIE = /*@cc_on!@*/false || !!(document as any).documentMode;
+    public static readonly isIE = !!(document as any).documentMode || false;
 
     // Edge 20+
     public static readonly isEdge = !Browser.isIE && !!(window as any).StyleMedia;
