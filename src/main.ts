@@ -19,7 +19,7 @@ if (Browser.isCompatible) {
         new URLSearchParams(window.location.search).forEach((value, key) => window.sessionStorage.setItem(key, value));
         window.location.replace(new URL(window.location.pathname, window.location.origin).href);
     } else {
-        // eslint-disable-next-line import/no-unassigned-import
+        // eslint-disable-next-line @typescript-eslint/no-require-imports, import/no-unassigned-import
         require("./app-main");
     }
 } else {
