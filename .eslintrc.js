@@ -1,19 +1,19 @@
 module.exports = {
-    "env": {
-        "browser": true
+    env: {
+        browser: true
     },
-    "extends": [
+    extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 8,
-        "project": "tsconfig.json",
-        "sourceType": "module"
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        ecmaVersion: 8,
+        project: "tsconfig.json",
+        sourceType: "module"
     },
-    "plugins": [
+    plugins: [
         "@typescript-eslint",
         "@typescript-eslint/tslint",
         "import",
@@ -21,12 +21,12 @@ module.exports = {
         "no-null",
         "prefer-arrow",
     ],
-    "rules": {
+    rules: {
         "@typescript-eslint/adjacent-overload-signatures": "error",
         "@typescript-eslint/array-type": [
             "error",
             {
-                "default": "array-simple",
+                default: "array-simple",
             }
         ],
         "@typescript-eslint/await-thenable": "error",
@@ -39,11 +39,11 @@ module.exports = {
         "@typescript-eslint/explicit-member-accessibility": [
             "error",
             {
-                "accessibility": "explicit",
-                "overrides": {
-                    "accessors": "explicit",
-                    "constructors": "explicit",
-                    "parameterProperties": "explicit"
+                accessibility: "explicit",
+                overrides: {
+                    accessors: "explicit",
+                    constructors: "explicit",
+                    parameterProperties: "explicit"
                 }
             }
         ],
@@ -51,30 +51,32 @@ module.exports = {
             "error",
             4,
             {
-                "SwitchCase": 1
+                SwitchCase: 1
             }
         ],
         "@typescript-eslint/interface-name-prefix": [
             "error",
-            { "prefixWithI": "always" }
+            {
+                prefixWithI: "always"
+            }
         ],
         "@typescript-eslint/member-delimiter-style": [
             "error",
             {
-                "multiline": {
-                    "delimiter": "semi",
-                    "requireLast": true
+                multiline: {
+                    delimiter: "semi",
+                    requireLast: true
                 },
-                "singleline": {
-                    "delimiter": "semi",
-                    "requireLast": false
+                singleline: {
+                    delimiter: "semi",
+                    requireLast: false
                 }
             }
         ],
         "@typescript-eslint/member-ordering": [
             "error",
             {
-                "default": [
+                default: [
                     'signature',
                   
                     'public-static-field',
@@ -125,7 +127,7 @@ module.exports = {
             "error",
             "double",
             {
-                "avoidEscape": true
+                avoidEscape: true
             }
         ],
         "@typescript-eslint/require-await": "error",
@@ -137,8 +139,8 @@ module.exports = {
         "@typescript-eslint/space-before-function-paren": [
             "error",
             {
-                "named": "never",
-                "asyncArrow": "always"
+                named: "never",
+                asyncArrow: "always"
             }
         ],
         "@typescript-eslint/strict-boolean-expressions": "off",
@@ -147,7 +149,12 @@ module.exports = {
         "@typescript-eslint/unbound-method": "error",
         "@typescript-eslint/unified-signatures": "error",
         "camelcase": "off",
-        "@typescript-eslint/camelcase": ["error", { "properties": "always" }],
+        "@typescript-eslint/camelcase": [
+            "error",
+            {
+                properties: "always"
+            }
+        ],
         "class-methods-use-this": "error",
         "comma-dangle": [
             "error",
@@ -183,7 +190,7 @@ module.exports = {
         "max-len": [
             "error",
             {
-                "code": 120
+                code: 120
             }
         ],
         "max-lines": [
@@ -211,7 +218,7 @@ module.exports = {
         "no-plusplus": [
             "off",
             {
-                "allowForLoopAfterthoughts": true
+                allowForLoopAfterthoughts: true
             }
         ],
         "no-redeclare": "error",
@@ -224,7 +231,7 @@ module.exports = {
         "no-shadow": [
             "error",
             {
-                "hoist": "all"
+                hoist: "all"
             }
         ],
         "no-sparse-arrays": "error",
@@ -248,9 +255,9 @@ module.exports = {
         "padding-line-between-statements": [
             "error",
             {
-                "blankLine": "always",
-                "prev": "*",
-                "next": "return"
+                blankLine: "always",
+                prev: "*",
+                next: "return"
             }
         ],
         "prefer-arrow/prefer-arrow-functions": "error",
@@ -265,9 +272,9 @@ module.exports = {
         "space-before-function-paren": [
             "error",
             {
-                "anonymous": "never",
-                "asyncArrow": "always",
-                "named": "never"
+                anonymous: "never",
+                asyncArrow: "always",
+                named: "never"
             }
         ],
         "space-in-parens": [
@@ -278,7 +285,7 @@ module.exports = {
             "error",
             "always",
             {
-                "exceptions": ["/"]
+                exceptions: ["/"]
             }
         ],
         "use-isnan": "error",
@@ -286,7 +293,7 @@ module.exports = {
         "@typescript-eslint/tslint/config": [
             "error",
             {
-                "rules": {
+                rules: {
                     "comment-type": [
                         true,
                         "singleline",
