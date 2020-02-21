@@ -57,7 +57,9 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
             return true;
         }
 
-        if ((input === undefined) || (input === null) || ((typeof input === "string") && (input.length === 0))) {
+        const definedInput = input ?? "";
+
+        if ((typeof definedInput === "string") && (definedInput.length === 0)) {
             return this.isRequired ? "A value is required." : true;
         }
 

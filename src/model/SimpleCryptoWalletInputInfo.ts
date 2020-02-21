@@ -61,6 +61,6 @@ export class SimpleCryptoWalletInputInfo extends
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static isUndefined(value: unknown) {
-        return (value === undefined) || (value === null) || (value === "");
+        return (value ?? "") === "";
     }
 }
