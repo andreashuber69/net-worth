@@ -33,9 +33,7 @@ export class SelectInputInfo extends SelectInputInfoBase {
     public readonly items: readonly string[];
 
     /** @internal */
-    public constructor(params: ISelectInputInfoParameters =
-        { label: "", hint: "", isPresent: false, isRequired: false, items: [], enumSchemaNames: [] }
-    ) {
+    public constructor(params = SelectInputInfo.getDefaults()) {
         super(params);
         ({ items: this.items, enumSchemaNames: this.enumSchemaNames } = params);
     }
@@ -56,6 +54,10 @@ export class SelectInputInfo extends SelectInputInfoBase {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static getDefaults(): ISelectInputInfoParameters {
+        return { label: "", hint: "", isPresent: false, isRequired: false, items: [], enumSchemaNames: [] };
+    }
 
     private readonly enumSchemaNames: readonly EnumSchemaName[];
 }
