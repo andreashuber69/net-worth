@@ -10,9 +10,16 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-declare let opr: any;
-declare let InstallTrigger: any;
-declare let safari: any;
+declare const opr: { addons: unknown } | undefined;
+declare const InstallTrigger: any;
+declare const safari: { pushNotification: object } | undefined;
+
+declare global {
+    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
+    interface Window {
+        HTMLElement?: string;
+    }
+}
 
 export class Browser {
     public static get isCompatible() {
@@ -44,21 +51,16 @@ export class Browser {
     // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 
     // Opera 8.0+
-    public static readonly isOpera =
-        // tslint:disable-next-line:no-unsafe-any
-        (!!(window as any).opr && !!opr.addons) || !!(window as any).opera || navigator.userAgent.indexOf(" OPR/") >= 0;
+    public static readonly isOpera = (!!(window as any).opr && !!opr?.addons) ||
+        !!(window as any).opera || navigator.userAgent.indexOf(" OPR/") >= 0;
 
     // Firefox 1.0+
     public static readonly isFirefox = typeof InstallTrigger !== "undefined";
 
     // Safari 3.0+ "[object HTMLElementConstructor]"
-    public static readonly isSafari =
-        // tslint:disable-next-line:no-unsafe-any
-        /constructor/i.test((window as any).HTMLElement) ||
-        // tslint:disable-next-line:only-arrow-functions no-unsafe-any
+    public static readonly isSafari = /constructor/i.test(window.HTMLElement) ||
         ((p) => p.toString() === "[object SafariRemoteNotification]")(
-            // tslint:disable-next-line:no-string-literal no-unsafe-any
-            !((window as any)["safari"]) || (typeof safari !== "undefined" && safari.pushNotification));
+            !((window as any).safari) || (typeof safari !== "undefined" && safari.pushNotification));
 
     // Internet Explorer 6-11
     public static readonly isIE = !!(document as any).documentMode || false;
