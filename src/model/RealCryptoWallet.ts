@@ -68,7 +68,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         const quantity = ("quantity" in props) && props.quantity || undefined;
 
         return {
-            ...RealCryptoWallet._getProperties([description, location, address, quantity, notes]),
+            ...RealCryptoWallet.getPropertiesImpl([description, location, address, quantity, notes]),
             currencySymbol,
         };
     }
@@ -93,7 +93,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
 
     /** @internal */
     protected getProperties(): ISimpleCryptoWalletProperties {
-        return RealCryptoWallet._getProperties([
+        return RealCryptoWallet.getPropertiesImpl([
             this.description,
             this.location || undefined,
             this.address || undefined,
@@ -104,7 +104,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static _getProperties(
+    private static getPropertiesImpl(
         [description, location, address, quantity, notes]: SimpleCryptoWalletProperties,
     ): ISimpleCryptoWalletProperties {
         if (address) {
