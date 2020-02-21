@@ -10,9 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-declare var opr: any;
-declare var InstallTrigger: any;
-declare var safari: any;
+declare let opr: any;
+declare let InstallTrigger: any;
+declare let safari: any;
 
 export class Browser {
     public static get isCompatible() {
