@@ -72,7 +72,8 @@ export class Validator {
 
     private static getSchemaKeyRef(schemaName: SchemaName) {
         return Validator.isPrimitiveSchemaName(schemaName) ?
-            schemaName : `${Validator.customSchemaKey}#/definitions/${schemaName}`;
+            schemaName :
+            `${Validator.customSchemaKey}#/definitions/${schemaName}`;
     }
 
     private static isSchemaName(name: string): name is SchemaName {

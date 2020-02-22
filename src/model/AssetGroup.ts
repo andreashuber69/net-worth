@@ -46,7 +46,8 @@ export class AssetGroup extends Asset {
 
     public get quantity() {
         return (this.type && this.unit) ?
-            this.assets.reduce<number | undefined>((s, a) => AssetGroup.add(s, a.quantity), 0) : undefined;
+            this.assets.reduce<number | undefined>((s, a) => AssetGroup.add(s, a.quantity), 0) :
+            undefined;
     }
 
     public get quantityHint() {

@@ -94,7 +94,8 @@ export abstract class Asset implements ICalculatedAssetProperties {
     /** @internal */
     public get percent() {
         return (this.totalValue === undefined) || (this.parent.assets.grandTotalValue === undefined) ?
-            undefined : this.totalValue / this.parent.assets.grandTotalValue * 100;
+            undefined :
+            this.totalValue / this.parent.assets.grandTotalValue * 100;
     }
 
     /** Provides a value indicating whether the asset has any associated actions. */

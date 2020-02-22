@@ -80,7 +80,8 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
         const singleResult = this[propertyName].validate(strict, input[propertyName], undefined);
 
         return (singleResult === true) && this.includeRelations ?
-            this.validateRelations(input, propertyName) : singleResult;
+            this.validateRelations(input, propertyName) :
+            singleResult;
     }
 
     /** @internal */

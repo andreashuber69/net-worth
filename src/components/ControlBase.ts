@@ -46,7 +46,8 @@ export abstract class ControlBase<T extends PrimitiveInputInfo> extends Componen
 
     public get propertyValue() {
         return InputUtility.isComposite(this.checkedValue) ?
-            this.checkedValue[this.checkedProperty] : this.checkedValue;
+            this.checkedValue[this.checkedProperty] :
+            this.checkedValue;
     }
 
     public set propertyValue(value: string) {
