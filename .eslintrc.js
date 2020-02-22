@@ -3,9 +3,8 @@ module.exports = {
         browser: true
     },
     extends: [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"
+        "eslint:all",
+        "plugin:@typescript-eslint/all"
     ],
     parser: "@typescript-eslint/parser",
     parserOptions: {
@@ -21,8 +20,29 @@ module.exports = {
         "no-null",
         "prefer-arrow",
     ],
+    root: true,
     rules: {
-        "@typescript-eslint/adjacent-overload-signatures": "error",
+        "capitalized-comments": [
+            "error",
+            "always",
+            {
+                "ignoreConsecutiveComments": true,
+                "ignoreInlineComments": true,
+                "ignorePattern": "tslint"
+            }
+        ],
+        "multiline-comment-style": [
+            "error",
+            "separate-lines"
+        ],
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "padded-blocks": [
+            "error",
+            "never"
+        ],
         "@typescript-eslint/array-type": [
             "error",
             {
@@ -30,10 +50,82 @@ module.exports = {
             }
         ],
         "@typescript-eslint/await-thenable": "error",
-        "@typescript-eslint/ban-ts-ignore": "error",
-        "@typescript-eslint/ban-types": "error",
-        "@typescript-eslint/class-name-casing": "error",
-        "@typescript-eslint/consistent-type-assertions": "error",
+        "@typescript-eslint/consistent-type-assertions": [
+            "error",
+            {
+                assertionStyle: "as",
+                objectLiteralTypeAssertions: "never",
+            }        
+        ],
+        "@typescript-eslint/no-type-alias": "off",
+        "no-inline-comments": "off",
+        "no-magic-numbers": "off",
+        "@typescript-eslint/no-magic-numbers": "off",
+        "function-call-argument-newline": [
+            "error",
+            "consistent"
+        ],
+        "lines-between-class-members": [
+            "error",
+            "always",
+            {
+                exceptAfterSingleLine: true
+            }
+        ],
+        "lines-around-comment": "off",
+        "line-comment-position": "off",
+        // Does not work with interfaces, see https://github.com/typescript-eslint/typescript-eslint/issues/1150
+        // "lines-around-comment": [
+        //     "error",
+        //     {
+        //         allowBlockStart: true,
+        //         allowObjectStart: true,
+        //         allowArrayStart: true,
+        //         allowClassStart: true
+        //     }
+        // ],
+        "array-bracket-newline": [
+            "error",
+            "consistent"
+        ],
+        "array-element-newline": [
+            "error",
+            "consistent"
+        ],
+        "sort-imports": [
+            "error",
+            {
+                "ignoreCase": true,
+                "ignoreDeclarationSort": true,
+            }
+        ],
+        "no-undef": "off",
+        "sort-keys": "off",
+        "no-undefined": "off",
+        "no-ternary": "off",
+        "new-cap": "off",
+        "@typescript-eslint/typedef": "off",
+        "multiline-ternary": [
+            "error",
+            "always-multiline"
+        ],
+        "operator-linebreak": [
+            "error",
+            "after"
+        ],
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "no-extra-parens": "off",
+        "@typescript-eslint/no-extra-parens": "off",
+        "function-paren-newline": [
+            "error",
+            "multiline-arguments"
+        ],
+        "object-property-newline": [
+            "error",
+            {
+                allowAllPropertiesOnSameLine: true
+            }
+        ],
         "@typescript-eslint/consistent-type-definitions": "error",
         "@typescript-eslint/explicit-function-return-type": 0,
         "@typescript-eslint/explicit-member-accessibility": [
