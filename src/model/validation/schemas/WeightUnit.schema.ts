@@ -14,11 +14,11 @@ import { arrayOfAll } from "../../arrayOfAll";
 
 /** Provides the conversion factors between the unit gram and other weight units. */
 export enum WeightUnit {
-    "g" = 1,
-    "kg" = 1000,
-    "gr" = 0.06479891, // https://en.wikipedia.org/wiki/Grain_(unit)
+    g = 1,
+    kg = 1000,
+    gr = 0.06479891, // https://en.wikipedia.org/wiki/Grain_(unit)
     "t oz" = gr * 480, // https://en.wikipedia.org/wiki/Ounce
-    "oz" = gr * 437.5, // https://en.wikipedia.org/wiki/Ounce
+    oz = gr * 437.5, // https://en.wikipedia.org/wiki/Ounce
 }
 
 export type WeightUnitName = keyof typeof WeightUnit;
