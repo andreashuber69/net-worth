@@ -107,7 +107,7 @@ export default class App extends Vue {
         return new Promise<string>((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = () => resolve(reader.result as string);
-            reader.onerror = () => reject("Unable to read file.");
+            reader.onerror = () => reject(new Error("Unable to read file."));
             reader.readAsText(blob);
         });
     }

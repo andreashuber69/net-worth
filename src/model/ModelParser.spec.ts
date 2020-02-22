@@ -35,7 +35,7 @@ class BlobUtility {
         return new Promise<ArrayBuffer>((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = () => resolve(reader.result as ArrayBuffer);
-            reader.onerror = () => reject("Unable to read blob.");
+            reader.onerror = () => reject(new Error("Unable to read blob."));
             reader.readAsArrayBuffer(blob);
         });
     }
