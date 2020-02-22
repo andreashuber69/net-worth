@@ -10,7 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-/** Defines valid values for asset quantities with zero decimals.
+/**
+ * Defines valid values for asset quantities with zero decimals.
  * @minimum 0
  * @multipleOf 1
  */
