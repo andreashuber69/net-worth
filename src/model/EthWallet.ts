@@ -33,7 +33,8 @@ export class EthWallet extends SimpleCryptoWallet {
     protected async queryQuantity() {
         const response = await QueryCache.fetch(
             `https://api.ethplorer.io/getAddressInfo/${this.address}?apiKey=dvoio1769GSrYx63`,
-            EthplorerGetAddressInfoResponse);
+            EthplorerGetAddressInfoResponse,
+        );
 
         return response.ETH.balance;
     }

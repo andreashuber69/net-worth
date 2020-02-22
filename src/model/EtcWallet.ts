@@ -34,7 +34,8 @@ export class EtcWallet extends SimpleCryptoWallet {
     protected async queryQuantity() {
         const response = await QueryCache.fetch(
             `https://blockscout.com/etc/mainnet/api?module=account&action=balance&address=${this.address}`,
-            BlockscoutBalanceResponse);
+            BlockscoutBalanceResponse,
+        );
         const result = Number.parseInt(response.result, 10);
 
         if ((response.status === "1") && Number.isFinite(result)) {

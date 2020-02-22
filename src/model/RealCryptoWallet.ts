@@ -61,7 +61,8 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     // This is a hack to work around the fact that the spread operator does not call property getters:
     // https://github.com/Microsoft/TypeScript/issues/26547
     protected static getProperties(
-        props: ISimpleCryptoWalletProperties, currencySymbol: string,
+        props: ISimpleCryptoWalletProperties,
+        currencySymbol: string,
     ): IRealCryptoWalletParameters {
         const { description, location, notes } = props;
         const address = ("address" in props) && props.address || undefined;

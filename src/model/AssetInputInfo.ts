@@ -63,7 +63,8 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
 
         if (!(result instanceof ctor)) {
             throw new Error(
-                `The requested type ${ctor.name} does not match the actual type of the property ${propertyName}.`);
+                `The requested type ${ctor.name} does not match the actual type of the property ${propertyName}.`,
+            );
         }
 
         return result;

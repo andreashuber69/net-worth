@@ -47,14 +47,24 @@ export abstract class InputInfo {
     // eslint-disable-next-line class-methods-use-this
     protected validatePrimitive(
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        strict: boolean, input: unknown, propertyName?: AssetPropertyName): true | string {
+        strict: boolean,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        input: unknown,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        propertyName?: AssetPropertyName,
+    ): true | string {
         return "A primitive value was provided when a composite one was expected.";
     }
 
     // eslint-disable-next-line class-methods-use-this
     protected validateComposite(
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        strict: boolean, input: CompositeInput, propertyName?: AssetPropertyName): true | string {
+        strict: boolean,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        input: CompositeInput,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        propertyName?: AssetPropertyName,
+    ): true | string {
         return "A composite value was provided when a primitive one was expected.";
     }
 }

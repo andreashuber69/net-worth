@@ -107,7 +107,8 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static isType<T extends AssetUnion>(
-        types: ReadonlyArray<T["type"]>, rawAsset?: AssetUnion,
+        types: ReadonlyArray<T["type"]>,
+        rawAsset?: AssetUnion,
     ): rawAsset is T {
         return (rawAsset && ObjectConverter.is<T>(rawAsset, types)) || false;
     }

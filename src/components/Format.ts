@@ -26,6 +26,8 @@ export class Format {
 
     private static format(num: number, maximumFractionDigits: number, minimumFractionDigits?: number) {
         return num.toLocaleString(
-            undefined, { maximumFractionDigits, minimumFractionDigits, useGrouping: true });
+            undefined,
+            { maximumFractionDigits, minimumFractionDigits, useGrouping: true },
+        );
     }
 }

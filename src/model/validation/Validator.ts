@@ -65,7 +65,8 @@ export class Validator {
         const result = new Ajv({ multipleOfPrecision: 9 });
         result.addSchema(schema, Validator.customSchemaKey);
         primitiveSchemaNames.forEach(
-            (name) => result.addSchema(Validator.getPrimitiveSchema(name), Validator.getSchemaKeyRef(name)));
+            (name) => result.addSchema(Validator.getPrimitiveSchema(name), Validator.getSchemaKeyRef(name)),
+        );
 
         return result;
     }

@@ -55,7 +55,9 @@ export class AssetCollection {
     /** Provides the sum of all asset total values. */
     public get grandTotalValue() {
         return this.groups.reduce<number | undefined>(
-            (s, a) => s === undefined ? undefined : (a.totalValue === undefined ? undefined : s + a.totalValue), 0);
+            (s, a) => s === undefined ? undefined : (a.totalValue === undefined ? undefined : s + a.totalValue),
+            0,
+        );
     }
 
     public constructor(params: IAssetCollectionParameters) {
@@ -144,7 +146,8 @@ export class AssetCollection {
     private async updateImpl(newBundles: readonly AssetBundle[]) {
         this.updateGroups();
         const promises = new Map<number, Promise<number>>(
-            newBundles.map<[number, Promise<number>]>((b, i) => [i, AssetCollection.queryBundleData(b, i)]));
+            newBundles.map<[number, Promise<number>]>((b, i) => [i, AssetCollection.queryBundleData(b, i)]),
+        );
 
         while (promises.size > 0) {
             await this.waitForResponses(promises);

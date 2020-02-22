@@ -65,20 +65,35 @@ describe(Validator.name, () => {
     shouldFailJsonValidation("null", DeletedAssets, new SyntaxError("data should be object"));
     shouldFailJsonValidation("[]", DeletedAssets, new ValidationError("data should be object"));
     shouldFailJsonValidation(
-        "{\"deletedAssets\":true}", DeletedAssets, new ValidationError("data.deletedAssets should be array"));
+        "{\"deletedAssets\":true}",
+        DeletedAssets,
+        new ValidationError("data.deletedAssets should be array"),
+    );
     shouldPassJsonValidation(
-        "{\"deletedAssets\":[]}", DeletedAssets, Object.assign(new DeletedAssets(), { deletedAssets: [] }));
+        "{\"deletedAssets\":[]}",
+        DeletedAssets,
+        Object.assign(new DeletedAssets(), { deletedAssets: [] }),
+    );
     shouldFailJsonValidation(
-        "{\"deletedAssets\":[0]}", DeletedAssets, new ValidationError("data.deletedAssets[0] should be string"));
+        "{\"deletedAssets\":[0]}",
+        DeletedAssets,
+        new ValidationError("data.deletedAssets[0] should be string"),
+    );
     shouldPassJsonValidation(
-        "{\"deletedAssets\":[\"\"]}", DeletedAssets, Object.assign(new DeletedAssets(), { deletedAssets: [""] }));
+        "{\"deletedAssets\":[\"\"]}",
+        DeletedAssets,
+        Object.assign(new DeletedAssets(), { deletedAssets: [""] }),
+    );
 
     shouldFailValidation(3, Boolean, new ValidationError("data should be boolean"));
     // eslint-disable-next-line no-new-wrappers
     shouldPassValidation(false, Boolean, new Boolean(false));
     shouldFailValidation("{}", DeletedAssets, new ValidationError("data should be object"));
     shouldPassValidation(
-        { deletedAssets: [] }, DeletedAssets, Object.assign(new DeletedAssets(), { deletedAssets: [] }));
+        { deletedAssets: [] },
+        DeletedAssets,
+        Object.assign(new DeletedAssets(), { deletedAssets: [] }),
+    );
 
     shouldFailJsonValidation("", Boolean, new SyntaxError("Unexpected end of JSON input"));
     shouldFailJsonValidation("42", Boolean, new ValidationError("data should be boolean"));

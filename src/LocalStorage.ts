@@ -60,7 +60,8 @@ export class LocalStorage {
         const url = new URL(window.location.pathname, window.location.origin);
         url.searchParams.append(
             LocalStorage.sessionLocalStorageKey,
-            model ? LocalStorage.saveImpl(model) : LocalStorage.emptyModelLocalStorageKey);
+            model ? LocalStorage.saveImpl(model) : LocalStorage.emptyModelLocalStorageKey,
+        );
         url.searchParams.append(LocalStorage.sessionForceLoadFromLocalStorageKey, (!!model).toString());
         window.open(url.href);
     }

@@ -220,84 +220,103 @@ describe("ModelParser.parse", () => {
     expectError(
         "MissingPrimaryAsset.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0] should have required property 'primaryAsset', data.bundles[0] should have required property 'primaryAsset', data.bundles[0] should have required property 'primaryAsset', data.bundles[0] should have required property 'primaryAsset', data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0] should have required property 'primaryAsset', data.bundles[0] should have required property 'primaryAsset', data.bundles[0] should have required property 'primaryAsset', data.bundles[0] should have required property 'primaryAsset', data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "MissingAssetType.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'address', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'address', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "InvalidAssetType.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'address', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should have required property 'address', data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "MissingRequiredProperties0.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should have required property 'type', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should have required property 'type', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "MissingRequiredProperties1.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should have required property 'description', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "MissingRequiredProperties2.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should have required property 'weight', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should have required property 'weight', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "MissingRequiredProperties3.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should have required property 'weightUnit', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should have required property 'weightUnit', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "MissingRequiredProperties4.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should have required property 'fineness', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should have required property 'fineness', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "MissingRequiredProperties5.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should have required property 'quantity', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should have required property 'quantity', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "MissingRequiredProperties6.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset.type should be equal to one of the allowed values, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "MissingRequiredProperties7.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'valueCurrency', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'valueCurrency', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "MissingRequiredProperties8.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'value', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should have required property 'value', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "InvalidValueProperties1.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset.location should be string, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset.location should be string, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "InvalidValueProperties2.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset.weight should be >= 0.001, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset.weight should be >= 0.001, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "InvalidValueProperties3.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset.weightUnit should be equal to one of the allowed values, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset.weightUnit should be equal to one of the allowed values, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "InvalidValueProperties4.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset.fineness should be <= 0.999999, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset.fineness should be <= 0.999999, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "InvalidValueProperties5.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset.quantity should be multiple of 1, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset.quantity should be multiple of 1, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "InvalidValueProperties7.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.value should be number, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.value should be number, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "InvalidValueProperties8.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.valueCurrency should be string, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset.valueCurrency should be string, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectError(
         "InvalidBtcWallet.assets",
         // eslint-disable-next-line max-len
-        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf");
-
+        "data.bundles[0] should have required property 'deletedAssets', data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should NOT have additional properties, data.bundles[0].primaryAsset should match some schema in anyOf, data.bundles[0] should match some schema in anyOf",
+    );
     expectEmptyModel("Minimal.assets");
     expectEmptyModel("EmptyName.assets");
     expectError("InvalidCurrency.assets", "data.currency should be equal to one of the allowed values");
@@ -316,7 +335,15 @@ describe("ModelParser.parse", () => {
                 if (asset instanceof SilverAsset) {
                     const expected: IExpectedAssetProperties<SilverAsset> =
                         getExpectedPreciousMetalProperties<SilverAsset>(
-                            "Silver", "Coins", "Home", 1, WeightUnit["t oz"], 0.999, "Whatever", 100);
+                            "Silver",
+                            "Coins",
+                            "Home",
+                            1,
+                            WeightUnit["t oz"],
+                            0.999,
+                            "Whatever",
+                            100,
+                        );
                     expectToEqual(asset, expected);
 
                     expect(asset.key).toBeGreaterThan(0);
@@ -354,8 +381,15 @@ describe("ModelParser.parse", () => {
 
                         const expected: IExpectedAssetProperties<Erc20TokensWallet> =
                             getExpectedCryptoProperties<Erc20TokensWallet, 6>(
-                                "ERC20 Tokens", "Spending", "", asset.unit,
-                                6, "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454", "", asset.quantity || -1);
+                                "ERC20 Tokens",
+                                "Spending",
+                                "",
+                                asset.unit,
+                                6,
+                                "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454",
+                                "",
+                                asset.quantity || -1
+                            );
                         expectToEqual(asset, expected);
 
                         expect(asset.key).toBeGreaterThan(0);

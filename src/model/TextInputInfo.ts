@@ -90,6 +90,7 @@ export class TextInputInfo extends PrimitiveInputInfo {
 
         return Validator.validate(
             !strict && this.isNumber && (typeof input === "string") ? Number.parseFloat(input) : input,
-            this.schemaName);
+            this.schemaName,
+        );
     }
 }

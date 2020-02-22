@@ -54,7 +54,9 @@ export class BtcWallet extends SimpleCryptoWallet {
 
         public async execute() {
             return NestedBCRequest.getFinalBalance(await QueryCache.fetch(
-                `https://blockchain.info/balance?active=${this.addresses}&cors=true`, BlockchainBalanceResponse));
+                `https://blockchain.info/balance?active=${this.addresses}&cors=true`,
+                BlockchainBalanceResponse,
+            ));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -48,10 +48,12 @@ export default class AssetList extends ComponentBase<Model> {
     public get headers() {
         const allColumnNames = ColumnInfo.getAllNames(this.checkedValue.assets.ordering.groupBys);
         const visibleColumnNames: readonly ColumnName[] = allColumnNames.filter(
-            (name) => allColumnNames.indexOf(name) < ColumnInfo.getTotalCount(this.optionalColumnCount));
+            (name) => allColumnNames.indexOf(name) < ColumnInfo.getTotalCount(this.optionalColumnCount),
+        );
 
         return AssetList.getHeaders(this.checkedValue.assets.ordering.groupBys).filter(
-            (h) => visibleColumnNames.includes(h.value));
+            (h) => visibleColumnNames.includes(h.value),
+        );
     }
 
     public get options() {
@@ -120,7 +122,9 @@ export default class AssetList extends ComponentBase<Model> {
         // first prefixed with an invisible - sign, before potentially also being prefixed with zeroes and grouping
         // characters.
         const prefixWithoutSign = maxPrefix[0].substr(
-            0, maxPrefix[0].length - valueFormatted.length + ((value < 0) && 1 || 0));
+            0,
+            maxPrefix[0].length - valueFormatted.length + ((value < 0) && 1 || 0),
+        );
 
         return ((value < 0) || !maxPrefix[1]) ? prefixWithoutSign : `${prefixWithoutSign}-`;
     }
@@ -187,7 +191,8 @@ export default class AssetList extends ComponentBase<Model> {
 
     private get maxPrefixes(): ReadonlyMap<NumericColumnName, [string, boolean]> {
         const result = new Map<NumericColumnName, [string, boolean]>(
-            numericColumnNames.map((name) => [name, ["", false]]));
+            numericColumnNames.map((name) => [name, ["", false]]),
+        );
         result.set("totalValue", [this.formatZeroes(this.checkedValue.assets.grandTotalValue), false]);
         result.set("percent", [this.formatZeroes(100), false]);
 

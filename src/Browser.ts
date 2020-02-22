@@ -60,7 +60,8 @@ export class Browser {
     // Safari 3.0+ "[object HTMLElementConstructor]"
     public static readonly isSafari = /constructor/i.test(window.HTMLElement) ||
         ((p) => p.toString() === "[object SafariRemoteNotification]")(
-            !((window as any).safari) || (typeof safari !== "undefined" && safari.pushNotification));
+            !((window as any).safari) || (typeof safari !== "undefined" && safari.pushNotification),
+        );
 
     // Internet Explorer 6-11
     public static readonly isIE = !!(document as any).documentMode || false;

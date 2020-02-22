@@ -85,22 +85,22 @@ export class ObjectConverter {
         [PalladiumAsset.type]: new PreciousMetalAssetInputInfo(PalladiumAsset),
         [PlatinumAsset.type]: new PreciousMetalAssetInputInfo(PlatinumAsset),
         [GoldAsset.type]: new PreciousMetalAssetInputInfo(GoldAsset),
-        [BtcWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
+        [BtcWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
         [XmrWallet.type]: new QuantityCryptoWalletInputInfo({ ctor: XmrWallet, quantityDecimals: 8 }),
-        [LtcWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
-        [EtcWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
+        [LtcWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
+        [EtcWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
         [Erc20TokensWallet.type]: new AddressCryptoWalletInputInfo({ ctor: Erc20TokensWallet, addressHint: erc20Hint }),
-        [EthWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
-        [BtgWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
-        [DashWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
-        [ZecWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
+        [EthWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
+        [BtgWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
+        [DashWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
+        [ZecWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
         [MiscAsset.type]: new MiscAssetInputInfo(),
     } as const;
 
@@ -146,7 +146,9 @@ export class ObjectConverter {
     }
 
     public static is<T extends ObjectUnion>(
-        rawObject: ObjectUnion, types: ReadonlyArray<T["type"]>): rawObject is T {
+        rawObject: ObjectUnion,
+        types: ReadonlyArray<T["type"]>,
+    ): rawObject is T {
         return types.includes(rawObject.type);
     }
 

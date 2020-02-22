@@ -86,7 +86,8 @@ const createAsset = <T, U>(ctor: new (parent: IParent, props: U) => T, props: U)
 };
 
 const getPropertyValues = (
-    object: Partial<Record<AssetPropertyName, unknown>>, names: readonly AssetPropertyName[],
+    object: Partial<Record<AssetPropertyName, unknown>>,
+    names: readonly AssetPropertyName[],
 ) => {
     const result = new Map<string, unknown>();
 
@@ -127,7 +128,15 @@ const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
 
 const testPreciousMetalAssetConstruction = (ctor: IPreciousMetalAssetCtor) => {
     const expectedPropertyNames = arrayOfAll<keyof IPreciousMetalAssetProperties>()(
-        "description", "location", "quantity", "notes", "weight", "weightUnit", "fineness");
+        "description",
+        "location",
+        "quantity",
+        "notes",
+        "weight",
+        "weightUnit",
+        "fineness",
+    );
+
     const props = getPreciousMetalProperties(getRandomData(ctor.type, expectedPropertyNames));
 
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
@@ -141,11 +150,19 @@ const testPreciousMetalAssetConstruction = (ctor: IPreciousMetalAssetCtor) => {
     expectProperty(ctor, props, "percent", (matcher) => matcher.toBeUndefined());
     expectProperty(ctor, props, "hasActions", (matcher) => matcher.toBe(true));
     testMethod(
-        ctor, props, "toJSON", "should return an object",
-        (asset) => expect(asset.toJSON() instanceof Object).toBe(true));
+        ctor,
+        props,
+        "toJSON",
+        "should return an object",
+        (asset) => expect(asset.toJSON() instanceof Object).toBe(true),
+    );
     testMethod(
-        ctor, props, "bundle", "should return an AssetBundle",
-        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true));
+        ctor,
+        props,
+        "bundle",
+        "should return an AssetBundle",
+        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true),
+    );
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
@@ -188,7 +205,11 @@ const testSimpleCryptoWalletConstruction = (ctor: SimpleCryptoWalletCtor) => {
 
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
     expectProperty(
-        ctor, props, "locationHint", (matcher) => matcher.toEqual(("address" in props) && props.address || ""));
+        ctor,
+        props,
+        "locationHint",
+        (matcher) => matcher.toEqual(("address" in props) && props.address || ""),
+    );
     expectProperty(ctor, props, "unit", (matcher) => matcher.toBeDefined());
     expectProperty(ctor, props, "quantityHint", (matcher) => matcher.toEqual(""));
     expectProperty(ctor, props, "displayDecimals", (matcher) => matcher.toBeGreaterThanOrEqual(0));
@@ -198,11 +219,19 @@ const testSimpleCryptoWalletConstruction = (ctor: SimpleCryptoWalletCtor) => {
     expectProperty(ctor, props, "percent", (matcher) => matcher.toBeUndefined());
     expectProperty(ctor, props, "hasActions", (matcher) => matcher.toBe(true));
     testMethod(
-        ctor, props, "toJSON", "should return an object",
-        (asset) => expect(asset.toJSON() instanceof Object).toBe(true));
+        ctor,
+        props,
+        "toJSON",
+        "should return an object",
+        (asset) => expect(asset.toJSON() instanceof Object).toBe(true),
+    );
     testMethod(
-        ctor, props, "bundle", "should return an AssetBundle",
-        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true));
+        ctor,
+        props,
+        "bundle",
+        "should return an AssetBundle",
+        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true),
+    );
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
@@ -240,7 +269,11 @@ type AddressCryptoWalletCtor = ICryptoWalletCtor<Erc20TokensWallet, IAddressCryp
 
 const testAddressCryptoWalletConstruction = (ctor: AddressCryptoWalletCtor) => {
     const expectedPropertyNames = arrayOfAll<keyof IAddressCryptoWalletProperties>()(
-        "description", "location", "notes", "address");
+        "description",
+        "location",
+        "notes",
+        "address",
+    );
     const props = getAddressCryptoWalletProperties(getRandomData(ctor.type, expectedPropertyNames));
 
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
@@ -254,11 +287,19 @@ const testAddressCryptoWalletConstruction = (ctor: AddressCryptoWalletCtor) => {
     expectProperty(ctor, props, "percent", (matcher) => matcher.toBeUndefined());
     expectProperty(ctor, props, "hasActions", (matcher) => matcher.toBe(true));
     testMethod(
-        ctor, props, "toJSON", "should return an object",
-        (asset) => expect(asset.toJSON() instanceof Object).toBe(true));
+        ctor,
+        props,
+        "toJSON",
+        "should return an object",
+        (asset) => expect(asset.toJSON() instanceof Object).toBe(true),
+    );
     testMethod(
-        ctor, props, "bundle", "should return an AssetBundle",
-        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true));
+        ctor,
+        props,
+        "bundle",
+        "should return an AssetBundle",
+        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true),
+    );
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
@@ -295,7 +336,13 @@ const testAddressCryptoWalletConstruction = (ctor: AddressCryptoWalletCtor) => {
 
 const testMiscAssetConstruction = (ctor: IMiscAssetCtor) => {
     const expectedPropertyNames = arrayOfAll<keyof IMiscAssetProperties>()(
-        "description", "location", "quantity", "notes", "value", "valueCurrency");
+        "description",
+        "location",
+        "quantity",
+        "notes",
+        "value",
+        "valueCurrency",
+    );
     const props = getMiscAssetProperties(getRandomData(ctor.type, expectedPropertyNames));
 
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
@@ -309,11 +356,19 @@ const testMiscAssetConstruction = (ctor: IMiscAssetCtor) => {
     expectProperty(ctor, props, "percent", (matcher) => matcher.toBeUndefined());
     expectProperty(ctor, props, "hasActions", (matcher) => matcher.toBe(true));
     testMethod(
-        ctor, props, "toJSON", "should return an object",
-        (asset) => expect(asset.toJSON() instanceof Object).toBe(true));
+        ctor,
+        props,
+        "toJSON",
+        "should return an object",
+        (asset) => expect(asset.toJSON() instanceof Object).toBe(true),
+    );
     testMethod(
-        ctor, props, "bundle", "should return an AssetBundle",
-        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true));
+        ctor,
+        props,
+        "bundle",
+        "should return an AssetBundle",
+        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true),
+    );
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
@@ -393,7 +448,8 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
                 await bundle.queryData();
                 ({ assets } = bundle);
             },
-            20000);
+            20000,
+        );
 
         describe("assets", () => {
             it("should contain assets with defined quantity, unitValue and totalValue", () => {
@@ -459,7 +515,8 @@ testSimpleCryptoWalletConstruction(ZecWallet);
 testMiscAssetConstruction(MiscAsset);
 
 const testSimpleCryptoWallet = (
-    ctor: new (parent: IParent, props: ISimpleCryptoWalletProperties) => SimpleCryptoWallet, address: string,
+    ctor: new (parent: IParent, props: ISimpleCryptoWalletProperties) => SimpleCryptoWallet,
+    address: string,
 ) => {
     describe(`${ctor.name} with address ${address}`, () => {
         testQueries(ctor, { description: "Spending", address });
@@ -477,7 +534,8 @@ const testPreciousMetalAsset = (
 // cSpell: disable
 testSimpleCryptoWallet(
     BtcWallet,
-    "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz");
+    "xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz",
+);
 testSimpleCryptoWallet(BtcWallet, "1MyMTPFeFWuPKtVa7W9Lc2wDi7ZNm6kN4a");
 testSimpleCryptoWallet(LtcWallet, "LS6dQU1M1Asx5ATT5gopFo53UfQ9dhLhmP");
 testSimpleCryptoWallet(DashWallet, "XjB1d1pNT9nfcCKp1N7AQCmzPNiVg6YEzn");
@@ -528,7 +586,9 @@ describe("no assets", () => {
 
 describe("single asset", () => {
     const asset = createAsset(
-        SilverAsset, { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 });
+        SilverAsset,
+        { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 },
+    );
     beforeAll(() => asset.queryData());
     expectProperty(AssetGroup, [asset], "isExpanded", (matcher) => matcher.toBe(false));
     expectProperty(AssetGroup, [asset], "isExpandable", (matcher) => matcher.toBe(true));
@@ -550,7 +610,9 @@ describe("single asset", () => {
 describe("two assets", () => {
     const assets = [
         createAsset(
-            SilverAsset, { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 }),
+            SilverAsset,
+            { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 },
+        ),
         createAsset(BtcWallet, { description: "Spending", quantity: 1 }),
     ];
 
@@ -577,6 +639,7 @@ describe("two assets", () => {
         AssetGroup,
         assets,
         "totalValue",
-        () => assets.map((a) => a.totalValue ?? 0).reduce((p, c) => p + c, 0));
+        () => assets.map((a) => a.totalValue ?? 0).reduce((p, c) => p + c, 0),
+    );
     expectProperty(AssetGroup, assets, "hasActions", (matcher) => matcher.toBe(false));
 });
