@@ -46,7 +46,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         await super.queryData();
 
         if (this.address) {
-            const { result, status } = await QueryUtility.execute(() => this.queryQuantity());
+            const { result, status } = await QueryUtility.execute(async () => this.queryQuantity());
 
             if (result !== undefined) {
                 this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result;
@@ -84,11 +84,11 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    protected queryQuantity(): Promise<number | undefined> {
+    protected async queryQuantity(): Promise<number | undefined> {
         return Promise.resolve(undefined);
     }
 
-    protected queryUnitValueUsd() {
+    protected async queryUnitValueUsd() {
         return this.unit ? new CryptoCompareRequest(this.unit, false).execute() : Promise.resolve(undefined);
     }
 

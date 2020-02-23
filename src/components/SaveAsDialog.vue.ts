@@ -40,7 +40,7 @@ export default class SaveAsDialog extends Vue {
         this.close(undefined);
     }
 
-    public showDialog(name: string) {
+    public async showDialog(name: string) {
         this.name = name;
         this.isOpen = true;
 

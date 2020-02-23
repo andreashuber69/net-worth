@@ -82,7 +82,7 @@ export default class AssetEditor extends Vue {
     }
 
     /** @internal */
-    public showDialog(parent: IParent, asset?: Asset) {
+    public async showDialog(parent: IParent, asset?: Asset) {
         this.parent = parent;
         this.isExistingAsset = Boolean(asset);
         this.assetInfo = AssetEditor.getAssetInfo(asset) ?? new NoAssetInputInfo();

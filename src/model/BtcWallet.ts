@@ -41,7 +41,7 @@ export class BtcWallet extends SimpleCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected queryQuantity() {
+    protected async queryQuantity() {
         return new BtcWallet.QuantityRequest(this.address).queryQuantity();
     }
 
@@ -110,7 +110,7 @@ export class BtcWallet extends SimpleCryptoWallet {
         private static readonly minUnusedAddressesToCheck = 20;
         private static batchLength = 2;
 
-        private static delay(milliseconds: number) {
+        private static async delay(milliseconds: number) {
             return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
         }
 

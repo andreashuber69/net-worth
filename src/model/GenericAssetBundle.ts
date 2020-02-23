@@ -31,7 +31,7 @@ export abstract class GenericAssetBundle<T extends SingleAsset> extends AssetBun
         }
     }
 
-    public queryData() {
+    public async queryData() {
         return this.assets[0].queryData();
     }
 }

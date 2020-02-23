@@ -151,6 +151,6 @@ export class Model implements IParent {
     private async onCurrencyChangedImpl() {
         this.exchangeRate = undefined;
         // Status is intentionally ignored
-        ({ result: this.exchangeRate } = await QueryUtility.execute(() => ExchangeRate.get(this.currency)));
+        ({ result: this.exchangeRate } = await QueryUtility.execute(async () => ExchangeRate.get(this.currency)));
     }
 }

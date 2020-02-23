@@ -99,6 +99,7 @@ module.exports = {
             "error",
             "always-multiline"
         ],
+        // cSpell: ignore linebreak
         "operator-linebreak": [
             "error",
             "after"
@@ -130,6 +131,7 @@ module.exports = {
         // Leads to a lot of duplication without clear advantages. If types are necessary for documentation purposes,
         // @typescript-eslint/explicit-module-boundary-types would be preferable.
         "@typescript-eslint/explicit-function-return-type": "off",
+        // cSpell: ignore todos
         "no-warning-comments": "off", // Turn this on after tackling TODOs ;-)?.
         "@typescript-eslint/indent": [
             "error",
@@ -183,11 +185,11 @@ module.exports = {
             "error",
             {
                 functions: false,
+                // cSpell: ignore typedefs
                 typedefs: false,
                 enums: false
             },
         ],
-        "@typescript-eslint/promise-function-async": "off",
         "@typescript-eslint/quotes": [
             "error",
             "double",
@@ -218,6 +220,7 @@ module.exports = {
             "error",
             "always-multiline"
         ],
+        // cSpell: ignore eqeqeq
         "eqeqeq": [
             "error",
             "always"
@@ -247,6 +250,7 @@ module.exports = {
         "no-cond-assign": "off",
         "no-console": "off",
         "no-magic-numbers": "off",
+        // cSpell: ignore plusplus
         "no-plusplus": [
             "off",
             {
@@ -321,6 +325,7 @@ module.exports = {
                     "no-default-import": true,
                     "no-dynamic-delete": true,
                     "no-inferred-empty-object-type": true,
+                    // cSpell: ignore mergeable
                     "no-mergeable-namespace": true,
                     "no-promise-as-boolean": true,
                     "no-reference-import": true,
@@ -355,6 +360,7 @@ module.exports = {
                         "check-separator",
                         "check-type",
                         "check-typecast",
+                        // cSpell: ignore preblock
                         "check-preblock",
                         "check-type-operator",
                         "check-rest-spread"

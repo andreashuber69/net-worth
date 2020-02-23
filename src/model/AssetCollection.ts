@@ -112,7 +112,7 @@ export class AssetCollection {
         }
     }
 
-    public idle() {
+    public async idle() {
         return this.taskQueue.idle();
     }
 
@@ -140,7 +140,7 @@ export class AssetCollection {
     }
 
     private update(...newBundles: readonly AssetBundle[]) {
-        this.taskQueue.queue(() => this.updateImpl(newBundles)).catch((error) => console.error(error));
+        this.taskQueue.queue(async () => this.updateImpl(newBundles)).catch((error) => console.error(error));
     }
 
     private async updateImpl(newBundles: readonly AssetBundle[]) {

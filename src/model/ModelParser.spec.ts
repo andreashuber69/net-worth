@@ -31,7 +31,7 @@ import { Weight } from "./validation/schemas/Weight.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 class BlobUtility {
-    public static toArrayBuffer(blob: Blob) {
+    public static async toArrayBuffer(blob: Blob) {
         return new Promise<ArrayBuffer>((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = () => resolve(reader.result as ArrayBuffer);
