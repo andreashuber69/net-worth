@@ -12,11 +12,12 @@
 
 import { TaskQueue } from "./TaskQueue";
 
-const randomDelay = () =>
-    new Promise<number>((resolve) => {
+const randomDelay = () => new Promise<number>(
+    (resolve) => {
         const milliseconds = Math.random() * 800 + 200;
         setTimeout(() => resolve(milliseconds), milliseconds);
-    });
+    },
+);
 
 const throwException = () => Promise.reject(new Error("Operation failed."));
 

@@ -90,8 +90,8 @@ class RequiredAddressAssetProperties extends AssetProperties {
     }
 }
 
-export const getPreciousMetalProperties = (data: AssetEditorData): IPreciousMetalAssetProperties =>
-    new RequiredQuantityAssetProperties(data);
+export const getPreciousMetalProperties =
+    (data: AssetEditorData): IPreciousMetalAssetProperties => new RequiredQuantityAssetProperties(data);
 
 export const getSimpleCryptoWalletProperties = (data: AssetEditorData): ISimpleCryptoWalletProperties => {
     if (data.address) {
@@ -103,14 +103,14 @@ export const getSimpleCryptoWalletProperties = (data: AssetEditorData): ISimpleC
     }
 };
 
-export const getAddressCryptoWalletProperties = (data: AssetEditorData): IAddressCryptoWalletProperties =>
-    new RequiredAddressAssetProperties(data);
+export const getAddressCryptoWalletProperties =
+    (data: AssetEditorData): IAddressCryptoWalletProperties => new RequiredAddressAssetProperties(data);
 
-export const getQuantityCryptoWalletProperties = (data: AssetEditorData): IQuantityCryptoWalletProperties =>
-    new RequiredQuantityAssetProperties(data);
+export const getQuantityCryptoWalletProperties =
+    (data: AssetEditorData): IQuantityCryptoWalletProperties => new RequiredQuantityAssetProperties(data);
 
-export const getMiscAssetProperties = (data: AssetEditorData): IMiscAssetProperties =>
-    new RequiredQuantityAssetProperties(data);
+export const getMiscAssetProperties =
+    (data: AssetEditorData): IMiscAssetProperties => new RequiredQuantityAssetProperties(data);
 
 export const createAsset = (parent: IParent, data: AssetEditorData) => {
     if (data.type === "") {

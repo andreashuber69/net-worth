@@ -56,14 +56,18 @@ export class ModelParser {
 
     private static createBundle(rawBundle: AssetBundleUnion) {
         return ObjectConverter.convert(rawBundle.primaryAsset, [
-            (asset: IPreciousMetalAsset, info) =>
-                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
-            (asset: ISimpleCryptoWallet, info) =>
-                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
-            (asset: IAddressCryptoWallet, info) =>
-                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
-            (asset: IQuantityCryptoWallet, info) =>
-                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
+            (asset: IPreciousMetalAsset, info) => (
+                (parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)
+            ),
+            (asset: ISimpleCryptoWallet, info) => (
+                (parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)
+            ),
+            (asset: IAddressCryptoWallet, info) => (
+                (parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)
+            ),
+            (asset: IQuantityCryptoWallet, info) => (
+                (parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)
+            ),
             (asset: IMiscAsset, info) => ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
         ])[1];
     }
