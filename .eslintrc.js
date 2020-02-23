@@ -144,19 +144,6 @@ module.exports = {
                 prefixWithI: "always"
             }
         ],
-        "@typescript-eslint/member-delimiter-style": [
-            "error",
-            {
-                multiline: {
-                    delimiter: "semi",
-                    requireLast: true
-                },
-                singleline: {
-                    delimiter: "semi",
-                    requireLast: false
-                }
-            }
-        ],
         "@typescript-eslint/member-ordering": [
             "error",
             {
