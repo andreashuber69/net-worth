@@ -91,7 +91,7 @@ export class LocalStorage {
         const oldKeys = LocalStorage.getOldKeys();
 
         // Sort the array in descending direction, so that the modified model that was last saved will be loaded.
-        oldKeys.sort((l, r) => l < r ? 1 : -1);
+        oldKeys.sort((l, r) => (l < r ? 1 : -1));
 
         for (const oldKey of oldKeys) {
             const model = LocalStorage.loadModel(oldKey.toString());
