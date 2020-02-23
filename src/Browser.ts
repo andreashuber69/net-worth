@@ -55,7 +55,7 @@ export class Browser {
 
     // Opera 8.0+
     public static readonly isOpera = (Boolean((window as any).opr) && Boolean(opr?.addons)) ||
-        Boolean((window as any).opera) || navigator.userAgent.indexOf(" OPR/") >= 0;
+        Boolean((window as any).opera) || navigator.userAgent.includes(" OPR/");
 
     // Firefox 1.0+
     public static readonly isFirefox = typeof InstallTrigger !== "undefined";
