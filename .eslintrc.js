@@ -190,13 +190,7 @@ module.exports = {
                 enums: false
             },
         ],
-        "@typescript-eslint/quotes": [
-            "error",
-            "double",
-            {
-                avoidEscape: true
-            }
-        ],
+        "quotes": "off", // Turned off in favor of @typescript-eslint/quotes (which is turned on with default settings)
         "@typescript-eslint/semi": [
             "error",
             "always"
