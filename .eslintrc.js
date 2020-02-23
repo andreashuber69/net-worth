@@ -170,29 +170,10 @@ module.exports = {
                 ]
             }
         ],
-        "@typescript-eslint/no-empty-function": "error",
-        "@typescript-eslint/no-empty-interface": "error",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-extraneous-class": "off",
-        "@typescript-eslint/no-floating-promises": "error",
-        "@typescript-eslint/no-for-in-array": "error",
-        "@typescript-eslint/no-inferrable-types": "error",
-        "@typescript-eslint/no-misused-new": "error",
-        "@typescript-eslint/no-namespace": "error",
-        "@typescript-eslint/no-non-null-assertion": "error",
-        "no-param-reassign": "error",
         "@typescript-eslint/no-parameter-properties": "off",
-        "@typescript-eslint/no-require-imports": "error",
-        "@typescript-eslint/no-this-alias": "error",
-        "@typescript-eslint/no-unnecessary-qualifier": "error",
-        "@typescript-eslint/no-unnecessary-type-arguments": "error",
-        "@typescript-eslint/no-unnecessary-type-assertion": "error",
         "@typescript-eslint/no-use-before-define": "off",
-        "@typescript-eslint/no-var-requires": "error",
-        "@typescript-eslint/prefer-for-of": "error",
-        "@typescript-eslint/prefer-function-type": "error",
-        "@typescript-eslint/prefer-namespace-keyword": "error",
-        "@typescript-eslint/prefer-readonly": "error",
         "@typescript-eslint/promise-function-async": "off",
         "@typescript-eslint/quotes": [
             "error",
@@ -201,8 +182,6 @@ module.exports = {
                 avoidEscape: true
             }
         ],
-        "@typescript-eslint/require-await": "error",
-        "@typescript-eslint/restrict-plus-operands": "error",
         "@typescript-eslint/semi": [
             "error",
             "always"
@@ -215,10 +194,6 @@ module.exports = {
             }
         ],
         "@typescript-eslint/strict-boolean-expressions": "off",
-        "@typescript-eslint/triple-slash-reference": "error",
-        "@typescript-eslint/type-annotation-spacing": "error",
-        "@typescript-eslint/unbound-method": "error",
-        "@typescript-eslint/unified-signatures": "error",
         "camelcase": "off",
         "@typescript-eslint/camelcase": [
             "error",
@@ -226,30 +201,15 @@ module.exports = {
                 properties: "always"
             }
         ],
-        "class-methods-use-this": "error",
         "comma-dangle": [
             "error",
             "always-multiline"
         ],
-        "complexity": "error",
-        "constructor-super": "error",
-        "curly": "error",
-        "default-case": "error",
-        "dot-notation": "error",
-        "eol-last": "error",
         "eqeqeq": [
             "error",
             "always"
         ],
-        "guard-for-in": "error",
         "id-blacklist": "off",
-        "id-match": "error",
-        "import/no-default-export": "error",
-        "import/no-deprecated": "error",
-        "import/no-extraneous-dependencies": "error",
-        "import/no-unassigned-import": "error",
-        "import/order": "error",
-        "jsdoc/no-types": "error",
         "linebreak-style": [
             "error",
             "unix"
@@ -268,57 +228,31 @@ module.exports = {
             "error",
             1000
         ],
-        "new-parens": "error",
         "newline-per-chained-call": "off",
         "no-bitwise": "off",
         "no-caller": "error",
         "no-cond-assign": "off",
         "no-console": "off",
-        "no-debugger": "error",
-        "no-duplicate-case": "error",
-        "no-duplicate-imports": "error",
-        "no-empty": "error",
-        "no-eval": "error",
-        "no-extra-bind": "error",
-        "no-irregular-whitespace": "error",
         "no-magic-numbers": "off",
-        "no-multiple-empty-lines": "error",
-        "no-new-func": "error",
-        "no-new-wrappers": "error",
-        "no-null/no-null": "error",
         "no-plusplus": [
             "off",
             {
                 allowForLoopAfterthoughts: true
             }
         ],
-        "no-redeclare": "error",
         "no-restricted-syntax": [
             "error",
             "ForInStatement"
         ],
-        "no-return-await": "error",
-        "no-sequences": "error",
         "no-shadow": [
             "error",
             {
                 hoist: "all"
             }
         ],
-        "no-sparse-arrays": "error",
-        "no-template-curly-in-string": "error",
-        "no-throw-literal": "error",
-        "no-trailing-spaces": "error",
-        "no-undef-init": "error",
-        "no-underscore-dangle": "error",
-        "no-unsafe-finally": "error",
-        "no-unused-expressions": "error",
-        "no-unused-labels": "error",
         "no-useless-constructor": "off",
         "@typescript-eslint/no-useless-constructor": "error",
-        "no-var": "error",
         "no-void": "off",
-        "object-shorthand": "error",
         "one-var": [
             "error",
             "never"
@@ -331,15 +265,10 @@ module.exports = {
                 next: "return"
             }
         ],
-        "prefer-arrow/prefer-arrow-functions": "error",
-        "prefer-const": "error",
-        "prefer-object-spread": "error",
-        "prefer-template": "error",
         "quote-props": [
             "error",
             "consistent-as-needed"
         ],
-        "radix": "error",
         "space-before-function-paren": [
             "error",
             {
@@ -359,8 +288,6 @@ module.exports = {
                 exceptions: ["/"]
             }
         ],
-        "use-isnan": "error",
-        "yoda": "error",
         "@typescript-eslint/tslint/config": [
             "error",
             {
