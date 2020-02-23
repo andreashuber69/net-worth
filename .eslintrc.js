@@ -90,7 +90,7 @@ module.exports = {
         // Does not make sense for js code >= ES5 with no-global-assign and no-shadow-restricted-names turned on.
         "no-undefined": "off",
         "no-ternary": "off",
-        // typescript ensures that constructor functions are only called with new, so the convention is not necessary.
+        // Typescript ensures that constructor functions are only called with new, so the convention is not necessary.
         "new-cap": "off",
         // Value is questionable, see
         // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/typedef.md
@@ -131,17 +131,6 @@ module.exports = {
         // @typescript-eslint/explicit-module-boundary-types would be preferable.
         "@typescript-eslint/explicit-function-return-type": "off",
         "no-warning-comments": "off", // Turn this on after tackling TODOs ;-)?.
-        "@typescript-eslint/explicit-member-accessibility": [
-            "error",
-            {
-                accessibility: "explicit",
-                overrides: {
-                    accessors: "explicit",
-                    constructors: "explicit",
-                    parameterProperties: "explicit"
-                }
-            }
-        ],
         "@typescript-eslint/indent": [
             "error",
             4,
