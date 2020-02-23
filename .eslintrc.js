@@ -49,7 +49,6 @@ module.exports = {
                 default: "array-simple",
             }
         ],
-        "@typescript-eslint/await-thenable": "error",
         "@typescript-eslint/consistent-type-assertions": [
             "error",
             {
@@ -72,22 +71,8 @@ module.exports = {
                 exceptAfterSingleLine: true
             }
         ],
-        "lines-around-comment": "off",
         "line-comment-position": "off",
-        // Does not work with interfaces, see https://github.com/typescript-eslint/typescript-eslint/issues/1150
-        // "lines-around-comment": [
-        //     "error",
-        //     {
-        //         allowBlockStart: true,
-        //         allowObjectStart: true,
-        //         allowArrayStart: true,
-        //         allowClassStart: true
-        //     }
-        // ],
-        "array-bracket-newline": [
-            "error",
-            "consistent"
-        ],
+        "lines-around-comment": "off", // Does not work with interfaces, see https://github.com/typescript-eslint/typescript-eslint/issues/1150        
         "array-element-newline": [
             "error",
             "consistent"

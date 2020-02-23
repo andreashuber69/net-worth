@@ -13,9 +13,8 @@
 import { bitcoin, bitcoinGold, dash, ethereum, ethereumClassic, litecoin, zcash } from "./AssetTypeName.schema";
 import { ISimpleCryptoWalletProperties } from "./ISimpleCryptoWalletProperties.schema";
 
-export const simpleCryptoWalletTypeNames = [
-    bitcoin, litecoin, ethereumClassic, ethereum, bitcoinGold, dash, zcash,
-] as const;
+export const simpleCryptoWalletTypeNames =
+    [bitcoin, litecoin, ethereumClassic, ethereum, bitcoinGold, dash, zcash] as const;
 
 export type SimpleCryptoWalletTypeName = typeof simpleCryptoWalletTypeNames[number];
 
