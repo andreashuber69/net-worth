@@ -191,10 +191,7 @@ module.exports = {
             },
         ],
         "quotes": "off", // Turned off in favor of @typescript-eslint/quotes (which is turned on with default settings)
-        "@typescript-eslint/semi": [
-            "error",
-            "always"
-        ],
+        "semi": "off", // Turned off in favor of @typescript-eslint/semi (which is turned on with default settings)
         "@typescript-eslint/space-before-function-paren": [
             "error",
             {
@@ -202,7 +199,7 @@ module.exports = {
                 asyncArrow: "always"
             }
         ],
-        "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/strict-boolean-expressions": "off", // Takes away too much expressive power.
         "camelcase": "off",
         "@typescript-eslint/camelcase": [
             "error",
