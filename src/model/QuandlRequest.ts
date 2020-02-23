@@ -25,8 +25,8 @@ export class QuandlRequest implements IWebRequest<number> {
             const price = (await QueryCache.fetch(url, QuandlResponse)).dataset.data[0][1] ?? Number.NaN;
 
             return this.invert ? 1 / price : price;
-        } else {
-            return 1;
         }
+
+        return 1;
     }
 }

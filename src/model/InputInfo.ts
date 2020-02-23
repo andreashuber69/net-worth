@@ -28,11 +28,9 @@ export abstract class InputInfo {
      * @returns `true` if the property value is valid; otherwise a string describing why the value is invalid.
      */
     public validate(strict: boolean, input: Input, propertyName?: AssetPropertyName) {
-        if (InputUtility.isComposite(input)) {
-            return this.validateComposite(strict, input, propertyName);
-        } else {
-            return this.validatePrimitive(strict, input, propertyName);
-        }
+        return InputUtility.isComposite(input) ?
+            this.validateComposite(strict, input, propertyName) :
+            this.validatePrimitive(strict, input, propertyName);
     }
 
     /**

@@ -143,9 +143,9 @@ export class ObjectConverter {
             const info = ObjectConverter.infos[rawObject.type];
 
             return [info, convertMiscObject(rawObject, info)] as const;
-        } else {
-            return ObjectConverter.assertUnreachable(rawObject);
         }
+
+        ObjectConverter.assertUnreachable(rawObject);
     }
 
     public static is<T extends ObjectUnion>(

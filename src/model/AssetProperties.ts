@@ -98,9 +98,9 @@ export const getSimpleCryptoWalletProperties = (data: AssetEditorData): ISimpleC
         return new RequiredAddressAssetProperties(data);
     } else if (data.quantity) {
         return new RequiredQuantityAssetProperties(data);
-    } else {
-        throw new Error("Invalid data!");
     }
+
+    throw new Error("Invalid data!");
 };
 
 export const getAddressCryptoWalletProperties =

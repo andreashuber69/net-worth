@@ -42,8 +42,8 @@ export class AssetCollectionUtility {
             return 1;
         } else if (leftProperty < rightProperty) {
             return -1;
-        } else {
-            return 1;
         }
+
+        return 1;
     }
 }

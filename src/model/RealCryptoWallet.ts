@@ -112,8 +112,8 @@ export abstract class RealCryptoWallet extends CryptoWallet {
             return { description, location, address, notes };
         } else if (quantity) {
             return { description, location, quantity, notes };
-        } else {
-            throw new Error("Unexpected ISimpleCryptoWalletProperties value!");
         }
+
+        throw new Error("Unexpected ISimpleCryptoWalletProperties value!");
     }
 }

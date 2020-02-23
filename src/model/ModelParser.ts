@@ -35,9 +35,9 @@ export class ModelParser {
         } catch (e) {
             if (e instanceof Error) {
                 return e.message;
-            } else {
-                throw e;
             }
+
+            throw e;
         }
     }
 

@@ -17,9 +17,9 @@ export class Format {
             return "";
         } else if (Number.isNaN(num)) {
             return "Error";
-        } else {
-            return Format.format(num, maximumFractionDigits, minimumFractionDigits);
         }
+
+        return Format.format(num, maximumFractionDigits, minimumFractionDigits);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
