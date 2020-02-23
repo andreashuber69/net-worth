@@ -55,15 +55,15 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getType(asset?: AssetUnion) {
-        return (asset && asset.type) || "";
+        return asset?.type ?? "";
     }
 
     private static getDescription(asset?: AssetUnion) {
-        return asset && asset.description;
+        return asset?.description;
     }
 
     private static getLocation(asset?: AssetUnion) {
-        return asset && asset.location;
+        return asset?.location;
     }
 
     private static getAddress(asset?: AssetUnion) {
@@ -95,7 +95,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getNotes(asset?: AssetUnion) {
-        return asset && asset.notes;
+        return asset?.notes;
     }
 
     private static isPreciousMetalAsset(asset?: AssetUnion): asset is IPreciousMetalAsset {

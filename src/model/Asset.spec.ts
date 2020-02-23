@@ -338,7 +338,6 @@ const testAddressCryptoWalletConstruction = (ctor: AddressCryptoWalletCtor) => {
                 expect(sut.editableAsset).toBe(sut);
             });
         });
-
     });
 };
 
@@ -484,15 +483,17 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
                     expect(asset.editableAsset).toBe(sut);
 
                     if (asset instanceof CryptoWallet) {
-                        if (!(sut instanceof CryptoWallet)) {
-                            fail("Unexpected asset type!");
-                        } else {
+                        if (sut instanceof CryptoWallet) {
                             expect(asset.address).toBe(sut.address);
+                        } else {
+                            fail("Unexpected asset type!");
                         }
                     }
 
                     if (asset instanceof Erc20TokenWallet) {
                         expect(sut instanceof Erc20TokensWallet).toBe(true);
+                        // This is not a performance problem as we're expecting all promises to reject immediately.
+                        // eslint-disable-next-line no-await-in-loop
                         await expectAsync(asset.queryData()).toBeRejected();
                         expect(() => asset.toJSON()).toThrow();
                         expect(() => asset.bundle()).toThrow();
@@ -633,6 +634,7 @@ describe("two assets", () => {
 
     beforeAll(async () => {
         for (const asset of assets) {
+            // eslint-disable-next-line no-await-in-loop
             await asset.queryData();
         }
     });

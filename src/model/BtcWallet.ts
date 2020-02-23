@@ -142,12 +142,15 @@ export class BtcWallet extends SimpleCryptoWallet {
         }
 
         private async addChain(node: HDNode) {
+            // eslint-disable-next-line init-declarations
             let batch: string[] | undefined;
             let unusedAddressesToCheck = NestedQuantityRequest.minUnusedAddressesToCheck;
 
             for (let index = 0; unusedAddressesToCheck > 0; index += batch.length) {
                 batch = NestedQuantityRequest.getBatch(node, index);
 
+                // We need to do this sequentially such that we don't miss the point where the unused addresses start
+                // eslint-disable-next-line no-await-in-loop
                 if ((await this.add(batch)).transactionCount === 0) {
                     unusedAddressesToCheck -= batch.length;
                 } else {
