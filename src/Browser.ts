@@ -80,7 +80,7 @@ export class Browser {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getVersion(versionPrefix: string) {
-        const userAgent = window.navigator.userAgent;
+        const { userAgent } = window.navigator;
         const versionIndex = userAgent.indexOf(versionPrefix);
 
         return versionIndex >= 0 ? parseInt(userAgent.substr(versionIndex + versionPrefix.length), 10) : Number.NaN;

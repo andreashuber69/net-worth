@@ -41,7 +41,7 @@ export default class AboutDialog extends Vue {
 
     // eslint-disable-next-line class-methods-use-this
     private get desktopVersion() {
-        const userAgent = window.navigator.userAgent;
+        const { userAgent } = window.navigator;
         const prefix = `${Application.packageName}/`;
         const start = userAgent.indexOf(prefix) + prefix.length;
 

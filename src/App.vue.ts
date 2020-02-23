@@ -124,13 +124,13 @@ export default class App extends Vue {
     }
 
     private async onFileInputChangedImpl() {
-        const files = this.fileInput.files;
+        const { files } = this.fileInput;
 
         if (!files || (files.length !== 1)) {
             return;
         }
 
-        const file = files[0];
+        const [file] = files;
         const model = Parser.parse(await App.read(file));
 
         if (!model) {

@@ -492,7 +492,7 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
             it("should remove an asset", () => {
                 const { length } = assets;
                 expect(length).toBeGreaterThan(0);
-                const assetToDelete = assets[0];
+                const [assetToDelete] = assets;
                 bundle.deleteAsset(assetToDelete);
                 expect(assets.length).toBe(length - 1);
                 expect(assets.includes(assetToDelete)).toBe(false);
