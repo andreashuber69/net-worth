@@ -97,7 +97,8 @@ export class Model implements IParent {
     public onChanged?: (() => void);
 
     public constructor(params?: IModelParameters) {
-        this.name = params?.name ?? "Unnamed";
+        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+        this.name = params?.name || "Unnamed";
         this.wasSavedToFile = params?.wasSavedToFile ?? false;
         this.hasUnsavedChangesImpl = params?.hasUnsavedChanges ?? false;
         this.currency = params?.currency ?? this.currencyImpl;
