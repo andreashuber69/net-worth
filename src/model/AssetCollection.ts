@@ -55,7 +55,7 @@ export class AssetCollection {
     /** Provides the sum of all asset total values. */
     public get grandTotalValue() {
         return this.groups.reduce<number | undefined>(
-            (s, a) => (s === undefined ? undefined : (a.totalValue === undefined ? undefined : s + a.totalValue)),
+            (s, a) => ((s === undefined) || (a.totalValue === undefined) ? undefined : s + a.totalValue),
             0,
         );
     }
