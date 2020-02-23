@@ -44,7 +44,7 @@ export default class SaveAsDialog extends Vue {
         this.name = name;
         this.isOpen = true;
 
-        return new Promise<string | undefined>((resolve) => this.resolve = resolve);
+        return new Promise<string | undefined>((resolve) => (this.resolve = resolve));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

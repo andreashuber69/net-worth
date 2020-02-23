@@ -113,7 +113,7 @@ export default class App extends Vue {
     }
 
     private static initModel(model: Model) {
-        model.onChanged = () => document.title = model.title;
+        model.onChanged = () => (document.title = model.title);
         document.title = model.title;
 
         return model;
