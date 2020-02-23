@@ -138,7 +138,8 @@ export default class App extends Vue {
         }
 
         const name = file.name.endsWith(model.fileExtension) ?
-            file.name.substring(0, file.name.length - model.fileExtension.length) : file.name;
+            file.name.substring(0, file.name.length - model.fileExtension.length) :
+            file.name;
 
         if (name.length > 0) {
             model.name = name;
@@ -153,7 +154,7 @@ export default class App extends Vue {
 
     private write() {
         this.model.hasUnsavedChanges = false;
-        const blob = new Blob([this.model.toJsonString()], { type : "application/json" });
+        const blob = new Blob([this.model.toJsonString()], { type: "application/json" });
 
         if (window.navigator.msSaveBlob) {
             window.navigator.msSaveBlob(blob, this.model.fileName);
