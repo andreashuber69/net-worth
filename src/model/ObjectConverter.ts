@@ -119,6 +119,8 @@ export class ObjectConverter {
             convertAddressCryptoObject,
             convertQuantityCryptoObject,
             convertMiscObject,
+        // This is a false positive.
+        // eslint-disable-next-line array-bracket-newline
         ]: Converters<P, S, A, Q, M, PR, SR, AR, QR, MR>,
     ) {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should
