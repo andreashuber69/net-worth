@@ -97,11 +97,11 @@ export class Erc20TokensWalletBundle extends AssetBundle {
     private addTokenWallet(token: IToken, quantityHint: string) {
         const info = token.tokenInfo;
 
-        if ((this.deletedAssets.indexOf(info.symbol) < 0) && (token.balance !== 0)) {
+        if (!this.deletedAssets.includes(info.symbol) && (token.balance !== 0)) {
             this.assets.push(new Erc20TokenWallet({
                 editable: this.erc20Wallet,
                 currencySymbol: info.symbol,
-                quantity: token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
+                quantity: token.balance / (10 ** Number.parseFloat(info.decimals.toString())),
                 quantityHint,
                 unitValueUsd: (info.price && info.price.rate) || 0,
             }));
