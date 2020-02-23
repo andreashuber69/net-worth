@@ -170,10 +170,23 @@ module.exports = {
                 ]
             }
         ],
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-extraneous-class": "off",
-        "@typescript-eslint/no-parameter-properties": "off",
-        "@typescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/no-explicit-any": "off", // Does not seem practical for most non-trivial projects.
+        "@typescript-eslint/no-extraneous-class": [
+            "error",
+            {
+                allowStaticOnly: true
+            }
+        ],
+        "@typescript-eslint/no-parameter-properties": "off", // The value of this rule seems dubious at best.
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": [
+            "error",
+            {
+                functions: false,
+                typedefs: false,
+                enums: false
+            },
+        ],
         "@typescript-eslint/promise-function-async": "off",
         "@typescript-eslint/quotes": [
             "error",
