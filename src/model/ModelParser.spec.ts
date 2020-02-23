@@ -184,7 +184,7 @@ const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
     weightUnit,
     unit: `${weight} ${WeightUnit[weightUnit]}`,
     fineness,
-    displayDecimals: 0 as 0,
+    displayDecimals: 0 as const,
     notes,
     quantity,
     quantityHint: "",
@@ -352,10 +352,10 @@ describe("ModelParser.parse", () => {
                     expect(asset.key).toBeGreaterThan(0);
                     expect(asset.unitValue).toBeGreaterThan(0);
 
-                    if (asset.unitValue !== undefined) {
-                        expect(asset.totalValue).toBe(asset.unitValue * asset.quantity);
-                    } else {
+                    if (asset.unitValue === undefined) {
                         fail("unitValue or quantity are unexpectedly undefined.");
+                    } else {
+                        expect(asset.totalValue).toBe(asset.unitValue * asset.quantity);
                     }
 
                     expect(asset.percent).toBe(100);
@@ -391,7 +391,7 @@ describe("ModelParser.parse", () => {
                                 6,
                                 "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454",
                                 "",
-                                asset.quantity ?? -1
+                                asset.quantity ?? -1,
                             );
                         expectToEqual(asset, expected);
 
