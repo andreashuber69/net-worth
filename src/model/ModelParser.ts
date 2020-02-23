@@ -47,7 +47,12 @@ export class ModelParser {
         { name, wasSavedToFile, hasUnsavedChanges, currency, groupBy, sort, bundles }: TaggedModel,
     ) {
         const params = {
-            name, wasSavedToFile, hasUnsavedChanges, currency, groupBy, sort,
+            name,
+            wasSavedToFile,
+            hasUnsavedChanges,
+            currency,
+            groupBy,
+            sort,
             createBundles: bundles.map((bundle) => ModelParser.createBundle(bundle)),
         };
 
