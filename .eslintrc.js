@@ -28,7 +28,7 @@ module.exports = {
             {
                 "ignoreConsecutiveComments": true,
                 "ignoreInlineComments": true,
-                "ignorePattern": "tslint"
+                "ignorePattern": "tslint|cSpell|codebeat"
             }
         ],
         "multiline-comment-style": [
@@ -126,8 +126,17 @@ module.exports = {
                 allowAllPropertiesOnSameLine: true
             }
         ],
+        "id-length": "off",
+        "@typescript-eslint/no-unused-vars-experimental": "off",
+        "max-statements": "off",
+        "max-lines-per-function": "off",
+        "@typescript-eslint/restrict-template-expressions": "off",
+        "@typescript-eslint/no-unnecessary-condition": "off",
+        "max-params": "off",
+        "no-invalid-this": "off", // https://github.com/typescript-eslint/typescript-eslint/issues/491
         "@typescript-eslint/consistent-type-definitions": "error",
-        "@typescript-eslint/explicit-function-return-type": 0,
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "no-warning-comments": "off",
         "@typescript-eslint/explicit-member-accessibility": [
             "error",
             {
