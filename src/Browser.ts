@@ -10,8 +10,11 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+// eslint-disable-next-line init-declarations
 declare const opr: { addons: unknown } | undefined;
+// eslint-disable-next-line init-declarations
 declare const InstallTrigger: any;
+// eslint-disable-next-line init-declarations
 declare const safari: { pushNotification: object } | undefined;
 
 declare global {

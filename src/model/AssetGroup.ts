@@ -100,7 +100,8 @@ export class AssetGroup extends Asset {
     }
 
     private coalesce<T>(getProperty: (asset: Asset) => T): T | undefined {
-        let previous: T | undefined;
+        // eslint-disable-next-line no-undef-init
+        let previous: T | undefined = undefined;
 
         for (let index = 0; index < this.assets.length; ++index) {
             if (index === 0) {

@@ -168,7 +168,9 @@ const testPreciousMetalAssetConstruction = (ctor: IPreciousMetalAssetCtor) => {
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
+        // eslint-disable-next-line init-declarations
         let expected: IPreciousMetalAssetProperties;
+        // eslint-disable-next-line init-declarations
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -237,7 +239,9 @@ const testSimpleCryptoWalletConstruction = (ctor: SimpleCryptoWalletCtor) => {
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
+        // eslint-disable-next-line init-declarations
         let expected: ISimpleCryptoWalletProperties;
+        // eslint-disable-next-line init-declarations
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -305,7 +309,9 @@ const testAddressCryptoWalletConstruction = (ctor: AddressCryptoWalletCtor) => {
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
+        // eslint-disable-next-line init-declarations
         let expected: IAddressCryptoWalletProperties;
+        // eslint-disable-next-line init-declarations
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -374,7 +380,9 @@ const testMiscAssetConstruction = (ctor: IMiscAssetCtor) => {
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
     describe(ctor.name, () => {
+        // eslint-disable-next-line init-declarations
         let expected: IMiscAssetProperties;
+        // eslint-disable-next-line init-declarations
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -408,7 +416,9 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
     ctor: new (parent: IParent, props: U) => T, props: U,
 ) => {
     describe("bundle() (before queryData())", () => {
+        // eslint-disable-next-line init-declarations
         let sut: InstanceType<typeof ctor>;
+        // eslint-disable-next-line init-declarations
         let bundle: ReturnType<typeof sut.bundle>;
 
         beforeEach(() => {
@@ -439,8 +449,11 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
     });
 
     describe("bundle() (after queryData())", () => {
+        // eslint-disable-next-line init-declarations
         let sut: InstanceType<typeof ctor>;
+        // eslint-disable-next-line init-declarations
         let bundle: ReturnType<typeof sut.bundle>;
+        // eslint-disable-next-line init-declarations
         let assets: typeof bundle.assets;
 
         beforeAll(

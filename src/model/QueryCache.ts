@@ -55,18 +55,20 @@ export class QueryCache {
     }
 
     private static async fetchAndParse(query: string) {
-        let responseText: string;
-
-        try {
-            responseText = await (await window.fetch(query)).text();
-        } catch (e) {
-            throw new QueryError(`Network Error: ${e}`);
-        }
+        const responseText = await QueryCache.tryFetch(query);
 
         try {
             return JSON.parse(responseText) as unknown;
         } catch (e) {
             throw new QueryError(`Invalid JSON: ${e}`);
+        }
+    }
+
+    private static async tryFetch(query: string) {
+        try {
+            return await (await window.fetch(query)).text();
+        } catch (e) {
+            throw new QueryError(`Network Error: ${e}`);
         }
     }
 }
