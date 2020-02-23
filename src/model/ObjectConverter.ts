@@ -145,7 +145,7 @@ export class ObjectConverter {
             return [info, convertMiscObject(rawObject, info)] as const;
         }
 
-        ObjectConverter.assertUnreachable(rawObject);
+        return ObjectConverter.assertUnreachable(rawObject);
     }
 
     public static is<T extends ObjectUnion>(
