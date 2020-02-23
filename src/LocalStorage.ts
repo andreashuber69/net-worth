@@ -127,7 +127,7 @@ export class LocalStorage {
 
         if (result) {
             while (window.sessionStorage.length > 0) {
-                window.sessionStorage.removeItem(window.sessionStorage.key(0) || "");
+                window.sessionStorage.removeItem(window.sessionStorage.key(0) ?? "");
             }
 
             window.localStorage.removeItem(localStorageKey);

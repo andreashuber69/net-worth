@@ -38,7 +38,7 @@ export class XmrWallet extends RealCryptoWallet {
         return {
             type: this.type,
             ...this.getProperties(),
-            quantity: this.quantity || 0,
+            quantity: this.quantity ?? 0,
         };
     }
 

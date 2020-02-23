@@ -71,12 +71,12 @@ export abstract class PreciousMetalAsset extends SingleAsset {
     protected constructor(parent: IParent, props: IPreciousMetalAssetProperties, private readonly quandlPath: string) {
         super(parent);
         this.description = props.description;
-        this.location = props.location || "";
+        this.location = props.location ?? "";
         this.weight = props.weight;
         this.weightUnit = props.weightUnit;
         this.fineness = props.fineness;
         this.quantity = props.quantity;
-        this.notes = props.notes || "";
+        this.notes = props.notes ?? "";
         this.pureGramsPerUnit = this.weight * this.weightUnit * this.fineness;
     }
 

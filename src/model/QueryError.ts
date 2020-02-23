@@ -13,7 +13,7 @@
 /** Thrown when a query fails. */
 export class QueryError extends Error {
     public constructor(message?: string) {
-        super(message || "Unexpected Response");
+        super(message ?? "Unexpected Response");
 
         // eslint-disable-next-line max-len
         // https://github.com/Microsoft/TypeScript-wiki/blob/master/Breaking-Changes.md#extending-built-ins-like-error-array-and-map-may-no-longer-work

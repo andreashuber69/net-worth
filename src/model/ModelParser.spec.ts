@@ -388,7 +388,7 @@ describe("ModelParser.parse", () => {
                                 6,
                                 "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454",
                                 "",
-                                asset.quantity || -1
+                                asset.quantity ?? -1
                             );
                         expectToEqual(asset, expected);
 

@@ -77,10 +77,10 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     protected constructor(parent: IParent, params: IRealCryptoWalletParameters) {
         super(parent, params.currencySymbol);
         this.description = params.description;
-        this.location = params.location || "";
+        this.location = params.location ?? "";
         this.address = ("address" in params) && params.address || "";
         this.quantity = ("quantity" in params) && params.quantity || undefined;
-        this.notes = params.notes || "";
+        this.notes = params.notes ?? "";
     }
 
     // eslint-disable-next-line class-methods-use-this

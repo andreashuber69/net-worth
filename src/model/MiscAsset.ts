@@ -58,11 +58,11 @@ export class MiscAsset extends SingleAsset {
     public constructor(parent: IParent, props: IMiscAssetProperties) {
         super(parent);
         this.description = props.description;
-        this.location = props.location || "";
+        this.location = props.location ?? "";
         this.value = props.value;
         this.valueCurrency = props.valueCurrency;
         this.quantity = props.quantity;
-        this.notes = props.notes || "";
+        this.notes = props.notes ?? "";
     }
 
     /** @internal */

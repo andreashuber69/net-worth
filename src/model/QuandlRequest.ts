@@ -22,7 +22,7 @@ export class QuandlRequest implements IWebRequest<number> {
     public async execute() {
         if (this.path.length > 0) {
             const url = `https://www.quandl.com/api/v3/datasets/${this.path}?api_key=ALxMkuJx2XTUqsnsn6qK&rows=1`;
-            const price = (await QueryCache.fetch(url, QuandlResponse)).dataset.data[0][1] || Number.NaN;
+            const price = (await QueryCache.fetch(url, QuandlResponse)).dataset.data[0][1] ?? Number.NaN;
 
             return this.invert ? 1 / price : price;
         } else {

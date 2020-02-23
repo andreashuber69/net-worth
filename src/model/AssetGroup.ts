@@ -25,19 +25,19 @@ export class AssetGroup extends Asset {
     }
 
     public get type() {
-        return this.coalesce((a) => a.type) || "";
+        return this.coalesce((a) => a.type) ?? "";
     }
 
     public get description() {
-        return this.coalesce((a) => a.description) || "";
+        return this.coalesce((a) => a.description) ?? "";
     }
 
     public get location() {
-        return this.coalesce((a) => a.location) || "";
+        return this.coalesce((a) => a.location) ?? "";
     }
 
     public get unit() {
-        return this.coalesce((a) => a.unit) || "";
+        return this.coalesce((a) => a.unit) ?? "";
     }
 
     public get fineness() {
@@ -51,11 +51,11 @@ export class AssetGroup extends Asset {
     }
 
     public get quantityHint() {
-        return this.coalesce((a) => a.quantityHint) || "";
+        return this.coalesce((a) => a.quantityHint) ?? "";
     }
 
     public get displayDecimals() {
-        return this.coalesce((a) => a.displayDecimals) || 0;
+        return this.coalesce((a) => a.displayDecimals) ?? 0;
     }
 
     public get notes() {
@@ -67,7 +67,7 @@ export class AssetGroup extends Asset {
     }
 
     public get unitValueHint() {
-        return this.coalesce((a) => a.unitValueHint) || "";
+        return this.coalesce((a) => a.unitValueHint) ?? "";
     }
 
     public get totalValue() {

@@ -82,7 +82,7 @@ export default class App extends Vue {
 
     public onRefreshClicked() {
         QueryCache.clear();
-        this.model = App.initModel(Parser.parse(this.model.toJsonString()) || new Model());
+        this.model = App.initModel(Parser.parse(this.model.toJsonString()) ?? new Model());
     }
 
     public get groupBys() {

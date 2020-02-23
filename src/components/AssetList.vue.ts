@@ -114,7 +114,7 @@ export default class AssetList extends ComponentBase<Model> {
             return "";
         }
 
-        const maxPrefix = this.maxPrefixes.get(columnName) || ["", false];
+        const maxPrefix = this.maxPrefixes.get(columnName) ?? ["", false];
         const valueFormatted = this.format(Math.trunc(value), 0);
 
         // The following logic is necessary so that negative values will be displayed in alignment with their
@@ -197,11 +197,11 @@ export default class AssetList extends ComponentBase<Model> {
         result.set("percent", [this.formatZeroes(100), false]);
 
         for (const property of numericColumnNames) {
-            let [longest, hasNegativeValues] = result.get(property) || ["", false];
+            let [longest, hasNegativeValues] = result.get(property) ?? ["", false];
 
             for (const asset of this.checkedValue.assets.grouped) {
                 const value = asset[property];
-                hasNegativeValues = hasNegativeValues || ((value || 0) < 0);
+                hasNegativeValues = hasNegativeValues || ((value ?? 0) < 0);
                 const current = this.formatZeroes(value);
                 longest = current.length > longest.length ? current : longest;
             }

@@ -97,13 +97,13 @@ export class Model implements IParent {
     public onChanged?: (() => void);
 
     public constructor(params?: IModelParameters) {
-        this.name = params?.name || "Unnamed";
-        this.wasSavedToFile = params?.wasSavedToFile || false;
-        this.hasUnsavedChangesImpl = params?.hasUnsavedChanges || false;
-        this.currency = params?.currency || this.currencyImpl;
+        this.name = params?.name ?? "Unnamed";
+        this.wasSavedToFile = params?.wasSavedToFile ?? false;
+        this.hasUnsavedChangesImpl = params?.hasUnsavedChanges ?? false;
+        this.currency = params?.currency ?? this.currencyImpl;
         this.assets = new AssetCollection({
             parent: this,
-            bundles: params?.createBundles.map((c) => c(this)) || [],
+            bundles: params?.createBundles.map((c) => c(this)) ?? [],
             groupBy: params?.groupBy,
             sort: params?.sort,
         });
