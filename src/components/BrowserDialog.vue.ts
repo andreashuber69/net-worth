@@ -44,6 +44,7 @@ export default class BrowserDialog extends Vue {
         const userAgent = window.navigator.userAgent.toLowerCase();
 
         // cSpell: ignore crios
-        return !/firefox|electron/.test(userAgent) && (!/chrome|crios/.test(userAgent) || /edge|opr\//.test(userAgent));
+        return !(/firefox|electron/u).test(userAgent) &&
+            (!(/chrome|crios/u).test(userAgent) || (/edge|opr\//u).test(userAgent));
     }
 }

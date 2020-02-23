@@ -61,7 +61,7 @@ export class Browser {
     public static readonly isFirefox = typeof InstallTrigger !== "undefined";
 
     // Safari 3.0+ "[object HTMLElementConstructor]"
-    public static readonly isSafari = /constructor/i.test(window.HTMLElement) ||
+    public static readonly isSafari = (/constructor/ui).test(window.HTMLElement) ||
         ((p) => p.toString() === "[object SafariRemoteNotification]")(
             !((window as any).safari) || (typeof safari !== "undefined" && safari.pushNotification),
         );

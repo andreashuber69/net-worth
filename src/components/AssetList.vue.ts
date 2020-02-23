@@ -215,7 +215,7 @@ export default class AssetList extends ComponentBase<Model> {
     private formatZeroes(num: number | undefined) {
         const numToFormat = (num === undefined) || Number.isNaN(num) ? undefined : Math.abs(num);
 
-        return this.format(numToFormat && Math.trunc(numToFormat), 0).replace(/\d/g, "0");
+        return this.format(numToFormat && Math.trunc(numToFormat), 0).replace(/\d/ug, "0");
     }
 
     private onIntervalElapsed() {
