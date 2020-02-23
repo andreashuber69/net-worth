@@ -56,10 +56,10 @@ module.exports = {
                 objectLiteralTypeAssertions: "never",
             }        
         ],
-        "@typescript-eslint/no-type-alias": "off",
-        "no-inline-comments": "off",
-        "no-magic-numbers": "off",
-        "@typescript-eslint/no-magic-numbers": "off",
+        "@typescript-eslint/no-type-alias": "off", // Does not make much sense.
+        "no-inline-comments": "off", // We want to allow inline comments.
+        "no-magic-numbers": "off", // Makes sense but appears to be too restrictive.
+        "@typescript-eslint/no-magic-numbers": "off", // Makes sense but appears to be too restrictive.
         "function-call-argument-newline": [
             "error",
             "consistent"
@@ -71,8 +71,9 @@ module.exports = {
                 exceptAfterSingleLine: true
             }
         ],
-        "line-comment-position": "off",
-        "lines-around-comment": "off", // Does not work with interfaces, see https://github.com/typescript-eslint/typescript-eslint/issues/1150        
+        "line-comment-position": "off", // We want to allow comments above and beside code.
+        // Does not work with interfaces, see https://github.com/typescript-eslint/typescript-eslint/issues/1150
+        "lines-around-comment": "off",        
         "array-element-newline": [
             "error",
             "consistent"
@@ -84,11 +85,15 @@ module.exports = {
                 "ignoreDeclarationSort": true,
             }
         ],
-        "no-undef": "off",
-        "sort-keys": "off",
+        "no-undef": "off", // Does not make sense with typescript-only code.
+        "sort-keys": "off", 
+        // Does not make sense for js code >= ES5 with no-global-assign and no-shadow-restricted-names turned on.
         "no-undefined": "off",
         "no-ternary": "off",
+        // typescript ensures that constructor functions are only called with new, so the convention is not necessary.
         "new-cap": "off",
+        // Value is questionable, see
+        // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/typedef.md
         "@typescript-eslint/typedef": "off",
         "multiline-ternary": [
             "error",
@@ -98,9 +103,10 @@ module.exports = {
             "error",
             "after"
         ],
+        // Could make sense for larger projects with multiple developers, seems overkill for small projects.
         "@typescript-eslint/explicit-module-boundary-types": "off",
-        "no-extra-parens": "off",
-        "@typescript-eslint/no-extra-parens": "off",
+        "no-extra-parens": "off", // Was turned off in favor of no-mixed-operators.
+        "@typescript-eslint/no-extra-parens": "off", // Was turned off in favor of no-mixed-operators.
         "function-paren-newline": [
             "error",
             "multiline-arguments"
@@ -111,17 +117,20 @@ module.exports = {
                 allowAllPropertiesOnSameLine: true
             }
         ],
-        "id-length": "off",
-        "@typescript-eslint/no-unused-vars-experimental": "off",
-        "max-statements": "off",
-        "max-lines-per-function": "off",
-        "@typescript-eslint/restrict-template-expressions": "off",
-        "@typescript-eslint/no-unnecessary-condition": "off",
+        "id-length": "off", // Seems too restrictive, sometimes one character is enough (e.g. for inline arrows).
+        "@typescript-eslint/no-unused-vars-experimental": "off", // Turned off in favor of no-unused-vars.
+        "max-statements": "off", // Does not make much sense for describe-style tests.
+        "max-lines-per-function": "off", // Does not make much sense for describe-style tests.
+        "@typescript-eslint/restrict-template-expressions": "off", // The advantages are unclear.
+        "@typescript-eslint/no-unnecessary-condition": "off", // Flags expressions like `... || "Error"`.
         "max-params": "off",
-        "no-invalid-this": "off", // https://github.com/typescript-eslint/typescript-eslint/issues/491
-        "@typescript-eslint/consistent-type-definitions": "error",
+        // Does not work for all cases in typescript https://github.com/typescript-eslint/typescript-eslint/issues/491.
+        "no-invalid-this": "off",
+        "@typescript-eslint/consistent-type-definitions": "off", // We want to use both interfaces and types.
+        // Leads to a lot of duplication without clear advantages. If types are necessary for documentation purposes,
+        // @typescript-eslint/explicit-module-boundary-types would be preferable.
         "@typescript-eslint/explicit-function-return-type": "off",
-        "no-warning-comments": "off",
+        "no-warning-comments": "off", // Turn this on after tackling TODOs ;-)?.
         "@typescript-eslint/explicit-member-accessibility": [
             "error",
             {
