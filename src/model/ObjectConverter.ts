@@ -114,8 +114,11 @@ export class ObjectConverter {
     >(
         rawObject: P | S | A | Q | M,
         [
-            convertPreciousMetalObject, convertSimpleCryptoObject,
-            convertAddressCryptoObject, convertQuantityCryptoObject, convertMiscObject,
+            convertPreciousMetalObject,
+            convertSimpleCryptoObject,
+            convertAddressCryptoObject,
+            convertQuantityCryptoObject,
+            convertMiscObject,
         ]: Converters<P, S, A, Q, M, PR, SR, AR, QR, MR>,
     ) {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should

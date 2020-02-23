@@ -32,8 +32,17 @@ export class ColumnInfo {
 
     public static getAllNames(groupBys: GroupBys): readonly ColumnName[] {
         return [
-            "expand", groupBys[0], "percent", "more", "totalValue", groupBys[1], "unit",
-            "quantity", "unitValue", "description", "fineness",
+            "expand",
+            groupBys[0],
+            "percent",
+            "more",
+            "totalValue",
+            groupBys[1],
+            "unit",
+            "quantity",
+            "unitValue",
+            "description",
+            "fineness",
         ] as const;
     }
 }
