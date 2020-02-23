@@ -41,16 +41,6 @@ class BlobUtility {
     }
 }
 
-const loadTestFile = async (name: string) => {
-    const response = await tryFetch(name);
-
-    if (!response.ok) {
-        throw new Error(`Response Status: ${response.status} ${response.statusText}`);
-    }
-
-    return new TextDecoder().decode(new Uint8Array(await BlobUtility.toArrayBuffer(await response.blob())));
-};
-
 const tryFetch = async (name: string) => {
     const url = `/base/src/model/ModelParser.spec/${name}`;
 
@@ -59,6 +49,16 @@ const tryFetch = async (name: string) => {
     } catch (e) {
         throw new Error(`Network Error: ${e}`);
     }
+};
+
+const loadTestFile = async (name: string) => {
+    const response = await tryFetch(name);
+
+    if (!response.ok) {
+        throw new Error(`Response Status: ${response.status} ${response.statusText}`);
+    }
+
+    return new TextDecoder().decode(new Uint8Array(await BlobUtility.toArrayBuffer(await response.blob())));
 };
 
 type IExpectedProperties<T, U extends keyof T = never> =
