@@ -54,8 +54,8 @@ export class Browser {
     // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 
     // Opera 8.0+
-    public static readonly isOpera = (!!(window as any).opr && !!opr?.addons) ||
-        !!(window as any).opera || navigator.userAgent.indexOf(" OPR/") >= 0;
+    public static readonly isOpera = (Boolean((window as any).opr) && Boolean(opr?.addons)) ||
+        Boolean((window as any).opera) || navigator.userAgent.indexOf(" OPR/") >= 0;
 
     // Firefox 1.0+
     public static readonly isFirefox = typeof InstallTrigger !== "undefined";
@@ -67,18 +67,18 @@ export class Browser {
         );
 
     // Internet Explorer 6-11
-    public static readonly isIE = !!(document as any).documentMode || false;
+    public static readonly isIE = Boolean((document as any).documentMode) || false;
 
     // Edge 20+
-    public static readonly isEdge = !Browser.isIE && !!(window as any).StyleMedia;
+    public static readonly isEdge = !Browser.isIE && Boolean((window as any).StyleMedia);
 
     // Chrome 1+
     // cSpell: ignore webstore
     // tslint:disable-next-line:no-unsafe-any
-    public static readonly isChrome = !!(window as any).chrome && !!(window as any).chrome.webstore;
+    public static readonly isChrome = Boolean((window as any).chrome) && Boolean((window as any).chrome.webstore);
 
     // Blink engine detection
-    public static readonly isBlink = (Browser.isChrome || Browser.isOpera) && !!(window as any).CSS;
+    public static readonly isBlink = (Browser.isChrome || Browser.isOpera) && Boolean((window as any).CSS);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

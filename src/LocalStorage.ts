@@ -62,7 +62,7 @@ export class LocalStorage {
             LocalStorage.sessionLocalStorageKey,
             model ? LocalStorage.saveImpl(model) : LocalStorage.emptyModelLocalStorageKey,
         );
-        url.searchParams.append(LocalStorage.sessionForceLoadFromLocalStorageKey, (!!model).toString());
+        url.searchParams.append(LocalStorage.sessionForceLoadFromLocalStorageKey, Boolean(model).toString());
         window.open(url.href);
     }
 
@@ -142,7 +142,7 @@ export class LocalStorage {
         // We need a key that is unique and monotonously increasing. When a browser is closed with the application
         // running in multiple tabs, it is likely that two tabs will get the same value from Date.now(). The random
         // component should reduce the likelihood of a collision.
-        const uniqueNumber = Math.trunc((Date.now() + Math.random()) * Math.pow(2, 10));
+        const uniqueNumber = Math.trunc((Date.now() + Math.random()) * (2 ** 10));
 
         if (!Number.isSafeInteger(uniqueNumber)) {
             // Make sure all digits are significant. Since Date.now() currently returns a value with 41 binary digits,
