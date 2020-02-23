@@ -210,7 +210,7 @@ const testSimpleCryptoWalletConstruction = (ctor: SimpleCryptoWalletCtor) => {
         ctor,
         props,
         "locationHint",
-        (matcher) => matcher.toEqual(("address" in props) && props.address || ""),
+        (matcher) => matcher.toEqual((("address" in props) && props.address) || ""),
     );
     expectProperty(ctor, props, "unit", (matcher) => matcher.toBeDefined());
     expectProperty(ctor, props, "quantityHint", (matcher) => matcher.toEqual(""));

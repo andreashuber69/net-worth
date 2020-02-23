@@ -53,7 +53,7 @@ export default class AssetEditor extends Vue {
     }
 
     public set type(value: string | undefined) {
-        this.assetInfo = value && AssetInput.infos[value] || new NoAssetInputInfo();
+        this.assetInfo = (value && AssetInput.infos[value]) || new NoAssetInputInfo();
         this.data.type = this.assetInfo.type;
     }
 

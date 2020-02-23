@@ -75,7 +75,7 @@ export class BtcWallet extends SimpleCryptoWallet {
         // eslint-disable-next-line @typescript-eslint/camelcase
         private static addBalance(result: IBalance, { final_balance, n_tx }: IAddressBalance) {
             // eslint-disable-next-line @typescript-eslint/camelcase
-            result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) + final_balance / 1E8;
+            result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) + (final_balance / 1E8);
             // eslint-disable-next-line @typescript-eslint/camelcase
             result.transactionCount += n_tx;
         }

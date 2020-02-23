@@ -65,8 +65,8 @@ export default class AssetList extends ComponentBase<Model> {
 
     public set options(options: IOptions) {
         this.checkedValue.assets.ordering.sort = {
-            by: options.sortBy.length && options.sortBy[0] || this.checkedValue.assets.ordering.sort.by,
-            descending: options.sortDesc.length && options.sortDesc[0] || false,
+            by: (options.sortBy.length && options.sortBy[0]) || this.checkedValue.assets.ordering.sort.by,
+            descending: (options.sortDesc.length && options.sortDesc[0]) || false,
         };
     }
 
@@ -123,7 +123,7 @@ export default class AssetList extends ComponentBase<Model> {
         // characters.
         const prefixWithoutSign = maxPrefix[0].substr(
             0,
-            maxPrefix[0].length - valueFormatted.length + ((value < 0) && 1 || 0),
+            maxPrefix[0].length - valueFormatted.length + (((value < 0) && 1) || 0),
         );
 
         return ((value < 0) || !maxPrefix[1]) ? prefixWithoutSign : `${prefixWithoutSign}-`;

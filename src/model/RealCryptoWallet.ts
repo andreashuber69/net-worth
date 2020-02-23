@@ -65,8 +65,8 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         currencySymbol: string,
     ): IRealCryptoWalletParameters {
         const { description, location, notes } = props;
-        const address = ("address" in props) && props.address || undefined;
-        const quantity = ("quantity" in props) && props.quantity || undefined;
+        const address = (("address" in props) && props.address) || undefined;
+        const quantity = (("quantity" in props) && props.quantity) || undefined;
 
         return {
             ...RealCryptoWallet.getPropertiesImpl([description, location, address, quantity, notes]),
@@ -78,8 +78,8 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         super(parent, params.currencySymbol);
         this.description = params.description;
         this.location = params.location ?? "";
-        this.address = ("address" in params) && params.address || "";
-        this.quantity = ("quantity" in params) && params.quantity || undefined;
+        this.address = (("address" in params) && params.address) || "";
+        this.quantity = (("quantity" in params) && params.quantity) || undefined;
         this.notes = params.notes ?? "";
     }
 

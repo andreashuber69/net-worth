@@ -78,7 +78,7 @@ export class Erc20TokensWalletBundle extends AssetBundle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getTokens({ tokens }: EthplorerGetAddressInfoResponse): [readonly IToken[], string] {
-        return tokens && [tokens, ""] || [[Erc20TokensWalletBundle.noTokenBalance], "No Token Balance Found!"];
+        return (tokens && [tokens, ""]) || [[Erc20TokensWalletBundle.noTokenBalance], "No Token Balance Found!"];
     }
 
     private static get noTokenBalance(): IToken {
@@ -103,7 +103,7 @@ export class Erc20TokensWalletBundle extends AssetBundle {
                 currencySymbol: info.symbol,
                 quantity: token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
                 quantityHint,
-                unitValueUsd: info.price && info.price.rate || 0,
+                unitValueUsd: (info.price && info.price.rate) || 0,
             }));
         }
     }

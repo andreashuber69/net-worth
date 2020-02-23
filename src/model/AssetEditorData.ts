@@ -55,7 +55,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getType(asset?: AssetUnion) {
-        return asset && asset.type || "";
+        return (asset && asset.type) || "";
     }
 
     private static getDescription(asset?: AssetUnion) {
@@ -67,7 +67,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getAddress(asset?: AssetUnion) {
-        return asset && ("address" in asset) && asset.address || undefined;
+        return (asset && ("address" in asset) && asset.address) || undefined;
     }
 
     private static getWeight(asset?: AssetUnion) {
@@ -91,7 +91,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getQuantity(asset?: AssetUnion) {
-        return asset && ("quantity" in asset) && asset.quantity.toString() || undefined;
+        return (asset && ("quantity" in asset) && asset.quantity.toString()) || undefined;
     }
 
     private static getNotes(asset?: AssetUnion) {
