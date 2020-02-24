@@ -217,14 +217,6 @@ module.exports = {
             "always"
         ],
         "id-blacklist": "off", // Often, e.g. "error" is a perfectly acceptable identifier.
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "max-classes-per-file": [
-            "error",
-            1
-        ],
         "max-len": [
             "error",
             {
