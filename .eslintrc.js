@@ -216,7 +216,7 @@ module.exports = {
             "error",
             "always"
         ],
-        "id-blacklist": "off",
+        "id-blacklist": "off", // Often, e.g. "error" is a perfectly acceptable identifier.
         "linebreak-style": [
             "error",
             "unix"
@@ -235,19 +235,14 @@ module.exports = {
             "error",
             1000
         ],
-        "newline-per-chained-call": "off",
+        "newline-per-chained-call": "off", // This rule seems too restrictive.
+        // Typescript already catches many of the bugs that this rule would because bitwise operators are not allowed
+        // for booleans.
         "no-bitwise": "off",
-        "no-caller": "error",
-        "no-cond-assign": "off",
-        "no-console": "off",
-        "no-magic-numbers": "off",
         // cSpell: ignore plusplus
-        "no-plusplus": [
-            "off",
-            {
-                allowForLoopAfterthoughts: true
-            }
-        ],
+        // Most of the problems with the ++ and -- operators are avoided because we've turned on 
+        // @typescript-eslint/semi.
+        "no-plusplus": "off",
         "no-restricted-syntax": [
             "error",
             "ForInStatement"
@@ -258,13 +253,10 @@ module.exports = {
                 hoist: "all"
             }
         ],
+        // Was turned off in favor of @typescript-eslint/no-useless-constructor (which is turned on with default
+        // settings).
         "no-useless-constructor": "off",
-        "@typescript-eslint/no-useless-constructor": "error",
-        "no-void": "off",
-        "one-var": [
-            "error",
-            "never"
-        ],
+        "one-var": "off", // Does not seem to work with const and let?
         "padding-line-between-statements": [
             "error",
             {
@@ -272,6 +264,7 @@ module.exports = {
                 prev: "*",
                 next: "return"
             }
+            // TODO: Configure to match code style
         ],
         "quote-props": [
             "error",
