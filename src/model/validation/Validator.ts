@@ -40,6 +40,7 @@ export class Validator {
         const validationResult = Validator.validate(data, ctor.name);
 
         if (validationResult !== true) {
+            // eslint-disable-next-line no-console
             console.log(`${JSON.stringify(data, undefined, 2)} does not satisfy ${ctor.name}`);
             throw new ValidationError(Validator.ajv.errorsText());
         }

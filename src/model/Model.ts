@@ -145,6 +145,7 @@ export class Model implements IParent {
     private currencyImpl: CurrencyName = this.currencies[0];
 
     private onCurrencyChanged() {
+        // eslint-disable-next-line no-console
         this.onCurrencyChangedImpl().catch((reason) => console.error(reason));
     }
 

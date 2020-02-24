@@ -140,6 +140,7 @@ export class AssetCollection {
     }
 
     private update(...newBundles: readonly AssetBundle[]) {
+        // eslint-disable-next-line no-console
         this.taskQueue.queue(async () => this.updateImpl(newBundles)).catch((error) => console.error(error));
     }
 
