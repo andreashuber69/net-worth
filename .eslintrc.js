@@ -93,6 +93,32 @@ module.exports = {
                 prefixWithI: "always"
             }
         ],
+        "jsdoc/check-alignment": "warn",
+        "jsdoc/check-examples": "warn",
+        "jsdoc/check-param-names": "warn",
+        "jsdoc/check-syntax": "warn",
+        "jsdoc/check-tag-names": [
+            "warn",
+            {
+                "definedTags": ["internal", "maximum", "minimum", "multipleOf"]
+            }
+        ],
+        "jsdoc/check-types": "warn",
+        "jsdoc/match-description": "warn",
+        "jsdoc/newline-after-description": "warn",
+        "jsdoc/no-types": "warn",
+        "jsdoc/require-description-complete-sentence": "warn",
+        "jsdoc/require-jsdoc": [
+            "warn",
+            {
+                publicOnly: true
+            }
+        ],
+        "jsdoc/require-param-description": "warn",
+        "jsdoc/require-param-name": "warn",
+        "jsdoc/require-returns-check": "warn",
+        "jsdoc/require-returns-description": "warn",
+        "jsdoc/valid-types": "warn",
         "line-comment-position": "off", // We want to allow comments above and beside code.
         // Does not work with interfaces, see https://github.com/typescript-eslint/typescript-eslint/issues/1150
         "lines-around-comment": "off",        
@@ -276,17 +302,6 @@ module.exports = {
             "error",
             {
                 rules: {
-                    "comment-type": [
-                        true,
-                        "singleline",
-                        "multiline",
-                        "doc",
-                        "directive"
-                    ],
-                    "encoding": true,
-                    "import-spacing": true,
-                    "invalid-void": true,
-                    "jsdoc-format": true,
                     "match-default-export-name": true,
                     "no-boolean-literal-compare": true,
                     "no-default-import": true,
