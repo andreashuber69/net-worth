@@ -14,6 +14,7 @@
 export class TaskQueue {
     /**
      * Queues and executes the supplied task.
+     *
      * @description First waits for possibly still queued tasks to complete in the sequence they were queued and then
      * calls `executeTask`, waits for the returned promise to settle and then returns the result.
      * @returns The promise returned by `executeTask`.

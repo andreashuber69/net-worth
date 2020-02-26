@@ -12,6 +12,7 @@
 
 /**
  * Defines valid values for misc asset values.
+ *
  * @multipleOf 0.01
  */
 export type Value = number;

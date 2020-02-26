@@ -12,6 +12,7 @@
 
 /**
  * Defines valid values for asset quantities with zero decimals.
+ *
  * @minimum 0
  * @multipleOf 1
  */

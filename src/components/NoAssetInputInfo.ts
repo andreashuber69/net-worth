@@ -17,6 +17,7 @@ import { TextInputInfo } from "../model/TextInputInfo";
 
 /**
  * Defines how an asset with no properties needs to be "input".
+ *
  * @description This is a virtual asset that is only useful to define how the [[AssetEditor]] UI looks like when no
  * asset type has been selected yet.
  */

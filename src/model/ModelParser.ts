@@ -26,8 +26,9 @@ export class ModelParser {
     /**
      * Returns a [[Model]] object that is equivalent to the passed JSON string or returns a string that describes why
      * the parse process failed.
+     *
      * @description This is typically called with a string that was returned by [[toJsonString]].
-     * @param json The string to parse
+     * @param json The string to parse.
      */
     public static parse(json: string) {
         try {

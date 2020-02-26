@@ -16,12 +16,14 @@ import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 
 /**
  * Defines the base for all classes that provide input information for a primitive or composite value.
+ *
  * @description Input information refers to data displayed in the UI (prompts, hints, whether a value is required, etc.)
  * as well as the means to validate input.
  */
 export abstract class InputInfo {
     /**
      * Validates `input` or a property of `input`.
+     *
      * @description As the type indicates, `input` can be of primitive or composite type. In the former case, `input`
      * itself is validated. In the latter case, the value of the property with the passed name is validated. Either
      * way, this method only ever validates a single primitive value.
@@ -35,6 +37,7 @@ export abstract class InputInfo {
 
     /**
      * Gets the [[PrimitiveInputInfo]] subclass object for a property.
+     *
      * @description When implemented by [[PrimitiveInputInfo]], this method simply returns `this`.
      * @throws `Error` if `T` does not match the type implied by `propertyName`.
      */

@@ -19,6 +19,7 @@ export class ComponentBase<T> extends Vue {
 
     /**
      * Provides the value.
+     *
      * @description Provides whatever is set for `value`, but ensures that the value cannot be undefined.
      */
     public get checkedValue() {

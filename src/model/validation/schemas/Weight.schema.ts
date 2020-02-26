@@ -12,6 +12,7 @@
 
 /**
  * Defines valid values for the precious metal weights.
+ *
  * @minimum 0.001
  * @multipleOf 0.001
  */

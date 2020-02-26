@@ -15,6 +15,7 @@ import { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
 
 /**
  * Defines the base of all classes that represent a bundle of assets.
+ *
  * @description Asset bundles are primarily useful in conjunction with crypto currencies, where one address can hold a
  * balance of multiple currencies. For example, an ETH address can hold balances of hundreds of ERC20 tokens. A bundle
  * of assets is always defined by a primary asset, the details of which are then used to retrieve information about

@@ -25,6 +25,7 @@ export type WeightUnitName = keyof typeof WeightUnit;
 
 /**
  * Enumerates the weight units supported by the application.
+ *
  * @description While it's easy to get the names of an enum in a string[] it seems impossible to get them in a literal
  * types tuple like this one, which is why we need to repeat them. [[arrayOfAll]] at least ensures that all names are
  * present and that they're written correctly.

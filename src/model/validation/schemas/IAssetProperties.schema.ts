@@ -14,6 +14,7 @@ import { AssetTypeName } from "./AssetTypeName.schema";
 
 /**
  * Defines the common editable properties of all assets.
+ *
  * @description This interface (as well as its extending interfaces) defines the properties as they need to be provided
  * by the user as well as by the serialized form. Properties that are defined optional here are also optional in the UI
  * and during parsing.

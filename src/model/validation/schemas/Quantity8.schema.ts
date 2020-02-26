@@ -12,6 +12,7 @@
 
 /**
  * Defines valid values for asset quantities with 8 decimals.
+ *
  * @minimum 0
  * @multipleOf 0.00000001
  */

@@ -17,8 +17,8 @@ export type ColumnName = "expand" | AssetDisplayPropertyName | "more";
 
 export class ColumnInfo {
     /**
-     * This is the number of columns that are always visible. If no optional columns are currently shown (i.e.
-     * optionalCount = 0), the first 4 columns of whatever is returned by `getAllNames` will be shown.
+     * This is the number of columns that are always visible. If no optional columns are currently shown
+     * (optionalCount = 0), the first 4 columns of whatever is returned by `getAllNames` will be shown.
      */
     public static readonly requiredCount = 4;
 
