@@ -95,6 +95,12 @@ module.exports = {
         ],
         "jsdoc/check-alignment": "warn",
         "jsdoc/check-examples": "warn",
+        "jsdoc/check-indentation": [
+            "warn",
+            {
+                excludeTags: ["description"]
+            }
+        ],
         "jsdoc/check-param-names": "warn",
         "jsdoc/check-syntax": "warn",
         "jsdoc/check-tag-names": [
