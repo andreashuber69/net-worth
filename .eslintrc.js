@@ -80,6 +80,7 @@ module.exports = {
         ],
         "id-blacklist": "off", // Often, e.g. "error" is a perfectly acceptable identifier.
         "id-length": "off", // Seems too restrictive, sometimes one character is enough (e.g. for inline arrows).
+        "indent": "off",
         "@typescript-eslint/indent": [
             "error",
             4,
@@ -114,12 +115,6 @@ module.exports = {
         "jsdoc/newline-after-description": "warn",
         "jsdoc/no-types": "warn",
         "jsdoc/require-description-complete-sentence": "warn",
-        "jsdoc/require-jsdoc": [
-            "warn",
-            {
-                publicOnly: true
-            }
-        ],
         "jsdoc/require-param-description": "warn",
         "jsdoc/require-param-name": "warn",
         "jsdoc/require-returns-check": "warn",
@@ -359,5 +354,10 @@ module.exports = {
         // Value is questionable, see
         // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/typedef.md
         "@typescript-eslint/typedef": "off"
+    },
+    settings: {
+        jsdoc: {
+            mode: "typescript"
+        }
     }
 };
