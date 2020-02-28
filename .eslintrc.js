@@ -1,3 +1,5 @@
+const extensions = [".js", ".ts"];
+
 module.exports = {
     env: {
         browser: true,
@@ -80,6 +82,12 @@ module.exports = {
         ],
         "id-blacklist": "off", // Often, e.g. "error" is a perfectly acceptable identifier.
         "id-length": "off", // Seems too restrictive, sometimes one character is enough (e.g. for inline arrows).
+        "import/no-unresolved": [
+            "error",
+            {
+                commonjs: true,
+            }
+        ],
         "indent": "off",
         "@typescript-eslint/indent": [
             "error",
@@ -357,6 +365,19 @@ module.exports = {
         "@typescript-eslint/typedef": "off"
     },
     settings: {
+        "import/extensions": extensions,
+        "import/external-module-folders": [
+            "node_modules",
+            "node_modules/@types"
+        ],
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts"],
+        },
+        "import/resolver": {
+            node: {
+                extensions
+            }
+        },
         jsdoc: {
             mode: "typescript"
         }
