@@ -13,7 +13,6 @@
 // tslint:disable-next-line:no-implicit-dependencies no-submodule-imports
 import { arrayOfAll } from "./arrayOfAll";
 import { Asset, IParent } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetGroup } from "./AssetGroup";
 import { allAssetPropertyNames, AssetPropertyName } from "./AssetInterfaces";
@@ -163,7 +162,7 @@ const testPreciousMetalAssetConstruction = (ctor: IPreciousMetalAssetCtor) => {
         props,
         "bundle",
         "should return an AssetBundle",
-        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true),
+        (asset) => expect(asset.bundle() instanceof Object).toBe(true),
     );
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
@@ -234,7 +233,7 @@ const testSimpleCryptoWalletConstruction = (ctor: SimpleCryptoWalletCtor) => {
         props,
         "bundle",
         "should return an AssetBundle",
-        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true),
+        (asset) => expect(asset.bundle() instanceof Object).toBe(true),
     );
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
@@ -304,7 +303,7 @@ const testAddressCryptoWalletConstruction = (ctor: AddressCryptoWalletCtor) => {
         props,
         "bundle",
         "should return an AssetBundle",
-        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true),
+        (asset) => expect(asset.bundle() instanceof Object).toBe(true),
     );
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 
@@ -374,7 +373,7 @@ const testMiscAssetConstruction = (ctor: IMiscAssetCtor) => {
         props,
         "bundle",
         "should return an AssetBundle",
-        (asset) => expect(asset.bundle() instanceof AssetBundle).toBe(true),
+        (asset) => expect(asset.bundle() instanceof Object).toBe(true),
     );
     testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
 

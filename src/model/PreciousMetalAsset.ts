@@ -12,7 +12,7 @@
 // <http://www.gnu.org/licenses/>.
 
 /* eslint-disable max-classes-per-file */
-import { IParent } from "./Asset";
+import { IAssetBundle, IParent } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
@@ -62,7 +62,7 @@ export abstract class PreciousMetalAsset extends SingleAsset {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public bundle(bundle?: unknown): GenericAssetBundle<PreciousMetalAsset> {
+    public bundle(bundle?: unknown): IAssetBundle {
         return new PreciousMetalAsset.Bundle(this);
     }
 
@@ -86,7 +86,7 @@ export abstract class PreciousMetalAsset extends SingleAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly Bundle = class NestedBundle extends GenericAssetBundle<PreciousMetalAsset> {
+    private static readonly Bundle = class extends GenericAssetBundle<PreciousMetalAsset> implements IAssetBundle {
         public toJSON() {
             return {
                 primaryAsset: this.assets[0].toJSON(),

@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 /* eslint-disable max-classes-per-file */
-import { IParent } from "./Asset";
+import { IAssetBundle, IParent } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
 import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
@@ -21,7 +21,7 @@ export abstract class SimpleCryptoWallet extends RealCryptoWallet {
     public abstract get type(): SimpleCryptoWalletTypeName;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public bundle(bundle?: unknown): GenericAssetBundle<SimpleCryptoWallet> {
+    public bundle(bundle?: unknown): IAssetBundle {
         return new SimpleCryptoWallet.Bundle(this);
     }
 
@@ -41,7 +41,7 @@ export abstract class SimpleCryptoWallet extends RealCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly Bundle = class NestedBundle extends GenericAssetBundle<SimpleCryptoWallet> {
+    private static readonly Bundle = class extends GenericAssetBundle<SimpleCryptoWallet> implements IAssetBundle {
         public toJSON() {
             return {
                 primaryAsset: this.assets[0].toJSON(),

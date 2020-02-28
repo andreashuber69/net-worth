@@ -11,8 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Application } from "./Application";
-import { IParent } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
+import { IAssetBundle, IParent } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { ExchangeRate } from "./ExchangeRate";
 import { QueryUtility } from "./QueryUtility";
@@ -28,7 +27,7 @@ export interface IModelParameters {
     readonly currency?: CurrencyName;
     readonly groupBy?: GroupBy;
     readonly sort?: ISort;
-    readonly createBundles: ReadonlyArray<(parent: IParent) => AssetBundle>;
+    readonly createBundles: ReadonlyArray<(parent: IParent) => IAssetBundle>;
 }
 
 export type IModel = Required<TaggedModel>;

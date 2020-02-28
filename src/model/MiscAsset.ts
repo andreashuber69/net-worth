@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 /* eslint-disable max-classes-per-file */
-import { IParent } from "./Asset";
+import { IAssetBundle, IParent } from "./Asset";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
 import { SingleAsset } from "./SingleAsset";
@@ -74,7 +74,7 @@ export class MiscAsset extends SingleAsset {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public bundle(bundle?: unknown): GenericAssetBundle<MiscAsset> {
+    public bundle(bundle?: unknown): IAssetBundle {
         return new MiscAsset.Bundle(this);
     }
 
@@ -86,7 +86,7 @@ export class MiscAsset extends SingleAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly Bundle = class NestedBundle extends GenericAssetBundle<MiscAsset> {
+    private static readonly Bundle = class extends GenericAssetBundle<MiscAsset> implements IAssetBundle {
         public toJSON() {
             return {
                 primaryAsset: this.assets[0].toJSON(),

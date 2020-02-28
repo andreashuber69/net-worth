@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetBundle } from "./AssetBundle";
 import { IAssetIntersection } from "./AssetInterfaces";
 import { IOrdering } from "./Ordering";
 import { QueryUtility } from "./QueryUtility";
+import { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
 import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 import { Fineness } from "./validation/schemas/Fineness.schema";
@@ -28,6 +28,34 @@ export interface IParent {
     };
 
     readonly exchangeRate?: number;
+}
+
+/**
+ * Represent a bundle of assets.
+ *
+ * @description Asset bundles are primarily useful in conjunction with crypto currencies, where one address can hold a
+ * balance of multiple currencies. For example, an ETH address can hold balances of hundreds of ERC20 tokens. A bundle
+ * of assets is always defined by a primary asset, the details of which are then used to retrieve information about
+ * secondary assets. For example, in the case of ERC20 tokens, a [[Erc20TokensWallet]] object is the primary asset
+ * and the nested [[Erc20TokenWallet]] objects are the secondary assets. When the former is instantiated with an address
+ * and then put into a bundle by calling [[Erc20TokensWallet.bundle]], [[Erc20TokenWallet]] objects are automatically
+ * added to [[assets]] for each of the ERC20 tokens.
+ * Since every asset must reside in a bundle, there is also the class [[GenericAssetBundle]], which never holds
+ * secondary assets besides the primary one. This is used for all [[PreciousMetalAsset]] subclasses and other
+ * [[CryptoWallet]] subclasses.
+ */
+export interface IAssetBundle {
+    /** Provides the bundled assets. */
+    readonly assets: readonly Asset[];
+
+    /** Deletes `asset` from [[assets]]. */
+    deleteAsset(asset: Asset): void;
+
+    /** @internal */
+    queryData(): Promise<void>;
+
+    /** @internal */
+    toJSON(): AssetBundleUnion;
 }
 
 /** Defines the base of all classes that represent an asset. */
@@ -121,7 +149,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
 
     /** @internal */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
-    public bundle(bundle?: unknown): AssetBundle {
+    public bundle(bundle?: unknown): IAssetBundle {
         throw new Error("Asset cannot be bundled.");
     }
 

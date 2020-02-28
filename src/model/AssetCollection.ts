@@ -10,8 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IParent } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
+import { Asset, IAssetBundle, IParent } from "./Asset";
 import { AssetCollectionUtility } from "./AssetCollectionUtility";
 import { AssetGroup } from "./AssetGroup";
 import { Ordering } from "./Ordering";
@@ -25,7 +24,7 @@ interface INotifiableParent extends IParent {
 
 interface IAssetCollectionParameters {
     parent: INotifiableParent;
-    bundles: AssetBundle[];
+    bundles: IAssetBundle[];
     groupBy?: GroupBy;
     sort?: ISort;
 }
@@ -123,7 +122,7 @@ export class AssetCollection {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static async queryBundleData(bundle: AssetBundle, id: number) {
+    private static async queryBundleData(bundle: IAssetBundle, id: number) {
         await bundle.queryData();
 
         return id;
@@ -131,7 +130,7 @@ export class AssetCollection {
 
     private readonly taskQueue = new TaskQueue();
     private readonly groups = new Array<AssetGroup>();
-    private readonly bundles: AssetBundle[];
+    private readonly bundles: IAssetBundle[];
     private readonly parent: INotifiableParent;
 
     private onGroupChanged() {
@@ -139,12 +138,12 @@ export class AssetCollection {
         this.update();
     }
 
-    private update(...newBundles: readonly AssetBundle[]) {
+    private update(...newBundles: readonly IAssetBundle[]) {
         // eslint-disable-next-line no-console
         this.taskQueue.queue(async () => this.updateImpl(newBundles)).catch((error) => console.error(error));
     }
 
-    private async updateImpl(newBundles: readonly AssetBundle[]) {
+    private async updateImpl(newBundles: readonly IAssetBundle[]) {
         this.updateGroups();
         const promises = new Map<number, Promise<number>>(
             newBundles.map<[number, Promise<number>]>((b, i) => [i, AssetCollection.queryBundleData(b, i)]),

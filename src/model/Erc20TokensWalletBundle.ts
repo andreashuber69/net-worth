@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetBundle } from "./AssetBundle";
+import { IAssetBundle } from "./Asset";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { QueryCache } from "./QueryCache";
@@ -20,12 +20,10 @@ import { EthplorerGetAddressInfoResponse, IToken } from "./validation/schemas/Et
 import { IErc20TokensWalletBundle } from "./validation/schemas/IErc20TokensWalletBundle.schema";
 import { Validator } from "./validation/Validator";
 
-export class Erc20TokensWalletBundle extends AssetBundle {
+export class Erc20TokensWalletBundle implements IAssetBundle {
     public readonly assets = new Array<Erc20TokenWallet>();
 
     public constructor(private readonly erc20Wallet: Erc20TokensWallet, bundle?: unknown) {
-        super();
-
         try {
             this.deletedAssets = [...Validator.fromData(bundle, DeletedAssets).deletedAssets];
         } catch {
