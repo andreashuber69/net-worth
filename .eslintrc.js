@@ -197,6 +197,7 @@ module.exports = {
         "no-invalid-this": "off",
         "no-magic-numbers": "off", // Makes sense but appears to be too restrictive.
         "@typescript-eslint/no-magic-numbers": "off", // Makes sense but appears to be too restrictive.
+        "no-null/no-null": "error",
         "@typescript-eslint/no-parameter-properties": "off", // The value of this rule seems dubious at best.
         // cSpell: ignore plusplus
         // Most of the problems with the ++ and -- operators are avoided because we've turned on 
