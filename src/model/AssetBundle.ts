@@ -28,8 +28,6 @@ import { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
  * [[CryptoWallet]] subclasses.
  */
 export abstract class AssetBundle {
-    public static readonly primaryAssetName = "primaryAsset";
-
     /** Provides the bundled assets. */
     public abstract get assets(): readonly Asset[];
 
