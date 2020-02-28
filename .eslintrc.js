@@ -82,12 +82,6 @@ module.exports = {
         ],
         "id-blacklist": "off", // Often, e.g. "error" is a perfectly acceptable identifier.
         "id-length": "off", // Seems too restrictive, sometimes one character is enough (e.g. for inline arrows).
-        "import/no-unresolved": [
-            "error",
-            {
-                commonjs: true,
-            }
-        ],
         "indent": "off",
         "@typescript-eslint/indent": [
             "error",
