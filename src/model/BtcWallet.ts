@@ -12,8 +12,7 @@
 
 /* eslint-disable max-classes-per-file */
 import { HDNode } from "bitcoinjs-lib";
-
-import { IParent } from "./Asset";
+import { IParent } from "./IEditable";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";

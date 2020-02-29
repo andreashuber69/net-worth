@@ -12,13 +12,15 @@
 
 // tslint:disable-next-line:no-implicit-dependencies no-submodule-imports
 import { arrayOfAll } from "./arrayOfAll";
-import { Asset, IParent } from "./Asset";
+import { Asset } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetGroup } from "./AssetGroup";
 import { allAssetPropertyNames, AssetPropertyName } from "./AssetInterfaces";
 import {
-    getAddressCryptoWalletProperties, getMiscAssetProperties,
-    getPreciousMetalProperties, getSimpleCryptoWalletProperties,
+    getAddressCryptoWalletProperties,
+    getMiscAssetProperties,
+    getPreciousMetalProperties,
+    getSimpleCryptoWalletProperties,
 } from "./AssetProperties";
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
@@ -30,6 +32,7 @@ import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { EtcWallet } from "./EtcWallet";
 import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
+import { IParent } from "./IEditable";
 import { LtcWallet } from "./LtcWallet";
 import { IMiscAssetCtor, MiscAsset } from "./MiscAsset";
 import { PalladiumAsset } from "./PalladiumAsset";

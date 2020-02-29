@@ -12,8 +12,9 @@
 // <http://www.gnu.org/licenses/>.
 
 /* eslint-disable max-classes-per-file */
-import { IAssetBundle, IParent } from "./Asset";
+import { IAssetBundle } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
+import { IParent } from "./IEditable";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
 import { Fineness } from "./validation/schemas/Fineness.schema";

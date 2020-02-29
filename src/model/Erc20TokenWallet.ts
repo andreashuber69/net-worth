@@ -11,12 +11,20 @@
 // <http://www.gnu.org/licenses/>.
 
 import { CryptoWallet } from "./CryptoWallet";
-import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { AddressCryptoWalletTypeName } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
+import { IEditable } from "./IEditable";
+
+interface IEditableErc20TokensWallet extends IEditable {
+    readonly type: AddressCryptoWalletTypeName;
+    readonly description: string;
+    readonly location: string;
+    readonly address: string;
+    readonly notes: string;
+}
 
 interface ITokenWalletParameters {
-    readonly editable: Erc20TokensWallet;
+    readonly editable: IEditableErc20TokensWallet;
     readonly currencySymbol: string;
     readonly quantity: QuantityAny;
     readonly quantityHint: string;
@@ -64,5 +72,5 @@ export class Erc20TokenWallet extends CryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private readonly editable: Erc20TokensWallet;
+    private readonly editable: IEditableErc20TokensWallet;
 }

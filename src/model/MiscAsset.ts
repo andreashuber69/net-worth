@@ -11,9 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 /* eslint-disable max-classes-per-file */
-import { IAssetBundle, IParent } from "./Asset";
+import { IAssetBundle } from "./Asset";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
+import { IParent } from "./IEditable";
 import { SingleAsset } from "./SingleAsset";
 import { misc } from "./validation/schemas/AssetTypeName.schema";
 import { CurrencyName } from "./validation/schemas/CurrencyName.schema";

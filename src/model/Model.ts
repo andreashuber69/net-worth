@@ -11,9 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Application } from "./Application";
-import { IAssetBundle, IParent } from "./Asset";
+import { IAssetBundle } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { ExchangeRate } from "./ExchangeRate";
+import { IParent } from "./IEditable";
 import { QueryUtility } from "./QueryUtility";
 import { CurrencyName, currencyNames } from "./validation/schemas/CurrencyName.schema";
 import { GroupBy } from "./validation/schemas/GroupBy.schema";

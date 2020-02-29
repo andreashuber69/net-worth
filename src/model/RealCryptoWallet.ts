@@ -10,9 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
 import { CryptoCompareRequest } from "./CryptoCompareRequest";
 import { CryptoWallet } from "./CryptoWallet";
+import { IParent } from "./IEditable";
 import { QueryUtility } from "./QueryUtility";
 import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";

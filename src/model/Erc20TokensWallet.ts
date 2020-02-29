@@ -10,8 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
 import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
+import { IParent } from "./IEditable";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { erc20Tokens } from "./validation/schemas/AssetTypeName.schema";
 import { IAddressCryptoWallet } from "./validation/schemas/IAddressCryptoWallet.schema";

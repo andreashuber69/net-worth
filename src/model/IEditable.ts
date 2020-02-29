@@ -10,19 +10,22 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { BlockcypherWallet } from "./BlockcypherWallet";
-import { IParent } from "./IEditable";
-import { RealCryptoWallet } from "./RealCryptoWallet";
-import { dash } from "./validation/schemas/AssetTypeName.schema";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
+import { IOrdering } from "./Ordering";
 
-/** Represents a DASH wallet. */
-export class DashWallet extends BlockcypherWallet {
-    public static readonly type = dash;
+/** @internal */
+export interface IParent {
+    readonly assets: {
+        readonly ordering: IOrdering;
+        readonly grandTotalValue?: number;
+    };
 
-    public readonly type = dash;
+    readonly exchangeRate?: number;
+}
 
-    public constructor(parent: IParent, props: ISimpleCryptoWalletProperties) {
-        super(parent, RealCryptoWallet.getProperties(props, "DASH"));
-    }
+export interface IEditable {
+    readonly type: AssetTypeName | "";
+    readonly parent: IParent;
+    toJSON(): AssetUnion;
 }

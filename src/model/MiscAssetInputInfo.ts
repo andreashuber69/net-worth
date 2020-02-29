@@ -10,8 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
 import { AssetInputInfo } from "./AssetInputInfo";
+import { IParent } from "./IEditable";
 import { MiscAsset } from "./MiscAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";

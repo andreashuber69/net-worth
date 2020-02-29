@@ -11,15 +11,14 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Vue } from "vue-property-decorator";
-
-import { Asset, IParent } from "../model/Asset";
+import { Asset } from "../model/Asset";
 import { AssetEditorData } from "../model/AssetEditorData";
 import { AssetInput } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { createAsset } from "../model/AssetProperties";
+import { IParent } from "../model/IEditable";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { assetTypeNames } from "../model/validation/schemas/AssetTypeName.schema";
-
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
 // tslint:disable-next-line:no-default-import
 import Select from "./Select.vue";

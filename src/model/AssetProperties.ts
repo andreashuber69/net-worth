@@ -11,8 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 /* eslint-disable max-classes-per-file */
-import { Asset, IParent } from "./Asset";
+import { Asset } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
+import { IParent } from "./IEditable";
 import { ObjectConverter } from "./ObjectConverter";
 import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";

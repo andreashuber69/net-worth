@@ -10,7 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IParent } from "./Asset";
+import { Asset } from "./Asset";
+import { IParent } from "./IEditable";
 import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 
 // This could easily be fixed by overriding abstract methods in two extending classes, but doing so seems strange at

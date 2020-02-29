@@ -10,9 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IAssetBundle, IParent } from "./Asset";
+import { Asset, IAssetBundle } from "./Asset";
 import { AssetCollectionUtility } from "./AssetCollectionUtility";
 import { AssetGroup } from "./AssetGroup";
+import { IParent } from "./IEditable";
 import { Ordering } from "./Ordering";
 import { TaskQueue } from "./TaskQueue";
 import { GroupBy } from "./validation/schemas/GroupBy.schema";

@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAssetIntersection } from "./AssetInterfaces";
-import { IOrdering } from "./Ordering";
+import { IEditable, IParent } from "./IEditable";
 import { QueryUtility } from "./QueryUtility";
 import { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
@@ -19,16 +19,6 @@ import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 import { Fineness } from "./validation/schemas/Fineness.schema";
 import { ICalculatedAssetProperties } from "./validation/schemas/ICalculatedAssetProperties.schema";
 import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
-
-/** @internal */
-export interface IParent {
-    readonly assets: {
-        readonly ordering: IOrdering;
-        readonly grandTotalValue?: number;
-    };
-
-    readonly exchangeRate?: number;
-}
 
 /**
  * Represent a bundle of assets.
@@ -133,7 +123,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
     }
 
     /** Provides the associated asset that can be edited. */
-    public get editableAsset(): Asset {
+    public get editableAsset(): IEditable {
         return this;
     }
 
