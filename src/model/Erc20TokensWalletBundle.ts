@@ -11,8 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { IAssetBundle } from "./Asset";
-import { Erc20TokensWallet } from "./Erc20TokensWallet";
-import { Erc20TokenWallet } from "./Erc20TokenWallet";
+import { Erc20TokenWallet, IErc20TokensWallet } from "./Erc20TokenWallet";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { DeletedAssets } from "./validation/schemas/DeletedAssets.schema";
@@ -23,7 +22,7 @@ import { Validator } from "./validation/Validator";
 export class Erc20TokensWalletBundle implements IAssetBundle {
     public readonly assets = new Array<Erc20TokenWallet>();
 
-    public constructor(private readonly erc20Wallet: Erc20TokensWallet, bundle?: unknown) {
+    public constructor(private readonly erc20Wallet: IErc20TokensWallet, bundle?: unknown) {
         try {
             this.deletedAssets = [...Validator.fromData(bundle, DeletedAssets).deletedAssets];
         } catch {
