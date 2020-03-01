@@ -12,6 +12,7 @@
 
 import { AssetPropertyName } from "./AssetInterfaces";
 import { InputInfo } from "./InputInfo";
+import { Input, InputUtility } from "./Input";
 
 export interface IPrimitiveInputInfoProperties {
     readonly label: string;
@@ -26,6 +27,12 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
     public readonly hint: string;
     public readonly isPresent: boolean;
     public readonly isRequired: boolean;
+
+    public validate(strict: boolean, input: Input, propertyName?: AssetPropertyName) {
+        return InputUtility.isComposite(input) ?
+            "A composite value was provided when a primitive one was expected." :
+            this.validatePrimitive(strict, input, propertyName);
+    }
 
     public get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T {
         if (propertyName !== undefined) {

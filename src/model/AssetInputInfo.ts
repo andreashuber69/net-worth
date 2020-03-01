@@ -12,7 +12,7 @@
 
 import { AssetPropertyName } from "./AssetInterfaces";
 import { IAuxProperties } from "./IAuxProperties";
-import { CompositeInput } from "./Input";
+import { CompositeInput, Input, InputUtility } from "./Input";
 import { InputInfo } from "./InputInfo";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
@@ -53,6 +53,12 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
      * latter one.
      */
     public includeRelations = false;
+
+    public validate(strict: boolean, input: Input, propertyName?: AssetPropertyName) {
+        return InputUtility.isComposite(input) ?
+            this.validateComposite(strict, input, propertyName) :
+            "A primitive value was provided when a composite one was expected.";
+    }
 
     public get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T {
         if (propertyName === undefined) {

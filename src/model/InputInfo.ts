@@ -11,7 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetPropertyName } from "./AssetInterfaces";
-import { CompositeInput, Input, InputUtility } from "./Input";
+import { Input } from "./Input";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 
 /**
@@ -29,11 +29,7 @@ export abstract class InputInfo {
      * way, this method only ever validates a single primitive value.
      * @returns `true` if the property value is valid; otherwise a string describing why the value is invalid.
      */
-    public validate(strict: boolean, input: Input, propertyName?: AssetPropertyName) {
-        return InputUtility.isComposite(input) ?
-            this.validateComposite(strict, input, propertyName) :
-            this.validatePrimitive(strict, input, propertyName);
-    }
+    public abstract validate(strict: boolean, input: Input, propertyName?: AssetPropertyName): true | string;
 
     /**
      * Gets the [[PrimitiveInputInfo]] subclass object for a property.
@@ -42,30 +38,4 @@ export abstract class InputInfo {
      * @throws `Error` if `T` does not match the type implied by `propertyName`.
      */
     public abstract get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T;
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // eslint-disable-next-line class-methods-use-this
-    protected validatePrimitive(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        strict: boolean,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        input: unknown,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        propertyName?: AssetPropertyName,
-    ): true | string {
-        return "A primitive value was provided when a composite one was expected.";
-    }
-
-    // eslint-disable-next-line class-methods-use-this
-    protected validateComposite(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        strict: boolean,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        input: CompositeInput,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        propertyName?: AssetPropertyName,
-    ): true | string {
-        return "A composite value was provided when a primitive one was expected.";
-    }
 }
