@@ -11,7 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 /* eslint-disable max-classes-per-file */
-import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
+import { IPrimitiveInputInfoProperties } from "./InputInfo";
+import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { EnumSchemaName, SchemaName, Validator } from "./validation/Validator";
 
 export abstract class SelectInputInfoBase extends PrimitiveInputInfo {

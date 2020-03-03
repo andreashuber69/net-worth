@@ -10,7 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
+import { IPrimitiveInputInfoProperties } from "./InputInfo";
+import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SchemaName, Validator } from "./validation/Validator";
 
 interface ITextInputInfoProperties extends IPrimitiveInputInfoProperties {

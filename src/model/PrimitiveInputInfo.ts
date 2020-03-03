@@ -11,15 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetPropertyName } from "./AssetInterfaces";
-import { InputInfo } from "./InputInfo";
+import { InputInfo, IPrimitiveInputInfoProperties } from "./InputInfo";
 import { Input, InputUtility } from "./Input";
-
-export interface IPrimitiveInputInfoProperties {
-    readonly label: string;
-    readonly hint: string;
-    readonly isPresent: boolean;
-    readonly isRequired: boolean;
-}
 
 /** Defines the base for all classes that provide input information for a primitive value. */
 export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitiveInputInfoProperties {
@@ -34,7 +27,7 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
             this.validatePrimitive(strict, input, propertyName);
     }
 
-    public get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T {
+    public get<T extends IPrimitiveInputInfoProperties>(ctor: new() => T, propertyName?: AssetPropertyName): T {
         if (propertyName !== undefined) {
             throw new Error("The propertyName argument must be undefined for a primitive input.");
         }

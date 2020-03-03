@@ -13,7 +13,7 @@
 import { AssetPropertyName } from "./AssetInterfaces";
 import { IAuxProperties } from "./IAuxProperties";
 import { CompositeInput, Input, InputUtility } from "./Input";
-import { InputInfo } from "./InputInfo";
+import { InputInfo, IPrimitiveInputInfoProperties } from "./InputInfo";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
@@ -60,7 +60,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
             "A primitive value was provided when a composite one was expected.";
     }
 
-    public get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T {
+    public get<T extends IPrimitiveInputInfoProperties>(ctor: new() => T, propertyName?: AssetPropertyName): T {
         if (propertyName === undefined) {
             throw new Error("The propertyName argument cannot be undefined for a composite input.");
         }

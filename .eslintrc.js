@@ -83,6 +83,7 @@ module.exports = {
         "id-blacklist": "off", // Often, e.g. "error" is a perfectly acceptable identifier.
         "id-length": "off", // Seems too restrictive, sometimes one character is enough (e.g. for inline arrows).
         "import/no-absolute-path": "error",
+        "import/no-cycle": "error",
         "import/no-dynamic-require": "error",
         "import/no-webpack-loader-syntax": "error",
         "indent": "off",

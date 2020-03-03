@@ -12,7 +12,13 @@
 
 import { AssetPropertyName } from "./AssetInterfaces";
 import { Input } from "./Input";
-import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
+
+export interface IPrimitiveInputInfoProperties {
+    readonly label: string;
+    readonly hint: string;
+    readonly isPresent: boolean;
+    readonly isRequired: boolean;
+}
 
 /**
  * Defines the base for all classes that provide input information for a primitive or composite value.
@@ -32,10 +38,9 @@ export abstract class InputInfo {
     public abstract validate(strict: boolean, input: Input, propertyName?: AssetPropertyName): true | string;
 
     /**
-     * Gets the [[PrimitiveInputInfo]] subclass object for a property.
+     * Gets the input info for a property.
      *
-     * @description When implemented by [[PrimitiveInputInfo]], this method simply returns `this`.
      * @throws `Error` if `T` does not match the type implied by `propertyName`.
      */
-    public abstract get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T;
+    public abstract get<T extends IPrimitiveInputInfoProperties>(ctor: new() => T, propertyName?: AssetPropertyName): T;
 }
