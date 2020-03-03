@@ -15,6 +15,14 @@ import { AddressCryptoWalletTypeName, IAddressCryptoWallet } from "./validation/
 import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 import { IEditable } from "./IEditable";
 
+interface ITokenWalletParameters {
+    readonly editable: IErc20TokensWallet;
+    readonly currencySymbol: string;
+    readonly quantity: QuantityAny;
+    readonly quantityHint: string;
+    readonly unitValueUsd?: number;
+}
+
 export interface IErc20TokensWallet extends IEditable {
     readonly type: AddressCryptoWalletTypeName;
     readonly description: string;
@@ -24,14 +32,6 @@ export interface IErc20TokensWallet extends IEditable {
 
     queryData(): Promise<void>;
     toJSON(): IAddressCryptoWallet;
-}
-
-interface ITokenWalletParameters {
-    readonly editable: IErc20TokensWallet;
-    readonly currencySymbol: string;
-    readonly quantity: QuantityAny;
-    readonly quantityHint: string;
-    readonly unitValueUsd?: number;
 }
 
 export class Erc20TokenWallet extends CryptoWallet {

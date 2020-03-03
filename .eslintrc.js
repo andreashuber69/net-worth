@@ -84,6 +84,8 @@ module.exports = {
         "id-length": "off", // Seems too restrictive, sometimes one character is enough (e.g. for inline arrows).
         "import/default": "off", // Already covered by typescript.
         "import/export": "off", // Already covered by typescript.
+        "import/exports-last": "error",
+        "import/first": "error",
         "import/named": "off", // Already covered by typescript.
         "import/namespace": "off", // Already covered by typescript.
         "import/no-absolute-path": "error",

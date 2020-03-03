@@ -20,11 +20,11 @@ import { ValidationError } from "./ValidationError";
 // These are the only non-null primitives currently allowed in JSON schema, see
 // https://json-schema.org/draft/2019-09/json-schema-core.html#rfc.section.4.2.1
 const primitiveSchemaNames = ["Boolean", "Number", "String"] as const;
-
 type PrimitiveSchemaName = typeof primitiveSchemaNames[number];
+type PropertyNamesWithEnumMembers<T> = { [K in keyof T]: T[K] extends { enum: unknown[] } ? K : never }[keyof T];
+
 export type SchemaName = PrimitiveSchemaName | keyof typeof schema.definitions;
 
-type PropertyNamesWithEnumMembers<T> = { [K in keyof T]: T[K] extends { enum: unknown[] } ? K : never }[keyof T];
 export type EnumSchemaName = PropertyNamesWithEnumMembers<typeof schema.definitions>;
 
 export class Validator {
