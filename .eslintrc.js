@@ -82,6 +82,10 @@ module.exports = {
         ],
         "id-blacklist": "off", // Often, e.g. "error" is a perfectly acceptable identifier.
         "id-length": "off", // Seems too restrictive, sometimes one character is enough (e.g. for inline arrows).
+        "import/default": "off", // Already covered by typescript.
+        "import/export": "off", // Already covered by typescript.
+        "import/named": "off", // Already covered by typescript.
+        "import/namespace": "off", // Already covered by typescript.
         "import/no-absolute-path": "error",
         "import/no-amd": "error",
         "import/no-commonjs": "error",
@@ -89,11 +93,16 @@ module.exports = {
         "import/no-deprecated": "error",
         "import/no-dynamic-require": "error",
         "import/no-extraneous-dependencies": "error",
+        "import/no-internal-modules": "off", // Seems too restrictive.
         "import/no-mutable-exports": "error",
         "import/no-named-as-default": "error",
         "import/no-named-as-default-member": "error",
         "import/no-nodejs-modules": "error",
+        "import/no-relative-parent-imports": "off", // Seems too restrictive.
+        "import/no-restricted-paths": "off", // Seems too restrictive.
         "import/no-self-import": "error",
+        "import/no-unresolved": "off", // Already covered by typescript.
+        "import/no-useless-path-segments": "error",
         "import/unambiguous": "error",
         "import/no-unused-modules": "error",
         "import/no-webpack-loader-syntax": "error",
