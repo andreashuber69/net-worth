@@ -93,8 +93,15 @@ module.exports = {
             }
         ],
         "import/first": "error",
+        "import/max-dependencies": [
+            "error",
+            {
+                max: 30
+            }
+        ],
         "import/named": "off", // Already covered by typescript.
         "import/namespace": "off", // Already covered by typescript.
+        "import/newline-after-import": "error",
         "import/no-absolute-path": "error",
         "import/no-amd": "error",
         "import/no-commonjs": "error",
@@ -125,6 +132,7 @@ module.exports = {
                 }
             }
         ],
+        "import/prefer-default-export": "off", // Does not make much sense.
         "import/unambiguous": "error",
         "indent": "off",
         "@typescript-eslint/indent": [

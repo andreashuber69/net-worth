@@ -48,6 +48,7 @@ import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
+// eslint-disable-next-line import/max-dependencies
 import { ZecWallet } from "./ZecWallet";
 
 let randomValue = Date.now();
