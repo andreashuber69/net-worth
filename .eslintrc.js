@@ -86,6 +86,7 @@ module.exports = {
         "import/no-cycle": "error",
         "import/no-dynamic-require": "error",
         "import/no-self-import": "error",
+        "import/no-unused-modules": "error",
         "import/no-webpack-loader-syntax": "error",
         "indent": "off",
         "@typescript-eslint/indent": [
