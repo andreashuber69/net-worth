@@ -10,9 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { IOrdering } from "./Ordering";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
 import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
-import { IOrdering } from "./Ordering";
 
 /** @internal */
 export interface IParent {

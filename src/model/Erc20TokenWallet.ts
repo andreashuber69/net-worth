@@ -11,9 +11,9 @@
 // <http://www.gnu.org/licenses/>.
 
 import { CryptoWallet } from "./CryptoWallet";
+import { IEditable } from "./IEditable";
 import { AddressCryptoWalletTypeName, IAddressCryptoWallet } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
-import { IEditable } from "./IEditable";
 
 interface ITokenWalletParameters {
     readonly editable: IErc20TokensWallet;

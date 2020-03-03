@@ -85,6 +85,13 @@ module.exports = {
         "import/default": "off", // Already covered by typescript.
         "import/export": "off", // Already covered by typescript.
         "import/exports-last": "error",
+        "import/extensions": [
+            "error",
+            {
+                "json": "always",
+                "schema": "always"
+            }
+        ],
         "import/first": "error",
         "import/named": "off", // Already covered by typescript.
         "import/namespace": "off", // Already covered by typescript.
@@ -107,9 +114,18 @@ module.exports = {
         "import/no-self-import": "error",
         "import/no-unresolved": "off", // Already covered by typescript.
         "import/no-useless-path-segments": "error",
-        "import/unambiguous": "error",
         "import/no-unused-modules": "error",
         "import/no-webpack-loader-syntax": "error",
+        "import/order": [
+            "error",
+            {
+                alphabetize: {
+                    order: "asc",
+                    caseInsensitive: true
+                }
+            }
+        ],
+        "import/unambiguous": "error",
         "indent": "off",
         "@typescript-eslint/indent": [
             "error",

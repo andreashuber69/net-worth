@@ -11,8 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetPropertyName } from "./AssetInterfaces";
-import { InputInfo, IPrimitiveInputInfoProperties } from "./InputInfo";
 import { Input, InputUtility } from "./Input";
+import { InputInfo, IPrimitiveInputInfoProperties } from "./InputInfo";
 
 /** Defines the base for all classes that provide input information for a primitive value. */
 export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitiveInputInfoProperties {
