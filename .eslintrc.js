@@ -85,6 +85,7 @@ module.exports = {
         "import/no-absolute-path": "error",
         "import/no-cycle": "error",
         "import/no-dynamic-require": "error",
+        "import/no-self-import": "error",
         "import/no-webpack-loader-syntax": "error",
         "indent": "off",
         "@typescript-eslint/indent": [
@@ -363,19 +364,6 @@ module.exports = {
         "@typescript-eslint/typedef": "off"
     },
     settings: {
-        "import/extensions": extensions,
-        "import/external-module-folders": [
-            "node_modules",
-            "node_modules/@types"
-        ],
-        "import/parsers": {
-            "@typescript-eslint/parser": [".ts"],
-        },
-        "import/resolver": {
-            node: {
-                extensions
-            }
-        },
         jsdoc: {
             mode: "typescript"
         }
