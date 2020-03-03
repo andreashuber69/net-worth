@@ -106,6 +106,7 @@ module.exports = {
         "import/no-amd": "error",
         "import/no-commonjs": "error",
         "import/no-cycle": "error",
+        "import/no-default-export": "off", // Does not seem to be working
         "import/no-deprecated": "error",
         "import/no-duplicates": "error",
         "import/no-dynamic-require": "error",
@@ -114,14 +115,17 @@ module.exports = {
         "import/no-mutable-exports": "error",
         "import/no-named-as-default": "error",
         "import/no-named-as-default-member": "error",
+        "import/no-named-default": "error",
+        "import/no-named-export": "off", // Does not make sense.
         "import/no-namespace": "error",
         "import/no-nodejs-modules": "error",
         "import/no-relative-parent-imports": "off", // Seems too restrictive.
         "import/no-restricted-paths": "off", // Seems too restrictive.
         "import/no-self-import": "error",
+        "import/no-unassigned-import": "error",
         "import/no-unresolved": "off", // Already covered by typescript.
-        "import/no-useless-path-segments": "error",
         "import/no-unused-modules": "error",
+        "import/no-useless-path-segments": "error",
         "import/no-webpack-loader-syntax": "error",
         "import/order": [
             "error",
