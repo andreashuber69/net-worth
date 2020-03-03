@@ -12,7 +12,7 @@
 // <http://www.gnu.org/licenses/>.
 
 // tslint:disable-next-line:no-submodule-imports ordered-imports
-import * as OfflinePluginRuntime from "offline-plugin/runtime";
+import { install } from "offline-plugin/runtime";
 import Vue from "vue";
 
 // tslint:disable-next-line:no-default-import ordered-imports
@@ -24,7 +24,7 @@ import "./assets/roboto-fontface.css";
 // tslint:disable-next-line: no-default-import
 import vuetify from "./plugins/vuetify";
 
-OfflinePluginRuntime.install();
+install();
 Vue.config.productionTip = false;
 
 new Vue({

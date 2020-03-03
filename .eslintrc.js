@@ -93,12 +93,14 @@ module.exports = {
         "import/no-commonjs": "error",
         "import/no-cycle": "error",
         "import/no-deprecated": "error",
+        "import/no-duplicates": "error",
         "import/no-dynamic-require": "error",
         "import/no-extraneous-dependencies": "error",
         "import/no-internal-modules": "off", // Seems too restrictive.
         "import/no-mutable-exports": "error",
         "import/no-named-as-default": "error",
         "import/no-named-as-default-member": "error",
+        "import/no-namespace": "error",
         "import/no-nodejs-modules": "error",
         "import/no-relative-parent-imports": "off", // Seems too restrictive.
         "import/no-restricted-paths": "off", // Seems too restrictive.
