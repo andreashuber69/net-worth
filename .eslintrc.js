@@ -83,6 +83,7 @@ module.exports = {
         "id-blacklist": "off", // Often, e.g. "error" is a perfectly acceptable identifier.
         "id-length": "off", // Seems too restrictive, sometimes one character is enough (e.g. for inline arrows).
         "import/default": "off", // Already covered by typescript.
+        "import/dynamic-import-chunkname": "error",
         "import/export": "off", // Already covered by typescript.
         "import/exports-last": "error",
         "import/extensions": [
@@ -93,6 +94,8 @@ module.exports = {
             }
         ],
         "import/first": "error",
+        // There are advantages and disadvantages to turning this on or off. "off" seems the better choice.
+        "import/group-exports": "off",
         "import/max-dependencies": [
             "error",
             {
@@ -104,9 +107,21 @@ module.exports = {
         "import/newline-after-import": "error",
         "import/no-absolute-path": "error",
         "import/no-amd": "error",
+        "import/no-anonymous-default-export": [
+            "error",
+            {
+                "allowArray": false,
+                "allowArrowFunction": false,
+                "allowAnonymousClass": false,
+                "allowAnonymousFunction": false,
+                "allowCallExpression": false,
+                "allowLiteral": false,
+                "allowObject": false
+            }
+        ],
         "import/no-commonjs": "error",
         "import/no-cycle": "error",
-        "import/no-default-export": "off", // Does not seem to be working
+        "import/no-default-export": "off", // Does not seem to be working.
         "import/no-deprecated": "error",
         "import/no-duplicates": "error",
         "import/no-dynamic-require": "error",
