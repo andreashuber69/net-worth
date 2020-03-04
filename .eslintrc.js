@@ -1,5 +1,3 @@
-const extensions = [".js", ".ts"];
-
 module.exports = {
     env: {
         browser: true,
@@ -337,6 +335,14 @@ module.exports = {
                 next: "return"
             }
             // TODO: Configure to match code style
+        ],
+        "prefer-arrow/prefer-arrow-functions": [
+            "error",
+            {
+                "disallowPrototype": true,
+                "singleReturnOnly": false,
+                "classPropertiesAllowed": false
+            }
         ],
         "quote-props": [
             "error",
