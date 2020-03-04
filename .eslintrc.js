@@ -83,6 +83,7 @@ module.exports = {
         "id-blacklist": "off", // Often, e.g. "error" is a perfectly acceptable identifier.
         "id-length": "off", // Seems too restrictive, sometimes one character is enough (e.g. for inline arrows).
         "import/default": "off", // Already covered by typescript.
+        // cSpell: ignore chunkname
         "import/dynamic-import-chunkname": "error",
         "import/export": "off", // Already covered by typescript.
         "import/exports-last": "error",
