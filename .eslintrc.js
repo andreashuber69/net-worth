@@ -119,7 +119,7 @@ module.exports = {
         ],
         "import/no-commonjs": "error",
         "import/no-cycle": "error",
-        "import/no-default-export": "off", // Does not seem to be working.
+        "import/no-default-export": "error",
         "import/no-deprecated": "error",
         "import/no-duplicates": "error",
         "import/no-dynamic-require": "error",
