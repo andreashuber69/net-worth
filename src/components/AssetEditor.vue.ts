@@ -20,11 +20,8 @@ import { IParent } from "../model/IEditable";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { assetTypeNames } from "../model/validation/schemas/AssetTypeName.schema";
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
-// tslint:disable-next-line:no-default-import
 import Select from "./Select.vue";
-// tslint:disable-next-line:no-default-import
 import TextArea from "./TextArea.vue";
-// tslint:disable-next-line:no-default-import
 import TextField from "./TextField.vue";
 
 @Component({ components: { Select, TextArea, TextField } })
@@ -105,7 +102,6 @@ export default class AssetEditor extends Vue {
         this.assetInfo.includeRelations = true;
 
         try {
-            // tslint:disable-next-line:no-unsafe-any
             return (this.$refs.form as any).validate();
         } finally {
             this.assetInfo.includeRelations = false;
@@ -114,7 +110,6 @@ export default class AssetEditor extends Vue {
 
     private close(asset?: Asset) {
         // This is necessary so that the Type field does not initially show an error next time we add a new asset.
-        // tslint:disable-next-line:no-unsafe-any
         (this.$refs.form as any).reset();
         // The following line ensures that the property is changed even if we happen to edit the same asset
         // again. Said change is necessary so that the vue.js change detection is triggered after clearing all fields

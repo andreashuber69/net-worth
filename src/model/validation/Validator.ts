@@ -10,10 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-// tslint:disable-next-line: match-default-export-name
 import Ajv from "ajv";
 
-// tslint:disable-next-line: no-default-import
 import schema from "./schemas/All.schema.json";
 import { ValidationError } from "./ValidationError";
 

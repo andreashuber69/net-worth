@@ -1,4 +1,3 @@
-// tslint:disable:file-name-casing
 // Copyright (C) 2018-2019 Andreas Huber Dönni
 //
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public

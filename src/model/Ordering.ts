@@ -15,9 +15,7 @@ import { GroupBy } from "./validation/schemas/GroupBy.schema";
 import { ISort } from "./validation/schemas/ISort.schema";
 
 interface IOrderingParameters {
-    // tslint:disable-next-line:prefer-method-signature
     readonly onGroupChanged: () => void;
-    // tslint:disable-next-line:prefer-method-signature
     readonly onSortChanged: () => void;
     readonly groupBy?: GroupBy;
     readonly sort?: ISort;
@@ -93,9 +91,7 @@ export class Ordering implements IOrdering {
         return `${groupBy[0].toUpperCase()}${groupBy.substr(1)}`;
     }
 
-    // tslint:disable-next-line:prefer-method-signature
     private readonly onGroupChanged: () => void;
-    // tslint:disable-next-line:prefer-method-signature
     private readonly onSortChanged: () => void;
     private groupByIndex: number;
     private sortImpl: ISort;

@@ -75,7 +75,6 @@ export class TextInputInfo extends PrimitiveInputInfo {
 
     private getValue(propertyName: string) {
         if (this.schemaName) {
-            // tslint:disable-next-line: no-unsafe-any
             const result = (Validator.getSchema(this.schemaName) as { [propertyName: string]: unknown })[propertyName];
 
             return typeof result === "number" ? result : undefined;

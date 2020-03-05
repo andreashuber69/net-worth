@@ -74,7 +74,6 @@ export class LocalStorage {
 
     private static loadExistingSession(localStorageKey: string) {
         if ((localStorageKey !== LocalStorage.emptyModelLocalStorageKey) &&
-            // tslint:disable-next-line:deprecation
             ((window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD) ||
             (window.sessionStorage.getItem(LocalStorage.sessionForceLoadFromLocalStorageKey) === true.toString()))) {
             // Session storage can only be non-empty because the user either reloaded the page or because Open...

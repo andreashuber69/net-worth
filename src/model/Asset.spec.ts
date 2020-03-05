@@ -10,7 +10,6 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-// tslint:disable-next-line:no-implicit-dependencies no-submodule-imports
 import { arrayOfAll } from "./arrayOfAll";
 import { Asset } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
@@ -101,7 +100,6 @@ const getPropertyValues = (
     return result;
 };
 
-// tslint:disable-next-line: ban-types
 type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
 
 const expectProperty = <T, U, N extends PropertyNames<T> & string>(

@@ -17,9 +17,7 @@ import { Model } from "../model/Model";
 import { GroupBys } from "../model/Ordering";
 import { SortBy } from "../model/validation/schemas/SortBy.schema";
 
-// tslint:disable-next-line:no-default-import
 import AssetEditor from "./AssetEditor.vue";
-// tslint:disable-next-line:no-default-import
 import { ColumnInfo, ColumnName } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";

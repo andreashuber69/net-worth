@@ -77,14 +77,12 @@ class AssetProperties {
     }
 }
 
-// tslint:disable-next-line: max-classes-per-file
 class RequiredQuantityAssetProperties extends AssetProperties {
     public get quantity() {
         return Number.parseFloat(AssetProperties.validate("quantity", this.data.quantity));
     }
 }
 
-// tslint:disable-next-line: max-classes-per-file
 class RequiredAddressAssetProperties extends AssetProperties {
     public get address() {
         return AssetProperties.validate("address", this.data.address);

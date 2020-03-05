@@ -14,7 +14,6 @@ module.exports = {
     },
     plugins: [
         "@typescript-eslint",
-        "@typescript-eslint/tslint",
         "import",
         "jsdoc",
         "no-null",
@@ -45,7 +44,7 @@ module.exports = {
             {
                 "ignoreConsecutiveComments": true,
                 "ignoreInlineComments": true,
-                "ignorePattern": "tslint|cSpell|codebeat"
+                "ignorePattern": "cSpell|codebeat"
             }
         ],
         "comma-dangle": [
@@ -380,58 +379,6 @@ module.exports = {
             }
         ],
         "@typescript-eslint/strict-boolean-expressions": "off", // Takes away too much expressive power.
-        "@typescript-eslint/tslint/config": [
-            "error",
-            {
-                rules: {
-                    "match-default-export-name": true,
-                    "no-boolean-literal-compare": true,
-                    "no-default-import": true,
-                    "no-dynamic-delete": true,
-                    "no-inferred-empty-object-type": true,
-                    // cSpell: ignore mergeable
-                    "no-mergeable-namespace": true,
-                    "no-promise-as-boolean": true,
-                    "no-reference-import": true,
-                    "no-restricted-globals": true,
-                    "no-tautology-expression": true,
-                    "no-unnecessary-callback-wrapper": true,
-                    "no-unsafe-any": true,
-                    "number-literal-format": true,
-                    "one-line": [
-                        true,
-                        "check-catch",
-                        "check-else",
-                        "check-finally",
-                        "check-open-brace",
-                        "check-whitespace"
-                    ],
-                    "prefer-conditional-expression": true,
-                    "prefer-method-signature": true,
-                    "prefer-switch": true,
-                    "prefer-while": true,
-                    "return-undefined": true,
-                    "static-this": true,
-                    "strict-string-expressions": true,
-                    "strict-type-predicates": true,
-                    "switch-final-break": true,
-                    "whitespace": [
-                        true,
-                        "check-branch",
-                        "check-decl",
-                        "check-operator",
-                        "check-module",
-                        "check-separator",
-                        "check-type",
-                        "check-typecast",
-                        // cSpell: ignore preblock
-                        "check-preblock",
-                        "check-type-operator",
-                        "check-rest-spread"
-                    ]
-                }
-            }
-        ],
         // Value is questionable, see
         // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/typedef.md
         "@typescript-eslint/typedef": "off"

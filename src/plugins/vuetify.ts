@@ -1,4 +1,3 @@
-// tslint:disable:file-name-casing
 // Copyright (C) 2018-2019 Andreas Huber Dönni
 //
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
@@ -12,7 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 import Vue from "vue";
-// tslint:disable-next-line:no-submodule-imports
 import Vuetify from "vuetify/lib";
 
 Vue.use(Vuetify);

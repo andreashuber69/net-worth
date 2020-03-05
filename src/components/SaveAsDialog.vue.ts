@@ -14,7 +14,6 @@ import { Component, Vue } from "vue-property-decorator";
 
 import { TextInputInfo } from "../model/TextInputInfo";
 
-// tslint:disable-next-line:no-default-import
 import TextField from "./TextField.vue";
 
 @Component({ components: { TextField } })
@@ -52,7 +51,6 @@ export default class SaveAsDialog extends Vue {
     private resolve?: (value: string | undefined) => void;
 
     private isValid() {
-        // tslint:disable-next-line:no-unsafe-any
         return (this.$refs.form as any).validate();
     }
 

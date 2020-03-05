@@ -62,7 +62,6 @@ const loadTestFile = async (name: string) => {
 };
 
 type IExpectedProperties<T, U extends keyof T = never> =
-    // tslint:disable-next-line: ban-types
     Pick<T, Exclude<{ [K in keyof T]: T[K] extends Function ? never : K }[keyof T], U>>;
 type IExpectedOrderingProperties = IExpectedProperties<Ordering>;
 type IExpectedAssetCollectionProperties =
@@ -123,7 +122,6 @@ const expectToEqual = (actual: { [key: string]: any }, expected: { [key: string]
         const expectedValue = expected[key];
 
         if (((typeof actualValue) === "object") && ((typeof expectedValue) === "object")) {
-            // tslint:disable-next-line: no-unsafe-any
             expectToEqual(actualValue, expectedValue);
         } else {
             expect(actualValue).toEqual(expectedValue);

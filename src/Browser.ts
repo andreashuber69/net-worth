@@ -74,7 +74,6 @@ export class Browser {
 
     // Chrome 1+
     // cSpell: ignore webstore
-    // tslint:disable-next-line:no-unsafe-any
     public static readonly isChrome = Boolean((window as any).chrome) && Boolean((window as any).chrome.webstore);
 
     // Blink engine detection
