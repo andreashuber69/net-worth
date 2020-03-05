@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
+import { IParent } from "./IEditable";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { RealCryptoWallet } from "./RealCryptoWallet";
@@ -34,7 +34,8 @@ export class EtcWallet extends SimpleCryptoWallet {
     protected async queryQuantity() {
         const response = await QueryCache.fetch(
             `https://blockscout.com/etc/mainnet/api?module=account&action=balance&address=${this.address}`,
-            BlockscoutBalanceResponse);
+            BlockscoutBalanceResponse,
+        );
         const result = Number.parseInt(response.result, 10);
 
         if ((response.status === "1") && Number.isFinite(result)) {

@@ -17,8 +17,8 @@ import { SelectInputInfo, SelectInputInfoBase } from "../model/SelectInputInfo";
 import { ControlBase } from "./ControlBase";
 
 @Component
-/** Implements a select control that simplifies common functionality like e.g. validation. */
-// tslint:disable-next-line:no-default-export
+/** Implements a select control that simplifies common functionality like validation. */
+// eslint-disable-next-line import/no-default-export
 export default class Select extends ControlBase<SelectInputInfoBase> {
     @Prop()
     public large?: boolean;

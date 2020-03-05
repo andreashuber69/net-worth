@@ -10,9 +10,19 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-declare var opr: any;
-declare var InstallTrigger: any;
-declare var safari: any;
+// eslint-disable-next-line init-declarations
+declare const opr: { addons: unknown } | undefined;
+// eslint-disable-next-line init-declarations
+declare const InstallTrigger: any;
+// eslint-disable-next-line init-declarations
+declare const safari: { pushNotification: object } | undefined;
+
+declare global {
+    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
+    interface Window {
+        HTMLElement?: string;
+    }
+}
 
 export class Browser {
     public static get isCompatible() {
@@ -44,41 +54,35 @@ export class Browser {
     // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 
     // Opera 8.0+
-    public static readonly isOpera =
-        // tslint:disable-next-line:no-unsafe-any
-        (!!(window as any).opr && !!opr.addons) || !!(window as any).opera || navigator.userAgent.indexOf(" OPR/") >= 0;
+    public static readonly isOpera = (Boolean((window as any).opr) && Boolean(opr?.addons)) ||
+        Boolean((window as any).opera) || navigator.userAgent.includes(" OPR/");
 
     // Firefox 1.0+
     public static readonly isFirefox = typeof InstallTrigger !== "undefined";
 
     // Safari 3.0+ "[object HTMLElementConstructor]"
-    public static readonly isSafari =
-        // tslint:disable-next-line:no-unsafe-any
-        /constructor/i.test((window as any).HTMLElement) ||
-        // tslint:disable-next-line:only-arrow-functions no-unsafe-any
-        (function(p) { return p.toString() === "[object SafariRemoteNotification]"; })(
-            // tslint:disable-next-line:no-string-literal no-unsafe-any
-            !((window as any)["safari"]) || (typeof safari !== "undefined" && safari.pushNotification));
+    public static readonly isSafari = (/constructor/ui).test(window.HTMLElement) ||
+        ((p) => p.toString() === "[object SafariRemoteNotification]")(
+            !((window as any).safari) || (typeof safari !== "undefined" && safari.pushNotification),
+        );
 
     // Internet Explorer 6-11
-    // tslint:disable-next-line:binary-expression-operand-order
-    public static readonly isIE = /*@cc_on!@*/false || !!(document as any).documentMode;
+    public static readonly isIE = Boolean((document as any).documentMode) || false;
 
     // Edge 20+
-    public static readonly isEdge = !Browser.isIE && !!(window as any).StyleMedia;
+    public static readonly isEdge = !Browser.isIE && Boolean((window as any).StyleMedia);
 
     // Chrome 1+
     // cSpell: ignore webstore
-    // tslint:disable-next-line:no-unsafe-any
-    public static readonly isChrome = !!(window as any).chrome && !!(window as any).chrome.webstore;
+    public static readonly isChrome = Boolean((window as any).chrome) && Boolean((window as any).chrome.webstore);
 
     // Blink engine detection
-    public static readonly isBlink = (Browser.isChrome || Browser.isOpera) && !!(window as any).CSS;
+    public static readonly isBlink = (Browser.isChrome || Browser.isOpera) && Boolean((window as any).CSS);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getVersion(versionPrefix: string) {
-        const userAgent = window.navigator.userAgent;
+        const { userAgent } = window.navigator;
         const versionIndex = userAgent.indexOf(versionPrefix);
 
         return versionIndex >= 0 ? parseInt(userAgent.substr(versionIndex + versionPrefix.length), 10) : Number.NaN;

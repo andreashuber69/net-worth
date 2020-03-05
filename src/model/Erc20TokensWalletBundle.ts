@@ -10,9 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetBundle } from "./AssetBundle";
-import { Erc20TokensWallet } from "./Erc20TokensWallet";
-import { Erc20TokenWallet } from "./Erc20TokenWallet";
+import { IAssetBundle } from "./Asset";
+import { Erc20TokenWallet, IErc20TokensWallet } from "./Erc20TokenWallet";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { DeletedAssets } from "./validation/schemas/DeletedAssets.schema";
@@ -20,12 +19,10 @@ import { EthplorerGetAddressInfoResponse, IToken } from "./validation/schemas/Et
 import { IErc20TokensWalletBundle } from "./validation/schemas/IErc20TokensWalletBundle.schema";
 import { Validator } from "./validation/Validator";
 
-export class Erc20TokensWalletBundle extends AssetBundle {
+export class Erc20TokensWalletBundle implements IAssetBundle {
     public readonly assets = new Array<Erc20TokenWallet>();
 
-    public constructor(private readonly erc20Wallet: Erc20TokensWallet, bundle?: unknown) {
-        super();
-
+    public constructor(private readonly erc20Wallet: IErc20TokensWallet, bundle?: unknown) {
         try {
             this.deletedAssets = [...Validator.fromData(bundle, DeletedAssets).deletedAssets];
         } catch {
@@ -53,7 +50,8 @@ export class Erc20TokensWalletBundle extends AssetBundle {
         try {
             const url = `https://api.ethplorer.io/getAddressInfo/${this.erc20Wallet.address}?apiKey=dvoio1769GSrYx63`;
             const tokens = Erc20TokensWalletBundle.getTokens(
-                await QueryCache.fetch(url, EthplorerGetAddressInfoResponse));
+                await QueryCache.fetch(url, EthplorerGetAddressInfoResponse),
+            );
 
             for (const token of tokens[0]) {
                 this.addTokenWallet(token, tokens[1]);
@@ -77,7 +75,7 @@ export class Erc20TokensWalletBundle extends AssetBundle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getTokens({ tokens }: EthplorerGetAddressInfoResponse): [readonly IToken[], string] {
-        return tokens && [tokens, ""] || [[Erc20TokensWalletBundle.noTokenBalance], "No Token Balance Found!"];
+        return (tokens && [tokens, ""]) || [[Erc20TokensWalletBundle.noTokenBalance], "No Token Balance Found!"];
     }
 
     private static get noTokenBalance(): IToken {
@@ -96,13 +94,13 @@ export class Erc20TokensWalletBundle extends AssetBundle {
     private addTokenWallet(token: IToken, quantityHint: string) {
         const info = token.tokenInfo;
 
-        if ((this.deletedAssets.indexOf(info.symbol) < 0) && (token.balance !== 0)) {
+        if (!this.deletedAssets.includes(info.symbol) && (token.balance !== 0)) {
             this.assets.push(new Erc20TokenWallet({
                 editable: this.erc20Wallet,
                 currencySymbol: info.symbol,
-                quantity: token.balance / Math.pow(10, Number.parseFloat(info.decimals.toString())),
+                quantity: token.balance / (10 ** Number.parseFloat(info.decimals.toString())),
                 quantityHint,
-                unitValueUsd: info.price && info.price.rate || 0,
+                unitValueUsd: (info.price && info.price.rate) || 0,
             }));
         }
     }

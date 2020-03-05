@@ -15,9 +15,7 @@ import { GroupBy } from "./validation/schemas/GroupBy.schema";
 import { ISort } from "./validation/schemas/ISort.schema";
 
 interface IOrderingParameters {
-    // tslint:disable-next-line:prefer-method-signature
     readonly onGroupChanged: () => void;
-    // tslint:disable-next-line:prefer-method-signature
     readonly onSortChanged: () => void;
     readonly groupBy?: GroupBy;
     readonly sort?: ISort;
@@ -37,6 +35,7 @@ export interface IOrdering {
 /** Provides information how assets are ordered (grouped and sorted) in the main model of the application. */
 export class Ordering implements IOrdering {
     /** Provides the labels for the properties by which the asset list can be grouped. */
+    // eslint-disable-next-line class-methods-use-this
     public get defaultGroupByLabels() {
         return Ordering.capitalizeGroupBys(allGroupBys[0]);
     }
@@ -63,8 +62,8 @@ export class Ordering implements IOrdering {
 
     public constructor(params: IOrderingParameters) {
         ({ onGroupChanged: this.onGroupChanged, onSortChanged: this.onSortChanged } = params);
-        this.groupByIndex = params.groupBy && Ordering.getIndex(params.groupBy) || 0;
-        this.sortImpl = params.sort || { by: "totalValue", descending: true };
+        this.groupByIndex = (params.groupBy && Ordering.getIndex(params.groupBy)) || 0;
+        this.sortImpl = params.sort ?? { by: "totalValue", descending: true };
     }
 
     public setGroupBy(groupBy: GroupBy) {
@@ -92,9 +91,7 @@ export class Ordering implements IOrdering {
         return `${groupBy[0].toUpperCase()}${groupBy.substr(1)}`;
     }
 
-    // tslint:disable-next-line:prefer-method-signature
     private readonly onGroupChanged: () => void;
-    // tslint:disable-next-line:prefer-method-signature
     private readonly onSortChanged: () => void;
     private groupByIndex: number;
     private sortImpl: ISort;

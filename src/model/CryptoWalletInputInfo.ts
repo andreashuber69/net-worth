@@ -10,9 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
 import { AssetInputInfo } from "./AssetInputInfo";
 import { CryptoWallet } from "./CryptoWallet";
+import { IParent } from "./IEditable";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 
@@ -31,12 +31,19 @@ export abstract class CryptoWalletInputInfo<T extends CryptoWallet, U> extends A
     }
 
     public readonly description = new TextInputInfo({
-        label: "Description", hint: "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.",
-        isPresent: true, isRequired: true, schemaName: "Text",
+        label: "Description",
+        hint: "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.",
+        isPresent: true,
+        isRequired: true,
+        schemaName: "Text",
     });
+
     public readonly location = new TextInputInfo({
-        label: "Location", hint: "The location of the wallet, e.g. 'My Mobile', 'Home', 'Safety Deposit Box'.",
-        isPresent: true, isRequired: false, schemaName: "Text",
+        label: "Location",
+        hint: "The location of the wallet, e.g. 'My Mobile', 'Home', 'Safety Deposit Box'.",
+        isPresent: true,
+        isRequired: false,
+        schemaName: "Text",
     });
 
     public readonly weight = new TextInputInfo();

@@ -10,10 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IParent } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
+import { Asset, IAssetBundle } from "./Asset";
 import { AssetCollectionUtility } from "./AssetCollectionUtility";
 import { AssetGroup } from "./AssetGroup";
+import { IParent } from "./IEditable";
 import { Ordering } from "./Ordering";
 import { TaskQueue } from "./TaskQueue";
 import { GroupBy } from "./validation/schemas/GroupBy.schema";
@@ -25,7 +25,7 @@ interface INotifiableParent extends IParent {
 
 interface IAssetCollectionParameters {
     parent: INotifiableParent;
-    bundles: AssetBundle[];
+    bundles: IAssetBundle[];
     groupBy?: GroupBy;
     sort?: ISort;
 }
@@ -55,7 +55,9 @@ export class AssetCollection {
     /** Provides the sum of all asset total values. */
     public get grandTotalValue() {
         return this.groups.reduce<number | undefined>(
-            (s, a) => s === undefined ? undefined : (a.totalValue === undefined ? undefined : s + a.totalValue), 0);
+            (s, a) => ((s === undefined) || (a.totalValue === undefined) ? undefined : s + a.totalValue),
+            0,
+        );
     }
 
     public constructor(params: IAssetCollectionParameters) {
@@ -81,7 +83,7 @@ export class AssetCollection {
 
     /** Deletes `asset`. */
     public delete(asset: Asset) {
-        const index = this.bundles.findIndex((b) => b.assets.indexOf(asset) >= 0);
+        const index = this.bundles.findIndex((b) => b.assets.includes(asset));
 
         if (index >= 0) {
             const bundle = this.bundles[index];
@@ -98,7 +100,7 @@ export class AssetCollection {
 
     /** Replaces the bundle containing `oldAsset` with a bundle containing `newAsset`. */
     public replace(oldAsset: Asset, newAsset: Asset) {
-        const index = this.bundles.findIndex((b) => b.assets.indexOf(oldAsset) >= 0);
+        const index = this.bundles.findIndex((b) => b.assets.includes(oldAsset));
 
         if (index >= 0) {
             const bundle = newAsset.bundle();
@@ -110,7 +112,7 @@ export class AssetCollection {
         }
     }
 
-    public idle() {
+    public async idle() {
         return this.taskQueue.idle();
     }
 
@@ -121,7 +123,7 @@ export class AssetCollection {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static async queryBundleData(bundle: AssetBundle, id: number) {
+    private static async queryBundleData(bundle: IAssetBundle, id: number) {
         await bundle.queryData();
 
         return id;
@@ -129,7 +131,7 @@ export class AssetCollection {
 
     private readonly taskQueue = new TaskQueue();
     private readonly groups = new Array<AssetGroup>();
-    private readonly bundles: AssetBundle[];
+    private readonly bundles: IAssetBundle[];
     private readonly parent: INotifiableParent;
 
     private onGroupChanged() {
@@ -137,16 +139,20 @@ export class AssetCollection {
         this.update();
     }
 
-    private update(...newBundles: readonly AssetBundle[]) {
-        this.taskQueue.queue(() => this.updateImpl(newBundles)).catch((error) => console.error(error));
+    private update(...newBundles: readonly IAssetBundle[]) {
+        // eslint-disable-next-line no-console
+        this.taskQueue.queue(async () => this.updateImpl(newBundles)).catch((error) => console.error(error));
     }
 
-    private async updateImpl(newBundles: readonly AssetBundle[]) {
+    private async updateImpl(newBundles: readonly IAssetBundle[]) {
         this.updateGroups();
         const promises = new Map<number, Promise<number>>(
-            newBundles.map<[number, Promise<number>]>((b, i) => [i, AssetCollection.queryBundleData(b, i)]));
+            newBundles.map<[number, Promise<number>]>((b, i) => [i, AssetCollection.queryBundleData(b, i)]),
+        );
 
         while (promises.size > 0) {
+            // We're waiting for all promises at once, the loop is only here for updating purposes
+            // eslint-disable-next-line no-await-in-loop
             await this.waitForResponses(promises);
         }
     }
@@ -172,10 +178,10 @@ export class AssetCollection {
 
         // Remove no longer existing groups
         for (let index = 0; index < this.groups.length;) {
-            if (!newGroups.has(this.groups[index][this.ordering.groupBys[0]])) {
-                this.groups.splice(index, 1);
-            } else {
+            if (newGroups.has(this.groups[index][this.ordering.groupBys[0]])) {
                 ++index;
+            } else {
+                this.groups.splice(index, 1);
             }
         }
 

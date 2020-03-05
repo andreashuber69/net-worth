@@ -10,9 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
 import { CryptoCompareRequest } from "./CryptoCompareRequest";
 import { CryptoWallet } from "./CryptoWallet";
+import { IParent } from "./IEditable";
 import { QueryUtility } from "./QueryUtility";
 import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
@@ -46,7 +46,7 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         await super.queryData();
 
         if (this.address) {
-            const { result, status } = await QueryUtility.execute(() => this.queryQuantity());
+            const { result, status } = await QueryUtility.execute(async () => this.queryQuantity());
 
             if (result !== undefined) {
                 this.quantity = (this.quantity === undefined ? 0 : this.quantity) + result;
@@ -61,14 +61,15 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     // This is a hack to work around the fact that the spread operator does not call property getters:
     // https://github.com/Microsoft/TypeScript/issues/26547
     protected static getProperties(
-        props: ISimpleCryptoWalletProperties, currencySymbol: string,
+        props: ISimpleCryptoWalletProperties,
+        currencySymbol: string,
     ): IRealCryptoWalletParameters {
         const { description, location, notes } = props;
-        const address = ("address" in props) && props.address || undefined;
-        const quantity = ("quantity" in props) && props.quantity || undefined;
+        const address = (("address" in props) && props.address) || undefined;
+        const quantity = (("quantity" in props) && props.quantity) || undefined;
 
         return {
-            ...RealCryptoWallet._getProperties([description, location, address, quantity, notes]),
+            ...RealCryptoWallet.getPropertiesImpl([description, location, address, quantity, notes]),
             currencySymbol,
         };
     }
@@ -76,24 +77,24 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     protected constructor(parent: IParent, params: IRealCryptoWalletParameters) {
         super(parent, params.currencySymbol);
         this.description = params.description;
-        this.location = params.location || "";
-        this.address = ("address" in params) && params.address || "";
-        this.quantity = ("quantity" in params) && params.quantity || undefined;
-        this.notes = params.notes || "";
+        this.location = params.location ?? "";
+        this.address = (("address" in params) && params.address) || "";
+        this.quantity = (("quantity" in params) && params.quantity) || undefined;
+        this.notes = params.notes ?? "";
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
-    protected queryQuantity(): Promise<number | undefined> {
+    // eslint-disable-next-line class-methods-use-this
+    protected async queryQuantity(): Promise<number | undefined> {
         return Promise.resolve(undefined);
     }
 
-    protected queryUnitValueUsd() {
+    protected async queryUnitValueUsd() {
         return this.unit ? new CryptoCompareRequest(this.unit, false).execute() : Promise.resolve(undefined);
     }
 
     /** @internal */
     protected getProperties(): ISimpleCryptoWalletProperties {
-        return RealCryptoWallet._getProperties([
+        return RealCryptoWallet.getPropertiesImpl([
             this.description,
             this.location || undefined,
             this.address || undefined,
@@ -104,15 +105,15 @@ export abstract class RealCryptoWallet extends CryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static _getProperties(
+    private static getPropertiesImpl(
         [description, location, address, quantity, notes]: SimpleCryptoWalletProperties,
     ): ISimpleCryptoWalletProperties {
         if (address) {
             return { description, location, address, notes };
         } else if (quantity) {
             return { description, location, quantity, notes };
-        } else {
-            throw new Error("Unexpected ISimpleCryptoWalletProperties value!");
         }
+
+        throw new Error("Unexpected ISimpleCryptoWalletProperties value!");
     }
 }

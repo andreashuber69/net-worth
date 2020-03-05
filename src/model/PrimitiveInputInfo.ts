@@ -11,14 +11,8 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetPropertyName } from "./AssetInterfaces";
-import { InputInfo } from "./InputInfo";
-
-export interface IPrimitiveInputInfoProperties {
-    readonly label: string;
-    readonly hint: string;
-    readonly isPresent: boolean;
-    readonly isRequired: boolean;
-}
+import { Input, InputUtility } from "./Input";
+import { InputInfo, IPrimitiveInputInfoProperties } from "./InputInfo";
 
 /** Defines the base for all classes that provide input information for a primitive value. */
 export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitiveInputInfoProperties {
@@ -27,7 +21,13 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
     public readonly isPresent: boolean;
     public readonly isRequired: boolean;
 
-    public get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T {
+    public validate(strict: boolean, input: Input, propertyName?: AssetPropertyName) {
+        return InputUtility.isComposite(input) ?
+            "A composite value was provided when a primitive one was expected." :
+            this.validatePrimitive(strict, input, propertyName);
+    }
+
+    public get<T extends IPrimitiveInputInfoProperties>(ctor: new() => T, propertyName?: AssetPropertyName): T {
         if (propertyName !== undefined) {
             throw new Error("The propertyName argument must be undefined for a primitive input.");
         }
@@ -57,7 +57,9 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
             return true;
         }
 
-        if ((input === undefined) || (input === null) || ((typeof input === "string") && (input.length === 0))) {
+        const definedInput = input ?? "";
+
+        if ((typeof definedInput === "string") && (definedInput.length === 0)) {
             return this.isRequired ? "A value is required." : true;
         }
 
@@ -65,7 +67,7 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
     }
 
     /** @internal */
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
     protected validateContent(strict: boolean, input: unknown): true | string {
         return true;
     }

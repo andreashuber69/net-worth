@@ -16,7 +16,7 @@ import { QuandlRequest } from "./QuandlRequest";
 import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
 
 export class ExchangeRate {
-    public static get(currency: CurrencyName) {
+    public static async get(currency: CurrencyName) {
         const request = ExchangeRate.currencyMap.get(currency);
 
         if (!request) {

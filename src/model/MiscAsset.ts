@@ -10,20 +10,17 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
+/* eslint-disable max-classes-per-file */
+import { IAssetBundle } from "./Asset";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
+import { IParent } from "./IEditable";
 import { SingleAsset } from "./SingleAsset";
 import { misc } from "./validation/schemas/AssetTypeName.schema";
 import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
 import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
 import { Quantity0 } from "./validation/schemas/Quantity0.schema";
-
-export interface IMiscAssetCtor {
-    readonly type: typeof MiscAsset.type;
-    new (parent: IParent, props: IMiscAssetProperties): MiscAsset;
-}
 
 /** Represents a miscellaneous asset. */
 export class MiscAsset extends SingleAsset {
@@ -39,6 +36,7 @@ export class MiscAsset extends SingleAsset {
         return MiscAsset.getUnit(this.value, this.valueCurrency);
     }
 
+    // eslint-disable-next-line class-methods-use-this
     public get fineness() {
         return undefined;
     }
@@ -56,11 +54,11 @@ export class MiscAsset extends SingleAsset {
     public constructor(parent: IParent, props: IMiscAssetProperties) {
         super(parent);
         this.description = props.description;
-        this.location = props.location || "";
+        this.location = props.location ?? "";
         this.value = props.value;
         this.valueCurrency = props.valueCurrency;
         this.quantity = props.quantity;
-        this.notes = props.notes || "";
+        this.notes = props.notes ?? "";
     }
 
     /** @internal */
@@ -76,7 +74,8 @@ export class MiscAsset extends SingleAsset {
         };
     }
 
-    public bundle(bundle?: unknown): GenericAssetBundle<MiscAsset> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public bundle(bundle?: unknown): IAssetBundle {
         return new MiscAsset.Bundle(this);
     }
 
@@ -88,8 +87,7 @@ export class MiscAsset extends SingleAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // tslint:disable-next-line: max-classes-per-file variable-name
-    private static readonly Bundle = class NestedBundle extends GenericAssetBundle<MiscAsset> {
+    private static readonly Bundle = class extends GenericAssetBundle<MiscAsset> implements IAssetBundle {
         public toJSON() {
             return {
                 primaryAsset: this.assets[0].toJSON(),
@@ -106,4 +104,9 @@ export class MiscAsset extends SingleAsset {
     private static getUnit(value: number, valueCurrency: CurrencyName) {
         return `${value.toLocaleString(undefined, MiscAsset.unitFormatOptions)} ${valueCurrency}`;
     }
+}
+
+export interface IMiscAssetCtor {
+    readonly type: typeof MiscAsset.type;
+    new (parent: IParent, props: IMiscAssetProperties): MiscAsset;
 }

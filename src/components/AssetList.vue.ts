@@ -17,9 +17,7 @@ import { Model } from "../model/Model";
 import { GroupBys } from "../model/Ordering";
 import { SortBy } from "../model/validation/schemas/SortBy.schema";
 
-// tslint:disable-next-line:no-default-import
 import AssetEditor from "./AssetEditor.vue";
-// tslint:disable-next-line:no-default-import
 import { ColumnInfo, ColumnName } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
@@ -43,15 +41,17 @@ type NumericColumnName = keyof Pick<Asset, typeof numericColumnNames[number]>;
 
 @Component({ components: { AssetEditor } })
 /** Implements the asset list UI. */
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class AssetList extends ComponentBase<Model> {
     public get headers() {
         const allColumnNames = ColumnInfo.getAllNames(this.checkedValue.assets.ordering.groupBys);
         const visibleColumnNames: readonly ColumnName[] = allColumnNames.filter(
-            (name) => allColumnNames.indexOf(name) < ColumnInfo.getTotalCount(this.optionalColumnCount));
+            (name) => allColumnNames.indexOf(name) < ColumnInfo.getTotalCount(this.optionalColumnCount),
+        );
 
         return AssetList.getHeaders(this.checkedValue.assets.ordering.groupBys).filter(
-            (h) => visibleColumnNames.includes(h.value));
+            (h) => visibleColumnNames.includes(h.value),
+        );
     }
 
     public get options() {
@@ -63,8 +63,8 @@ export default class AssetList extends ComponentBase<Model> {
 
     public set options(options: IOptions) {
         this.checkedValue.assets.ordering.sort = {
-            by: options.sortBy.length && options.sortBy[0] || this.checkedValue.assets.ordering.sort.by,
-            descending: options.sortDesc.length && options.sortDesc[0] || false,
+            by: (options.sortBy.length && options.sortBy[0]) || this.checkedValue.assets.ordering.sort.by,
+            descending: (options.sortDesc.length && options.sortDesc[0]) || false,
         };
     }
 
@@ -112,7 +112,7 @@ export default class AssetList extends ComponentBase<Model> {
             return "";
         }
 
-        const maxPrefix = this.maxPrefixes.get(columnName) || ["", false];
+        const maxPrefix = this.maxPrefixes.get(columnName) ?? ["", false];
         const valueFormatted = this.format(Math.trunc(value), 0);
 
         // The following logic is necessary so that negative values will be displayed in alignment with their
@@ -120,7 +120,9 @@ export default class AssetList extends ComponentBase<Model> {
         // first prefixed with an invisible - sign, before potentially also being prefixed with zeroes and grouping
         // characters.
         const prefixWithoutSign = maxPrefix[0].substr(
-            0, maxPrefix[0].length - valueFormatted.length + ((value < 0) && 1 || 0));
+            0,
+            maxPrefix[0].length - valueFormatted.length + (((value < 0) && 1) || 0),
+        );
 
         return ((value < 0) || !maxPrefix[1]) ? prefixWithoutSign : `${prefixWithoutSign}-`;
     }
@@ -187,16 +189,17 @@ export default class AssetList extends ComponentBase<Model> {
 
     private get maxPrefixes(): ReadonlyMap<NumericColumnName, [string, boolean]> {
         const result = new Map<NumericColumnName, [string, boolean]>(
-            numericColumnNames.map((name) => [name, ["", false]]));
+            numericColumnNames.map((name) => [name, ["", false]]),
+        );
         result.set("totalValue", [this.formatZeroes(this.checkedValue.assets.grandTotalValue), false]);
         result.set("percent", [this.formatZeroes(100), false]);
 
         for (const property of numericColumnNames) {
-            let [longest, hasNegativeValues] = result.get(property) || ["", false];
+            let [longest, hasNegativeValues] = result.get(property) ?? ["", false];
 
             for (const asset of this.checkedValue.assets.grouped) {
                 const value = asset[property];
-                hasNegativeValues = hasNegativeValues || ((value || 0) < 0);
+                hasNegativeValues = hasNegativeValues || ((value ?? 0) < 0);
                 const current = this.formatZeroes(value);
                 longest = current.length > longest.length ? current : longest;
             }
@@ -210,7 +213,7 @@ export default class AssetList extends ComponentBase<Model> {
     private formatZeroes(num: number | undefined) {
         const numToFormat = (num === undefined) || Number.isNaN(num) ? undefined : Math.abs(num);
 
-        return this.format(numToFormat && Math.trunc(numToFormat), 0).replace(/\d/g, "0");
+        return this.format(numToFormat && Math.trunc(numToFormat), 0).replace(/\d/ug, "0");
     }
 
     private onIntervalElapsed() {

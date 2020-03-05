@@ -11,27 +11,27 @@
 // <http://www.gnu.org/licenses/>.
 
 export interface IToken {
+    readonly [key: string]: unknown;
     readonly tokenInfo: {
+        readonly [key: string]: unknown;
         readonly symbol: string;
         readonly decimals: string | number;
         readonly price: false | {
+            readonly [key: string]: unknown;
             readonly rate: number;
             readonly currency: "USD";
-            readonly [key: string]: unknown;
         };
-        readonly [key: string]: unknown;
     };
 
     readonly balance: number;
-    readonly [key: string]: unknown;
 }
 
 export class EthplorerGetAddressInfoResponse {
+    readonly [key: string]: unknown;
     public readonly ETH!: {
         readonly balance: number;
         readonly [key: string]: unknown;
     };
 
     public readonly tokens?: readonly IToken[];
-    readonly [key: string]: unknown;
 }

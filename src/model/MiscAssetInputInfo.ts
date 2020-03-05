@@ -10,8 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
 import { AssetInputInfo } from "./AssetInputInfo";
+import { IParent } from "./IEditable";
 import { MiscAsset } from "./MiscAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
@@ -23,36 +23,54 @@ import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.
  * representation of the asset.
  */
 export class MiscAssetInputInfo extends AssetInputInfo {
+    // eslint-disable-next-line class-methods-use-this
     public get type(): typeof MiscAsset.type {
         return MiscAsset.type;
     }
 
     public readonly description = new TextInputInfo({
-        label: "Description", hint: "The nature of the items, e.g. 'Cash', 'Vacation House'.",
-        isPresent: true, isRequired: true, schemaName: "Text",
-    });
-    public readonly location = new TextInputInfo({
-        label: "Location", hint: "The location, e.g. 'Safe', 'Redford'.", isPresent: true, isRequired: false,
+        label: "Description",
+        hint: "The nature of the items, e.g. 'Cash', 'Vacation House'.",
+        isPresent: true,
+        isRequired: true,
         schemaName: "Text",
     });
+
+    public readonly location = new TextInputInfo({
+        label: "Location",
+        hint: "The location, e.g. 'Safe', 'Redford'.",
+        isPresent: true,
+        isRequired: false,
+        schemaName: "Text",
+    });
+
     public readonly address = new TextInputInfo();
     public readonly weight = new TextInputInfo();
     public readonly weightUnit = new SelectInputInfo();
     public readonly fineness = new TextInputInfo();
+
     public readonly value = new TextInputInfo({
         label: "Value",
         hint: "The value of a single item, expressed in Currency. A liability can be expressed with a negative number",
-        isPresent: true, isRequired: true, schemaName: "Value",
+        isPresent: true,
+        isRequired: true,
+        schemaName: "Value",
     });
+
     public readonly valueCurrency = new SelectInputInfo({
-        label: "Currency", hint: "The currency Value is expressed in.", isPresent: true, isRequired: true,
-        items: currencyNames, enumSchemaNames: ["CurrencyName"],
+        label: "Currency",
+        hint: "The currency Value is expressed in.",
+        isPresent: true,
+        isRequired: true,
+        items: currencyNames,
+        enumSchemaNames: ["CurrencyName"],
     });
+
     public readonly quantity = new TextInputInfo({
         label: "Quantity", hint: "The number of items.", isPresent: true, isRequired: true, schemaName: "Quantity0",
     });
 
-    // tslint:disable-next-line: prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     public createAsset(parent: IParent, props: IMiscAssetProperties) {
         return new MiscAsset(parent, props);
     }

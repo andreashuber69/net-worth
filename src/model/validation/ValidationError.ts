@@ -14,7 +14,7 @@ export class ValidationError extends Error {
     public constructor(message?: string) {
         super(message);
 
-        // tslint:disable-next-line:max-line-length
+        // eslint-disable-next-line max-len
         // https://github.com/Microsoft/TypeScript-wiki/blob/master/Breaking-Changes.md#extending-built-ins-like-error-array-and-map-may-no-longer-work
         Object.setPrototypeOf(this, ValidationError.prototype);
     }

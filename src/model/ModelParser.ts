@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
+import { IParent } from "./IEditable";
 import { Model } from "./Model";
 import { ObjectConverter } from "./ObjectConverter";
 import { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
@@ -26,8 +26,9 @@ export class ModelParser {
     /**
      * Returns a [[Model]] object that is equivalent to the passed JSON string or returns a string that describes why
      * the parse process failed.
+     *
      * @description This is typically called with a string that was returned by [[toJsonString]].
-     * @param json The string to parse
+     * @param json The string to parse.
      */
     public static parse(json: string) {
         try {
@@ -35,9 +36,9 @@ export class ModelParser {
         } catch (e) {
             if (e instanceof Error) {
                 return e.message;
-            } else {
-                throw e;
             }
+
+            throw e;
         }
     }
 
@@ -47,7 +48,12 @@ export class ModelParser {
         { name, wasSavedToFile, hasUnsavedChanges, currency, groupBy, sort, bundles }: TaggedModel,
     ) {
         const params = {
-            name, wasSavedToFile, hasUnsavedChanges, currency, groupBy, sort,
+            name,
+            wasSavedToFile,
+            hasUnsavedChanges,
+            currency,
+            groupBy,
+            sort,
             createBundles: bundles.map((bundle) => ModelParser.createBundle(bundle)),
         };
 
@@ -56,14 +62,18 @@ export class ModelParser {
 
     private static createBundle(rawBundle: AssetBundleUnion) {
         return ObjectConverter.convert(rawBundle.primaryAsset, [
-            (asset: IPreciousMetalAsset, info) =>
-                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
-            (asset: ISimpleCryptoWallet, info) =>
-                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
-            (asset: IAddressCryptoWallet, info) =>
-                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
-            (asset: IQuantityCryptoWallet, info) =>
-                ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
+            (asset: IPreciousMetalAsset, info) => (
+                (parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)
+            ),
+            (asset: ISimpleCryptoWallet, info) => (
+                (parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)
+            ),
+            (asset: IAddressCryptoWallet, info) => (
+                (parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)
+            ),
+            (asset: IQuantityCryptoWallet, info) => (
+                (parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)
+            ),
             (asset: IMiscAsset, info) => ((parent: IParent) => info.createAsset(parent, asset).bundle(rawBundle)),
         ])[1];
     }

@@ -30,6 +30,14 @@ export type IAssetIntersection = IAssetPropertiesIntersection & {
 export type AssetPropertyName = keyof IAssetPropertiesIntersection;
 
 export const allAssetPropertyNames = arrayOfAll<AssetPropertyName>()(
-    "description", "location", "quantity", "notes", "weight",
-    "weightUnit", "fineness", "address", "value", "valueCurrency",
+    "description",
+    "location",
+    "quantity",
+    "notes",
+    "weight",
+    "weightUnit",
+    "fineness",
+    "address",
+    "value",
+    "valueCurrency",
 );

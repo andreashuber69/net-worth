@@ -17,15 +17,17 @@ export class Format {
             return "";
         } else if (Number.isNaN(num)) {
             return "Error";
-        } else {
-            return Format.format(num, maximumFractionDigits, minimumFractionDigits);
         }
+
+        return Format.format(num, maximumFractionDigits, minimumFractionDigits);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static format(num: number, maximumFractionDigits: number, minimumFractionDigits?: number) {
         return num.toLocaleString(
-            undefined, { maximumFractionDigits, minimumFractionDigits, useGrouping: true });
+            undefined,
+            { maximumFractionDigits, minimumFractionDigits, useGrouping: true },
+        );
     }
 }

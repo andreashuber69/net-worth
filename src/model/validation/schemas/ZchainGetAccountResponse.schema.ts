@@ -11,6 +11,6 @@
 // <http://www.gnu.org/licenses/>.
 
 export class ZchainGetAccountResponse {
-    public readonly balance!: number;
     readonly [key: string]: unknown;
+    public readonly balance!: number;
 }

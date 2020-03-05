@@ -10,9 +10,17 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
+/* eslint-disable max-classes-per-file */
+import { IPrimitiveInputInfoProperties } from "./InputInfo";
+import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { EnumSchemaName, SchemaName, Validator } from "./validation/Validator";
 
+interface ISelectInputInfoParameters extends IPrimitiveInputInfoProperties {
+    readonly items: readonly string[];
+    readonly enumSchemaNames: readonly EnumSchemaName[];
+}
+
+/** Provides input information for a property where a valid value needs to be equal to one of a given list of values. */
 export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
     public abstract get items(): readonly string[];
 
@@ -22,19 +30,11 @@ export abstract class SelectInputInfoBase extends PrimitiveInputInfo {
     }
 }
 
-interface ISelectInputInfoParameters extends IPrimitiveInputInfoProperties {
-    readonly items: readonly string[];
-    readonly enumSchemaNames: readonly EnumSchemaName[];
-}
-
-/** Provides input information for a property where a valid value needs to be equal to one of a given list of values. */
-// tslint:disable-next-line:max-classes-per-file
 export class SelectInputInfo extends SelectInputInfoBase {
     public readonly items: readonly string[];
 
     /** @internal */
-    public constructor(params: ISelectInputInfoParameters =
-        { label: "", hint: "", isPresent: false, isRequired: false, items: [], enumSchemaNames: [] }) {
+    public constructor(params = SelectInputInfo.getDefaults()) {
         super(params);
         ({ items: this.items, enumSchemaNames: this.enumSchemaNames } = params);
     }
@@ -44,7 +44,9 @@ export class SelectInputInfo extends SelectInputInfoBase {
     protected validateContent(strict: boolean, input: unknown) {
         if (this.items.length && this.enumSchemaNames.length) {
             const result = this.enumSchemaNames.reduce<string | true>(
-                (p: string | true, c: SchemaName) => p === true ? p : Validator.validate(input, c), "");
+                (p: string | true, c: SchemaName) => (p === true ? p : Validator.validate(input, c)),
+                "",
+            );
 
             if (result !== true) {
                 return result;
@@ -55,6 +57,10 @@ export class SelectInputInfo extends SelectInputInfoBase {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static getDefaults(): ISelectInputInfoParameters {
+        return { label: "", hint: "", isPresent: false, isRequired: false, items: [], enumSchemaNames: [] };
+    }
 
     private readonly enumSchemaNames: readonly EnumSchemaName[];
 }

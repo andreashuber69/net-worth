@@ -10,7 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { Asset, IParent } from "./Asset";
+import { Asset } from "./Asset";
+import { IParent } from "./IEditable";
 import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 
 // This could easily be fixed by overriding abstract methods in two extending classes, but doing so seems strange at
@@ -19,24 +20,25 @@ import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 export class AssetGroup extends Asset {
     public isExpanded = false;
 
+    // eslint-disable-next-line class-methods-use-this
     public get isExpandable() {
         return true;
     }
 
     public get type() {
-        return this.coalesce((a) => a.type) || "";
+        return this.coalesce((a) => a.type) ?? "";
     }
 
     public get description() {
-        return this.coalesce((a) => a.description) || "";
+        return this.coalesce((a) => a.description) ?? "";
     }
 
     public get location() {
-        return this.coalesce((a) => a.location) || "";
+        return this.coalesce((a) => a.location) ?? "";
     }
 
     public get unit() {
-        return this.coalesce((a) => a.unit) || "";
+        return this.coalesce((a) => a.unit) ?? "";
     }
 
     public get fineness() {
@@ -45,15 +47,16 @@ export class AssetGroup extends Asset {
 
     public get quantity() {
         return (this.type && this.unit) ?
-            this.assets.reduce<number | undefined>((s, a) => AssetGroup.add(s, a.quantity), 0) : undefined;
+            this.assets.reduce<number | undefined>((s, a) => AssetGroup.add(s, a.quantity), 0) :
+            undefined;
     }
 
     public get quantityHint() {
-        return this.coalesce((a) => a.quantityHint) || "";
+        return this.coalesce((a) => a.quantityHint) ?? "";
     }
 
     public get displayDecimals() {
-        return this.coalesce((a) => a.displayDecimals) || 0;
+        return this.coalesce((a) => a.displayDecimals) ?? 0;
     }
 
     public get notes() {
@@ -65,13 +68,14 @@ export class AssetGroup extends Asset {
     }
 
     public get unitValueHint() {
-        return this.coalesce((a) => a.unitValueHint) || "";
+        return this.coalesce((a) => a.unitValueHint) ?? "";
     }
 
     public get totalValue() {
         return this.assets.reduce<number | undefined>((s, a) => AssetGroup.add(s, a.totalValue), 0);
     }
 
+    // eslint-disable-next-line class-methods-use-this
     public get hasActions() {
         return false;
     }
@@ -80,7 +84,7 @@ export class AssetGroup extends Asset {
         super(parent);
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     public toJSON(): AssetUnion {
         throw new Error(`${AssetGroup.name} cannot be serialized.`);
     }
@@ -97,7 +101,8 @@ export class AssetGroup extends Asset {
     }
 
     private coalesce<T>(getProperty: (asset: Asset) => T): T | undefined {
-        let previous: T | undefined;
+        // eslint-disable-next-line no-undef-init
+        let previous: T | undefined = undefined;
 
         for (let index = 0; index < this.assets.length; ++index) {
             if (index === 0) {

@@ -11,26 +11,22 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Component, Vue } from "vue-property-decorator";
-
-import { Asset, IParent } from "../model/Asset";
+import { Asset } from "../model/Asset";
 import { AssetEditorData } from "../model/AssetEditorData";
 import { AssetInput } from "../model/AssetInput";
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { createAsset } from "../model/AssetProperties";
+import { IParent } from "../model/IEditable";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { assetTypeNames } from "../model/validation/schemas/AssetTypeName.schema";
-
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
-// tslint:disable-next-line:no-default-import
 import Select from "./Select.vue";
-// tslint:disable-next-line:no-default-import
 import TextArea from "./TextArea.vue";
-// tslint:disable-next-line:no-default-import
 import TextField from "./TextField.vue";
 
 @Component({ components: { Select, TextArea, TextField } })
 /** Implements the dialog used to edit assets. */
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class AssetEditor extends Vue {
     public isOpen = false;
 
@@ -39,9 +35,14 @@ export default class AssetEditor extends Vue {
     }
 
     /** Provides the asset type input information. */
+    // eslint-disable-next-line class-methods-use-this
     public get typeInputInfo() {
         return new SelectInputInfo({
-            label: "Type", hint: "", isPresent: true, isRequired: true, items: assetTypeNames,
+            label: "Type",
+            hint: "",
+            isPresent: true,
+            isRequired: true,
+            items: assetTypeNames,
             enumSchemaNames: ["AssetTypeName"],
         });
     }
@@ -52,7 +53,7 @@ export default class AssetEditor extends Vue {
     }
 
     public set type(value: string | undefined) {
-        this.assetInfo = value && AssetInput.infos[value] || new NoAssetInputInfo();
+        this.assetInfo = (value && AssetInput.infos[value]) || new NoAssetInputInfo();
         this.data.type = this.assetInfo.type;
     }
 
@@ -62,7 +63,7 @@ export default class AssetEditor extends Vue {
     /** Provides the data currently displayed in the asset editor. */
     public data = new AssetEditorData();
 
-    public onSaveClicked(event: MouseEvent) {
+    public onSaveClicked() {
         if (!this.parent) {
             throw new Error("No parent set!");
         }
@@ -72,19 +73,19 @@ export default class AssetEditor extends Vue {
         }
     }
 
-    public onCancelClicked(event: MouseEvent) {
+    public onCancelClicked() {
         this.close();
     }
 
     /** @internal */
-    public showDialog(parent: IParent, asset?: Asset) {
+    public async showDialog(parent: IParent, asset?: Asset) {
         this.parent = parent;
-        this.isExistingAsset = !!asset;
-        this.assetInfo = AssetEditor.getAssetInfo(asset) || new NoAssetInputInfo();
+        this.isExistingAsset = Boolean(asset);
+        this.assetInfo = AssetEditor.getAssetInfo(asset) ?? new NoAssetInputInfo();
         this.data = new AssetEditorData(asset ? asset.editableAsset.toJSON() : undefined);
         this.isOpen = true;
 
-        return new Promise<Asset | undefined>((resolve) => this.resolve = resolve);
+        return new Promise<Asset | undefined>((resolve) => (this.resolve = resolve));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -101,7 +102,6 @@ export default class AssetEditor extends Vue {
         this.assetInfo.includeRelations = true;
 
         try {
-            // tslint:disable-next-line:no-unsafe-any
             return (this.$refs.form as any).validate();
         } finally {
             this.assetInfo.includeRelations = false;
@@ -110,7 +110,6 @@ export default class AssetEditor extends Vue {
 
     private close(asset?: Asset) {
         // This is necessary so that the Type field does not initially show an error next time we add a new asset.
-        // tslint:disable-next-line:no-unsafe-any
         (this.$refs.form as any).reset();
         // The following line ensures that the property is changed even if we happen to edit the same asset
         // again. Said change is necessary so that the vue.js change detection is triggered after clearing all fields

@@ -20,7 +20,7 @@
       "script": "serve-development",
       "problemMatcher": [
         "$tsc",
-        "$tslint5"
+        "$eslint-stylish"
       ],
       "group": {
         "kind": "build",
@@ -32,7 +32,7 @@
       "script": "serve-production",
       "problemMatcher": [
         "$tsc",
-        "$tslint5"
+        "$eslint-stylish"
       ]
     },
     {
@@ -40,7 +40,7 @@
       "script": "build",
       "problemMatcher": [
         "$tsc",
-        "$tslint5"
+        "$eslint-stylish"
       ]
     },
     {
@@ -52,7 +52,7 @@
       "type": "npm",
       "script": "lint",
       "problemMatcher": [
-        "$tslint5"
+        "$eslint-stylish"
       ]
     },
     {

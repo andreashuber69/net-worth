@@ -21,7 +21,9 @@ export class CryptoCompareRequest implements IWebRequest<number> {
 
     public async execute() {
         const price = (await QueryCache.fetch(
-            `https://min-api.cryptocompare.com/data/price?fsym=${this.coin}&tsyms=USD`, CryptoCompareResponse)).USD;
+            `https://min-api.cryptocompare.com/data/price?fsym=${this.coin}&tsyms=USD`,
+            CryptoCompareResponse,
+        )).USD;
 
         return this.invert ? 1 / price : price;
     }

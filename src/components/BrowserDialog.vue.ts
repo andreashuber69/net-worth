@@ -16,19 +16,22 @@ import { Application } from "../model/Application";
 
 @Component
 /** Implements the dialog informing the user about untested browsers. */
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class BrowserDialog extends Vue {
+    // eslint-disable-next-line class-methods-use-this
     public get applicationTitle() {
         return Application.title;
     }
 
     public isOpen = !this.dontShowDialog;
 
+    // eslint-disable-next-line class-methods-use-this
     public get dontShowDialog() {
         return !BrowserDialog.isUntestedBrowser ||
             window.localStorage.getItem(BrowserDialog.dontShowBrowserDialogName) === true.toString();
     }
 
+    // eslint-disable-next-line class-methods-use-this
     public set dontShowDialog(value: boolean) {
         window.localStorage.setItem(BrowserDialog.dontShowBrowserDialogName, value.toString());
     }
@@ -41,6 +44,7 @@ export default class BrowserDialog extends Vue {
         const userAgent = window.navigator.userAgent.toLowerCase();
 
         // cSpell: ignore crios
-        return !/firefox|electron/.test(userAgent) && (!/chrome|crios/.test(userAgent) || /edge|opr\//.test(userAgent));
+        return !(/firefox|electron/u).test(userAgent) &&
+            (!(/chrome|crios/u).test(userAgent) || (/edge|opr\//u).test(userAgent));
     }
 }

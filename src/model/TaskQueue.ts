@@ -12,7 +12,9 @@
 
 /** Provides the means to execute tasks strictly sequentially. */
 export class TaskQueue {
-    /** Queues and executes the supplied task.
+    /**
+     * Queues and executes the supplied task.
+     *
      * @description First waits for possibly still queued tasks to complete in the sequence they were queued and then
      * calls `executeTask`, waits for the returned promise to settle and then returns the result.
      * @returns The promise returned by `executeTask`.
@@ -40,7 +42,7 @@ export class TaskQueue {
     public async idle(): Promise<void> {
         try {
             await this.previous;
-        // tslint:disable-next-line: no-empty
+        // eslint-disable-next-line no-empty
         } catch {
         }
     }

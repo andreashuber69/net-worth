@@ -17,8 +17,8 @@ import { TextInputInfo } from "../model/TextInputInfo";
 import { ControlBase } from "./ControlBase";
 
 @Component
-/** Implements a text field control that simplifies common functionality like e.g. validation. */
-// tslint:disable-next-line:no-default-export
+/** Implements a text field control that simplifies common functionality like validation. */
+// eslint-disable-next-line import/no-default-export
 export default class TextField extends ControlBase<TextInputInfo> {
     @Prop()
     public large?: boolean;

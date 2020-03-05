@@ -11,10 +11,10 @@
 // <http://www.gnu.org/licenses/>.
 
 import { Application } from "./Application";
-import { IParent } from "./Asset";
-import { AssetBundle } from "./AssetBundle";
+import { IAssetBundle } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { ExchangeRate } from "./ExchangeRate";
+import { IParent } from "./IEditable";
 import { QueryUtility } from "./QueryUtility";
 import { CurrencyName, currencyNames } from "./validation/schemas/CurrencyName.schema";
 import { GroupBy } from "./validation/schemas/GroupBy.schema";
@@ -28,7 +28,7 @@ export interface IModelParameters {
     readonly currency?: CurrencyName;
     readonly groupBy?: GroupBy;
     readonly sort?: ISort;
-    readonly createBundles: ReadonlyArray<(parent: IParent) => AssetBundle>;
+    readonly createBundles: ReadonlyArray<(parent: IParent) => IAssetBundle>;
 }
 
 export type IModel = Required<TaggedModel>;
@@ -66,6 +66,7 @@ export class Model implements IParent {
     }
 
     /** Provides the available currencies to value the assets in. */
+    // eslint-disable-next-line class-methods-use-this
     public get currencies() {
         return currencyNames;
     }
@@ -85,8 +86,8 @@ export class Model implements IParent {
 
     public readonly assets: AssetCollection;
 
+    // cSpell: ignore usdxxx
     /**
-     * cSpell: ignore usdxxx
      * Provides the USD exchange rate of the currently selected currency (USDXXX, where XXX is the currently selected
      * currency).
      */
@@ -96,13 +97,14 @@ export class Model implements IParent {
     public onChanged?: (() => void);
 
     public constructor(params?: IModelParameters) {
+        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         this.name = params?.name || "Unnamed";
-        this.wasSavedToFile = params?.wasSavedToFile || false;
-        this.hasUnsavedChangesImpl = params?.hasUnsavedChanges || false;
-        this.currency = params?.currency || this.currencyImpl;
+        this.wasSavedToFile = params?.wasSavedToFile ?? false;
+        this.hasUnsavedChangesImpl = params?.hasUnsavedChanges ?? false;
+        this.currency = params?.currency ?? this.currencyImpl;
         this.assets = new AssetCollection({
             parent: this,
-            bundles: params?.createBundles.map((c) => c(this)) || [],
+            bundles: params?.createBundles.map((c) => c(this)) ?? [],
             groupBy: params?.groupBy,
             sort: params?.sort,
         });
@@ -143,12 +145,13 @@ export class Model implements IParent {
     private currencyImpl: CurrencyName = this.currencies[0];
 
     private onCurrencyChanged() {
+        // eslint-disable-next-line no-console
         this.onCurrencyChangedImpl().catch((reason) => console.error(reason));
     }
 
     private async onCurrencyChangedImpl() {
         this.exchangeRate = undefined;
         // Status is intentionally ignored
-        ({ result: this.exchangeRate } = await QueryUtility.execute(() => ExchangeRate.get(this.currency)));
+        ({ result: this.exchangeRate } = await QueryUtility.execute(async () => ExchangeRate.get(this.currency)));
     }
 }

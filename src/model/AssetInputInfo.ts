@@ -12,8 +12,8 @@
 
 import { AssetPropertyName } from "./AssetInterfaces";
 import { IAuxProperties } from "./IAuxProperties";
-import { CompositeInput } from "./Input";
-import { InputInfo } from "./InputInfo";
+import { CompositeInput, Input, InputUtility } from "./Input";
+import { InputInfo, IPrimitiveInputInfoProperties } from "./InputInfo";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
@@ -54,7 +54,13 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
      */
     public includeRelations = false;
 
-    public get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T {
+    public validate(strict: boolean, input: Input, propertyName?: AssetPropertyName) {
+        return InputUtility.isComposite(input) ?
+            this.validateComposite(strict, input, propertyName) :
+            "A primitive value was provided when a composite one was expected.";
+    }
+
+    public get<T extends IPrimitiveInputInfoProperties>(ctor: new() => T, propertyName?: AssetPropertyName): T {
         if (propertyName === undefined) {
             throw new Error("The propertyName argument cannot be undefined for a composite input.");
         }
@@ -63,7 +69,8 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
 
         if (!(result instanceof ctor)) {
             throw new Error(
-                `The requested type ${ctor.name} does not match the actual type of the property ${propertyName}.`);
+                `The requested type ${ctor.name} does not match the actual type of the property ${propertyName}.`,
+            );
         }
 
         return result;
@@ -80,11 +87,12 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
         const singleResult = this[propertyName].validate(strict, input[propertyName], undefined);
 
         return (singleResult === true) && this.includeRelations ?
-            this.validateRelations(input, propertyName) : singleResult;
+            this.validateRelations(input, propertyName) :
+            singleResult;
     }
 
     /** @internal */
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
     protected validateRelations(input: CompositeInput, propertyName: AssetPropertyName): true | string {
         return true;
     }

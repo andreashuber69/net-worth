@@ -20,8 +20,8 @@ export class QueryCache {
     public static fetch<R>(query: string, responseCtor: new () => R): Promise<R>;
     public static async fetch<R>(query: string, responseCtor?: new () => R) {
         return responseCtor ?
-            QueryCache.cacheResult(query, () => QueryCache.fetchParseAndValidate(query, responseCtor)) :
-            QueryCache.cacheResult(query, () => QueryCache.fetchAndParse(query));
+            QueryCache.cacheResult(query, async () => QueryCache.fetchParseAndValidate(query, responseCtor)) :
+            QueryCache.cacheResult(query, async () => QueryCache.fetchAndParse(query));
     }
 
     /** @internal */
@@ -33,7 +33,7 @@ export class QueryCache {
 
     private static readonly cache = new Map<string, Promise<unknown>>();
 
-    private static cacheResult<R>(query: string, getResponse: () => Promise<R>) {
+    private static async cacheResult<R>(query: string, getResponse: () => Promise<R>) {
         let result = QueryCache.cache.get(query);
 
         if (!result) {
@@ -55,18 +55,20 @@ export class QueryCache {
     }
 
     private static async fetchAndParse(query: string) {
-        let responseText: string;
-
-        try {
-            responseText = await (await window.fetch(query)).text();
-        } catch (e) {
-            throw new QueryError(`Network Error: ${e}`);
-        }
+        const responseText = await QueryCache.tryFetch(query);
 
         try {
             return JSON.parse(responseText) as unknown;
         } catch (e) {
             throw new QueryError(`Invalid JSON: ${e}`);
+        }
+    }
+
+    private static async tryFetch(query: string) {
+        try {
+            return await (await window.fetch(query)).text();
+        } catch (e) {
+            throw new QueryError(`Network Error: ${e}`);
         }
     }
 }

@@ -20,7 +20,7 @@ import { PrimitiveInputInfo } from "../model/PrimitiveInputInfo";
 
 import { ComponentBase } from "./ComponentBase";
 
-/** Defines the base for all controls that simplify common functionality like e.g. validation. */
+/** Defines the base for all controls that simplify common functionality like validation. */
 export abstract class ControlBase<T extends PrimitiveInputInfo> extends ComponentBase<IAuxProperties<string> | string> {
     @Prop()
     public info?: InputInfo;
@@ -46,7 +46,8 @@ export abstract class ControlBase<T extends PrimitiveInputInfo> extends Componen
 
     public get propertyValue() {
         return InputUtility.isComposite(this.checkedValue) ?
-            this.checkedValue[this.checkedProperty] : this.checkedValue;
+            this.checkedValue[this.checkedProperty] :
+            this.checkedValue;
     }
 
     public set propertyValue(value: string) {

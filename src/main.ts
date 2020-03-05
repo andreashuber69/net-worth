@@ -1,4 +1,3 @@
-// tslint:disable:file-name-casing
 // Copyright (C) 2018-2019 Andreas Huber Dönni
 //
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
@@ -19,7 +18,7 @@ if (Browser.isCompatible) {
         new URLSearchParams(window.location.search).forEach((value, key) => window.sessionStorage.setItem(key, value));
         window.location.replace(new URL(window.location.pathname, window.location.origin).href);
     } else {
-        // tslint:disable-next-line:no-require-imports no-var-requires
+        // eslint-disable-next-line @typescript-eslint/no-require-imports, import/no-unassigned-import, global-require
         require("./app-main");
     }
 } else {
