@@ -254,7 +254,6 @@ module.exports = {
         // Typescript already catches many of the bugs that this rule would because bitwise operators are not allowed
         // for booleans.
         "no-bitwise": "off",
-        "@typescript-eslint/no-explicit-any": "off", // Does not seem practical for most non-trivial projects.
         "no-extra-parens": "off", // Was turned off in favor of no-mixed-operators.
         "@typescript-eslint/no-extra-parens": "off", // Was turned off in favor of no-mixed-operators.
         "@typescript-eslint/no-extraneous-class": [
