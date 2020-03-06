@@ -116,16 +116,15 @@ const getExpectedProperties = (
     };
 };
 
-const expectToEqual = (actual: { [key: string]: any }, expected: { [key: string]: any }) => {
-    for (const key of Object.keys(expected)) {
-        const actualValue = actual[key];
-        const expectedValue = expected[key];
+const hasIndexSignature = (value: unknown): value is { [key: string]: unknown } => typeof value === "object";
 
-        if (((typeof actualValue) === "object") && ((typeof expectedValue) === "object")) {
-            expectToEqual(actualValue, expectedValue);
-        } else {
-            expect(actualValue).toEqual(expectedValue);
+const expectToEqual = (actual: unknown, expected: unknown) => {
+    if (hasIndexSignature(actual) && hasIndexSignature(expected)) {
+        for (const key of Object.keys(expected)) {
+            expectToEqual(actual[key], expected[key]);
         }
+    } else {
+        expect(actual).toEqual(expected);
     }
 };
 
