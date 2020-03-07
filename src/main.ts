@@ -26,27 +26,15 @@ if (Browser.isCompatible) {
 
     if (appElement) {
         appElement.innerHTML = `
-            <div style="padding: 20px; font-size:large">
-                <p><strong>${Application.title} doesn't work on this browser.</strong></p>
-                <p>
+            <div class="base-page incompatible-browser-page">
+                <span><strong>${Application.title} doesn't work on this browser.</strong></span>
+                <span>
                     It is recommended to use ${Application.title} from within a recent version of an
-                    <strong>open-source</strong> browser like <strong>Brave</strong> or <strong>Firefox</strong>.
-                </p>
-                <p>
-                    ${Application.title} should also work on recent incarnations of proprietary browsers like Chrome,
-                    Opera, Safari, Edge and probably others.
-                </p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p><strong>${Application.title} ${Application.version}</strong></p>
-                <p>userAgent: ${window.navigator.userAgent}</p>
-                <p>isOpera: ${Browser.isOpera}</p>
-                <p>isFirefox: ${Browser.isFirefox}</p>
-                <p>isSafari: ${Browser.isSafari}</p>
-                <p>isIE: ${Browser.isIE}</p>
-                <p>isEdge: ${Browser.isEdge}</p>
-                <p>isChrome: ${Browser.isChrome}</p>
-                <p>isBlink: ${Browser.isBlink}</p>
+                    <strong>open-source</strong> browser like Iron, Brave or Firefox. ${Application.title} should also
+                    work on recent incarnations of proprietary browsers like Chrome, Opera, Safari, Edge and probably others.
+                </span>
+                <span>${Application.title} ${Application.version}</span>
+                <span>${window.navigator.userAgent}</span>
             </div>
         `;
     }
