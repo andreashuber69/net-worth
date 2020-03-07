@@ -13,7 +13,7 @@
 // eslint-disable-next-line init-declarations
 declare const opr: { addons: unknown } | undefined;
 // eslint-disable-next-line init-declarations
-declare const InstallTrigger: any;
+declare const InstallTrigger: unknown;
 // eslint-disable-next-line init-declarations
 declare const safari: { pushNotification: object } | undefined;
 
@@ -54,30 +54,31 @@ export class Browser {
     // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 
     // Opera 8.0+
-    public static readonly isOpera = (Boolean((window as any).opr) && Boolean(opr?.addons)) ||
-        Boolean((window as any).opera) || navigator.userAgent.includes(" OPR/");
+    public static readonly isOpera = (("opr" in window) && Boolean(opr?.addons)) ||
+        ("opera" in window) || navigator.userAgent.includes(" OPR/");
 
     // Firefox 1.0+
     public static readonly isFirefox = typeof InstallTrigger !== "undefined";
 
     // Safari 3.0+ "[object HTMLElementConstructor]"
     public static readonly isSafari = (/constructor/ui).test(window.HTMLElement) ||
-        ((p) => p.toString() === "[object SafariRemoteNotification]")(
-            !((window as any).safari) || (typeof safari !== "undefined" && safari.pushNotification),
+        ((p) => p?.toString() === "[object SafariRemoteNotification]")(
+            !("safari" in window) || (safari?.pushNotification),
         );
 
     // Internet Explorer 6-11
-    public static readonly isIE = Boolean((document as any).documentMode) || false;
+    public static readonly isIE = "documentMode" in document;
 
     // Edge 20+
-    public static readonly isEdge = !Browser.isIE && Boolean((window as any).StyleMedia);
+    public static readonly isEdge = !Browser.isIE && ("StyleMedia" in window);
 
     // Chrome 1+
     // cSpell: ignore webstore
-    public static readonly isChrome = Boolean((window as any).chrome) && Boolean((window as any).chrome.webstore);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public static readonly isChrome = ("chrome" in window) && Boolean((window as any).chrome.webstore);
 
     // Blink engine detection
-    public static readonly isBlink = (Browser.isChrome || Browser.isOpera) && Boolean((window as any).CSS);
+    public static readonly isBlink = (Browser.isChrome || Browser.isOpera) && ("CSS" in window);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

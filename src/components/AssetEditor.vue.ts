@@ -102,7 +102,7 @@ export default class AssetEditor extends Vue {
         this.assetInfo.includeRelations = true;
 
         try {
-            return (this.$refs.form as any).validate();
+            return this.form.validate();
         } finally {
             this.assetInfo.includeRelations = false;
         }
@@ -110,7 +110,7 @@ export default class AssetEditor extends Vue {
 
     private close(asset?: Asset) {
         // This is necessary so that the Type field does not initially show an error next time we add a new asset.
-        (this.$refs.form as any).reset();
+        this.form.reset();
         // The following line ensures that the property is changed even if we happen to edit the same asset
         // again. Said change is necessary so that the vue.js change detection is triggered after clearing all fields
         // with the reset call above.
@@ -122,5 +122,11 @@ export default class AssetEditor extends Vue {
         }
 
         this.resolve(asset);
+    }
+
+    private get form() {
+        // The runtime type of this.$refs.form is VueComponent. It appears nobody has written typings for this yet.
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return this.$refs.form as any;
     }
 }

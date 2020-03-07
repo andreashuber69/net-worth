@@ -49,7 +49,7 @@ export class TaskQueue {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private previous: Promise<any> = Promise.resolve();
+    private previous: Promise<unknown> = Promise.resolve();
 
     private async executeAfterPrevious<T>(createTask: () => Promise<T>) {
         await this.idle();

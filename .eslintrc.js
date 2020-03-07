@@ -119,7 +119,7 @@ module.exports = {
         ],
         "import/no-commonjs": "error",
         "import/no-cycle": "error",
-        "import/no-default-export": "off", // Does not seem to be working.
+        "import/no-default-export": "error",
         "import/no-deprecated": "error",
         "import/no-duplicates": "error",
         "import/no-dynamic-require": "error",
@@ -254,7 +254,6 @@ module.exports = {
         // Typescript already catches many of the bugs that this rule would because bitwise operators are not allowed
         // for booleans.
         "no-bitwise": "off",
-        "@typescript-eslint/no-explicit-any": "off", // Does not seem practical for most non-trivial projects.
         "no-extra-parens": "off", // Was turned off in favor of no-mixed-operators.
         "@typescript-eslint/no-extra-parens": "off", // Was turned off in favor of no-mixed-operators.
         "@typescript-eslint/no-extraneous-class": [

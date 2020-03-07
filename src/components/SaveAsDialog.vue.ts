@@ -51,6 +51,8 @@ export default class SaveAsDialog extends Vue {
     private resolve?: (value: string | undefined) => void;
 
     private isValid() {
+        // The runtime type of this.$refs.form is VueComponent. It appears nobody has written typings for this yet.
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return (this.$refs.form as any).validate();
     }
 
