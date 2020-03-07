@@ -16,25 +16,16 @@ export class Browser {
     public static get isCompatible() {
         const { browserName, browserVersion, engineName } = Browser.getInfo();
 
-        switch (browserName) {
-            case "Firefox":
-                if (browserVersion < 47) {
-                    return false;
-                }
+        if ((browserName === "Firefox") && (browserVersion < 47)) {
+            return false;
+        }
 
-                break;
-            case "Mobile Safari":
-            case "Safari":
-                if (browserVersion < 10) {
-                    return false;
-                }
+        if (((browserName === "Mobile Safari") || (browserName === "Safari")) && (browserVersion < 10)) {
+            return false;
+        }
 
-                break;
-            case "IE":
-            case "IEMobile":
-                return false;
-            default:
-                break;
+        if ((browserName === "IE") || (browserName === "IEMobile")) {
+            return false;
         }
 
         // The Blink engine is used by Chrome, Chromium and other Chromium-based browsers (like Opera and Yandex), all
