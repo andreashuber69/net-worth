@@ -27,6 +27,7 @@
       .base-page {
         position: fixed;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         top: 0;
@@ -38,9 +39,13 @@
           of the center. While 100% would solve that problem nicely, it doesn't work for mobile browsers, where the page
           is horizontally briefly larger than the viewport. The indicator would thus jump around while the table is
           sized down to fit the page. Therefore 100vw is considered the lesser of two evils.
-         */
+        */
         width: 100vw;
         background: #25272a;
+      }
+
+      .base-page > span {
+        padding: 20px
       }
 
       .no-script-page {
@@ -49,10 +54,6 @@
         font-family: sans-serif; /* Roboto is not yet known at this point */
         font-size: large;
         font-weight: 700;
-      }
-
-      .warning {
-        padding: 20px;
       }
 
       .loading-page {
@@ -88,7 +89,7 @@
   <body>
     <noscript>
       <div class="base-page no-script-page">
-        <span class="warning">
+        <span>
           This site doesn't work without JavaScript enabled. Please enable it to continue.
         </span>
       </div>
