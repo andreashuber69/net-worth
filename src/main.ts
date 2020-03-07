@@ -31,7 +31,8 @@ if (Browser.isCompatible) {
                 <span>
                     It is recommended to use ${Application.title} from within a recent version of an
                     <strong>open-source</strong> browser like Iron, Brave or Firefox. ${Application.title} should also
-                    work on recent incarnations of proprietary browsers like Chrome, Opera, Safari, Edge and probably others.
+                    work on recent incarnations of proprietary browsers like Chrome, Opera, Safari, Edge and probably
+                    others.
                 </span>
                 <span>${Application.title} ${Application.version}</span>
                 <span>${window.navigator.userAgent}</span>
