@@ -1,3 +1,4 @@
+// cSpell: disable
 const karmaTypescriptConfig = {
     bundlerOptions: {
         entrypoints: /\.spec\.ts$/,
