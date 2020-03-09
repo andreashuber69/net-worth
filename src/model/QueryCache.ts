@@ -19,9 +19,14 @@ export class QueryCache {
     public static fetch(query: string): Promise<unknown>;
     public static fetch<R>(query: string, responseCtor: new () => R): Promise<R>;
     public static async fetch<R>(query: string, responseCtor?: new () => R) {
-        return responseCtor ?
-            QueryCache.cacheResult(query, async () => QueryCache.fetchParseAndValidate(query, responseCtor)) :
-            QueryCache.cacheResult(query, async () => QueryCache.fetchAndParse(query));
+        return QueryCache.cacheResult(
+            query,
+            async () => (
+                responseCtor ?
+                    QueryCache.fetchParseAndValidate(query, responseCtor) :
+                    QueryCache.fetchAndParse(query)
+            ),
+        );
     }
 
     /** @internal */
