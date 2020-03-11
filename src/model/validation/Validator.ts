@@ -40,7 +40,7 @@ export class Validator {
         if (validationResult !== true) {
             // eslint-disable-next-line no-console
             console.log(`${JSON.stringify(data, undefined, 2)} does not satisfy ${ctor.name}`);
-            throw new ValidationError(Validator.ajv.errorsText());
+            throw new ValidationError(validationResult);
         }
 
         return Validator.isPrimitiveSchemaName(ctor.name) ? new ctor(data) : Object.assign(new ctor(), data);
