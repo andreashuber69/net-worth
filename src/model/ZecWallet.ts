@@ -33,6 +33,8 @@ export class ZecWallet extends SimpleCryptoWallet {
     protected async queryQuantity() {
         const url = `https://api.zcha.in/v2/mainnet/accounts/${this.address}`;
 
+        // cSpell: ignore zcha
+        // Apparently, zcha.in doesn't validate the address at all, which is why we don't expect an error response.
         return (await QueryCache.fetch(url, ZchainGetAccountResponse)).balance;
     }
 }

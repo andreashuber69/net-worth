@@ -17,11 +17,25 @@ import { Validator } from "./validation/Validator";
 export class QueryCache {
     /** @internal */
     public static fetch(query: string): Promise<unknown>;
-    public static fetch<R>(query: string, responseCtor: new () => R): Promise<R>;
-    public static async fetch<R>(query: string, responseCtor?: new () => R) {
-        return responseCtor ?
-            QueryCache.cacheResult(query, async () => QueryCache.fetchParseAndValidate(query, responseCtor)) :
-            QueryCache.cacheResult(query, async () => QueryCache.fetchAndParse(query));
+    public static fetch<R>(
+        query: string,
+        responseCtor: new () => R,
+        getErrorMessage?: (r: R) => string | undefined,
+    ): Promise<R>;
+
+    public static async fetch<R>(
+        query: string,
+        responseCtor?: new () => R,
+        getErrorMessage?: (r: R) => string | undefined,
+    ) {
+        return QueryCache.cacheResult(
+            query,
+            async () => (
+                responseCtor ?
+                    QueryCache.fetchParseValidateAndApprove(query, responseCtor, getErrorMessage) :
+                    QueryCache.fetchAndParse(query)
+            ),
+        );
     }
 
     /** @internal */
@@ -42,6 +56,24 @@ export class QueryCache {
         }
 
         return result;
+    }
+
+    private static async fetchParseValidateAndApprove<R>(
+        query: string,
+        responseCtor: new () => R,
+        getErrorMessage?: (r: R) => string | undefined,
+    ) {
+        const response = await QueryCache.fetchParseAndValidate(query, responseCtor);
+
+        if (getErrorMessage) {
+            const errorMessage = getErrorMessage(response);
+
+            if (errorMessage) {
+                throw new QueryError(`Server Error: ${errorMessage}`);
+            }
+        }
+
+        return response;
     }
 
     private static async fetchParseAndValidate<R>(query: string, responseCtor: new () => R) {

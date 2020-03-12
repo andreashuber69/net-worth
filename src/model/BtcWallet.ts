@@ -55,6 +55,7 @@ export class BtcWallet extends SimpleCryptoWallet {
             return NestedBCRequest.getFinalBalance(await QueryCache.fetch(
                 `https://blockchain.info/balance?active=${this.addresses}&cors=true`,
                 BlockchainBalanceResponse,
+                (r) => (typeof r.reason === "string" && r.reason) || undefined,
             ));
         }
 
@@ -62,7 +63,11 @@ export class BtcWallet extends SimpleCryptoWallet {
 
         private static getFinalBalance(response: BlockchainBalanceResponse) {
             const result: IBalance = { finalBalance: Number.NaN, transactionCount: 0 };
-            Object.keys(response).forEach((address) => NestedBCRequest.addBalance(result, response[address]));
+            const balances = Object.keys(response).map((k) => response[k]).filter(
+                (v): v is IAddressBalance => typeof v === "object",
+            );
+
+            balances.forEach((b) => NestedBCRequest.addBalance(result, b));
 
             if (Number.isNaN(result.finalBalance)) {
                 throw new QueryError();
