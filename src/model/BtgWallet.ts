@@ -32,6 +32,8 @@ export class BtgWallet extends SimpleCryptoWallet {
     protected async queryQuantity() {
         const url = `https://explorer.bitcoingold.org/insight-api/addr/${this.address}/balance`;
 
+        // If the address is invalid, the server answers without setting the Access-Control-Allow-Origin header, which
+        // keeps us from reading the error message in the body.
         return Number(await QueryCache.fetch(url, Number)) / 1E8;
     }
 }
