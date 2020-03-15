@@ -10,8 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
+/* eslint-disable max-classes-per-file */
+import { IAssetBundle } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
+import { IParent } from "./IEditable";
 import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
 import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
 
@@ -19,7 +21,8 @@ import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/sc
 export abstract class SimpleCryptoWallet extends RealCryptoWallet {
     public abstract get type(): SimpleCryptoWalletTypeName;
 
-    public bundle(bundle?: unknown): GenericAssetBundle<SimpleCryptoWallet> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public bundle(bundle?: unknown): IAssetBundle {
         return new SimpleCryptoWallet.Bundle(this);
     }
 
@@ -39,8 +42,7 @@ export abstract class SimpleCryptoWallet extends RealCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // tslint:disable-next-line: max-classes-per-file variable-name
-    private static readonly Bundle = class NestedBundle extends GenericAssetBundle<SimpleCryptoWallet> {
+    private static readonly Bundle = class extends GenericAssetBundle<SimpleCryptoWallet> implements IAssetBundle {
         public toJSON() {
             return {
                 primaryAsset: this.assets[0].toJSON(),

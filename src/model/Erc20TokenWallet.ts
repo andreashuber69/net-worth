@@ -11,16 +11,27 @@
 // <http://www.gnu.org/licenses/>.
 
 import { CryptoWallet } from "./CryptoWallet";
-import { Erc20TokensWallet } from "./Erc20TokensWallet";
-import { AddressCryptoWalletTypeName } from "./validation/schemas/IAddressCryptoWallet.schema";
+import { IEditable } from "./IEditable";
+import { AddressCryptoWalletTypeName, IAddressCryptoWallet } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 
 interface ITokenWalletParameters {
-    readonly editable: Erc20TokensWallet;
+    readonly editable: IErc20TokensWallet;
     readonly currencySymbol: string;
     readonly quantity: QuantityAny;
     readonly quantityHint: string;
     readonly unitValueUsd?: number;
+}
+
+export interface IErc20TokensWallet extends IEditable {
+    readonly type: AddressCryptoWalletTypeName;
+    readonly description: string;
+    readonly location: string;
+    readonly address: string;
+    readonly notes: string;
+
+    queryData(): Promise<void>;
+    toJSON(): IAddressCryptoWallet;
 }
 
 export class Erc20TokenWallet extends CryptoWallet {
@@ -57,12 +68,12 @@ export class Erc20TokenWallet extends CryptoWallet {
         this.unitValueUsd = unitValueUsd;
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     public toJSON(): never {
         throw new Error(`${Erc20TokenWallet.name} cannot be serialized.`);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private readonly editable: Erc20TokensWallet;
+    private readonly editable: IErc20TokensWallet;
 }

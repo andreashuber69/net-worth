@@ -25,9 +25,9 @@ export class QueryUtility {
                     result: Number.NaN,
                     status: e.message,
                 };
-            } else {
-                throw e;
             }
+
+            throw e;
         }
     }
 }

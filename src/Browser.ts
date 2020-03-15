@@ -10,77 +10,43 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-declare var opr: any;
-declare var InstallTrigger: any;
-declare var safari: any;
+import { UAParser } from "ua-parser-js";
 
 export class Browser {
     public static get isCompatible() {
-        // The following detection is accurate for desktop browsers only. For many mobile browsers, especially the ones
-        // based on Chromium, this method will return true no matter what version of browser it runs on. For now, this
-        // might be "good enough", as users tend to update their phones much more often than their desktop computers. A
-        // phone therefore has a higher probability to come with a suitable browser.
-        if (Browser.isFirefox && (Browser.getVersion(" Firefox/") < 47)) {
+        const { browserName, browserVersion, engineName } = Browser.getInfo();
+
+        if ((browserName === "Firefox") && (browserVersion < 47)) {
             return false;
         }
 
-        if (Browser.isSafari && (Browser.getVersion(" Version/") < 10)) {
+        if (((browserName === "Mobile Safari") || (browserName === "Safari")) && (browserVersion < 10)) {
             return false;
         }
 
-        if (Browser.isIE) {
+        if ((browserName === "IE") || (browserName === "IEMobile")) {
             return false;
         }
 
-        // Blink is true for Chrome, Chromium and other Chromium-based browsers like Opera and Yandex, all of which have
-        // a Chrome version in their userAgent string
-        if (Browser.isBlink && (Browser.getVersion(" Chrome/") < 54)) {
+        // The Blink engine is used by Chrome, Chromium and other Chromium-based browsers (like Opera and Yandex), all
+        // of which have a Chrome version in their userAgent string
+        if ((engineName === "Blink") && (browserVersion < 54)) {
             return false;
         }
 
         return true;
     }
 
-    // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 
-    // Opera 8.0+
-    public static readonly isOpera =
-        // tslint:disable-next-line:no-unsafe-any
-        (!!(window as any).opr && !!opr.addons) || !!(window as any).opera || navigator.userAgent.indexOf(" OPR/") >= 0;
+    private static getInfo() {
+        const uaParser = new UAParser();
+        const { browser: { name: browserName, major }, engine: { name: engineName } } = uaParser.getResult();
+        const parsedMajor = Number.parseInt(major ?? "", 10);
 
-    // Firefox 1.0+
-    public static readonly isFirefox = typeof InstallTrigger !== "undefined";
-
-    // Safari 3.0+ "[object HTMLElementConstructor]"
-    public static readonly isSafari =
-        // tslint:disable-next-line:no-unsafe-any
-        /constructor/i.test((window as any).HTMLElement) ||
-        // tslint:disable-next-line:only-arrow-functions no-unsafe-any
-        (function(p) { return p.toString() === "[object SafariRemoteNotification]"; })(
-            // tslint:disable-next-line:no-string-literal no-unsafe-any
-            !((window as any)["safari"]) || (typeof safari !== "undefined" && safari.pushNotification));
-
-    // Internet Explorer 6-11
-    // tslint:disable-next-line:binary-expression-operand-order
-    public static readonly isIE = /*@cc_on!@*/false || !!(document as any).documentMode;
-
-    // Edge 20+
-    public static readonly isEdge = !Browser.isIE && !!(window as any).StyleMedia;
-
-    // Chrome 1+
-    // cSpell: ignore webstore
-    // tslint:disable-next-line:no-unsafe-any
-    public static readonly isChrome = !!(window as any).chrome && !!(window as any).chrome.webstore;
-
-    // Blink engine detection
-    public static readonly isBlink = (Browser.isChrome || Browser.isOpera) && !!(window as any).CSS;
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static getVersion(versionPrefix: string) {
-        const userAgent = window.navigator.userAgent;
-        const versionIndex = userAgent.indexOf(versionPrefix);
-
-        return versionIndex >= 0 ? parseInt(userAgent.substr(versionIndex + versionPrefix.length), 10) : Number.NaN;
+        return {
+            browserName,
+            browserVersion: Number.isNaN(parsedMajor) ? 0 : parsedMajor,
+            engineName,
+        };
     }
 }

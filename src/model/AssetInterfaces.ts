@@ -10,6 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+import { arrayOfAll } from "./arrayOfAll";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
 import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
@@ -28,7 +29,15 @@ export type IAssetIntersection = IAssetPropertiesIntersection & {
 
 export type AssetPropertyName = keyof IAssetPropertiesIntersection;
 
-export const allAssetPropertyNames: readonly AssetPropertyName[] = [
-    "description", "location", "quantity", "notes", "weight",
-    "weightUnit", "fineness", "address", "value", "valueCurrency",
-] as const;
+export const allAssetPropertyNames = arrayOfAll<AssetPropertyName>()(
+    "description",
+    "location",
+    "quantity",
+    "notes",
+    "weight",
+    "weightUnit",
+    "fineness",
+    "address",
+    "value",
+    "valueCurrency",
+);

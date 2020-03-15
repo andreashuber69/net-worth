@@ -10,7 +10,8 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IPrimitiveInputInfoProperties, PrimitiveInputInfo } from "./PrimitiveInputInfo";
+import { IPrimitiveInputInfoProperties } from "./InputInfo";
+import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
 import { SchemaName, Validator } from "./validation/Validator";
 
 interface ITextInputInfoProperties extends IPrimitiveInputInfoProperties {
@@ -74,13 +75,12 @@ export class TextInputInfo extends PrimitiveInputInfo {
 
     private getValue(propertyName: string) {
         if (this.schemaName) {
-            // tslint:disable-next-line: no-unsafe-any
             const result = (Validator.getSchema(this.schemaName) as { [propertyName: string]: unknown })[propertyName];
 
             return typeof result === "number" ? result : undefined;
-        } else {
-            return undefined;
         }
+
+        return undefined;
     }
 
     private validateValue(strict: boolean, input: unknown) {
@@ -90,6 +90,7 @@ export class TextInputInfo extends PrimitiveInputInfo {
 
         return Validator.validate(
             !strict && this.isNumber && (typeof input === "string") ? Number.parseFloat(input) : input,
-            this.schemaName);
+            this.schemaName,
+        );
     }
 }

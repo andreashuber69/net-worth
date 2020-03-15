@@ -11,8 +11,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
+/* eslint-disable max-classes-per-file */
+import { IAssetBundle } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
+import { IParent } from "./IEditable";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
 import { Fineness } from "./validation/schemas/Fineness.schema";
@@ -60,7 +62,8 @@ export abstract class PreciousMetalAsset extends SingleAsset {
         };
     }
 
-    public bundle(bundle?: unknown): GenericAssetBundle<PreciousMetalAsset> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public bundle(bundle?: unknown): IAssetBundle {
         return new PreciousMetalAsset.Bundle(this);
     }
 
@@ -69,12 +72,12 @@ export abstract class PreciousMetalAsset extends SingleAsset {
     protected constructor(parent: IParent, props: IPreciousMetalAssetProperties, private readonly quandlPath: string) {
         super(parent);
         this.description = props.description;
-        this.location = props.location || "";
+        this.location = props.location ?? "";
         this.weight = props.weight;
         this.weightUnit = props.weightUnit;
         this.fineness = props.fineness;
         this.quantity = props.quantity;
-        this.notes = props.notes || "";
+        this.notes = props.notes ?? "";
         this.pureGramsPerUnit = this.weight * this.weightUnit * this.fineness;
     }
 
@@ -84,8 +87,7 @@ export abstract class PreciousMetalAsset extends SingleAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // tslint:disable-next-line: max-classes-per-file variable-name
-    private static readonly Bundle = class NestedBundle extends GenericAssetBundle<PreciousMetalAsset> {
+    private static readonly Bundle = class extends GenericAssetBundle<PreciousMetalAsset> implements IAssetBundle {
         public toJSON() {
             return {
                 primaryAsset: this.assets[0].toJSON(),

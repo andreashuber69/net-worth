@@ -10,24 +10,42 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetBundle } from "./AssetBundle";
 import { IAssetIntersection } from "./AssetInterfaces";
-import { IOrdering } from "./Ordering";
+import { IEditable, IParent } from "./IEditable";
 import { QueryUtility } from "./QueryUtility";
+import { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
 import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 import { Fineness } from "./validation/schemas/Fineness.schema";
 import { ICalculatedAssetProperties } from "./validation/schemas/ICalculatedAssetProperties.schema";
 import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 
-/** @internal */
-export interface IParent {
-    readonly assets: {
-        readonly ordering: IOrdering;
-        readonly grandTotalValue?: number;
-    };
+/**
+ * Represent a bundle of assets.
+ *
+ * @description Asset bundles are primarily useful in conjunction with crypto currencies, where one address can hold a
+ * balance of multiple currencies. For example, an ETH address can hold balances of hundreds of ERC20 tokens. A bundle
+ * of assets is always defined by a primary asset, the details of which are then used to retrieve information about
+ * secondary assets. For example, in the case of ERC20 tokens, a [[Erc20TokensWallet]] object is the primary asset
+ * and the nested [[Erc20TokenWallet]] objects are the secondary assets. When the former is instantiated with an address
+ * and then put into a bundle by calling [[Erc20TokensWallet.bundle]], [[Erc20TokenWallet]] objects are automatically
+ * added to [[assets]] for each of the ERC20 tokens.
+ * Since every asset must reside in a bundle, there is also the class [[GenericAssetBundle]], which never holds
+ * secondary assets besides the primary one. This is used for all [[PreciousMetalAsset]] subclasses and other
+ * [[CryptoWallet]] subclasses.
+ */
+export interface IAssetBundle {
+    /** Provides the bundled assets. */
+    readonly assets: readonly Asset[];
 
-    readonly exchangeRate?: number;
+    /** Deletes `asset` from [[assets]]. */
+    deleteAsset(asset: Asset): void;
+
+    /** @internal */
+    queryData(): Promise<void>;
+
+    /** @internal */
+    toJSON(): AssetBundleUnion;
 }
 
 /** Defines the base of all classes that represent an asset. */
@@ -38,6 +56,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
     /** Provides the parent model to which this asset belongs. */
     public readonly parent: IParent;
 
+    // eslint-disable-next-line class-methods-use-this
     public get isExpandable() {
         return false;
     }
@@ -52,6 +71,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
     public abstract get location(): string;
 
     /** Provides further information on the location. */
+    // eslint-disable-next-line class-methods-use-this
     public get locationHint() {
         return "";
     }
@@ -92,22 +112,24 @@ export abstract class Asset implements ICalculatedAssetProperties {
     /** @internal */
     public get percent() {
         return (this.totalValue === undefined) || (this.parent.assets.grandTotalValue === undefined) ?
-            undefined : this.totalValue / this.parent.assets.grandTotalValue * 100;
+            undefined :
+            this.totalValue / this.parent.assets.grandTotalValue * 100;
     }
 
     /** Provides a value indicating whether the asset has any associated actions. */
+    // eslint-disable-next-line class-methods-use-this
     public get hasActions() {
         return true;
     }
 
     /** Provides the associated asset that can be edited. */
-    public get editableAsset(): Asset {
+    public get editableAsset(): IEditable {
         return this;
     }
 
     /** @internal */
     public async queryData(): Promise<void> {
-        const { result, status } = await QueryUtility.execute(() => this.queryUnitValueUsd());
+        const { result, status } = await QueryUtility.execute(async () => this.queryUnitValueUsd());
         this.unitValueUsd = result;
         this.unitValueHintImpl = status;
     }
@@ -116,13 +138,13 @@ export abstract class Asset implements ICalculatedAssetProperties {
     public abstract toJSON(): AssetUnion;
 
     /** @internal */
-    // tslint:disable-next-line:prefer-function-over-method
-    public bundle(bundle?: unknown): AssetBundle {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
+    public bundle(bundle?: unknown): IAssetBundle {
         throw new Error("Asset cannot be bundled.");
     }
 
     /** @internal */
-    // tslint:disable-next-line:no-empty prefer-function-over-method
+    // eslint-disable-next-line @typescript-eslint/no-empty-function, class-methods-use-this
     public expand() {
     }
 
@@ -134,8 +156,8 @@ export abstract class Asset implements ICalculatedAssetProperties {
         this.parent = parent;
     }
 
-    // tslint:disable-next-line:prefer-function-over-method
-    protected queryUnitValueUsd(): Promise<number | undefined> {
+    // eslint-disable-next-line class-methods-use-this
+    protected async queryUnitValueUsd(): Promise<number | undefined> {
         return Promise.reject(new Error("Asset cannot query unit value."));
     }
 

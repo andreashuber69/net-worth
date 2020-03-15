@@ -10,7 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-/** Defines valid values for the precious metal weights.
+/**
+ * Defines valid values for the precious metal weights.
+ *
  * @minimum 0.001
  * @multipleOf 0.001
  */

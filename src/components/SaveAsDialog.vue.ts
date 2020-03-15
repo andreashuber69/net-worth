@@ -14,12 +14,11 @@ import { Component, Vue } from "vue-property-decorator";
 
 import { TextInputInfo } from "../model/TextInputInfo";
 
-// tslint:disable-next-line:no-default-import
 import TextField from "./TextField.vue";
 
 @Component({ components: { TextField } })
 /** Implements the dialog used during Save As... */
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class SaveAsDialog extends Vue {
     public name = "";
 
@@ -30,21 +29,21 @@ export default class SaveAsDialog extends Vue {
         label: "Name", hint: "The name of the file.", isPresent: true, isRequired: true, schemaName: "Text",
     });
 
-    public onSaveClicked(event: MouseEvent) {
+    public onSaveClicked() {
         if (this.isValid()) {
             this.close(this.name);
         }
     }
 
-    public onCancelClicked(event: MouseEvent) {
+    public onCancelClicked() {
         this.close(undefined);
     }
 
-    public showDialog(name: string) {
+    public async showDialog(name: string) {
         this.name = name;
         this.isOpen = true;
 
-        return new Promise<string | undefined>((resolve) => this.resolve = resolve);
+        return new Promise<string | undefined>((resolve) => (this.resolve = resolve));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,7 +51,8 @@ export default class SaveAsDialog extends Vue {
     private resolve?: (value: string | undefined) => void;
 
     private isValid() {
-        // tslint:disable-next-line:no-unsafe-any
+        // The runtime type of this.$refs.form is VueComponent. It appears nobody has written typings for this yet.
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return (this.$refs.form as any).validate();
     }
 

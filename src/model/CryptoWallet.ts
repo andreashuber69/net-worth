@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
+import { IParent } from "./IEditable";
 import { SingleAsset } from "./SingleAsset";
 import { AddressCryptoWalletTypeName } from "./validation/schemas/IAddressCryptoWallet.schema";
 import { QuantityCryptoWalletTypeName } from "./validation/schemas/IQuantityCryptoWallet.schema";
@@ -31,6 +31,7 @@ export abstract class CryptoWallet extends SingleAsset {
         return this.currencySymbol;
     }
 
+    // eslint-disable-next-line class-methods-use-this
     public get fineness() {
         return undefined;
     }

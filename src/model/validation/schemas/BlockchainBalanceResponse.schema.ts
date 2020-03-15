@@ -11,11 +11,13 @@
 // <http://www.gnu.org/licenses/>.
 
 export interface IAddressBalance {
-    readonly final_balance: number;
-    readonly n_tx: number;
     readonly [key: string]: unknown;
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    readonly final_balance: number;
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    readonly n_tx: number;
 }
 
 export class BlockchainBalanceResponse {
-    readonly [address: string]: IAddressBalance;
+    readonly [address: string]: IAddressBalance | string | number;
 }

@@ -11,48 +11,36 @@
 // <http://www.gnu.org/licenses/>.
 
 import { AssetPropertyName } from "./AssetInterfaces";
-import { CompositeInput, Input, InputUtility } from "./Input";
-import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
+import { Input } from "./Input";
+
+export interface IPrimitiveInputInfoProperties {
+    readonly label: string;
+    readonly hint: string;
+    readonly isPresent: boolean;
+    readonly isRequired: boolean;
+}
 
 /**
  * Defines the base for all classes that provide input information for a primitive or composite value.
+ *
  * @description Input information refers to data displayed in the UI (prompts, hints, whether a value is required, etc.)
  * as well as the means to validate input.
  */
 export abstract class InputInfo {
     /**
      * Validates `input` or a property of `input`.
+     *
      * @description As the type indicates, `input` can be of primitive or composite type. In the former case, `input`
      * itself is validated. In the latter case, the value of the property with the passed name is validated. Either
      * way, this method only ever validates a single primitive value.
      * @returns `true` if the property value is valid; otherwise a string describing why the value is invalid.
      */
-    public validate(strict: boolean, input: Input, propertyName?: AssetPropertyName) {
-        if (InputUtility.isComposite(input)) {
-            return this.validateComposite(strict, input, propertyName);
-        } else {
-            return this.validatePrimitive(strict, input, propertyName);
-        }
-    }
+    public abstract validate(strict: boolean, input: Input, propertyName?: AssetPropertyName): true | string;
 
     /**
-     * Gets the [[PrimitiveInputInfo]] subclass object for a property.
-     * @description When implemented by [[PrimitiveInputInfo]], this method simply returns `this`.
+     * Gets the input info for a property.
+     *
      * @throws `Error` if `T` does not match the type implied by `propertyName`.
      */
-    public abstract get<T extends PrimitiveInputInfo>(ctor: new() => T, propertyName?: AssetPropertyName): T;
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // tslint:disable-next-line:prefer-function-over-method
-    protected validatePrimitive(
-        strict: boolean, input: unknown, propertyName?: AssetPropertyName): true | string {
-        return "A primitive value was provided when a composite one was expected.";
-    }
-
-    // tslint:disable-next-line:prefer-function-over-method
-    protected validateComposite(
-        strict: boolean, input: CompositeInput, propertyName?: AssetPropertyName): true | string {
-        return "A composite value was provided when a primitive one was expected.";
-    }
+    public abstract get<T extends IPrimitiveInputInfoProperties>(ctor: new() => T, propertyName?: AssetPropertyName): T;
 }

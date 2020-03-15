@@ -10,16 +10,14 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { AssetBundle } from "./AssetBundle";
 import { SingleAsset } from "./SingleAsset";
 
 /** Defines a bundle containing a single asset. */
-export abstract class GenericAssetBundle<T extends SingleAsset> extends AssetBundle {
+export abstract class GenericAssetBundle<T extends SingleAsset> {
     public readonly assets: T[];
 
     /** @internal */
     public constructor(asset: T) {
-        super();
         this.assets = [asset];
     }
 
@@ -31,7 +29,7 @@ export abstract class GenericAssetBundle<T extends SingleAsset> extends AssetBun
         }
     }
 
-    public queryData() {
+    public async queryData() {
         return this.assets[0].queryData();
     }
 }

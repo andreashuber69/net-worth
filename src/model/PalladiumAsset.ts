@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
+import { IParent } from "./IEditable";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { palladium } from "./validation/schemas/AssetTypeName.schema";
 import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";

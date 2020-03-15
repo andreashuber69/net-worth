@@ -17,8 +17,8 @@ import { TextInputInfo } from "../model/TextInputInfo";
 import { ControlBase } from "./ControlBase";
 
 @Component
-/** Implements a text area control that simplifies common functionality like e.g. validation. */
-// tslint:disable-next-line:no-default-export
+/** Implements a text area control that simplifies common functionality like validation. */
+// eslint-disable-next-line import/no-default-export
 export default class TextArea extends ControlBase<TextInputInfo> {
     /**
      * @description This redundant method is only necessary because a method called from a template apparently needs to

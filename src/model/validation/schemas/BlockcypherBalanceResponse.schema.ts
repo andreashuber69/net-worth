@@ -11,6 +11,7 @@
 // <http://www.gnu.org/licenses/>.
 
 export class BlockcypherBalanceResponse {
-    public readonly balance!: number;
     readonly [key: string]: unknown;
+    public readonly balance?: number;
+    public readonly error?: string;
 }

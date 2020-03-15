@@ -10,9 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
+/* eslint-disable max-classes-per-file */
 import { HDNode } from "bitcoinjs-lib";
-
-import { IParent } from "./Asset";
+import { IParent } from "./IEditable";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
@@ -40,30 +40,34 @@ export class BtcWallet extends SimpleCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected queryQuantity() {
+    protected async queryQuantity() {
         return new BtcWallet.QuantityRequest(this.address).queryQuantity();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // tslint:disable-next-line:variable-name
-    private static readonly BlockchainRequest =
-        // tslint:disable-next-line:max-classes-per-file
-        class NestedBlockchainRequest implements IWebRequest<Readonly<IBalance>> {
+    private static readonly BlockchainRequest = class NestedBCRequest implements IWebRequest<Readonly<IBalance>> {
         public constructor(addresses: readonly string[]) {
             this.addresses = addresses.join("|");
         }
 
         public async execute() {
-            return NestedBlockchainRequest.getFinalBalance(await QueryCache.fetch(
-                `https://blockchain.info/balance?active=${this.addresses}&cors=true`, BlockchainBalanceResponse));
+            return NestedBCRequest.getFinalBalance(await QueryCache.fetch(
+                `https://blockchain.info/balance?active=${this.addresses}&cors=true`,
+                BlockchainBalanceResponse,
+                (r) => (typeof r.reason === "string" && r.reason) || undefined,
+            ));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private static getFinalBalance(response: BlockchainBalanceResponse) {
             const result: IBalance = { finalBalance: Number.NaN, transactionCount: 0 };
-            Object.keys(response).forEach((address) => NestedBlockchainRequest.addBalance(result, response[address]));
+            const balances = Object.keys(response).map((k) => response[k]).filter(
+                (v): v is IAddressBalance => typeof v === "object",
+            );
+
+            balances.forEach((b) => NestedBCRequest.addBalance(result, b));
 
             if (Number.isNaN(result.finalBalance)) {
                 throw new QueryError();
@@ -72,15 +76,17 @@ export class BtcWallet extends SimpleCryptoWallet {
             return result;
         }
 
+        // eslint-disable-next-line @typescript-eslint/camelcase
         private static addBalance(result: IBalance, { final_balance, n_tx }: IAddressBalance) {
-            result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) + final_balance / 1E8;
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) + (final_balance / 1E8);
+            // eslint-disable-next-line @typescript-eslint/camelcase
             result.transactionCount += n_tx;
         }
 
         private readonly addresses: string;
     };
 
-    // tslint:disable-next-line:variable-name max-classes-per-file
     private static readonly QuantityRequest = class NestedQuantityRequest {
         public constructor(private readonly address: string) {
         }
@@ -108,7 +114,7 @@ export class BtcWallet extends SimpleCryptoWallet {
         private static readonly minUnusedAddressesToCheck = 20;
         private static batchLength = 2;
 
-        private static delay(milliseconds: number) {
+        private static async delay(milliseconds: number) {
             return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
         }
 
@@ -140,12 +146,15 @@ export class BtcWallet extends SimpleCryptoWallet {
         }
 
         private async addChain(node: HDNode) {
+            // eslint-disable-next-line init-declarations
             let batch: string[] | undefined;
             let unusedAddressesToCheck = NestedQuantityRequest.minUnusedAddressesToCheck;
 
             for (let index = 0; unusedAddressesToCheck > 0; index += batch.length) {
                 batch = NestedQuantityRequest.getBatch(node, index);
 
+                // We need to do this sequentially such that we don't miss the point where the unused addresses start
+                // eslint-disable-next-line no-await-in-loop
                 if ((await this.add(batch)).transactionCount === 0) {
                     unusedAddressesToCheck -= batch.length;
                 } else {

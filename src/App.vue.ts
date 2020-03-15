@@ -12,13 +12,9 @@
 
 import { Component, Vue } from "vue-property-decorator";
 
-// tslint:disable-next-line:no-default-import
 import AboutDialog from "./components/AboutDialog.vue";
-// tslint:disable-next-line:no-default-import
 import AssetList from "./components/AssetList.vue";
-// tslint:disable-next-line:no-default-import
 import BrowserDialog from "./components/BrowserDialog.vue";
-// tslint:disable-next-line:no-default-import
 import SaveAsDialog from "./components/SaveAsDialog.vue";
 import { LocalStorage } from "./LocalStorage";
 import { Model } from "./model/Model";
@@ -26,7 +22,7 @@ import { QueryCache } from "./model/QueryCache";
 import { Parser } from "./Parser";
 
 @Component({ components: { AboutDialog, AssetList, BrowserDialog, SaveAsDialog } })
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class App extends Vue {
     public isDrawerVisible = false;
     public model: Model;
@@ -34,7 +30,7 @@ export default class App extends Vue {
     public constructor() {
         super();
         this.model = App.initModel(LocalStorage.load());
-        window.addEventListener("beforeunload", (ev) => this.onBeforeUnload(ev));
+        window.addEventListener("beforeunload", () => LocalStorage.save(this.model));
     }
 
     public onNewClicked() {
@@ -82,7 +78,7 @@ export default class App extends Vue {
 
     public onRefreshClicked() {
         QueryCache.clear();
-        this.model = App.initModel(Parser.parse(this.model.toJsonString()) || new Model());
+        this.model = App.initModel(Parser.parse(this.model.toJsonString()) ?? new Model());
     }
 
     public get groupBys() {
@@ -103,17 +99,17 @@ export default class App extends Vue {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static read(blob: Blob) {
+    private static async read(blob: Blob) {
         return new Promise<string>((resolve, reject) => {
             const reader = new FileReader();
-            reader.onload = (ev) => resolve(reader.result as string);
-            reader.onerror = (ev) => reject("Unable to read file.");
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = () => reject(new Error("Unable to read file."));
             reader.readAsText(blob);
         });
     }
 
     private static initModel(model: Model) {
-        model.onChanged = () => document.title = model.title;
+        model.onChanged = () => (document.title = model.title);
         document.title = model.title;
 
         return model;
@@ -124,13 +120,13 @@ export default class App extends Vue {
     }
 
     private async onFileInputChangedImpl() {
-        const files = this.fileInput.files;
+        const { files } = this.fileInput;
 
         if (!files || (files.length !== 1)) {
             return;
         }
 
-        const file = files[0];
+        const [file] = files;
         const model = Parser.parse(await App.read(file));
 
         if (!model) {
@@ -138,7 +134,8 @@ export default class App extends Vue {
         }
 
         const name = file.name.endsWith(model.fileExtension) ?
-            file.name.substring(0, file.name.length - model.fileExtension.length) : file.name;
+            file.name.substring(0, file.name.length - model.fileExtension.length) :
+            file.name;
 
         if (name.length > 0) {
             model.name = name;
@@ -153,9 +150,9 @@ export default class App extends Vue {
 
     private write() {
         this.model.hasUnsavedChanges = false;
-        const blob = new Blob([this.model.toJsonString()], { type : "application/json" });
+        const blob = new Blob([this.model.toJsonString()], { type: "application/json" });
 
-        if (!!window.navigator.msSaveOrOpenBlob) {
+        if (window.navigator.msSaveBlob) {
             window.navigator.msSaveBlob(blob, this.model.fileName);
         } else {
             const elem = window.document.createElement("a");
@@ -170,9 +167,5 @@ export default class App extends Vue {
             elem.click();
             document.body.removeChild(elem);
         }
-    }
-
-    private onBeforeUnload(ev: BeforeUnloadEvent) {
-        LocalStorage.save(this.model);
     }
 }

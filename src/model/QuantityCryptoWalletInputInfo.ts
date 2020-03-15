@@ -29,7 +29,10 @@ export class QuantityCryptoWalletInputInfo extends
     public constructor(parameters: IQuantityCryptoWalletInputInfoParameters) {
         super(parameters);
         this.quantity = new TextInputInfo({
-            label: "Quantity", hint: "The amount in the wallet.", isPresent: true, isRequired: false,
+            label: "Quantity",
+            hint: "The amount in the wallet.",
+            isPresent: true,
+            isRequired: false,
             schemaName: QuantityCryptoWalletInputInfo.getSchema(parameters.quantityDecimals),
         });
     }

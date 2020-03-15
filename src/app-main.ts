@@ -1,4 +1,3 @@
-// tslint:disable:file-name-casing
 // Copyright (C) 2018-2019 Andreas Huber Dönni
 //
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
@@ -11,20 +10,17 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-// tslint:disable-next-line:no-submodule-imports ordered-imports
-import * as OfflinePluginRuntime from "offline-plugin/runtime";
+import { install } from "offline-plugin/runtime";
 import Vue from "vue";
 
-// tslint:disable-next-line:no-default-import ordered-imports
 import App from "./App.vue";
-// tslint:disable-next-line:no-import-side-effect
+// eslint-disable-next-line import/no-unassigned-import
 import "./assets/material-icons.css";
-// tslint:disable-next-line:no-import-side-effect
+// eslint-disable-next-line import/no-unassigned-import
 import "./assets/roboto-fontface.css";
-// tslint:disable-next-line: no-default-import
 import vuetify from "./plugins/vuetify";
 
-OfflinePluginRuntime.install();
+install();
 Vue.config.productionTip = false;
 
 new Vue({

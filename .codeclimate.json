@@ -13,10 +13,13 @@
     },
     "similar-code": {
       "config": {
-        "threshold": 60
+        "threshold": 70
       }
     }
   },
+  "exclude_patterns": [
+    "**/*.spec.ts"
+  ],
   "plugins": {
   }
 }

@@ -10,7 +10,9 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-/** Defines valid values for precious metal fineness, e.g. 0.999.
+/**
+ * Defines valid values for precious metal fineness, e.g. 0.999.
+ *
  * @minimum 0.5
  * @maximum 0.999999
  * @multipleOf 0.000001

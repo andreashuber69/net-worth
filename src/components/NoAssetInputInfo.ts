@@ -17,6 +17,7 @@ import { TextInputInfo } from "../model/TextInputInfo";
 
 /**
  * Defines how an asset with no properties needs to be "input".
+ *
  * @description This is a virtual asset that is only useful to define how the [[AssetEditor]] UI looks like when no
  * asset type has been selected yet.
  */
@@ -38,7 +39,7 @@ export class NoAssetInputInfo extends AssetInputInfo {
         super();
     }
 
-    // tslint:disable-next-line: prefer-function-over-method
+    // eslint-disable-next-line class-methods-use-this
     public createAsset(): Asset {
         throw new Error("Can't create asset.");
     }

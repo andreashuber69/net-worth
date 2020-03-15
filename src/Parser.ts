@@ -20,6 +20,8 @@ export class Parser {
         if (model instanceof Model) {
             return model;
         } else if (model) {
+            // We want to see the error in the debugger.
+            // eslint-disable-next-line no-alert
             alert(model);
         }
 

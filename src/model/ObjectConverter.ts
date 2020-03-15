@@ -85,24 +85,24 @@ export class ObjectConverter {
         [PalladiumAsset.type]: new PreciousMetalAssetInputInfo(PalladiumAsset),
         [PlatinumAsset.type]: new PreciousMetalAssetInputInfo(PlatinumAsset),
         [GoldAsset.type]: new PreciousMetalAssetInputInfo(GoldAsset),
-        [BtcWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
+        [BtcWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: BtcWallet, addressHint: btcHint, quantityDecimals: 8 }),
         [XmrWallet.type]: new QuantityCryptoWalletInputInfo({ ctor: XmrWallet, quantityDecimals: 8 }),
-        [LtcWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
-        [EtcWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
+        [LtcWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
+        [EtcWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
         [Erc20TokensWallet.type]: new AddressCryptoWalletInputInfo({ ctor: Erc20TokensWallet, addressHint: erc20Hint }),
-        [EthWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
-        [BtgWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
-        [DashWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
-        [ZecWallet.type]: new SimpleCryptoWalletInputInfo(
-            { ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
+        [EthWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
+        [BtgWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: BtgWallet, addressHint: btgHint, quantityDecimals: 8 }),
+        [DashWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: DashWallet, addressHint: dashHint, quantityDecimals: 8 }),
+        [ZecWallet.type]:
+            new SimpleCryptoWalletInputInfo({ ctor: ZecWallet, addressHint: zecHint, quantityDecimals: 8 }),
         [MiscAsset.type]: new MiscAssetInputInfo(),
-     } as const;
+    } as const;
 
     public static convert<
         P extends IPreciousMetalObject,
@@ -114,8 +114,13 @@ export class ObjectConverter {
     >(
         rawObject: P | S | A | Q | M,
         [
-            convertPreciousMetalObject, convertSimpleCryptoObject,
-            convertAddressCryptoObject, convertQuantityCryptoObject, convertMiscObject,
+            convertPreciousMetalObject,
+            convertSimpleCryptoObject,
+            convertAddressCryptoObject,
+            convertQuantityCryptoObject,
+            convertMiscObject,
+        // This is a false positive.
+        // eslint-disable-next-line array-bracket-newline
         ]: Converters<P, S, A, Q, M, PR, SR, AR, QR, MR>,
     ) {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should
@@ -140,13 +145,15 @@ export class ObjectConverter {
             const info = ObjectConverter.infos[rawObject.type];
 
             return [info, convertMiscObject(rawObject, info)] as const;
-        } else {
-            return ObjectConverter.assertUnreachable(rawObject);
         }
+
+        return ObjectConverter.assertUnreachable(rawObject);
     }
 
     public static is<T extends ObjectUnion>(
-        rawObject: ObjectUnion, types: ReadonlyArray<T["type"]>): rawObject is T {
+        rawObject: ObjectUnion,
+        types: ReadonlyArray<T["type"]>,
+    ): rawObject is T {
         return types.includes(rawObject.type);
     }
 

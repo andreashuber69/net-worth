@@ -10,7 +10,7 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
+import { IParent } from "./IEditable";
 import { QueryCache } from "./QueryCache";
 import { IRealCryptoWalletParameters } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
@@ -24,7 +24,8 @@ export abstract class BlockcypherWallet extends SimpleCryptoWallet {
 
     protected async queryQuantity() {
         const url = `https://api.blockcypher.com/v1/${this.unit.toLowerCase()}/main/addrs/${this.address}/balance`;
+        const response = await QueryCache.fetch(url, BlockcypherBalanceResponse, (r) => r.error);
 
-        return (await QueryCache.fetch(url, BlockcypherBalanceResponse)).balance / 1E8;
+        return (response.balance && response.balance / 1E8) ?? Number.NaN;
     }
 }

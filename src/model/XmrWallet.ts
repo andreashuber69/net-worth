@@ -10,8 +10,10 @@
 // You should have received a copy of the GNU General Public License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-import { IParent } from "./Asset";
+/* eslint-disable max-classes-per-file */
+import { IAssetBundle } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
+import { IParent } from "./IEditable";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { monero } from "./validation/schemas/AssetTypeName.schema";
 import { IQuantityCryptoWallet } from "./validation/schemas/IQuantityCryptoWallet.schema";
@@ -27,7 +29,8 @@ export class XmrWallet extends RealCryptoWallet {
         super(parent, RealCryptoWallet.getProperties(props, "XMR"));
     }
 
-    public bundle(bundle?: unknown): GenericAssetBundle<XmrWallet> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public bundle(bundle?: unknown): IAssetBundle {
         return new XmrWallet.Bundle(this);
     }
 
@@ -36,14 +39,13 @@ export class XmrWallet extends RealCryptoWallet {
         return {
             type: this.type,
             ...this.getProperties(),
-            quantity: this.quantity || 0,
+            quantity: this.quantity ?? 0,
         };
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // tslint:disable-next-line: max-classes-per-file variable-name
-    private static readonly Bundle = class NestedBundle extends GenericAssetBundle<XmrWallet> {
+    private static readonly Bundle = class extends GenericAssetBundle<XmrWallet> implements IAssetBundle {
         public toJSON() {
             return {
                 primaryAsset: this.assets[0].toJSON(),

@@ -17,9 +17,7 @@ import { Model } from "../model/Model";
 import { GroupBys } from "../model/Ordering";
 import { SortBy } from "../model/validation/schemas/SortBy.schema";
 
-// tslint:disable-next-line:no-default-import
 import AssetEditor from "./AssetEditor.vue";
-// tslint:disable-next-line:no-default-import
 import { ColumnInfo, ColumnName } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
@@ -43,15 +41,17 @@ type NumericColumnName = keyof Pick<Asset, typeof numericColumnNames[number]>;
 
 @Component({ components: { AssetEditor } })
 /** Implements the asset list UI. */
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class AssetList extends ComponentBase<Model> {
     public get headers() {
         const allColumnNames = ColumnInfo.getAllNames(this.checkedValue.assets.ordering.groupBys);
         const visibleColumnNames: readonly ColumnName[] = allColumnNames.filter(
-            (name) => allColumnNames.indexOf(name) < ColumnInfo.getTotalCount(this.optionalColumnCount));
+            (name) => allColumnNames.indexOf(name) < ColumnInfo.getTotalCount(this.optionalColumnCount),
+        );
 
         return AssetList.getHeaders(this.checkedValue.assets.ordering.groupBys).filter(
-            (h) => visibleColumnNames.includes(h.value));
+            (h) => visibleColumnNames.includes(h.value),
+        );
     }
 
     public get options() {
@@ -63,13 +63,9 @@ export default class AssetList extends ComponentBase<Model> {
 
     public set options(options: IOptions) {
         this.checkedValue.assets.ordering.sort = {
-            by: options.sortBy.length && options.sortBy[0] || this.checkedValue.assets.ordering.sort.by,
-            descending: options.sortDesc.length && options.sortDesc[0] || false,
+            by: (options.sortBy.length && options.sortBy[0]) || this.checkedValue.assets.ordering.sort.by,
+            descending: (options.sortDesc.length && options.sortDesc[0]) || false,
         };
-    }
-
-    public get isLoading() {
-        return (this.checkedValue.assets.grandTotalValue === undefined);
     }
 
     public get grandTotalValue() {
@@ -116,7 +112,7 @@ export default class AssetList extends ComponentBase<Model> {
             return "";
         }
 
-        const maxPrefix = this.maxPrefixes.get(columnName) || ["", false];
+        const maxPrefix = this.maxPrefixes.get(columnName) ?? ["", false];
         const valueFormatted = this.format(Math.trunc(value), 0);
 
         // The following logic is necessary so that negative values will be displayed in alignment with their
@@ -124,7 +120,9 @@ export default class AssetList extends ComponentBase<Model> {
         // first prefixed with an invisible - sign, before potentially also being prefixed with zeroes and grouping
         // characters.
         const prefixWithoutSign = maxPrefix[0].substr(
-            0, maxPrefix[0].length - valueFormatted.length + ((value < 0) && 1 || 0));
+            0,
+            maxPrefix[0].length - valueFormatted.length + (((value < 0) && 1) || 0),
+        );
 
         return ((value < 0) || !maxPrefix[1]) ? prefixWithoutSign : `${prefixWithoutSign}-`;
     }
@@ -149,13 +147,10 @@ export default class AssetList extends ComponentBase<Model> {
         this.checkedValue.assets.delete(asset);
     }
 
-    public mounted() {
-        this.timer = setInterval(() => this.onIntervalElapsed(), 100);
-    }
-
     public beforeDestroy() {
         if (this.timer) {
-            clearInterval(this.timer);
+            clearTimeout(this.timer);
+            this.timer = undefined;
         }
     }
 
@@ -183,7 +178,6 @@ export default class AssetList extends ComponentBase<Model> {
 
     private optionalColumnCount = ColumnInfo.maxOptionalCount;
     private timer?: NodeJS.Timer;
-    private previousOffset = Number.NaN;
 
     private get assetEditor() {
         return this.getControl("editor") as AssetEditor;
@@ -191,16 +185,17 @@ export default class AssetList extends ComponentBase<Model> {
 
     private get maxPrefixes(): ReadonlyMap<NumericColumnName, [string, boolean]> {
         const result = new Map<NumericColumnName, [string, boolean]>(
-            numericColumnNames.map((name) => [name, ["", false]]));
+            numericColumnNames.map((name) => [name, ["", false]]),
+        );
         result.set("totalValue", [this.formatZeroes(this.checkedValue.assets.grandTotalValue), false]);
         result.set("percent", [this.formatZeroes(100), false]);
 
         for (const property of numericColumnNames) {
-            let [longest, hasNegativeValues] = result.get(property) || ["", false];
+            let [longest, hasNegativeValues] = result.get(property) ?? ["", false];
 
             for (const asset of this.checkedValue.assets.grouped) {
                 const value = asset[property];
-                hasNegativeValues = hasNegativeValues || ((value || 0) < 0);
+                hasNegativeValues = hasNegativeValues || ((value ?? 0) < 0);
                 const current = this.formatZeroes(value);
                 longest = current.length > longest.length ? current : longest;
             }
@@ -214,22 +209,29 @@ export default class AssetList extends ComponentBase<Model> {
     private formatZeroes(num: number | undefined) {
         const numToFormat = (num === undefined) || Number.isNaN(num) ? undefined : Math.abs(num);
 
-        return this.format(numToFormat && Math.trunc(numToFormat), 0).replace(/\d/g, "0");
+        return this.format(numToFormat && Math.trunc(numToFormat), 0).replace(/\d/ug, "0");
     }
 
-    private onIntervalElapsed() {
+    private adjustTableColumnCount() {
+        if (!this.timer) {
+            this.timer = setTimeout(() => this.onTimeout(), 10);
+        }
+    }
+
+    private onTimeout() {
+        this.timer = undefined;
         const element = this.$el as HTMLElement;
 
-        if (this.previousOffset === element.offsetLeft) {
-            if ((this.optionalColumnCount > 0) && (element.offsetLeft < 0)) {
-                --this.optionalColumnCount;
-            } else if ((this.optionalColumnCount < ColumnInfo.maxOptionalCount) &&
-                (element.offsetLeft * 2 > element.offsetWidth /
-                    (ColumnInfo.requiredCount + this.optionalColumnCount) * 3)) {
-                ++this.optionalColumnCount;
-            }
+        // If we detect that the table column count needs to be adjusted, we need to have this function be called again
+        // to see whether the count is now correct.
+        if ((this.optionalColumnCount > 0) && (element.offsetLeft < 0)) {
+            --this.optionalColumnCount;
+            this.adjustTableColumnCount();
+        } else if ((this.optionalColumnCount < ColumnInfo.maxOptionalCount) &&
+            (element.offsetLeft * 2 > element.offsetWidth /
+                (ColumnInfo.requiredCount + this.optionalColumnCount) * 3)) {
+            ++this.optionalColumnCount;
+            this.adjustTableColumnCount();
         }
-
-        this.previousOffset = element.offsetLeft;
     }
 }

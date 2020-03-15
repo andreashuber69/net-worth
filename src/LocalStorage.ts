@@ -60,8 +60,9 @@ export class LocalStorage {
         const url = new URL(window.location.pathname, window.location.origin);
         url.searchParams.append(
             LocalStorage.sessionLocalStorageKey,
-            model ? LocalStorage.saveImpl(model) : LocalStorage.emptyModelLocalStorageKey);
-        url.searchParams.append(LocalStorage.sessionForceLoadFromLocalStorageKey, (!!model).toString());
+            model ? LocalStorage.saveImpl(model) : LocalStorage.emptyModelLocalStorageKey,
+        );
+        url.searchParams.append(LocalStorage.sessionForceLoadFromLocalStorageKey, Boolean(model).toString());
         window.open(url.href);
     }
 
@@ -73,7 +74,6 @@ export class LocalStorage {
 
     private static loadExistingSession(localStorageKey: string) {
         if ((localStorageKey !== LocalStorage.emptyModelLocalStorageKey) &&
-            // tslint:disable-next-line:deprecation
             ((window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD) ||
             (window.sessionStorage.getItem(LocalStorage.sessionForceLoadFromLocalStorageKey) === true.toString()))) {
             // Session storage can only be non-empty because the user either reloaded the page or because Open...
@@ -90,7 +90,7 @@ export class LocalStorage {
         const oldKeys = LocalStorage.getOldKeys();
 
         // Sort the array in descending direction, so that the modified model that was last saved will be loaded.
-        oldKeys.sort((l, r) => l < r ? 1 : -1);
+        oldKeys.sort((l, r) => (l < r ? 1 : -1));
 
         for (const oldKey of oldKeys) {
             const model = LocalStorage.loadModel(oldKey.toString());
@@ -113,7 +113,7 @@ export class LocalStorage {
         if (!model.assets.isEmpty) {
             const json = model.toJsonString();
 
-            // tslint:disable-next-line:no-empty
+            // eslint-disable-next-line no-empty
             while (!(key = LocalStorage.trySaveToLocalStorage(json))) {
             }
         }
@@ -126,7 +126,7 @@ export class LocalStorage {
 
         if (result) {
             while (window.sessionStorage.length > 0) {
-                window.sessionStorage.removeItem(window.sessionStorage.key(0) || "");
+                window.sessionStorage.removeItem(window.sessionStorage.key(0) ?? "");
             }
 
             window.localStorage.removeItem(localStorageKey);
@@ -141,7 +141,7 @@ export class LocalStorage {
         // We need a key that is unique and monotonously increasing. When a browser is closed with the application
         // running in multiple tabs, it is likely that two tabs will get the same value from Date.now(). The random
         // component should reduce the likelihood of a collision.
-        const uniqueNumber = Math.trunc((Date.now() + Math.random()) * Math.pow(2, 10));
+        const uniqueNumber = Math.trunc((Date.now() + Math.random()) * (2 ** 10));
 
         if (!Number.isSafeInteger(uniqueNumber)) {
             // Make sure all digits are significant. Since Date.now() currently returns a value with 41 binary digits,
@@ -169,7 +169,8 @@ export class LocalStorage {
 
         for (let index = 0; index < window.localStorage.length; ++index) {
             const oldKey = window.localStorage.key(index);
-            let oldKeyNumber: number | undefined;
+            // eslint-disable-next-line no-undef-init
+            let oldKeyNumber: number | undefined = undefined;
 
             if (oldKey && (oldKeyNumber = Number.parseInt(oldKey, 10))) {
                 result.push(oldKeyNumber);

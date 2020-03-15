@@ -16,7 +16,7 @@ import { Application } from "../model/Application";
 
 @Component
 /** Implements the About dialog. */
-// tslint:disable-next-line:no-default-export
+// eslint-disable-next-line import/no-default-export
 export default class AboutDialog extends Vue {
     public isOpen = false;
 
@@ -28,6 +28,7 @@ export default class AboutDialog extends Vue {
         return Application.packageName + (this.userAgent.includes("Electron") ? "-desktop" : "");
     }
 
+    // eslint-disable-next-line class-methods-use-this
     public get userAgent() {
         return window.navigator.userAgent;
     }
@@ -38,8 +39,9 @@ export default class AboutDialog extends Vue {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // eslint-disable-next-line class-methods-use-this
     private get desktopVersion() {
-        const userAgent = window.navigator.userAgent;
+        const { userAgent } = window.navigator;
         const prefix = `${Application.packageName}/`;
         const start = userAgent.indexOf(prefix) + prefix.length;
 
