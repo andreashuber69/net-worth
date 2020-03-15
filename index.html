@@ -1,6 +1,7 @@
 <!DOCTYPE html><html lang=en-US><head><meta charset=utf-8><title>Net Worth</title><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Net Worth presents your precious metal and cryptocurrency holdings in a groupable and sortable table, which allows you to quickly see how your net worth is spread among the different asset types and locations."><meta name=theme-color content=#1976d2><link rel="shortcut icon" href=/net-worth/favicon.ico><link rel=manifest href=/net-worth/manifest.json><link rel=apple-touch-icon href=/net-worth/icon-192x192.png><style>.base-page {
         position: fixed;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         top: 0;
@@ -12,21 +13,26 @@
           of the center. While 100% would solve that problem nicely, it doesn't work for mobile browsers, where the page
           is horizontally briefly larger than the viewport. The indicator would thus jump around while the table is
           sized down to fit the page. Therefore 100vw is considered the lesser of two evils.
-         */
+        */
         width: 100vw;
         background: #25272a;
+        font-family: sans-serif; /* Roboto is not yet known at this point */
+        font-size: large;
+        font-weight: 500;
+      }
+
+      .base-page > span {
+        padding: 20px
       }
 
       .no-script-page {
         z-index: 1000;
         color: #99c247;
-        font-family: sans-serif; /* Roboto is not yet known at this point */
-        font-size: large;
-        font-weight: 700;
       }
 
-      .warning {
-        padding: 20px;
+      .incompatible-browser-page {
+        z-index: 1000;
+        color: #fe1e67;
       }
 
       .loading-page {
@@ -56,4 +62,4 @@
         100% {
           transform: rotate(360deg);
         }
-      }</style><link href=/net-worth/fonts/MaterialIcons-Regular.8a9a261c.woff2 rel=preload as=font crossorigin=""><link href=/net-worth/fonts/Roboto-Bold.b52fac2b.woff2 rel=preload as=font crossorigin=""><link href=/net-worth/fonts/Roboto-Medium.90d16760.woff2 rel=preload as=font crossorigin=""><link href=/net-worth/fonts/Roboto-Regular.73f0a88b.woff2 rel=preload as=font crossorigin=""><link href=/net-worth/img/background.03f488ed.png rel=preload as=image><link href=/net-worth/css/chunk-vendors.78bd7bd3.css rel=stylesheet media=print onload="this.media='all'"><link href=/net-worth/css/app.ec35a21e.css rel=stylesheet media=print onload="this.media='all'"></head><body><noscript><div class="base-page no-script-page"><span class=warning>This site doesn't work without JavaScript enabled. Please enable it to continue.</span></div></noscript><div id=loader class="base-page loading-page"><div class=loading-indicator></div></div><script>window.addEventListener("load", () => document.getElementById("loader").classList.add("loaded"));</script><div id=app></div><script src=/net-worth/js/chunk-vendors.57e4122c.js></script><script src=/net-worth/js/app.1292e050.js></script></body></html>
+      }</style><link href=/net-worth/fonts/MaterialIcons-Regular.8a9a261c.woff2 rel=preload as=font crossorigin=""><link href=/net-worth/fonts/Roboto-Bold.b52fac2b.woff2 rel=preload as=font crossorigin=""><link href=/net-worth/fonts/Roboto-Medium.90d16760.woff2 rel=preload as=font crossorigin=""><link href=/net-worth/fonts/Roboto-Regular.73f0a88b.woff2 rel=preload as=font crossorigin=""><link href=/net-worth/img/background.03f488ed.png rel=preload as=image><link href=/net-worth/css/chunk-vendors.217aeca3.css rel=stylesheet media=print onload="this.media='all'"><link href=/net-worth/css/app.854393b6.css rel=stylesheet media=print onload="this.media='all'"></head><body><noscript><div class="base-page no-script-page"><span>This site doesn't work without JavaScript enabled. Please enable it to continue.</span></div></noscript><div id=loader class="base-page loading-page"><div class=loading-indicator></div></div><script>window.addEventListener("load", () => document.getElementById("loader").classList.add("loaded"));</script><div id=app></div><script src=/net-worth/js/chunk-vendors.7654831f.js></script><script src=/net-worth/js/app.081e5afe.js></script></body></html>
