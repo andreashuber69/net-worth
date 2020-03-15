@@ -45,10 +45,12 @@ Net Worth runs in your internet browser but works and feels mostly like a conven
 logins, no passwords and your data is only ever stored locally on your computer.
 
 While the application should work in most recent internet browsers, for privacy reasons it is recommended to
-install either [Brave](https://brave.com) or [Firefox](https://www.mozilla.org/en-US/firefox/new/) and point it to
-<https://andreashuber69.github.io/net-worth>. Note that **Brave** treats all requests to external services as if
-they are made by cross-site trackers, which is why you need to deactivate Brave Shields for this application (see
-[Privacy](#privacy) for more information on what kind of queries are made by the application).
+install either [Brave](https://brave.com), [Iron](https://www.srware.net/iron/) or
+[Firefox](https://www.mozilla.org/en-US/firefox/new/) and point it to <https://andreashuber69.github.io/net-worth>.
+
+> Note: It appears that some versions of **Brave** treat requests to external services as if they are made by cross-site
+> trackers. So, if you experience any problems, please deactivate **Brave Shields** and try again. In the
+> [Privacy](#privacy) section you can find more information on what kinds of queries are made by the application.
 
 ### Installation
 
