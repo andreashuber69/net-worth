@@ -147,13 +147,10 @@ export default class AssetList extends ComponentBase<Model> {
         this.checkedValue.assets.delete(asset);
     }
 
-    public mounted() {
-        this.timer = setInterval(() => this.onIntervalElapsed(), 100);
-    }
-
     public beforeDestroy() {
         if (this.timer) {
-            clearInterval(this.timer);
+            clearTimeout(this.timer);
+            this.timer = undefined;
         }
     }
 
@@ -181,7 +178,6 @@ export default class AssetList extends ComponentBase<Model> {
 
     private optionalColumnCount = ColumnInfo.maxOptionalCount;
     private timer?: NodeJS.Timer;
-    private previousOffset = Number.NaN;
 
     private get assetEditor() {
         return this.getControl("editor") as AssetEditor;
@@ -216,19 +212,26 @@ export default class AssetList extends ComponentBase<Model> {
         return this.format(numToFormat && Math.trunc(numToFormat), 0).replace(/\d/ug, "0");
     }
 
-    private onIntervalElapsed() {
+    private adjustTableColumnCount() {
+        if (!this.timer) {
+            this.timer = setTimeout(() => this.onTimeout(), 10);
+        }
+    }
+
+    private onTimeout() {
+        this.timer = undefined;
         const element = this.$el as HTMLElement;
 
-        if (this.previousOffset === element.offsetLeft) {
-            if ((this.optionalColumnCount > 0) && (element.offsetLeft < 0)) {
-                --this.optionalColumnCount;
-            } else if ((this.optionalColumnCount < ColumnInfo.maxOptionalCount) &&
-                (element.offsetLeft * 2 > element.offsetWidth /
-                    (ColumnInfo.requiredCount + this.optionalColumnCount) * 3)) {
-                ++this.optionalColumnCount;
-            }
+        // If we detect that the table column count needs to be adjusted, we need to have this function be called again
+        // to see whether the count is now correct.
+        if ((this.optionalColumnCount > 0) && (element.offsetLeft < 0)) {
+            --this.optionalColumnCount;
+            this.adjustTableColumnCount();
+        } else if ((this.optionalColumnCount < ColumnInfo.maxOptionalCount) &&
+            (element.offsetLeft * 2 > element.offsetWidth /
+                (ColumnInfo.requiredCount + this.optionalColumnCount) * 3)) {
+            ++this.optionalColumnCount;
+            this.adjustTableColumnCount();
         }
-
-        this.previousOffset = element.offsetLeft;
     }
 }
