@@ -147,13 +147,6 @@ export default class AssetList extends ComponentBase<Model> {
         this.checkedValue.assets.delete(asset);
     }
 
-    public beforeDestroy() {
-        if (this.timer) {
-            clearTimeout(this.timer);
-            this.timer = undefined;
-        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getHeaders(groupBys: GroupBys): readonly ITableHeader[] {
@@ -177,7 +170,6 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     private optionalColumnCount = ColumnInfo.maxOptionalCount;
-    private timer?: NodeJS.Timer;
 
     private get assetEditor() {
         return this.getControl("editor") as AssetEditor;
@@ -213,13 +205,10 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     private adjustTableColumnCount() {
-        if (!this.timer) {
-            this.timer = setTimeout(() => this.onTimeout(), 10);
-        }
+        this.$nextTick(() => this.onRendered());
     }
 
-    private onTimeout() {
-        this.timer = undefined;
+    private onRendered() {
         const element = this.$el as HTMLElement;
 
         // If we detect that the table column count needs to be adjusted, we need to have this function be called again
