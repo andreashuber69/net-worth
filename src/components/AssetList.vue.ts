@@ -147,6 +147,17 @@ export default class AssetList extends ComponentBase<Model> {
         this.checkedValue.assets.delete(asset);
     }
 
+    public mounted() {
+        this.timer = setInterval(() => this.adjustTableColumnCount(), 500);
+    }
+
+    public beforeDestroy() {
+        if (this.timer) {
+            clearInterval(this.timer);
+            this.timer = undefined;
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getHeaders(groupBys: GroupBys): readonly ITableHeader[] {
@@ -170,6 +181,7 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     private optionalColumnCount = ColumnInfo.maxOptionalCount;
+    private timer?: NodeJS.Timer;
 
     private get assetEditor() {
         return this.getControl("editor") as AssetEditor;
