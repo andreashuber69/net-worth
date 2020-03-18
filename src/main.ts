@@ -27,13 +27,15 @@ if (Browser.isCompatible) {
     if (appElement) {
         appElement.innerHTML = `
             <div class="base-page incompatible-browser-page">
-                <p><strong>${Application.title} doesn't work on this browser.</strong></p>
-                <p>
-                    It is recommended to use ${Application.title} from within a recent version of an
-                    <strong>open-source</strong> browser like Iron, Brave or Firefox. ${Application.title} should also
-                    work on recent incarnations of proprietary browsers like Chrome, Opera, Safari, Edge and probably
-                    others.
-                </p>
+                <p><strong>${Application.title} doesn't work on this
+                    browser.</strong></p>
+                <p>It is recommended to use ${Application.title}
+                    from within a recent version of an
+                    <strong>open-source</strong> browser like Iron,
+                    Brave or Firefox. ${Application.title} should
+                    also work on recent incarnations of
+                    proprietary browsers like Chrome,
+                    Opera, Safari, Edge and others.</p>
                 <p>${Application.title} ${Application.version}</p>
                 <p>${window.navigator.userAgent}</p>
             </div>
