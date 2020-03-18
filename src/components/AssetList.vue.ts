@@ -147,9 +147,13 @@ export default class AssetList extends ComponentBase<Model> {
         this.checkedValue.assets.delete(asset);
     }
 
+    public mounted() {
+        this.timer = setInterval(() => this.adjustTableColumnCount(), 500);
+    }
+
     public beforeDestroy() {
         if (this.timer) {
-            clearTimeout(this.timer);
+            clearInterval(this.timer);
             this.timer = undefined;
         }
     }
@@ -213,13 +217,10 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     private adjustTableColumnCount() {
-        if (!this.timer) {
-            this.timer = setTimeout(() => this.onTimeout(), 10);
-        }
+        this.$nextTick(() => this.onRendered());
     }
 
-    private onTimeout() {
-        this.timer = undefined;
+    private onRendered() {
         const element = this.$el as HTMLElement;
 
         // If we detect that the table column count needs to be adjusted, we need to have this function be called again
