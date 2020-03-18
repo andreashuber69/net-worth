@@ -30,7 +30,7 @@ export class Browser {
 
         // The Blink engine is used by Chrome, Chromium and other Chromium-based browsers (like Opera and Yandex), all
         // of which have a Chrome version in their userAgent string
-        if ((engineName === "Blink") && (browserVersion < 54)) {
+        if ((engineName === "Blink") && (browserVersion < 58)) {
             return false;
         }
 
