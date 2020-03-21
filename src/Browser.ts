@@ -14,7 +14,7 @@ import { UAParser } from "ua-parser-js";
 
 export class Browser {
     public static get isCompatible() {
-        const { browserName, browserVersion, engineName } = Browser.getInfo();
+        const { browserName, browserVersion, engineName, engineVersion } = Browser.getInfo();
 
         if ((browserName === "Firefox") && (browserVersion < 47)) {
             return false;
@@ -30,7 +30,7 @@ export class Browser {
 
         // The Blink engine is used by Chrome, Chromium and other Chromium-based browsers (like Opera and Yandex), all
         // of which have a Chrome version in their userAgent string
-        if ((engineName === "Blink") && (browserVersion < 58)) {
+        if ((engineName === "Blink") && (engineVersion < 58)) {
             return false;
         }
 
@@ -40,13 +40,19 @@ export class Browser {
 
     private static getInfo() {
         const uaParser = new UAParser();
-        const { browser: { name: browserName, major }, engine: { name: engineName } } = uaParser.getResult();
-        const parsedMajor = Number.parseInt(major ?? "", 10);
+        const { browser, engine } = uaParser.getResult();
 
         return {
-            browserName,
-            browserVersion: Number.isNaN(parsedMajor) ? 0 : parsedMajor,
-            engineName,
+            browserName: browser.name,
+            browserVersion: Browser.getMajorVersion(browser.version),
+            engineName: engine.name,
+            engineVersion: Browser.getMajorVersion(engine.version),
         };
+    }
+
+    private static getMajorVersion(str: string | undefined) {
+        const parsed = Number.parseInt(str ?? "", 10);
+
+        return Number.isNaN(parsed) ? 0 : parsed;
     }
 }
