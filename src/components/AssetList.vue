@@ -18,10 +18,9 @@
       <AssetEditor ref="editor"></AssetEditor>
     </v-layout>
     <v-data-table
-      :headers="headers" :options.sync="options" :loading="checkedValue.assets.grandTotalValue === undefined"
-      :items="checkedValue.assets.grouped" item-key="key" :server-items-length="checkedValue.assets.grouped.length"
-      hide-default-footer :mobile-breakpoint="0" class="elevation-1" @click:row="$event.expand()"
-      v-resize="adjustTableColumnCount">
+      :headers="headers" :options.sync="options" :loading="loading" :items="checkedValue.assets.grouped" item-key="key"
+      :server-items-length="checkedValue.assets.grouped.length" hide-default-footer :mobile-breakpoint="0"
+      class="elevation-1" @click:row="$event.expand()" v-resize="adjustTableColumnCount">
       <template v-slot:header.unitValue="{ header }">
         {{ header.text }}<br>({{ checkedValue.currency }})
       </template>
@@ -40,20 +39,32 @@
         <span>{{ format(value, 6) }}</span>
       </template>
       <template v-slot:item.unitValue="{ item, header, value }">
-        <span class="prefix">{{ getPrefix(header.value, value) }}</span>
-        <span :title="item.unitValueHint">{{ format(value, 2, 2) }}</span>
+        <template v-if="value !== undefined || !loading">
+          <span class="prefix">{{ getPrefix(header.value, value) }}</span>
+          <span :title="item.unitValueHint">{{ format(value, 2, 2) }}</span>
+        </template>
+        <v-skeleton-loader v-else type="text"></v-skeleton-loader>
       </template>
       <template v-slot:item.quantity="{ item, header, value }">
-        <span class="prefix">{{ getPrefix(header.value, value) }}</span>
-        <span :title="item.quantityHint">{{ format(value, 6) }}</span>
+        <template v-if="value !== undefined || !loading">
+          <span class="prefix">{{ getPrefix(header.value, value) }}</span>
+          <span :title="item.quantityHint">{{ format(value, 6) }}</span>
+        </template>
+        <v-skeleton-loader v-else type="text"></v-skeleton-loader>
       </template>
       <template v-slot:item.totalValue="{ header, value }">
-        <span class="prefix total">{{ getPrefix(header.value, value) }}</span>
-        <span class="total">{{ format(value, 2, 2) }}</span>
+        <template v-if="value !== undefined || !loading">
+          <span class="prefix total">{{ getPrefix(header.value, value) }}</span>
+          <span class="total">{{ format(value, 2, 2) }}</span>
+        </template>
+        <v-skeleton-loader v-else type="text"></v-skeleton-loader>
       </template>
       <template v-slot:item.percent="{ header, value }">
-        <span class="prefix total">{{ getPrefix(header.value, value) }}</span>
-        <span class="total">{{ format(value, 1, 1) }}</span>
+        <template v-if="value !== undefined || !loading">
+          <span class="prefix total">{{ getPrefix(header.value, value) }}</span>
+          <span class="total">{{ format(value, 1, 1) }}</span>
+        </template>
+        <v-skeleton-loader v-else type="text"></v-skeleton-loader>
       </template>
       <template v-slot:item.more="{ item }">
         <v-menu v-if="item.hasActions">
@@ -83,8 +94,11 @@
         <tr>
           <td :colspan="grandTotalLabelColumnCount" class="total">Grand Total</td>
           <td v-if="isVisible('totalValue')">
-            <span class="prefix total">{{ getPrefix('totalValue', grandTotalValue) }}</span>
-            <span class="total">{{ format(grandTotalValue, 2, 2) }}</span>
+            <template v-if="!loading">
+              <span class="prefix total">{{ getPrefix('totalValue', grandTotalValue) }}</span>
+              <span class="total">{{ format(grandTotalValue, 2, 2) }}</span>
+            </template>
+            <v-skeleton-loader v-else type="text"></v-skeleton-loader>
           </td>
           <td>
             <span class="prefix total">{{ getPrefix('percent', 100) }}</span>
