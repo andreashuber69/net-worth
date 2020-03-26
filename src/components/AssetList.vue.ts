@@ -21,7 +21,7 @@ import AssetEditor from "./AssetEditor.vue";
 import { ColumnInfo, ColumnName } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
-import NumericTableCell from "./NumericTableCell.vue";
+import NumericTableCell, { NumericColumnName, numericColumnNames } from "./NumericTableCell.vue";
 
 type ITableHeader = {
     readonly value: Exclude<ColumnName, SortBy>;
@@ -36,9 +36,6 @@ interface IOptions {
     readonly sortBy: SortBy[];
     readonly sortDesc: boolean[];
 }
-
-const numericColumnNames = ["fineness", "unitValue", "quantity", "totalValue", "percent"] as const;
-type NumericColumnName = keyof Pick<Asset, typeof numericColumnNames[number]>;
 
 @Component({ components: { AssetEditor, NumericTableCell } })
 /** Implements the asset list UI. */
@@ -101,9 +98,8 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public get maxPrefixes(): ReadonlyMap<NumericColumnName, [string, boolean]> {
-        const result = new Map<NumericColumnName, [string, boolean]>(
-            numericColumnNames.map((name) => [name, ["", false]]),
-        );
+        const result = AssetList.initMaxPrefixes();
+
         result.set("totalValue", [AssetList.formatZeroes(this.checkedValue.assets.grandTotalValue), false]);
         result.set("percent", [AssetList.formatZeroes(100), false]);
 
@@ -172,14 +168,18 @@ export default class AssetList extends ComponentBase<Model> {
         ];
     }
 
-    private static capitalize(str: string) {
-        return `${str[0].toUpperCase()}${str.substr(1)}`;
+    private static initMaxPrefixes() {
+        return new Map<NumericColumnName, [string, boolean]>(numericColumnNames.map((name) => [name, ["", false]]));
     }
 
     private static formatZeroes(num: number | undefined) {
         const numToFormat = (num === undefined) || Number.isNaN(num) ? undefined : Math.abs(num);
 
         return Format.value(numToFormat && Math.trunc(numToFormat), 0).replace(/\d/ug, "0");
+    }
+
+    private static capitalize(str: string) {
+        return `${str[0].toUpperCase()}${str.substr(1)}`;
     }
 
     private optionalColumnCount = ColumnInfo.maxOptionalCount;
