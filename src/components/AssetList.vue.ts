@@ -98,10 +98,7 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public get maxPrefixes(): ReadonlyMap<NumericColumnName, [string, boolean]> {
-        const result = AssetList.initMaxPrefixes();
-
-        result.set("totalValue", [AssetList.formatZeroes(this.checkedValue.assets.grandTotalValue), false]);
-        result.set("percent", [AssetList.formatZeroes(100), false]);
+        const result = this.initMaxPrefixes();
 
         for (const property of numericColumnNames) {
             let [longest, hasNegativeValues] = result.get(property) ?? ["", false];
@@ -168,10 +165,6 @@ export default class AssetList extends ComponentBase<Model> {
         ];
     }
 
-    private static initMaxPrefixes() {
-        return new Map<NumericColumnName, [string, boolean]>(numericColumnNames.map((name) => [name, ["", false]]));
-    }
-
     private static formatZeroes(num: number | undefined) {
         const numToFormat = (num === undefined) || Number.isNaN(num) ? undefined : Math.abs(num);
 
@@ -187,6 +180,15 @@ export default class AssetList extends ComponentBase<Model> {
 
     private get assetEditor() {
         return this.getControl("editor") as AssetEditor;
+    }
+
+    private initMaxPrefixes() {
+        const result =
+            new Map<NumericColumnName, [string, boolean]>(numericColumnNames.map((name) => [name, ["", false]]));
+        result.set("totalValue", [AssetList.formatZeroes(this.checkedValue.assets.grandTotalValue), false]);
+        result.set("percent", [AssetList.formatZeroes(100), false]);
+
+        return result;
     }
 
     private adjustTableColumnCount() {
