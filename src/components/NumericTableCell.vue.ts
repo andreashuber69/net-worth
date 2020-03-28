@@ -54,7 +54,9 @@ export default class NumericTableCell extends ComponentBase<number> {
         // positive brothers and sisters. In a column with at least one negative value, all positive values are
         // first prefixed with an invisible - sign, before potentially also being prefixed with zeroes and grouping
         // characters.
-        const integralValueLength = NumericTableCell.getIntegralPart(this.valueFormatted).length;
+        const absoluteValueFormatted =
+            this.valueFormatted.startsWith("-") ? this.valueFormatted.substr(1) : this.valueFormatted;
+        const integralValueLength = NumericTableCell.getIntegralPart(absoluteValueFormatted).length;
         const prefixWithoutSign = this.maxPrefix[0].substr(0, this.maxPrefix[0].length - integralValueLength);
 
         return ((this.value < 0) || !this.maxPrefix[1]) ? prefixWithoutSign : `${prefixWithoutSign}-`;
