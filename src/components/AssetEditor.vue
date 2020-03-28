@@ -21,8 +21,8 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <Select large="true" :info="typeInputInfo" v-model="type"></Select>
-              <TextField :info="assetInfo" property="description" v-model="data"></TextField>
               <TextField :info="assetInfo" property="location" v-model="data"></TextField>
+              <TextField :info="assetInfo" property="description" v-model="data"></TextField>
               <TextField :info="assetInfo" property="address" v-model="data"></TextField>
               <TextField :info="assetInfo" property="weight" v-model="data"></TextField>
               <Select :info="assetInfo" property="weightUnit" v-model="data"></Select>

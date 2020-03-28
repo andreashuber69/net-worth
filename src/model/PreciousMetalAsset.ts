@@ -28,9 +28,9 @@ import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 export abstract class PreciousMetalAsset extends SingleAsset {
     public abstract get type(): PreciousMetalAssetTypeName;
 
-    public readonly description: string;
-
     public readonly location: string;
+
+    public readonly description: string;
 
     public readonly weight: Weight;
 
@@ -52,8 +52,8 @@ export abstract class PreciousMetalAsset extends SingleAsset {
     public toJSON(): IPreciousMetalAsset {
         return {
             type: this.type,
-            description: this.description,
             location: this.location || undefined,
+            description: this.description,
             weight: this.weight,
             weightUnit: this.weightUnit,
             fineness: this.fineness,
@@ -71,8 +71,8 @@ export abstract class PreciousMetalAsset extends SingleAsset {
 
     protected constructor(parent: IParent, props: IPreciousMetalAssetProperties, private readonly quandlPath: string) {
         super(parent);
-        this.description = props.description;
         this.location = props.location ?? "";
+        this.description = props.description;
         this.weight = props.weight;
         this.weightUnit = props.weightUnit;
         this.fineness = props.fineness;

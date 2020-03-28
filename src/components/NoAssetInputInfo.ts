@@ -23,8 +23,8 @@ import { TextInputInfo } from "../model/TextInputInfo";
  */
 export class NoAssetInputInfo extends AssetInputInfo {
     public readonly type = "";
-    public readonly description = new TextInputInfo();
     public readonly location = new TextInputInfo();
+    public readonly description = new TextInputInfo();
     public readonly address = new TextInputInfo();
     public readonly weight = new TextInputInfo();
     public readonly weightUnit = new SelectInputInfo();

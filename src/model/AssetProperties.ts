@@ -23,12 +23,12 @@ import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCrypt
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 class AssetProperties {
-    public get description() {
-        return AssetProperties.validate("description", this.data.description);
-    }
-
     public get location() {
         return this.data.location;
+    }
+
+    public get description() {
+        return AssetProperties.validate("description", this.data.description);
     }
 
     public get address() {

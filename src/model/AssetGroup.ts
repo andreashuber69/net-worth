@@ -29,12 +29,12 @@ export class AssetGroup extends Asset {
         return this.coalesce((a) => a.type) ?? "";
     }
 
-    public get description() {
-        return this.coalesce((a) => a.description) ?? "";
-    }
-
     public get location() {
         return this.coalesce((a) => a.location) ?? "";
+    }
+
+    public get description() {
+        return this.coalesce((a) => a.description) ?? "";
     }
 
     public get unit() {

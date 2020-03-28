@@ -22,8 +22,8 @@ import { WeightUnit, WeightUnitName } from "./validation/schemas/WeightUnit.sche
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements Partial<IAuxProperties<string>> {
     public type: AssetTypeName | "";
-    public description?: string;
     public location?: string;
+    public description?: string;
     public address?: string;
     public weight?: string;
     public weightUnit?: WeightUnitName;
@@ -39,8 +39,8 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     // codebeat:disable[ABC]
     public constructor(asset?: AssetUnion) {
         this.type = AssetEditorData.getType(asset);
-        this.description = AssetEditorData.getDescription(asset);
         this.location = AssetEditorData.getLocation(asset);
+        this.description = AssetEditorData.getDescription(asset);
         this.address = AssetEditorData.getAddress(asset);
         this.weight = AssetEditorData.getWeight(asset);
         this.weightUnit = AssetEditorData.getWeightUnit(asset);
@@ -58,12 +58,12 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
         return asset?.type ?? "";
     }
 
-    private static getDescription(asset?: AssetUnion) {
-        return asset?.description;
-    }
-
     private static getLocation(asset?: AssetUnion) {
         return asset?.location;
+    }
+
+    private static getDescription(asset?: AssetUnion) {
+        return asset?.description;
     }
 
     private static getAddress(asset?: AssetUnion) {

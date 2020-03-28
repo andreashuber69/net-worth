@@ -19,8 +19,8 @@ import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityC
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 type SimpleCryptoWalletProperties = [
-    ISimpleCryptoWalletProperties["description"],
     ISimpleCryptoWalletProperties["location"],
+    ISimpleCryptoWalletProperties["description"],
     IAddressCryptoWalletProperties["address"] | undefined,
     IQuantityCryptoWalletProperties["quantity"] | undefined,
     ISimpleCryptoWalletProperties["notes"]
@@ -33,11 +33,11 @@ export type IRealCryptoWalletParameters = ISimpleCryptoWalletProperties & {
 
 /** Defines the base of all classes that represent a real crypto currency wallet. */
 export abstract class RealCryptoWallet extends CryptoWallet {
+    public readonly location: string;
+
     public readonly description: string;
 
     public readonly address: string;
-
-    public readonly location: string;
 
     public readonly notes: string;
 
@@ -64,20 +64,20 @@ export abstract class RealCryptoWallet extends CryptoWallet {
         props: ISimpleCryptoWalletProperties,
         currencySymbol: string,
     ): IRealCryptoWalletParameters {
-        const { description, location, notes } = props;
+        const { location, description, notes } = props;
         const address = (("address" in props) && props.address) || undefined;
         const quantity = (("quantity" in props) && props.quantity) || undefined;
 
         return {
-            ...RealCryptoWallet.getPropertiesImpl([description, location, address, quantity, notes]),
+            ...RealCryptoWallet.getPropertiesImpl([location, description, address, quantity, notes]),
             currencySymbol,
         };
     }
 
     protected constructor(parent: IParent, params: IRealCryptoWalletParameters) {
         super(parent, params.currencySymbol);
-        this.description = params.description;
         this.location = params.location ?? "";
+        this.description = params.description;
         this.address = (("address" in params) && params.address) || "";
         this.quantity = (("quantity" in params) && params.quantity) || undefined;
         this.notes = params.notes ?? "";
@@ -95,8 +95,8 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     /** @internal */
     protected getProperties(): ISimpleCryptoWalletProperties {
         return RealCryptoWallet.getPropertiesImpl([
-            this.description,
             this.location || undefined,
+            this.description,
             this.address || undefined,
             this.address ? undefined : this.quantity,
             this.notes || undefined,
@@ -106,12 +106,12 @@ export abstract class RealCryptoWallet extends CryptoWallet {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static getPropertiesImpl(
-        [description, location, address, quantity, notes]: SimpleCryptoWalletProperties,
+        [location, description, address, quantity, notes]: SimpleCryptoWalletProperties,
     ): ISimpleCryptoWalletProperties {
         if (address) {
-            return { description, location, address, notes };
+            return { location, description, address, notes };
         } else if (quantity) {
-            return { description, location, quantity, notes };
+            return { location, description, quantity, notes };
         }
 
         throw new Error("Unexpected ISimpleCryptoWalletProperties value!");

@@ -28,19 +28,19 @@ export class MiscAssetInputInfo extends AssetInputInfo {
         return MiscAsset.type;
     }
 
-    public readonly description = new TextInputInfo({
-        label: "Description",
-        hint: "The nature of the items, e.g. 'Cash', 'Vacation House'.",
-        isPresent: true,
-        isRequired: true,
-        schemaName: "Text",
-    });
-
     public readonly location = new TextInputInfo({
         label: "Location",
         hint: "The location, e.g. 'Safe', 'Redford'.",
         isPresent: true,
         isRequired: false,
+        schemaName: "Text",
+    });
+
+    public readonly description = new TextInputInfo({
+        label: "Description",
+        hint: "The nature of the items, e.g. 'Cash', 'Vacation House'.",
+        isPresent: true,
+        isRequired: true,
         schemaName: "Text",
     });
 

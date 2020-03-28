@@ -171,12 +171,12 @@ type IExpectedAssetProperties<T extends Asset> =
     IExpectedProperties<T, "key" | "unitValue" | "totalValue" | "percent" | "parent" | "editableAsset">;
 
 const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
-    type: T["type"], description: string, location: string, weight: Weight,
+    type: T["type"], location: string, description: string, weight: Weight,
     weightUnit: WeightUnit, fineness: Fineness, notes: string, quantity: Quantity0,
 ) => ({
     type,
-    description,
     location,
+    description,
     weight,
     weightUnit,
     unit: `${weight} ${WeightUnit[weightUnit]}`,
@@ -192,12 +192,12 @@ const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
 });
 
 const getExpectedCryptoProperties = <T extends CryptoWallet, U extends number>(
-    type: T["type"], description: string, location: string, unit: string, displayDecimals: U, address: string,
+    type: T["type"], location: string, description: string, unit: string, displayDecimals: U, address: string,
     notes: string, quantity: QuantityAny,
 ) => ({
     type,
-    description,
     location,
+    description,
     unit,
     fineness: undefined,
     displayDecimals,
@@ -336,8 +336,8 @@ describe("ModelParser.parse", () => {
                     const expected: IExpectedAssetProperties<SilverAsset> =
                         getExpectedPreciousMetalProperties<SilverAsset>(
                             "Silver",
-                            "Coins",
                             "Home",
+                            "Coins",
                             1,
                             WeightUnit["t oz"],
                             0.999,
@@ -382,8 +382,8 @@ describe("ModelParser.parse", () => {
                         const expected: IExpectedAssetProperties<Erc20TokensWallet> =
                             getExpectedCryptoProperties<Erc20TokensWallet, 6>(
                                 "ERC20 Tokens",
-                                "Spending",
                                 "",
+                                "Spending",
                                 asset.unit,
                                 6,
                                 "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454",
