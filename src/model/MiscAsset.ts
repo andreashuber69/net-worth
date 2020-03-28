@@ -28,9 +28,9 @@ export class MiscAsset extends SingleAsset {
 
     public readonly type = misc;
 
-    public readonly description: string;
-
     public readonly location: string;
+
+    public readonly description: string;
 
     public get unit() {
         return MiscAsset.getUnit(this.value, this.valueCurrency);
@@ -53,8 +53,8 @@ export class MiscAsset extends SingleAsset {
 
     public constructor(parent: IParent, props: IMiscAssetProperties) {
         super(parent);
-        this.description = props.description;
         this.location = props.location ?? "";
+        this.description = props.description;
         this.value = props.value;
         this.valueCurrency = props.valueCurrency;
         this.quantity = props.quantity;
@@ -65,8 +65,8 @@ export class MiscAsset extends SingleAsset {
     public toJSON(): IMiscAsset {
         return {
             type: this.type,
-            description: this.description,
             location: this.location || undefined,
+            description: this.description,
             value: this.value,
             valueCurrency: this.valueCurrency,
             quantity: this.quantity,

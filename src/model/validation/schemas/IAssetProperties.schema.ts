@@ -20,11 +20,11 @@ import { AssetTypeName } from "./AssetTypeName.schema";
  * and during parsing.
  */
 export interface IAssetProperties {
-    /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
-    readonly description: string;
-
     /** Provides the location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
     readonly location?: string;
+
+    /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
+    readonly description: string;
 
     /** Provides the asset notes. */
     readonly notes?: string;

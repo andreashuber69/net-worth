@@ -64,9 +64,6 @@ export abstract class Asset implements ICalculatedAssetProperties {
     /** Provides the type of asset, e.g. 'Silver, 'Gold', 'Bitcoin', 'Litecoin'. */
     public abstract get type(): AssetTypeName | "";
 
-    /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
-    public abstract get description(): string;
-
     /** Provides the location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
     public abstract get location(): string;
 
@@ -75,6 +72,9 @@ export abstract class Asset implements ICalculatedAssetProperties {
     public get locationHint() {
         return "";
     }
+
+    /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
+    public abstract get description(): string;
 
     /** Provides the unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'. */
     public abstract get unit(): string;

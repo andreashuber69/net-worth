@@ -33,19 +33,19 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
         return this.ctor.type;
     }
 
-    public readonly description = new TextInputInfo({
-        label: "Description",
-        hint: "Describes the items, e.g. 'Coins', 'Bars'.",
-        isPresent: true,
-        isRequired: true,
-        schemaName: "Text",
-    });
-
     public readonly location = new TextInputInfo({
         label: "Location",
         hint: "The location, e.g. 'Safe', 'Safety Deposit Box'.",
         isPresent: true,
         isRequired: false,
+        schemaName: "Text",
+    });
+
+    public readonly description = new TextInputInfo({
+        label: "Description",
+        hint: "Describes the items, e.g. 'Coins', 'Bars'.",
+        isPresent: true,
+        isRequired: true,
         schemaName: "Text",
     });
 

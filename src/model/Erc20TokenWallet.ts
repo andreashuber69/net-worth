@@ -25,8 +25,8 @@ interface ITokenWalletParameters {
 
 export interface IErc20TokensWallet extends IEditable {
     readonly type: AddressCryptoWalletTypeName;
-    readonly description: string;
     readonly location: string;
+    readonly description: string;
     readonly address: string;
     readonly notes: string;
 
@@ -39,12 +39,12 @@ export class Erc20TokenWallet extends CryptoWallet {
         return this.editable.type;
     }
 
-    public get description() {
-        return this.editable.description;
-    }
-
     public get location() {
         return this.editable.location;
+    }
+
+    public get description() {
+        return this.editable.description;
     }
 
     public get address() {

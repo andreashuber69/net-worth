@@ -30,19 +30,19 @@ export abstract class CryptoWalletInputInfo<T extends CryptoWallet, U> extends A
         return this.ctor.type;
     }
 
-    public readonly description = new TextInputInfo({
-        label: "Description",
-        hint: "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.",
-        isPresent: true,
-        isRequired: true,
-        schemaName: "Text",
-    });
-
     public readonly location = new TextInputInfo({
         label: "Location",
         hint: "The location of the wallet, e.g. 'My Mobile', 'Home', 'Safety Deposit Box'.",
         isPresent: true,
         isRequired: false,
+        schemaName: "Text",
+    });
+
+    public readonly description = new TextInputInfo({
+        label: "Description",
+        hint: "Describes the wallet, e.g. 'Mycelium', 'Hardware Wallet', 'Paper Wallet'.",
+        isPresent: true,
+        isRequired: true,
         schemaName: "Text",
     });
 

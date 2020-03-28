@@ -30,8 +30,8 @@ interface IValidationResults extends IAuxProperties<true | string> {
 export abstract class AssetInputInfo extends InputInfo implements IAuxProperties<PrimitiveInputInfo> {
     public abstract get type(): AssetTypeName | "";
 
-    public abstract get description(): TextInputInfo;
     public abstract get location(): TextInputInfo;
+    public abstract get description(): TextInputInfo;
     public abstract get address(): TextInputInfo;
     public abstract get value(): TextInputInfo;
     public abstract get valueCurrency(): SelectInputInfo;

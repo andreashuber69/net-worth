@@ -13,8 +13,8 @@
     {
       "primaryAsset": {
         "type": "Silver",
-        "description": "Coins",
         "location": "Home",
+        "description": "Coins",
         "weight": 1,
         "weightUnit": 31.1034768,
         "fineness": 0.999,
