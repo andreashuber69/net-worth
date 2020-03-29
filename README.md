@@ -29,8 +29,8 @@
 </p>
 
 <h1 align="center">Net Worth</h1>
-<span align="center">Copyright &copy; 2018-2020 Andreas Huber</span>
-<br>
+<p align="center">Copyright &copy; 2018-2020 Andreas Huber</p>
+
 Gain a quick overview of your precious metal and crypto assets!
 
 If you primarily store your wealth in 'unconventional' assets like precious metals and cryptocurrencies, it seems
