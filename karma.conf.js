@@ -1,3 +1,4 @@
+// https://github.com/andreashuber69/net-worth#--
 // cSpell: disable
 const karmaTypescriptConfig = {
     bundlerOptions: {
