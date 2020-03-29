@@ -29,6 +29,7 @@
 </p>
 
 <h1 align="center">Net Worth</h1>
+<p align="center">Copyright &copy; 2018-2020 Andreas Huber</p>
 
 Gain a quick overview of your precious metal and crypto assets!
 
@@ -153,6 +154,8 @@ Of course, there are also some (minor) disadvantages:
   are typically changed rarely.
 - If a web site attempts to open a new browser window, pop-up blockers sometimes get in the way. Most browsers allow the
   user to authorize exceptions.
+
+## [License](https://raw.githubusercontent.com/andreashuber69/net-worth/develop/LICENSE)
 
 ## Technologies & Packages
 
