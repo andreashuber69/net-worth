@@ -1,6 +1,7 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Component, Vue } from "vue-property-decorator";
 
+import { BeforeInstallPromptEvent } from "./BeforeInstallPromptEvent";
 import AboutDialog from "./components/AboutDialog.vue";
 import AssetList from "./components/AssetList.vue";
 import BrowserDialog from "./components/BrowserDialog.vue";
@@ -20,6 +21,7 @@ export default class App extends Vue {
         super();
         this.model = App.initModel(LocalStorage.load());
         window.addEventListener("beforeunload", () => LocalStorage.save(this.model));
+        window.addEventListener("beforeinstallprompt", (ev) => this.onBeforeInstallPrompt(ev));
     }
 
     public onNewClicked() {
@@ -57,6 +59,19 @@ export default class App extends Vue {
             this.model.name = newName;
             this.model.wasSavedToFile = true;
             this.write();
+        }
+    }
+
+    public get canInstall() {
+        return Boolean(this.beforeInstallPrompt);
+    }
+
+    public async onInstallClicked(): Promise<void> {
+        if (this.beforeInstallPrompt) {
+            const ev = this.beforeInstallPrompt;
+            this.beforeInstallPrompt = false;
+            this.isDrawerVisible = false;
+            await ev.prompt();
         }
     }
 
@@ -104,8 +119,16 @@ export default class App extends Vue {
         return model;
     }
 
+    // eslint-disable-next-line no-null/no-null
+    private beforeInstallPrompt: BeforeInstallPromptEvent | false = false;
+
     private get fileInput() {
         return this.$refs.fileInput as HTMLInputElement;
+    }
+
+    private onBeforeInstallPrompt(ev: BeforeInstallPromptEvent) {
+        ev.preventDefault();
+        this.beforeInstallPrompt = ev;
     }
 
     private async onFileInputChangedImpl() {
