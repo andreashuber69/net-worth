@@ -1,15 +1,4 @@
-// Copyright (C) 2018-2019 Andreas Huber Dönni
-//
-// This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-// License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
-// version.
-//
-// This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
-
+// https://github.com/andreashuber69/net-worth#--
 import { Component } from "vue-property-decorator";
 
 import { Asset } from "../model/Asset";
@@ -21,6 +10,7 @@ import AssetEditor from "./AssetEditor.vue";
 import { ColumnInfo, ColumnName } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
+import NumericTableCell, { NumericColumnName, numericColumnNames } from "./NumericTableCell.vue";
 
 type ITableHeader = {
     readonly value: Exclude<ColumnName, SortBy>;
@@ -36,10 +26,7 @@ interface IOptions {
     readonly sortDesc: boolean[];
 }
 
-const numericColumnNames = ["fineness", "unitValue", "quantity", "totalValue", "percent"] as const;
-type NumericColumnName = keyof Pick<Asset, typeof numericColumnNames[number]>;
-
-@Component({ components: { AssetEditor } })
+@Component({ components: { AssetEditor, NumericTableCell } })
 /** Implements the asset list UI. */
 // eslint-disable-next-line import/no-default-export
 export default class AssetList extends ComponentBase<Model> {
@@ -66,6 +53,10 @@ export default class AssetList extends ComponentBase<Model> {
             by: (options.sortBy.length && options.sortBy[0]) || this.checkedValue.assets.ordering.sort.by,
             descending: (options.sortDesc.length && options.sortDesc[0]) || false,
         };
+    }
+
+    public get loading() {
+        return this.checkedValue.assets.grandTotalValue === undefined;
     }
 
     public get grandTotalValue() {
@@ -95,36 +86,23 @@ export default class AssetList extends ComponentBase<Model> {
             ColumnInfo.getTotalCount(this.optionalColumnCount);
     }
 
-    public format(num: number | undefined, maximumFractionDigits: number, minimumFractionDigits?: number) {
-        // This must be an instance function, because it is called from the template. The following avoids
-        // "Class method does not use 'this'." error.
-        this.toString();
+    public get maxPrefixes(): ReadonlyMap<NumericColumnName, [string, boolean]> {
+        const result = this.initMaxPrefixes();
 
-        return Format.value(num, maximumFractionDigits, minimumFractionDigits);
-    }
+        for (const property of numericColumnNames) {
+            let [longest, hasNegativeValues] = result.get(property) ?? ["", false];
 
-    /**
-     * @description Calculates a string that needs to be prepended to a given number such that its decimal point is
-     * aligned with all other numbers in the same column.
-     */
-    public getPrefix(columnName: NumericColumnName, value: number | undefined) {
-        if ((value === undefined) || Number.isNaN(value)) {
-            return "";
+            for (const asset of this.checkedValue.assets.grouped) {
+                const value = asset[property];
+                hasNegativeValues = hasNegativeValues || ((value ?? 0) < 0);
+                const current = AssetList.formatZeroes(value);
+                longest = current.length > longest.length ? current : longest;
+            }
+
+            result.set(property, [longest, hasNegativeValues]);
         }
 
-        const maxPrefix = this.maxPrefixes.get(columnName) ?? ["", false];
-        const valueFormatted = this.format(Math.trunc(value), 0);
-
-        // The following logic is necessary so that negative values will be displayed in alignment with their
-        // positive brothers and sisters. In a column with at least one negative value, all positive values are
-        // first prefixed with an invisible - sign, before potentially also being prefixed with zeroes and grouping
-        // characters.
-        const prefixWithoutSign = maxPrefix[0].substr(
-            0,
-            maxPrefix[0].length - valueFormatted.length + (((value < 0) && 1) || 0),
-        );
-
-        return ((value < 0) || !maxPrefix[1]) ? prefixWithoutSign : `${prefixWithoutSign}-`;
+        return result;
     }
 
     public async onAdd() {
@@ -176,6 +154,12 @@ export default class AssetList extends ComponentBase<Model> {
         ];
     }
 
+    private static formatZeroes(num: number | undefined) {
+        const numToFormat = (num === undefined) || Number.isNaN(num) ? undefined : Math.abs(num);
+
+        return Format.value(numToFormat && Math.trunc(numToFormat), 0).replace(/\d/ug, "0");
+    }
+
     private static capitalize(str: string) {
         return `${str[0].toUpperCase()}${str.substr(1)}`;
     }
@@ -187,33 +171,13 @@ export default class AssetList extends ComponentBase<Model> {
         return this.getControl("editor") as AssetEditor;
     }
 
-    private get maxPrefixes(): ReadonlyMap<NumericColumnName, [string, boolean]> {
-        const result = new Map<NumericColumnName, [string, boolean]>(
-            numericColumnNames.map((name) => [name, ["", false]]),
-        );
-        result.set("totalValue", [this.formatZeroes(this.checkedValue.assets.grandTotalValue), false]);
-        result.set("percent", [this.formatZeroes(100), false]);
-
-        for (const property of numericColumnNames) {
-            let [longest, hasNegativeValues] = result.get(property) ?? ["", false];
-
-            for (const asset of this.checkedValue.assets.grouped) {
-                const value = asset[property];
-                hasNegativeValues = hasNegativeValues || ((value ?? 0) < 0);
-                const current = this.formatZeroes(value);
-                longest = current.length > longest.length ? current : longest;
-            }
-
-            result.set(property, [longest, hasNegativeValues]);
-        }
+    private initMaxPrefixes() {
+        const result =
+            new Map<NumericColumnName, [string, boolean]>(numericColumnNames.map((name) => [name, ["", false]]));
+        result.set("totalValue", [AssetList.formatZeroes(this.checkedValue.assets.grandTotalValue), false]);
+        result.set("percent", [AssetList.formatZeroes(100), false]);
 
         return result;
-    }
-
-    private formatZeroes(num: number | undefined) {
-        const numToFormat = (num === undefined) || Number.isNaN(num) ? undefined : Math.abs(num);
-
-        return this.format(numToFormat && Math.trunc(numToFormat), 0).replace(/\d/ug, "0");
     }
 
     private adjustTableColumnCount() {

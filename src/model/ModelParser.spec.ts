@@ -1,15 +1,4 @@
-// Copyright (C) 2018-2019 Andreas Huber Dönni
-//
-// This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-// License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
-// version.
-//
-// This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
-
+// https://github.com/andreashuber69/net-worth#--
 import { Asset } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { AssetGroup } from "./AssetGroup";
@@ -171,12 +160,12 @@ type IExpectedAssetProperties<T extends Asset> =
     IExpectedProperties<T, "key" | "unitValue" | "totalValue" | "percent" | "parent" | "editableAsset">;
 
 const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
-    type: T["type"], description: string, location: string, weight: Weight,
+    type: T["type"], location: string, description: string, weight: Weight,
     weightUnit: WeightUnit, fineness: Fineness, notes: string, quantity: Quantity0,
 ) => ({
     type,
-    description,
     location,
+    description,
     weight,
     weightUnit,
     unit: `${weight} ${WeightUnit[weightUnit]}`,
@@ -192,12 +181,12 @@ const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
 });
 
 const getExpectedCryptoProperties = <T extends CryptoWallet, U extends number>(
-    type: T["type"], description: string, location: string, unit: string, displayDecimals: U, address: string,
+    type: T["type"], location: string, description: string, unit: string, displayDecimals: U, address: string,
     notes: string, quantity: QuantityAny,
 ) => ({
     type,
-    description,
     location,
+    description,
     unit,
     fineness: undefined,
     displayDecimals,
@@ -336,8 +325,8 @@ describe("ModelParser.parse", () => {
                     const expected: IExpectedAssetProperties<SilverAsset> =
                         getExpectedPreciousMetalProperties<SilverAsset>(
                             "Silver",
-                            "Coins",
                             "Home",
+                            "Coins",
                             1,
                             WeightUnit["t oz"],
                             0.999,
@@ -382,8 +371,8 @@ describe("ModelParser.parse", () => {
                         const expected: IExpectedAssetProperties<Erc20TokensWallet> =
                             getExpectedCryptoProperties<Erc20TokensWallet, 6>(
                                 "ERC20 Tokens",
-                                "Spending",
                                 "",
+                                "Spending",
                                 asset.unit,
                                 6,
                                 "0x00C5E04176d95A286fccE0E68c683Ca0bfec8454",

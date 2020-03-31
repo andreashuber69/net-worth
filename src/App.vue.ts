@@ -1,17 +1,7 @@
-// Copyright (C) 2018-2019 Andreas Huber Dönni
-//
-// This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-// License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
-// version.
-//
-// This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
-
+// https://github.com/andreashuber69/net-worth#--
 import { Component, Vue } from "vue-property-decorator";
 
+import { BeforeInstallPromptEvent } from "./BeforeInstallPromptEvent";
 import AboutDialog from "./components/AboutDialog.vue";
 import AssetList from "./components/AssetList.vue";
 import BrowserDialog from "./components/BrowserDialog.vue";
@@ -31,6 +21,7 @@ export default class App extends Vue {
         super();
         this.model = App.initModel(LocalStorage.load());
         window.addEventListener("beforeunload", () => LocalStorage.save(this.model));
+        window.addEventListener("beforeinstallprompt", (ev) => this.onBeforeInstallPrompt(ev));
     }
 
     public onNewClicked() {
@@ -68,6 +59,19 @@ export default class App extends Vue {
             this.model.name = newName;
             this.model.wasSavedToFile = true;
             this.write();
+        }
+    }
+
+    public get canInstall() {
+        return Boolean(this.beforeInstallPrompt);
+    }
+
+    public async onInstallClicked(): Promise<void> {
+        if (this.beforeInstallPrompt) {
+            const ev = this.beforeInstallPrompt;
+            this.beforeInstallPrompt = false;
+            this.isDrawerVisible = false;
+            await ev.prompt();
         }
     }
 
@@ -115,8 +119,16 @@ export default class App extends Vue {
         return model;
     }
 
+    // eslint-disable-next-line no-null/no-null
+    private beforeInstallPrompt: BeforeInstallPromptEvent | false = false;
+
     private get fileInput() {
         return this.$refs.fileInput as HTMLInputElement;
+    }
+
+    private onBeforeInstallPrompt(ev: BeforeInstallPromptEvent) {
+        ev.preventDefault();
+        this.beforeInstallPrompt = ev;
     }
 
     private async onFileInputChangedImpl() {

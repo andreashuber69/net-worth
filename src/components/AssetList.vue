@@ -1,27 +1,13 @@
-<!--
-   Copyright (C) 2018-2019 Andreas Huber Dönni
-
-   This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
-   version.
-
-   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-   warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License along with this program. If not, see
-   <http://www.gnu.org/licenses/>.
--->
-
+<!-- https://github.com/andreashuber69/net-worth#-- -->
 <template>
   <div>
     <v-layout row justify-center>
       <AssetEditor ref="editor"></AssetEditor>
     </v-layout>
     <v-data-table
-      :headers="headers" :options.sync="options" :loading="checkedValue.assets.grandTotalValue === undefined"
-      :items="checkedValue.assets.grouped" item-key="key" :server-items-length="checkedValue.assets.grouped.length"
-      hide-default-footer :mobile-breakpoint="0" class="elevation-1" @click:row="$event.expand()"
-      v-resize="adjustTableColumnCount">
+      :headers="headers" :options.sync="options" :loading="loading" :items="checkedValue.assets.grouped" item-key="key"
+      :server-items-length="checkedValue.assets.grouped.length" hide-default-footer :mobile-breakpoint="0"
+      class="elevation-1" @click:row="$event.expand()" v-resize="adjustTableColumnCount">
       <template v-slot:header.unitValue="{ header }">
         {{ header.text }}<br>({{ checkedValue.currency }})
       </template>
@@ -35,25 +21,33 @@
       <template v-slot:item.description="{ item, value }">
         <span :title="item.notes">{{ value }}</span>
       </template>
-      <template v-slot:item.fineness="{ header, value }">
-        <span class="prefix">{{ getPrefix(header.value, value) }}</span>
-        <span>{{ format(value, 6) }}</span>
+      <template v-slot:item.fineness="{ header: { value: name }, value }">
+        <NumericTableCell :maxPrefix="maxPrefixes.get(name)" :maxDigits="6" :value="value">
+        </NumericTableCell>
       </template>
-      <template v-slot:item.unitValue="{ item, header, value }">
-        <span class="prefix">{{ getPrefix(header.value, value) }}</span>
-        <span :title="item.unitValueHint">{{ format(value, 2, 2) }}</span>
+      <template v-slot:item.unitValue="{ item, header: { value: name }, value }">
+        <NumericTableCell
+          :maxPrefix="maxPrefixes.get(name)" :maxDigits="2" :minDigits="2"
+          :value="value" :title="item.unitValueHint" :isLoading="loading">
+        </NumericTableCell>
       </template>
-      <template v-slot:item.quantity="{ item, header, value }">
-        <span class="prefix">{{ getPrefix(header.value, value) }}</span>
-        <span :title="item.quantityHint">{{ format(value, 6) }}</span>
+      <template v-slot:item.quantity="{ item, header: { value: name }, value }">
+        <NumericTableCell
+          :maxPrefix="maxPrefixes.get(name)" :maxDigits="6"
+          :value="value" :title="item.quantityHint" :isLoading="loading">
+        </NumericTableCell>
       </template>
-      <template v-slot:item.totalValue="{ header, value }">
-        <span class="prefix total">{{ getPrefix(header.value, value) }}</span>
-        <span class="total">{{ format(value, 2, 2) }}</span>
+      <template v-slot:item.totalValue="{ header: { value: name }, value }">
+        <NumericTableCell
+          :maxPrefix="maxPrefixes.get(name)" :maxDigits="2" :minDigits="2" :isTotal="true"
+          :value="value" :isLoading="loading">
+        </NumericTableCell>
       </template>
-      <template v-slot:item.percent="{ header, value }">
-        <span class="prefix total">{{ getPrefix(header.value, value) }}</span>
-        <span class="total">{{ format(value, 1, 1) }}</span>
+      <template v-slot:item.percent="{ header: { value: name }, value }">
+        <NumericTableCell
+          :maxPrefix="maxPrefixes.get(name)" :maxDigits="1" :minDigits="1" :isTotal="true"
+          :value="value" :isLoading="loading">
+        </NumericTableCell>
       </template>
       <template v-slot:item.more="{ item }">
         <v-menu v-if="item.hasActions">
@@ -83,12 +77,15 @@
         <tr>
           <td :colspan="grandTotalLabelColumnCount" class="total">Grand Total</td>
           <td v-if="isVisible('totalValue')">
-            <span class="prefix total">{{ getPrefix('totalValue', grandTotalValue) }}</span>
-            <span class="total">{{ format(grandTotalValue, 2, 2) }}</span>
+            <NumericTableCell
+              :maxPrefix="maxPrefixes.get('totalValue')" :maxDigits="2" :minDigits="2" :isTotal="true"
+              :value="grandTotalValue" :isLoading="loading">
+            </NumericTableCell>
           </td>
           <td>
-            <span class="prefix total">{{ getPrefix('percent', 100) }}</span>
-            <span class="total">100.0</span>
+            <NumericTableCell
+              :maxPrefix="maxPrefixes.get('percent')" :maxDigits="1" :minDigits="1" :isTotal="true" :value="100">
+            </NumericTableCell>
           </td>
           <td></td>
         </tr>

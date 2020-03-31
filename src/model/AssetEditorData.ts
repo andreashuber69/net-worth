@@ -1,15 +1,4 @@
-// Copyright (C) 2018-2019 Andreas Huber Dönni
-//
-// This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-// License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
-// version.
-//
-// This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
-
+// https://github.com/andreashuber69/net-worth#--
 import { IAuxProperties } from "./IAuxProperties";
 import { ObjectConverter } from "./ObjectConverter";
 import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
@@ -22,8 +11,8 @@ import { WeightUnit, WeightUnitName } from "./validation/schemas/WeightUnit.sche
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements Partial<IAuxProperties<string>> {
     public type: AssetTypeName | "";
-    public description?: string;
     public location?: string;
+    public description?: string;
     public address?: string;
     public weight?: string;
     public weightUnit?: WeightUnitName;
@@ -39,8 +28,8 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     // codebeat:disable[ABC]
     public constructor(asset?: AssetUnion) {
         this.type = AssetEditorData.getType(asset);
-        this.description = AssetEditorData.getDescription(asset);
         this.location = AssetEditorData.getLocation(asset);
+        this.description = AssetEditorData.getDescription(asset);
         this.address = AssetEditorData.getAddress(asset);
         this.weight = AssetEditorData.getWeight(asset);
         this.weightUnit = AssetEditorData.getWeightUnit(asset);
@@ -58,12 +47,12 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
         return asset?.type ?? "";
     }
 
-    private static getDescription(asset?: AssetUnion) {
-        return asset?.description;
-    }
-
     private static getLocation(asset?: AssetUnion) {
         return asset?.location;
+    }
+
+    private static getDescription(asset?: AssetUnion) {
+        return asset?.description;
     }
 
     private static getAddress(asset?: AssetUnion) {

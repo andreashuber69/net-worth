@@ -1,3 +1,4 @@
+// https://github.com/andreashuber69/net-worth#--
 module.exports = {
     env: {
         browser: true,

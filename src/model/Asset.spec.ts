@@ -1,15 +1,4 @@
-// Copyright (C) 2018-2019 Andreas Huber Dönni
-//
-// This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-// License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
-// version.
-//
-// This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
-
+// https://github.com/andreashuber69/net-worth#--
 import { arrayOfAll } from "./arrayOfAll";
 import { Asset } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
@@ -131,8 +120,8 @@ const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
 
 const testPreciousMetalAssetConstruction = (ctor: IPreciousMetalAssetCtor) => {
     const expectedPropertyNames = arrayOfAll<keyof IPreciousMetalAssetProperties>()(
-        "description",
         "location",
+        "description",
         "quantity",
         "notes",
         "weight",
@@ -205,7 +194,7 @@ type SimpleCryptoWalletCtor = ICryptoWalletCtor<SimpleCryptoWallet, ISimpleCrypt
 
 const testSimpleCryptoWalletConstruction = (ctor: SimpleCryptoWalletCtor) => {
     const expectedPropertyNames =
-        arrayOfAll<keyof IAddressCryptoWalletProperties>()("description", "location", "notes", "address");
+        arrayOfAll<keyof IAddressCryptoWalletProperties>()("location", "description", "notes", "address");
     const props = getSimpleCryptoWalletProperties(getRandomData(ctor.type, expectedPropertyNames));
 
     expectProperty(ctor, props, "isExpandable", (matcher) => matcher.toBe(false));
@@ -276,8 +265,8 @@ type AddressCryptoWalletCtor = ICryptoWalletCtor<Erc20TokensWallet, IAddressCryp
 
 const testAddressCryptoWalletConstruction = (ctor: AddressCryptoWalletCtor) => {
     const expectedPropertyNames = arrayOfAll<keyof IAddressCryptoWalletProperties>()(
-        "description",
         "location",
+        "description",
         "notes",
         "address",
     );
@@ -344,8 +333,8 @@ const testAddressCryptoWalletConstruction = (ctor: AddressCryptoWalletCtor) => {
 
 const testMiscAssetConstruction = (ctor: IMiscAssetCtor) => {
     const expectedPropertyNames = arrayOfAll<keyof IMiscAssetProperties>()(
-        "description",
         "location",
+        "description",
         "quantity",
         "notes",
         "value",
@@ -478,8 +467,8 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
             it("should contain assets with the given properties", async () => {
                 for (const asset of assets) {
                     expect(asset.type).toBe(sut.type);
-                    expect(asset.description).toBe(sut.description);
                     expect(asset.location).toBe(sut.location);
+                    expect(asset.description).toBe(sut.description);
                     expect(asset.notes).toBe(sut.notes);
                     expect(asset.editableAsset).toBe(sut);
 
@@ -579,8 +568,8 @@ describe("no assets", () => {
     expectProperty(AssetGroup, [], "isExpanded", (matcher) => matcher.toBe(false));
     expectProperty(AssetGroup, [], "isExpandable", (matcher) => matcher.toBe(true));
     expectProperty(AssetGroup, [], "type", (matcher) => matcher.toEqual(""));
-    expectProperty(AssetGroup, [], "description", (matcher) => matcher.toEqual(""));
     expectProperty(AssetGroup, [], "location", (matcher) => matcher.toEqual(""));
+    expectProperty(AssetGroup, [], "description", (matcher) => matcher.toEqual(""));
     expectProperty(AssetGroup, [], "unit", (matcher) => matcher.toEqual(""));
     expectProperty(AssetGroup, [], "fineness", (matcher) => matcher.toBeUndefined());
     expectProperty(AssetGroup, [], "quantity", (matcher) => matcher.toBeUndefined());
@@ -610,8 +599,8 @@ describe("single asset", () => {
     expectProperty(AssetGroup, [asset], "isExpanded", (matcher) => matcher.toBe(false));
     expectProperty(AssetGroup, [asset], "isExpandable", (matcher) => matcher.toBe(true));
     expectProperty(AssetGroup, [asset], "type", (matcher) => matcher.toEqual(asset.type));
-    expectProperty(AssetGroup, [asset], "description", (matcher) => matcher.toEqual(asset.description));
     expectProperty(AssetGroup, [asset], "location", (matcher) => matcher.toEqual(asset.location));
+    expectProperty(AssetGroup, [asset], "description", (matcher) => matcher.toEqual(asset.description));
     expectProperty(AssetGroup, [asset], "unit", (matcher) => matcher.toEqual(asset.unit));
     expectProperty(AssetGroup, [asset], "fineness", (matcher) => matcher.toBe(asset.fineness));
     expectProperty(AssetGroup, [asset], "quantity", (matcher) => matcher.toBe(asset.quantity));
@@ -643,8 +632,8 @@ describe("two assets", () => {
     expectProperty(AssetGroup, assets, "isExpanded", (matcher) => matcher.toBe(false));
     expectProperty(AssetGroup, assets, "isExpandable", (matcher) => matcher.toBe(true));
     expectProperty(AssetGroup, assets, "type", (matcher) => matcher.toEqual(""));
-    expectProperty(AssetGroup, assets, "description", (matcher) => matcher.toEqual(""));
     expectProperty(AssetGroup, assets, "location", (matcher) => matcher.toEqual(""));
+    expectProperty(AssetGroup, assets, "description", (matcher) => matcher.toEqual(""));
     expectProperty(AssetGroup, assets, "unit", (matcher) => matcher.toEqual(""));
     expectProperty(AssetGroup, assets, "fineness", (matcher) => matcher.toBeUndefined());
     expectProperty(AssetGroup, assets, "quantity", (matcher) => matcher.toBeUndefined());

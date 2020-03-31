@@ -1,16 +1,5 @@
 
-// Copyright (C) 2018-2019 Andreas Huber Dönni
-//
-// This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-// License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
-// version.
-//
-// This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
-
+// https://github.com/andreashuber69/net-worth#--
 /* eslint-disable max-classes-per-file */
 import { IAssetBundle } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
@@ -28,9 +17,9 @@ import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 export abstract class PreciousMetalAsset extends SingleAsset {
     public abstract get type(): PreciousMetalAssetTypeName;
 
-    public readonly description: string;
-
     public readonly location: string;
+
+    public readonly description: string;
 
     public readonly weight: Weight;
 
@@ -52,8 +41,8 @@ export abstract class PreciousMetalAsset extends SingleAsset {
     public toJSON(): IPreciousMetalAsset {
         return {
             type: this.type,
-            description: this.description,
             location: this.location || undefined,
+            description: this.description,
             weight: this.weight,
             weightUnit: this.weightUnit,
             fineness: this.fineness,
@@ -71,8 +60,8 @@ export abstract class PreciousMetalAsset extends SingleAsset {
 
     protected constructor(parent: IParent, props: IPreciousMetalAssetProperties, private readonly quandlPath: string) {
         super(parent);
-        this.description = props.description;
         this.location = props.location ?? "";
+        this.description = props.description;
         this.weight = props.weight;
         this.weightUnit = props.weightUnit;
         this.fineness = props.fineness;

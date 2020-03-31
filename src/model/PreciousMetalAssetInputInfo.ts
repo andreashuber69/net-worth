@@ -1,15 +1,4 @@
-// Copyright (C) 2018-2019 Andreas Huber Dönni
-//
-// This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-// License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
-// version.
-//
-// This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
-
+// https://github.com/andreashuber69/net-worth#--
 import { AssetInputInfo } from "./AssetInputInfo";
 import { IParent } from "./IEditable";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
@@ -33,19 +22,19 @@ export class PreciousMetalAssetInputInfo extends AssetInputInfo {
         return this.ctor.type;
     }
 
-    public readonly description = new TextInputInfo({
-        label: "Description",
-        hint: "Describes the items, e.g. 'Coins', 'Bars'.",
-        isPresent: true,
-        isRequired: true,
-        schemaName: "Text",
-    });
-
     public readonly location = new TextInputInfo({
         label: "Location",
         hint: "The location, e.g. 'Safe', 'Safety Deposit Box'.",
         isPresent: true,
         isRequired: false,
+        schemaName: "Text",
+    });
+
+    public readonly description = new TextInputInfo({
+        label: "Description",
+        hint: "Describes the items, e.g. 'Coins', 'Bars'.",
+        isPresent: true,
+        isRequired: true,
         schemaName: "Text",
     });
 

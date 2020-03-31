@@ -1,15 +1,4 @@
-// Copyright (C) 2018-2019 Andreas Huber Dönni
-//
-// This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-// License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
-// version.
-//
-// This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
-
+// https://github.com/andreashuber69/net-worth#--
 import { IAssetIntersection } from "./AssetInterfaces";
 import { IEditable, IParent } from "./IEditable";
 import { QueryUtility } from "./QueryUtility";
@@ -64,9 +53,6 @@ export abstract class Asset implements ICalculatedAssetProperties {
     /** Provides the type of asset, e.g. 'Silver, 'Gold', 'Bitcoin', 'Litecoin'. */
     public abstract get type(): AssetTypeName | "";
 
-    /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
-    public abstract get description(): string;
-
     /** Provides the location of the asset, e.g. 'Safe', 'Safety Deposit Box', 'Mobile Phone', 'Hardware Wallet'. */
     public abstract get location(): string;
 
@@ -75,6 +61,9 @@ export abstract class Asset implements ICalculatedAssetProperties {
     public get locationHint() {
         return "";
     }
+
+    /** Provides the asset description, e.g. 'Bars', 'Coins', 'Spending', 'Savings'. */
+    public abstract get description(): string;
 
     /** Provides the unit of the quantity, e.g. '1 t oz', '10 g', 'BTC'. */
     public abstract get unit(): string;

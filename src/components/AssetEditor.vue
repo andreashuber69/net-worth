@@ -1,17 +1,4 @@
-<!--
-   Copyright (C) 2018-2019 Andreas Huber Dönni
-
-   This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
-   version.
-
-   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-   warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License along with this program. If not, see
-   <http://www.gnu.org/licenses/>.
--->
-
+<!-- https://github.com/andreashuber69/net-worth#-- -->
 <template>
   <v-dialog persistent v-model="isOpen" max-width="960px">
     <v-card>
@@ -21,8 +8,8 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <Select large="true" :info="typeInputInfo" v-model="type"></Select>
-              <TextField :info="assetInfo" property="description" v-model="data"></TextField>
               <TextField :info="assetInfo" property="location" v-model="data"></TextField>
+              <TextField :info="assetInfo" property="description" v-model="data"></TextField>
               <TextField :info="assetInfo" property="address" v-model="data"></TextField>
               <TextField :info="assetInfo" property="weight" v-model="data"></TextField>
               <Select :info="assetInfo" property="weightUnit" v-model="data"></Select>
