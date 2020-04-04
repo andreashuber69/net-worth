@@ -17,6 +17,7 @@
     "dont",
     "ethereum",
     "ethplorer",
+    "fastxpub",
     "fontface",
     "groupable",
     "lbma",
@@ -29,6 +30,8 @@
     "submodule",
     "vuejs",
     "vuetify",
+    "wasm",
+    "xpub",
     "yandex",
     "zcash",
     "zchain"
@@ -48,6 +51,7 @@
     "node_modules/**",
     "package.json",
     "package-lock.json",
+    "public/fastxpub.*",
     "src/assets/**",
     "src/model/ModelParser.spec/**"
   ]
