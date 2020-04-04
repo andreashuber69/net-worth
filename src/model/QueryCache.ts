@@ -76,7 +76,7 @@ export class QueryCache {
     }
 
     private static async fetchAndParse(query: string) {
-        const responseText = await QueryCache.tryFetch(query);
+        const responseText = await this.tryGetText(await QueryCache.tryFetch(query));
 
         try {
             return JSON.parse(responseText) as unknown;
@@ -87,9 +87,21 @@ export class QueryCache {
 
     private static async tryFetch(query: string) {
         try {
-            return await (await window.fetch(query)).text();
+            return await window.fetch(query);
         } catch (e) {
             throw new QueryError(`Network Error: ${e}`);
+        }
+    }
+
+    private static async tryGetText(response: Response) {
+        if (!response.ok) {
+            throw new QueryError(`HTTP Error: ${response.statusText}`);
+        }
+
+        try {
+            return await response.text();
+        } catch (e) {
+            throw new QueryError(e.toString());
         }
     }
 }
