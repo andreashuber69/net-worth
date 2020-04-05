@@ -1,4 +1,5 @@
 import { HDNode, Network } from "bitcoinjs-lib";
+import { TaskQueue } from "./TaskQueue";
 
 
 declare module "bitcoinjs-lib" {
@@ -13,21 +14,20 @@ declare module "bitcoinjs-lib" {
 
 // https://github.com/andreashuber69/net-worth#--
 export class FastXpub {
-    public static async Create() {
+    public static async create() {
         return new FastXpub(await FastXpub.wasmFile);
     }
 
     public async deriveNodeXpub(xpub: string, network: Network, index: number) {
-        return new Promise<string>((resolve, reject) => {
-            this.worker.onmessage = (ev) => resolve(ev.data.xpub as string);
-            this.worker.onerror = (ev) => reject(ev.message);
-            this.worker.postMessage({
+        return this.getResponse(
+            {
                 type: "deriveNode",
                 xpub,
                 version: network.bip32.public,
                 index,
-            });
-        });
+            },
+            ({ data }) => data.xpub as string,
+        );
     }
 
     public async deriveAddressRange(
@@ -37,29 +37,26 @@ export class FastXpub {
         firstIndex: number,
         lastIndex: number,
     ) {
-        const nodeCopy = {
-            depth: node.depth,
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            child_num: node.index,
-            fingerprint: node.parentFingerprint,
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            chain_code: Array.prototype.slice.call(node.chainCode),
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            public_key: Array.prototype.slice.call(node.keyPair.getPublicKeyBuffer()),
-        };
-
-        return new Promise<string[]>((resolve, reject) => {
-            this.worker.onmessage = (ev) => resolve(ev.data.addresses as string[]);
-            this.worker.onerror = (ev) => reject(ev.message);
-            this.worker.postMessage({
+        return this.getResponse(
+            {
                 type: "deriveAddressRange",
-                node: nodeCopy,
+                node: {
+                    depth: node.depth,
+                    // eslint-disable-next-line @typescript-eslint/camelcase
+                    child_num: node.index,
+                    fingerprint: node.parentFingerprint,
+                    // eslint-disable-next-line @typescript-eslint/camelcase
+                    chain_code: node.chainCode.slice(),
+                    // eslint-disable-next-line @typescript-eslint/camelcase
+                    public_key: node.keyPair.getPublicKeyBuffer().slice(),
+                },
                 version,
                 firstIndex,
                 lastIndex,
                 addressFormat: segwit === "p2sh" ? 1 : 0,
-            });
-        });
+            },
+            ({ data }) => data.addresses as string[],
+        );
     }
 
     private static readonly wasmFile = FastXpub.getWasmFile();
@@ -75,11 +72,38 @@ export class FastXpub {
     }
 
     private readonly worker = new Worker("fastxpub.js");
+    private readonly taskQueue = new TaskQueue();
 
     private constructor(wasmFile: ArrayBuffer) {
         this.worker.postMessage({
             type: "init",
             binary: wasmFile,
         });
+    }
+
+    private async getResponse<T>(message: unknown, extractResult: (ev: MessageEvent) => T) {
+        return this.taskQueue.queue(
+            async () => new Promise<T>((resolve, reject) => {
+                this.worker.onmessage = (ev) => {
+                    this.removeHandlers();
+                    resolve(extractResult(ev));
+                };
+
+                this.worker.onerror = (ev) => {
+                    this.removeHandlers();
+                    reject(new Error(ev.message));
+                };
+
+                this.worker.postMessage(message);
+            }),
+        );
+    }
+
+    private removeHandlers() {
+        // The API requires null
+        // eslint-disable-next-line no-null/no-null
+        this.worker.onmessage = null;
+        // eslint-disable-next-line no-null/no-null
+        this.worker.onerror = null;
     }
 }
