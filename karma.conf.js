@@ -40,12 +40,20 @@ module.exports = function(config) {
             { 
                 pattern: "src/model/**/*.ts",
             },
-            { 
+            {
                 pattern: "src/model/ModelParser.spec/*.assets",
+                included: false,
+                served: true
+            },
+            {
+                pattern: "public/fastxpub.*",
                 included: false,
                 served: true
             }
         ],
+        proxies: {
+            "/": "/base/public/"
+        },
         preprocessors: {
             "**/*.ts": ["karma-typescript"]
         },

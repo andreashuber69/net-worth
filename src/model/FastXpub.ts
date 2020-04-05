@@ -18,7 +18,7 @@ export class FastXpub {
         return new FastXpub(await FastXpub.wasmFile);
     }
 
-    public async deriveNodeXpub(xpub: string, network: Network, index: number) {
+    public async deriveNode(xpub: string, network: Network, index: number) {
         return this.getResponse(
             {
                 type: "deriveNode",
