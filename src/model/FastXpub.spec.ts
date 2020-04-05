@@ -18,6 +18,7 @@ describe(FastXpub.name, () => {
             const node = HDNode.fromBase58("xpub6EikzRzgQiSsjiL3nz2SUZTi964wvqa1Je1WtRr5cXEwFEbMJvhas6BauDXoAVRhShfrJVTF1CKoq8zFmA9x72KocKxmRPBy4DizNPxLw9g", networks.bitcoin);
             const addresses = await sut.deriveAddressRange(node, 0, undefined, 0, 8);
             expect(addresses).toEqual([
+                // cSpell: disable
                 "1LDB6EomUoB4uXaqutFes9uduQ9Mz7PgHh",
                 "1CfZgDBKAy9W6o4wJiGjCeMe4HPb3sibsY",
                 "1L5CaYTqgyimJwT8RY2WBBtMuVxzPdH2X3",
