@@ -7,7 +7,6 @@ import AssetList from "./components/AssetList.vue";
 import BrowserDialog from "./components/BrowserDialog.vue";
 import SaveAsDialog from "./components/SaveAsDialog.vue";
 import { LocalStorage } from "./LocalStorage";
-import { FastXpub } from "./model/FastXpub";
 import { Model } from "./model/Model";
 import { QueryCache } from "./model/QueryCache";
 import { Parser } from "./Parser";
@@ -120,7 +119,6 @@ export default class App extends Vue {
         return model;
     }
 
-    private readonly fastXpub = new FastXpub();
     // eslint-disable-next-line no-null/no-null
     private beforeInstallPrompt: BeforeInstallPromptEvent | false = false;
 
