@@ -40,16 +40,7 @@ export class FastXpub {
         return this.getResponse(
             {
                 type: "deriveAddressRange",
-                node: {
-                    depth: node.depth,
-                    // eslint-disable-next-line @typescript-eslint/camelcase
-                    child_num: node.index,
-                    fingerprint: node.parentFingerprint,
-                    // eslint-disable-next-line @typescript-eslint/camelcase
-                    chain_code: node.chainCode.slice(),
-                    // eslint-disable-next-line @typescript-eslint/camelcase
-                    public_key: node.keyPair.getPublicKeyBuffer().slice(),
-                },
+                node: FastXpub.getNode(node),
                 version,
                 firstIndex,
                 lastIndex,
@@ -69,6 +60,19 @@ export class FastXpub {
         }
 
         return response.arrayBuffer();
+    }
+
+    private static getNode(node: HDNode) {
+        return {
+            depth: node.depth,
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            child_num: node.index,
+            fingerprint: node.parentFingerprint,
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            chain_code: node.chainCode.slice(),
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            public_key: node.keyPair.getPublicKeyBuffer().slice(),
+        };
     }
 
     private readonly worker = new Worker("fastxpub.js");
