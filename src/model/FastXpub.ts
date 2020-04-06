@@ -1,4 +1,4 @@
-import { HDNode, Network } from "bitcoinjs-lib";
+import { HDNode } from "bitcoinjs-lib";
 import { TaskQueue } from "./TaskQueue";
 
 
@@ -18,12 +18,12 @@ export class FastXpub {
         return new FastXpub(await FastXpub.wasmFile);
     }
 
-    public async deriveNode(xpub: string, network: Network, index: number) {
+    public async deriveNode(node: HDNode, index: number) {
         return this.getResponse(
             {
                 type: "deriveNode",
-                xpub,
-                version: network.bip32.public,
+                xpub: node.toBase58(),
+                version: node.getNetwork().bip32.public,
                 index,
             },
             ({ data }) => data.xpub as string,
