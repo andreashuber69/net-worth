@@ -84,19 +84,25 @@ export class FastXpub {
     private async getResponse<T>(message: unknown, extractResult: (ev: MessageEvent) => T) {
         return this.taskQueue.queue(
             async () => new Promise<T>((resolve, reject) => {
-                this.worker.onmessage = (ev) => {
-                    this.removeHandlers();
-                    resolve(extractResult(ev));
-                };
-
-                this.worker.onerror = (ev) => {
-                    this.removeHandlers();
-                    reject(new Error(ev.message));
-                };
-
+                this.setHandlers<T>(extractResult, resolve, reject);
                 this.worker.postMessage(message);
             }),
         );
+    }
+
+    private setHandlers<T>(
+        extractResult: (ev: MessageEvent) => T,
+        resolve: (value: T) => void,
+        reject: (reason: Error) => void,
+    ) {
+        this.worker.onmessage = (ev) => {
+            this.removeHandlers();
+            resolve(extractResult(ev));
+        };
+        this.worker.onerror = (ev) => {
+            this.removeHandlers();
+            reject(new Error(ev.message));
+        };
     }
 
     private removeHandlers() {
