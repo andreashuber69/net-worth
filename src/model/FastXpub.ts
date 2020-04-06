@@ -62,16 +62,16 @@ export class FastXpub {
         return response.arrayBuffer();
     }
 
-    private static getNode(node: HDNode) {
+    private static getNode({ depth, index, parentFingerprint, chainCode, keyPair }: HDNode) {
         return {
-            depth: node.depth,
+            depth,
             // eslint-disable-next-line @typescript-eslint/camelcase
-            child_num: node.index,
-            fingerprint: node.parentFingerprint,
+            child_num: index,
+            fingerprint: parentFingerprint,
             // eslint-disable-next-line @typescript-eslint/camelcase
-            chain_code: node.chainCode.slice(),
+            chain_code: chainCode.slice(),
             // eslint-disable-next-line @typescript-eslint/camelcase
-            public_key: node.keyPair.getPublicKeyBuffer().slice(),
+            public_key: keyPair.getPublicKeyBuffer().slice(),
         };
     }
 
