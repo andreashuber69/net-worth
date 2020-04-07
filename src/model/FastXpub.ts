@@ -1,16 +1,6 @@
-import { HDNode } from "bitcoinjs-lib";
+// https://github.com/andreashuber69/net-worth#--
+import { HDNode } from "@trezor/utxo-lib";
 import { TaskQueue } from "./TaskQueue";
-
-
-declare module "bitcoinjs-lib" {
-    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
-    interface HDNode {
-        readonly depth: number;
-        readonly index: number;
-        readonly parentFingerprint: number;
-        readonly chainCode: Uint8Array;
-    }
-}
 
 // https://github.com/andreashuber69/net-worth#--
 export class FastXpub {

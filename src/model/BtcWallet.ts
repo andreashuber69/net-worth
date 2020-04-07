@@ -1,6 +1,6 @@
 // https://github.com/andreashuber69/net-worth#--
 /* eslint-disable max-classes-per-file */
-import { HDNode } from "bitcoinjs-lib";
+import { HDNode } from "@trezor/utxo-lib";
 import { IParent } from "./IEditable";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";

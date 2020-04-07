@@ -1,6 +1,6 @@
 // https://github.com/andreashuber69/net-worth#--
 /* eslint-disable max-len */
-import { HDNode, networks } from "bitcoinjs-lib";
+import { HDNode, networks } from "@trezor/utxo-lib";
 import { FastXpub } from "./FastXpub";
 
 // cSpell: disable
