@@ -15,6 +15,16 @@ const deriveAddressRangeFixtures = [
             "16xCaBhJSyQaniRnN3NqiW1ohgaxdoansU",
         ] as const,
     },
+    {
+        coin: "legacy LTC",
+        network: networks.litecoin,
+        xpub: "Ltub2YmmNemmgpHLEWN4icd5kx6Roy4sYd2ewUR1hJRDNefEgHNXLektp5p9xyakTVodcgbab9j2GdSjXhseBBwPuGoJdtRE3VVi5h9fRYeaRbZ",
+        expectedAddresses: [
+            "LVPbH7szxpFCsqcWbkT4r7thv9eDWL62WK",
+            "LeUWJbajpZtxqwkpSmze9d5R8DTZoa33JQ",
+            "LYdzh3PAKqumN3M3jQcJWF7iCv8o8C7Jkg",
+        ] as const,
+    },
 ] as const;
 
 describe(FastXpub.name, () => {
@@ -34,8 +44,8 @@ describe(FastXpub.name, () => {
         describe("deriveAddressRange", () => {
             it(`should derive the correct addresses for a ${f.coin} wallet`, async () => {
                 const parent = HDNode.fromBase58(f.xpub, f.network);
-                const m0 = HDNode.fromBase58(await sut.deriveNode(parent, 0));
-                expect(await sut.deriveAddressRange(m0, 0, undefined, 0, 2)).toEqual(f.expectedAddresses);
+                const m0 = HDNode.fromBase58(await sut.deriveNode(parent, 0), f.network);
+                expect(await sut.deriveAddressRange(m0, f.network.pubKeyHash, undefined, 0, 2)).toEqual(f.expectedAddresses);
             });
         });
     });
