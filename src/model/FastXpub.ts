@@ -78,21 +78,16 @@ export class FastXpub {
 
         return FastXpub.taskQueue.queue(
             async () => new Promise<T>((resolve, reject) => {
-                FastXpub.setHandlers<T>(worker, extractResult, resolve, reject);
+                FastXpub.setHandlers(worker, (ev) => resolve(extractResult(ev)), reject);
                 worker.postMessage(message);
             }),
         );
     }
 
-    private static setHandlers<T>(
-        worker: Worker,
-        extractResult: (ev: MessageEvent) => T,
-        resolve: (value: T) => void,
-        reject: (reason: Error) => void,
-    ) {
+    private static setHandlers(worker: Worker, resolve: (ev: MessageEvent) => void, reject: (reason: Error) => void) {
         worker.onmessage = (ev) => {
             FastXpub.removeHandlers(worker);
-            resolve(extractResult(ev));
+            resolve(ev);
         };
         worker.onerror = (ev) => {
             FastXpub.removeHandlers(worker);
