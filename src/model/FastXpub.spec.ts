@@ -1,6 +1,6 @@
 // https://github.com/andreashuber69/net-worth#--
 /* eslint-disable max-len */
-import { HDNode, networks } from "@trezor/utxo-lib";
+import { networks } from "@trezor/utxo-lib";
 import { FastXpub } from "./FastXpub";
 
 // cSpell: disable
@@ -28,14 +28,10 @@ const deriveAddressRangeFixtures = [
 ] as const;
 
 describe(FastXpub.name, () => {
-    // eslint-disable-next-line init-declarations
-    let sut: FastXpub;
-    beforeAll(async () => (sut = await FastXpub.create()));
-
     describe("deriveNode", () => {
         it("should derive the correct nodes", async () => {
-            const node = HDNode.fromBase58("xpub661MyMwAqRbcFW31YEwpkMuc5THy2PSt5bDMsktWQcFF8syAmRUapSCGu8ED9W6oDMSgv6Zz8idoc4a6mr8BDzTJY47LJhkJ8UB7WEGuduB");
-            const m0 = await sut.deriveNode(node, 0);
+            const sut = new FastXpub(networks.bitcoin);
+            const m0 = await sut.deriveNode("xpub661MyMwAqRbcFW31YEwpkMuc5THy2PSt5bDMsktWQcFF8syAmRUapSCGu8ED9W6oDMSgv6Zz8idoc4a6mr8BDzTJY47LJhkJ8UB7WEGuduB", 0);
             expect(m0).toEqual("xpub69H7F5d8KSRgmmdJg2KhpAK8SR3DjMwAdkxj3ZuxV27CprR9LgpeyGmXUbC6wb7ERfvrnKZjXoUmmDznezpbZb7ap6r1D3tgFxHmwMkQTPH");
         });
     });
@@ -43,9 +39,9 @@ describe(FastXpub.name, () => {
     deriveAddressRangeFixtures.forEach((f) => {
         describe("deriveAddressRange", () => {
             it(`should derive the correct addresses for a ${f.coin} wallet`, async () => {
-                const parent = HDNode.fromBase58(f.xpub, f.network);
-                const m0 = HDNode.fromBase58(await sut.deriveNode(parent, 0), f.network);
-                expect(await sut.deriveAddressRange(m0, f.network.pubKeyHash, undefined, 0, 2)).toEqual(f.expectedAddresses);
+                const sut = new FastXpub(f.network);
+                const m0 = await sut.deriveNode(f.xpub, 0);
+                expect(await sut.deriveAddressRange(m0, 0, 2)).toEqual(f.expectedAddresses);
             });
         });
     });

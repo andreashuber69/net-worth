@@ -1,15 +1,19 @@
 // https://github.com/andreashuber69/net-worth#--
-import { HDNode } from "@trezor/utxo-lib";
+import { HDNode, Network } from "@trezor/utxo-lib";
 import { TaskQueue } from "./TaskQueue";
 
 // https://github.com/andreashuber69/net-worth#--
 export class FastXpub {
-    public static async create() {
-        return new FastXpub(await FastXpub.wasmFile);
+    public constructor(network: Network) {
+        this.network = network;
     }
 
-    public async deriveNode(node: HDNode, index: number) {
-        return this.getResponse(
+    public async deriveNode(xpub: string, index: number) {
+        // It appears that fastxpub doesn't answer a request containing a malformed xpub, which is why we ensure the
+        // correct format by creating a HDNode first.
+        const node = HDNode.fromBase58(xpub, this.network);
+
+        return FastXpub.getResponse(
             {
                 type: "deriveNode",
                 xpub: node.toBase58(),
@@ -20,36 +24,40 @@ export class FastXpub {
         );
     }
 
-    public async deriveAddressRange(
-        node: HDNode,
-        version: number,
-        segwit: string | undefined,
-        firstIndex: number,
-        lastIndex: number,
-    ) {
-        return this.getResponse(
+    public async deriveAddressRange(xpub: string, firstIndex: number, lastIndex: number) {
+        const hdNode = HDNode.fromBase58(xpub, this.network);
+
+        return FastXpub.getResponse(
             {
                 type: "deriveAddressRange",
-                node: FastXpub.getNode(node),
-                version,
+                node: FastXpub.getNode(hdNode),
                 firstIndex,
                 lastIndex,
-                addressFormat: segwit === "p2sh" ? 1 : 0,
+                version: hdNode.getNetwork().pubKeyHash,
+                addressFormat: 0, // TODO
             },
             ({ data }) => data.addresses as string[],
         );
     }
 
-    private static readonly wasmFile = FastXpub.getWasmFile();
+    private static readonly worker = FastXpub.getWorker();
+    private static readonly taskQueue = new TaskQueue();
 
-    private static async getWasmFile() {
+    private static async getWorker() {
         const response = await window.fetch("fastxpub.wasm");
 
         if (!response.ok) {
             throw new Error(`Can't fetch: ${response.statusText}`);
         }
 
-        return response.arrayBuffer();
+        const result = new Worker("fastxpub.js");
+
+        result.postMessage({
+            type: "init",
+            binary: await response.arrayBuffer(),
+        });
+
+        return result;
     }
 
     private static getNode({ depth, index, parentFingerprint, chainCode, keyPair }: HDNode) {
@@ -65,45 +73,40 @@ export class FastXpub {
         };
     }
 
-    private readonly worker = new Worker("fastxpub.js");
-    private readonly taskQueue = new TaskQueue();
+    private static async getResponse<T>(message: unknown, extractResult: (ev: MessageEvent) => T) {
+        const worker = await FastXpub.worker;
 
-    private constructor(wasmFile: ArrayBuffer) {
-        this.worker.postMessage({
-            type: "init",
-            binary: wasmFile,
-        });
-    }
-
-    private async getResponse<T>(message: unknown, extractResult: (ev: MessageEvent) => T) {
-        return this.taskQueue.queue(
+        return FastXpub.taskQueue.queue(
             async () => new Promise<T>((resolve, reject) => {
-                this.setHandlers<T>(extractResult, resolve, reject);
-                this.worker.postMessage(message);
+                FastXpub.setHandlers<T>(worker, extractResult, resolve, reject);
+                worker.postMessage(message);
             }),
         );
     }
 
-    private setHandlers<T>(
+    private static setHandlers<T>(
+        worker: Worker,
         extractResult: (ev: MessageEvent) => T,
         resolve: (value: T) => void,
         reject: (reason: Error) => void,
     ) {
-        this.worker.onmessage = (ev) => {
-            this.removeHandlers();
+        worker.onmessage = (ev) => {
+            FastXpub.removeHandlers(worker);
             resolve(extractResult(ev));
         };
-        this.worker.onerror = (ev) => {
-            this.removeHandlers();
+        worker.onerror = (ev) => {
+            FastXpub.removeHandlers(worker);
             reject(new Error(ev.message));
         };
     }
 
-    private removeHandlers() {
+    private static removeHandlers(worker: Worker) {
         // The API requires null
         // eslint-disable-next-line no-null/no-null
-        this.worker.onmessage = null;
+        worker.onmessage = null;
         // eslint-disable-next-line no-null/no-null
-        this.worker.onerror = null;
+        worker.onerror = null;
     }
+
+    private readonly network: Network;
 }
