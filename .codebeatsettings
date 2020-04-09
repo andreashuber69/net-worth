@@ -1,6 +1,6 @@
 {
   "TYPESCRIPT": {
     "TOO_MANY_FUNCTIONS": [20, 30, 50, 80],
-    "BLOCK_NESTING": [4,5,6,7]
+    "BLOCK_NESTING": [4, 5, 6, 7]
   }
 }
