@@ -76,8 +76,8 @@ describe(FastXpub.name, () => {
         });
     });
 
-    deriveAddressRangeFixtures.forEach((f) => {
-        describe("deriveAddressRange", () => {
+    describe("deriveAddressRange", () => {
+        deriveAddressRangeFixtures.forEach((f) => {
             it(`should derive the correct addresses for a ${f.coin} wallet`, async () => {
                 const sut = new FastXpub(f.network);
                 const m0 = await sut.deriveNode(f.xpub, 0);
