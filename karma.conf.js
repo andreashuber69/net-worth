@@ -1,5 +1,21 @@
 // https://github.com/andreashuber69/net-worth#--
 // cSpell: disable
+const files = [
+    { 
+        pattern: "src/model/**/*.ts",
+    },
+    {
+        pattern: "src/model/ModelParser.spec/*.assets",
+        included: false,
+        served: true
+    },
+    {
+        pattern: "public/fastxpub.*",
+        included: false,
+        served: true
+    }
+];
+
 const karmaTypescriptConfig = {
     bundlerOptions: {
         entrypoints: /\.spec\.ts$/,
@@ -36,16 +52,10 @@ const karmaTypescriptConfig = {
 module.exports = function(config) {
     config.set({
         frameworks: ["jasmine", "karma-typescript"],
-        files: [
-            { 
-                pattern: "src/model/**/*.ts",
-            },
-            { 
-                pattern: "src/model/ModelParser.spec/*.assets",
-                included: false,
-                served: true
-            }
-        ],
+        files,
+        proxies: {
+            "/": "/base/public/"
+        },
         preprocessors: {
             "**/*.ts": ["karma-typescript"]
         },

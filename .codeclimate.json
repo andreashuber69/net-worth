@@ -18,7 +18,8 @@
     }
   },
   "exclude_patterns": [
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "karma.conf.js"
   ],
   "plugins": {
   }
