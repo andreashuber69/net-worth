@@ -35,16 +35,16 @@ const deriveAddressRangeFixtures = [
             "GcA94T2BYYHWk61Qkdxt5tZdJMw4XBXVgf",
         ] as const,
     } as const,
-    // {
-    //     coin: "DASH",
-    //     network: networks.dash,
-    //     xpub: "drkpRzboK3oVTJvACBqgitGRyoNVXg1HRzaFUSjUpDf3w2mC4SFosAB58hBDNueqHQeN8ZymKdUZa9CUHhnapQKM1gbzx8Ypt3Wv3hrVs6h8ZWT",
-    //     expectedAddresses: [
-    //         "XkqyKihuxirhrAWLBmuiCFRwC2STWQ7ku1",
-    //         "Xk2AFmi7EXL4xYoyvtyG3Myei6MN3zp731",
-    //         "XrXyQFjEvwiHHbrR5rziNPHdSi19SThAx6",
-    //     ] as const,
-    // } as const,
+    {
+        coin: "DASH",
+        network: networks.dash,
+        xpub: "drkpRzboK3oVTJvACBqgitGRyoNVXg1HRzaFUSjUpDf3w2mC4SFosAB58hBDNueqHQeN8ZymKdUZa9CUHhnapQKM1gbzx8Ypt3Wv3hrVs6h8ZWT",
+        expectedAddresses: [
+            "XkqyKihuxirhrAWLBmuiCFRwC2STWQ7ku1",
+            "Xk2AFmi7EXL4xYoyvtyG3Myei6MN3zp731",
+            "XrXyQFjEvwiHHbrR5rziNPHdSi19SThAx6",
+        ] as const,
+    } as const,
     {
         coin: "legacy LTC",
         network: networks.litecoin,

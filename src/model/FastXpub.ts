@@ -1,5 +1,6 @@
 // https://github.com/andreashuber69/net-worth#--
 import { HDNode, Network } from "@trezor/utxo-lib";
+import { decode, encode } from "bs58check";
 import { TaskQueue } from "./TaskQueue";
 
 // https://github.com/andreashuber69/net-worth#--
@@ -11,13 +12,13 @@ export class FastXpub {
     public async deriveNode(xpub: string, index: number) {
         // It appears that fastxpub doesn't answer a request containing a malformed xpub, which is why we ensure the
         // correct format by creating a HDNode first.
-        const node = HDNode.fromBase58(xpub, this.network);
+        this.toNode(xpub);
 
         return FastXpub.getResponse(
             {
                 type: "deriveNode",
-                xpub: node.toBase58(),
-                version: node.getNetwork().bip32.public,
+                xpub,
+                version: decode(xpub).readUInt32BE(0),
                 index,
             },
             ({ data }) => data.xpub as string,
@@ -25,7 +26,7 @@ export class FastXpub {
     }
 
     public async deriveAddressRange(xpub: string, firstIndex: number, lastIndex: number) {
-        const hdNode = HDNode.fromBase58(xpub, this.network);
+        const hdNode = this.toNode(xpub);
 
         return FastXpub.getResponse(
             {
@@ -104,4 +105,17 @@ export class FastXpub {
     }
 
     private readonly network: Network;
+
+    private toNode(xpub: string) {
+        const xpubsToTweak = ["ypub", "drkp"];
+
+        if (xpubsToTweak.includes(xpub.slice(0, 4))) {
+            const hex = `0${this.network.bip32.public.toString(16)}`;
+            const converted = encode(Buffer.concat([Buffer.from(hex, "hex"), decode(xpub).slice(4)]));
+
+            return HDNode.fromBase58(converted, this.network);
+        }
+
+        return HDNode.fromBase58(xpub, this.network);
+    }
 }
