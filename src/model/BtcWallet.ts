@@ -2,7 +2,6 @@
 /* eslint-disable max-classes-per-file */
 import { networks } from "@trezor/utxo-lib";
 import { IParent } from "./IEditable";
-import { IWebRequest } from "./IWebRequest";
 import { IBatchInfo, QuantityRequest } from "./QuantityRequest";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
@@ -30,47 +29,6 @@ export class BtcWallet extends SimpleCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly BlockchainRequest = class NestedBCRequest implements IWebRequest<Readonly<IBatchInfo>> {
-        public constructor(addresses: readonly string[]) {
-            this.addresses = addresses.join("|");
-        }
-
-        public async execute() {
-            return NestedBCRequest.getFinalBalance(await QueryCache.fetch(
-                `https://blockchain.info/balance?active=${this.addresses}&cors=true`,
-                BlockchainBalanceResponse,
-                (r) => (typeof r.reason === "string" && r.reason) || undefined,
-            ));
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        private static getFinalBalance(response: BlockchainBalanceResponse) {
-            const result: IBatchInfo = { balance: Number.NaN, txCount: 0 };
-            const balances = Object.keys(response).map((k) => response[k]).filter(
-                (v): v is IAddressBalance => typeof v === "object",
-            );
-
-            balances.forEach((b) => NestedBCRequest.addBalance(result, b));
-
-            if (Number.isNaN(result.balance)) {
-                throw new QueryError();
-            }
-
-            return result;
-        }
-
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        private static addBalance(result: IBatchInfo, { final_balance, n_tx }: IAddressBalance) {
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            result.balance = (Number.isNaN(result.balance) ? 0 : result.balance) + (final_balance / 1E8);
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            result.txCount += n_tx;
-        }
-
-        private readonly addresses: string;
-    };
-
     private static readonly BtcQuantityRequest = class extends QuantityRequest {
         public constructor(address: string) {
             super(networks.bitcoin, address);
@@ -80,7 +38,36 @@ export class BtcWallet extends SimpleCryptoWallet {
 
         // eslint-disable-next-line class-methods-use-this
         protected async getBatchInfo(addresses: readonly string[]) {
-            return new BtcWallet.BlockchainRequest(addresses).execute();
+            return this.getFinalBalance(await QueryCache.fetch(
+                `https://blockchain.info/balance?active=${addresses.join("|")}&cors=true`,
+                BlockchainBalanceResponse,
+                (r) => (typeof r.reason === "string" && r.reason) || undefined,
+            ));
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private getFinalBalance(response: BlockchainBalanceResponse) {
+            const result: IBatchInfo = { balance: Number.NaN, txCount: 0 };
+            const balances = Object.keys(response).map((k) => response[k]).filter(
+                (v): v is IAddressBalance => typeof v === "object",
+            );
+
+            balances.forEach((b) => this.addBalance(result, b));
+
+            if (Number.isNaN(result.balance)) {
+                throw new QueryError();
+            }
+
+            return result;
+        }
+
+        // eslint-disable-next-line @typescript-eslint/camelcase, class-methods-use-this
+        private addBalance(result: IBatchInfo, { final_balance, n_tx }: IAddressBalance) {
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            result.balance = (Number.isNaN(result.balance) ? 0 : result.balance) + (final_balance / 1E8);
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            result.txCount += n_tx;
         }
     };
 }
