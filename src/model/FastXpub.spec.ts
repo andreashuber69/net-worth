@@ -14,7 +14,37 @@ const deriveAddressRangeFixtures = [
             "1FoJtisysDzJ92QMDSCtHoPSV7sN5sjeh7",
             "16xCaBhJSyQaniRnN3NqiW1ohgaxdoansU",
         ] as const,
-    },
+    } as const,
+    {
+        coin: "BCH",
+        network: networks.bitcoincash,
+        xpub: "xpub6CcGciyc8DdXXpaYFXd72hEHCCxeBeWMSfZ66ivpuPg169BYj8SydWBwipjuckuxRAyVByyrHrnJNNSoV3Q6p3Uh1HTtwSiHn4o5vhy3bDy",
+        expectedAddresses: [
+            "1FCt5ovrFbEXj8bcpf2dDYAb8NzPk9VUx7",
+            "1BM5QcoLVKrtnDxEJaJXUURiz5q6jTuKcn",
+            "1EW39ydkc8jotiyKohuqSdkmdp9U7GQGRh",
+        ] as const,
+    } as const,
+    {
+        coin: "legacy BTG",
+        network: networks.bitcoingold,
+        xpub: "xpub6DW4G75Y5pPqLhzAtRbxZhTpHZAaNqp8iKPm6JmP3ieMGHTjnoHorwcU7cdHtEJujdkenhpQNJkbx6ExWsQwxrhhN9QKqkwA9DDE4ody3Pa",
+        expectedAddresses: [
+            "GWxkpFsBnFonA3k2GQLyfGjBBh2Cc9SbLK",
+            "GYSa9LkPyvK1fARzCPkCsxyGKQHGjWHcBz",
+            "GcA94T2BYYHWk61Qkdxt5tZdJMw4XBXVgf",
+        ] as const,
+    } as const,
+    // {
+    //     coin: "DASH",
+    //     network: networks.dash,
+    //     xpub: "drkpRzboK3oVTJvACBqgitGRyoNVXg1HRzaFUSjUpDf3w2mC4SFosAB58hBDNueqHQeN8ZymKdUZa9CUHhnapQKM1gbzx8Ypt3Wv3hrVs6h8ZWT",
+    //     expectedAddresses: [
+    //         "XkqyKihuxirhrAWLBmuiCFRwC2STWQ7ku1",
+    //         "Xk2AFmi7EXL4xYoyvtyG3Myei6MN3zp731",
+    //         "XrXyQFjEvwiHHbrR5rziNPHdSi19SThAx6",
+    //     ] as const,
+    // } as const,
     {
         coin: "legacy LTC",
         network: networks.litecoin,
@@ -24,10 +54,20 @@ const deriveAddressRangeFixtures = [
             "LeUWJbajpZtxqwkpSmze9d5R8DTZoa33JQ",
             "LYdzh3PAKqumN3M3jQcJWF7iCv8o8C7Jkg",
         ] as const,
-    },
+    } as const,
+    {
+        coin: "ZEC",
+        network: networks.zcash,
+        xpub: "xpub6CLSnhkLotnHLGsYFYp1GBCHErdpntoGZ98r1hZaTzseALCfD74kJKcM18b6CGqu6Bq8heJcffepb1QN4y7u2458NDNobgnnTVgjZreoXpA",
+        expectedAddresses: [
+            "t1YaYmr4T8JmuLHPGcY7ydQGj88tomfc76E",
+            "t1h8cvgy1B3FvMLn92JohgPkUwRMu4zpyE7",
+            "t1aUvHzcKTiZ4bozzuKXCsmcTGwSiXzzvqK",
+        ] as const,
+    } as const,
 ] as const;
 
-describe(FastXpub.name, () => {
+fdescribe(FastXpub.name, () => {
     describe("deriveNode", () => {
         it("should derive the correct nodes", async () => {
             const sut = new FastXpub(networks.bitcoin);
