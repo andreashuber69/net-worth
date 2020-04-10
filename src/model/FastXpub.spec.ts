@@ -6,6 +6,16 @@ import { FastXpub } from "./FastXpub";
 // cSpell: disable
 const deriveAddressRangeFixtures = [
     {
+        coin: "BTC",
+        network: networks.bitcoin,
+        xpub: "ypub6XULFemHRxUx8r525Ug7o8tFgBqH9tYaVBJMnsnqnKdHGJu9iWqtGeGiezBG1fHy66ZY7shsCo48m99dcsDaddzkTs6P7voAd3z2kpRppuh",
+        expectedAddresses: [
+            "3H4oX72eeWEmLdmUYXk4mtsYp4PdX3hmjj",
+            "33HEs7w1btgCmUERLyjxthK9Z5zjE7mpAC",
+            "3Pf3y3fXBTwvfHN9ywEJsPDFXnmJFBXbYX",
+        ] as const,
+    } as const,
+    {
         coin: "legacy BTC",
         network: networks.bitcoin,
         xpub: "xpub6CR3KoDQXWzSRJJvUq9Kr2rxGCHAfuwTeQAP3Q4p3687zxwiukfjRYZhgNxugYBjxk9iCAqy1mWR8Hb7oqqYUneYoZajA4CnzQyWhv52pHq",

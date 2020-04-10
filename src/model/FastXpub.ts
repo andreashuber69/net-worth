@@ -27,6 +27,7 @@ export class FastXpub {
 
     public async deriveAddressRange(xpub: string, firstIndex: number, lastIndex: number) {
         const hdNode = this.toNode(xpub);
+        const p2sh = xpub.startsWith("ypub");
 
         return FastXpub.getResponse(
             {
@@ -34,8 +35,8 @@ export class FastXpub {
                 node: FastXpub.getNode(hdNode),
                 firstIndex,
                 lastIndex,
-                version: hdNode.getNetwork().pubKeyHash,
-                addressFormat: 0, // TODO
+                version: p2sh ? hdNode.getNetwork().scriptHash : hdNode.getNetwork().pubKeyHash,
+                addressFormat: p2sh ? 1 : 0,
             },
             ({ data }) => data.addresses as string[],
         );
