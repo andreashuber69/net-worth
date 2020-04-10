@@ -1,6 +1,7 @@
 // https://github.com/andreashuber69/net-worth#--
 /* eslint-disable max-classes-per-file */
-import { HDNode } from "@trezor/utxo-lib";
+import { networks } from "@trezor/utxo-lib";
+import { FastXpub } from "./FastXpub";
 import { IParent } from "./IEditable";
 import { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
@@ -85,13 +86,11 @@ export class BtcWallet extends SimpleCryptoWallet {
             if (this.address.length <= 100) {
                 await this.add([this.address]);
             } else {
-                await NestedQuantityRequest.delay(1000);
-                const parent = HDNode.fromBase58(this.address);
-
-                // The following calls use a lot of CPU. By delaying first, we ensure that other queries can be
-                // sent, their respective responses received and even rendered in the UI before the CPU is blocked.
-                await this.addChain(parent.derive(0));
-                await this.addChain(parent.derive(1));
+                const fastXpub = new FastXpub(networks.bitcoin);
+                await Promise.all([
+                    this.addChain(fastXpub, await fastXpub.deriveNode(this.address, 0)),
+                    this.addChain(fastXpub, await fastXpub.deriveNode(this.address, 1)),
+                ]);
             }
 
             return this.quantity;
@@ -100,29 +99,7 @@ export class BtcWallet extends SimpleCryptoWallet {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private static readonly minUnusedAddressesToCheck = 20;
-        private static batchLength = 2;
-
-        private static async delay(milliseconds: number) {
-            return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
-        }
-
-        private static getBatch(node: HDNode, offset: number) {
-            const result = new Array<string>(NestedQuantityRequest.batchLength);
-            const start = Date.now();
-
-            for (let index = 0; index < result.length; ++index) {
-                result[index] = node.derive(offset + index).getAddress();
-            }
-
-            if ((Date.now() - start < 500) && (NestedQuantityRequest.batchLength < 16)) {
-                // This is an attempt at making address derivation more bearable on browsers with lousy script execution
-                // speed, e.g. Edge. Of course, this doesn't make the overall process faster, but it avoids blocking the
-                // thread for longer than a second.
-                NestedQuantityRequest.batchLength *= 2;
-            }
-
-            return result;
-        }
+        private static readonly batchLength = 20;
 
         private quantity = 0;
 
@@ -133,15 +110,16 @@ export class BtcWallet extends SimpleCryptoWallet {
             return result;
         }
 
-        private async addChain(node: HDNode) {
+        private async addChain(fastXpub: FastXpub, xpub: string) {
             // eslint-disable-next-line init-declarations
             let batch: string[] | undefined;
             let unusedAddressesToCheck = NestedQuantityRequest.minUnusedAddressesToCheck;
 
             for (let index = 0; unusedAddressesToCheck > 0; index += batch.length) {
-                batch = NestedQuantityRequest.getBatch(node, index);
-
                 // We need to do this sequentially such that we don't miss the point where the unused addresses start
+                // eslint-disable-next-line no-await-in-loop
+                batch = await fastXpub.deriveAddressRange(xpub, index, index + NestedQuantityRequest.batchLength - 1);
+
                 // eslint-disable-next-line no-await-in-loop
                 if ((await this.add(batch)).transactionCount === 0) {
                     unusedAddressesToCheck -= batch.length;
