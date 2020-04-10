@@ -27,7 +27,7 @@ export class FastXpub {
 
     public async deriveAddressRange(xpub: string, firstIndex: number, lastIndex: number) {
         const hdNode = this.toNode(xpub);
-        const p2sh = xpub.startsWith("ypub");
+        const p2sh = FastXpub.p2shXpubPrefixes.includes(xpub.slice(0, 4));
 
         return FastXpub.getResponse(
             {
@@ -41,6 +41,9 @@ export class FastXpub {
             ({ data }) => data.addresses as string[],
         );
     }
+
+    private static readonly overwriteVersionXpubPrefixes: readonly string[] = ["ypub", "Mtub", "drkp"];
+    private static readonly p2shXpubPrefixes: readonly string[] = ["ypub", "Mtub"];
 
     private static readonly worker = FastXpub.getWorker();
     private static readonly taskQueue = new TaskQueue();
@@ -108,9 +111,7 @@ export class FastXpub {
     private readonly network: Network;
 
     private toNode(xpub: string) {
-        const xpubsToTweak = ["ypub", "drkp"];
-
-        if (xpubsToTweak.includes(xpub.slice(0, 4))) {
+        if (FastXpub.overwriteVersionXpubPrefixes.includes(xpub.slice(0, 4))) {
             const decoded = decode(xpub);
             decoded.writeInt32BE(this.network.bip32.public, 0);
 

@@ -36,6 +36,16 @@ const deriveAddressRangeFixtures = [
         ] as const,
     } as const,
     {
+        coin: "BTG",
+        network: networks.bitcoingold,
+        xpub: "ypub6XbvqZDtAgAHmEMVPh3Y3BUPJNuCL7TpCHntHMytbYq7STRu8ywFY6B3Ee1SnAjiAJcXn7P7Y79Tfdh4D3jqzcBhzLoAcnPQhy4xLbB1iUb",
+        expectedAddresses: [
+            "AGU8a1EJKaBVDJ59THN6XRqt8GMx37ghYA",
+            "AeogqQ3oCfMVfHVtJ7hgFmvxtYiUDShDFc",
+            "AHLYLAtCcGGUZ2KukUhof1D4c1XAqdUqZF",
+        ] as const,
+    } as const,
+    {
         coin: "legacy BTG",
         network: networks.bitcoingold,
         xpub: "xpub6DW4G75Y5pPqLhzAtRbxZhTpHZAaNqp8iKPm6JmP3ieMGHTjnoHorwcU7cdHtEJujdkenhpQNJkbx6ExWsQwxrhhN9QKqkwA9DDE4ody3Pa",
@@ -53,6 +63,16 @@ const deriveAddressRangeFixtures = [
             "XkqyKihuxirhrAWLBmuiCFRwC2STWQ7ku1",
             "Xk2AFmi7EXL4xYoyvtyG3Myei6MN3zp731",
             "XrXyQFjEvwiHHbrR5rziNPHdSi19SThAx6",
+        ] as const,
+    } as const,
+    {
+        coin: "LTC",
+        network: networks.litecoin,
+        xpub: "Mtub2s2ywizEPokT7Byp6i5ztr7X9mHWLF2Zskixrf4WZkF6eW6yUwkoVRp2SuGgaNw4FdKfM3fwJPEjF5AK2Nt7TsCEkhnLJrRzBdb2v8gnsjC",
+        expectedAddresses: [
+            "MRMcXf2e6TRKY1EjgJXciE3WTk9k9CQUbm",
+            "MGQYB2DVEoAT2MBM9asRSdkf7ZWAKnwhmA",
+            "MBms7K1kmgbnmkeMpeJ9foC15Wbbw9N8gG",
         ] as const,
     } as const,
     {
