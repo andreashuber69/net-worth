@@ -5,11 +5,11 @@ export class Browser {
     public static get isCompatible() {
         const { browserName, browserVersion, engineName, engineVersion } = Browser.getInfo();
 
-        if ((browserName === "Firefox") && (browserVersion < 47)) {
+        if ((browserName === "Firefox") && (browserVersion < 52)) {
             return false;
         }
 
-        if (((browserName === "Mobile Safari") || (browserName === "Safari")) && (browserVersion < 10)) {
+        if (((browserName === "Mobile Safari") || (browserName === "Safari")) && (browserVersion < 11)) {
             return false;
         }
 
