@@ -49,13 +49,12 @@ export class FastXpub {
     private static readonly taskQueue = new TaskQueue();
 
     private static async getWorker() {
+        const result = new Worker("fastxpub.js");
         const response = await window.fetch("fastxpub.wasm");
 
         if (!response.ok) {
             throw new Error(`Can't fetch: ${response.statusText}`);
         }
-
-        const result = new Worker("fastxpub.js");
 
         result.postMessage({
             type: "init",
