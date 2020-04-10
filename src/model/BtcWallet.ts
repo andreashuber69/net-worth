@@ -13,9 +13,9 @@ import { BlockchainBalanceResponse, IAddressBalance } from "./validation/schemas
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 /** @internal */
-interface IBalance {
-    finalBalance: number;
-    transactionCount: number;
+interface IBatchInfo {
+    balance: number;
+    txCount: number;
 }
 
 /** Represents a BTC wallet. */
@@ -36,7 +36,7 @@ export class BtcWallet extends SimpleCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private static readonly BlockchainRequest = class NestedBCRequest implements IWebRequest<Readonly<IBalance>> {
+    private static readonly BlockchainRequest = class NestedBCRequest implements IWebRequest<Readonly<IBatchInfo>> {
         public constructor(addresses: readonly string[]) {
             this.addresses = addresses.join("|");
         }
@@ -52,14 +52,14 @@ export class BtcWallet extends SimpleCryptoWallet {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private static getFinalBalance(response: BlockchainBalanceResponse) {
-            const result: IBalance = { finalBalance: Number.NaN, transactionCount: 0 };
+            const result: IBatchInfo = { balance: Number.NaN, txCount: 0 };
             const balances = Object.keys(response).map((k) => response[k]).filter(
                 (v): v is IAddressBalance => typeof v === "object",
             );
 
             balances.forEach((b) => NestedBCRequest.addBalance(result, b));
 
-            if (Number.isNaN(result.finalBalance)) {
+            if (Number.isNaN(result.balance)) {
                 throw new QueryError();
             }
 
@@ -67,11 +67,11 @@ export class BtcWallet extends SimpleCryptoWallet {
         }
 
         // eslint-disable-next-line @typescript-eslint/camelcase
-        private static addBalance(result: IBalance, { final_balance, n_tx }: IAddressBalance) {
+        private static addBalance(result: IBatchInfo, { final_balance, n_tx }: IAddressBalance) {
             // eslint-disable-next-line @typescript-eslint/camelcase
-            result.finalBalance = (Number.isNaN(result.finalBalance) ? 0 : result.finalBalance) + (final_balance / 1E8);
+            result.balance = (Number.isNaN(result.balance) ? 0 : result.balance) + (final_balance / 1E8);
             // eslint-disable-next-line @typescript-eslint/camelcase
-            result.transactionCount += n_tx;
+            result.txCount += n_tx;
         }
 
         private readonly addresses: string;
@@ -84,12 +84,11 @@ export class BtcWallet extends SimpleCryptoWallet {
         public async queryQuantity() {
             // TODO: This is a crude test to distinguish between xpub and a normal address
             if (this.address.length <= 100) {
-                await this.add([this.address]);
+                await this.getBatchInfo([this.address]);
             } else {
-                const fastXpub = new FastXpub(networks.bitcoin);
                 await Promise.all([
-                    this.addChain(fastXpub, await fastXpub.deriveNode(this.address, 0)),
-                    this.addChain(fastXpub, await fastXpub.deriveNode(this.address, 1)),
+                    this.addChain(await this.fastXpub.deriveNode(this.address, 0)),
+                    this.addChain(await this.fastXpub.deriveNode(this.address, 1)),
                 ]);
             }
 
@@ -98,35 +97,32 @@ export class BtcWallet extends SimpleCryptoWallet {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private static readonly minUnusedAddressesToCheck = 20;
         private static readonly batchLength = 20;
-
+        private readonly fastXpub = new FastXpub(networks.bitcoin);
         private quantity = 0;
 
-        private async add(addresses: readonly string[]) {
-            const result = await new BtcWallet.BlockchainRequest(addresses).execute();
-            this.quantity += result.finalBalance;
-
-            return result;
+        // eslint-disable-next-line class-methods-use-this
+        private async getBatchInfo(addresses: readonly string[]) {
+            return new BtcWallet.BlockchainRequest(addresses).execute();
         }
 
-        private async addChain(fastXpub: FastXpub, xpub: string) {
-            // eslint-disable-next-line init-declarations
-            let batch: string[] | undefined;
-            let unusedAddressesToCheck = NestedQuantityRequest.minUnusedAddressesToCheck;
+        private async addChain(xpub: string) {
+            let done = false;
+            let batch = await this.getBatch(xpub, 0);
 
-            for (let index = 0; unusedAddressesToCheck > 0; index += batch.length) {
-                // We need to do this sequentially such that we don't miss the point where the unused addresses start
+            for (let index = NestedQuantityRequest.batchLength; !done; index += NestedQuantityRequest.batchLength) {
+                // We need to do this sequentially such that we don't miss the point where unused addresses start
                 // eslint-disable-next-line no-await-in-loop
-                batch = await fastXpub.deriveAddressRange(xpub, index, index + NestedQuantityRequest.batchLength - 1);
-
-                // eslint-disable-next-line no-await-in-loop
-                if ((await this.add(batch)).transactionCount === 0) {
-                    unusedAddressesToCheck -= batch.length;
-                } else {
-                    unusedAddressesToCheck = NestedQuantityRequest.minUnusedAddressesToCheck;
-                }
+                const results = await Promise.all([this.getBatchInfo(batch), this.getBatch(xpub, index)]);
+                const [{ balance, txCount }] = results;
+                this.quantity += balance;
+                done = txCount === 0;
+                [, batch] = results;
             }
+        }
+
+        private async getBatch(xpub: string, index: number) {
+            return this.fastXpub.deriveAddressRange(xpub, index, index + NestedQuantityRequest.batchLength - 1);
         }
     };
 }
