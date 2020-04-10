@@ -67,7 +67,7 @@ const deriveAddressRangeFixtures = [
     } as const,
 ] as const;
 
-fdescribe(FastXpub.name, () => {
+describe(FastXpub.name, () => {
     describe("deriveNode", () => {
         it("should derive the correct nodes", async () => {
             const sut = new FastXpub(networks.bitcoin);

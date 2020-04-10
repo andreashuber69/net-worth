@@ -110,10 +110,10 @@ export class FastXpub {
         const xpubsToTweak = ["ypub", "drkp"];
 
         if (xpubsToTweak.includes(xpub.slice(0, 4))) {
-            const hex = `0${this.network.bip32.public.toString(16)}`;
-            const converted = encode(Buffer.concat([Buffer.from(hex, "hex"), decode(xpub).slice(4)]));
+            const decoded = decode(xpub);
+            decoded.writeInt32BE(this.network.bip32.public, 0);
 
-            return HDNode.fromBase58(converted, this.network);
+            return HDNode.fromBase58(encode(decoded), this.network);
         }
 
         return HDNode.fromBase58(xpub, this.network);
