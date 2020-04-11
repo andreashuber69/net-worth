@@ -11,7 +11,7 @@ export abstract class QuantityRequest {
     public async queryQuantity() {
         // TODO: This is a crude test to distinguish between xpub and a normal address
         if (this.address.length <= 100) {
-            await this.getBatchInfo([this.address]);
+            this.quantity += (await this.getBatchInfo([this.address])).balance;
         } else {
             await Promise.all([
                 this.addChain(await this.fastXpub.deriveNode(this.address, 0)),
