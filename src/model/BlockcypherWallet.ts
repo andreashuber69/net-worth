@@ -13,7 +13,7 @@ export abstract class BlockcypherWallet extends SimpleCryptoWallet {
 
     protected async queryQuantity() {
         const url = `https://api.blockcypher.com/v1/${this.unit.toLowerCase()}/main/addrs/${this.address}/balance`;
-        const response = await QueryCache.fetch(url, BlockcypherBalanceResponse, (r) => r.error);
+        const response = await QueryCache.fetch(url, BlockcypherBalanceResponse, { getErrorMessage: (r) => r.error });
 
         return (response.balance && response.balance / 1E8) ?? Number.NaN;
     }

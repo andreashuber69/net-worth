@@ -39,7 +39,11 @@ export class Erc20TokensWalletBundle implements IAssetBundle {
         try {
             const url = `https://api.ethplorer.io/getAddressInfo/${this.erc20Wallet.address}?apiKey=dvoio1769GSrYx63`;
             const tokens = Erc20TokensWalletBundle.getTokens(
-                await QueryCache.fetch(url, EthplorerGetAddressInfoResponse, (r) => r.error?.message),
+                await QueryCache.fetch(
+                    url,
+                    EthplorerGetAddressInfoResponse,
+                    { getErrorMessage: (r) => r.error?.message },
+                ),
             );
 
             for (const token of tokens[0]) {

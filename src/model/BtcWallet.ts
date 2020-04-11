@@ -41,7 +41,7 @@ export class BtcWallet extends SimpleCryptoWallet {
             return this.getFinalBalance(await QueryCache.fetch(
                 `https://blockchain.info/balance?active=${addresses.join("|")}&cors=true`,
                 BlockchainBalanceResponse,
-                (r) => (typeof r.reason === "string" && r.reason) || undefined,
+                { getErrorMessage: (r) => (typeof r.reason === "string" && r.reason) || undefined },
             ));
         }
 
