@@ -14,7 +14,7 @@ export abstract class QuantityRequest {
         if (this.address.length <= 100) {
             this.quantity += (await this.getBatchInfo([this.address])).balance;
         } else {
-            await Promise.all((await this.getNodes()).map(async (n) => this.addChain(n)));
+            await Promise.all(this.getNodes().map(async (n) => this.addChain(await n)));
         }
 
         return this.quantity;
@@ -35,12 +35,9 @@ export abstract class QuantityRequest {
     private readonly fastXpub: FastXpub;
     private quantity = 0;
 
-    private async getNodes() {
+    private getNodes() {
         try {
-            return [
-                await this.fastXpub.deriveNode(this.address, 0),
-                await this.fastXpub.deriveNode(this.address, 1),
-            ];
+            return [0, 1].map(async (i) => this.fastXpub.deriveNode(this.address, i));
         } catch (e) {
             throw new QueryError("Invalid xpub.");
         }
