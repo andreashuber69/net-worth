@@ -35,7 +35,7 @@ const getXpubNotSupportedMessage =
     (domain: string) => `The wallets single public address (xpub is not supported). Will be sent to ${domain} to query the balance.`;
 
 const btcHint = getXpubSupportedMessage("xpub/ypub", "blockchain.info");
-const ltcHint = getXpubSupportedMessage("Mtub/Ltub", "blockchair.com");
+const ltcHint = getXpubSupportedMessage("Ltub/Mtub", "blockchair.com");
 const etcHint = getXpubNotSupportedMessage("blockscout.com");
 const ethHint = getXpubNotSupportedMessage("ethplorer.io");
 const btgHint = getXpubSupportedMessage("xpub/ypub", "bitcoingold.org");
