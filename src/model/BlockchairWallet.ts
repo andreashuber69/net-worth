@@ -67,8 +67,6 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
                     return "bitcoin-cash";
                 case "bsv":
                     return "bitcoin-sv";
-                case "btc":
-                    return "bitcoin";
                 case "ltc":
                     return "litecoin";
                 case "zec":
