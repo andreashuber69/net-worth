@@ -1,6 +1,7 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Network } from "@trezor/utxo-lib";
 import { FastXpub } from "./FastXpub";
+import { QueryError } from "./QueryError";
 
 export interface IBatchInfo {
     balance: number;
@@ -13,10 +14,7 @@ export abstract class QuantityRequest {
         if (this.address.length <= 100) {
             this.quantity += (await this.getBatchInfo([this.address])).balance;
         } else {
-            await Promise.all([
-                this.addChain(await this.fastXpub.deriveNode(this.address, 0)),
-                this.addChain(await this.fastXpub.deriveNode(this.address, 1)),
-            ]);
+            await Promise.all((await this.getNodes()).map(async (n) => this.addChain(n)));
         }
 
         return this.quantity;
@@ -33,8 +31,20 @@ export abstract class QuantityRequest {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static readonly batchLength = 20;
+
     private readonly fastXpub: FastXpub;
     private quantity = 0;
+
+    private async getNodes() {
+        try {
+            return [
+                await this.fastXpub.deriveNode(this.address, 0),
+                await this.fastXpub.deriveNode(this.address, 1),
+            ];
+        } catch (e) {
+            throw new QueryError("Invalid xpub.");
+        }
+    }
 
     private async addChain(xpub: string) {
         let done = false;

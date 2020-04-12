@@ -53,8 +53,8 @@
               </v-btn>
             </v-flex>
             <v-flex xs12 sm6 md4>
-              <v-btn href="https://blockcypher.com" target="_blank" block text class="ma-0">
-                <v-img :src="require('@/assets/blockcypher.svg')" max-width="200" height="36" contain></v-img>
+              <v-btn href="https://blockchair.com" target="_blank" block text class="ma-0">
+                <v-img :src="require('@/assets/blockchair.svg')" max-width="200" height="36" contain></v-img>
               </v-btn>
             </v-flex>
             <v-flex xs12 sm6 md4>
@@ -71,11 +71,6 @@
             <v-flex xs12 sm6 md4>
               <v-btn href="https://explorer.bitcoingold.org" target="_blank" block text class="ma-0">
                 <v-img :src="require('@/assets/bitcoingold.png')" max-width="200" height="36" contain></v-img>
-              </v-btn>
-            </v-flex>
-            <v-flex xs12 sm6 md4>
-              <v-btn href="https://zcha.in" target="_blank" block text class="ma-0">
-                ZCHAIN
               </v-btn>
             </v-flex>
             <v-flex xs12 sm6 md4>

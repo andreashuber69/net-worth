@@ -27,38 +27,20 @@ import { ObjectUnion } from "./validation/schemas/ObjectUnion.schema";
 import { XmrWallet } from "./XmrWallet";
 import { ZecWallet } from "./ZecWallet";
 
-// cSpell:ignore xpub, ypub, Mtub, Ltub, drkp, zcha
-const btcHint =
-    "The wallets public address, single or xpub (ypub is not supported). " +
-    "Will be sent to blockchain.info to query the balance.";
+const getXpubSupportedMessage =
+    // eslint-disable-next-line max-len
+    (xpub: string, domain: string) => `The wallets public address (single or Trezor ${xpub}). Only single addresses will be sent to ${domain} to query the balance (a ${xpub} is split into single addresses beforehand).`;
+const getXpubNotSupportedMessage =
+    // eslint-disable-next-line max-len
+    (domain: string) => `The wallets single public address (xpub is not supported). Will be sent to ${domain} to query the balance.`;
 
-const ltcHint =
-    "The wallets single public address (neither Mtub nor Ltub are supported). " +
-    "Will be sent to blockcypher.com to query the balance.";
-
-const etcHint =
-    "The wallets single public address (xpub is not supported). " +
-    "Will be sent to blockscout.com to query the balance.";
-
-const ethHint =
-    "The wallets single public address (xpub is not supported). " +
-    "Will be sent to ethplorer.io to query the ETH balance.";
-
-const erc20Hint =
-    "The wallets single public address (xpub is not supported). " +
-    "Will be sent to ethplorer.io to query ERC20 token balances.";
-
-const btgHint =
-    "The wallets single public address (ypub is not supported). " +
-    "Will be sent to bitcoingold.org to query the balance.";
-
-const dashHint =
-    "The wallets single public address (drkp is not supported). " +
-    "Will be sent to blockcypher.com to query the balance.";
-
-const zecHint =
-    "The wallets single public address (xpub is not supported). " +
-    "Will be sent to zcha.in to query the balance.";
+const btcHint = getXpubSupportedMessage("xpub/ypub", "blockchain.info");
+const ltcHint = getXpubSupportedMessage("Mtub/Ltub", "blockchair.com");
+const etcHint = getXpubNotSupportedMessage("blockscout.com");
+const ethHint = getXpubNotSupportedMessage("ethplorer.io");
+const btgHint = getXpubSupportedMessage("xpub/ypub", "bitcoingold.org");
+const dashHint = getXpubSupportedMessage("drkp", "blockchair.com");
+const zecHint = getXpubSupportedMessage("xpub", "blockchair.com");
 
 type Converters<P, S, A, Q, M, PR, SR, AR, QR, MR> = readonly [
     (value: P, info: PreciousMetalAssetInputInfo) => PR,
@@ -81,7 +63,7 @@ export class ObjectConverter {
             new SimpleCryptoWalletInputInfo({ ctor: LtcWallet, addressHint: ltcHint, quantityDecimals: 8 }),
         [EtcWallet.type]:
             new SimpleCryptoWalletInputInfo({ ctor: EtcWallet, addressHint: etcHint, quantityDecimals: 18 }),
-        [Erc20TokensWallet.type]: new AddressCryptoWalletInputInfo({ ctor: Erc20TokensWallet, addressHint: erc20Hint }),
+        [Erc20TokensWallet.type]: new AddressCryptoWalletInputInfo({ ctor: Erc20TokensWallet, addressHint: ethHint }),
         [EthWallet.type]:
             new SimpleCryptoWalletInputInfo({ ctor: EthWallet, addressHint: ethHint, quantityDecimals: 18 }),
         [BtgWallet.type]:
