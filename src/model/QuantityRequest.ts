@@ -3,7 +3,7 @@ import { Network } from "@trezor/utxo-lib";
 import { FastXpub } from "./FastXpub";
 import { QueryError } from "./QueryError";
 
-export interface IBatchInfo {
+interface IOutputInfo {
     balance: number;
     txCount: number;
 }
@@ -26,7 +26,7 @@ export abstract class QuantityRequest {
         this.fastXpub = new FastXpub(network);
     }
 
-    protected abstract getBatchInfo(addresses: readonly string[]): Promise<IBatchInfo>;
+    protected abstract getOutputInfos(addresses: readonly string[]): Promise<IOutputInfo[]>;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -63,6 +63,17 @@ export abstract class QuantityRequest {
 
     private async getBatch(xpub: string, index: number) {
         return this.fastXpub.deriveAddressRange(xpub, index, index + QuantityRequest.batchLength - 1);
+    }
+
+    private async getBatchInfo(addresses: readonly string[]) {
+        const result = { balance: 0, txCount: 0 };
+
+        (await this.getOutputInfos(addresses)).forEach((i) => {
+            result.balance += i.balance;
+            result.txCount += i.txCount;
+        });
+
+        return result;
     }
 }
 

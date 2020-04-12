@@ -1,5 +1,5 @@
 // https://github.com/andreashuber69/net-worth#--
-export interface IUtxo {
+interface IUtxo {
     [key: string]: unknown;
     readonly amount: number;
 }

@@ -2,12 +2,12 @@
 /* eslint-disable max-classes-per-file */
 import { Network } from "@trezor/utxo-lib";
 import { IParent } from "./IEditable";
-import { IBatchInfo, QuantityRequest } from "./QuantityRequest";
+import { QuantityRequest } from "./QuantityRequest";
 import { IFetchOptions, QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
-import { BlockchairBalanceResponse, IAddressInfo } from "./validation/schemas/BlockchairBalanceResponse.schema";
+import { BlockchairBalanceResponse } from "./validation/schemas/BlockchairBalanceResponse.schema";
 import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 export type IBlockchairWalletParameters = IRealCryptoWalletParameters & {
@@ -44,10 +44,22 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        protected async getBatchInfo(addresses: readonly string[]) {
+        protected async getOutputInfos(addresses: readonly string[]) {
             const url = `${this.urlPrefix}${addresses.join(",")}?limit=0`;
+            const { data } = await QueryCache.fetch(url, BlockchairBalanceResponse, this.fetchOptions);
 
-            return this.getFinalBalance(await QueryCache.fetch(url, BlockchairBalanceResponse, this.fetchOptions));
+            if (!data) {
+                return [{ balance: 0, txCount: 0 }];
+            }
+
+            const addressInfos = Object.values(data.addresses);
+
+            if (addressInfos.length === 0) {
+                throw new QueryError("Unexpected empty addresses object.");
+            }
+
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            return addressInfos.map(({ balance, output_count }) => ({ balance: balance / 1E8, txCount: output_count }));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,28 +88,6 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
                 default:
                     throw new Error(`Unsupported coin: ${coin}`);
             }
-        }
-
-        private getFinalBalance({ data }: BlockchairBalanceResponse): IBatchInfo {
-            if (data) {
-                const result = { balance: Number.NaN, txCount: 0 };
-                Object.values(data.addresses).forEach((b) => this.addBalance(result, b));
-
-                if (Number.isNaN(result.balance)) {
-                    throw new QueryError();
-                }
-
-                return result;
-            }
-
-            return { balance: 0, txCount: 0 };
-        }
-
-        // eslint-disable-next-line @typescript-eslint/camelcase, class-methods-use-this
-        private addBalance(result: IBatchInfo, { balance, output_count }: IAddressInfo) {
-            result.balance = (Number.isNaN(result.balance) ? 0 : result.balance) + (balance / 1E8);
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            result.txCount += output_count;
         }
     };
 
