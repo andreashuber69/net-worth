@@ -94,15 +94,26 @@ Some table cells reveal more information when hovering over them with the mouse 
 
 ### Privacy
 
-- **Data Storage**: The data you enter into Net Worth is only ever stored locally and can, at your request, be saved to
-  a file on your hard drive.
+- **Data Storage**: The asset details you enter into Net Worth are stored in your browser. Said data can be saved to a
+  .assets file on your hard drive such that you can load it again later, much like you can save and load stuff with a
+  conventional desktop application. Note that .assets files are **not** encrypted. If you care about privacy, you should
+  thus ensure that such files cannot be accessed by anybody else, e.g. by storing them on a password-protected encrypted
+  drive. Moreover, you should only use Net Worth on a device where you have a password-protected personal account.
+  Finally, it is worth noting that most cloud storage services like e.g. Dropbox, Google Drive, etc. do **not** store
+  user data in an encrypted form.
 - **Queries**: The application queries precious metal prices and currency exchange rates
   ([quandl.com](https://quandl.com)) plus crypto currency prices ([cryptocompare.com](https://cryptocompare.com)). For
-  crypto currencies, you have the option to also track your balance. If you choose to do so, the application will also
-  send your public address(es) to an online service like e.g. [blockchain.info](https://blockchain.info).
-- **Encryption**: All queries are always encrypted (https), but of course the owners of the respective services will
-  have access to the contents of the queries (which can be attributed to you via your IP address). If you have concerns
-  about that, you should use a reputable VPN provider or even TOR.
+  crypto currencies, you have the option to also track your balance, by specifying a public address instead of a
+  quantity. If you choose to do so, the application will also send your public address(es) to an online service like
+  e.g. [blockchain.info](https://blockchain.info). All queries are always encrypted (https), but of course the owners of
+  the respective services will have access to the contents of the queries (which can be attributed to you via your IP
+  address). This is why it is recommended to only use the application via a reputable VPN provider or even TOR.
+- **HD Wallets**: Besides normal public addresses, the application also supports so-called xpubs (short for extended
+  public keys) for most crypto currencies. To protect your privacy, Net Worth never sends these to external services.
+  Instead, balances are queried with normal public addresses derived from an xpub. While this approach reveals as
+  little as possible about your wallet, it should be noted that it's trivial to reconstruct the past transaction
+  history from the contents of the queries. This is why, again, you should take measures so that the queries are not
+  attributable to you, see above.
 
 ## Features
 
