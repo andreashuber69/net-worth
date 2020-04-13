@@ -12,7 +12,7 @@ export class FastXpub {
     public async deriveNode(xpub: string, index: number) {
         // It appears that fastxpub doesn't answer a request containing a malformed xpub, which is why we ensure the
         // correct format by creating a HDNode first.
-        this.toNode(xpub);
+        this.toHDNode(xpub);
 
         return FastXpub.getResponse(
             {
@@ -26,13 +26,13 @@ export class FastXpub {
     }
 
     public async deriveAddressRange(xpub: string, firstIndex: number, lastIndex: number) {
-        const hdNode = this.toNode(xpub);
+        const hdNode = this.toHDNode(xpub);
         const p2sh = FastXpub.p2shXpubPrefixes.includes(xpub.slice(0, 4));
 
         return FastXpub.getResponse(
             {
                 type: "deriveAddressRange",
-                node: FastXpub.getNode(hdNode),
+                node: FastXpub.convert(hdNode),
                 firstIndex,
                 lastIndex,
                 version: p2sh ? hdNode.getNetwork().scriptHash : hdNode.getNetwork().pubKeyHash,
@@ -49,13 +49,12 @@ export class FastXpub {
     private static readonly taskQueue = new TaskQueue();
 
     private static async getWorker() {
+        const result = new Worker("fastxpub.js");
         const response = await window.fetch("fastxpub.wasm");
 
         if (!response.ok) {
             throw new Error(`Can't fetch: ${response.statusText}`);
         }
-
-        const result = new Worker("fastxpub.js");
 
         result.postMessage({
             type: "init",
@@ -65,7 +64,7 @@ export class FastXpub {
         return result;
     }
 
-    private static getNode({ depth, index, parentFingerprint, chainCode, keyPair }: HDNode) {
+    private static convert({ depth, index, parentFingerprint, chainCode, keyPair }: HDNode) {
         return {
             depth,
             // eslint-disable-next-line @typescript-eslint/camelcase
@@ -110,7 +109,7 @@ export class FastXpub {
 
     private readonly network: Network;
 
-    private toNode(xpub: string) {
+    private toHDNode(xpub: string) {
         if (FastXpub.overwriteVersionXpubPrefixes.includes(xpub.slice(0, 4))) {
             const decoded = decode(xpub);
             decoded.writeInt32BE(this.network.bip32.public, 0);

@@ -2,27 +2,24 @@
 import { QueryError } from "./QueryError";
 import { Validator } from "./validation/Validator";
 
+export interface IFetchOptions<R> {
+    readonly ignoreResponseCodes?: readonly number[];
+    readonly getErrorMessage?: (r: R) => string | undefined;
+}
+
 /** @internal */
 export class QueryCache {
     /** @internal */
     public static fetch(query: string): Promise<unknown>;
-    public static fetch<R>(
-        query: string,
-        responseCtor: new () => R,
-        getErrorMessage?: (r: R) => string | undefined,
-    ): Promise<R>;
+    public static fetch<R>(query: string, responseCtor: new () => R, options?: IFetchOptions<R>): Promise<R>;
 
-    public static async fetch<R>(
-        query: string,
-        responseCtor?: new () => R,
-        getErrorMessage?: (r: R) => string | undefined,
-    ) {
+    public static async fetch<R>(query: string, responseCtor?: new () => R, options: IFetchOptions<R> = {}) {
         return QueryCache.cacheResult(
             query,
             async () => (
                 responseCtor ?
-                    QueryCache.fetchParseValidateAndApprove(query, responseCtor, getErrorMessage) :
-                    QueryCache.fetchAndParse(query)
+                    QueryCache.fetchParseValidateAndApprove(query, responseCtor, options) :
+                    QueryCache.fetchAndParse(query, undefined)
             ),
         );
     }
@@ -50,9 +47,9 @@ export class QueryCache {
     private static async fetchParseValidateAndApprove<R>(
         query: string,
         responseCtor: new () => R,
-        getErrorMessage?: (r: R) => string | undefined,
+        { ignoreResponseCodes, getErrorMessage }: IFetchOptions<R>,
     ) {
-        const response = await QueryCache.fetchParseAndValidate(query, responseCtor);
+        const response = await QueryCache.fetchParseAndValidate(query, responseCtor, ignoreResponseCodes);
 
         if (getErrorMessage) {
             const errorMessage = getErrorMessage(response);
@@ -65,8 +62,12 @@ export class QueryCache {
         return response;
     }
 
-    private static async fetchParseAndValidate<R>(query: string, responseCtor: new () => R) {
-        const response = await QueryCache.fetchAndParse(query);
+    private static async fetchParseAndValidate<R>(
+        query: string,
+        responseCtor: new () => R,
+        ignoreResponseCodes: readonly number[] | undefined,
+    ) {
+        const response = await QueryCache.fetchAndParse(query, ignoreResponseCodes);
 
         try {
             return Validator.fromData(response, responseCtor);
@@ -75,8 +76,8 @@ export class QueryCache {
         }
     }
 
-    private static async fetchAndParse(query: string) {
-        const responseText = await this.tryGetText(await QueryCache.tryFetch(query));
+    private static async fetchAndParse(query: string, ignoreResponseCodes: readonly number[] | undefined) {
+        const responseText = await this.tryGetText(await QueryCache.tryFetch(query), ignoreResponseCodes);
 
         try {
             return JSON.parse(responseText) as unknown;
@@ -93,8 +94,8 @@ export class QueryCache {
         }
     }
 
-    private static async tryGetText(response: Response) {
-        if (!response.ok) {
+    private static async tryGetText(response: Response, ignoreResponseCodes: readonly number[] | undefined) {
+        if (!response.ok && !(ignoreResponseCodes ?? []).includes(response.status)) {
             throw new QueryError(`HTTP Error: ${response.statusText}`);
         }
 
