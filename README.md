@@ -95,13 +95,14 @@ Some table cells reveal more information when hovering over them with the mouse 
 ### Privacy
 
 - **Data Storage**: The asset details you enter into Net Worth are stored in an application-specific space in your
-  browser, so that it can only be accessed when your browser is pointed to https://andreashuber69.github.io/net-worth.
-  Said data can be saved to a .assets file on your hard drive such that you can load it again later, much like you can
-  save and load stuff with conventional desktop applications. Note that .assets files are **not** encrypted. If you
-  care about privacy, you should thus ensure that these files cannot be accessed by anybody else, e.g. by storing them
-  on a password-protected encrypted drive. Moreover, you should only use Net Worth on a device where you have a
-  password-protected personal account. Finally, it is worth noting that most cloud storage services like e.g. Dropbox,
-  Google Drive, etc. do **not** store user data in an encrypted form.
+  browser, so that it can only be accessed when your browser is pointed to
+  [https://andreashuber69.github.io/net-worth](https://andreashuber69.github.io/net-worth). Said data can be saved to a
+  .assets file on your hard drive such that you can load it again later, much like you can save and load stuff with
+  conventional desktop applications. Note that .assets files are **not** encrypted. If you care about privacy, you
+  should thus ensure that these files cannot be accessed by anybody else, e.g. by storing them on a password-protected
+  encrypted drive. Moreover, you should only use Net Worth on a device where you have a password-protected personal
+  account. Finally, it is worth noting that most cloud storage services like e.g. Dropbox, Google Drive, etc. do **not**
+  store user data in an encrypted form.
 - **Queries**: The application queries precious metal prices and currency exchange rates
   ([quandl.com](https://quandl.com)) plus crypto currency prices ([cryptocompare.com](https://cryptocompare.com)). For
   crypto currencies, you have the option to also track your balance, by specifying a public address instead of a
