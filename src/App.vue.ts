@@ -119,7 +119,6 @@ export default class App extends Vue {
         return model;
     }
 
-    // eslint-disable-next-line no-null/no-null
     private beforeInstallPrompt: BeforeInstallPromptEvent | false = false;
 
     private get fileInput() {
