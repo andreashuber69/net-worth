@@ -5,7 +5,6 @@
     "Andreas",
     "beforeinstallprompt",
     "bitcoingold",
-    "bitcoinjs",
     "blockchain",
     "blockchair",
     "blockcypher",
@@ -42,8 +41,7 @@
     "xpubs",
     "yandex",
     "ypub",
-    "zcash",
-    "zchain"
+    "zcash"
   ],
   "flagWords": [],
   "dictionaries": [
