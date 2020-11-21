@@ -75,6 +75,8 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
         // eslint-disable-next-line class-methods-use-this
         private getCoinName(coin: string) {
             switch (coin) {
+                case "btc":
+                    return "bitcoin";
                 case "bch":
                     return "bitcoin-cash";
                 case "bsv":
