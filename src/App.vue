@@ -40,7 +40,7 @@
         </v-list-item>
         <v-list-item v-if="canInstall" link @click="onInstallClicked">
           <v-list-item-icon>
-            <v-icon>cloud_download</v-icon>
+            <v-icon>add_circle_outline</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>Install...</v-list-item-title>
