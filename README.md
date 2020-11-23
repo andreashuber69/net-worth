@@ -107,7 +107,7 @@ Some table cells reveal more information when hovering over them with the mouse 
   ([quandl.com](https://quandl.com)) plus crypto currency prices ([cryptocompare.com](https://cryptocompare.com)). For
   crypto currencies, you have the option to also track your balance, by specifying a public address instead of a
   quantity. If you choose to do so, the application will also send your public address(es) to an online service like
-  e.g. [blockchain.info](https://blockchain.info). All queries are always encrypted (https), but of course the owners of
+  e.g. [blockchair.com](https://blockchair.com). All queries are always encrypted (https), but of course the owners of
   the respective services will have access to the contents of the queries (which can be attributed to you via your IP
   address). This is why it is recommended to only use the application via a reputable VPN provider or even TOR.
 - **HD Wallets**: Besides normal public addresses, the application also supports so-called xpubs (short for extended

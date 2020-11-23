@@ -47,12 +47,7 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
 
         protected async getOutputInfos(addresses: readonly string[]) {
             const url = `${this.urlPrefix}${addresses.join(",")}?limit=0`;
-            const start = new Date().getTime();
-            const { data } = await this.Class.taskQueue.queue(
-                async () => QueryCache.fetch(url, BlockchairBalanceResponse, this.fetchOptions),
-            );
-
-            this.Class.enqueueWait(this.Class.taskQueue, start);
+            const { data } = await this.Class.taskQueue.queue(async () => this.fetch(url));
 
             if (!data) {
                 return [{ balance: 0, txCount: 0 }];
@@ -72,6 +67,11 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private static readonly taskQueue = new TaskQueue();
+        private static readonly fetchOptions: IFetchOptions<BlockchairBalanceResponse> = {
+            ignoreResponseCodes: [404],
+            getErrorMessage:
+                ({ context: { error } }) => (error === "We couldn't find any of the addresses" ? undefined : error),
+        };
 
         // eslint-disable-next-line class-methods-use-this
         private static getCoinName(coin: string) {
@@ -93,29 +93,23 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
             }
         }
 
-        // eslint-disable-next-line class-methods-use-this
-        private static enqueueWait(taskQueue: TaskQueue, start: number) {
-            // For open requests, blockchair currently only allows 30 per minute.
-            const minMillisecondsBetweenRequests = 2000;
-            const waitTime = minMillisecondsBetweenRequests - (new Date().getTime() - start);
+        private readonly Class = BlockchairWallet.BlockchairQuantityRequest;
+        private readonly urlPrefix: string;
 
-            if (waitTime > 0) {
-                // We don't need to wait for the completion of this promise because the next request will only be
-                // executed once the wait time is over
-                // eslint-disable-next-line @typescript-eslint/no-floating-promises
-                taskQueue.queue(async () => new Promise<void>((resolve) => setTimeout(resolve, waitTime)));
+        private async fetch(url: string) {
+            const start = new Date().getTime();
+
+            try {
+                return await QueryCache.fetch(url, BlockchairBalanceResponse, this.Class.fetchOptions);
+            } finally {
+                const minMillisecondsBetweenRequests = 2000;
+                const waitTime = minMillisecondsBetweenRequests - (new Date().getTime() - start);
+
+                if (waitTime > 0) {
+                    await new Promise((resolve) => setTimeout(resolve, waitTime));
+                }
             }
         }
-
-        private readonly Class = BlockchairWallet.BlockchairQuantityRequest;
-
-        private readonly fetchOptions: IFetchOptions<BlockchairBalanceResponse> = {
-            ignoreResponseCodes: [404],
-            getErrorMessage:
-                ({ context: { error } }) => (error === "We couldn't find any of the addresses" ? undefined : error),
-        };
-
-        private readonly urlPrefix: string;
     };
 
     private readonly network: Network;

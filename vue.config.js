@@ -13,8 +13,15 @@ module.exports = {
     transpileDependencies: ["vuetify"],
     configureWebpack: config => {
         if (process.env.NODE_ENV === "production") {
-            // Validator depends on schema class names not being mangled.
-            config.optimization.minimizer[0].options.terserOptions.mangle.reserved = Object.keys(schema.definitions);
+            const schemaNames = Object.keys(schema.definitions);
+
+            // The following tweaks are necessary because bitcoinjs-lib requires that certain class names are not
+            // mangled, see https://github.com/bitcoinjs/bitcoinjs-lib/issues/659. bitcoinjs-lib is no longer used
+            // directly but apparently it is used indirectly by FastXpub.
+            // Moreover, Validator also depends on schema class names not being mangled.
+            config.optimization.minimizer[0].options.terserOptions.mangle.reserved = [
+                "Array", "BigInteger", "Boolean", "Buffer", "ECPair", "Function", "Number", "Point", ...schemaNames
+            ];
         }
     },
     chainWebpack: config => {
