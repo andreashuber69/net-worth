@@ -49,7 +49,7 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
             const url = `${this.urlPrefix}${addresses.join(",")}?limit=0`;
             const start = new Date().getTime();
             const { data } = await this.Class.taskQueue.queue(
-                async () => QueryCache.fetch(url, BlockchairBalanceResponse, this.fetchOptions),
+                async () => QueryCache.fetch(url, BlockchairBalanceResponse, this.Class.fetchOptions),
             );
 
             this.Class.enqueueWait(this.Class.taskQueue, start);
@@ -72,6 +72,11 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private static readonly taskQueue = new TaskQueue();
+        private static readonly fetchOptions: IFetchOptions<BlockchairBalanceResponse> = {
+            ignoreResponseCodes: [404],
+            getErrorMessage:
+                ({ context: { error } }) => (error === "We couldn't find any of the addresses" ? undefined : error),
+        };
 
         // eslint-disable-next-line class-methods-use-this
         private static getCoinName(coin: string) {
@@ -108,13 +113,6 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
         }
 
         private readonly Class = BlockchairWallet.BlockchairQuantityRequest;
-
-        private readonly fetchOptions: IFetchOptions<BlockchairBalanceResponse> = {
-            ignoreResponseCodes: [404],
-            getErrorMessage:
-                ({ context: { error } }) => (error === "We couldn't find any of the addresses" ? undefined : error),
-        };
-
         private readonly urlPrefix: string;
     };
 
