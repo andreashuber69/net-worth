@@ -48,11 +48,6 @@
               </v-btn>
             </v-flex>
             <v-flex xs12 sm6 md4>
-              <v-btn href="https://blockchain.info" target="_blank" block text class="ma-0">
-                <v-img :src="require('@/assets/blockchain.svg')" max-width="200" height="36" contain></v-img>
-              </v-btn>
-            </v-flex>
-            <v-flex xs12 sm6 md4>
               <v-btn href="https://blockchair.com" target="_blank" block text class="ma-0">
                 <v-img :src="require('@/assets/blockchair.svg')" max-width="200" height="36" contain></v-img>
               </v-btn>

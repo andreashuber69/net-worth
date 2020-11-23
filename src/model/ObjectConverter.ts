@@ -34,7 +34,7 @@ const getXpubNotSupportedMessage =
     // eslint-disable-next-line max-len
     (domain: string) => `The wallets single public address (xpub is not supported). Will be sent to ${domain} to query the balance.`;
 
-const btcHint = getXpubSupportedMessage("xpub/ypub", "blockchain.info");
+const btcHint = getXpubSupportedMessage("xpub/ypub", "blockchair.com");
 const ltcHint = getXpubSupportedMessage("Ltub/Mtub", "blockchair.com");
 const etcHint = getXpubNotSupportedMessage("blockscout.com");
 const ethHint = getXpubNotSupportedMessage("ethplorer.io");
