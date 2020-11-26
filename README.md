@@ -117,6 +117,23 @@ Some table cells reveal more information when hovering over them with the mouse 
   history from the contents of the queries. This is why, again, you should take measures so that the queries are not
   attributable to you, see above.
 
+### Data Provider Request Limits
+
+The application gathers data from various providers, who generously offer their services free of charge. Some of the
+providers (like e.g. blockchair.com) heavily limit the number of requests they answer from a given IP address.
+
+#### Asset Prices
+
+This is usually not a problem for asset prices because these can be retrieved with very few requests. If you use a VPN,
+it is possible however that the previous user of the same IP address has already exhausted the provider limit and you
+therefore get error messages.
+
+#### Crypto Currency Balances
+
+If you allow the application to query your crypto currency balance by providing a public address, the requests are
+spaced out such that the provider request limit is not exhausted. Depending on the number of addresses you provide, this
+may take substantial time, especially if you provide an xpub of a wallet with many transactions.
+
 ## Features
 
 - Supported precious metals: **Silver**, **Palladium**, **Platinum**, **Gold**
