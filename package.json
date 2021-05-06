@@ -42,7 +42,7 @@
     "bs58check": "^2.1.2",
     "core-js": "^3.6.4",
     "offline-plugin": "^5.0.7",
-    "ua-parser-js": "^0.7.21",
+    "ua-parser-js": "^0.7.24",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.0",
