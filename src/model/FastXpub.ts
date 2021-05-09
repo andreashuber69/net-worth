@@ -83,7 +83,7 @@ export class FastXpub {
 
         return FastXpub.taskQueue.queue(
             async () => new Promise<T>((resolve, reject) => {
-                FastXpub.setHandlers(worker, (ev) => resolve(extractResult(ev)), reject);
+                FastXpub.setHandlers(worker, (ev) => void resolve(extractResult(ev)), reject);
                 worker.postMessage(message);
             }),
         );

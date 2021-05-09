@@ -128,7 +128,7 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public mounted() {
-        this.timer = setInterval(() => this.adjustTableColumnCount(), 500);
+        this.timer = setInterval(() => void this.adjustTableColumnCount(), 500);
     }
 
     public beforeDestroy() {
@@ -183,7 +183,7 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     private adjustTableColumnCount() {
-        this.$nextTick(() => this.onRendered());
+        this.$nextTick(() => void this.onRendered());
     }
 
     private onRendered() {

@@ -136,7 +136,7 @@ export class Model implements IParent {
 
     private onCurrencyChanged() {
         // eslint-disable-next-line no-console
-        this.onCurrencyChangedImpl().catch((reason) => console.error(reason));
+        this.onCurrencyChangedImpl().catch((reason) => void console.error(reason));
     }
 
     private async onCurrencyChangedImpl() {

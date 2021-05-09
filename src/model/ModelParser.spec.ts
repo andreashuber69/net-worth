@@ -24,8 +24,8 @@ class BlobUtility {
     public static async toArrayBuffer(blob: Blob) {
         return new Promise<ArrayBuffer>((resolve, reject) => {
             const reader = new FileReader();
-            reader.onload = () => resolve(reader.result as ArrayBuffer);
-            reader.onerror = () => reject(new Error("Unable to read blob."));
+            reader.onload = () => void resolve(reader.result as ArrayBuffer);
+            reader.onerror = () => void reject(new Error("Unable to read blob."));
             reader.readAsArrayBuffer(blob);
         });
     }

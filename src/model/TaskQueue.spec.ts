@@ -4,7 +4,7 @@ import { TaskQueue } from "./TaskQueue";
 const randomDelay = async () => new Promise<number>(
     (resolve) => {
         const milliseconds = (Math.random() * 800) + 200;
-        setTimeout(() => resolve(milliseconds), milliseconds);
+        setTimeout(() => void resolve(milliseconds), milliseconds);
     },
 );
 

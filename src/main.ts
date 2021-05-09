@@ -4,7 +4,9 @@ import { Application } from "./model/Application";
 
 if (Browser.isCompatible) {
     if (window.location.search) {
-        new URLSearchParams(window.location.search).forEach((value, key) => window.sessionStorage.setItem(key, value));
+        new URLSearchParams(window.location.search).forEach(
+            (value, key) => void window.sessionStorage.setItem(key, value),
+        );
         window.location.replace(new URL(window.location.pathname, window.location.origin).href);
     } else {
         // eslint-disable-next-line @typescript-eslint/no-require-imports, import/no-unassigned-import, global-require

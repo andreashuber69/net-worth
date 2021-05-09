@@ -51,8 +51,8 @@ export class AssetCollection {
 
     public constructor(params: IAssetCollectionParameters) {
         this.ordering = new Ordering({
-            onGroupChanged: () => this.onGroupChanged(),
-            onSortChanged: () => AssetCollectionUtility.sort(this.groups, this.ordering.sort),
+            onGroupChanged: () => void this.onGroupChanged(),
+            onSortChanged: () => void AssetCollectionUtility.sort(this.groups, this.ordering.sort),
             groupBy: params.groupBy,
             sort: params.sort,
         });
@@ -130,7 +130,7 @@ export class AssetCollection {
 
     private update(...newBundles: readonly IAssetBundle[]) {
         // eslint-disable-next-line no-console
-        this.taskQueue.queue(async () => this.updateImpl(newBundles)).catch((error) => console.error(error));
+        this.taskQueue.queue(async () => this.updateImpl(newBundles)).catch((error) => void console.error(error));
     }
 
     private async updateImpl(newBundles: readonly IAssetBundle[]) {

@@ -97,8 +97,8 @@ type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[ke
 const expectProperty = <T, U, N extends PropertyNames<T> & string>(
     ctor: new (parent: IParent, props: U) => T, props: U, name: N, matcher: (x: jasmine.Matchers<T[N]>) => void,
 ) => {
-    describe(ctor.name, () => describe(name, () => {
-        it("value should meet expectations", () => matcher(expect(createAsset(ctor, props)[name])));
+    describe(ctor.name, () => void describe(name, () => {
+        it("value should meet expectations", () => void matcher(expect(createAsset(ctor, props)[name])));
     }));
 };
 
@@ -109,14 +109,17 @@ const testMethod = <T, U, N extends MethodNames<T> & string>(
 ) => {
     describe(
         ctor.name,
-        () => describe(`${name.toString()}()`, () => it(expectation, () => test(createAsset(ctor, props)))),
+        () => void describe(
+            `${name.toString()}()`,
+            () => void it(expectation, () => void test(createAsset(ctor, props))),
+        ),
     );
 };
 
 const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
     ctor: new (parent: IParent, props: U) => T, props: U, name: N, expectedMessage: string,
 ) => {
-    describe(ctor.name, () => describe(`${name.toString()}()`, () => {
+    describe(ctor.name, () => void describe(`${name.toString()}()`, () => {
         it("should throw", () => expect(createAsset(ctor, props)[name]).toThrowError(expectedMessage));
     }));
 };
@@ -158,7 +161,13 @@ const testPreciousMetalAssetConstruction = (ctor: IPreciousMetalAssetCtor) => {
         "should return an AssetBundle",
         (asset) => expect(asset.bundle() instanceof Object).toBe(true),
     );
-    testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
+    testMethod(
+        ctor,
+        props,
+        "expand",
+        "should return undefined",
+        (asset) => expect(void asset.expand()).toBeUndefined(),
+    );
 
     describe(ctor.name, () => {
         // eslint-disable-next-line init-declarations
@@ -229,7 +238,13 @@ const testSimpleCryptoWalletConstruction = (ctor: SimpleCryptoWalletCtor) => {
         "should return an AssetBundle",
         (asset) => expect(asset.bundle() instanceof Object).toBe(true),
     );
-    testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
+    testMethod(
+        ctor,
+        props,
+        "expand",
+        "should return undefined",
+        (asset) => expect(void asset.expand()).toBeUndefined(),
+    );
 
     describe(ctor.name, () => {
         // eslint-disable-next-line init-declarations
@@ -299,7 +314,13 @@ const testAddressCryptoWalletConstruction = (ctor: AddressCryptoWalletCtor) => {
         "should return an AssetBundle",
         (asset) => expect(asset.bundle() instanceof Object).toBe(true),
     );
-    testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
+    testMethod(
+        ctor,
+        props,
+        "expand",
+        "should return undefined",
+        (asset) => expect(void asset.expand()).toBeUndefined(),
+    );
 
     describe(ctor.name, () => {
         // eslint-disable-next-line init-declarations
@@ -369,7 +390,13 @@ const testMiscAssetConstruction = (ctor: IMiscAssetCtor) => {
         "should return an AssetBundle",
         (asset) => expect(asset.bundle() instanceof Object).toBe(true),
     );
-    testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
+    testMethod(
+        ctor,
+        props,
+        "expand",
+        "should return undefined",
+        (asset) => expect(void asset.expand()).toBeUndefined(),
+    );
 
     describe(ctor.name, () => {
         // eslint-disable-next-line init-declarations
