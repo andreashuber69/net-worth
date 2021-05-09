@@ -193,7 +193,8 @@ module.exports = {
         "line-comment-position": "off", // We want to allow comments above and beside code.
         // Does not work with interfaces, see https://github.com/typescript-eslint/typescript-eslint/issues/1150
         "lines-around-comment": "off",        
-        "lines-between-class-members": [
+        "lines-between-class-members": "off",
+        "@typescript-eslint/lines-between-class-members": [
             "error",
             "always",
             {
