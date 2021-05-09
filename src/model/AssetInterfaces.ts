@@ -1,10 +1,10 @@
 // https://github.com/andreashuber69/net-worth#--
 import { arrayOfAll } from "./arrayOfAll";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
-import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
-import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
-import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
-import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
+import type { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import type { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
+import type { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
+import type { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
+import type { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
 
 /** Combines the defining properties of all assets. */
 export type IAssetPropertiesIntersection =

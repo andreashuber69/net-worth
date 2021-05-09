@@ -1,6 +1,6 @@
 // https://github.com/andreashuber69/net-worth#--
 import { erc20Tokens } from "./AssetTypeName.schema";
-import { IAddressCryptoWalletProperties } from "./IAddressCryptoWalletProperties.schema";
+import type { IAddressCryptoWalletProperties } from "./IAddressCryptoWalletProperties.schema";
 
 export const addressCryptoWalletTypeNames = [erc20Tokens] as const;
 

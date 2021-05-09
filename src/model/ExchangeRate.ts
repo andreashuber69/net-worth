@@ -1,8 +1,8 @@
 // https://github.com/andreashuber69/net-worth#--
 import { CryptoCompareRequest } from "./CryptoCompareRequest";
-import { IWebRequest } from "./IWebRequest";
+import type { IWebRequest } from "./IWebRequest";
 import { QuandlRequest } from "./QuandlRequest";
-import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import type { CurrencyName } from "./validation/schemas/CurrencyName.schema";
 
 export class ExchangeRate {
     public static async get(currency: CurrencyName) {

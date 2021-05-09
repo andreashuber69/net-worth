@@ -1,10 +1,11 @@
 // https://github.com/andreashuber69/net-worth#--
-import { AssetPropertyName } from "./AssetInterfaces";
-import { CryptoWalletInputInfo, ICryptoWalletInputInfoParameters } from "./CryptoWalletInputInfo";
-import { CompositeInput } from "./Input";
-import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
+import type { AssetPropertyName } from "./AssetInterfaces";
+import type { ICryptoWalletInputInfoParameters } from "./CryptoWalletInputInfo";
+import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
+import type { CompositeInput } from "./Input";
+import type { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { TextInputInfo } from "./TextInputInfo";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import type { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 interface ISimpleCryptoWalletInputInfoParameters extends
     ICryptoWalletInputInfoParameters<SimpleCryptoWallet, ISimpleCryptoWalletProperties> {

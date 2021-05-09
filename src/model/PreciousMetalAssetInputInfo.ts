@@ -1,11 +1,11 @@
 // https://github.com/andreashuber69/net-worth#--
 import { AssetInputInfo } from "./AssetInputInfo";
-import { IParent } from "./IEditable";
-import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import type { IParent } from "./IEditable";
+import type { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
-import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
+import type { PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
+import type { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
 import { weightUnitNames } from "./validation/schemas/WeightUnit.schema";
 
 export interface IPreciousMetalAssetCtor {

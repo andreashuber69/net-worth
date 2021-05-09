@@ -1,12 +1,12 @@
 // https://github.com/andreashuber69/net-worth#--
-import { Asset, IAssetBundle } from "./Asset";
+import type { Asset, IAssetBundle } from "./Asset";
 import { AssetCollectionUtility } from "./AssetCollectionUtility";
 import { AssetGroup } from "./AssetGroup";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { Ordering } from "./Ordering";
 import { TaskQueue } from "./TaskQueue";
-import { GroupBy } from "./validation/schemas/GroupBy.schema";
-import { ISort } from "./validation/schemas/ISort.schema";
+import type { GroupBy } from "./validation/schemas/GroupBy.schema";
+import type { ISort } from "./validation/schemas/ISort.schema";
 
 interface INotifiableParent extends IParent {
     notifyChanged(): void;

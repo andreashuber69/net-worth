@@ -1,14 +1,14 @@
 // https://github.com/andreashuber69/net-worth#--
 /* eslint-disable max-classes-per-file */
-import { Asset } from "./Asset";
-import { AssetEditorData } from "./AssetEditorData";
-import { IParent } from "./IEditable";
+import type { Asset } from "./Asset";
+import type { AssetEditorData } from "./AssetEditorData";
+import type { IParent } from "./IEditable";
 import { ObjectConverter } from "./ObjectConverter";
-import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
-import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
-import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
-import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import type { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
+import type { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
+import type { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
+import type { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
+import type { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 class AssetProperties {

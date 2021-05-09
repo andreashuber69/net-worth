@@ -1,11 +1,13 @@
 // https://github.com/andreashuber69/net-worth#--
-import { IAssetBundle } from "./Asset";
-import { Erc20TokenWallet, IErc20TokensWallet } from "./Erc20TokenWallet";
+import type { IAssetBundle } from "./Asset";
+import type { IErc20TokensWallet } from "./Erc20TokenWallet";
+import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { DeletedAssets } from "./validation/schemas/DeletedAssets.schema";
-import { EthplorerGetAddressInfoResponse, IToken } from "./validation/schemas/EthplorerGetAddressInfoResponse.schema";
-import { IErc20TokensWalletBundle } from "./validation/schemas/IErc20TokensWalletBundle.schema";
+import type { IToken } from "./validation/schemas/EthplorerGetAddressInfoResponse.schema";
+import { EthplorerGetAddressInfoResponse } from "./validation/schemas/EthplorerGetAddressInfoResponse.schema";
+import type { IErc20TokensWalletBundle } from "./validation/schemas/IErc20TokensWalletBundle.schema";
 import { Validator } from "./validation/Validator";
 
 export class Erc20TokensWalletBundle implements IAssetBundle {

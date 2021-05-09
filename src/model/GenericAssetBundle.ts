@@ -1,5 +1,5 @@
 // https://github.com/andreashuber69/net-worth#--
-import { SingleAsset } from "./SingleAsset";
+import type { SingleAsset } from "./SingleAsset";
 
 /** Defines a bundle containing a single asset. */
 export abstract class GenericAssetBundle<T extends SingleAsset> {

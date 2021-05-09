@@ -1,5 +1,5 @@
 // https://github.com/andreashuber69/net-worth#--
-import { AssetInputInfo } from "./AssetInputInfo";
+import type { AssetInputInfo } from "./AssetInputInfo";
 import { ObjectConverter } from "./ObjectConverter";
 
 export class AssetInput {

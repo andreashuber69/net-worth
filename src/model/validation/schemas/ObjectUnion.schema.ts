@@ -1,9 +1,9 @@
 // https://github.com/andreashuber69/net-worth#--
-import { IAddressCryptoObject } from "./IAddressCryptoWallet.schema";
-import { IMiscObject } from "./IMiscAsset.schema";
-import { IPreciousMetalObject } from "./IPreciousMetalAsset.schema";
-import { IQuantityCryptoObject } from "./IQuantityCryptoWallet.schema";
-import { ISimpleCryptoObject } from "./ISimpleCryptoWallet.schema";
+import type { IAddressCryptoObject } from "./IAddressCryptoWallet.schema";
+import type { IMiscObject } from "./IMiscAsset.schema";
+import type { IPreciousMetalObject } from "./IPreciousMetalAsset.schema";
+import type { IQuantityCryptoObject } from "./IQuantityCryptoWallet.schema";
+import type { ISimpleCryptoObject } from "./ISimpleCryptoWallet.schema";
 
 export type ObjectUnion =
     IPreciousMetalObject | ISimpleCryptoObject | IAddressCryptoObject | IQuantityCryptoObject | IMiscObject;

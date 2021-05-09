@@ -1,9 +1,10 @@
 // https://github.com/andreashuber69/net-worth#--
 import { arrayOfAll } from "./arrayOfAll";
-import { Asset } from "./Asset";
+import type { Asset } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetGroup } from "./AssetGroup";
-import { allAssetPropertyNames, AssetPropertyName } from "./AssetInterfaces";
+import { allAssetPropertyNames } from "./AssetInterfaces";
+import type { AssetPropertyName } from "./AssetInterfaces";
 import {
     getAddressCryptoWalletProperties,
     getMiscAssetProperties,
@@ -13,28 +14,30 @@ import {
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
 import { CryptoWallet } from "./CryptoWallet";
-import { ICryptoWalletCtor } from "./CryptoWalletInputInfo";
+import type { ICryptoWalletCtor } from "./CryptoWalletInputInfo";
 import { DashWallet } from "./DashWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { EtcWallet } from "./EtcWallet";
 import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { LtcWallet } from "./LtcWallet";
-import { IMiscAssetCtor, MiscAsset } from "./MiscAsset";
+import { MiscAsset } from "./MiscAsset";
+import type { IMiscAssetCtor } from "./MiscAsset";
 import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
-import { PreciousMetalAsset } from "./PreciousMetalAsset";
-import { IPreciousMetalAssetCtor } from "./PreciousMetalAssetInputInfo";
+import type { PreciousMetalAsset } from "./PreciousMetalAsset";
+import type { IPreciousMetalAssetCtor } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
-import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
-import { AssetTypeName, assetTypeNames } from "./validation/schemas/AssetTypeName.schema";
-import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
-import { IAssetProperties } from "./validation/schemas/IAssetProperties.schema";
-import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
-import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import type { SimpleCryptoWallet } from "./SimpleCryptoWallet";
+import type { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import { assetTypeNames } from "./validation/schemas/AssetTypeName.schema";
+import type { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
+import type { IAssetProperties } from "./validation/schemas/IAssetProperties.schema";
+import type { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
+import type { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
+import type { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 // eslint-disable-next-line import/max-dependencies
 import { ZecWallet } from "./ZecWallet";

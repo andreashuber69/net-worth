@@ -1,6 +1,6 @@
 // https://github.com/andreashuber69/net-worth#--
 import { monero } from "./AssetTypeName.schema";
-import { IQuantityCryptoWalletProperties } from "./IQuantityCryptoWalletProperties.schema";
+import type { IQuantityCryptoWalletProperties } from "./IQuantityCryptoWalletProperties.schema";
 
 export const quantityCryptoWalletTypeNames = [monero] as const;
 

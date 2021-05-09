@@ -1,9 +1,9 @@
 // https://github.com/andreashuber69/net-worth#--
-import { Fineness } from "./Fineness.schema";
-import { IAssetProperties } from "./IAssetProperties.schema";
-import { Quantity0 } from "./Quantity0.schema";
-import { Weight } from "./Weight.schema";
-import { WeightUnit } from "./WeightUnit.schema";
+import type { Fineness } from "./Fineness.schema";
+import type { IAssetProperties } from "./IAssetProperties.schema";
+import type { Quantity0 } from "./Quantity0.schema";
+import type { Weight } from "./Weight.schema";
+import type { WeightUnit } from "./WeightUnit.schema";
 
 /** Contains the defining properties common to all precious metal assets. */
 export interface IPreciousMetalAssetProperties extends IAssetProperties {

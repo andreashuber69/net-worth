@@ -1,7 +1,8 @@
 // https://github.com/andreashuber69/net-worth#--
-import { IPrimitiveInputInfoProperties } from "./InputInfo";
+import type { IPrimitiveInputInfoProperties } from "./InputInfo";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
-import { SchemaName, Validator } from "./validation/Validator";
+import type { SchemaName } from "./validation/Validator";
+import { Validator } from "./validation/Validator";
 
 interface ITextInputInfoProperties extends IPrimitiveInputInfoProperties {
     readonly schemaName?: SchemaName;

@@ -1,5 +1,5 @@
 // https://github.com/andreashuber69/net-worth#--
-import { Network } from "@trezor/utxo-lib";
+import type { Network } from "@trezor/utxo-lib";
 import { FastXpub } from "./FastXpub";
 import { QueryError } from "./QueryError";
 

@@ -1,11 +1,11 @@
 // https://github.com/andreashuber69/net-worth#--
 import { CryptoCompareRequest } from "./CryptoCompareRequest";
 import { CryptoWallet } from "./CryptoWallet";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { QueryUtility } from "./QueryUtility";
-import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
-import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import type { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
+import type { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
+import type { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 type SimpleCryptoWalletProperties = [
     ISimpleCryptoWalletProperties["location"],

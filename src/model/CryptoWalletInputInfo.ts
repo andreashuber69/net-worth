@@ -1,7 +1,7 @@
 // https://github.com/andreashuber69/net-worth#--
 import { AssetInputInfo } from "./AssetInputInfo";
-import { CryptoWallet } from "./CryptoWallet";
-import { IParent } from "./IEditable";
+import type { CryptoWallet } from "./CryptoWallet";
+import type { IParent } from "./IEditable";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 

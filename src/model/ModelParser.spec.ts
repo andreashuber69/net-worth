@@ -1,22 +1,23 @@
 // https://github.com/andreashuber69/net-worth#--
-import { Asset } from "./Asset";
-import { AssetCollection } from "./AssetCollection";
+import type { Asset } from "./Asset";
+import type { AssetCollection } from "./AssetCollection";
 import { AssetGroup } from "./AssetGroup";
-import { CryptoWallet } from "./CryptoWallet";
+import type { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { Model } from "./Model";
 import { ModelParser } from "./ModelParser";
-import { Ordering } from "./Ordering";
-import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import type { Ordering } from "./Ordering";
+import type { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
-import { CurrencyName, currencyNames } from "./validation/schemas/CurrencyName.schema";
-import { Fineness } from "./validation/schemas/Fineness.schema";
-import { GroupBy } from "./validation/schemas/GroupBy.schema";
-import { Quantity0 } from "./validation/schemas/Quantity0.schema";
-import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
-import { SortBy } from "./validation/schemas/SortBy.schema";
-import { Weight } from "./validation/schemas/Weight.schema";
+import type { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import { currencyNames } from "./validation/schemas/CurrencyName.schema";
+import type { Fineness } from "./validation/schemas/Fineness.schema";
+import type { GroupBy } from "./validation/schemas/GroupBy.schema";
+import type { Quantity0 } from "./validation/schemas/Quantity0.schema";
+import type { QuantityAny } from "./validation/schemas/QuantityAny.schema";
+import type { SortBy } from "./validation/schemas/SortBy.schema";
+import type { Weight } from "./validation/schemas/Weight.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 class BlobUtility {

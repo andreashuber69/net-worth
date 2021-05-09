@@ -1,15 +1,18 @@
 // https://github.com/andreashuber69/net-worth#--
 /* eslint-disable max-classes-per-file */
-import { Network } from "@trezor/utxo-lib";
-import { IParent } from "./IEditable";
+import type { Network } from "@trezor/utxo-lib";
+import type { IParent } from "./IEditable";
 import { QuantityRequest } from "./QuantityRequest";
-import { IFetchOptions, QueryCache } from "./QueryCache";
+import type { IFetchOptions } from "./QueryCache";
+import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
-import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
+import type { IRealCryptoWalletParameters} from "./RealCryptoWallet";
+import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { TaskQueue } from "./TaskQueue";
-import { BlockchairBalanceResponse, IAddressInfo } from "./validation/schemas/BlockchairBalanceResponse.schema";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import type { IAddressInfo } from "./validation/schemas/BlockchairBalanceResponse.schema";
+import { BlockchairBalanceResponse } from "./validation/schemas/BlockchairBalanceResponse.schema";
+import type { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 export type IBlockchairWalletParameters = IRealCryptoWalletParameters & {
     readonly network: Network;

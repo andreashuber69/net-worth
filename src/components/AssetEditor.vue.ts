@@ -1,11 +1,11 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Component, Vue } from "vue-property-decorator";
-import { Asset } from "../model/Asset";
+import type { Asset } from "../model/Asset";
 import { AssetEditorData } from "../model/AssetEditorData";
 import { AssetInput } from "../model/AssetInput";
-import { AssetInputInfo } from "../model/AssetInputInfo";
+import type { AssetInputInfo } from "../model/AssetInputInfo";
 import { createAsset } from "../model/AssetProperties";
-import { IParent } from "../model/IEditable";
+import type { IParent } from "../model/IEditable";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { assetTypeNames } from "../model/validation/schemas/AssetTypeName.schema";
 import { NoAssetInputInfo } from "./NoAssetInputInfo";

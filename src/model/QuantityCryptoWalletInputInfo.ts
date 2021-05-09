@@ -1,8 +1,9 @@
 // https://github.com/andreashuber69/net-worth#--
-import { CryptoWalletInputInfo, ICryptoWalletInputInfoParameters } from "./CryptoWalletInputInfo";
+import type { ICryptoWalletInputInfoParameters } from "./CryptoWalletInputInfo";
+import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
-import { XmrWallet } from "./XmrWallet";
+import type { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
+import type { XmrWallet } from "./XmrWallet";
 
 interface IQuantityCryptoWalletInputInfoParameters extends
     ICryptoWalletInputInfoParameters<XmrWallet, IQuantityCryptoWalletProperties> {

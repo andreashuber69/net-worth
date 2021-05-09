@@ -1,12 +1,15 @@
 // https://github.com/andreashuber69/net-worth#--
-import { IAuxProperties } from "./IAuxProperties";
+import type { IAuxProperties } from "./IAuxProperties";
 import { ObjectConverter } from "./ObjectConverter";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
-import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
-import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
-import { IMiscAsset, miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
-import { IPreciousMetalAsset, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
-import { WeightUnit, WeightUnitName } from "./validation/schemas/WeightUnit.schema";
+import type { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import type { AssetUnion } from "./validation/schemas/AssetUnion.schema";
+import type { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import type { IMiscAsset} from "./validation/schemas/IMiscAsset.schema";
+import { miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
+import type { IPreciousMetalAsset} from "./validation/schemas/IPreciousMetalAsset.schema";
+import { preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
+import type { WeightUnitName } from "./validation/schemas/WeightUnit.schema";
+import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements Partial<IAuxProperties<string>> {

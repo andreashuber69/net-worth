@@ -1,5 +1,5 @@
 // https://github.com/andreashuber69/net-worth#--
-import { AssetTypeName } from "./AssetTypeName.schema";
+import type { AssetTypeName } from "./AssetTypeName.schema";
 
 /**
  * Defines the common editable properties of all assets.

@@ -1,5 +1,6 @@
 // https://github.com/andreashuber69/net-worth#--
-import { HDNode, Network } from "@trezor/utxo-lib";
+import type { Network } from "@trezor/utxo-lib";
+import { HDNode } from "@trezor/utxo-lib";
 import { decode, encode } from "bs58check";
 import { TaskQueue } from "./TaskQueue";
 

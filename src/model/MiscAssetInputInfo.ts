@@ -1,11 +1,11 @@
 // https://github.com/andreashuber69/net-worth#--
 import { AssetInputInfo } from "./AssetInputInfo";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { MiscAsset } from "./MiscAsset";
 import { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import { currencyNames } from "./validation/schemas/CurrencyName.schema";
-import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
+import type { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
 
 /**
  * Defines how the properties of a miscellaneous asset need to be input and validated and provides a method to create a

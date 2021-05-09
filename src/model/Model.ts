@@ -1,14 +1,15 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Application } from "./Application";
-import { IAssetBundle } from "./Asset";
+import type { IAssetBundle } from "./Asset";
 import { AssetCollection } from "./AssetCollection";
 import { ExchangeRate } from "./ExchangeRate";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { QueryUtility } from "./QueryUtility";
-import { CurrencyName, currencyNames } from "./validation/schemas/CurrencyName.schema";
-import { GroupBy } from "./validation/schemas/GroupBy.schema";
-import { ISort } from "./validation/schemas/ISort.schema";
-import { TaggedModel } from "./validation/schemas/TaggedModel.schema";
+import type { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import { currencyNames } from "./validation/schemas/CurrencyName.schema";
+import type { GroupBy } from "./validation/schemas/GroupBy.schema";
+import type { ISort } from "./validation/schemas/ISort.schema";
+import type { TaggedModel } from "./validation/schemas/TaggedModel.schema";
 
 export interface IModelParameters {
     readonly name?: string;

@@ -1,8 +1,11 @@
 // https://github.com/andreashuber69/net-worth#--
 import { CryptoWallet } from "./CryptoWallet";
-import { IEditable } from "./IEditable";
-import { AddressCryptoWalletTypeName, IAddressCryptoWallet } from "./validation/schemas/IAddressCryptoWallet.schema";
-import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
+import type { IEditable } from "./IEditable";
+import type {
+    AddressCryptoWalletTypeName,
+    IAddressCryptoWallet,
+} from "./validation/schemas/IAddressCryptoWallet.schema";
+import type { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 
 interface ITokenWalletParameters {
     readonly editable: IErc20TokensWallet;

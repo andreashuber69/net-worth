@@ -1,7 +1,7 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Component, Vue } from "vue-property-decorator";
 
-import { BeforeInstallPromptEvent } from "./BeforeInstallPromptEvent";
+import type { BeforeInstallPromptEvent } from "./BeforeInstallPromptEvent";
 import AboutDialog from "./components/AboutDialog.vue";
 import AssetList from "./components/AssetList.vue";
 import BrowserDialog from "./components/BrowserDialog.vue";

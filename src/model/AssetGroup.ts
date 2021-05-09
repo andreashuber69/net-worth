@@ -1,7 +1,7 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Asset } from "./Asset";
-import { IParent } from "./IEditable";
-import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
+import type { IParent } from "./IEditable";
+import type { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 
 // This could easily be fixed by overriding abstract methods in two extending classes, but doing so seems strange at
 // best. Most method implementations are trivial, so their number shouldn't matter that much.

@@ -1,8 +1,8 @@
 // https://github.com/andreashuber69/net-worth#--
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { gold } from "./validation/schemas/AssetTypeName.schema";
-import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
+import type { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
 
 /** Represents an asset made of gold. */
 export class GoldAsset extends PreciousMetalAsset {

@@ -1,12 +1,14 @@
 // https://github.com/andreashuber69/net-worth#--
-import { AssetPropertyName } from "./AssetInterfaces";
-import { IAuxProperties } from "./IAuxProperties";
-import { CompositeInput, Input, InputUtility } from "./Input";
-import { InputInfo, IPrimitiveInputInfoProperties } from "./InputInfo";
-import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
-import { SelectInputInfo } from "./SelectInputInfo";
+import type { AssetPropertyName } from "./AssetInterfaces";
+import type { IAuxProperties } from "./IAuxProperties";
+import type { CompositeInput, Input} from "./Input";
+import { InputUtility } from "./Input";
+import type { IPrimitiveInputInfoProperties } from "./InputInfo";
+import { InputInfo } from "./InputInfo";
+import type { PrimitiveInputInfo } from "./PrimitiveInputInfo";
+import type { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import type { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
 
 interface IValidationResults extends IAuxProperties<true | string> {
     [key: string]: true | string;

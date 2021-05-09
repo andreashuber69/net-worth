@@ -1,10 +1,10 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Erc20TokensWalletBundle } from "./Erc20TokensWalletBundle";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { erc20Tokens } from "./validation/schemas/AssetTypeName.schema";
-import { IAddressCryptoWallet } from "./validation/schemas/IAddressCryptoWallet.schema";
-import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
+import type { IAddressCryptoWallet } from "./validation/schemas/IAddressCryptoWallet.schema";
+import type { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 
 /** Represents a wallet for ERC20 tokens. */
 export class Erc20TokensWallet extends RealCryptoWallet {

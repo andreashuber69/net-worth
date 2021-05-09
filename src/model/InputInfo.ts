@@ -1,6 +1,6 @@
 // https://github.com/andreashuber69/net-worth#--
-import { AssetPropertyName } from "./AssetInterfaces";
-import { Input } from "./Input";
+import type { AssetPropertyName } from "./AssetInterfaces";
+import type { Input } from "./Input";
 
 export interface IPrimitiveInputInfoProperties {
     readonly label: string;

@@ -1,5 +1,5 @@
 // https://github.com/andreashuber69/net-worth#--
-import { SortBy } from "./SortBy.schema";
+import type { SortBy } from "./SortBy.schema";
 
 export interface ISort {
     /** Provides the name of the property by which the asset list is currently sorted. */

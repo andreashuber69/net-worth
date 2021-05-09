@@ -1,6 +1,6 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Component, Prop } from "vue-property-decorator";
-import { Asset } from "../model/Asset";
+import type { Asset } from "../model/Asset";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 

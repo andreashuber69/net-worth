@@ -1,12 +1,12 @@
 // https://github.com/andreashuber69/net-worth#--
 /* eslint-disable max-classes-per-file */
-import { IAssetBundle } from "./Asset";
+import type { IAssetBundle } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { monero } from "./validation/schemas/AssetTypeName.schema";
-import { IQuantityCryptoWallet } from "./validation/schemas/IQuantityCryptoWallet.schema";
-import { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
+import type { IQuantityCryptoWallet } from "./validation/schemas/IQuantityCryptoWallet.schema";
+import type { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuantityCryptoWalletProperties.schema";
 
 /** Represents a wallet for Monero. */
 export class XmrWallet extends RealCryptoWallet {

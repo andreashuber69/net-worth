@@ -1,16 +1,18 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Component } from "vue-property-decorator";
 
-import { Asset } from "../model/Asset";
-import { Model } from "../model/Model";
-import { GroupBys } from "../model/Ordering";
-import { SortBy } from "../model/validation/schemas/SortBy.schema";
+import type { Asset } from "../model/Asset";
+import type { Model } from "../model/Model";
+import type { GroupBys } from "../model/Ordering";
+import type { SortBy } from "../model/validation/schemas/SortBy.schema";
 
 import AssetEditor from "./AssetEditor.vue";
-import { ColumnInfo, ColumnName } from "./ColumnInfo";
+import type { ColumnName } from "./ColumnInfo";
+import { ColumnInfo } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
-import NumericTableCell, { NumericColumnName, numericColumnNames } from "./NumericTableCell.vue";
+import type { NumericColumnName } from "./NumericTableCell.vue";
+import NumericTableCell, { numericColumnNames } from "./NumericTableCell.vue";
 
 type ITableHeader = {
     readonly value: Exclude<ColumnName, SortBy>;
