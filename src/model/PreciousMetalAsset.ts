@@ -76,6 +76,7 @@ export abstract class PreciousMetalAsset extends SingleAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     private static readonly Bundle = class extends GenericAssetBundle<PreciousMetalAsset> implements IAssetBundle {
         public toJSON() {
             return {

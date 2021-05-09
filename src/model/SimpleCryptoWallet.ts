@@ -31,6 +31,7 @@ export abstract class SimpleCryptoWallet extends RealCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     private static readonly Bundle = class extends GenericAssetBundle<SimpleCryptoWallet> implements IAssetBundle {
         public toJSON() {
             return {

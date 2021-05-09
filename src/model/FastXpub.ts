@@ -67,12 +67,12 @@ export class FastXpub {
     private static convert({ depth, index, parentFingerprint, chainCode, keyPair }: HDNode) {
         return {
             depth,
-            // eslint-disable-next-line @typescript-eslint/camelcase
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             child_num: index,
             fingerprint: parentFingerprint,
-            // eslint-disable-next-line @typescript-eslint/camelcase
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             chain_code: chainCode.slice(),
-            // eslint-disable-next-line @typescript-eslint/camelcase
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             public_key: keyPair.getPublicKeyBuffer().slice(),
         };
     }

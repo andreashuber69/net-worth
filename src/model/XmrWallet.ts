@@ -34,6 +34,7 @@ export class XmrWallet extends RealCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     private static readonly Bundle = class extends GenericAssetBundle<XmrWallet> implements IAssetBundle {
         public toJSON() {
             return {

@@ -28,6 +28,7 @@ export class BtgWallet extends SimpleCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     private static readonly BtgQuantityRequest = class extends QuantityRequest {
         public constructor(address: string) {
             super(networks.bitcoingold, address);

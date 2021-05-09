@@ -37,6 +37,7 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     private static readonly BlockchairQuantityRequest = class extends QuantityRequest {
         public constructor(network: Network, address: string) {
             super(network, address);
@@ -60,7 +61,7 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
                 throw new QueryError("Unexpected empty addresses object.");
             }
 
-            // eslint-disable-next-line @typescript-eslint/camelcase
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             return addressInfos.map(({ balance, output_count }) => ({ balance: balance / 1E8, txCount: output_count }));
         }
 
@@ -93,6 +94,7 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
             }
         }
 
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         private readonly Class = BlockchairWallet.BlockchairQuantityRequest;
         private readonly urlPrefix: string;
 

@@ -17,6 +17,7 @@ export interface IToken {
 
 export class EthplorerGetAddressInfoResponse {
     readonly [key: string]: unknown;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     public readonly ETH?: {
         readonly [key: string]: unknown;
         readonly balance: number;

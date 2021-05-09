@@ -76,6 +76,7 @@ export class MiscAsset extends SingleAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     private static readonly Bundle = class extends GenericAssetBundle<MiscAsset> implements IAssetBundle {
         public toJSON() {
             return {
