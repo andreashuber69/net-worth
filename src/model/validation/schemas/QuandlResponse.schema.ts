@@ -4,8 +4,8 @@ export class QuandlResponse {
         readonly data: readonly [
             readonly [
                 string,
-                number | null
-            ]
+                number | null,
+            ],
         ];
         readonly [key: string]: unknown;
     };

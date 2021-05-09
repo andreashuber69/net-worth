@@ -12,7 +12,7 @@ type SimpleCryptoWalletProperties = [
     ISimpleCryptoWalletProperties["description"],
     IAddressCryptoWalletProperties["address"] | undefined,
     IQuantityCryptoWalletProperties["quantity"] | undefined,
-    ISimpleCryptoWalletProperties["notes"]
+    ISimpleCryptoWalletProperties["notes"],
 ];
 
 export type IRealCryptoWalletParameters = ISimpleCryptoWalletProperties & {
