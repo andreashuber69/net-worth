@@ -16,7 +16,7 @@ declare module "@trezor/utxo-lib" {
         readonly coin: string;
     }
 
-    // eslint-disable-next-line init-declarations
+    // eslint-disable-next-line @typescript-eslint/init-declarations
     export const networks: {
         readonly dash: Network;
         readonly dashTest: Network;

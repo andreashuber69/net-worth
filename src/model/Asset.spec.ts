@@ -171,9 +171,9 @@ const testPreciousMetalAssetConstruction = (ctor: IPreciousMetalAssetCtor) => {
     );
 
     describe(ctor.name, () => {
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let expected: IPreciousMetalAssetProperties;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -248,9 +248,9 @@ const testSimpleCryptoWalletConstruction = (ctor: SimpleCryptoWalletCtor) => {
     );
 
     describe(ctor.name, () => {
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let expected: ISimpleCryptoWalletProperties;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -324,9 +324,9 @@ const testAddressCryptoWalletConstruction = (ctor: AddressCryptoWalletCtor) => {
     );
 
     describe(ctor.name, () => {
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let expected: IAddressCryptoWalletProperties;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -400,9 +400,9 @@ const testMiscAssetConstruction = (ctor: IMiscAssetCtor) => {
     );
 
     describe(ctor.name, () => {
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let expected: IMiscAssetProperties;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -436,9 +436,9 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
     ctor: new (parent: IParent, props: U) => T, props: U,
 ) => {
     describe("bundle() (before queryData())", () => {
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let sut: InstanceType<typeof ctor>;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let bundle: ReturnType<typeof sut.bundle>;
 
         beforeEach(() => {
@@ -469,11 +469,11 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
     });
 
     describe("bundle() (after queryData())", () => {
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let sut: InstanceType<typeof ctor>;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let bundle: ReturnType<typeof sut.bundle>;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let assets: typeof bundle.assets;
 
         beforeAll(
