@@ -40,6 +40,8 @@ module.exports = {
                 allowSingleLine: true,
             },
         ],
+        // Turned off in favor of @typescript-eslint/naming-convention
+        "camelcase": "off",
         "capitalized-comments": [
             "error",
             "always",
@@ -269,6 +271,8 @@ module.exports = {
                     regex: "^I[A-Z]",
                     match: true,
                 },
+                leadingUnderscore: "forbid",
+                trailingUnderscore: "forbid",
             },
         ],
         // Typescript ensures that constructor functions are only called with new, so the convention is not necessary.
