@@ -3,15 +3,15 @@ import { DeletedAssets } from "./schemas/DeletedAssets.schema";
 import { ValidationError } from "./ValidationError";
 import { Validator } from "./Validator";
 
-const shouldPassJsonValidation = <T extends object>(
-    json: string, ctor: new (value?: unknown) => T, expected: object,
+const shouldPassJsonValidation = <T>(
+    json: string, ctor: new (value?: unknown) => T, expected: T,
 ) => {
     describe("fromJson", () => {
         describe(json, () => {
             it("should pass JSON validation", () => {
                 const actual = Validator.fromJson(json, ctor);
                 expect(actual instanceof ctor).toBe(true);
-                expect(actual as object).toEqual(expected);
+                expect(actual).toEqual(expected);
             });
         });
     });
@@ -27,13 +27,13 @@ const shouldFailJsonValidation = <T>(json: string, ctor: new (value?: unknown) =
     });
 };
 
-const shouldPassValidation = <T extends object>(data: unknown, ctor: new (value?: unknown) => T, expected: object) => {
+const shouldPassValidation = <T>(data: unknown, ctor: new (value?: unknown) => T, expected: T) => {
     describe("fromData", () => {
         describe(JSON.stringify(data), () => {
             it("should pass validation", () => {
                 const actual = Validator.fromData(data, ctor);
                 expect(actual instanceof ctor).toBe(true);
-                expect(actual as object).toEqual(expected);
+                expect(actual).toEqual(expected);
             });
         });
     });

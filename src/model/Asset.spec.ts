@@ -92,6 +92,7 @@ const getPropertyValues = (
     return result;
 };
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
 
 const expectProperty = <T, U, N extends PropertyNames<T> & string>(

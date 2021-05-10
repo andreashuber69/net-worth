@@ -52,6 +52,7 @@ const loadTestFile = async (name: string) => {
 };
 
 type IExpectedProperties<T, U extends keyof T = never> =
+    // eslint-disable-next-line @typescript-eslint/ban-types
     Pick<T, Exclude<{ [K in keyof T]: T[K] extends Function ? never : K }[keyof T], U>>;
 type IExpectedOrderingProperties = IExpectedProperties<Ordering>;
 type IExpectedAssetCollectionProperties =
