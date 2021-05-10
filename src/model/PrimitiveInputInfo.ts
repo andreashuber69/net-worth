@@ -59,7 +59,7 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
 
     /** @internal */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
-    protected validateContent(strict: boolean, input: unknown): true | string {
+    protected validateContent(strict: boolean, input: unknown): string | true {
         return true;
     }
 }

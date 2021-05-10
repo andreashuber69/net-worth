@@ -56,7 +56,7 @@ type IExpectedProperties<T, U extends keyof T = never> =
     Pick<T, Exclude<{ [K in keyof T]: T[K] extends Function ? never : K }[keyof T], U>>;
 type IExpectedOrderingProperties = IExpectedProperties<Ordering>;
 type IExpectedAssetCollectionProperties =
-    IExpectedProperties<AssetCollection, "grouped" | "ordering" | "grandTotalValue"> &
+    IExpectedProperties<AssetCollection, "grandTotalValue" | "grouped" | "ordering"> &
     { readonly ordering: IExpectedOrderingProperties };
 type IExpectedModelProperties =
     IExpectedProperties<Model, "assets" | "exchangeRate"> & { readonly assets: IExpectedAssetCollectionProperties };
@@ -159,7 +159,7 @@ const expectEmptyModel = (fileName: string) => {
 };
 
 type IExpectedAssetProperties<T extends Asset> =
-    IExpectedProperties<T, "key" | "unitValue" | "totalValue" | "percent" | "parent" | "editableAsset">;
+    IExpectedProperties<T, "editableAsset" | "key" | "parent" | "percent" | "totalValue" | "unitValue">;
 
 const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
     type: T["type"], location: string, description: string, weight: Weight,

@@ -8,5 +8,5 @@ export interface IAddressBalance {
 }
 
 export class BlockchainBalanceResponse {
-    readonly [address: string]: IAddressBalance | string | number;
+    readonly [address: string]: IAddressBalance | number | string;
 }

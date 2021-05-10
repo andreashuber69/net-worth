@@ -24,7 +24,7 @@ export abstract class InputInfo {
      * way, this method only ever validates a single primitive value.
      * @returns `true` if the property value is valid; otherwise a string describing why the value is invalid.
      */
-    public abstract validate(strict: boolean, input: Input, propertyName?: AssetPropertyName): true | string;
+    public abstract validate(strict: boolean, input: Input, propertyName?: AssetPropertyName): string | true;
 
     /**
      * Gets the input info for a property.

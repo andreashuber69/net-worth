@@ -57,12 +57,12 @@ class AssetProperties {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected static validate<T extends string | undefined>(name: string, value: T): Exclude<T, undefined | ""> {
+    protected static validate<T extends string | undefined>(name: string, value: T): Exclude<T, "" | undefined> {
         if (!value) {
             throw new Error(`Unexpected ${name}.`);
         }
 
-        return value as Exclude<T, undefined | "">;
+        return value as Exclude<T, "" | undefined>;
     }
 }
 

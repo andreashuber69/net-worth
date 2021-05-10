@@ -6,4 +6,4 @@ import type { IQuantityCryptoWallet } from "./IQuantityCryptoWallet.schema";
 import type { ISimpleCryptoWallet } from "./ISimpleCryptoWallet.schema";
 
 export type AssetUnion =
-    IPreciousMetalAsset | ISimpleCryptoWallet | IAddressCryptoWallet | IQuantityCryptoWallet | IMiscAsset;
+    IAddressCryptoWallet | IMiscAsset | IPreciousMetalAsset | IQuantityCryptoWallet | ISimpleCryptoWallet;

@@ -4,7 +4,7 @@ export interface IToken {
     readonly tokenInfo: {
         readonly [key: string]: unknown;
         readonly symbol: string;
-        readonly decimals: string | number;
+        readonly decimals: number | string;
         readonly price: false | {
             readonly [key: string]: unknown;
             readonly rate: number;

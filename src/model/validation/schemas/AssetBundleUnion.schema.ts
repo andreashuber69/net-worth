@@ -6,5 +6,5 @@ import type { IQuantityCryptoWalletBundle } from "./IQuantityCryptoWalletBundle.
 import type { ISimpleCryptoWalletBundle } from "./ISimpleCryptoWalletBundle.schema";
 
 export type AssetBundleUnion =
-    IPreciousMetalAssetBundle | ISimpleCryptoWalletBundle |
-    IErc20TokensWalletBundle | IQuantityCryptoWalletBundle | IMiscAssetBundle;
+    IErc20TokensWalletBundle | IMiscAssetBundle | IPreciousMetalAssetBundle | IQuantityCryptoWalletBundle |
+    ISimpleCryptoWalletBundle;

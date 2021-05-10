@@ -6,4 +6,4 @@ import type { IQuantityCryptoObject } from "./IQuantityCryptoWallet.schema";
 import type { ISimpleCryptoObject } from "./ISimpleCryptoWallet.schema";
 
 export type ObjectUnion =
-    IPreciousMetalObject | ISimpleCryptoObject | IAddressCryptoObject | IQuantityCryptoObject | IMiscObject;
+    IAddressCryptoObject | IMiscObject | IPreciousMetalObject | IQuantityCryptoObject | ISimpleCryptoObject;

@@ -86,7 +86,7 @@ export class ObjectConverter {
         M extends IMiscObject,
         PR, SR, AR, QR, MR,
         >(
-            rawObject: P | S | A | Q | M,
+            rawObject: A | M | P | Q | S,
             [
                 convertPreciousMetalObject,
                 convertSimpleCryptoObject,

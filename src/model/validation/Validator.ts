@@ -35,7 +35,7 @@ export class Validator {
         return Validator.isPrimitiveSchemaName(ctor.name) ? new ctor(data) : Object.assign(new ctor(), data);
     }
 
-    public static validate(data: unknown, schemaName: SchemaName): true | string {
+    public static validate(data: unknown, schemaName: SchemaName): string | true {
         return (Validator.ajv.validate(Validator.getSchemaKeyRef(schemaName), data) === true) ||
             Validator.ajv.errorsText();
     }

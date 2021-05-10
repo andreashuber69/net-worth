@@ -8,7 +8,7 @@ import type { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 
 /** Defines the base of all classes that represent a crypto currency wallet. */
 export abstract class CryptoWallet extends SingleAsset {
-    public abstract get type(): SimpleCryptoWalletTypeName | AddressCryptoWalletTypeName | QuantityCryptoWalletTypeName;
+    public abstract get type(): AddressCryptoWalletTypeName | QuantityCryptoWalletTypeName | SimpleCryptoWalletTypeName;
 
     public get locationHint() {
         return this.address;

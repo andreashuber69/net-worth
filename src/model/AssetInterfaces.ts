@@ -8,8 +8,8 @@ import type { IQuantityCryptoWalletProperties } from "./validation/schemas/IQuan
 
 /** Combines the defining properties of all assets. */
 export type IAssetPropertiesIntersection =
-    IPreciousMetalAssetProperties & IAddressCryptoWalletProperties &
-    IQuantityCryptoWalletProperties & IMiscAssetProperties;
+    IAddressCryptoWalletProperties & IMiscAssetProperties &
+    IPreciousMetalAssetProperties & IQuantityCryptoWalletProperties;
 
 export type IAssetIntersection = IAssetPropertiesIntersection & {
     readonly type: AssetTypeName;

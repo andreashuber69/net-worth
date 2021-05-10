@@ -10,8 +10,8 @@ import type { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import type { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
 
-interface IValidationResults extends IAuxProperties<true | string> {
-    [key: string]: true | string;
+interface IValidationResults extends IAuxProperties<string | true> {
+    [key: string]: string | true;
 }
 
 /**
@@ -84,7 +84,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
 
     /** @internal */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
-    protected validateRelations(input: CompositeInput, propertyName: AssetPropertyName): true | string {
+    protected validateRelations(input: CompositeInput, propertyName: AssetPropertyName): string | true {
         return true;
     }
 }
