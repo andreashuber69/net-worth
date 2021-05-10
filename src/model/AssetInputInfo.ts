@@ -10,10 +10,6 @@ import type { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
 import type { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
 
-interface IValidationResults extends IAuxProperties<string | true> {
-    [key: string]: string | true;
-}
-
 /**
  * Defines how the properties of a given asset type need to be input and validated and provides a method to create a
  * representation of the asset.
