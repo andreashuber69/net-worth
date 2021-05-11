@@ -16,7 +16,7 @@ const expectFailure = async (promise: Promise<never>) => {
     try {
         await promise;
         fail("The task unexpectedly succeeded.");
-    } catch (e) {
+    } catch (e: unknown) {
         if (e instanceof Error) {
             expect(e.message).toEqual("Operation failed.");
         } else {

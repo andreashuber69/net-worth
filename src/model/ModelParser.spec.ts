@@ -36,7 +36,7 @@ const tryFetch = async (name: string) => {
 
     try {
         return await window.fetch(url);
-    } catch (e) {
+    } catch (e: unknown) {
         throw new Error(`Network Error: ${e}`);
     }
 };

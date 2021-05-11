@@ -48,7 +48,7 @@ export class Erc20TokensWalletBundle implements IAssetBundle {
             for (const token of tokens[0]) {
                 this.addTokenWallet(token, tokens[1]);
             }
-        } catch (e) {
+        } catch (e: unknown) {
             if (e instanceof QueryError) {
                 this.addTokenWallet(Erc20TokensWalletBundle.noTokenBalance, e.toString());
             } else {

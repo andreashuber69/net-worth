@@ -22,7 +22,7 @@ export class ModelParser {
     public static parse(json: string) {
         try {
             return ModelParser.parseBundles(Validator.fromJson(json, TaggedModel));
-        } catch (e) {
+        } catch (e: unknown) {
             if (e instanceof Error) {
                 return e.message;
             }

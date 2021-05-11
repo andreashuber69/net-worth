@@ -71,7 +71,7 @@ export class QueryCache {
 
         try {
             return Validator.fromData(response, responseCtor);
-        } catch (e) {
+        } catch (e: unknown) {
             throw new QueryError(`Validation Error: ${e}`);
         }
     }
@@ -81,7 +81,7 @@ export class QueryCache {
 
         try {
             return JSON.parse(responseText) as unknown;
-        } catch (e) {
+        } catch (e: unknown) {
             throw new QueryError(`Invalid JSON: ${e}`);
         }
     }
@@ -89,7 +89,7 @@ export class QueryCache {
     private static async tryFetch(query: string) {
         try {
             return await window.fetch(query);
-        } catch (e) {
+        } catch (e: unknown) {
             throw new QueryError(`Network Error: ${e}`);
         }
     }
@@ -101,7 +101,7 @@ export class QueryCache {
 
         try {
             return await response.text();
-        } catch (e) {
+        } catch (e: unknown) {
             throw new QueryError(e.toString());
         }
     }
