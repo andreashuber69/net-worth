@@ -63,7 +63,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getWeight(asset?: AssetUnion) {
-        return AssetEditorData.isPreciousMetalAsset(asset) ? asset.weight.toString() : undefined;
+        return AssetEditorData.isPreciousMetalAsset(asset) ? `${asset.weight}` : undefined;
     }
 
     private static getWeightUnit(asset?: AssetUnion) {
@@ -71,11 +71,11 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getFineness(asset?: AssetUnion) {
-        return AssetEditorData.isPreciousMetalAsset(asset) ? asset.fineness.toString() : undefined;
+        return AssetEditorData.isPreciousMetalAsset(asset) ? `${asset.fineness}` : undefined;
     }
 
     private static getValue(asset?: AssetUnion) {
-        return AssetEditorData.isMiscAsset(asset) ? asset.value.toString() : undefined;
+        return AssetEditorData.isMiscAsset(asset) ? `${asset.value}` : undefined;
     }
 
     private static getValueCurrency(asset?: AssetUnion) {
@@ -83,7 +83,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getQuantity(asset?: AssetUnion) {
-        return (asset && ("quantity" in asset) && asset.quantity.toString()) || undefined;
+        return (asset && ("quantity" in asset) && `${asset.quantity}`) || undefined;
     }
 
     private static getNotes(asset?: AssetUnion) {

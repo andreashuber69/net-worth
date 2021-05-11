@@ -50,7 +50,7 @@ export class Erc20TokensWalletBundle implements IAssetBundle {
             }
         } catch (e: unknown) {
             if (e instanceof QueryError) {
-                this.addTokenWallet(Erc20TokensWalletBundle.noTokenBalance, e.toString());
+                this.addTokenWallet(Erc20TokensWalletBundle.noTokenBalance, `${e}`);
             } else {
                 throw e;
             }
@@ -92,7 +92,7 @@ export class Erc20TokensWalletBundle implements IAssetBundle {
             this.assets.push(new Erc20TokenWallet({
                 editable: this.erc20Wallet,
                 currencySymbol: info.symbol,
-                quantity: token.balance / (10 ** Number.parseFloat(info.decimals.toString())),
+                quantity: token.balance / (10 ** Number.parseFloat(`${info.decimals}`)),
                 quantityHint,
                 unitValueUsd: (info.price && info.price.rate) || 0,
             }));

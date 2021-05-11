@@ -59,7 +59,7 @@ export default class NumericTableCell extends ComponentBase<number> {
         return Format.value(this.value, this.maxDigits, this.minDigits);
     }
 
-    private static readonly decimalSeparator = Format.value(1.1, 1, 1).toString().substr(1, 1);
+    private static readonly decimalSeparator = `${Format.value(1.1, 1, 1)}`.substr(1, 1);
 
     private static getIntegralPart(formatted: string) {
         const decimalSeparatorIndex = formatted.indexOf(this.decimalSeparator);

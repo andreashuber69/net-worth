@@ -102,7 +102,7 @@ export class QueryCache {
         try {
             return await response.text();
         } catch (e: unknown) {
-            throw new QueryError(e.toString());
+            throw new QueryError(`${e}`);
         }
     }
 }

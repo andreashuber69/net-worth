@@ -59,7 +59,7 @@ const getRandomData = (type: AssetTypeName, expectedPropertyNames: readonly Asse
                 data[name] = "USD";
                 break;
             default:
-                data[name] = (++randomValue).toString();
+                data[name] = `${++randomValue}`;
         }
     }
 
@@ -110,17 +110,14 @@ const testMethod = <T, U, N extends MethodNames<T> & string>(
 ) => {
     describe(
         ctor.name,
-        () => void describe(
-            `${name.toString()}()`,
-            () => void it(expectation, () => void test(createAsset(ctor, props))),
-        ),
+        () => void describe(`${name}()`, () => void it(expectation, () => void test(createAsset(ctor, props)))),
     );
 };
 
 const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
     ctor: new (parent: IParent, props: U) => T, props: U, name: N, expectedMessage: string,
 ) => {
-    describe(ctor.name, () => void describe(`${name.toString()}()`, () => {
+    describe(ctor.name, () => void describe(`${name}()`, () => {
         it("should throw", () => expect(createAsset(ctor, props)[name]).toThrowError(expectedMessage));
     }));
 };
