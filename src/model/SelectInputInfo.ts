@@ -2,7 +2,7 @@
 /* eslint-disable max-classes-per-file */
 import type { IPrimitiveInputInfoProperties } from "./InputInfo";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
-import type { EnumSchemaName, SchemaName} from "./validation/Validator";
+import type { EnumSchemaName, SchemaName } from "./validation/Validator";
 import { Validator } from "./validation/Validator";
 
 interface ISelectInputInfoParameters extends IPrimitiveInputInfoProperties {

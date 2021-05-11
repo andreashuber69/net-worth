@@ -6,7 +6,7 @@ import { QuantityRequest } from "./QuantityRequest";
 import type { IFetchOptions } from "./QueryCache";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
-import type { IRealCryptoWalletParameters} from "./RealCryptoWallet";
+import type { IRealCryptoWalletParameters } from "./RealCryptoWallet";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { TaskQueue } from "./TaskQueue";

@@ -1,7 +1,7 @@
 // https://github.com/andreashuber69/net-worth#--
 import type { AssetPropertyName } from "./AssetInterfaces";
 import type { IAuxProperties } from "./IAuxProperties";
-import type { CompositeInput, Input} from "./Input";
+import type { CompositeInput, Input } from "./Input";
 import { InputUtility } from "./Input";
 import type { IPrimitiveInputInfoProperties } from "./InputInfo";
 import { InputInfo } from "./InputInfo";
