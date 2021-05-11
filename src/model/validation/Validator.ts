@@ -40,7 +40,7 @@ export class Validator {
             Validator.ajv.errorsText();
     }
 
-    public static getSchema(name: SchemaName) {
+    public static getSchema(name: SchemaName): Readonly<Record<string, unknown>> {
         return Validator.isPrimitiveSchemaName(name) ? Validator.getPrimitiveSchema(name) : schema.definitions[name];
     }
 

@@ -65,7 +65,7 @@ export class TextInputInfo extends PrimitiveInputInfo {
 
     private getValue(propertyName: string) {
         if (this.schemaName) {
-            const result = (Validator.getSchema(this.schemaName) as { [propertyName: string]: unknown })[propertyName];
+            const result = Validator.getSchema(this.schemaName)[propertyName];
 
             return typeof result === "number" ? result : undefined;
         }

@@ -107,7 +107,7 @@ const getExpectedProperties = (
     };
 };
 
-const hasIndexSignature = (value: unknown): value is { [key: string]: unknown } => typeof value === "object";
+const hasIndexSignature = (value: unknown): value is Readonly<Record<string, unknown>> => typeof value === "object";
 
 const expectToEqual = (actual: unknown, expected: unknown) => {
     if (hasIndexSignature(actual) && hasIndexSignature(expected)) {

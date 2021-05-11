@@ -8,6 +8,8 @@ export interface IAddressInfo {
 
 export interface IData {
     readonly [key: string]: unknown;
+    // Record<T> doesn't work here, because the schema generator is unable to deal with that
+    // eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
     readonly addresses: {
         readonly [address: string]: IAddressInfo;
     };
