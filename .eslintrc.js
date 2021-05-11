@@ -51,6 +51,8 @@ module.exports = {
                 ignorePattern: "cSpell|codebeat",
             },
         ],
+        // We want to use the most appropriate style for each property.
+        "@typescript-eslint/class-literal-property-style": "off",
         "comma-dangle": "off",
         "@typescript-eslint/comma-dangle": [
             "error",
