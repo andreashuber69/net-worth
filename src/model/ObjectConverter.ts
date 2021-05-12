@@ -85,17 +85,17 @@ export class ObjectConverter {
         Q extends IQuantityCryptoObject,
         M extends IMiscObject,
         PR, SR, AR, QR, MR,
-        >(
-            rawObject: A | M | P | Q | S,
-            [
-                convertPreciousMetalObject,
-                convertSimpleCryptoObject,
-                convertAddressCryptoObject,
-                convertQuantityCryptoObject,
-                convertMiscObject,
-                // This is a false positive.
-                // eslint-disable-next-line array-bracket-newline
-            ]: Converters<P, S, A, Q, M, PR, SR, AR, QR, MR>,
+    >(
+        rawObject: A | M | P | Q | S,
+        [
+            convertPreciousMetalObject,
+            convertSimpleCryptoObject,
+            convertAddressCryptoObject,
+            convertQuantityCryptoObject,
+            convertMiscObject,
+            // This is a false positive.
+            // eslint-disable-next-line array-bracket-newline
+        ]: Converters<P, S, A, Q, M, PR, SR, AR, QR, MR>,
     ) {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should
         // go away...
