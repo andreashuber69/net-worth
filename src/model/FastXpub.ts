@@ -15,22 +15,23 @@ export class FastXpub {
         // correct format by creating a HDNode first.
         this.toHDNode(xpub);
 
-        return FastXpub.getResponse(
+        const data = (await FastXpub.getResponse(
             {
                 type: "deriveNode",
                 xpub,
                 version: decode(xpub).readUInt32BE(0),
                 index,
             },
-            ({ data }) => data.xpub as string,
-        );
+        )) as { xpub: string };
+
+        return data.xpub;
     }
 
     public async deriveAddressRange(xpub: string, firstIndex: number, lastIndex: number) {
         const hdNode = this.toHDNode(xpub);
         const p2sh = FastXpub.p2shXpubPrefixes.includes(xpub.slice(0, 4));
 
-        return FastXpub.getResponse(
+        const data = (await FastXpub.getResponse(
             {
                 type: "deriveAddressRange",
                 node: FastXpub.convert(hdNode),
@@ -39,8 +40,9 @@ export class FastXpub {
                 version: p2sh ? hdNode.getNetwork().scriptHash : hdNode.getNetwork().pubKeyHash,
                 addressFormat: p2sh ? 1 : 0,
             },
-            ({ data }) => data.addresses as string[],
-        );
+        )) as { addresses: string[] };
+
+        return data.addresses;
     }
 
     private static readonly overwriteVersionXpubPrefixes: readonly string[] = ["ypub", "Mtub", "drkp"];
@@ -78,12 +80,12 @@ export class FastXpub {
         };
     }
 
-    private static async getResponse<T>(message: unknown, extractResult: (ev: MessageEvent) => T) {
+    private static async getResponse(message: unknown) {
         const worker = await FastXpub.worker;
 
         return FastXpub.taskQueue.queue(
-            async () => new Promise<T>((resolve, reject) => {
-                FastXpub.setHandlers(worker, (ev) => void resolve(extractResult(ev)), reject);
+            async () => new Promise<unknown>((resolve, reject) => {
+                FastXpub.setHandlers(worker, (ev) => void resolve(ev.data), reject);
                 worker.postMessage(message);
             }),
         );
