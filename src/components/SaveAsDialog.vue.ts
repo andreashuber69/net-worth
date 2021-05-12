@@ -5,6 +5,7 @@ import { TextInputInfo } from "../model/TextInputInfo";
 
 import TextField from "./TextField.vue";
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 @Component({ components: { TextField } })
 /** Implements the dialog used during Save As... */
 // eslint-disable-next-line import/no-default-export

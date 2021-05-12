@@ -13,6 +13,7 @@ import Select from "./Select.vue";
 import TextArea from "./TextArea.vue";
 import TextField from "./TextField.vue";
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 @Component({ components: { Select, TextArea, TextField } })
 /** Implements the dialog used to edit assets. */
 // eslint-disable-next-line import/no-default-export

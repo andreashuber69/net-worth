@@ -11,6 +11,7 @@ import { Model } from "./model/Model";
 import { QueryCache } from "./model/QueryCache";
 import { Parser } from "./Parser";
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 @Component({ components: { AboutDialog, AssetList, BrowserDialog, SaveAsDialog } })
 // eslint-disable-next-line import/no-default-export
 export default class App extends Vue {

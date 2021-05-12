@@ -28,6 +28,7 @@ interface IOptions {
     readonly sortDesc: boolean[];
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 @Component({ components: { AssetEditor, NumericTableCell } })
 /** Implements the asset list UI. */
 // eslint-disable-next-line import/no-default-export
