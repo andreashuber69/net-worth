@@ -4,6 +4,33 @@ import { HDNode } from "@trezor/utxo-lib";
 import { decode, encode } from "bs58check";
 import { TaskQueue } from "./TaskQueue";
 
+interface IDeriveNodeMessage {
+    readonly type: "deriveNode";
+    readonly xpub: string;
+    readonly version: number;
+    readonly index: number;
+}
+
+interface INode {
+    readonly depth: number;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    readonly child_num: number;
+    readonly fingerprint: number;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    readonly chain_code: Uint8Array;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    readonly public_key: Buffer;
+}
+
+interface IDeriveAddressRangeMessage {
+    readonly type: "deriveAddressRange";
+    readonly node: INode;
+    readonly firstIndex: number;
+    readonly lastIndex: number;
+    readonly version: number;
+    readonly addressFormat: number;
+}
+
 // https://github.com/andreashuber69/net-worth#--
 export class FastXpub {
     public constructor(network: Network) {
@@ -14,24 +41,20 @@ export class FastXpub {
         // It appears that fastxpub doesn't answer a request containing a malformed xpub, which is why we ensure the
         // correct format by creating a HDNode first.
         this.toHDNode(xpub);
+        const message: IDeriveNodeMessage = {
+            type: "deriveNode",
+            xpub,
+            version: decode(xpub).readUInt32BE(0),
+            index,
+        };
 
-        const data = (await FastXpub.getResponse(
-            {
-                type: "deriveNode",
-                xpub,
-                version: decode(xpub).readUInt32BE(0),
-                index,
-            },
-        )) as { xpub: string };
-
-        return data.xpub;
+        return (await FastXpub.getResponse(message)).xpub;
     }
 
     public async deriveAddressRange(xpub: string, firstIndex: number, lastIndex: number) {
         const hdNode = this.toHDNode(xpub);
         const p2sh = FastXpub.p2shXpubPrefixes.includes(xpub.slice(0, 4));
-
-        const data = (await FastXpub.getResponse(
+        const message: IDeriveAddressRangeMessage =
             {
                 type: "deriveAddressRange",
                 node: FastXpub.convert(hdNode),
@@ -39,10 +62,9 @@ export class FastXpub {
                 lastIndex,
                 version: p2sh ? hdNode.getNetwork().scriptHash : hdNode.getNetwork().pubKeyHash,
                 addressFormat: p2sh ? 1 : 0,
-            },
-        )) as { addresses: string[] };
+            };
 
-        return data.addresses;
+        return (await FastXpub.getResponse(message)).addresses;
     }
 
     private static readonly overwriteVersionXpubPrefixes: readonly string[] = ["ypub", "Mtub", "drkp"];
@@ -80,6 +102,8 @@ export class FastXpub {
         };
     }
 
+    private static getResponse(message: IDeriveNodeMessage): Promise<{ readonly xpub: string }>
+    private static getResponse(message: IDeriveAddressRangeMessage): Promise<{ readonly addresses: readonly string[] }>
     private static async getResponse(message: unknown) {
         const worker = await FastXpub.worker;
 
