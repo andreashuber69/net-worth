@@ -39,7 +39,7 @@ declare module "@trezor/utxo-lib" {
 
     // eslint-disable-next-line @typescript-eslint/naming-convention
     export interface ECPair {
-        getPublicKeyBuffer(): Buffer;
+        readonly getPublicKeyBuffer: () => Buffer;
     }
 
     // eslint-disable-next-line @typescript-eslint/naming-convention
