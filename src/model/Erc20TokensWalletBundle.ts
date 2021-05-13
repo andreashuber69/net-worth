@@ -94,6 +94,8 @@ export class Erc20TokensWalletBundle implements IAssetBundle {
                 currencySymbol: info.symbol,
                 quantity: token.balance / (10 ** Number.parseFloat(`${info.decimals}`)),
                 quantityHint,
+                // Optional chain does not work here because we're *not* checking for null or undefined
+                // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
                 unitValueUsd: (info.price && info.price.rate) || 0,
             }));
         }
