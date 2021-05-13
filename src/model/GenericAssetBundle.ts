@@ -1,4 +1,5 @@
 // https://github.com/andreashuber69/net-worth#--
+import type { Asset } from "./Asset";
 import type { SingleAsset } from "./SingleAsset";
 
 /** Defines a bundle containing a single asset. */
@@ -10,8 +11,8 @@ export abstract class GenericAssetBundle<T extends SingleAsset> {
         this.assets = [asset];
     }
 
-    public deleteAsset(asset: T) {
-        const index = this.assets.indexOf(asset);
+    public deleteAsset(asset: Asset) {
+        const index = this.assets.indexOf(asset as T);
 
         if (index >= 0) {
             this.assets.splice(index, 1);

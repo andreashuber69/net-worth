@@ -1,5 +1,5 @@
 // https://github.com/andreashuber69/net-worth#--
-import type { IAssetBundle } from "./Asset";
+import type { Asset, IAssetBundle } from "./Asset";
 import type { IErc20TokensWallet } from "./Erc20TokenWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { QueryCache } from "./QueryCache";
@@ -22,8 +22,8 @@ export class Erc20TokensWalletBundle implements IAssetBundle {
         }
     }
 
-    public deleteAsset(asset: Erc20TokenWallet) {
-        const index = this.assets.indexOf(asset);
+    public deleteAsset(asset: Asset) {
+        const index = this.assets.indexOf(asset as Erc20TokenWallet);
 
         if (index >= 0) {
             this.deletedAssets.push(this.assets[index].unit);

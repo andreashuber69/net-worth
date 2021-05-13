@@ -28,7 +28,7 @@ export interface IAssetBundle {
     readonly assets: readonly Asset[];
 
     /** Deletes `asset` from [[assets]]. */
-    deleteAsset(asset: Asset): void;
+    readonly deleteAsset: (asset: Asset) => void;
 
     /** @internal */
     readonly queryData: () => Promise<void>;
