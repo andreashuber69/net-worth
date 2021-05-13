@@ -3,6 +3,7 @@ import { Component, Vue } from "vue-property-decorator";
 
 import { TextInputInfo } from "../model/TextInputInfo";
 
+import type { IVueForm } from "./IVueForm";
 import TextField from "./TextField.vue";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -43,7 +44,7 @@ export default class SaveAsDialog extends Vue {
     private isValid() {
         // The runtime type of this.$refs.form is VueComponent. It appears nobody has written typings for this yet.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return (this.$refs.form as any).validate();
+        return (this.$refs.form as any as IVueForm).validate();
     }
 
     private close(value: string | undefined) {

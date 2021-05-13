@@ -8,6 +8,7 @@ import { createAsset } from "../model/AssetProperties";
 import type { IParent } from "../model/IEditable";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { assetTypeNames } from "../model/validation/schemas/AssetTypeName.schema";
+import type { IVueForm } from "./IVueForm";
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
 import Select from "./Select.vue";
 import TextArea from "./TextArea.vue";
@@ -117,6 +118,6 @@ export default class AssetEditor extends Vue {
     private get form() {
         // The runtime type of this.$refs.form is VueComponent. It appears nobody has written typings for this yet.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return this.$refs.form as any;
+        return this.$refs.form as any as IVueForm;
     }
 }
