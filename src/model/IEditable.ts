@@ -16,5 +16,5 @@ export interface IParent {
 export interface IEditable {
     readonly type: AssetTypeName | "";
     readonly parent: IParent;
-    toJSON(): AssetUnion;
+    readonly toJSON: () => AssetUnion;
 }

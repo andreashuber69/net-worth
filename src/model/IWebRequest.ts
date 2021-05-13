@@ -2,5 +2,5 @@
 /** Represents a single web request. */
 export interface IWebRequest<T> {
     /** Executes the request and returns a promise for the result. */
-    execute(): Promise<T>;
+    readonly execute: () => Promise<T>;
 }

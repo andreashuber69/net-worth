@@ -31,10 +31,10 @@ export interface IAssetBundle {
     deleteAsset(asset: Asset): void;
 
     /** @internal */
-    queryData(): Promise<void>;
+    readonly queryData: () => Promise<void>;
 
     /** @internal */
-    toJSON(): AssetBundleUnion;
+    readonly toJSON: () => AssetBundleUnion;
 }
 
 /** Defines the base of all classes that represent an asset. */

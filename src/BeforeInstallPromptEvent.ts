@@ -14,5 +14,5 @@ export interface BeforeInstallPromptEvent extends Event {
         platform: string;
     }>;
 
-    prompt(): Promise<void>;
+    readonly prompt: () => Promise<void>;
 }

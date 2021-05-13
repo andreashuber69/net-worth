@@ -22,8 +22,8 @@ export interface IErc20TokensWallet extends IEditable {
     readonly address: string;
     readonly notes: string;
 
-    queryData(): Promise<void>;
-    toJSON(): IAddressCryptoWallet;
+    readonly queryData: () => Promise<void>;
+    readonly toJSON: () => IAddressCryptoWallet;
 }
 
 export class Erc20TokenWallet extends CryptoWallet {

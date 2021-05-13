@@ -9,7 +9,7 @@ import type { GroupBy } from "./validation/schemas/GroupBy.schema";
 import type { ISort } from "./validation/schemas/ISort.schema";
 
 interface INotifiableParent extends IParent {
-    notifyChanged(): void;
+    readonly notifyChanged: () => void;
 }
 
 interface IAssetCollectionParameters {
