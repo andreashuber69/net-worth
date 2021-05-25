@@ -13,11 +13,13 @@ branches:
   - /^release\/.*/
   - master
 
+before_install:
+- git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+
 before_script:
 - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
 - chmod +x ./cc-test-reporter
 - ./cc-test-reporter before-build
-- git config --global url."https://github.com/".insteadOf ssh://git@github.com/
 
 script:
 - npm run ci
