@@ -37,7 +37,7 @@
     "ci": "karma start --browsers ChromeHeadless"
   },
   "dependencies": {
-    "@trezor/utxo-lib": "^0.1.0",
+    "@trezor/utxo-lib": "^0.1.2",
     "ajv": "^6.11.0",
     "bs58check": "^2.1.2",
     "core-js": "^3.6.4",
