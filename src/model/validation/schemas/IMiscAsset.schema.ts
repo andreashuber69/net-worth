@@ -1,6 +1,6 @@
 // https://github.com/andreashuber69/net-worth#--
 import { misc } from "./AssetTypeName.schema";
-import { IMiscAssetProperties } from "./IMiscAssetProperties.schema";
+import type { IMiscAssetProperties } from "./IMiscAssetProperties.schema";
 
 export const miscAssetTypeNames = [misc] as const;
 

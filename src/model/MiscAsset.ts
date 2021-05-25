@@ -1,15 +1,15 @@
 // https://github.com/andreashuber69/net-worth#--
 /* eslint-disable max-classes-per-file */
-import { IAssetBundle } from "./Asset";
+import type { IAssetBundle } from "./Asset";
 import { ExchangeRate } from "./ExchangeRate";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { SingleAsset } from "./SingleAsset";
 import { misc } from "./validation/schemas/AssetTypeName.schema";
-import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
-import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
-import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
-import { Quantity0 } from "./validation/schemas/Quantity0.schema";
+import type { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import type { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
+import type { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
+import type { Quantity0 } from "./validation/schemas/Quantity0.schema";
 
 /** Represents a miscellaneous asset. */
 export class MiscAsset extends SingleAsset {
@@ -76,6 +76,7 @@ export class MiscAsset extends SingleAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     private static readonly Bundle = class extends GenericAssetBundle<MiscAsset> implements IAssetBundle {
         public toJSON() {
             return {

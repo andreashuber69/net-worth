@@ -4,7 +4,7 @@ export interface IToken {
     readonly tokenInfo: {
         readonly [key: string]: unknown;
         readonly symbol: string;
-        readonly decimals: string | number;
+        readonly decimals: number | string;
         readonly price: false | {
             readonly [key: string]: unknown;
             readonly rate: number;
@@ -17,6 +17,8 @@ export interface IToken {
 
 export class EthplorerGetAddressInfoResponse {
     readonly [key: string]: unknown;
+
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     public readonly ETH?: {
         readonly [key: string]: unknown;
         readonly balance: number;

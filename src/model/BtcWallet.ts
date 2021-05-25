@@ -1,9 +1,9 @@
 // https://github.com/andreashuber69/net-worth#--
 import { networks } from "@trezor/utxo-lib";
 import { BlockchairWallet } from "./BlockchairWallet";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { bitcoin } from "./validation/schemas/AssetTypeName.schema";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import type { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 /** Represents a BTC wallet. */
 export class BtcWallet extends BlockchairWallet {

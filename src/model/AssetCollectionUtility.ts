@@ -1,8 +1,8 @@
 // https://github.com/andreashuber69/net-worth#--
-import { Asset } from "./Asset";
-import { AssetGroup } from "./AssetGroup";
-import { ISort } from "./validation/schemas/ISort.schema";
-import { SortBy } from "./validation/schemas/SortBy.schema";
+import type { Asset } from "./Asset";
+import type { AssetGroup } from "./AssetGroup";
+import type { ISort } from "./validation/schemas/ISort.schema";
+import type { SortBy } from "./validation/schemas/SortBy.schema";
 
 export class AssetCollectionUtility {
     public static sort(groups: AssetGroup[], sort: ISort) {

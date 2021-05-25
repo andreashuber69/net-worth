@@ -16,14 +16,17 @@ import { PreciousMetalAssetInputInfo } from "./PreciousMetalAssetInputInfo";
 import { QuantityCryptoWalletInputInfo } from "./QuantityCryptoWalletInputInfo";
 import { SilverAsset } from "./SilverAsset";
 import { SimpleCryptoWalletInputInfo } from "./SimpleCryptoWalletInputInfo";
-import { addressCryptoWalletTypeNames, IAddressCryptoObject } from "./validation/schemas/IAddressCryptoWallet.schema";
-import { IMiscObject, miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
-import { IPreciousMetalObject, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
-import {
-    IQuantityCryptoObject, quantityCryptoWalletTypeNames,
-} from "./validation/schemas/IQuantityCryptoWallet.schema";
-import { ISimpleCryptoObject, simpleCryptoWalletTypeNames } from "./validation/schemas/ISimpleCryptoWallet.schema";
-import { ObjectUnion } from "./validation/schemas/ObjectUnion.schema";
+import type { IAddressCryptoObject } from "./validation/schemas/IAddressCryptoWallet.schema";
+import { addressCryptoWalletTypeNames } from "./validation/schemas/IAddressCryptoWallet.schema";
+import type { IMiscObject } from "./validation/schemas/IMiscAsset.schema";
+import { miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
+import type { IPreciousMetalObject } from "./validation/schemas/IPreciousMetalAsset.schema";
+import { preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
+import type { IQuantityCryptoObject } from "./validation/schemas/IQuantityCryptoWallet.schema";
+import { quantityCryptoWalletTypeNames } from "./validation/schemas/IQuantityCryptoWallet.schema";
+import type { ISimpleCryptoObject } from "./validation/schemas/ISimpleCryptoWallet.schema";
+import { simpleCryptoWalletTypeNames } from "./validation/schemas/ISimpleCryptoWallet.schema";
+import type { ObjectUnion } from "./validation/schemas/ObjectUnion.schema";
 import { XmrWallet } from "./XmrWallet";
 import { ZecWallet } from "./ZecWallet";
 
@@ -83,15 +86,15 @@ export class ObjectConverter {
         M extends IMiscObject,
         PR, SR, AR, QR, MR,
     >(
-        rawObject: P | S | A | Q | M,
+        rawObject: A | M | P | Q | S,
         [
             convertPreciousMetalObject,
             convertSimpleCryptoObject,
             convertAddressCryptoObject,
             convertQuantityCryptoObject,
             convertMiscObject,
-        // This is a false positive.
-        // eslint-disable-next-line array-bracket-newline
+            // This is a false positive.
+            // eslint-disable-next-line array-bracket-newline
         ]: Converters<P, S, A, Q, M, PR, SR, AR, QR, MR>,
     ) {
         // TODO: This is rather unwieldy. Once we switch over to schema-based validation completely, some of this should

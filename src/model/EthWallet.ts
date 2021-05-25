@@ -1,11 +1,11 @@
 // https://github.com/andreashuber69/net-worth#--
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { ethereum } from "./validation/schemas/AssetTypeName.schema";
 import { EthplorerGetAddressInfoResponse } from "./validation/schemas/EthplorerGetAddressInfoResponse.schema";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import type { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 /** Represents an ETH wallet. */
 export class EthWallet extends SimpleCryptoWallet {

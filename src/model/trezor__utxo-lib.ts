@@ -2,7 +2,7 @@
 // cSpell: disable
 // eslint-disable-next-line import/unambiguous
 declare module "@trezor/utxo-lib" {
-    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     export interface Network {
         readonly messagePrefix: string;
         readonly bech32?: string;
@@ -16,7 +16,7 @@ declare module "@trezor/utxo-lib" {
         readonly coin: string;
     }
 
-    // eslint-disable-next-line init-declarations
+    // eslint-disable-next-line @typescript-eslint/init-declarations
     export const networks: {
         readonly dash: Network;
         readonly dashTest: Network;
@@ -37,12 +37,12 @@ declare module "@trezor/utxo-lib" {
         readonly komodo: Network;
     };
 
-    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     export interface ECPair {
-        getPublicKeyBuffer(): Buffer;
+        readonly getPublicKeyBuffer: () => Buffer;
     }
 
-    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     export class HDNode {
         public static fromBase58(str: string, networks?: Network | Network[], skipValidation?: boolean): HDNode;
 

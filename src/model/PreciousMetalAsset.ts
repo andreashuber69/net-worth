@@ -1,16 +1,16 @@
 
 // https://github.com/andreashuber69/net-worth#--
 /* eslint-disable max-classes-per-file */
-import { IAssetBundle } from "./Asset";
+import type { IAssetBundle } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { QuandlRequest } from "./QuandlRequest";
 import { SingleAsset } from "./SingleAsset";
-import { Fineness } from "./validation/schemas/Fineness.schema";
-import { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
-import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
-import { Quantity0 } from "./validation/schemas/Quantity0.schema";
-import { Weight } from "./validation/schemas/Weight.schema";
+import type { Fineness } from "./validation/schemas/Fineness.schema";
+import type { IPreciousMetalAsset, PreciousMetalAssetTypeName } from "./validation/schemas/IPreciousMetalAsset.schema";
+import type { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
+import type { Quantity0 } from "./validation/schemas/Quantity0.schema";
+import type { Weight } from "./validation/schemas/Weight.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 /** Defines the base of all classes that represent a precious metal asset. */
@@ -76,6 +76,7 @@ export abstract class PreciousMetalAsset extends SingleAsset {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     private static readonly Bundle = class extends GenericAssetBundle<PreciousMetalAsset> implements IAssetBundle {
         public toJSON() {
             return {

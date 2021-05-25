@@ -1,8 +1,8 @@
 // https://github.com/andreashuber69/net-worth#--
-import { AssetDisplayPropertyName } from "../model/Asset";
-import { GroupBys } from "../model/Ordering";
+import type { AssetDisplayPropertyName } from "../model/Asset";
+import type { GroupBys } from "../model/Ordering";
 
-export type ColumnName = "expand" | AssetDisplayPropertyName | "more";
+export type ColumnName = AssetDisplayPropertyName | "expand" | "more";
 
 export class ColumnInfo {
     /**

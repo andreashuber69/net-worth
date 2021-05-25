@@ -1,14 +1,14 @@
 // https://github.com/andreashuber69/net-worth#--
 // eslint-disable-next-line max-classes-per-file
 import { networks } from "@trezor/utxo-lib";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { QuantityRequest } from "./QuantityRequest";
 import { QueryCache } from "./QueryCache";
 import { RealCryptoWallet } from "./RealCryptoWallet";
 import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
 import { bitcoinGold } from "./validation/schemas/AssetTypeName.schema";
 import { InsightUtxoResponse } from "./validation/schemas/InsightUtxoResponse.schema";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import type { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 
 /** Represents a BTG wallet. */
 export class BtgWallet extends SimpleCryptoWallet {
@@ -28,6 +28,7 @@ export class BtgWallet extends SimpleCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     private static readonly BtgQuantityRequest = class extends QuantityRequest {
         public constructor(address: string) {
             super(networks.bitcoingold, address);

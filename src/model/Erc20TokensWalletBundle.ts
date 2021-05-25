@@ -1,11 +1,13 @@
 // https://github.com/andreashuber69/net-worth#--
-import { IAssetBundle } from "./Asset";
-import { Erc20TokenWallet, IErc20TokensWallet } from "./Erc20TokenWallet";
+import type { Asset, IAssetBundle } from "./Asset";
+import type { IErc20TokensWallet } from "./Erc20TokenWallet";
+import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { QueryCache } from "./QueryCache";
 import { QueryError } from "./QueryError";
 import { DeletedAssets } from "./validation/schemas/DeletedAssets.schema";
-import { EthplorerGetAddressInfoResponse, IToken } from "./validation/schemas/EthplorerGetAddressInfoResponse.schema";
-import { IErc20TokensWalletBundle } from "./validation/schemas/IErc20TokensWalletBundle.schema";
+import type { IToken } from "./validation/schemas/EthplorerGetAddressInfoResponse.schema";
+import { EthplorerGetAddressInfoResponse } from "./validation/schemas/EthplorerGetAddressInfoResponse.schema";
+import type { IErc20TokensWalletBundle } from "./validation/schemas/IErc20TokensWalletBundle.schema";
 import { Validator } from "./validation/Validator";
 
 export class Erc20TokensWalletBundle implements IAssetBundle {
@@ -20,8 +22,8 @@ export class Erc20TokensWalletBundle implements IAssetBundle {
         }
     }
 
-    public deleteAsset(asset: Erc20TokenWallet) {
-        const index = this.assets.indexOf(asset);
+    public deleteAsset(asset: Asset) {
+        const index = this.assets.indexOf(asset as Erc20TokenWallet);
 
         if (index >= 0) {
             this.deletedAssets.push(this.assets[index].unit);
@@ -46,9 +48,9 @@ export class Erc20TokensWalletBundle implements IAssetBundle {
             for (const token of tokens[0]) {
                 this.addTokenWallet(token, tokens[1]);
             }
-        } catch (e) {
+        } catch (e: unknown) {
             if (e instanceof QueryError) {
-                this.addTokenWallet(Erc20TokensWalletBundle.noTokenBalance, e.toString());
+                this.addTokenWallet(Erc20TokensWalletBundle.noTokenBalance, `${e}`);
             } else {
                 throw e;
             }
@@ -90,8 +92,10 @@ export class Erc20TokensWalletBundle implements IAssetBundle {
             this.assets.push(new Erc20TokenWallet({
                 editable: this.erc20Wallet,
                 currencySymbol: info.symbol,
-                quantity: token.balance / (10 ** Number.parseFloat(info.decimals.toString())),
+                quantity: token.balance / (10 ** Number.parseFloat(`${info.decimals}`)),
                 quantityHint,
+                // Optional chain does not work here because we're *not* checking for null or undefined
+                // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
                 unitValueUsd: (info.price && info.price.rate) || 0,
             }));
         }

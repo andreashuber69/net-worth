@@ -1,16 +1,14 @@
 // https://github.com/andreashuber69/net-worth#--
-import { AssetPropertyName } from "./AssetInterfaces";
-import { IAuxProperties } from "./IAuxProperties";
-import { CompositeInput, Input, InputUtility } from "./Input";
-import { InputInfo, IPrimitiveInputInfoProperties } from "./InputInfo";
-import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
-import { SelectInputInfo } from "./SelectInputInfo";
+import type { AssetPropertyName } from "./AssetInterfaces";
+import type { IAuxProperties } from "./IAuxProperties";
+import type { CompositeInput, Input } from "./Input";
+import { InputUtility } from "./Input";
+import type { IPrimitiveInputInfoProperties } from "./InputInfo";
+import { InputInfo } from "./InputInfo";
+import type { PrimitiveInputInfo } from "./PrimitiveInputInfo";
+import type { SelectInputInfo } from "./SelectInputInfo";
 import { TextInputInfo } from "./TextInputInfo";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
-
-interface IValidationResults extends IAuxProperties<true | string> {
-    [key: string]: true | string;
-}
+import type { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
 
 /**
  * Defines how the properties of a given asset type need to be input and validated and provides a method to create a
@@ -82,7 +80,7 @@ export abstract class AssetInputInfo extends InputInfo implements IAuxProperties
 
     /** @internal */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
-    protected validateRelations(input: CompositeInput, propertyName: AssetPropertyName): true | string {
+    protected validateRelations(input: CompositeInput, propertyName: AssetPropertyName): string | true {
         return true;
     }
 }

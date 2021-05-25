@@ -1,8 +1,8 @@
 // https://github.com/andreashuber69/net-worth#--
-import { AssetBundleUnion } from "./AssetBundleUnion.schema";
-import { CurrencyName } from "./CurrencyName.schema";
-import { GroupBy } from "./GroupBy.schema";
-import { ISort } from "./ISort.schema";
+import type { AssetBundleUnion } from "./AssetBundleUnion.schema";
+import type { CurrencyName } from "./CurrencyName.schema";
+import type { GroupBy } from "./GroupBy.schema";
+import type { ISort } from "./ISort.schema";
 
 export class TaggedModel {
     public readonly version!: 1;

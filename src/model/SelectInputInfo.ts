@@ -1,8 +1,9 @@
 // https://github.com/andreashuber69/net-worth#--
 /* eslint-disable max-classes-per-file */
-import { IPrimitiveInputInfoProperties } from "./InputInfo";
+import type { IPrimitiveInputInfoProperties } from "./InputInfo";
 import { PrimitiveInputInfo } from "./PrimitiveInputInfo";
-import { EnumSchemaName, SchemaName, Validator } from "./validation/Validator";
+import type { EnumSchemaName, SchemaName } from "./validation/Validator";
+import { Validator } from "./validation/Validator";
 
 interface ISelectInputInfoParameters extends IPrimitiveInputInfoProperties {
     readonly items: readonly string[];

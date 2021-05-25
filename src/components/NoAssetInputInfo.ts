@@ -1,5 +1,5 @@
 // https://github.com/andreashuber69/net-worth#--
-import { Asset } from "../model/Asset";
+import type { Asset } from "../model/Asset";
 import { AssetInputInfo } from "../model/AssetInputInfo";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { TextInputInfo } from "../model/TextInputInfo";

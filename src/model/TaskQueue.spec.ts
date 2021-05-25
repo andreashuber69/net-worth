@@ -4,7 +4,7 @@ import { TaskQueue } from "./TaskQueue";
 const randomDelay = async () => new Promise<number>(
     (resolve) => {
         const milliseconds = (Math.random() * 800) + 200;
-        setTimeout(() => resolve(milliseconds), milliseconds);
+        setTimeout(() => void resolve(milliseconds), milliseconds);
     },
 );
 
@@ -16,7 +16,7 @@ const expectFailure = async (promise: Promise<never>) => {
     try {
         await promise;
         fail("The task unexpectedly succeeded.");
-    } catch (e) {
+    } catch (e: unknown) {
         if (e instanceof Error) {
             expect(e.message).toEqual("Operation failed.");
         } else {

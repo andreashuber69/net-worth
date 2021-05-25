@@ -1,13 +1,13 @@
 // https://github.com/andreashuber69/net-worth#--
-import { IAssetIntersection } from "./AssetInterfaces";
-import { IEditable, IParent } from "./IEditable";
+import type { IAssetIntersection } from "./AssetInterfaces";
+import type { IEditable, IParent } from "./IEditable";
 import { QueryUtility } from "./QueryUtility";
-import { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
-import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
-import { Fineness } from "./validation/schemas/Fineness.schema";
-import { ICalculatedAssetProperties } from "./validation/schemas/ICalculatedAssetProperties.schema";
-import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
+import type { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
+import type { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import type { AssetUnion } from "./validation/schemas/AssetUnion.schema";
+import type { Fineness } from "./validation/schemas/Fineness.schema";
+import type { ICalculatedAssetProperties } from "./validation/schemas/ICalculatedAssetProperties.schema";
+import type { QuantityAny } from "./validation/schemas/QuantityAny.schema";
 
 /**
  * Represent a bundle of assets.
@@ -28,13 +28,13 @@ export interface IAssetBundle {
     readonly assets: readonly Asset[];
 
     /** Deletes `asset` from [[assets]]. */
-    deleteAsset(asset: Asset): void;
+    readonly deleteAsset: (asset: Asset) => void;
 
     /** @internal */
-    queryData(): Promise<void>;
+    readonly queryData: () => Promise<void>;
 
     /** @internal */
-    toJSON(): AssetBundleUnion;
+    readonly toJSON: () => AssetBundleUnion;
 }
 
 /** Defines the base of all classes that represent an asset. */

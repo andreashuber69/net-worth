@@ -1,12 +1,15 @@
 // https://github.com/andreashuber69/net-worth#--
-import { IAuxProperties } from "./IAuxProperties";
+import type { IAuxProperties } from "./IAuxProperties";
 import { ObjectConverter } from "./ObjectConverter";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
-import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
-import { CurrencyName } from "./validation/schemas/CurrencyName.schema";
-import { IMiscAsset, miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
-import { IPreciousMetalAsset, preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
-import { WeightUnit, WeightUnitName } from "./validation/schemas/WeightUnit.schema";
+import type { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import type { AssetUnion } from "./validation/schemas/AssetUnion.schema";
+import type { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import type { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
+import { miscAssetTypeNames } from "./validation/schemas/IMiscAsset.schema";
+import type { IPreciousMetalAsset } from "./validation/schemas/IPreciousMetalAsset.schema";
+import { preciousMetalAssetTypeNames } from "./validation/schemas/IPreciousMetalAsset.schema";
+import type { WeightUnitName } from "./validation/schemas/WeightUnit.schema";
+import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 /** Represents the data being edited in the asset editor. */
 export class AssetEditorData implements Partial<IAuxProperties<string>> {
@@ -60,7 +63,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getWeight(asset?: AssetUnion) {
-        return AssetEditorData.isPreciousMetalAsset(asset) ? asset.weight.toString() : undefined;
+        return AssetEditorData.isPreciousMetalAsset(asset) ? `${asset.weight}` : undefined;
     }
 
     private static getWeightUnit(asset?: AssetUnion) {
@@ -68,11 +71,11 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getFineness(asset?: AssetUnion) {
-        return AssetEditorData.isPreciousMetalAsset(asset) ? asset.fineness.toString() : undefined;
+        return AssetEditorData.isPreciousMetalAsset(asset) ? `${asset.fineness}` : undefined;
     }
 
     private static getValue(asset?: AssetUnion) {
-        return AssetEditorData.isMiscAsset(asset) ? asset.value.toString() : undefined;
+        return AssetEditorData.isMiscAsset(asset) ? `${asset.value}` : undefined;
     }
 
     private static getValueCurrency(asset?: AssetUnion) {
@@ -80,7 +83,7 @@ export class AssetEditorData implements Partial<IAuxProperties<string>> {
     }
 
     private static getQuantity(asset?: AssetUnion) {
-        return (asset && ("quantity" in asset) && asset.quantity.toString()) || undefined;
+        return (asset && ("quantity" in asset) && `${asset.quantity}`) || undefined;
     }
 
     private static getNotes(asset?: AssetUnion) {

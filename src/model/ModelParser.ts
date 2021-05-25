@@ -1,13 +1,13 @@
 // https://github.com/andreashuber69/net-worth#--
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { Model } from "./Model";
 import { ObjectConverter } from "./ObjectConverter";
-import { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
-import { IAddressCryptoWallet } from "./validation/schemas/IAddressCryptoWallet.schema";
-import { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
-import { IPreciousMetalAsset } from "./validation/schemas/IPreciousMetalAsset.schema";
-import { IQuantityCryptoWallet } from "./validation/schemas/IQuantityCryptoWallet.schema";
-import { ISimpleCryptoWallet } from "./validation/schemas/ISimpleCryptoWallet.schema";
+import type { AssetBundleUnion } from "./validation/schemas/AssetBundleUnion.schema";
+import type { IAddressCryptoWallet } from "./validation/schemas/IAddressCryptoWallet.schema";
+import type { IMiscAsset } from "./validation/schemas/IMiscAsset.schema";
+import type { IPreciousMetalAsset } from "./validation/schemas/IPreciousMetalAsset.schema";
+import type { IQuantityCryptoWallet } from "./validation/schemas/IQuantityCryptoWallet.schema";
+import type { ISimpleCryptoWallet } from "./validation/schemas/ISimpleCryptoWallet.schema";
 import { TaggedModel } from "./validation/schemas/TaggedModel.schema";
 import { Validator } from "./validation/Validator";
 
@@ -22,7 +22,7 @@ export class ModelParser {
     public static parse(json: string) {
         try {
             return ModelParser.parseBundles(Validator.fromJson(json, TaggedModel));
-        } catch (e) {
+        } catch (e: unknown) {
             if (e instanceof Error) {
                 return e.message;
             }

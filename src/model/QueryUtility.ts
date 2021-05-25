@@ -8,7 +8,7 @@ export class QueryUtility {
                 result: await query(),
                 status: "",
             };
-        } catch (e) {
+        } catch (e: unknown) {
             if (e instanceof QueryError) {
                 return {
                     result: Number.NaN,

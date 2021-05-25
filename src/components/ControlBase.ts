@@ -1,11 +1,11 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Prop } from "vue-property-decorator";
 
-import { AssetPropertyName } from "../model/AssetInterfaces";
-import { IAuxProperties } from "../model/IAuxProperties";
+import type { AssetPropertyName } from "../model/AssetInterfaces";
+import type { IAuxProperties } from "../model/IAuxProperties";
 import { InputUtility } from "../model/Input";
-import { InputInfo } from "../model/InputInfo";
-import { PrimitiveInputInfo } from "../model/PrimitiveInputInfo";
+import type { InputInfo } from "../model/InputInfo";
+import type { PrimitiveInputInfo } from "../model/PrimitiveInputInfo";
 
 import { ComponentBase } from "./ComponentBase";
 

@@ -1,5 +1,5 @@
 // https://github.com/andreashuber69/net-worth#--
-import { AssetPropertyName } from "./AssetInterfaces";
+import type { AssetPropertyName } from "./AssetInterfaces";
 
 export type CompositeInput = { [K in AssetPropertyName]?: unknown };
 export type Input = CompositeInput | unknown;

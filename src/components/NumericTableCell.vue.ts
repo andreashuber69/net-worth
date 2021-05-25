@@ -1,6 +1,6 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Component, Prop } from "vue-property-decorator";
-import { Asset } from "../model/Asset";
+import type { Asset } from "../model/Asset";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
 
@@ -59,7 +59,7 @@ export default class NumericTableCell extends ComponentBase<number> {
         return Format.value(this.value, this.maxDigits, this.minDigits);
     }
 
-    private static readonly decimalSeparator = Format.value(1.1, 1, 1).toString().substr(1, 1);
+    private static readonly decimalSeparator = `${Format.value(1.1, 1, 1)}`.substr(1, 1);
 
     private static getIntegralPart(formatted: string) {
         const decimalSeparatorIndex = formatted.indexOf(this.decimalSeparator);

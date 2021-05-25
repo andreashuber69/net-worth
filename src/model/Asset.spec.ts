@@ -1,9 +1,10 @@
 // https://github.com/andreashuber69/net-worth#--
 import { arrayOfAll } from "./arrayOfAll";
-import { Asset } from "./Asset";
+import type { Asset } from "./Asset";
 import { AssetEditorData } from "./AssetEditorData";
 import { AssetGroup } from "./AssetGroup";
-import { allAssetPropertyNames, AssetPropertyName } from "./AssetInterfaces";
+import { allAssetPropertyNames } from "./AssetInterfaces";
+import type { AssetPropertyName } from "./AssetInterfaces";
 import {
     getAddressCryptoWalletProperties,
     getMiscAssetProperties,
@@ -13,28 +14,30 @@ import {
 import { BtcWallet } from "./BtcWallet";
 import { BtgWallet } from "./BtgWallet";
 import { CryptoWallet } from "./CryptoWallet";
-import { ICryptoWalletCtor } from "./CryptoWalletInputInfo";
+import type { ICryptoWalletCtor } from "./CryptoWalletInputInfo";
 import { DashWallet } from "./DashWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { EtcWallet } from "./EtcWallet";
 import { EthWallet } from "./EthWallet";
 import { GoldAsset } from "./GoldAsset";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { LtcWallet } from "./LtcWallet";
-import { IMiscAssetCtor, MiscAsset } from "./MiscAsset";
+import { MiscAsset } from "./MiscAsset";
+import type { IMiscAssetCtor } from "./MiscAsset";
 import { PalladiumAsset } from "./PalladiumAsset";
 import { PlatinumAsset } from "./PlatinumAsset";
-import { PreciousMetalAsset } from "./PreciousMetalAsset";
-import { IPreciousMetalAssetCtor } from "./PreciousMetalAssetInputInfo";
+import type { PreciousMetalAsset } from "./PreciousMetalAsset";
+import type { IPreciousMetalAssetCtor } from "./PreciousMetalAssetInputInfo";
 import { SilverAsset } from "./SilverAsset";
-import { SimpleCryptoWallet } from "./SimpleCryptoWallet";
-import { AssetTypeName, assetTypeNames } from "./validation/schemas/AssetTypeName.schema";
-import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
-import { IAssetProperties } from "./validation/schemas/IAssetProperties.schema";
-import { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
-import { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
-import { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
+import type { SimpleCryptoWallet } from "./SimpleCryptoWallet";
+import type { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import { assetTypeNames } from "./validation/schemas/AssetTypeName.schema";
+import type { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
+import type { IAssetProperties } from "./validation/schemas/IAssetProperties.schema";
+import type { IMiscAssetProperties } from "./validation/schemas/IMiscAssetProperties.schema";
+import type { IPreciousMetalAssetProperties } from "./validation/schemas/IPreciousMetalAssetProperties.schema";
+import type { ISimpleCryptoWalletProperties } from "./validation/schemas/ISimpleCryptoWalletProperties.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 // eslint-disable-next-line import/max-dependencies
 import { ZecWallet } from "./ZecWallet";
@@ -56,7 +59,7 @@ const getRandomData = (type: AssetTypeName, expectedPropertyNames: readonly Asse
                 data[name] = "USD";
                 break;
             default:
-                data[name] = (++randomValue).toString();
+                data[name] = `${++randomValue}`;
         }
     }
 
@@ -89,13 +92,14 @@ const getPropertyValues = (
     return result;
 };
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 type PropertyNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
 
 const expectProperty = <T, U, N extends PropertyNames<T> & string>(
     ctor: new (parent: IParent, props: U) => T, props: U, name: N, matcher: (x: jasmine.Matchers<T[N]>) => void,
 ) => {
-    describe(ctor.name, () => describe(name, () => {
-        it("value should meet expectations", () => matcher(expect(createAsset(ctor, props)[name])));
+    describe(ctor.name, () => void describe(name, () => {
+        it("value should meet expectations", () => void matcher(expect(createAsset(ctor, props)[name])));
     }));
 };
 
@@ -106,14 +110,14 @@ const testMethod = <T, U, N extends MethodNames<T> & string>(
 ) => {
     describe(
         ctor.name,
-        () => describe(`${name.toString()}()`, () => it(expectation, () => test(createAsset(ctor, props)))),
+        () => void describe(`${name}()`, () => void it(expectation, () => void test(createAsset(ctor, props)))),
     );
 };
 
 const expectMethodThrowsError = <T, U, N extends MethodNames<T> & string>(
     ctor: new (parent: IParent, props: U) => T, props: U, name: N, expectedMessage: string,
 ) => {
-    describe(ctor.name, () => describe(`${name.toString()}()`, () => {
+    describe(ctor.name, () => void describe(`${name}()`, () => {
         it("should throw", () => expect(createAsset(ctor, props)[name]).toThrowError(expectedMessage));
     }));
 };
@@ -155,12 +159,18 @@ const testPreciousMetalAssetConstruction = (ctor: IPreciousMetalAssetCtor) => {
         "should return an AssetBundle",
         (asset) => expect(asset.bundle() instanceof Object).toBe(true),
     );
-    testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
+    testMethod(
+        ctor,
+        props,
+        "expand",
+        "should return undefined",
+        (asset) => expect(void asset.expand()).toBeUndefined(),
+    );
 
     describe(ctor.name, () => {
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let expected: IPreciousMetalAssetProperties;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -226,12 +236,18 @@ const testSimpleCryptoWalletConstruction = (ctor: SimpleCryptoWalletCtor) => {
         "should return an AssetBundle",
         (asset) => expect(asset.bundle() instanceof Object).toBe(true),
     );
-    testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
+    testMethod(
+        ctor,
+        props,
+        "expand",
+        "should return undefined",
+        (asset) => expect(void asset.expand()).toBeUndefined(),
+    );
 
     describe(ctor.name, () => {
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let expected: ISimpleCryptoWalletProperties;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -296,12 +312,18 @@ const testAddressCryptoWalletConstruction = (ctor: AddressCryptoWalletCtor) => {
         "should return an AssetBundle",
         (asset) => expect(asset.bundle() instanceof Object).toBe(true),
     );
-    testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
+    testMethod(
+        ctor,
+        props,
+        "expand",
+        "should return undefined",
+        (asset) => expect(void asset.expand()).toBeUndefined(),
+    );
 
     describe(ctor.name, () => {
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let expected: IAddressCryptoWalletProperties;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -366,12 +388,18 @@ const testMiscAssetConstruction = (ctor: IMiscAssetCtor) => {
         "should return an AssetBundle",
         (asset) => expect(asset.bundle() instanceof Object).toBe(true),
     );
-    testMethod(ctor, props, "expand", "should return undefined", (asset) => expect(asset.expand()).toBeUndefined());
+    testMethod(
+        ctor,
+        props,
+        "expand",
+        "should return undefined",
+        (asset) => expect(void asset.expand()).toBeUndefined(),
+    );
 
     describe(ctor.name, () => {
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let expected: IMiscAssetProperties;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let sut: InstanceType<typeof ctor>;
 
         beforeEach(() => {
@@ -405,9 +433,9 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
     ctor: new (parent: IParent, props: U) => T, props: U,
 ) => {
     describe("bundle() (before queryData())", () => {
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let sut: InstanceType<typeof ctor>;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let bundle: ReturnType<typeof sut.bundle>;
 
         beforeEach(() => {
@@ -438,11 +466,11 @@ const testQueries = <T extends Asset, U extends IAssetProperties>(
     });
 
     describe("bundle() (after queryData())", () => {
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let sut: InstanceType<typeof ctor>;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let bundle: ReturnType<typeof sut.bundle>;
-        // eslint-disable-next-line init-declarations
+        // eslint-disable-next-line @typescript-eslint/init-declarations
         let assets: typeof bundle.assets;
 
         beforeAll(

@@ -1,5 +1,5 @@
 // https://github.com/andreashuber69/net-worth#--
-import { IWebRequest } from "./IWebRequest";
+import type { IWebRequest } from "./IWebRequest";
 import { QueryCache } from "./QueryCache";
 import { CryptoCompareResponse } from "./validation/schemas/CryptoCompareResponse.schema";
 

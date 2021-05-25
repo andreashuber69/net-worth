@@ -1,30 +1,31 @@
 // https://github.com/andreashuber69/net-worth#--
-import { Asset } from "./Asset";
-import { AssetCollection } from "./AssetCollection";
+import type { Asset } from "./Asset";
+import type { AssetCollection } from "./AssetCollection";
 import { AssetGroup } from "./AssetGroup";
-import { CryptoWallet } from "./CryptoWallet";
+import type { CryptoWallet } from "./CryptoWallet";
 import { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { Erc20TokenWallet } from "./Erc20TokenWallet";
 import { Model } from "./Model";
 import { ModelParser } from "./ModelParser";
-import { Ordering } from "./Ordering";
-import { PreciousMetalAsset } from "./PreciousMetalAsset";
+import type { Ordering } from "./Ordering";
+import type { PreciousMetalAsset } from "./PreciousMetalAsset";
 import { SilverAsset } from "./SilverAsset";
-import { CurrencyName, currencyNames } from "./validation/schemas/CurrencyName.schema";
-import { Fineness } from "./validation/schemas/Fineness.schema";
-import { GroupBy } from "./validation/schemas/GroupBy.schema";
-import { Quantity0 } from "./validation/schemas/Quantity0.schema";
-import { QuantityAny } from "./validation/schemas/QuantityAny.schema";
-import { SortBy } from "./validation/schemas/SortBy.schema";
-import { Weight } from "./validation/schemas/Weight.schema";
+import type { CurrencyName } from "./validation/schemas/CurrencyName.schema";
+import { currencyNames } from "./validation/schemas/CurrencyName.schema";
+import type { Fineness } from "./validation/schemas/Fineness.schema";
+import type { GroupBy } from "./validation/schemas/GroupBy.schema";
+import type { Quantity0 } from "./validation/schemas/Quantity0.schema";
+import type { QuantityAny } from "./validation/schemas/QuantityAny.schema";
+import type { SortBy } from "./validation/schemas/SortBy.schema";
+import type { Weight } from "./validation/schemas/Weight.schema";
 import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 class BlobUtility {
     public static async toArrayBuffer(blob: Blob) {
         return new Promise<ArrayBuffer>((resolve, reject) => {
             const reader = new FileReader();
-            reader.onload = () => resolve(reader.result as ArrayBuffer);
-            reader.onerror = () => reject(new Error("Unable to read blob."));
+            reader.onload = () => void resolve(reader.result as ArrayBuffer);
+            reader.onerror = () => void reject(new Error("Unable to read blob."));
             reader.readAsArrayBuffer(blob);
         });
     }
@@ -35,7 +36,7 @@ const tryFetch = async (name: string) => {
 
     try {
         return await window.fetch(url);
-    } catch (e) {
+    } catch (e: unknown) {
         throw new Error(`Network Error: ${e}`);
     }
 };
@@ -51,10 +52,11 @@ const loadTestFile = async (name: string) => {
 };
 
 type IExpectedProperties<T, U extends keyof T = never> =
+    // eslint-disable-next-line @typescript-eslint/ban-types
     Pick<T, Exclude<{ [K in keyof T]: T[K] extends Function ? never : K }[keyof T], U>>;
 type IExpectedOrderingProperties = IExpectedProperties<Ordering>;
 type IExpectedAssetCollectionProperties =
-    IExpectedProperties<AssetCollection, "grouped" | "ordering" | "grandTotalValue"> &
+    IExpectedProperties<AssetCollection, "grandTotalValue" | "grouped" | "ordering"> &
     { readonly ordering: IExpectedOrderingProperties };
 type IExpectedModelProperties =
     IExpectedProperties<Model, "assets" | "exchangeRate"> & { readonly assets: IExpectedAssetCollectionProperties };
@@ -105,7 +107,7 @@ const getExpectedProperties = (
     };
 };
 
-const hasIndexSignature = (value: unknown): value is { [key: string]: unknown } => typeof value === "object";
+const hasIndexSignature = (value: unknown): value is Readonly<Record<string, unknown>> => typeof value === "object";
 
 const expectToEqual = (actual: unknown, expected: unknown) => {
     if (hasIndexSignature(actual) && hasIndexSignature(expected)) {
@@ -157,7 +159,7 @@ const expectEmptyModel = (fileName: string) => {
 };
 
 type IExpectedAssetProperties<T extends Asset> =
-    IExpectedProperties<T, "key" | "unitValue" | "totalValue" | "percent" | "parent" | "editableAsset">;
+    IExpectedProperties<T, "editableAsset" | "key" | "parent" | "percent" | "totalValue" | "unitValue">;
 
 const getExpectedPreciousMetalProperties = <T extends PreciousMetalAsset>(
     type: T["type"], location: string, description: string, weight: Weight,

@@ -1,15 +1,15 @@
 // https://github.com/andreashuber69/net-worth#--
-import { Asset, IAssetBundle } from "./Asset";
+import type { Asset, IAssetBundle } from "./Asset";
 import { AssetCollectionUtility } from "./AssetCollectionUtility";
 import { AssetGroup } from "./AssetGroup";
-import { IParent } from "./IEditable";
+import type { IParent } from "./IEditable";
 import { Ordering } from "./Ordering";
 import { TaskQueue } from "./TaskQueue";
-import { GroupBy } from "./validation/schemas/GroupBy.schema";
-import { ISort } from "./validation/schemas/ISort.schema";
+import type { GroupBy } from "./validation/schemas/GroupBy.schema";
+import type { ISort } from "./validation/schemas/ISort.schema";
 
 interface INotifiableParent extends IParent {
-    notifyChanged(): void;
+    readonly notifyChanged: () => void;
 }
 
 interface IAssetCollectionParameters {
@@ -51,8 +51,8 @@ export class AssetCollection {
 
     public constructor(params: IAssetCollectionParameters) {
         this.ordering = new Ordering({
-            onGroupChanged: () => this.onGroupChanged(),
-            onSortChanged: () => AssetCollectionUtility.sort(this.groups, this.ordering.sort),
+            onGroupChanged: () => void this.onGroupChanged(),
+            onSortChanged: () => void AssetCollectionUtility.sort(this.groups, this.ordering.sort),
             groupBy: params.groupBy,
             sort: params.sort,
         });
@@ -130,7 +130,7 @@ export class AssetCollection {
 
     private update(...newBundles: readonly IAssetBundle[]) {
         // eslint-disable-next-line no-console
-        this.taskQueue.queue(async () => this.updateImpl(newBundles)).catch((error) => console.error(error));
+        this.taskQueue.queue(async () => this.updateImpl(newBundles)).catch((error) => void console.error(error));
     }
 
     private async updateImpl(newBundles: readonly IAssetBundle[]) {

@@ -1,7 +1,9 @@
 // https://github.com/andreashuber69/net-worth#--
-import { AssetPropertyName } from "./AssetInterfaces";
-import { Input, InputUtility } from "./Input";
-import { InputInfo, IPrimitiveInputInfoProperties } from "./InputInfo";
+import type { AssetPropertyName } from "./AssetInterfaces";
+import type { Input } from "./Input";
+import { InputUtility } from "./Input";
+import type { IPrimitiveInputInfoProperties } from "./InputInfo";
+import { InputInfo } from "./InputInfo";
 
 /** Defines the base for all classes that provide input information for a primitive value. */
 export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitiveInputInfoProperties {
@@ -57,7 +59,7 @@ export abstract class PrimitiveInputInfo extends InputInfo implements IPrimitive
 
     /** @internal */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, class-methods-use-this
-    protected validateContent(strict: boolean, input: unknown): true | string {
+    protected validateContent(strict: boolean, input: unknown): string | true {
         return true;
     }
 }

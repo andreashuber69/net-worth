@@ -3,10 +3,15 @@ import { arrayOfAll } from "../../arrayOfAll";
 
 /** Provides the conversion factors between the unit gram and other weight units. */
 export enum WeightUnit {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     g = 1,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     kg = 1000,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     gr = 0.06479891, // https://en.wikipedia.org/wiki/Grain_(unit)
+    // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/prefer-literal-enum-member
     "t oz" = gr * 480, // https://en.wikipedia.org/wiki/Ounce
+    // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/prefer-literal-enum-member
     oz = gr * 437.5, // https://en.wikipedia.org/wiki/Ounce
 }
 

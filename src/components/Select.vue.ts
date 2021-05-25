@@ -1,7 +1,8 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Component, Prop } from "vue-property-decorator";
 
-import { SelectInputInfo, SelectInputInfoBase } from "../model/SelectInputInfo";
+import type { SelectInputInfoBase } from "../model/SelectInputInfo";
+import { SelectInputInfo } from "../model/SelectInputInfo";
 
 import { ControlBase } from "./ControlBase";
 

@@ -1,7 +1,7 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Component, Vue } from "vue-property-decorator";
 
-import { BeforeInstallPromptEvent } from "./BeforeInstallPromptEvent";
+import type { BeforeInstallPromptEvent } from "./BeforeInstallPromptEvent";
 import AboutDialog from "./components/AboutDialog.vue";
 import AssetList from "./components/AssetList.vue";
 import BrowserDialog from "./components/BrowserDialog.vue";
@@ -11,6 +11,7 @@ import { Model } from "./model/Model";
 import { QueryCache } from "./model/QueryCache";
 import { Parser } from "./Parser";
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 @Component({ components: { AboutDialog, AssetList, BrowserDialog, SaveAsDialog } })
 // eslint-disable-next-line import/no-default-export
 export default class App extends Vue {
@@ -20,8 +21,8 @@ export default class App extends Vue {
     public constructor() {
         super();
         this.model = App.initModel(LocalStorage.load());
-        window.addEventListener("beforeunload", () => LocalStorage.save(this.model));
-        window.addEventListener("beforeinstallprompt", (ev) => this.onBeforeInstallPrompt(ev));
+        window.addEventListener("beforeunload", () => void LocalStorage.save(this.model));
+        window.addEventListener("beforeinstallprompt", (ev) => void this.onBeforeInstallPrompt(ev));
     }
 
     public onNewClicked() {
@@ -106,8 +107,8 @@ export default class App extends Vue {
     private static async read(blob: Blob) {
         return new Promise<string>((resolve, reject) => {
             const reader = new FileReader();
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = () => reject(new Error("Unable to read file."));
+            reader.onload = () => void resolve(reader.result as string);
+            reader.onerror = () => void reject(new Error("Unable to read file."));
             reader.readAsText(blob);
         });
     }

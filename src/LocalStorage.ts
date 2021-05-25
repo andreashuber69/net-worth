@@ -51,7 +51,7 @@ export class LocalStorage {
             LocalStorage.sessionLocalStorageKey,
             model ? LocalStorage.saveImpl(model) : LocalStorage.emptyModelLocalStorageKey,
         );
-        url.searchParams.append(LocalStorage.sessionForceLoadFromLocalStorageKey, Boolean(model).toString());
+        url.searchParams.append(LocalStorage.sessionForceLoadFromLocalStorageKey, `${Boolean(model)}`);
         window.open(url.href);
     }
 
@@ -64,7 +64,7 @@ export class LocalStorage {
     private static loadExistingSession(localStorageKey: string) {
         if ((localStorageKey !== LocalStorage.emptyModelLocalStorageKey) &&
             ((window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD) ||
-            (window.sessionStorage.getItem(LocalStorage.sessionForceLoadFromLocalStorageKey) === true.toString()))) {
+            (window.sessionStorage.getItem(LocalStorage.sessionForceLoadFromLocalStorageKey) === `${true}`))) {
             // Session storage can only be non-empty because the user either reloaded the page or because Open...
             // or New was clicked. Both call openNewWindow, which opens a new window with parameters attached to the
             // URL. Code in main.ts transfers any URL parameters into session storage and then uses
@@ -82,7 +82,7 @@ export class LocalStorage {
         oldKeys.sort((l, r) => (l < r ? 1 : -1));
 
         for (const oldKey of oldKeys) {
-            const model = LocalStorage.loadModel(oldKey.toString());
+            const model = LocalStorage.loadModel(`${oldKey}`);
 
             if (model.hasUnsavedChanges) {
                 // The main goal of this whole mechanism is to prevent data loss, which is why, in a new session, we
@@ -139,7 +139,7 @@ export class LocalStorage {
             throw new Error("Can't create unique key.");
         }
 
-        const uniqueKey = uniqueNumber.toString();
+        const uniqueKey = `${uniqueNumber}`;
 
         if (window.localStorage.getItem(uniqueKey)) {
             return undefined;

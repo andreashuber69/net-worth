@@ -1,16 +1,18 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Component } from "vue-property-decorator";
 
-import { Asset } from "../model/Asset";
-import { Model } from "../model/Model";
-import { GroupBys } from "../model/Ordering";
-import { SortBy } from "../model/validation/schemas/SortBy.schema";
+import type { Asset } from "../model/Asset";
+import type { Model } from "../model/Model";
+import type { GroupBys } from "../model/Ordering";
+import type { SortBy } from "../model/validation/schemas/SortBy.schema";
 
 import AssetEditor from "./AssetEditor.vue";
-import { ColumnInfo, ColumnName } from "./ColumnInfo";
+import type { ColumnName } from "./ColumnInfo";
+import { ColumnInfo } from "./ColumnInfo";
 import { ComponentBase } from "./ComponentBase";
 import { Format } from "./Format";
-import NumericTableCell, { NumericColumnName, numericColumnNames } from "./NumericTableCell.vue";
+import type { NumericColumnName } from "./NumericTableCell.vue";
+import NumericTableCell, { numericColumnNames } from "./NumericTableCell.vue";
 
 type ITableHeader = {
     readonly value: Exclude<ColumnName, SortBy>;
@@ -26,6 +28,7 @@ interface IOptions {
     readonly sortDesc: boolean[];
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 @Component({ components: { AssetEditor, NumericTableCell } })
 /** Implements the asset list UI. */
 // eslint-disable-next-line import/no-default-export
@@ -126,7 +129,7 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     public mounted() {
-        this.timer = setInterval(() => this.adjustTableColumnCount(), 500);
+        this.timer = setInterval(() => void this.adjustTableColumnCount(), 500);
     }
 
     public beforeDestroy() {
@@ -181,7 +184,7 @@ export default class AssetList extends ComponentBase<Model> {
     }
 
     private adjustTableColumnCount() {
-        this.$nextTick(() => this.onRendered());
+        this.$nextTick(() => void this.onRendered());
     }
 
     private onRendered() {

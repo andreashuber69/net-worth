@@ -35,12 +35,12 @@ export class Validator {
         return Validator.isPrimitiveSchemaName(ctor.name) ? new ctor(data) : Object.assign(new ctor(), data);
     }
 
-    public static validate(data: unknown, schemaName: SchemaName): true | string {
+    public static validate(data: unknown, schemaName: SchemaName): string | true {
         return (Validator.ajv.validate(Validator.getSchemaKeyRef(schemaName), data) === true) ||
             Validator.ajv.errorsText();
     }
 
-    public static getSchema(name: SchemaName) {
+    public static getSchema(name: SchemaName): Readonly<Record<string, unknown>> {
         return Validator.isPrimitiveSchemaName(name) ? Validator.getPrimitiveSchema(name) : schema.definitions[name];
     }
 

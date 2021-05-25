@@ -1,7 +1,7 @@
 // https://github.com/andreashuber69/net-worth#--
-import { IOrdering } from "./Ordering";
-import { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
-import { AssetUnion } from "./validation/schemas/AssetUnion.schema";
+import type { IOrdering } from "./Ordering";
+import type { AssetTypeName } from "./validation/schemas/AssetTypeName.schema";
+import type { AssetUnion } from "./validation/schemas/AssetUnion.schema";
 
 /** @internal */
 export interface IParent {
@@ -16,5 +16,5 @@ export interface IParent {
 export interface IEditable {
     readonly type: AssetTypeName | "";
     readonly parent: IParent;
-    toJSON(): AssetUnion;
+    readonly toJSON: () => AssetUnion;
 }

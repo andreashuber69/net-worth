@@ -1,10 +1,11 @@
 // https://github.com/andreashuber69/net-worth#--
 /* eslint-disable max-classes-per-file */
-import { IAssetBundle } from "./Asset";
+import type { IAssetBundle } from "./Asset";
 import { GenericAssetBundle } from "./GenericAssetBundle";
-import { IParent } from "./IEditable";
-import { IRealCryptoWalletParameters, RealCryptoWallet } from "./RealCryptoWallet";
-import { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
+import type { IParent } from "./IEditable";
+import type { IRealCryptoWalletParameters } from "./RealCryptoWallet";
+import { RealCryptoWallet } from "./RealCryptoWallet";
+import type { ISimpleCryptoWallet, SimpleCryptoWalletTypeName } from "./validation/schemas/ISimpleCryptoWallet.schema";
 
 /** Defines the base of all simple crypto currency wallets. */
 export abstract class SimpleCryptoWallet extends RealCryptoWallet {
@@ -31,6 +32,7 @@ export abstract class SimpleCryptoWallet extends RealCryptoWallet {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     private static readonly Bundle = class extends GenericAssetBundle<SimpleCryptoWallet> implements IAssetBundle {
         public toJSON() {
             return {

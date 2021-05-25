@@ -17,12 +17,12 @@ export default class BrowserDialog extends Vue {
     // eslint-disable-next-line class-methods-use-this
     public get dontShowDialog() {
         return !BrowserDialog.isUntestedBrowser ||
-            window.localStorage.getItem(BrowserDialog.dontShowBrowserDialogName) === true.toString();
+            window.localStorage.getItem(BrowserDialog.dontShowBrowserDialogName) === `${true}`;
     }
 
     // eslint-disable-next-line class-methods-use-this
     public set dontShowDialog(value: boolean) {
-        window.localStorage.setItem(BrowserDialog.dontShowBrowserDialogName, value.toString());
+        window.localStorage.setItem(BrowserDialog.dontShowBrowserDialogName, `${value}`);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

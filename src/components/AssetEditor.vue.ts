@@ -1,18 +1,20 @@
 // https://github.com/andreashuber69/net-worth#--
 import { Component, Vue } from "vue-property-decorator";
-import { Asset } from "../model/Asset";
+import type { Asset } from "../model/Asset";
 import { AssetEditorData } from "../model/AssetEditorData";
 import { AssetInput } from "../model/AssetInput";
-import { AssetInputInfo } from "../model/AssetInputInfo";
+import type { AssetInputInfo } from "../model/AssetInputInfo";
 import { createAsset } from "../model/AssetProperties";
-import { IParent } from "../model/IEditable";
+import type { IParent } from "../model/IEditable";
 import { SelectInputInfo } from "../model/SelectInputInfo";
 import { assetTypeNames } from "../model/validation/schemas/AssetTypeName.schema";
+import type { IVueForm } from "./IVueForm";
 import { NoAssetInputInfo } from "./NoAssetInputInfo";
 import Select from "./Select.vue";
 import TextArea from "./TextArea.vue";
 import TextField from "./TextField.vue";
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 @Component({ components: { Select, TextArea, TextField } })
 /** Implements the dialog used to edit assets. */
 // eslint-disable-next-line import/no-default-export
@@ -116,6 +118,6 @@ export default class AssetEditor extends Vue {
     private get form() {
         // The runtime type of this.$refs.form is VueComponent. It appears nobody has written typings for this yet.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return this.$refs.form as any;
+        return this.$refs.form as any as IVueForm;
     }
 }

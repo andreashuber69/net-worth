@@ -1,7 +1,7 @@
 // https://github.com/andreashuber69/net-worth#--
 import { arrayOfAll } from "./arrayOfAll";
-import { GroupBy } from "./validation/schemas/GroupBy.schema";
-import { ISort } from "./validation/schemas/ISort.schema";
+import type { GroupBy } from "./validation/schemas/GroupBy.schema";
+import type { ISort } from "./validation/schemas/ISort.schema";
 
 interface IOrderingParameters {
     readonly onGroupChanged: () => void;

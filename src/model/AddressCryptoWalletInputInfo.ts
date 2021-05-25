@@ -1,8 +1,9 @@
 // https://github.com/andreashuber69/net-worth#--
-import { CryptoWalletInputInfo, ICryptoWalletInputInfoParameters } from "./CryptoWalletInputInfo";
-import { Erc20TokensWallet } from "./Erc20TokensWallet";
+import type { ICryptoWalletInputInfoParameters } from "./CryptoWalletInputInfo";
+import { CryptoWalletInputInfo } from "./CryptoWalletInputInfo";
+import type { Erc20TokensWallet } from "./Erc20TokensWallet";
 import { TextInputInfo } from "./TextInputInfo";
-import { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
+import type { IAddressCryptoWalletProperties } from "./validation/schemas/IAddressCryptoWalletProperties.schema";
 
 interface IAddressCryptoWalletInputInfoParameters extends
     ICryptoWalletInputInfoParameters<Erc20TokensWallet, IAddressCryptoWalletProperties> {
