@@ -102,7 +102,7 @@ export class AssetCollection {
     }
 
     public async idle() {
-        return this.taskQueue.idle();
+        await this.taskQueue.idle();
     }
 
     /** @internal */
@@ -130,7 +130,9 @@ export class AssetCollection {
 
     private update(...newBundles: readonly IAssetBundle[]) {
         // eslint-disable-next-line no-console
-        this.taskQueue.queue(async () => this.updateImpl(newBundles)).catch((error) => void console.error(error));
+        this.taskQueue.queue(async () => void await this.updateImpl(newBundles)).catch(
+            (error) => void console.error(error),
+        );
     }
 
     private async updateImpl(newBundles: readonly IAssetBundle[]) {

@@ -12,7 +12,7 @@ export class ExchangeRate {
             throw new Error("Unknown currency!");
         }
 
-        return request.execute();
+        return await request.execute();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -105,7 +105,7 @@ export default class App extends Vue {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private static async read(blob: Blob) {
-        return new Promise<string>((resolve, reject) => {
+        return await new Promise<string>((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = () => void resolve(reader.result as string);
             reader.onerror = () => void reject(new Error("Unable to read file."));

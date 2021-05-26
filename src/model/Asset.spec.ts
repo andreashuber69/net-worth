@@ -623,7 +623,7 @@ describe("single asset", () => {
         SilverAsset,
         { description: "Bars", weight: 1, weightUnit: WeightUnit.kg, fineness: 0.999, quantity: 1 },
     );
-    beforeAll(async () => asset.queryData());
+    beforeAll(async () => void await asset.queryData());
     expectProperty(AssetGroup, [asset], "isExpanded", (matcher) => matcher.toBe(false));
     expectProperty(AssetGroup, [asset], "isExpandable", (matcher) => matcher.toBe(true));
     expectProperty(AssetGroup, [asset], "type", (matcher) => matcher.toEqual(asset.type));

@@ -107,8 +107,8 @@ export class FastXpub {
     private static async getResponse(message: unknown) {
         const worker = await FastXpub.worker;
 
-        return FastXpub.taskQueue.queue(
-            async () => new Promise<unknown>((resolve, reject) => {
+        return await FastXpub.taskQueue.queue(
+            async () => await new Promise<unknown>((resolve, reject) => {
                 FastXpub.setHandlers(worker, (ev) => void resolve(ev.data), reject);
                 worker.postMessage(message);
             }),

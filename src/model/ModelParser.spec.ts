@@ -22,7 +22,7 @@ import { WeightUnit } from "./validation/schemas/WeightUnit.schema";
 
 class BlobUtility {
     public static async toArrayBuffer(blob: Blob) {
-        return new Promise<ArrayBuffer>((resolve, reject) => {
+        return await new Promise<ArrayBuffer>((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = () => void resolve(reader.result as ArrayBuffer);
             reader.onerror = () => void reject(new Error("Unable to read blob."));

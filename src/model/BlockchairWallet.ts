@@ -35,7 +35,7 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
     }
 
     protected async queryQuantity() {
-        return new BlockchairWallet.BlockchairQuantityRequest(this.network, this.address).queryQuantity();
+        return await new BlockchairWallet.BlockchairQuantityRequest(this.network, this.address).queryQuantity();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,7 +51,7 @@ export abstract class BlockchairWallet extends SimpleCryptoWallet {
 
         protected async getOutputInfos(addresses: readonly string[]) {
             const url = `${this.urlPrefix}${addresses.join(",")}?limit=0`;
-            const { data } = await this.Class.taskQueue.queue(async () => this.fetch(url));
+            const { data } = await this.Class.taskQueue.queue(async () => await this.fetch(url));
 
             if (!data) {
                 return [{ balance: 0, txCount: 0 }];

@@ -1,14 +1,14 @@
 // https://github.com/andreashuber69/net-worth#--
 import { TaskQueue } from "./TaskQueue";
 
-const randomDelay = async () => new Promise<number>(
+const randomDelay = async () => await new Promise<number>(
     (resolve) => {
         const milliseconds = (Math.random() * 800) + 200;
         setTimeout(() => void resolve(milliseconds), milliseconds);
     },
 );
 
-const throwException = async () => Promise.reject(new Error("Operation failed."));
+const throwException = async () => await Promise.reject(new Error("Operation failed."));
 
 const precision = -2;
 

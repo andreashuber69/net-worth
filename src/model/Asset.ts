@@ -118,7 +118,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
 
     /** @internal */
     public async queryData(): Promise<void> {
-        const { result, status } = await QueryUtility.execute(async () => this.queryUnitValueUsd());
+        const { result, status } = await QueryUtility.execute(async () => await this.queryUnitValueUsd());
         this.unitValueUsd = result;
         this.unitValueHintImpl = status;
     }
@@ -147,7 +147,7 @@ export abstract class Asset implements ICalculatedAssetProperties {
 
     // eslint-disable-next-line class-methods-use-this
     protected async queryUnitValueUsd(): Promise<number | undefined> {
-        return Promise.reject(new Error("Asset cannot query unit value."));
+        return await Promise.reject(new Error("Asset cannot query unit value."));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

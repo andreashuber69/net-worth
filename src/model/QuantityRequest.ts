@@ -14,7 +14,7 @@ export abstract class QuantityRequest {
         if (this.address.length <= 100) {
             this.quantity += (await this.getBatchInfo([this.address])).balance;
         } else {
-            await Promise.all((await this.getNodes()).map(async (n) => this.addChain(n)));
+            await Promise.all((await this.getNodes()).map(async (n) => void await this.addChain(n)));
         }
 
         return this.quantity;
@@ -37,7 +37,7 @@ export abstract class QuantityRequest {
 
     private async getNodes() {
         try {
-            return await Promise.all([0, 1].map(async (i) => this.fastXpub.deriveNode(this.address, i)));
+            return await Promise.all([0, 1].map(async (i) => await this.fastXpub.deriveNode(this.address, i)));
         } catch {
             throw new QueryError("Invalid xpub.");
         }
@@ -59,7 +59,7 @@ export abstract class QuantityRequest {
     }
 
     private async getBatch(xpub: string, index: number) {
-        return this.fastXpub.deriveAddressRange(xpub, index, index + QuantityRequest.batchLength - 1);
+        return await this.fastXpub.deriveAddressRange(xpub, index, index + QuantityRequest.batchLength - 1);
     }
 
     private async getBatchInfo(addresses: readonly string[]) {
