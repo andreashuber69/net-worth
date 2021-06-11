@@ -56,9 +56,11 @@ describe(TaskQueue.name, () => {
             const secondPromise = sut.queue(randomDelay);
             const thirdPromise = sut.queue(throwException);
             const fourthPromise = sut.queue(randomDelay);
+            // This line should be two lines further down from its current position but that doesn't work due to a bug
+            // https://github.com/jasmine/jasmine/issues/1843
+            await expectFailure(thirdPromise);
             await sut.idle();
             const actualTotalDelay = Date.now() - start;
-            await expectFailure(thirdPromise);
             const totalDelay = await firstPromise + await secondPromise + await fourthPromise;
             // Make sure the previous statement did not further delay, i.e. all tasks have in fact completed.
             expect(Date.now() - start).toBeCloseTo(actualTotalDelay, precision);
