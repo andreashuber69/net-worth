@@ -51,12 +51,12 @@ const shouldFailValidation = <T>(data: unknown, ctor: new (value?: unknown) => T
 
 describe(Validator.name, () => {
     shouldFailJsonValidation("", DeletedAssets, new SyntaxError("Unexpected end of JSON input"));
-    shouldFailJsonValidation("null", DeletedAssets, new SyntaxError("data should be object"));
-    shouldFailJsonValidation("[]", DeletedAssets, new ValidationError("data should be object"));
+    shouldFailJsonValidation("null", DeletedAssets, new SyntaxError("data must be object"));
+    shouldFailJsonValidation("[]", DeletedAssets, new ValidationError("data must be object"));
     shouldFailJsonValidation(
         "{\"deletedAssets\":true}",
         DeletedAssets,
-        new ValidationError("data.deletedAssets should be array"),
+        new ValidationError("data/deletedAssets must be array"),
     );
     shouldPassJsonValidation(
         "{\"deletedAssets\":[]}",
@@ -66,7 +66,7 @@ describe(Validator.name, () => {
     shouldFailJsonValidation(
         "{\"deletedAssets\":[0]}",
         DeletedAssets,
-        new ValidationError("data.deletedAssets[0] should be string"),
+        new ValidationError("data/deletedAssets/0 must be string"),
     );
     shouldPassJsonValidation(
         "{\"deletedAssets\":[\"\"]}",
@@ -74,10 +74,10 @@ describe(Validator.name, () => {
         Object.assign(new DeletedAssets(), { deletedAssets: [""] }),
     );
 
-    shouldFailValidation(3, Boolean, new ValidationError("data should be boolean"));
+    shouldFailValidation(3, Boolean, new ValidationError("data must be boolean"));
     // eslint-disable-next-line no-new-wrappers
     shouldPassValidation(false, Boolean, new Boolean(false));
-    shouldFailValidation("{}", DeletedAssets, new ValidationError("data should be object"));
+    shouldFailValidation("{}", DeletedAssets, new ValidationError("data must be object"));
     shouldPassValidation(
         { deletedAssets: [] },
         DeletedAssets,
@@ -85,18 +85,18 @@ describe(Validator.name, () => {
     );
 
     shouldFailJsonValidation("", Boolean, new SyntaxError("Unexpected end of JSON input"));
-    shouldFailJsonValidation("42", Boolean, new ValidationError("data should be boolean"));
-    shouldFailJsonValidation("{}", Boolean, new ValidationError("data should be boolean"));
+    shouldFailJsonValidation("42", Boolean, new ValidationError("data must be boolean"));
+    shouldFailJsonValidation("{}", Boolean, new ValidationError("data must be boolean"));
     // eslint-disable-next-line no-new-wrappers
     shouldPassJsonValidation("true", Boolean, new Boolean(true));
     shouldFailJsonValidation("", Number, new SyntaxError("Unexpected end of JSON input"));
-    shouldFailJsonValidation("true", Number, new ValidationError("data should be number"));
-    shouldFailJsonValidation("\"\"", Number, new ValidationError("data should be number"));
+    shouldFailJsonValidation("true", Number, new ValidationError("data must be number"));
+    shouldFailJsonValidation("\"\"", Number, new ValidationError("data must be number"));
     // eslint-disable-next-line no-new-wrappers
     shouldPassJsonValidation("42", Number, new Number(42));
     shouldFailJsonValidation("", String, new SyntaxError("Unexpected end of JSON input"));
-    shouldFailJsonValidation("true", String, new ValidationError("data should be string"));
-    shouldFailJsonValidation("1792", String, new ValidationError("data should be string"));
+    shouldFailJsonValidation("true", String, new ValidationError("data must be string"));
+    shouldFailJsonValidation("1792", String, new ValidationError("data must be string"));
     // eslint-disable-next-line no-new-wrappers
     shouldPassJsonValidation("\"blah\"", String, new String("blah"));
 });

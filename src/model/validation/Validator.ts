@@ -36,7 +36,7 @@ export class Validator {
     }
 
     public static validate(data: unknown, schemaName: SchemaName): string | true {
-        return (Validator.ajv.validate(Validator.getSchemaKeyRef(schemaName), data) === true) ||
+        return (Validator.ajv.validate(Validator.getSchemaKeyRef(schemaName), data)) ||
             Validator.ajv.errorsText();
     }
 
