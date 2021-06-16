@@ -43,9 +43,9 @@
     "core-js": "^3.14.0",
     "offline-plugin": "^5.0.7",
     "ua-parser-js": "^0.7.28",
-    "vue": "^2.6.11",
-    "vue-class-component": "^7.2.3",
-    "vue-property-decorator": "^8.4.0",
+    "vue": "^2.6.14",
+    "vue-class-component": "^7.2.6",
+    "vue-property-decorator": "^9.1.2",
     "vuetify": "^2.2.12"
   },
   "devDependencies": {
@@ -54,10 +54,10 @@
     "@types/ua-parser-js": "^0.7.36",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
-    "@vue/cli-plugin-babel": "^4.2.2",
-    "@vue/cli-plugin-typescript": "^4.2.2",
-    "@vue/cli-service": "^4.2.2",
-    "@vue/preload-webpack-plugin": "^1.1.1",
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-typescript": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
+    "@vue/preload-webpack-plugin": "^2.0.0",
     "async-css-plugin": "^1.1.5",
     "codeclimate-test-reporter": "^0.5.1",
     "cross-env": "^7.0.3",
@@ -67,6 +67,7 @@
     "eslint-plugin-jsdoc": "^35.3.0",
     "eslint-plugin-no-null": "^1.0.2",
     "eslint-plugin-prefer-arrow": "^1.2.3",
+    "html-webpack-plugin": "^4.5.2",
     "jasmine-core": "^3.7.1",
     "karma": "^6.3.3",
     "karma-chrome-launcher": "^3.1.0",
@@ -82,7 +83,8 @@
     "typescript": "^4.2.4",
     "typescript-json-schema": "^0.50.1",
     "vue-cli-plugin-vuetify": "^2.0.5",
-    "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.4.3"
+    "vue-template-compiler": "^2.6.14",
+    "vuetify-loader": "^1.4.3",
+    "webpack": "^4.45.0"
   }
 }
