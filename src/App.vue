@@ -99,10 +99,10 @@
         <v-layout justify-center>
           <AssetList :value="model" ref="assetList"/>
         </v-layout>
-        <BrowserDialog/>
-        <SaveAsDialog ref="saveAsDialog"/>
-        <AboutDialog ref="aboutDialog"/>
       </v-container>
+      <BrowserDialog/>
+      <SaveAsDialog ref="saveAsDialog"/>
+      <AboutDialog ref="aboutDialog"/>
     </v-content>
   </v-app>
 </template>
