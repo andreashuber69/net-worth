@@ -1,9 +1,7 @@
 <!-- https://github.com/andreashuber69/net-worth#-- -->
 <template>
   <div>
-    <v-layout row justify-center>
-      <AssetEditor ref="editor"></AssetEditor>
-    </v-layout>
+    <AssetEditor ref="editor"></AssetEditor>
     <v-data-table
       :headers="headers" :options.sync="options" :loading="loading" :items="checkedValue.assets.grouped" item-key="key"
       :server-items-length="checkedValue.assets.grouped.length" hide-default-footer :mobile-breakpoint="0"

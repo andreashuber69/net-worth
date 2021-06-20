@@ -97,11 +97,11 @@
     }">
       <v-container>
         <v-layout justify-center>
-          <BrowserDialog/>
           <AssetList :value="model" ref="assetList"/>
-          <SaveAsDialog ref="saveAsDialog"/>
-          <AboutDialog ref="aboutDialog"/>
         </v-layout>
+        <BrowserDialog/>
+        <SaveAsDialog ref="saveAsDialog"/>
+        <AboutDialog ref="aboutDialog"/>
       </v-container>
     </v-content>
   </v-app>
