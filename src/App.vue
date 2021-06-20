@@ -91,7 +91,7 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-content :style="{
+    <v-main :style="{
       'background-image': `url(${require('./assets/background.png')})`,
       'background-repeat': 'repeat'
     }">
@@ -103,7 +103,7 @@
       <BrowserDialog/>
       <SaveAsDialog ref="saveAsDialog"/>
       <AboutDialog ref="aboutDialog"/>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
