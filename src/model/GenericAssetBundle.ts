@@ -20,6 +20,6 @@ export abstract class GenericAssetBundle<T extends SingleAsset> {
     }
 
     public async queryData() {
-        return this.assets[0].queryData();
+        await this.assets[0].queryData();
     }
 }

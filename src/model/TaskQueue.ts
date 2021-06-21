@@ -43,6 +43,6 @@ export class TaskQueue {
     private async executeAfterPrevious<T>(createTask: () => Promise<T>) {
         await this.idle();
 
-        return createTask();
+        return await createTask();
     }
 }

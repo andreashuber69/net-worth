@@ -91,19 +91,19 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-content :style="{
+    <v-main :style="{
       'background-image': `url(${require('./assets/background.png')})`,
       'background-repeat': 'repeat'
     }">
       <v-container>
         <v-layout justify-center>
-          <BrowserDialog/>
           <AssetList :value="model" ref="assetList"/>
-          <SaveAsDialog ref="saveAsDialog"/>
-          <AboutDialog ref="aboutDialog"/>
         </v-layout>
       </v-container>
-    </v-content>
+      <BrowserDialog/>
+      <SaveAsDialog ref="saveAsDialog"/>
+      <AboutDialog ref="aboutDialog"/>
+    </v-main>
   </v-app>
 </template>
 

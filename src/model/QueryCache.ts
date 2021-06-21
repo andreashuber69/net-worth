@@ -14,12 +14,12 @@ export class QueryCache {
     public static fetch<R>(query: string, responseCtor: new () => R, options?: IFetchOptions<R>): Promise<R>;
 
     public static async fetch<R>(query: string, responseCtor?: new () => R, options: IFetchOptions<R> = {}) {
-        return QueryCache.cacheResult(
+        return await QueryCache.cacheResult(
             query,
             async () => (
                 responseCtor ?
-                    QueryCache.fetchParseValidateAndApprove(query, responseCtor, options) :
-                    QueryCache.fetchAndParse(query, undefined)
+                    await QueryCache.fetchParseValidateAndApprove(query, responseCtor, options) :
+                    await QueryCache.fetchAndParse(query, undefined)
             ),
         );
     }
@@ -41,7 +41,7 @@ export class QueryCache {
             QueryCache.cache.set(query, result);
         }
 
-        return result;
+        return await result;
     }
 
     private static async fetchParseValidateAndApprove<R>(

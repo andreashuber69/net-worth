@@ -36,7 +36,7 @@ export class Validator {
     }
 
     public static validate(data: unknown, schemaName: SchemaName): string | true {
-        return (Validator.ajv.validate(Validator.getSchemaKeyRef(schemaName), data) === true) ||
+        return (Validator.ajv.validate(Validator.getSchemaKeyRef(schemaName), data)) ||
             Validator.ajv.errorsText();
     }
 
@@ -50,7 +50,7 @@ export class Validator {
     private static readonly ajv = Validator.createAjv();
 
     private static createAjv() {
-        const result = new Ajv({ multipleOfPrecision: 9 });
+        const result = new Ajv({ multipleOfPrecision: 9, allowUnionTypes: true, strictTuples: false });
         result.addSchema(schema, Validator.customSchemaKey);
         primitiveSchemaNames.forEach(
             (name) => result.addSchema(Validator.getPrimitiveSchema(name), Validator.getSchemaKeyRef(name)),
