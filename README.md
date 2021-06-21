@@ -29,7 +29,7 @@
 </p>
 
 <h1 align="center">Net Worth</h1>
-<p align="center">Copyright &copy; 2018-2020 Andreas Huber</p>
+<p align="center">Copyright &copy; 2018-2021 Andreas Huber</p>
 
 Gain a quick overview of your precious metal and crypto assets!
 
