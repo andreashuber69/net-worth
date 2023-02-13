@@ -1,7 +1,9 @@
 # https://github.com/andreashuber69/net-worth#--
 # cSpell: disable
+os: linux
+dist: xenial
 language: node_js
-nodejs:
+node_js:
 - 14
 
 addons:
@@ -32,11 +34,12 @@ after_script:
 - npx codeclimate-test-reporter < coverage/lcov.lcov
   
 deploy:
+  strategy: git
   provider: pages
-  skip-cleanup: true
-  local-dir: dist
-  keep-history: true
-  github-token: $GITHUB_TOKEN
+  skip_cleanup: true
+  local_dir: dist
+  keep_history: true
+  token: $GITHUB_TOKEN
   verbose: true
   on:
     branch: master
