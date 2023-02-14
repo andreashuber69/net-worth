@@ -31,7 +31,7 @@
     "lint": "eslint ./src --ext .js,.ts",
     "generate-schemas": "typescript-json-schema './schema.tsconfig.json' '*' --required --noExtraProps --aliasRefs --out 'src/model/validation/schemas/All.schema.json'",
     "pretest": "npm run generate-schemas",
-    "test": "karma start --browsers Chrome",
+    "test": "karma start --browsers Chromium",
     "show-coverage": "lite-server --baseDir='coverage/html'",
     "preci": "npm run build",
     "ci": "karma start --browsers ChromeHeadless"
